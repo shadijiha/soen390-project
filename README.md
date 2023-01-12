@@ -25,7 +25,7 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 | Name                 | Student ID | GitHub Page                                                   |
 | -------------------- | ---------- | ------------------------------------------------------------- |
 | Usama Saleem         | 40110036   | [usamasaleem1](https://github.com/usamasaleem1)               |
-| Name                 | ID         | [Name](https://github.com/)                                   |
+| Shadi Jiha           | 40131284   | [shadijiha](https://github.com/shadijiha)                     |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
