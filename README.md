@@ -28,7 +28,7 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 | Shadi Jiha           | 40131284   | [shadijiha](https://github.com/shadijiha)                     |
 | Muhammad Mubashir    | 40152977   | [mubashir494](https://github.com/mubashir494)                 |
 | Marc EId             | 40153034   | [Marc-Eid](https://github.com/Marc-Eid)                       |
-| Name                 | ID         | [Name](https://github.com/)                                   |
+| Uzair Ali            | 40111410   | [uzairali245](https://github.com/uzairali245)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
