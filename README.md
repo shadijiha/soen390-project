@@ -1,6 +1,6 @@
-# App Title
+# SkillSwipe
 
-This project is a part of SOEN 390 - Software Engineering Team Design Project - at Concordia University. The project aims to build (...)
+This project is a part of SOEN 390 - Software Engineering Team Design Project - at Concordia University. The project aims to build a LinkedIn esque app.
 
 
 <br />
