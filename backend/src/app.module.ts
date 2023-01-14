@@ -18,6 +18,7 @@ import { UsersModule } from "./users/users.module";
 			database: process.env.DB_NAME,
 			entities: ["dist/models/**/*.entity.{ts,js}"],
 			synchronize: true,
+			autoLoadEntities: true
 		}),
 		UsersModule,
 		AuthModule,

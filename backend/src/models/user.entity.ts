@@ -9,9 +9,9 @@ import {
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from "typeorm";
-import { Education } from "./education.entity";
 
-@Entity()
+
+@Entity("users")
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
@@ -48,9 +48,9 @@ export class User extends BaseEntity {
 	updated_at: Date;
 
 	// RELATIONS
-	@OneToMany(() => Education, (e) => e.user)
-	@ApiProperty({ type: [Education] })
-	educations: Education[];
+	// @OneToMany(() => Education, (e) => e.user)
+	// @ApiProperty({ type: [Education] })
+	// educations: Education[];
 
 	// SPECIAL GETTERS
 	public get fullName() {

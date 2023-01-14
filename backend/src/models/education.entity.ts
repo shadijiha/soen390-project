@@ -41,7 +41,7 @@ export class Education extends BaseEntity {
 	updated_at: Date;
 
 	// RELATIONS
-	@ManyToOne(() => User, (u) => u.educations)
-	@ApiProperty({ type: () => User })
-	user: User;
+	// @ManyToOne(() => User, (u) => u.educations)
+	// @ApiProperty({ type: () => User })
+	// user: User;
 }
