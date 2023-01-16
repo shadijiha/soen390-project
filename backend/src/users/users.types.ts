@@ -24,8 +24,24 @@ export namespace Users {
 	}
 
 
+    export class UpdateUserRequest {
+        @ApiProperty()
+		firstName: string | null;
 
+		@ApiProperty()
+		lastName: string | null;
 
+        @ApiProperty()
+        email: string | null;
+
+		@ApiProperty({ examples: ["male", "female"] })
+		gender: "male" | "female" | null;
+    }
+
+    export class UpdateUserResponse extends App.WithStatus{
+        @ApiProperty({type: User})
+        user: User | null;
+    }
 
 
 }

@@ -1,11 +1,11 @@
-import { Controller, Delete, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Delete, Get, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 import { Body, HttpCode, Post, Put, UseGuards } from '@nestjs/common/decorators';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { response } from 'express';
 import { Auth } from 'src/auth/auth.types';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { User } from 'src/models/user.entity';
-import { Code } from 'typeorm';
+import { Code, DeleteResult } from 'typeorm';
 import { UsersService } from './users.service';
 import { Users } from './users.types';
 
@@ -33,12 +33,13 @@ export class UsersController {
 
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() user: User){
-        return this.usersService.update(user.id, user);
+    @ApiResponse({type: Users.UpdateUserResponse})
+    update(@Param('id') id: number, @Body() user: Users.UpdateUserRequest): Promise<User>{
+        return this.usersService.update(id, user);
     }
 
     @Delete(':id')
-    remove(@Param('id') id: string): Promise<void> {
+    remove(@Param('id') id: string): Promise<DeleteResult> {
       return this.usersService.remove(id);
     }
 
