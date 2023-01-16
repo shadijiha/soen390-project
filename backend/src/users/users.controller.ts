@@ -1,6 +1,6 @@
 import { Controller, Delete, Get, HttpStatus, Param, ParseIntPipe } from '@nestjs/common';
 import { Body, HttpCode, Post, Put, UseGuards } from '@nestjs/common/decorators';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { response } from 'express';
 import { Auth } from 'src/auth/auth.types';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
@@ -12,12 +12,14 @@ import { Users } from './users.types';
 
 @Controller('users')
 @ApiTags("Users")
+@ApiBearerAuth()
+@UseGuards(JwtAuthGuard)
 export class UsersController {
     
     constructor(
 		private readonly usersService: UsersService	) {}
 
-
+    
     @Get()
     @ApiResponse({type: Users.GetAllUsersResponse})
     async findAll(): Promise<User[]>{
