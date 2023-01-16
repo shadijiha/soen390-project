@@ -13,6 +13,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { Education } from "./education.entity";
+import { Recommendation } from "./recommendation.entity";
 import { Skill } from "./skill.entity";
 import { Volunteering } from "./volunteering.entity";
 import { Work } from "./work.entity";
@@ -28,7 +29,7 @@ export class User extends BaseEntity {
   @ApiProperty()
   firstName: string;
 
-  @Column({default: null})
+  @Column({ default: null })
   @Index()
   @ApiProperty()
   lastName: string;
@@ -41,7 +42,7 @@ export class User extends BaseEntity {
   @Column({ select: false })
   password: string;
 
-  @Column({default: null})
+  @Column({ default: null })
   @ApiProperty()
   mobileNo: string;
 
@@ -49,7 +50,7 @@ export class User extends BaseEntity {
   @ApiProperty()
   gender: "male" | "female";
 
-  @Column({default: null})
+  @Column({ default: null })
   @ApiProperty()
   biography: string;
 
@@ -83,13 +84,21 @@ export class User extends BaseEntity {
   @ApiProperty({ type: [User] })
   connections: User[];
 
-
-
   //skills
   @ManyToMany((type) => Skill, (skill) => skill.user)
   @JoinTable()
-  @ApiProperty({ type: [Skill] }) 
+  @ApiProperty({ type: [Skill] })
   skills: Skill[];
+
+  //recommendations received
+  @OneToMany(() => User, (user) => user.recommendationsReceived)
+  @ApiProperty({ type: [Recommendation] })
+  recommendationsReceived: Recommendation[];
+
+  //recommendations given
+  @OneToMany(() => User, (user) => user.recommendationsGiven)
+  @ApiProperty({ type: [Recommendation] })
+  recommendationsGiven: Recommendation[];
 
   // SPECIAL GETTERS
   public get fullName() {
