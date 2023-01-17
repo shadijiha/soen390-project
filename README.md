@@ -1,6 +1,6 @@
-# App Title
+# SkillSwipe
 
-This project is a part of SOEN 390 - Software Engineering Team Design Project - at Concordia University. The project aims to build (...)
+This project is a part of SOEN 390 - Software Engineering Team Design Project - at Concordia University. The project aims to build a LinkedIn esque app.
 
 
 <br />
@@ -25,10 +25,10 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 | Name                 | Student ID | GitHub Page                                                   |
 | -------------------- | ---------- | ------------------------------------------------------------- |
 | Usama Saleem         | 40110036   | [usamasaleem1](https://github.com/usamasaleem1)               |
-| Name                 | ID         | [Name](https://github.com/)                                   |
-| Name                 | ID         | [Name](https://github.com/)                                   |
-| Name                 | ID         | [Name](https://github.com/)                                   |
-| Name                 | ID         | [Name](https://github.com/)                                   |
+| Shadi Jiha           | 40131284   | [shadijiha](https://github.com/shadijiha)                     |
+| Muhammad Mubashir    | 40152977   | [mubashir494](https://github.com/mubashir494)                 |
+| Marc EId             | 40153034   | [Marc-Eid](https://github.com/Marc-Eid)                       |
+| Uzair Ali            | 40111410   | [uzairali245](https://github.com/uzairali245)                 |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
 | Name                 | ID         | [Name](https://github.com/)                                   |
@@ -54,7 +54,7 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 
 <br />
 
-## Project Wiki:
+## [Project Wiki:]([https://github.com/](https://github.com/shadijiha/soen390-project/wiki)) 
 
 - Project meeting journal is stored [here](https://github.com/).
 - Project tutorial videos can be found [here](https://github.com/).
