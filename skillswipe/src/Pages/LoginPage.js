@@ -1,8 +1,10 @@
-import React from "react";
+import React from 'react'
 
-const LoginPage = ({ styles }) => {
-  const { showSidebar } = styles;
 
-};
+function LoginPage() {
+  return (
+    <div>LoginPage</div>
+  )
+}
 
-export default LoginPage;
+export default LoginPage

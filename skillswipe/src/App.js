@@ -1,13 +1,12 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import TopBar from "./components/TopBar";
 import FooterMenu from "./components/FooterMenu";
 import Content from "./components/Content";
 import Sidebar from "./components/Sidebar";
-import { Link } from 'react-router-dom';
 import LoginPage from "./Pages/LoginPage";
-import { BrowserRouter } from 'react-router-dom';
 
- 
 class App extends Component {
   constructor(props) {
     super(props);
@@ -35,7 +34,6 @@ class App extends Component {
 
   render() {
     const { windowWidth } = this.state;
-
     const styles = {
       white: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       black: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
@@ -47,46 +45,55 @@ class App extends Component {
       sidebarCollapsed: windowWidth < 1100
     };
 
+
+
     const menuItems = styles.showSidebar
-        //desktop menu items  
-        ? [
-          { icon: `😀`, text: "Item 1" },
-          { icon: `😉`, text: "Item 2" },
-          { icon: `😎`, text: "Item 3" },
-          { icon: `🤔`, text: "Item 4" },
-          { icon: `😛`, text: "Item 5" },
-          { icon: `😺️`, text: "Profile" },
-          { icon: `⚙`, text: "Settings" }
-        ]
-        //mobile menu items
+      //desktop menu items  
+      ? [
+        { icon: `🏠`, text: "Home"},
+        { icon: `😀`, text: "Item 1" },
+        { icon: `😉`, text: "Item 2"},
+        { icon: `😎`, text: "Item 3"},
+        { icon: `🤔`, text: "Item 4"},
+        { icon: `😛`, text: "Item 5"},
+        { icon: `😺️`, text: "Profile"},
+        { icon: `⚙`, text: "Settings"}
+      ]
+      //mobile menu items
       : [
-          { icon: `😀`, text: "Item 1" },
-          { icon: `😉`, text: "Item 2" },
-          { icon: `😎`, text: "Item 3" },
-          { icon: `🤔`, text: "Item 4" },
-          { icon: `😛`, text: "Item 5" }
-        ];
+        { icon: `😀`, text: "Item 1", link: "/item1" },
+        { icon: `😉`, text: "Item 2", link: "/item2" },
+        { icon: `😎`, text: "Item 3", link: "/item3" },
+        { icon: `🤔`, text: "Item 4", link: "/item4" },
+        { icon: `😛`, text: "Item 5", link: "/item5" }
+      ];
 
     return (
-      <div
-        style={{
-          backgroundColor: styles.black(0.05),
-          minHeight: "100vh",
-          position: "relative"
-        }}
-      >
-        {styles.showSidebar ? (
-          <Sidebar menuItems={menuItems} styles={styles} />
-        ) : (
-          <TopBar styles={styles} />
-        )}
+      <BrowserRouter>
 
-        <Content styles={styles} />
+        <div
+          style={{
+            backgroundColor: styles.black(0.05),
+            minHeight: "100vh",
+            position: "relative"
+          }}
+        >
 
-        {!styles.showSidebar && (
-          <FooterMenu menuItems={menuItems} styles={styles} />
-        )}
-      </div>
+          {styles.showSidebar ? (
+            <Sidebar menuItems={menuItems} styles={styles} />
+
+          ) : (
+              <TopBar styles={styles} />
+            )}
+
+          <Content styles={styles} />
+
+          {!styles.showSidebar && (
+            <FooterMenu menuItems={menuItems} styles={styles} />
+          )}
+
+        </div>
+      </BrowserRouter>
     );
   }
 }
