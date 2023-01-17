@@ -50,7 +50,7 @@ class App extends Component {
     const menuItems = styles.showSidebar
       //desktop menu items  
       ? [
-        { icon: `🏠`, text: "Home"},
+        { icon: `🏠`, text: "Home", link: "/Pages/LoginPage"},
         { icon: `😀`, text: "Item 1" },
         { icon: `😉`, text: "Item 2"},
         { icon: `😎`, text: "Item 3"},
