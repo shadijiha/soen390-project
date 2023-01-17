@@ -3,7 +3,11 @@ import TopBar from "./components/TopBar";
 import FooterMenu from "./components/FooterMenu";
 import Content from "./components/Content";
 import Sidebar from "./components/Sidebar";
+import { Link } from 'react-router-dom';
+import LoginPage from "./Pages/LoginPage";
+import { BrowserRouter } from 'react-router-dom';
 
+ 
 class App extends Component {
   constructor(props) {
     super(props);
