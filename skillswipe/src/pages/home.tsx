@@ -45,7 +45,9 @@ const Home = () => {
                   width="100%"
                   minW="80vw"
                 >
-                  <Text>{post.title}</Text>
+                  <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                    {post.title}
+                  </Text>
                   <Text>{post.body}</Text>
                 </Box>
               </ListItem>

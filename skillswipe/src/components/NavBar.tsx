@@ -18,6 +18,7 @@ export default function NavBar() {
   const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
+  const formBackground = useColorModeValue("gray.100", "gray.700");
 
   return (
     <Box as="nav" p={15} w="100%">
@@ -30,7 +31,6 @@ export default function NavBar() {
                 Home
               </Button>
             </NextLink>
-
             <NextLink href="/swipe" passHref>
               <Button as="a" variant="ghost" aria-label="Swipe" my={5} w="100%">
                 Swipe
@@ -66,7 +66,7 @@ export default function NavBar() {
         <Flex
           w="100vw"
           display={display}
-          bgColor="gray.50"
+          bgColor={formBackground}
           zIndex={20}
           h="100vh"
           pos="fixed"

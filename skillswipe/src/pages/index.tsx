@@ -10,7 +10,7 @@ const IndexPage = () => {
 return (
 <Flex height="100vh" alignItems="center" justifyContent="center">
   <Flex direction="column" background={formBackground} p={12} rounded={25} >
-    <Heading mb={6}>Skillswipe</Heading>
+    <Heading mb={6}>SkillSwipe 🚀</Heading>
     <Input placeholder="Email" variant="filled" mb={3} type="email" background={placeholderBackground} />
     <Input placeholder="*******" variant="filled" mb={6} type="password" background={placeholderBackground}/>
     <Button colorScheme="blue" mb={4}>
