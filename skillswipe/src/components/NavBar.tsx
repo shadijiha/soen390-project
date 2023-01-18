@@ -31,9 +31,15 @@ export default function NavBar() {
                 Home
               </Button>
             </NextLink>
-            <NextLink href="/swipe" passHref>
-              <Button as="a" variant="ghost" aria-label="Swipe" my={5} w="100%">
-                Swipe
+            <NextLink href="/findJob" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Find Jobs"
+                my={5}
+                w="100%"
+              >
+                Find Jobs
               </Button>
             </NextLink>
 
@@ -95,9 +101,15 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
-            <NextLink href="/swipe" passHref>
-              <Button as="a" variant="ghost" aria-label="Swipe" my={5} w="100%">
-                Swipe
+            <NextLink href="/inbox" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Messages"
+                my={5}
+                w="100%"
+              >
+                Messages
               </Button>
             </NextLink>
 

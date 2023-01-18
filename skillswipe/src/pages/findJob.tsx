@@ -2,13 +2,13 @@ import React from "react";
 import { Text } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
-const swipe = () => {
+const findJob = () => {
   return (
     <>
       <NavBar></NavBar>
-      <Text>Swipe page</Text>
+      <Text>Find Jobs</Text>
     </>
   );
 };
 
-export default swipe;
+export default findJob;
