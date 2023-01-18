@@ -1,59 +1,38 @@
 import React from "react";
 import Link from "next/link";
-import { useState } from 'react'
+import { useState } from "react";
 import {
   useColorMode,
   Switch,
   Flex,
   Button,
   IconButton,
-  useColorModeValue
-} from '@chakra-ui/react'
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
-import NextLink from 'next/link'
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
 
 export default function NavBar() {
-  const { colorMode, toggleColorMode } = useColorMode()
-  const isDark = colorMode === 'dark'
-  const [display, changeDisplay] = useState('none')
-  const toggleTheme = useColorModeValue("🌙", "💡")
+  const { colorMode, toggleColorMode } = useColorMode();
+  const isDark = colorMode === "dark";
+  const [display, changeDisplay] = useState("none");
+  const toggleTheme = useColorModeValue("🌙", "💡");
 
-
-      return (
+  return (
     <Flex>
-      <Flex
-        position="fixed"
-        top="1rem"
-        right="1rem"
-        align="center"
-      >
+      <Flex position="fixed" top="1rem" right="1rem" align="center">
         {/* Desktop */}
-        
-        <Flex
-          display={['none', 'none', 'flex','flex']}
-        >
+        <Flex display={["none", "none", "flex", "flex"]}>
           <NextLink href="/home" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Home"
-              my={5}
-              w="100%"
-            >
+            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
               Home
-                    </Button>
+            </Button>
           </NextLink>
 
           <NextLink href="/swipe" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Swipe"
-              my={5}
-              w="100%"
-            >
+            <Button as="a" variant="ghost" aria-label="Swipe" my={5} w="100%">
               Swipe
-                    </Button>
+            </Button>
           </NextLink>
 
           <NextLink href="/" passHref>
@@ -65,7 +44,7 @@ export default function NavBar() {
               w="100%"
             >
               Sign In/Logout
-                    </Button>
+            </Button>
           </NextLink>
         </Flex>
 
@@ -74,18 +53,16 @@ export default function NavBar() {
           aria-label="Open Menu"
           size="lg"
           mr={2}
-          icon={
-            <HamburgerIcon />
-          }
-          onClick={() => changeDisplay('flex')}
-          display={['flex', 'flex', 'none', 'none']}
+          icon={<HamburgerIcon />}
+          onClick={() => changeDisplay("flex")}
+          display={["flex", "flex", "none", "none"]}
         />
         <Button onClick={toggleColorMode}>{toggleTheme}</Button>
       </Flex>
 
       {/* Mobile Content */}
       <Flex
-        w='100vw'
+        w="100vw"
         display={display}
         bgColor="gray.50"
         zIndex={20}
@@ -102,54 +79,31 @@ export default function NavBar() {
             mr={2}
             aria-label="Open Menu"
             size="lg"
-            icon={
-              <CloseIcon />
-            }
-            onClick={() => changeDisplay('none')}
+            icon={<CloseIcon />}
+            onClick={() => changeDisplay("none")}
           />
         </Flex>
 
-        <Flex
-          flexDir="column"
-          align="center"
-        >
+        <Flex flexDir="column" align="center">
           <NextLink href="/home" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Home"
-              my={5}
-              w="100%"
-            >
+            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
               Home
-                    </Button>
+            </Button>
           </NextLink>
 
           <NextLink href="/swipe" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Swipe"
-              my={5}
-              w="100%"
-            >
+            <Button as="a" variant="ghost" aria-label="Swipe" my={5} w="100%">
               Swipe
-                    </Button>
+            </Button>
           </NextLink>
 
           <NextLink href="/" passHref>
-            <Button
-              as="a"
-              variant="ghost"
-              aria-label="Sign In"
-              my={5}
-              w="100%"
-            >
+            <Button as="a" variant="ghost" aria-label="Sign In" my={5} w="100%">
               Sign In/Logout
             </Button>
           </NextLink>
         </Flex>
       </Flex>
     </Flex>
-  )
+  );
 }
