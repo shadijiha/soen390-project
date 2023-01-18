@@ -46,10 +46,11 @@ const Home = () => {
                   backgroundColor={postBackground}
                   padding="1rem"
                   marginBottom="1rem"
-                  rounded="lg"
+                  rounded="2xl"
                   overflow="hidden"
                   width="100%"
                   minW="80vw"
+                  maxW="90vw"
                 >
                   <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                     {post.title}
