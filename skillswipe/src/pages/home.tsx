@@ -16,7 +16,7 @@ import { useState, useEffect } from "react";
 const Home = () => {
   const { toggleColorMode } = useColorMode();
   const formBorder = useColorModeValue("gray.100", "gray.600");
-  const postBackground = useColorModeValue("gray.200", "gray.900");
+  const postBackground = useColorModeValue("gray.200", "gray.700");
   const toggleTheme = useColorModeValue("🌙", "💡");
 
   const [posts, setPosts] = useState([
