@@ -15,8 +15,8 @@ import { useState, useEffect } from "react";
 
 const Home = () => {
   const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue("gray.100", "gray.700");
-  const placeholderBackground = useColorModeValue("gray.200", "gray.600");
+  const formBorder = useColorModeValue("gray.100", "gray.600");
+  const postBackground = useColorModeValue("gray.200", "gray.900");
   const toggleTheme = useColorModeValue("🌙", "💡");
 
   const [posts, setPosts] = useState([
@@ -36,8 +36,8 @@ const Home = () => {
               <ListItem key={post.id}>
                 <Box
                   borderWidth="1px"
-                  borderColor={formBackground}
-                  backgroundColor={placeholderBackground}
+                  borderColor={formBorder}
+                  backgroundColor={postBackground}
                   padding="1rem"
                   marginBottom="1rem"
                   rounded="lg"
