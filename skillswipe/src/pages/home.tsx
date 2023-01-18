@@ -1,5 +1,8 @@
 import { Flex, Heading, Input, Button, useColorMode, useColorModeValue} from '@chakra-ui/react'
 import Link from 'next/link';
+import Head from "next/head";
+import type { NextPage } from "next";
+import NavBar from '@/components/NavBar';
 
 const Home = () => {
   const { toggleColorMode } = useColorMode()
@@ -8,15 +11,10 @@ const Home = () => {
   const toggleTheme = useColorModeValue("🌙", "💡")
 
 return (
-<Flex height="100vh" alignItems="center" justifyContent="center">
-  <Flex direction="column" background={formBackground} p={12} rounded={25} >
-    <Heading mb={6}>Home</Heading>
-    <Button colorScheme="blue" mb={4}>
-      <Link href="/">Go back</Link>
-      </Button>
-    <Button onClick={toggleColorMode} variant="contained">{toggleTheme}</Button>
-  </Flex>
-</Flex>
+
+      <>
+      <NavBar></NavBar>
+    </>
 )
 
   
