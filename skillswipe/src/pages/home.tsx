@@ -28,7 +28,13 @@ const Home = () => {
   return (
     <>
       <NavBar></NavBar>
-      <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        p={4}
+        paddingTop="9vh"
+      >
         <Box>
           <Heading paddingBottom={5}>Recent Posts</Heading>
           <List>
