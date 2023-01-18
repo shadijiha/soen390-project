@@ -59,7 +59,9 @@ export default function NavBar() {
             onClick={() => changeDisplay("flex")}
             display={["flex", "flex", "none", "none"]}
           />
-          <Button onClick={toggleColorMode}>{toggleTheme}</Button>
+          <Button marginLeft={3} onClick={toggleColorMode}>
+            {toggleTheme}
+          </Button>
         </Flex>
 
         {/* Mobile Content */}
