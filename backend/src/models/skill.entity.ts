@@ -4,6 +4,7 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	ManyToMany,
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
@@ -11,18 +12,18 @@ import {
 import { User } from "./user.entity";
 
 @Entity()
-export class Education extends BaseEntity {
+export class Skill extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
 	id: number;
 
 	@Column()
 	@ApiProperty()
-	institution: string;
+	company: string;
 
 	@Column()
 	@ApiProperty()
-	degree: string;
+	title: string;
 
 	@Column()
 	@ApiProperty()
@@ -42,7 +43,11 @@ export class Education extends BaseEntity {
 
 
 	// RELATIONS
-	@ManyToOne(() => User, (u) => u.educations)
+	@ManyToMany(() => User, (u) => u.skills)
 	@ApiProperty({ type: () => User })
 	user: User;
+
+
+
+
 }
