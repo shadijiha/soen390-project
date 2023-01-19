@@ -38,41 +38,22 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(":id")
+  @Get("me")
   @ApiResponse({ type: Users.GetUserResponse })
-  async findOneById(
-    @Request() req,
-    @Param("id", ParseIntPipe) id: number
-  ): Promise<User> {
-    if (id == req.user.id) {
-      return this.usersService.findOneById(req.user.id);
-    } else {
-      throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
-    }
+  async findOneById(@Request() req): Promise<User> {
+    return this.usersService.findOneById(req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)
   @Put(":id")
   @ApiResponse({ type: Users.UpdateUserResponse })
-  update(
-    @Request() req,
-    @Param("id") id: number,
-    @Body() user: Users.UpdateUserRequest
-  ): Promise<User> {
-    if (id == req.user.id) {
-      return this.usersService.update(id, user);
-    } else {
-      throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
-    }
+  update(@Request() req, @Body() user: Users.UpdateUserRequest): Promise<User> {
+    return this.usersService.update(req.user.id, user);
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(":id")
-  remove(@Request() req, @Param("id") id: string): Promise<DeleteResult> {
-    if (id == req.user.id) {
-      return this.usersService.remove(id);
-    } else {
-      throw new HttpException("Unauthorized", HttpStatus.UNAUTHORIZED);
-    }
+  remove(@Request() req): Promise<DeleteResult> {
+    return this.usersService.remove(req.user.id);
   }
 }
