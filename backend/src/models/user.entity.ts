@@ -12,7 +12,11 @@ import {
   RelationCount,
   UpdateDateColumn,
 } from "typeorm";
+import { Award } from "./award.entity";
+import { Course } from "./course.entity";
 import { Education } from "./education.entity";
+import { Language } from "./language.entity";
+import { Project } from "./project.entity";
 import { Recommendation } from "./recommendation.entity";
 import { Skill } from "./skill.entity";
 import { Volunteering } from "./volunteering.entity";
@@ -99,6 +103,28 @@ export class User extends BaseEntity {
   @OneToMany(() => User, (user) => user.recommendationsGiven)
   @ApiProperty({ type: [Recommendation] })
   recommendationsGiven: Recommendation[];
+
+  //courses
+  @OneToMany(() => Course, (course) => course.user)
+  @ApiProperty({ type: [Course] })
+  courses: Course[];
+
+  //projects
+  @OneToMany(() => Project, (project) => project.user)
+  @ApiProperty({ type: [Project] })
+  projects: Project[];
+
+  //awards
+  @OneToMany(() => Award, (award) => award.user)
+  @ApiProperty({ type: [Award] })
+  awards: Award[];
+
+  //languages
+  @ManyToMany((type) => Language, (language) => language.user)
+  @JoinTable()
+  @ApiProperty({ type: [Language] })
+  languages: Language[];
+   
 
   // SPECIAL GETTERS
   public get fullName() {

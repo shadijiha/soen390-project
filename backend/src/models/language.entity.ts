@@ -12,26 +12,19 @@ import {
 import { User } from "./user.entity";
 
 @Entity()
-export class Skill extends BaseEntity {
+export class Language extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
 	id: number;
 
 	@Column()
 	@ApiProperty()
-	company: string;
+	languageName: string;
 
 	@Column()
 	@ApiProperty()
-	title: string;
+	proficiency: string;
 
-	@Column()
-	@ApiProperty()
-	start_year: number;
-
-	@Column()
-	@ApiProperty()
-	end_year: number;
 
 	@CreateDateColumn()
 	@ApiProperty()
@@ -43,8 +36,8 @@ export class Skill extends BaseEntity {
 
 
 	// RELATIONS
-	@ManyToMany(() => User, (u) => u.skills)
-	@ApiProperty({ type:  [User] })
+	@ManyToMany(() => User, (u) => u.languages)
+	@ApiProperty({ type: [User] })
 	user: User[];
 
 

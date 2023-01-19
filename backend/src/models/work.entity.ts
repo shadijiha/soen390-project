@@ -47,6 +47,4 @@ export class Work extends BaseEntity {
 	user: User;
 
 
-
-
 }

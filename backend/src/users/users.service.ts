@@ -56,15 +56,15 @@ export class UsersService {
 
 
 	async update(id: number, user: Users.UpdateUserRequest): Promise<User>{
-		 let oldUser = this.usersRepository.findOneBy({id});
+		 let oldUser = await this.usersRepository.findOneBy({id});
 		 let updatedUser = new User();
 		
-		 updatedUser.email = user.email != null ? user.email : (await oldUser).email;
-		 updatedUser.firstName = user.firstName != null ? user.firstName : (await oldUser).firstName;
-		 updatedUser.lastName = user.lastName != null ? user.lastName : (await oldUser).lastName;
-		 updatedUser.gender = user.gender != null ? user.gender : (await oldUser).gender;
-		 updatedUser.password = (await oldUser).password;
-		updatedUser.created_at = (await oldUser).created_at;
+		 updatedUser.email = user.email != null ? user.email : oldUser.email;
+		 updatedUser.firstName = user.firstName != null ? user.firstName : oldUser.firstName;
+		 updatedUser.lastName = user.lastName != null ? user.lastName : oldUser.lastName;
+		 updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+		 updatedUser.password = oldUser.password;
+		updatedUser.created_at = oldUser.created_at;
 
 		this.usersRepository.update(id, updatedUser);
 		return this.usersRepository.findOneBy({id});
