@@ -11,18 +11,18 @@ import {
 import { User } from "./user.entity";
 
 @Entity()
-export class Education extends BaseEntity {
+export class Work extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
 	id: number;
 
 	@Column()
 	@ApiProperty()
-	institution: string;
+	company: string;
 
 	@Column()
 	@ApiProperty()
-	degree: string;
+	title: string;
 
 	@Column()
 	@ApiProperty()
@@ -42,7 +42,9 @@ export class Education extends BaseEntity {
 
 
 	// RELATIONS
-	@ManyToOne(() => User, (u) => u.educations)
+	@ManyToOne(() => User, (u) => u.workExperience)
 	@ApiProperty({ type: () => User })
 	user: User;
+
+
 }
