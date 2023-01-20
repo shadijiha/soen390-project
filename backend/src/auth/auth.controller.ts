@@ -28,6 +28,7 @@ export class AuthController {
 	public async login(
 		@Body() body: Auth.LoginRequest
 	): Promise<Auth.LoginResponse> {
+		console.log(body)
 		try {
 			const user = await this.userService.getByEmail(body.email);
 			return {
@@ -44,6 +45,7 @@ export class AuthController {
 	public async register(
 		@Body() body: Auth.RegisterRequest
 	): Promise<Auth.LoginResponse> {
+	
 		try {
 			const user = await this.userService.create(body);
 			return {
