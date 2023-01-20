@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useState } from "react";
+import Router, { useRouter } from "next/router";
 import {
   useColorMode,
   Switch,
@@ -19,14 +20,22 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  const router = useRouter();
 
+  const logout = () => {
+    if(localStorage.getItem("jwt")){
+      localStorage.removeItem("jwt");
+     
+      // More work To be done
+    }
+  }
   return (
     <Box as="nav" p={15} w="100%">
       <Flex>
         <Flex position="fixed" top="1rem" right="1rem" align="center">
           {/* Desktop */}
           <Flex display={["none", "none", "flex", "flex"]}>
-            <NextLink href="/home" passHref>
+            <NextLink href="/" passHref>
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
@@ -50,6 +59,7 @@ export default function NavBar() {
                 aria-label="Sign In/Logout"
                 my={5}
                 w="100%"
+                onClick={logout}
               >
                 Sign In/Logout
               </Button>
