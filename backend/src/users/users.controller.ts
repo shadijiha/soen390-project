@@ -45,14 +45,14 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(":id")
+  @Put()
   @ApiResponse({ type: Users.UpdateUserResponse })
   update(@Request() req, @Body() user: Users.UpdateUserRequest): Promise<User> {
     return this.usersService.update(req.user.id, user);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(":id")
+  @Delete()
   remove(@Request() req): Promise<DeleteResult> {
     return this.usersService.remove(req.user.id);
   }

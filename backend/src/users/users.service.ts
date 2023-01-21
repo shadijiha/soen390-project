@@ -66,7 +66,7 @@ export class UsersService {
 		 updatedUser.password = oldUser.password;
 		updatedUser.created_at = oldUser.created_at;
 
-		this.usersRepository.update(id, updatedUser);
+		await this.usersRepository.update(id, updatedUser);
 		return this.usersRepository.findOneBy({id});
 	}
 
