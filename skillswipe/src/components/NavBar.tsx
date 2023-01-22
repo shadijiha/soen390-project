@@ -10,6 +10,7 @@ import {
   IconButton,
   useColorModeValue,
   Box,
+  color,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
@@ -23,12 +24,12 @@ export default function NavBar() {
   const router = useRouter();
 
   const logout = () => {
-    if(localStorage.getItem("jwt")){
+    if (localStorage.getItem("jwt")) {
       localStorage.removeItem("jwt");
-     
+
       // More work To be done
     }
-  }
+  };
   return (
     <Box as="nav" p={15} w="100%">
       <Flex>
@@ -36,10 +37,11 @@ export default function NavBar() {
           {/* Desktop */}
           <Flex display={["none", "none", "flex", "flex"]}>
             <NextLink href="/" passHref>
-              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+              <Button as="a" variant="solid" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NextLink>
+
             <NextLink href="/findJob" passHref>
               <Button
                 as="a"
@@ -62,6 +64,18 @@ export default function NavBar() {
                 onClick={logout}
               >
                 Sign In/Logout
+              </Button>
+            </NextLink>
+
+            <NextLink href="/profile" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
+                My Account
               </Button>
             </NextLink>
           </Flex>
@@ -120,6 +134,18 @@ export default function NavBar() {
                 w="100%"
               >
                 Messages
+              </Button>
+            </NextLink>
+
+            <NextLink href="/profile" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
+                My Account
               </Button>
             </NextLink>
 

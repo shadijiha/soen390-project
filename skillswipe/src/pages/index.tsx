@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Icon, Flex, Heading, Input, Button, useColorMode, useColorModeValue, Center, Text} from '@chakra-ui/react'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
