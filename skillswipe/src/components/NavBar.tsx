@@ -11,20 +11,18 @@ import {
   IconButton,
   useColorModeValue,
   Box,
-  color,
+  Text,
 } from "@chakra-ui/react";
-import {HamburgerIcon, CloseIcon} from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 
 export default function NavBar() {
-
   const { colorMode, toggleColorMode } = useColorMode();
   const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const router = useRouter();
-
 
   const logout = () => {
     if (localStorage.getItem("jwt")) {
@@ -36,16 +34,25 @@ export default function NavBar() {
   return (
     <Box as="nav" p={15} w="100%" pt={"0px"}>
       <Flex>
-        <Flex backdropFilter="auto" backdropBlur="25px"  position="fixed" left="0px" align="center" w="100%" pt={"0px"}>
+        <Flex
+          backdropFilter="auto"
+          backdropBlur="xl"
+          position="fixed"
+          left="0px"
+          align="center"
+          w="100%"
+          backgroundColor="rgba(255, 255, 255, 0.15)"
+          // add a drop shadow
+          boxShadow="0px 0px 10px rgba(0, 0, 0, 0.15)"
+        >
           {/* Desktop */}
 
-            <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
-                🚀 SkillSwipe
-            </Text>
+          <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
+            🚀 SkillSwipe
+          </Text>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
               <Button as="a" variant="solid" aria-label="Home" my={5} w="100%">
-
                 Home
               </Button>
             </NextLink>
@@ -61,7 +68,6 @@ export default function NavBar() {
                 Find Jobs
               </Button>
             </NextLink>
-
 
             <NextLink href="/" passHref>
               <Button
@@ -89,65 +95,63 @@ export default function NavBar() {
             </NextLink>
           </Flex>
 
+          {/* Mobile */}
+          <IconButton
+            aria-label="Open Menu"
+            size="lg"
+            mr={2}
+            icon={<HamburgerIcon />}
+            onClick={() => changeDisplay("flex")}
+            display={["flex", "flex", "none", "none"]}
+            ml={"auto"}
+          />
+          <Button marginLeft={3} onClick={toggleColorMode}>
+            {toggleTheme}
+          </Button>
+        </Flex>
 
-                    {/* Mobile */}
-                    <IconButton
-                        aria-label="Open Menu"
-                        size="lg"
-                        mr={2}
-                        icon={<HamburgerIcon/>}
-                        onClick={() => changeDisplay("flex")}
-                        display={["flex", "flex", "none", "none"]}
-                        ml={"auto"}
-                    />
-                    <Button marginLeft={3} onClick={toggleColorMode}>
-                        {toggleTheme}
-                    </Button>
-                </Flex>
+        {/* Mobile Content */}
+        <Flex
+          w="100vw"
+          display={display}
+          bgColor={formBackground}
+          zIndex={20}
+          h="100vh"
+          pos="fixed"
+          top="0"
+          left="0"
+          overflowY="auto"
+          flexDir="column"
+        >
+          <Flex justify="flex-end">
+            <IconButton
+              mt={2}
+              mr={2}
+              aria-label="Open Menu"
+              size="lg"
+              icon={<CloseIcon />}
+              onClick={() => changeDisplay("none")}
+            />
+          </Flex>
 
-                {/* Mobile Content */}
-                <Flex
-                    w="100vw"
-                    display={display}
-                    bgColor={formBackground}
-                    zIndex={20}
-                    h="100vh"
-                    pos="fixed"
-                    top="0"
-                    left="0"
-                    overflowY="auto"
-                    flexDir="column"
-                >
-                    <Flex justify="flex-end">
-                        <IconButton
-                            mt={2}
-                            mr={2}
-                            aria-label="Open Menu"
-                            size="lg"
-                            icon={<CloseIcon/>}
-                            onClick={() => changeDisplay("none")}
-                        />
-                    </Flex>
+          <Flex flexDir="column" align="center">
+            <NextLink href="/home" passHref>
+              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+                Home
+              </Button>
+            </NextLink>
 
-                    <Flex flexDir="column" align="center">
-                        <NextLink href="/home" passHref>
-                            <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
-                                Home
-                            </Button>
-                        </NextLink>
-
-                        <NextLink href="/inbox" passHref>
-                            <Button
-                                as="a"
-                                variant="ghost"
-                                aria-label="Messages"
-                                my={5}
-                                w="100%"
-                            >
-                                Messages
-                            </Button>
-                        </NextLink>
-
+            <NextLink href="/inbox" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Messages"
+                my={5}
+                w="100%"
+              >
+                Messages
+              </Button>
+            </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button
