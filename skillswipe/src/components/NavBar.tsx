@@ -8,7 +8,7 @@ import {
     Button,
     IconButton,
     useColorModeValue,
-    Box,
+    Box, Text,
 } from "@chakra-ui/react";
 import {HamburgerIcon, CloseIcon} from "@chakra-ui/icons";
 import NextLink from "next/link";
@@ -21,11 +21,14 @@ export default function NavBar() {
     const formBackground = useColorModeValue("gray.100", "gray.700");
 
   return (
-    <Box as="nav" p={15} w="100%">
+    <Box as="nav" p={15} w="100%" pt={"0px"}>
       <Flex>
-        <Flex backgroundColor={formBackground}  position="fixed" left="0px" align="center" w="100%">
+        <Flex backdropFilter="auto" backdropBlur="25px"  position="fixed" left="0px" align="center" w="100%" pt={"0px"}>
           {/* Desktop */}
-          <Flex display={["none", "none", "flex", "flex"]} m={"auto"}>
+            <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
+                🚀 SkillSwipe
+            </Text>
+          <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
@@ -64,6 +67,7 @@ export default function NavBar() {
                         icon={<HamburgerIcon/>}
                         onClick={() => changeDisplay("flex")}
                         display={["flex", "flex", "none", "none"]}
+                        ml={"auto"}
                     />
                     <Button marginLeft={3} onClick={toggleColorMode}>
                         {toggleTheme}
