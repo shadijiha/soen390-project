@@ -137,6 +137,18 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
+            <NextLink href="/profile" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
+                My Account
+              </Button>
+            </NextLink>
+
             <NextLink href="/" passHref>
               <Button
                 as="a"
