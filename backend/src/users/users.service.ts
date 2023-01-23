@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { Auth } from "src/auth/auth.types";
-import { User } from "src/models/user.entity";
+import { Auth } from "../auth/auth.types";
+import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Repository } from "typeorm";
 import { Users } from "./users.types";
@@ -15,7 +15,7 @@ export class UsersService {
 	) {}
 
 	public async getByEmail(email: string) {
-		return await User.findOne({ where: { email } });
+		return await this.usersRepository.findOne({ where: { email } });
 	}
 
 	findAll(): Promise<User[]> {

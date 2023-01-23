@@ -3,8 +3,8 @@
  */
 
 import { ApiProperty } from "@nestjs/swagger";
-import { App } from "src/app.types";
-import { User } from "src/models/user.entity";
+import { App } from "../app.types";
+import { User } from "../models/user.entity";
 
 export namespace Auth {
 	export class LoginRequest {

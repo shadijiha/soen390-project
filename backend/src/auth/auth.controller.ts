@@ -8,9 +8,9 @@ import {
 } from "@nestjs/common";
 import { ConflictException, HttpException } from "@nestjs/common/exceptions";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { User } from "src/models/user.entity";
-import { UsersService } from "src/users/users.service";
-import { AuthUser, BearerPayload } from "src/util/util";
+import { User } from "../models/user.entity";
+import { UsersService } from "../users/users.service";
+import { AuthUser, BearerPayload } from "../util/util";
 import { AuthService } from "./auth.service";
 import { Auth } from "./auth.types";
 import { JwtAuthGuard } from "./jwt-auth.guard";
@@ -41,7 +41,7 @@ export class AuthController {
 		@Body() body: Auth.RegisterRequest
 	): Promise<Auth.LoginResponse> {
 		// Check if the user exists first
-		if (await User.findOne({ where: { email: body.email } })) {
+		if (await this.userService.findOneByEmail(body.email)) {
 			throw new ConflictException("Email " + body.email + " already taken");
 		}
 

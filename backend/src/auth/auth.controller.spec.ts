@@ -1,19 +1,27 @@
 import { ConflictException, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
+import { UsersService } from "../users/users.service";
+import { DataSource, DataSourceOptions, Repository } from "typeorm";
 import { User } from "../models/user.entity";
 import { setupTestDB } from "../util/testUtil";
 import { AuthController } from "./auth.controller";
+import { AuthService } from "./auth.service";
+import { UsersModule } from "../users/users.module";
+import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
 
 describe("AuthController", () => {
 	let controller: AuthController;
+	let userRepository: Repository<User>;
 
 	beforeEach(async () => {
 		const module: TestingModule = await Test.createTestingModule({
-			imports: [...setupTestDB()],
+			imports: [...setupTestDB(), UsersModule],
 			controllers: [AuthController],
 		}).compile();
 
 		controller = module.get<AuthController>(AuthController);
+		userRepository = module.get(getRepositoryToken(User));
 	});
 
 	it("should be defined", () => {
@@ -22,7 +30,7 @@ describe("AuthController", () => {
 
 	// Test the register
 	const emailToTest = "test" + Math.floor(Math.random() * 10e9) + "@test.com";
-	it("Register with new email", async () => {
+	it("should register and return the user", async () => {
 		const registerResult = await controller.register({
 			email: emailToTest,
 			firstName: "First name sample",
@@ -35,7 +43,7 @@ describe("AuthController", () => {
 	});
 
 	// Test the register with the same email
-	it("Register with existing email", async () => {
+	it("should raise an email already exists error", async () => {
 		expect(
 			await controller.register({
 				email: emailToTest,
@@ -48,7 +56,7 @@ describe("AuthController", () => {
 	});
 
 	// Test logging in with wong password
-	it("Login with wrong password", async () => {
+	it("should throw UnauthorizedException error", async () => {
 		expect(
 			await controller.login({
 				email: emailToTest,
@@ -58,7 +66,7 @@ describe("AuthController", () => {
 	});
 
 	// Test logging in with non existing email
-	it("Login with non existing email", async () => {
+	it("should throw UnauthorizedException error", async () => {
 		const notExistingEmail =
 			"test" + Math.floor(Math.random() * 10e12) + "@test.com";
 		expect(
@@ -70,7 +78,7 @@ describe("AuthController", () => {
 	});
 
 	// Login with correct email, password
-	it("Login with correct email and password", async () => {
+	it("should login and return user and access token", async () => {
 		expect(
 			await controller.login({
 				email: emailToTest,
@@ -80,20 +88,22 @@ describe("AuthController", () => {
 	});
 
 	// Check /me
-	it("Me when payload is ok", async () => {
+	it("should return a user", async () => {
 		expect(
 			await controller.me({
 				email: emailToTest,
-				id: (await User.findOne({ where: { email: emailToTest } })).id,
+				id: (
+					await userRepository.findOne({ where: { email: emailToTest } })
+				).id,
 			})
 		).toHaveProperty("user.email", emailToTest);
 	});
 
-	it("Me when payload is null", async () => {
+	it("should throw an error", async () => {
 		expect(await controller.me(null)).toThrowError();
 	});
 
 	afterAll(async () => {
-		(await User.findOne({ where: { email: emailToTest } }))?.remove();
+		(await userRepository.findOne({ where: { email: emailToTest } }))?.remove();
 	});
 });

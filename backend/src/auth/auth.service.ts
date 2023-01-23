@@ -1,19 +1,26 @@
 import { Injectable } from "@nestjs/common";
 import { UnauthorizedException } from "@nestjs/common/exceptions";
 import { JwtService } from "@nestjs/jwt";
+import { InjectRepository } from "@nestjs/typeorm";
 import * as argon2 from "argon2";
-import { User } from "src/models/user.entity";
+import { Repository } from "typeorm";
+import { User } from "../models/user.entity";
 import { Auth } from "./auth.types";
 
 @Injectable()
 export class AuthService {
-	constructor(private jwtService: JwtService) {}
+	constructor(
+		private jwtService: JwtService,
+		@InjectRepository(User)
+		private usersRepository: Repository<User>
+	) {}
 
 	public async validateUser(
 		email: string,
 		pass: string
 	): Promise<Partial<User> | null> {
-		const user = await User.createQueryBuilder("user")
+		const user = await this.usersRepository
+			.createQueryBuilder("user")
 			.select("user.password")
 			.addSelect("user")
 			.where("email = :email", {
@@ -31,7 +38,7 @@ export class AuthService {
 
 	public async login({ email, password }: Auth.LoginRequest) {
 		// Validate email
-		const user = await User.findOne({ where: { email } });
+		const user = await this.usersRepository.findOne({ where: { email } });
 		if (!user) {
 			throw new UnauthorizedException("Email  " + email + " is invalid");
 		}

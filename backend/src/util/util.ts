@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext, Logger } from "@nestjs/common";
 import { ApiBody } from "@nestjs/swagger";
 import { Request } from "express";
-import { App } from "src/app.types";
+import { App } from "../app.types";
 
 export type BearerPayload = { email: string; id: number };
 

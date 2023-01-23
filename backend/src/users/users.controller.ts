@@ -16,11 +16,9 @@ import {
 	UseGuards,
 } from "@nestjs/common/decorators";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { response } from "express";
-import { Auth } from "src/auth/auth.types";
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { User } from "src/models/user.entity";
-import { Code, DeleteResult } from "typeorm";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { User } from "../models/user.entity";
+import { DeleteResult } from "typeorm";
 import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 
