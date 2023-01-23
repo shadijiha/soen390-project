@@ -37,11 +37,14 @@ export default function NavBar() {
       <Flex>
         <Flex
           backdropFilter="auto"
-          backdropBlur="25px"
+
+          backdropBlur="xl"
           position="fixed"
           left="0px"
           align="center"
           w="100%"
+          backgroundColor="rgba(255, 255, 255, 0.15)"
+          boxShadow="0px 0px 20px rgba(0, 0, 0, 0.25)"
           pt={"0px"}
         >
           {/* Desktop */}
