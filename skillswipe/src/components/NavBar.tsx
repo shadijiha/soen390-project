@@ -2,17 +2,15 @@ import React from "react";
 import Link from "next/link";
 
 import { useState } from "react";
-import Router, { useRouter } from "next/router";
+// import Router, { useRouter } from "next/router";
 import {
   useColorMode,
-  Switch,
   Flex,
   Button,
   IconButton,
   useColorModeValue,
   Box,
   Text,
-  color,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
@@ -23,7 +21,7 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
-  const router = useRouter();
+  // const router = useRouter();
 
   const logout = () => {
     if (localStorage.getItem("jwt")) {
@@ -32,12 +30,15 @@ export default function NavBar() {
       // More work To be done
     }
   };
+
+  const [showDropdown1, setShowDropdown1] = useState(false);
+  const [showDropdown2, setShowDropdown2] = useState(false);
   return (
     <Box as="nav" p={15} w="100%" pt={"0px"}>
-      <Flex>
+      <Flex paddingBottom={"7em"}>
+        {/* Desktop */}
         <Flex
           backdropFilter="auto"
-
           backdropBlur="xl"
           position="fixed"
           left="0px"
@@ -46,15 +47,15 @@ export default function NavBar() {
           backgroundColor="rgba(255, 255, 255, 0.15)"
           boxShadow="0px 0px 20px rgba(0, 0, 0, 0.25)"
           pt={"0px"}
+          paddingEnd={"2em"}
+          paddingStart={"2em"}
         >
-          {/* Desktop */}
-
           <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
             🚀 SkillSwipe
           </Text>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
-              <Button as="a" variant="solid" aria-label="Home" my={5} w="100%">
+              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NextLink>
@@ -71,6 +72,18 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
+            <NextLink href="/profile" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
+                My Account
+              </Button>
+            </NextLink>
+
             <NextLink href="/" passHref>
               <Button
                 as="a"
@@ -83,16 +96,16 @@ export default function NavBar() {
                 Sign In/Logout
               </Button>
             </NextLink>
-
-            <NextLink href="/profile" passHref>
+            <NextLink href={""}>
               <Button
+                onClick={toggleColorMode}
                 as="a"
                 variant="ghost"
-                aria-label="My Account"
+                aria-label="Toggle Theme"
                 my={5}
                 w="100%"
               >
-                My Account
+                {toggleTheme}
               </Button>
             </NextLink>
           </Flex>
@@ -106,10 +119,8 @@ export default function NavBar() {
             onClick={() => changeDisplay("flex")}
             display={["flex", "flex", "none", "none"]}
             ml={"auto"}
+            variant={"ghost"}
           />
-          <Button marginLeft={3} onClick={toggleColorMode}>
-            {toggleTheme}
-          </Button>
         </Flex>
 
         {/* Mobile Content */}
@@ -130,7 +141,7 @@ export default function NavBar() {
               mt={2}
               mr={2}
               aria-label="Open Menu"
-              size="lg"
+              size="xl"
               icon={<CloseIcon />}
               onClick={() => changeDisplay("none")}
             />
@@ -178,6 +189,9 @@ export default function NavBar() {
                 Sign In/Logout
               </Button>
             </NextLink>
+            <Button marginLeft={3} onClick={toggleColorMode} variant="ghost">
+              {toggleTheme}
+            </Button>
           </Flex>
         </Flex>
       </Flex>

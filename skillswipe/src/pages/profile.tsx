@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import imageFile from "../assets/images/image.jpeg";
 import {
   Box,
   Flex,
@@ -69,10 +70,10 @@ const Profile = () => {
       >
         <Box>
           <Flex>
-            <Stack spacing={3}>
+            <Stack spacing={0}>
               <Image
+                src={imageFile.src}
                 rounded="full"
-                src={profileImage}
                 mr={6}
                 objectFit="cover"
                 alt="Hello"
