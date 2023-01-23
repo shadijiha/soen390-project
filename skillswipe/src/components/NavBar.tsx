@@ -72,6 +72,18 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
+            <NextLink href="/inbox" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Messages"
+                my={5}
+                w="100%"
+              >
+                Messages
+              </Button>
+            </NextLink>
+
             <NextLink href="/profile" passHref>
               <Button
                 as="a"
@@ -92,6 +104,12 @@ export default function NavBar() {
                 my={5}
                 w="100%"
                 onClick={logout}
+                border="2px solid #D2173DAF"
+                borderRadius="100px"
+                _hover={{
+                  boxShadow: "md",
+                  transform: "scale(1.05)",
+                }}
               >
                 Sign In/Logout
               </Button>
@@ -99,11 +117,13 @@ export default function NavBar() {
             <NextLink href={""}>
               <Button
                 onClick={toggleColorMode}
-                as="a"
                 variant="ghost"
                 aria-label="Toggle Theme"
                 my={5}
                 w="100%"
+                _hover={{
+                  transform: "scale(1.25)",
+                }}
               >
                 {toggleTheme}
               </Button>
@@ -144,6 +164,7 @@ export default function NavBar() {
               size="xl"
               icon={<CloseIcon />}
               onClick={() => changeDisplay("none")}
+              backgroundColor="transparent"
             />
           </Flex>
 
@@ -151,6 +172,18 @@ export default function NavBar() {
             <NextLink href="/home" passHref>
               <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
+              </Button>
+            </NextLink>
+
+            <NextLink href="/findJob" passHref>
+              <Button
+                as="a"
+                variant="ghost"
+                aria-label="Find Jobs"
+                my={5}
+                w="100%"
+              >
+                Find Jobs
               </Button>
             </NextLink>
 
@@ -185,11 +218,25 @@ export default function NavBar() {
                 aria-label="Sign In"
                 my={5}
                 w="100%"
+                border="2px solid #D2173DAF"
+                borderRadius="100px"
+                _hover={{
+                  boxShadow: "md",
+                  transform: "scale(1.05)",
+                }}
               >
                 Sign In/Logout
               </Button>
             </NextLink>
-            <Button marginLeft={3} onClick={toggleColorMode} variant="ghost">
+            <Button
+              size="lg"
+              marginLeft={3}
+              onClick={toggleColorMode}
+              variant="ghost"
+              _hover={{
+                transform: "scale(1.25)",
+              }}
+            >
               {toggleTheme}
             </Button>
           </Flex>
