@@ -34,7 +34,7 @@ export class UsersService {
 		const user = new User();
 		user.email = body.email;
 		user.password = await argon2.hash(body.password);
-		user.firstName = body.fistName;
+		user.firstName = body.firstName;
 		user.lastName = body.lastName;
 		user.gender = body.gender;
 

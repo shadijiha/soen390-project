@@ -25,7 +25,7 @@ export namespace Auth {
 
 	export class RegisterRequest extends LoginRequest {
 		@ApiProperty()
-		fistName: string;
+		firstName: string;
 
 		@ApiProperty()
 		lastName: string;
