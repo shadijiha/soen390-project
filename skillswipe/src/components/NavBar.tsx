@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   Box,
   Text,
+  color,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
@@ -36,6 +37,7 @@ export default function NavBar() {
       <Flex>
         <Flex
           backdropFilter="auto"
+
           backdropBlur="xl"
           position="fixed"
           left="0px"
@@ -43,6 +45,7 @@ export default function NavBar() {
           w="100%"
           backgroundColor="rgba(255, 255, 255, 0.15)"
           boxShadow="0px 0px 20px rgba(0, 0, 0, 0.25)"
+          pt={"0px"}
         >
           {/* Desktop */}
 
