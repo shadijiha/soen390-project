@@ -35,7 +35,7 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 | Uzair Ali         | 40111410   | [uzairali245](https://github.com/uzairali245)     |
 | Roger Sioufi      | 40177472   | [rogersi9](https://github.com/rogersi9)           |
 | Name              | 40034162   | [Aleksandr Vinokhodov](https://github.com/daxsis) |
-| Name              | ID         | [Name](https://github.com/)                       |
+| Ahed              | 40112710   | [Ahed750](https://github.com/Ahed752)             |
 
 <br />
 
