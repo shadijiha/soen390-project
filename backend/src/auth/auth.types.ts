@@ -17,7 +17,7 @@ export namespace Auth {
 
 	export class LoginResponse extends App.WithStatus {
 		@ApiProperty({ type: User })
-		user: User | null;
+		user: User | Partial<User> | null;
 
 		@ApiProperty()
 		access_token: string;
