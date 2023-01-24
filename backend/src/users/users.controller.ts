@@ -1,20 +1,5 @@
-import {
-	Controller,
-	Delete,
-	Get,
-	HttpException,
-	HttpStatus,
-	Param,
-	ParseIntPipe,
-	Request,
-} from "@nestjs/common";
-import {
-	Body,
-	HttpCode,
-	Post,
-	Put,
-	UseGuards,
-} from "@nestjs/common/decorators";
+import { Controller, Delete, Get, Request } from "@nestjs/common";
+import { Body, Put, UseGuards } from "@nestjs/common/decorators";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "../models/user.entity";
@@ -27,29 +12,29 @@ import { Users } from "./users.types";
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-	constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-	@Get()
-	@ApiResponse({ type: Users.GetAllUsersResponse })
-	async findAll(): Promise<User[]> {
-		return this.usersService.findAll();
-	}
+  @Get()
+  @ApiResponse({ type: Users.GetAllUsersResponse })
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 
-	// @UseGuards(JwtAuthGuard)
-	// @Get("me")
-	// @ApiResponse({ type: Users.GetUserResponse })
-	// async findOneById(@Request() req): Promise<User> {
-	//   return this.usersService.findOneById(req.user.id);
-	// }
+  // @UseGuards(JwtAuthGuard)
+  // @Get("me")
+  // @ApiResponse({ type: Users.GetUserResponse })
+  // async findOneById(@Request() req): Promise<User> {
+  //   return this.usersService.findOneById(req.user.id);
+  // }
 
-	@Put()
-	@ApiResponse({ type: Users.UpdateUserResponse })
-	update(@Request() req, @Body() user: Users.UpdateUserRequest): Promise<User> {
-		return this.usersService.update(req.user.id, user);
-	}
+  @Put()
+  @ApiResponse({ type: Users.UpdateUserResponse })
+  update(@Request() req, @Body() user: Users.UpdateUserRequest): Promise<User> {
+    return this.usersService.update(req.user.id, user);
+  }
 
-	@Delete()
-	remove(@Request() req): Promise<DeleteResult> {
-		return this.usersService.remove(req.user.id);
-	}
+  @Delete()
+  remove(@Request() req): Promise<DeleteResult> {
+    return this.usersService.remove(req.user.id);
+  }
 }
