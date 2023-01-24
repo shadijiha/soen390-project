@@ -11,142 +11,77 @@ import {
   FormHelperText,
   Stack,
   Divider,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
 const Profile = () => {
-  const [name, setName] = useState("John Doe");
-  const [title, setTitle] = useState("Software Engineer at XYZ Company");
-  const [location, setLocation] = useState("New York City, NY");
-  const [education, setEducation] = useState("Concordia University");
-  const [experience, setExperience] = useState(
-    "Intern at Google, Inc. 2020-2021, Software Engineer at XYZ Company 2019-2020, Software Engineer at ABC Company 2018-2019"
-  );
-  const [skills, setSkills] = useState("ReactJS, Flutter, NodeJS, MongoDB");
+  const [profile, setProfile] = useState({
+  name: "Full Name",
+  title: "Software Engineer",
+  location: "Montreal ,QC, CA",
+  experience: "5 years of experience in full stack development",
+  image: "https://via.placeholder.com/150x150",
+  cover: "https://i.pinimg.com/736x/39/86/fe/3986fed5bc314b3ea37701b328c2485d--covers-for-facebook-pop-of-color.jpg",
+  });
 
-  const [about, setAbout] = useState(
-    "I am a passionate software engineer with 5 years of experience in building web and mobile applications. I am always looking for new challenges and opportunities to grow and learn."
-  );
-  const [profileImage, setProfileImage] = useState(
-    "https://thispersondoesnotexist.com/image"
-  );
-
-  const handleNameChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setName(e.target.value);
-  const handleTitleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setTitle(e.target.value);
-  const handleLocationChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setLocation(e.target.value);
-  const handleAboutChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setAbout(e.target.value);
-  const handleProfileImageChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setProfileImage(e.target.value);
-  const handleExperienceChange = (event: any) => {
-    setExperience(event.target.value);
-  };
-  const handleEducationChange = (event: any) => {
-    setEducation(event.target.value);
+  const handleEdit = () => {
+  setProfile({
+  ...profile,
+  name: "Full Name",
+  title: "Software Engineer",
+  location: "Montreal ,QC, CA",
+  experience: "5 years of experience in full stack development",
+  image: "https://via.placeholder.com/150x150",
+  cover: "https://via.placeholder.com/1000x300",
+  });
   };
 
-  const handleSkillsChange = (event: any) => {
-    setSkills(event.target.value);
-  };
+  const postBackground = useColorModeValue("gray.100", "gray.700");
   return (
-    <>
-      <NavBar />
-      <Flex
-        w="100%"
-        h="100vh"
-        align="center"
-        justify="center"
-        flexDir="column"
-        p={10}
-      >
-        <Box>
-          <Flex>
-            <Stack spacing={3}>
-              <Image
-                rounded="full"
-                src={profileImage}
-                mr={6}
-                objectFit="cover"
-                alt="Hello"
-                maxW={150}
-                maxH={150}
-              />
-              <FormControl>
-                <FormLabel>Name</FormLabel>
-                <Input
-                  value={name}
-                  onChange={handleNameChange}
-                  placeholder="John Doe"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Title</FormLabel>
-                <Input
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder="Software Engineer at XYZ Company"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Location</FormLabel>
-                <Input
-                  value={location}
-                  onChange={handleLocationChange}
-                  placeholder="New York City, NY"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>About</FormLabel>
-                <Input
-                  value={about}
-                  onChange={handleAboutChange}
-                  placeholder="I am a passionate software engineer with 5 years of experience in building web and mobile applications. I am always looking for new challenges and opportunities to grow and learn."
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Profile Image</FormLabel>
-                <Input
-                  value={profileImage}
-                  onChange={handleProfileImageChange}
-                  placeholder="https://via.placeholder.com/150"
-                />
-                <FormHelperText>
-                  Input a URL for your profile image
-                </FormHelperText>
-              </FormControl>
+  
+  <Flex direction="column" align="right" p={12} pt = {'0px'}>
+  <NavBar />
+  <Box w="100%" h="300px" bg="gray.100" rounded="lg" mb={6} />
+  <Flex align="center" mt={4}>
+  <Image src={"https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg"} w="150px" h="150px" rounded="full" mr={4} />
+  <Stack>
 
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Education</FormLabel>
-                <Input value={education} onChange={handleEducationChange} />
-              </FormControl>
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Experience</FormLabel>
-                <Input value={experience} onChange={handleExperienceChange} />
-              </FormControl>
+  <Text fontSize="2xl" fontWeight="bold">
+  {profile.name}
+  </Text>
+ 
 
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Skills</FormLabel>
-                <Input value={skills} onChange={handleSkillsChange} />
-              </FormControl>
-              <Button variant="teal" mt={4}>
-                Save Changes
-              </Button>
-            </Stack>
-          </Flex>
-        </Box>
-      </Flex>
-    </>
+  <Text fontSize="lg" fontWeight="medium">
+  {profile.title}
+  </Text>
+  <Text fontSize="sm">{profile.location}</Text>
+  </Stack>
+  <Text ml={'auto'}>Concordia University</Text>
+  </Flex>
+  <Divider my={6} w="100%" />
+  <Stack>
+    <Box border={'1px'} padding = {'15px'} backgroundColor = {postBackground} borderRadius = {'10px'}>
+  <Text fontSize="lg" fontWeight="medium" mb={2}>
+  Personal Experience
+  </Text>
+  <Text fontSize="sm">{profile.experience}</Text>
+  </Box>
+  </Stack>
+  <Box border={'1px'} mt = '20px' padding={'15px'} backgroundColor = {postBackground} borderRadius = {'10px'} >
+  <Text fontSize="lg" fontWeight="medium" mb={2}>
+    Employment History 
+  </Text>
+  </Box>
+
+  <Flex justify="space-between" mt={6}>
+  <Button variantColor="teal" variant="outline" onClick={handleEdit}>
+  Edit Profile
+  </Button>
+  </Flex>
+  </Flex>
   );
-};
-export default Profile;
+  };
+  
+  export default Profile;
+
