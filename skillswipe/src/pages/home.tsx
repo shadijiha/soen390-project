@@ -32,7 +32,7 @@ const Home = () => {
   return (
     <>
       <NavBar />
-      <Box display="flex" justifyContent="center">
+      <Box display="flex" justifyContent="center" data-testid="Home-page">
         <Box>
           <Heading paddingBottom={5}>Recent Posts</Heading>
           <List>
