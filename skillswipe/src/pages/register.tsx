@@ -72,7 +72,8 @@ const Register = () => {
       if(emailValidator(User.email) == true){
         register(User).then((Response) => {
           toast("Successfully Registered the Account")
-          localStorage.setItem('jwt',Response.access_token)
+          console.log(Response)
+          localStorage.setItem('jwt',Response.data.access_token)
           // Redux to be initialized More work to be done
           router.push('/home');
         }).catch((error) => {
