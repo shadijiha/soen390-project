@@ -19,6 +19,10 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  const navColor = useColorModeValue(
+    "rgba(255, 255, 255, 0.25)",
+    "rgba(0, 0, 0, 0.25)"
+  );
   // const router = useRouter();
 
   const logout = () => {
@@ -42,7 +46,7 @@ export default function NavBar() {
           left="0px"
           align="center"
           w="100%"
-          backgroundColor="rgba(255, 255, 255, 0.15)"
+          backgroundColor={navColor}
           boxShadow="0px 0px 20px rgba(0, 0, 0, 0.25)"
           pt={"0px"}
           paddingEnd={"2em"}
