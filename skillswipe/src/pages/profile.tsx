@@ -21,6 +21,7 @@ const Profile = () => {
     name: "John Smith",
     title: "Software Engineer",
     location: "Montreal ,QC, CA",
+    school: "Concordia University",
     experience: "Five years of experience in full stack development",
     experience2: "Three years of experience in mobile development",
     experience3: "Two years of experience in data analysis",
@@ -70,7 +71,7 @@ const Profile = () => {
   return (
     <>
       <NavBar />
-      <Flex direction="column" align="right" p={12} pt={"0px"}>
+      <Flex direction="column" align="right" p={12}>
         <Stack
           borderWidth="1px"
           borderColor={formBorder}
@@ -93,12 +94,7 @@ const Profile = () => {
             mb={6}
             objectFit="cover"
           />
-
-          <Flex
-            align="center"
-            direction={["column", "column", "row", "row"]}
-            mb={6}
-          >
+          <Flex align="center" direction={["column", "column", "row", "row"]}>
             <Image
               src={profile.image}
               alt=""
@@ -116,11 +112,9 @@ const Profile = () => {
                 {profile.title}
               </Text>
               <Text fontSize="sm">{profile.location}</Text>
+              <Text>{profile.school}</Text>
             </Stack>
           </Flex>
-          <Text align={["center", "center", "right", "right"]}>
-            Concordia University
-          </Text>
         </Stack>
         <Divider my={6} w="100%" />
         <Stack>
@@ -179,7 +173,19 @@ const Profile = () => {
           </Text>
           <Stack>
             {employmentHistory.map((history, index) => (
-              <Box key={index} p={2}>
+              <Box
+                key={index}
+                borderWidth="1px"
+                borderColor={formBorder}
+                backgroundColor={postBackground}
+                padding="1rem"
+                marginBottom="1rem"
+                rounded="20"
+                overflow="hidden"
+                width="100%"
+                minW="80vw"
+                maxW="90vw"
+              >
                 <Text fontWeight="bold">{history.company}</Text>
                 <Text>{history.position}</Text>
                 <Text>{history.duration}</Text>
