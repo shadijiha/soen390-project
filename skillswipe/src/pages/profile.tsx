@@ -12,6 +12,7 @@ import {
   Stack,
   Divider,
   useColorModeValue,
+  useColorMode,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
@@ -28,6 +29,9 @@ const Profile = () => {
     cover:
       "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
   });
+  const { toggleColorMode } = useColorMode();
+  const formBorder = useColorModeValue("gray.100", "gray.600");
+  const toggleTheme = useColorModeValue("🌙", "💡");
 
   const [employmentHistory, setEmploymentHistory] = useState([
     {
@@ -68,10 +72,16 @@ const Profile = () => {
       <NavBar />
       <Flex direction="column" align="right" p={12} pt={"0px"}>
         <Stack
-          border={"1px"}
-          padding={"30px"}
+          borderWidth="1px"
+          borderColor={formBorder}
           backgroundColor={postBackground}
-          borderRadius={"10px"}
+          padding="1rem"
+          marginBottom="1rem"
+          rounded="20"
+          overflow="hidden"
+          width="100%"
+          minW="80vw"
+          maxW="90vw"
         >
           <Image
             src={profile.cover}
@@ -115,10 +125,16 @@ const Profile = () => {
         <Divider my={6} w="100%" />
         <Stack>
           <Box
-            border={"1px"}
-            padding={"15px"}
+            borderWidth="1px"
+            borderColor={formBorder}
             backgroundColor={postBackground}
-            borderRadius={"10px"}
+            padding="1rem"
+            marginBottom="1rem"
+            rounded="20"
+            overflow="hidden"
+            width="100%"
+            minW="80vw"
+            maxW="90vw"
           >
             <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
               Personal Experience
@@ -147,11 +163,16 @@ const Profile = () => {
         </Stack>
 
         <Box
-          border={"1px"}
-          mt="20px"
-          padding={"15px"}
+          borderWidth="1px"
+          borderColor={formBorder}
           backgroundColor={postBackground}
-          borderRadius={"10px"}
+          padding="1rem"
+          marginBottom="1rem"
+          rounded="20"
+          overflow="hidden"
+          width="100%"
+          minW="80vw"
+          maxW="90vw"
         >
           <Text fontSize="lg" fontWeight="medium" mb={2}>
             Employment History:
