@@ -23,8 +23,10 @@ const Profile = () => {
     experience: "Five years of experience in full stack development",
     experience2: "Three years of experience in mobile development",
     experience3: "Two years of experience in data analysis",
-    image: "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
-    cover: "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
+    image:
+      "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
+    cover:
+      "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
   });
 
   const [employmentHistory, setEmploymentHistory] = useState([
@@ -32,14 +34,16 @@ const Profile = () => {
       company: "ABC Inc",
       position: "Software Engineer",
       duration: "January 2020 - Present",
-      description: "Working on building and maintaining the company's e-commerce platform using React and Node.js."
+      description:
+        "Working on building and maintaining the company's e-commerce platform using React and Node.js.",
     },
     {
       company: "DEF Corp",
       position: "Full Stack Developer",
       duration: "June 2016 - December 2019",
-      description: "Developed and implemented several features for the company's CRM system using Ruby on Rails and JavaScript."
-    }
+      description:
+        "Developed and implemented several features for the company's CRM system using Ruby on Rails and JavaScript.",
+    },
   ]);
 
   const handleEdit = () => {
@@ -51,8 +55,10 @@ const Profile = () => {
       experience: "Five years of experience in full stack development",
       experience2: "Three years of experience in mobile development",
       experience3: "Two years of experience in data analysis",
-      image: "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
-      cover: "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
+      image:
+        "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
+      cover:
+        "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
     });
   };
 
@@ -60,13 +66,39 @@ const Profile = () => {
   return (
     <>
       <NavBar />
-      <Flex direction="column" align="right" p={12} pt={'0px'}>
-        <Stack border={'1px'} padding={'30px'} backgroundColor={postBackground} borderRadius={'10px'}>
-          <Image src={profile.cover} alt="" w="100%" h="300px" bg="gray.100" rounded="lg" mb={6} />
+      <Flex direction="column" align="right" p={12} pt={"0px"}>
+        <Stack
+          border={"1px"}
+          padding={"30px"}
+          backgroundColor={postBackground}
+          borderRadius={"10px"}
+        >
+          <Image
+            src={profile.cover}
+            alt=""
+            w="100%"
+            h="300px"
+            bg="gray.100"
+            rounded="lg"
+            mb={6}
+            objectFit="cover"
+          />
 
-          <Flex align='center' direction={['column','column','row','row']} mb={6}>
-            <Image src={profile.image} alt="" w="150px" h="150px" rounded="full" />
-            <Stack ml={['0px','0px','20px','20px']} >
+          <Flex
+            align="center"
+            direction={["column", "column", "row", "row"]}
+            mb={6}
+          >
+            <Image
+              src={profile.image}
+              alt=""
+              w="150px"
+              h="150px"
+              rounded="full"
+              objectFit={"cover"}
+              mr={6}
+            />
+            <Stack ml={["0px", "0px", "20px", "20px"]}>
               <Text fontSize="2xl" fontWeight="bold">
                 {profile.name}
               </Text>
@@ -76,32 +108,51 @@ const Profile = () => {
               <Text fontSize="sm">{profile.location}</Text>
             </Stack>
           </Flex>
-            <Text align={['center','center','right','right']}>Concordia University</Text>
+          <Text align={["center", "center", "right", "right"]}>
+            Concordia University
+          </Text>
         </Stack>
         <Divider my={6} w="100%" />
         <Stack>
-          <Box border={'1px'} padding={'15px'} backgroundColor={postBackground} borderRadius={'10px'}>
-            <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={'1rem'}>
+          <Box
+            border={"1px"}
+            padding={"15px"}
+            backgroundColor={postBackground}
+            borderRadius={"10px"}
+          >
+            <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
               Personal Experience
             </Text>
 
-            <Stack ml={5} >
+            <Stack ml={5}>
               <ol>
                 <li>
-                  <Text fontSize="sm" marginBottom={'1rem'}>{profile.experience}</Text>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience}
+                  </Text>
                 </li>
                 <li>
-                  <Text fontSize="sm" marginBottom={'1rem'}>{profile.experience2}</Text>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience2}
+                  </Text>
                 </li>
                 <li>
-                  <Text fontSize="sm" marginBottom={'1rem'}>{profile.experience3}</Text>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience3}
+                  </Text>
                 </li>
               </ol>
             </Stack>
           </Box>
         </Stack>
 
-        <Box border={'1px'} mt='20px'  padding={'15px'} backgroundColor={postBackground} borderRadius={'10px'} >
+        <Box
+          border={"1px"}
+          mt="20px"
+          padding={"15px"}
+          backgroundColor={postBackground}
+          borderRadius={"10px"}
+        >
           <Text fontSize="lg" fontWeight="medium" mb={2}>
             Employment History:
           </Text>
@@ -122,4 +173,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
