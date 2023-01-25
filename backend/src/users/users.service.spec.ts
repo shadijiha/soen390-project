@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { User } from "../models/user.entity";
 import { dataSourceMockFactory } from "../util/mockDataSource";
-import { DataSource } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { UsersService } from "./users.service";
 
 describe("UsersService", () => {
@@ -23,4 +23,13 @@ describe("UsersService", () => {
     it("should be defined", () => {
         expect(service).toBeDefined();
     });
+
+    it('should return all users', async () => {
+        const allUsers = await service.findAll();
+        expect(allUsers.length).toEqual(0);
+
+    });
+
+
+
 });

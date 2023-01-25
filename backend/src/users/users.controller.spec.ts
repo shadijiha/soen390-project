@@ -5,10 +5,22 @@ import { DataSource } from "typeorm";
 import { User } from "../models/user.entity";
 import { UsersController } from "./users.controller";
 import { UsersService } from "./users.service";
+import { AuthUser, BearerPayload } from "../util/util";
+import { Users } from "./users.types";
 
 describe("UsersController", () => {
     let controller: UsersController;
+    let service: UsersService;
     beforeEach(async () => {
+        const ApiServiceProvider = {
+        provide: UsersService,
+        useFactory: () => ({
+            findAll: jest.fn(() => []),
+            update: jest.fn(() => {}),
+
+        })
+
+        }
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 UsersService,
@@ -16,13 +28,30 @@ describe("UsersController", () => {
                     provide: getRepositoryToken(User),
                     useValue: {},
                 },
-                { provide: DataSource, useFactory: dataSourceMockFactory }
+                { provide: DataSource, useFactory: dataSourceMockFactory },
+            ApiServiceProvider
             ],
             controllers: [UsersController],
         }).compile();
         controller = module.get<UsersController>(UsersController);
+        service = module.get<UsersService>(UsersService);
     });
     it('should be defined', () => {
         expect(controller).toBeDefined();
     });
+
+
+    it('should return all users', async () => {
+        const allUsers = await controller.findAll();
+        expect(service.findAll).toHaveBeenCalled;
+
+    });
+
+    it('should return updated user', async () => {
+        const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
+        const body: Users.UpdateUserRequest = { firstName: "Test", lastName: null, email: null, gender: null   };
+        const updatedUser = await controller.update(bearer, body);
+        expect(service.update).toHaveBeenCalled;
+    });
+
 });
