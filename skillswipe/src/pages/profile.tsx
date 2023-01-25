@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import imageFile from "../assets/images/image.jpeg";
 import {
   Box,
   Flex,
@@ -76,6 +77,7 @@ const Profile = () => {
   return (
     <>
       <NavBar />
+
       <Flex direction="column" align="right" p={12}>
         <Stack
           borderWidth={borderWidth}
@@ -123,6 +125,7 @@ const Profile = () => {
               </Text>
               <Text fontSize="sm">{profile.location}</Text>
               <Text>{profile.school}</Text>
+
             </Stack>
           </Flex>
         </Stack>

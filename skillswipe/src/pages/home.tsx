@@ -32,8 +32,11 @@ const Home = () => {
 
   return (
     <>
+
       <NavBar></NavBar>
       <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+
+
         <Box>
           <Heading paddingBottom={5}>Recent Posts</Heading>
           <List>
