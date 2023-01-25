@@ -1,10 +1,10 @@
 import {
-	Body,
-	Controller,
-	Get,
-	Post,
-	UseGuards,
-	Request,
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  Request,
 } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -18,48 +18,48 @@ import { JwtAuthGuard } from "./jwt-auth.guard";
 @Controller("auth")
 @ApiTags("Authentication")
 export class AuthController {
-	constructor(
-		private readonly userService: UsersService,
-		private readonly authService: AuthService
-	) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly authService: AuthService
+  ) {}
 
-	@Post("login")
-	@ApiResponse({ type: Auth.LoginResponse })
-	public async login(
-		@Body() body: Auth.LoginRequest
-	): Promise<Auth.LoginResponse> {
-		try {
-			const user = await this.userService.getByEmail(body.email);
-			return {
-				user: user,
-				access_token: await this.authService.login(user),
-			};
-		} catch (e) {
-			return error<Auth.LoginResponse>(e);
-		}
-	}
+  @Post("login")
+  @ApiResponse({ type: Auth.LoginResponse })
+  public async login(
+    @Body() body: Auth.LoginRequest
+  ): Promise<Auth.LoginResponse> {
+    try {
+      const user = await this.userService.getByEmail(body.email);
+      return {
+        user: user,
+        access_token: await this.authService.login(user),
+      };
+    } catch (e) {
+      return error<Auth.LoginResponse>(e);
+    }
+  }
 
-	@Post("register")
-	@ApiResponse({ type: Auth.LoginResponse })
-	public async register(
-		@Body() body: Auth.RegisterRequest
-	): Promise<Auth.LoginResponse> {
-		try {
-			const user = await this.userService.create(body);
-			return {
-				user,
-				access_token: await this.authService.login(user),
-			};
-		} catch (e) {
-			return error<Auth.LoginResponse>(e);
-		}
-	}
+  @Post("register")
+  @ApiResponse({ type: Auth.LoginResponse })
+  public async register(
+    @Body() body: Auth.RegisterRequest
+  ): Promise<Auth.LoginResponse> {
+    try {
+      const user = await this.userService.create(body);
+      return {
+        user,
+        access_token: await this.authService.login(user),
+      };
+    } catch (e) {
+      return error<Auth.LoginResponse>(e);
+    }
+  }
 
-	@Get("me")
-	@ApiResponse({ type: User })
-	@ApiBearerAuth()
-	@UseGuards(JwtAuthGuard)
-	public async me(@Request() req): Promise<User> {
-		return this.userService.getByEmail(req.user.email);
-	}
+  @Get("me")
+  @ApiResponse({ type: User })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  public async me(@Request() req): Promise<User> {
+    return this.userService.getByEmail(req.user.email);
+  }
 }

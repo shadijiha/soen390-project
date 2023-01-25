@@ -9,21 +9,21 @@ import { AuthService } from "./auth.service";
 import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
-	imports: [
-		UsersModule,
-		PassportModule,
-		JwtModule.registerAsync({
-			imports: [ConfigModule],
-			useFactory: async (configService: ConfigService) => {
-				return {
-					secret: process.env.APP_SECRET,
-					signOptions: { expiresIn: "24h" },
-				};
-			},
-			inject: [ConfigService],
-		}),
-	],
-	controllers: [AuthController],
-	providers: [AuthService, UsersService, JwtStrategy],
+  imports: [
+    UsersModule,
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          secret: process.env.APP_SECRET,
+          signOptions: { expiresIn: "24h" },
+        };
+      },
+      inject: [ConfigService],
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, UsersService, JwtStrategy],
 })
 export class AuthModule {}
