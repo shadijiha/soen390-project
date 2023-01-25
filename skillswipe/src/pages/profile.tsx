@@ -12,142 +12,206 @@ import {
   FormHelperText,
   Stack,
   Divider,
+  useColorModeValue,
+  useColorMode,
+  VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
+var borderWidth = "3px";
+var boxBorder = "30";
+
 const Profile = () => {
-  const [name, setName] = useState("John Doe");
-  const [title, setTitle] = useState("Software Engineer at XYZ Company");
-  const [location, setLocation] = useState("New York City, NY");
-  const [education, setEducation] = useState("Concordia University");
-  const [experience, setExperience] = useState(
-    "Intern at Google, Inc. 2020-2021, Software Engineer at XYZ Company 2019-2020, Software Engineer at ABC Company 2018-2019"
-  );
-  const [skills, setSkills] = useState("ReactJS, Flutter, NodeJS, MongoDB");
+  const [profile, setProfile] = useState({
+    name: "John Smith",
+    title: "Software Engineer",
+    location: "Montreal ,QC, CA",
+    school: "Concordia University",
+    experience: "Five years of experience in full stack development",
+    experience2: "Three years of experience in mobile development",
+    experience3: "Two years of experience in data analysis",
+    image:
+      "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
+    cover:
+      "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
+  });
+  const { toggleColorMode } = useColorMode();
+  const formBorder = useColorModeValue("gray.300", "gray.600");
+  const toggleTheme = useColorModeValue("🌙", "💡");
 
-  const [about, setAbout] = useState(
-    "I am a passionate software engineer with 5 years of experience in building web and mobile applications. I am always looking for new challenges and opportunities to grow and learn."
-  );
-  const [profileImage, setProfileImage] = useState(
-    "https://thispersondoesnotexist.com/image"
-  );
+  const [employmentHistory, setEmploymentHistory] = useState([
+    {
+      company: "ABC Inc",
+      position: "Software Engineer",
+      duration: "January 2020 - Present",
+      description:
+        "Working on building and maintaining the company's e-commerce platform using React and Node.js.",
+    },
+    {
+      company: "DEF Corp",
+      position: "Full Stack Developer",
+      duration: "June 2016 - December 2019",
+      description:
+        "Developed and implemented several features for the company's CRM system using Ruby on Rails and JavaScript.",
+    },
+  ]);
 
-  const handleNameChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setName(e.target.value);
-  const handleTitleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setTitle(e.target.value);
-  const handleLocationChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setLocation(e.target.value);
-  const handleAboutChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setAbout(e.target.value);
-  const handleProfileImageChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => setProfileImage(e.target.value);
-  const handleExperienceChange = (event: any) => {
-    setExperience(event.target.value);
-  };
-  const handleEducationChange = (event: any) => {
-    setEducation(event.target.value);
+  const handleEdit = () => {
+    setProfile({
+      ...profile,
+      name: "Full Name",
+      title: "Software Engineer",
+      location: "Montreal ,QC, CA",
+      experience: "Five years of experience in full stack development",
+      experience2: "Three years of experience in mobile development",
+      experience3: "Two years of experience in data analysis",
+      image:
+        "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
+      cover:
+        "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
+    });
   };
 
-  const handleSkillsChange = (event: any) => {
-    setSkills(event.target.value);
-  };
+  const postBackground = useColorModeValue("gray.100", "gray.700");
   return (
     <>
       <NavBar />
-      <Flex
-        w="100%"
-        h="100vh"
-        align="center"
-        justify="center"
-        flexDir="column"
-        p={10}
-      >
-        <Box>
-          <Flex>
-            <Stack spacing={0}>
-              <Image
-                src={imageFile.src}
-                rounded="full"
-                mr={6}
-                objectFit="cover"
-                alt="Hello"
-                maxW={150}
-                maxH={150}
-              />
-              <FormControl>
-                <FormLabel>Name</FormLabel>
-                <Input
-                  value={name}
-                  onChange={handleNameChange}
-                  placeholder="John Doe"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Title</FormLabel>
-                <Input
-                  value={title}
-                  onChange={handleTitleChange}
-                  placeholder="Software Engineer at XYZ Company"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Location</FormLabel>
-                <Input
-                  value={location}
-                  onChange={handleLocationChange}
-                  placeholder="New York City, NY"
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>About</FormLabel>
-                <Input
-                  value={about}
-                  onChange={handleAboutChange}
-                  placeholder="I am a passionate software engineer with 5 years of experience in building web and mobile applications. I am always looking for new challenges and opportunities to grow and learn."
-                />
-              </FormControl>
-              <FormControl>
-                <FormLabel>Profile Image</FormLabel>
-                <Input
-                  value={profileImage}
-                  onChange={handleProfileImageChange}
-                  placeholder="https://via.placeholder.com/150"
-                />
-                <FormHelperText>
-                  Input a URL for your profile image
-                </FormHelperText>
-              </FormControl>
 
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Education</FormLabel>
-                <Input value={education} onChange={handleEducationChange} />
-              </FormControl>
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Experience</FormLabel>
-                <Input value={experience} onChange={handleExperienceChange} />
-              </FormControl>
+      <Flex direction="column" align="right" p={12}>
+        <Stack
+          borderWidth={borderWidth}
+          borderColor={formBorder}
+          backgroundColor={postBackground} // we should make this blurred so that the cover shows through a bit
+          padding="0rem"
+          marginBottom="1rem"
+          rounded={boxBorder}
+          overflow="hidden"
+          width="100%"
+          minW="80vw"
+          maxW="90vw"
+          boxShadow="lg"
+          zIndex={"-1"}
+        >
+          <Image
+            src={profile.cover}
+            alt=""
+            w="100%"
+            h="300px"
+            bg="gray.100"
+            rounded="lg"
+            mb={6}
+            objectFit="cover"
+          />
+          <Flex align="center" direction={["column", "column", "row", "row"]}>
+            <Image
+              src={profile.image}
+              alt=""
+              w="150px"
+              h="150px"
+              rounded="full"
+              objectFit={"cover"}
+              mr={6}
+              mb={6}
+              marginLeft={10}
+              boxShadow="lg"
+            />
+            <Stack ml={6}>
+              <Text fontSize="2xl" fontWeight="bold">
+                {profile.name}
+              </Text>
+              <Text fontSize="lg" fontWeight="medium">
+                {profile.title}
+              </Text>
+              <Text fontSize="sm">{profile.location}</Text>
+              <Text>{profile.school}</Text>
 
-              <Divider orientation="horizontal" my={8} />
-              <FormControl>
-                <FormLabel>Skills</FormLabel>
-                <Input value={skills} onChange={handleSkillsChange} />
-              </FormControl>
-              <Button variant="teal" mt={4}>
-                Save Changes
-              </Button>
             </Stack>
           </Flex>
+        </Stack>
+        <Divider my={6} w="100%" />
+        <Stack>
+          <Box
+            borderWidth={borderWidth}
+            borderColor={formBorder}
+            backgroundColor={postBackground}
+            padding="1rem"
+            marginBottom="1rem"
+            rounded={boxBorder}
+            overflow="hidden"
+            width="100%"
+            minW="80vw"
+            maxW="90vw"
+            boxShadow="lg"
+          >
+            <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
+              Personal Experience
+            </Text>
+
+            <Stack ml={5}>
+              <ol>
+                <li>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience}
+                  </Text>
+                </li>
+                <li>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience2}
+                  </Text>
+                </li>
+                <li>
+                  <Text fontSize="sm" marginBottom={"1rem"}>
+                    {profile.experience3}
+                  </Text>
+                </li>
+              </ol>
+            </Stack>
+          </Box>
+        </Stack>
+
+        <Box
+          borderWidth={borderWidth}
+          borderColor={formBorder}
+          backgroundColor={postBackground}
+          padding="1rem"
+          marginBottom="1rem"
+          rounded={boxBorder}
+          overflow="hidden"
+          width="100%"
+          minW="80vw"
+          maxW="90vw"
+          boxShadow="lg"
+        >
+          <Text fontSize="lg" fontWeight="medium" mb={2} ml={2}>
+            Employment History:
+          </Text>
+          <Stack>
+            {employmentHistory.map((history, index) => (
+              <Box
+                key={index}
+                borderWidth="2px"
+                borderColor={formBorder}
+                backgroundColor={postBackground}
+                padding="1rem"
+                marginBottom="1rem"
+                rounded="25"
+                overflow="hidden"
+                width="100%"
+                minW="80vw"
+                maxW="90vw"
+              >
+                <Text fontWeight="bold">{history.company}</Text>
+                <Text>{history.position}</Text>
+                <Text>{history.duration}</Text>
+                <Text>{history.description}</Text>
+              </Box>
+            ))}
+          </Stack>
         </Box>
       </Flex>
     </>
   );
 };
+
 export default Profile;
