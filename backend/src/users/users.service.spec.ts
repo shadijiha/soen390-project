@@ -43,9 +43,12 @@ describe("UsersService", () => {
   });
 
   it("should return a user by id", async () => {
-    const result = await userRepository.findOneBy({id: 1});
-    expect(result).toEqual({ id: 1, username: 'test' });
+    const result = await service.findOneByEmail("test@gmail.com");
+    expect(result).toEqual({ id: 1, username: 'test' }); 
   });
+
+
+
 
 
 });
