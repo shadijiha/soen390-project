@@ -2,7 +2,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { User } from "../models/user.entity";
 import { dataSourceMockFactory } from "../util/mockDataSource";
-import { DataSource, Repository } from "typeorm";
+import { DataSource, DeleteResult, Repository } from "typeorm";
 import { UsersService } from "./users.service";
 import * as argon2 from "argon2";
 
@@ -16,6 +16,10 @@ describe("UsersService", () => {
   mockUser.firstName = "test";
   mockUser.lastName = 'test';
   mockUser.gender = 'male';
+  let updatedUser: User = new User();
+  updatedUser.email = 'updated@gmail.com'
+  let deletedResult :DeleteResult = new DeleteResult();
+  deletedResult.affected = 1;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -27,6 +31,8 @@ describe("UsersService", () => {
             find: () => [],
             findOneBy: () => mockUser,
             save: () => mockUser,
+            update: () => updatedUser,
+            delete: () => deletedResult,
           },
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
@@ -59,6 +65,15 @@ describe("UsersService", () => {
     expect(result.email).toEqual('test@gmail.com' ); 
   });
 
+  it("should return updated user", async () => {
+    const result = await service.update(1, updatedUser);
+    expect(result.email).toEqual('test@gmail.com');
+  });
 
+  //remove user
+  it("should return deleted user", async () => {
+    const result = await service.remove('1');
+    expect(result.affected).toEqual(1);
+  });
 
 });
