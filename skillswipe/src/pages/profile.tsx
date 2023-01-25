@@ -16,6 +16,9 @@ import {
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
+var borderWidth = "3px";
+var boxBorder = "30";
+
 const Profile = () => {
   const [profile, setProfile] = useState({
     name: "John Smith",
@@ -31,7 +34,7 @@ const Profile = () => {
       "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
   });
   const { toggleColorMode } = useColorMode();
-  const formBorder = useColorModeValue("gray.100", "gray.600");
+  const formBorder = useColorModeValue("gray.300", "gray.600");
   const toggleTheme = useColorModeValue("🌙", "💡");
 
   const [employmentHistory, setEmploymentHistory] = useState([
@@ -73,16 +76,17 @@ const Profile = () => {
       <NavBar />
       <Flex direction="column" align="right" p={12}>
         <Stack
-          borderWidth="1px"
+          borderWidth={borderWidth}
           borderColor={formBorder}
-          backgroundColor={postBackground}
-          padding="1rem"
+          backgroundColor={postBackground} // we should make this blurred so that the cover shows through a bit
+          padding="0rem"
           marginBottom="1rem"
-          rounded="20"
+          rounded={boxBorder}
           overflow="hidden"
           width="100%"
           minW="80vw"
           maxW="90vw"
+          boxShadow="lg"
         >
           <Image
             src={profile.cover}
@@ -103,8 +107,11 @@ const Profile = () => {
               rounded="full"
               objectFit={"cover"}
               mr={6}
+              mb={6}
+              marginLeft={10}
+              boxShadow="lg"
             />
-            <Stack ml={["0px", "0px", "20px", "20px"]}>
+            <Stack ml={6}>
               <Text fontSize="2xl" fontWeight="bold">
                 {profile.name}
               </Text>
@@ -119,16 +126,17 @@ const Profile = () => {
         <Divider my={6} w="100%" />
         <Stack>
           <Box
-            borderWidth="1px"
+            borderWidth={borderWidth}
             borderColor={formBorder}
             backgroundColor={postBackground}
             padding="1rem"
             marginBottom="1rem"
-            rounded="20"
+            rounded={boxBorder}
             overflow="hidden"
             width="100%"
             minW="80vw"
             maxW="90vw"
+            boxShadow="lg"
           >
             <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
               Personal Experience
@@ -157,30 +165,31 @@ const Profile = () => {
         </Stack>
 
         <Box
-          borderWidth="1px"
+          borderWidth={borderWidth}
           borderColor={formBorder}
           backgroundColor={postBackground}
           padding="1rem"
           marginBottom="1rem"
-          rounded="20"
+          rounded={boxBorder}
           overflow="hidden"
           width="100%"
           minW="80vw"
           maxW="90vw"
+          boxShadow="lg"
         >
-          <Text fontSize="lg" fontWeight="medium" mb={2}>
+          <Text fontSize="lg" fontWeight="medium" mb={2} ml={2}>
             Employment History:
           </Text>
           <Stack>
             {employmentHistory.map((history, index) => (
               <Box
                 key={index}
-                borderWidth="1px"
+                borderWidth="2px"
                 borderColor={formBorder}
                 backgroundColor={postBackground}
                 padding="1rem"
                 marginBottom="1rem"
-                rounded="20"
+                rounded="25"
                 overflow="hidden"
                 width="100%"
                 minW="80vw"
