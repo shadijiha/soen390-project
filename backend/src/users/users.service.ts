@@ -1,32 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import { Auth } from "src/auth/auth.types";
-import { User } from "src/models/user.entity";
+import { Auth } from "../auth/auth.types";
+import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Repository } from "typeorm";
 import { Users } from "./users.types";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User)
-    private usersRepository: Repository<User>,
-    private dataSource: DataSource
-  ) {}
+	constructor(
+		@InjectRepository(User)
+		private usersRepository: Repository<User>,
+		private dataSource: DataSource
+	) {}
 
-  // public async create(body: Auth.RegisterRequest) {
-  // 	const user = new User();
-  // 	user.email = body.email;
-  // 	user.password = body.password;
-  // 	user.firstName = body.fistName;
-  // 	user.lastName = body.lastName;
-  // 	user.gender = body.gender;
-  // 	await user.save();
-  // 	return user;
-  // }
-
-  public async getByEmail(email: string) {
-    return await User.findOne({ where: { email } });
-  }
+	public async getByEmail(email: string) {
+		return await this.usersRepository.findOne({ where: { email } });
+	}
 
   findAll(): Promise<User[]> {
     return this.usersRepository.find();
@@ -40,16 +30,17 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  create(body: Auth.RegisterRequest): Promise<User> {
-    const user = new User();
-    user.email = body.email;
-    user.password = body.password;
-    user.firstName = body.fistName;
-    user.lastName = body.lastName;
-    user.gender = body.gender;
+	public async create(body: Auth.RegisterRequest) {
+		const user = new User();
+		user.email = body.email;
+		user.password = await argon2.hash(body.password);
+		user.firstName = body.firstName;
+		user.lastName = body.lastName;
+		user.gender = body.gender;
 
-    return this.usersRepository.save(user);
-  }
+		const { password, ...userNoPass } = await this.usersRepository.save(user);
+		return userNoPass;
+	}
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
