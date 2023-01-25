@@ -17,6 +17,8 @@ describe("UsersController", () => {
         useFactory: () => ({
             findAll: jest.fn(() => []),
             update: jest.fn(() => {}),
+            getByEmail: jest.fn(() => {}),
+            remove: jest.fn(() => {}),
 
         })
 
@@ -47,11 +49,26 @@ describe("UsersController", () => {
 
     });
 
+    it('should return logged in user', async () => {
+        const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
+        const loggedInUser = await controller.me(bearer);
+        expect(service.getByEmail).toHaveBeenCalled;
+
+    });
+
+
+
     it('should return updated user', async () => {
         const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
         const body: Users.UpdateUserRequest = { firstName: "Test", lastName: null, email: null, gender: null   };
         const updatedUser = await controller.update(bearer, body);
         expect(service.update).toHaveBeenCalled;
+    });
+
+    it('should delete logged in user', async () => {
+        const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
+        const deletedUser = await controller.remove(bearer);
+        expect(service.remove).toHaveBeenCalled;
     });
 
 });
