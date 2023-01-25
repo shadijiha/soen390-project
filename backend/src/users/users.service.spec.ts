@@ -4,12 +4,18 @@ import { User } from "../models/user.entity";
 import { dataSourceMockFactory } from "../util/mockDataSource";
 import { DataSource, Repository } from "typeorm";
 import { UsersService } from "./users.service";
+import * as argon2 from "argon2";
 
 describe("UsersService", () => {
   let service: UsersService;
   let userRepository: Repository<User>;
   let mockUser: User = new User();
   mockUser.id = 1;
+  mockUser.email = 'test@gmail.com'
+  mockUser.password = '123';
+  mockUser.firstName = "test";
+  mockUser.lastName = 'test';
+  mockUser.gender = 'male';
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -20,6 +26,7 @@ describe("UsersService", () => {
           useValue: {
             find: () => [],
             findOneBy: () => mockUser,
+            save: () => mockUser,
           },
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
@@ -42,12 +49,15 @@ describe("UsersService", () => {
     expect(user.id).toEqual(1);
   });
 
-  it("should return a user by id", async () => {
+  it("should return a user by email", async () => {
     const result = await service.findOneByEmail("test@gmail.com");
-    expect(result).toEqual({ id: 1, username: 'test' }); 
+    expect(result.email).toEqual('test@gmail.com' ); 
   });
 
-
+  it("should return created user", async () => {
+    const result = await service.create(mockUser);
+    expect(result.email).toEqual('test@gmail.com' ); 
+  });
 
 
 
