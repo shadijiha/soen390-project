@@ -1,6 +1,4 @@
 import React from "react";
-import Link from "next/link";
-
 import { useState } from "react";
 // import Router, { useRouter } from "next/router";
 import {
@@ -17,11 +15,15 @@ import NextLink from "next/link";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
-  const isDark = colorMode === "dark";
+  // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
-  // const router = useRouter();
+
+  const navColor = useColorModeValue(
+    "rgba(255, 255, 255, 0.25)",
+    "rgba(0, 0, 0, 0.25)"
+  );
 
   const logout = () => {
     if (localStorage.getItem("jwt")) {
@@ -44,7 +46,7 @@ export default function NavBar() {
           left="0px"
           align="center"
           w="100%"
-          backgroundColor="rgba(255, 255, 255, 0.15)"
+          backgroundColor={navColor}
           boxShadow="0px 0px 20px rgba(0, 0, 0, 0.25)"
           pt={"0px"}
           paddingEnd={"2em"}
@@ -55,50 +57,31 @@ export default function NavBar() {
           </Text>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
-              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+              <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="Find Jobs"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="Messages"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="My Account"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
                 My Account
               </Button>
             </NextLink>
 
             <NextLink href="/" passHref>
               <Button
-                as="a"
                 variant="ghost"
                 aria-label="Sign In/Logout"
                 my={5}
@@ -170,50 +153,31 @@ export default function NavBar() {
 
           <Flex flexDir="column" align="center">
             <NextLink href="/home" passHref>
-              <Button as="a" variant="ghost" aria-label="Home" my={5} w="100%">
+              <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="Find Jobs"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="Messages"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button
-                as="a"
-                variant="ghost"
-                aria-label="My Account"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
                 My Account
               </Button>
             </NextLink>
 
             <NextLink href="/" passHref>
               <Button
-                as="a"
                 variant="ghost"
                 aria-label="Sign In"
                 my={5}
