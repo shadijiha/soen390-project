@@ -13,6 +13,8 @@ import {
   Divider,
   useColorModeValue,
   useColorMode,
+  VStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
 
@@ -87,6 +89,7 @@ const Profile = () => {
           minW="80vw"
           maxW="90vw"
           boxShadow="lg"
+          zIndex={"-1"}
         >
           <Image
             src={profile.cover}

@@ -10,6 +10,7 @@ import Link from "next/link";
 import Head from "next/head";
 import type { NextPage } from "next";
 import NavBar from "@/components/NavBar";
+import SmallWithLogoLeft from "@/components/footer";
 import { Box, Text, List, ListItem } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
