@@ -30,6 +30,7 @@ describe("UsersService", () => {
           useValue: {
             find: () => [],
             findOneBy: () => mockUser,
+            findOne: () => mockUser,
             save: () => mockUser,
             update: () => updatedUser,
             delete: () => deletedResult,
@@ -55,6 +56,10 @@ describe("UsersService", () => {
     expect(user.id).toEqual(1);
   });
 
+  it("should return a user by email", async () => {
+    const result = await service.getByEmail("test@gmail.com");
+    expect(result.email).toEqual('test@gmail.com' ); 
+  });
   it("should return a user by email", async () => {
     const result = await service.findOneByEmail("test@gmail.com");
     expect(result.email).toEqual('test@gmail.com' ); 
