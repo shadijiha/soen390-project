@@ -15,76 +15,74 @@ import { User } from "src/models/user.entity";
 import { Volunteering } from "src/models/volunteering.entity";
 import { Work } from "src/models/work.entity";
 
-
 export namespace Users {
-	export class GetAllUsersRequest {}
+  export class GetAllUsersRequest {}
 
-	export class GetAllUsersResponse extends App.WithStatus {
-		@ApiProperty({ isArray: true, type: User })
-		user: User[] | null;
-	}
+  export class GetAllUsersResponse extends App.WithStatus {
+    @ApiProperty({ isArray: true, type: User })
+    user: User[] | null;
+  }
 
-	export class GetUserResponse extends App.WithStatus {
-		@ApiProperty({ type: User })
-		user: User | null;
-	}
+  export class GetUserResponse extends App.WithStatus {
+    @ApiProperty({ type: User })
+    user: User | null;
+  }
 
-	export class UpdateUserRequest {
-		@ApiProperty()
-		firstName: string | null;
+  export class UpdateUserRequest {
+    @ApiProperty()
+    firstName: string | null;
 
-		@ApiProperty()
-		lastName: string | null;
+    @ApiProperty()
+    lastName: string | null;
 
-		@ApiProperty()
-		email: string | null;
-	
-		@ApiProperty()
-		mobileNo: string;
-	
-		@ApiProperty({ examples: ["male", "female"] })
-		gender: "male" | "female" | null;
-	
-		@ApiProperty()
-		biography: string;
+    @ApiProperty()
+    email: string | null;
 
-		@ApiProperty({ type: [Education] })
-		educations: Education[];
+    @ApiProperty()
+    mobileNo: string;
 
-		@ApiProperty({ type: [Work] })
-		workExperience: Work[];
+    @ApiProperty({ examples: ["male", "female"] })
+    gender: "male" | "female" | null;
 
-		@ApiProperty({ type: [Volunteering] })
-		volunteeringExperience: Volunteering[];
+    @ApiProperty()
+    biography: string;
 
-		@ApiProperty({ type: [User] })
-		connections: User[];
+    @ApiProperty({ type: [Education] })
+    educations: Education[];
 
-		@ApiProperty({ type: [Skill] })
-		skills: Skill[];
+    @ApiProperty({ type: [Work] })
+    workExperience: Work[];
 
-		@ApiProperty({ type: [Recommendation] })
-		recommendationsReceived: Recommendation[];
+    @ApiProperty({ type: [Volunteering] })
+    volunteeringExperience: Volunteering[];
 
-		@ApiProperty({ type: [Recommendation] })
-		recommendationsGiven: Recommendation[];
+    @ApiProperty({ type: [User] })
+    connections: User[];
 
-		@ApiProperty({ type: [Course] })
-		courses: Course[];
+    @ApiProperty({ type: [Skill] })
+    skills: Skill[];
 
-		@ApiProperty({ type: [Project] })
-		projects: Project[];
+    @ApiProperty({ type: [Recommendation] })
+    recommendationsReceived: Recommendation[];
 
-		@ApiProperty({ type: [Award] })
-		awards: Award[];
-		
-		@ApiProperty({ type: [Language] })
-		languages: Language[];
-		
-    }
+    @ApiProperty({ type: [Recommendation] })
+    recommendationsGiven: Recommendation[];
 
-	export class UpdateUserResponse extends App.WithStatus {
-		@ApiProperty({ type: User })
-		user: User | null;
-	}
+    @ApiProperty({ type: [Course] })
+    courses: Course[];
+
+    @ApiProperty({ type: [Project] })
+    projects: Project[];
+
+    @ApiProperty({ type: [Award] })
+    awards: Award[];
+
+    @ApiProperty({ type: [Language] })
+    languages: Language[];
+  }
+
+  export class UpdateUserResponse extends App.WithStatus {
+    @ApiProperty({ type: User })
+    user: User | null;
+  }
 }
