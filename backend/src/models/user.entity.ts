@@ -1,21 +1,23 @@
 import { ApiProperty } from "@nestjs/swagger";
 import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  Index,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  RelationCount,
-  UpdateDateColumn,
+	BaseEntity,
+	Column,
+	CreateDateColumn,
+	DeleteDateColumn,
+	Entity,
+	Index,
+	JoinTable,
+	ManyToMany,
+	OneToMany,
+	PrimaryGeneratedColumn,
+	RelationCount,
+	UpdateDateColumn,
 } from "typeorm";
 import { Award } from "./award.entity";
 import { Course } from "./course.entity";
 import { Education } from "./education.entity";
 import { Language } from "./language.entity";
+import { Message } from "./message.entity";
 import { Project } from "./project.entity";
 import { Recommendation } from "./recommendation.entity";
 import { Skill } from "./skill.entity";
@@ -24,109 +26,134 @@ import { Work } from "./work.entity";
 
 @Entity("users")
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  @ApiProperty()
-  id: number;
+	@PrimaryGeneratedColumn()
+	@ApiProperty()
+	id: number;
 
-  @Column()
-  @Index()
-  @ApiProperty()
-  firstName: string;
+	@Column()
+	@Index()
+	@ApiProperty()
+	firstName: string;
 
-  @Column({ default: null })
-  @Index()
-  @ApiProperty()
-  lastName: string;
+	@Column({ default: null })
+	@Index()
+	@ApiProperty()
+	lastName: string;
 
-  @Column()
-  @Index({ unique: true })
-  @ApiProperty()
-  email: string;
+	@Column()
+	@Index({ unique: true })
+	@ApiProperty()
+	email: string;
 
-  @Column({ select: false })
-  password: string;
+	@Column({ select: false })
+	password: string;
 
-  @Column({ default: null })
-  @ApiProperty()
-  mobileNo: string;
+	@Column({ default: false })
+	@ApiProperty()
+	is_admin: boolean;
 
-  @Column()
-  @ApiProperty()
-  gender: "male" | "female";
+	@Column({ default: null })
+	@ApiProperty()
+	mobileNo: string;
 
-  @Column({ default: null })
-  @ApiProperty()
-  biography: string;
+	@Column()
+	@ApiProperty()
+	gender: "male" | "female";
 
-  @CreateDateColumn()
-  @ApiProperty()
-  created_at: Date;
+	@Column({ default: null })
+	@ApiProperty()
+	profile_pic: string;
 
-  @UpdateDateColumn()
-  @ApiProperty()
-  updated_at: Date;
+	@Column({ default: null })
+	@ApiProperty()
+	biography: string;
 
-  // RELATIONS
+	@CreateDateColumn()
+	@ApiProperty()
+	created_at: Date;
 
-  //education
-  @OneToMany(() => Education, (e) => e.user)
-  @ApiProperty({ type: [Education] })
-  educations: Education[];
+	@UpdateDateColumn()
+	@ApiProperty()
+	updated_at: Date;
 
-  //work experience
-  @OneToMany(() => Work, (w) => w.user)
-  @ApiProperty({ type: [Work] })
-  workExperience: Work[];
+	@DeleteDateColumn()
+	deleted_at: Date;
 
-  //volunteering experience
-  @OneToMany(() => Volunteering, (v) => v.user)
-  @ApiProperty({ type: [Volunteering] })
-  volunteeringExperience: Volunteering[];
+	// SPECIAL GETTERS AND METHODS
+	public get fullName() {
+		return this.firstName + " " + this.lastName;
+	}
 
-  //connections
-  @ManyToMany(() => User, (user) => user.connections)
-  @ApiProperty({ type: [User] })
-  connections: User[];
+	/**
+	 * @param otherUser
+	 * @returns Returns the conversation between the current user and the other user
+	 */
+	public async getMessagesFrom(otherUser: User | number) {
+		const otherId = typeof otherUser === "number" ? otherUser : otherUser.id;
+		const messages = await Message.find({
+			where: [
+				{ senderId: this.id, receiverId: otherId },
+				{ senderId: otherId, receiverId: this.id },
+			],
+			order: { created_at: "ASC" },
+		});
+	}
 
-  //skills
-  @ManyToMany((type) => Skill, (skill) => skill.user)
-  @JoinTable()
-  @ApiProperty({ type: [Skill] })
-  skills: Skill[];
+	// RELATIONS
+	//education
+	@OneToMany(() => Education, (e) => e.user)
+	@ApiProperty({ type: [Education] })
+	educations: Education[];
 
-  //recommendations received
-  @OneToMany(() => User, (user) => user.recommendationsReceived)
-  @ApiProperty({ type: [Recommendation] })
-  recommendationsReceived: Recommendation[];
+	//work experience
+	@OneToMany(() => Work, (w) => w.user)
+	@ApiProperty({ type: [Work] })
+	workExperience: Work[];
 
-  //recommendations given
-  @OneToMany(() => User, (user) => user.recommendationsGiven)
-  @ApiProperty({ type: [Recommendation] })
-  recommendationsGiven: Recommendation[];
+	//volunteering experience
+	@OneToMany(() => Volunteering, (v) => v.user)
+	@ApiProperty({ type: [Volunteering] })
+	volunteeringExperience: Volunteering[];
 
-  //courses
-  @OneToMany(() => Course, (course) => course.user)
-  @ApiProperty({ type: [Course] })
-  courses: Course[];
+	//connections
+	@ManyToMany(() => User, (user) => user.connections)
+	@ApiProperty({ type: [User] })
+	connections: User[];
 
-  //projects
-  @OneToMany(() => Project, (project) => project.user)
-  @ApiProperty({ type: [Project] })
-  projects: Project[];
+	//skills
+	@ManyToMany((type) => Skill, (skill) => skill.user)
+	@JoinTable()
+	@ApiProperty({ type: [Skill] })
+	skills: Skill[];
 
-  //awards
-  @OneToMany(() => Award, (award) => award.user)
-  @ApiProperty({ type: [Award] })
-  awards: Award[];
+	//recommendations received
+	@OneToMany(() => User, (user) => user.recommendationsReceived)
+	@ApiProperty({ type: [Recommendation] })
+	recommendationsReceived: Recommendation[];
 
-  //languages
-  @ManyToMany((type) => Language, (language) => language.user)
-  @JoinTable()
-  @ApiProperty({ type: [Language] })
-  languages: Language[];
+	//recommendations given
+	@OneToMany(() => User, (user) => user.recommendationsGiven)
+	@ApiProperty({ type: [Recommendation] })
+	recommendationsGiven: Recommendation[];
 
-  // SPECIAL GETTERS
-  public get fullName() {
-    return this.firstName + " " + this.lastName;
-  }
+	//courses
+	@OneToMany(() => Course, (course) => course.user)
+	@ApiProperty({ type: [Course] })
+	courses: Course[];
+
+	//projects
+	@OneToMany(() => Project, (project) => project.user)
+	@ApiProperty({ type: [Project] })
+	projects: Project[];
+
+	//awards
+	@OneToMany(() => Award, (award) => award.user)
+	@ApiProperty({ type: [Award] })
+	awards: Award[];
+
+	//languages
+	@ManyToMany((type) => Language, (language) => language.user)
+	@JoinTable()
+	@ApiProperty({ type: [Language] })
+	languages: Language[];
 }
