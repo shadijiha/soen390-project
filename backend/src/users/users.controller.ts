@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Controller,
   Delete,
@@ -15,13 +16,17 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common/decorators";
+=======
+import { Controller, Delete, Get, Request } from "@nestjs/common";
+import { Body, Put, UseGuards } from "@nestjs/common/decorators";
+>>>>>>> origin/master
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "../models/user.entity";
 import { DeleteResult } from "typeorm";
 import { UsersService } from "./users.service";
 import { Users } from "./users.types";
-import { AuthUser, BearerPayload } from "src/util/util";
+import { AuthUser, BearerPayload } from "../util/util";
 
 @Controller("users")
 @ApiTags("Users")

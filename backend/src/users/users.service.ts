@@ -38,28 +38,75 @@ export class UsersService {
     user.lastName = body.lastName;
     user.gender = body.gender;
 
+<<<<<<< HEAD
     const { password, ...userNoPass } = await this.usersRepository.save(user);
     return userNoPass;
   }
+=======
+		const { password, ...userNoPass } = await this.usersRepository.save(user);
+		return await userNoPass;
+	}
+>>>>>>> origin/master
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
     let updatedUser = new User();
 
-    updatedUser.email = user.email != null ? user.email : oldUser.email;
     updatedUser.firstName =
       user.firstName != null ? user.firstName : oldUser.firstName;
     updatedUser.lastName =
       user.lastName != null ? user.lastName : oldUser.lastName;
-    updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+    updatedUser.email = user.email != null ? user.email : oldUser.email;
     updatedUser.password = oldUser.password;
+    updatedUser.mobileNo =
+      user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
+    updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+    updatedUser.biography =
+      user.biography != null ? user.biography : oldUser.biography;
+    updatedUser.educations =
+      user.educations != null ? user.educations : oldUser.educations;
+    updatedUser.workExperience =
+      user.workExperience != null
+        ? user.workExperience
+        : oldUser.workExperience;
+    updatedUser.volunteeringExperience =
+      user.volunteeringExperience != null
+        ? user.volunteeringExperience
+        : oldUser.volunteeringExperience;
+    updatedUser.connections =
+      user.connections != null ? user.connections : oldUser.connections;
+    updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
+    updatedUser.recommendationsReceived =
+      user.recommendationsReceived != null
+        ? user.recommendationsReceived
+        : oldUser.recommendationsReceived;
+    updatedUser.recommendationsGiven =
+      user.recommendationsGiven != null
+        ? user.recommendationsGiven
+        : oldUser.recommendationsGiven;
+    updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
+    updatedUser.projects =
+      user.projects != null ? user.projects : oldUser.projects;
+    updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
+    updatedUser.languages =
+      user.languages != null ? user.languages : oldUser.languages;
     updatedUser.created_at = oldUser.created_at;
 
-    this.usersRepository.update(id, updatedUser);
+<<<<<<< HEAD
+    await this.usersRepository.update(id, updatedUser);
     return this.usersRepository.findOneBy({ id });
   }
 
   async remove(id: string): Promise<DeleteResult> {
     return this.usersRepository.delete(id);
   }
+=======
+		await this.usersRepository.update(id, updatedUser);
+		return this.usersRepository.findOneBy({ id });
+	}
+
+	async remove(id: string): Promise<DeleteResult> {
+		return await this.usersRepository.delete(id);
+	}
+>>>>>>> origin/master
 }
