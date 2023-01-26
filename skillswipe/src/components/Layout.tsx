@@ -27,8 +27,17 @@ const Layout = ({children } : any)=>{
             })
         }
         else{
-            router.push('/')
+            if(router.asPath != "/register"){      
+                router.push('/')
             setTimeout(() => {setLoading(false)},100)
+                
+            }
+            else{
+                setTimeout(() => {setLoading(false)},100)
+
+            }
+            
+            
         }
     },[])
     return(
