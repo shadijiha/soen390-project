@@ -39,7 +39,7 @@ export class UsersService {
 		user.gender = body.gender;
 
 		const { password, ...userNoPass } = await this.usersRepository.save(user);
-		return userNoPass;
+		return await userNoPass;
 	}
 
 	async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
@@ -55,11 +55,11 @@ export class UsersService {
 		updatedUser.password = oldUser.password;
 		updatedUser.created_at = oldUser.created_at;
 
-		this.usersRepository.update(id, updatedUser);
+		await this.usersRepository.update(id, updatedUser);
 		return this.usersRepository.findOneBy({ id });
 	}
 
 	async remove(id: string): Promise<DeleteResult> {
-		return this.usersRepository.delete(id);
+		return await this.usersRepository.delete(id);
 	}
 }

@@ -35,6 +35,7 @@
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
+    "sqlite3": "^5.1.4",
     "typeorm": "^0.3.11"
   },
   "devDependencies": {
@@ -49,6 +50,7 @@
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "dotenv": "^16.0.3",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -63,6 +65,9 @@
     "typescript": "^4.7.4"
   },
   "jest": {
+    "setupFiles": [
+      "<rootDir>/../test/setEnvVars.ts"
+    ],
     "moduleFileExtensions": [
       "js",
       "json",
@@ -77,6 +82,14 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    }
   }
 }
