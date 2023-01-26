@@ -1,6 +1,7 @@
 import { render,screen } from '@testing-library/react'
 import Home from '@/pages/home'
 import '@testing-library/jest-dom'
+import React from 'react';
 
 describe('Home', () => {
   const renderHome = () =>

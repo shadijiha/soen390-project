@@ -87,8 +87,8 @@ const Register = () => {
   }
   return (
     <>
-      <Flex height="100vh" alignItems="center" justifyContent="center">
-        <Flex
+      <Flex height="100vh" alignItems="center" justifyContent="center" data-testid="register-page">
+        <Flex 
           direction="column"
           background={formBackground}
           p={12}
