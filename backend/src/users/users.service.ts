@@ -38,15 +38,9 @@ export class UsersService {
     user.lastName = body.lastName;
     user.gender = body.gender;
 
-<<<<<<< HEAD
-    const { password, ...userNoPass } = await this.usersRepository.save(user);
-    return userNoPass;
-  }
-=======
 		const { password, ...userNoPass } = await this.usersRepository.save(user);
 		return await userNoPass;
 	}
->>>>>>> origin/master
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
@@ -92,15 +86,6 @@ export class UsersService {
       user.languages != null ? user.languages : oldUser.languages;
     updatedUser.created_at = oldUser.created_at;
 
-<<<<<<< HEAD
-    await this.usersRepository.update(id, updatedUser);
-    return this.usersRepository.findOneBy({ id });
-  }
-
-  async remove(id: string): Promise<DeleteResult> {
-    return this.usersRepository.delete(id);
-  }
-=======
 		await this.usersRepository.update(id, updatedUser);
 		return this.usersRepository.findOneBy({ id });
 	}
@@ -108,5 +93,4 @@ export class UsersService {
 	async remove(id: string): Promise<DeleteResult> {
 		return await this.usersRepository.delete(id);
 	}
->>>>>>> origin/master
 }
