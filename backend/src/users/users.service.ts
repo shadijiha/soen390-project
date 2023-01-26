@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { Auth } from "src/auth/auth.types";
-import { User } from "src/models/user.entity";
+import { Auth } from "../auth/auth.types";
+import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Repository } from "typeorm";
 import { Users } from "./users.types";
+import * as argon2 from "argon2";
 
 @Injectable()
 export class UsersService {
@@ -13,19 +14,8 @@ export class UsersService {
     private dataSource: DataSource
   ) {}
 
-  // public async create(body: Auth.RegisterRequest) {
-  // 	const user = new User();
-  // 	user.email = body.email;
-  // 	user.password = body.password;
-  // 	user.firstName = body.fistName;
-  // 	user.lastName = body.lastName;
-  // 	user.gender = body.gender;
-  // 	await user.save();
-  // 	return user;
-  // }
-
   public async getByEmail(email: string) {
-    return await User.findOne({ where: { email } });
+    return await this.usersRepository.findOne({ where: { email } });
   }
 
   findAll(): Promise<User[]> {
@@ -40,30 +30,69 @@ export class UsersService {
     return this.usersRepository.findOneBy({ email });
   }
 
-  create(body: Auth.RegisterRequest): Promise<User> {
+  public async create(body: Auth.RegisterRequest) {
     const user = new User();
     user.email = body.email;
-    user.password = body.password;
-    user.firstName = body.fistName;
+    user.password = await argon2.hash(body.password);
+    user.firstName = body.firstName;
     user.lastName = body.lastName;
     user.gender = body.gender;
 
-    return this.usersRepository.save(user);
+<<<<<<< HEAD
+    const { password, ...userNoPass } = await this.usersRepository.save(user);
+    return userNoPass;
   }
+=======
+		const { password, ...userNoPass } = await this.usersRepository.save(user);
+		return await userNoPass;
+	}
+>>>>>>> origin/master
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
     let updatedUser = new User();
 
-    updatedUser.email = user.email != null ? user.email : oldUser.email;
     updatedUser.firstName =
       user.firstName != null ? user.firstName : oldUser.firstName;
     updatedUser.lastName =
       user.lastName != null ? user.lastName : oldUser.lastName;
-    updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+    updatedUser.email = user.email != null ? user.email : oldUser.email;
     updatedUser.password = oldUser.password;
+    updatedUser.mobileNo =
+      user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
+    updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+    updatedUser.biography =
+      user.biography != null ? user.biography : oldUser.biography;
+    updatedUser.educations =
+      user.educations != null ? user.educations : oldUser.educations;
+    updatedUser.workExperience =
+      user.workExperience != null
+        ? user.workExperience
+        : oldUser.workExperience;
+    updatedUser.volunteeringExperience =
+      user.volunteeringExperience != null
+        ? user.volunteeringExperience
+        : oldUser.volunteeringExperience;
+    updatedUser.connections =
+      user.connections != null ? user.connections : oldUser.connections;
+    updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
+    updatedUser.recommendationsReceived =
+      user.recommendationsReceived != null
+        ? user.recommendationsReceived
+        : oldUser.recommendationsReceived;
+    updatedUser.recommendationsGiven =
+      user.recommendationsGiven != null
+        ? user.recommendationsGiven
+        : oldUser.recommendationsGiven;
+    updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
+    updatedUser.projects =
+      user.projects != null ? user.projects : oldUser.projects;
+    updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
+    updatedUser.languages =
+      user.languages != null ? user.languages : oldUser.languages;
     updatedUser.created_at = oldUser.created_at;
 
+<<<<<<< HEAD
     await this.usersRepository.update(id, updatedUser);
     return this.usersRepository.findOneBy({ id });
   }
@@ -71,4 +100,13 @@ export class UsersService {
   async remove(id: string): Promise<DeleteResult> {
     return this.usersRepository.delete(id);
   }
+=======
+		await this.usersRepository.update(id, updatedUser);
+		return this.usersRepository.findOneBy({ id });
+	}
+
+	async remove(id: string): Promise<DeleteResult> {
+		return await this.usersRepository.delete(id);
+	}
+>>>>>>> origin/master
 }

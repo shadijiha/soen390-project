@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Flex,
   Heading,
@@ -7,10 +7,17 @@ import {
   useColorMode,
   Center,
   Text,
-  useColorModeValue,
+  useColorModeValue,Select,Alert,AlertIcon
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {emailValidator} from '../Util/Validator';
+import {register} from './api/api';
+import { useRouter } from "next/router";
+
+
 
 const Register = () => {
   const { toggleColorMode } = useColorMode();
@@ -18,7 +25,67 @@ const Register = () => {
   const googleBackground = useColorModeValue("white", "gray.700");
   const placeholderBackground = useColorModeValue("gray.200", "gray.600");
   const toggleTheme = useColorModeValue("🌙", "💡");
+  const [User, setUser] = useState({"firstName" : "","lastName" : "","password" : "","email" : "","gender" : ""});
+  const [ConfirmPass,setConfirmPass] = useState("");
+  const router = useRouter();
+ 
+  const FirstNameChange = (event : any) =>{
+    setUser({
+      ...User,
+      firstName:  event.target.value
+    })
+  }
+  const LastNameChange = (event : any) =>{
+    setUser({
+      ...User,
+      lastName:  event.target.value
+    })
+    
+  }
+  const EmailChange = (event : any) =>{
+    setUser({
+      ...User,
+      email:  event.target.value
+    })
+  }
+  const passwordChange = (event : any) =>{
+    setUser({
+      ...User,
+      password:  event.target.value
+    })
+  }
+  const confirmpassChange = (event : any) =>{
+    setConfirmPass(event.target.value)
+  }
+  const genderChange = (event : any) =>{
+    setUser({
+      ...User,
+      gender:  event.target.value
+    })
+  }
+  const submitForm = () => {
+ 
+    if(!(User.firstName && User.lastName && User.email && User.password && User.gender && User.password == ConfirmPass)){
+      toast("Please fill all the fields")
+    }
+    else{
+      if(emailValidator(User.email) == true){
+        register(User).then((Response) => {
+          toast("Successfully Registered the Account")
+          console.log(Response)
+          localStorage.setItem('jwt',Response.data.access_token)
+          // Redux to be initialized More work to be done
+          router.push('/home');
+        }).catch((error) => {
+          toast(error.message)
+        })
+      }
+      else{
 
+        toast("Invalid Inputs")
+      }
+    }
+  }
   return (
     <>
       <Flex height="100vh" alignItems="center" justifyContent="center">
@@ -30,11 +97,31 @@ const Register = () => {
         >
           <Heading mb={6}>Register 🧖🏼</Heading>
           <Input
+            placeholder="First Name"
+            variant="filled"
+            mb={3}
+            type="text"
+            background={placeholderBackground}
+            onChange={FirstNameChange}
+          />
+          
+
+          <Input
+            placeholder="Last Name"
+            variant="filled"
+            mb={3}
+            type="text"
+            background={placeholderBackground}
+            onChange={LastNameChange}
+          />
+
+          <Input
             placeholder="Email"
             variant="filled"
             mb={3}
             type="email"
             background={placeholderBackground}
+            onChange={EmailChange}
           />
           <Input
             placeholder="Password"
@@ -42,15 +129,23 @@ const Register = () => {
             mb={3}
             type="password"
             background={placeholderBackground}
+            onChange={passwordChange}
           />
           <Input
             placeholder="Confirm Password"
             variant="filled"
-            mb={6}
+       
             type="password"
             background={placeholderBackground}
+            onChange={confirmpassChange}
           />
-          <Button colorScheme="green" mb={4}>
+          <Text color={"tomato"} fontSize='xs' noOfLines={[1, 2]} >{ConfirmPass != User.password ? "Password \n in both fields should be Same":""}</Text>
+          
+          <Select my={3} onChange={genderChange} placeholder='Select Gender' mb={6} variant="filled" background={placeholderBackground}>
+            <option value='MALE'>MALE</option>
+            <option value='FEMALE'>FEMALE</option>
+          </Select>
+          <Button colorScheme="green" mb={4} onClick={submitForm}>
             Register
           </Button>
           {/* Google */}
@@ -74,7 +169,7 @@ const Register = () => {
           >
             {toggleTheme}
           </Button>
-          <Button mb={-5}>
+          <Button mb={-5} >
             <Link href="/">
               <Text fontSize={13}>Already a user?</Text>
             </Link>

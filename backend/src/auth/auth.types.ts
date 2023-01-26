@@ -3,8 +3,8 @@
  */
 
 import { ApiProperty } from "@nestjs/swagger";
-import { App } from "src/app.types";
-import { User } from "src/models/user.entity";
+import { App } from "../app.types";
+import { User } from "../models/user.entity";
 
 export namespace Auth {
   export class LoginRequest {
@@ -17,7 +17,7 @@ export namespace Auth {
 
   export class LoginResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+    user: User | Partial<User> | null;
 
     @ApiProperty()
     access_token: string;
@@ -25,7 +25,7 @@ export namespace Auth {
 
   export class RegisterRequest extends LoginRequest {
     @ApiProperty()
-    fistName: string;
+    firstName: string;
 
     @ApiProperty()
     lastName: string;

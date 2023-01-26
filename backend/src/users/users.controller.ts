@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Controller,
   Delete,
@@ -15,14 +16,17 @@ import {
   Put,
   UseGuards,
 } from "@nestjs/common/decorators";
+=======
+import { Controller, Delete, Get, Request } from "@nestjs/common";
+import { Body, Put, UseGuards } from "@nestjs/common/decorators";
+>>>>>>> origin/master
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { response } from "express";
-import { Auth } from "src/auth/auth.types";
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { User } from "src/models/user.entity";
-import { Code, DeleteResult } from "typeorm";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { User } from "../models/user.entity";
+import { DeleteResult } from "typeorm";
 import { UsersService } from "./users.service";
 import { Users } from "./users.types";
+import { AuthUser, BearerPayload } from "../util/util";
 
 @Controller("users")
 @ApiTags("Users")
@@ -37,23 +41,39 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get("me")
-  @ApiResponse({ type: Users.GetUserResponse })
-  async findOneById(@Request() req): Promise<User> {
-    return this.usersService.findOneById(req.user.id);
-  }
+<<<<<<< HEAD
+  // @UseGuards(JwtAuthGuard)
+  // @Get("me")
+  // @ApiResponse({ type: Users.GetUserResponse })
+  // async findOneById(@Request() req): Promise<User> {
+  //   return this.usersService.findOneById(req.user.id);
+  // }
 
-  @UseGuards(JwtAuthGuard)
   @Put()
   @ApiResponse({ type: Users.UpdateUserResponse })
   update(@Request() req, @Body() user: Users.UpdateUserRequest): Promise<User> {
     return this.usersService.update(req.user.id, user);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete()
   remove(@Request() req): Promise<DeleteResult> {
     return this.usersService.remove(req.user.id);
+=======
+  @Get("me")
+  @ApiResponse({ type: User })
+  public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
+      return this.usersService.getByEmail(authedUser.email);
+  }
+
+  @Put()
+  @ApiResponse({ type: Users.UpdateUserResponse })
+  update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest): Promise<User> {
+		return this.usersService.update(authedUser.id, user);
+	}
+
+  @Delete()
+  remove(@AuthUser() authedUser: BearerPayload): Promise<DeleteResult> {
+		return this.usersService.remove(authedUser.id.toString());
+>>>>>>> origin/master
   }
 }
