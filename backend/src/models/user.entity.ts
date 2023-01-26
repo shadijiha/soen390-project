@@ -124,7 +124,6 @@ export class User extends BaseEntity {
   @JoinTable()
   @ApiProperty({ type: [Language] })
   languages: Language[];
-   
 
   // SPECIAL GETTERS
   public get fullName() {
