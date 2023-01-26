@@ -36,15 +36,18 @@ const login = () => {
     }
     else{
       loginApi(User).then((Response: any) => {
-        console.log(Response)
-        toast("Successfully Logged In")
-        router.push('/home');
-        localStorage.setItem('jwt',Response.access_token)
-
-        // Work to be done here
+          toast("Successfully Logged In")
+          router.push('/home');
+          localStorage.setItem('jwt',Response.access_token)
 
       }).catch((error : any) => {
-        toast(error.message)
+        
+        if(error.response.status == 401){
+          toast('Please fill correct details')
+        }
+        else{
+          toast(error.message)
+        }
 
       })
     }
@@ -59,7 +62,7 @@ return (
     <Input placeholder="Email" onChange={changeEmail} variant="filled" mb={3} type="email" background={placeholderBackground} />
     <Input placeholder="*******" onChange={changePassword} variant="filled" mb={6} type="password" background={placeholderBackground}/>
     <Button colorScheme="blue" mb={3} onClick={submitForm}>
-      <Link href="/home">Sign In</Link>
+      Sign in
       </Button>
        {/* Google */}
       <Button
