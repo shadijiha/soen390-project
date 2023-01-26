@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import imageFile from "../assets/images/image.jpeg";
 import {
   Box,
@@ -18,11 +18,27 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import NavBar from "../components/NavBar";
+import Layout from "@/components/Layout";
+import { checkLogin } from "./api/api";
 
 var borderWidth = "3px";
 var boxBorder = "30";
 
 const Profile = () => {
+  useEffect(() => {
+    if(localStorage.getItem('jwt')){
+      checkLogin(localStorage.getItem("jwt")).then((Response) => {
+        setProfile({
+          ...profile,
+          name : Response.data.firstName +" "+Response.data.lastName
+        })
+
+      }).catch((error) => {
+
+      })
+
+    }
+  },[])
   const [profile, setProfile] = useState({
     name: "John Smith",
     title: "Software Engineer",
@@ -76,6 +92,8 @@ const Profile = () => {
   const postBackground = useColorModeValue("gray.100", "gray.700");
   return (
     <>
+      <Layout>
+        
       <NavBar />
 
       <Flex direction="column" align="right" p={12}>
@@ -102,7 +120,7 @@ const Profile = () => {
             rounded="lg"
             mb={6}
             objectFit="cover"
-          />
+            />
           <Flex align="center" direction={["column", "column", "row", "row"]}>
             <Image
               src={profile.image}
@@ -115,7 +133,7 @@ const Profile = () => {
               mb={6}
               marginLeft={10}
               boxShadow="lg"
-            />
+              />
             <Stack ml={6}>
               <Text fontSize="2xl" fontWeight="bold">
                 {profile.name}
@@ -143,7 +161,7 @@ const Profile = () => {
             minW="80vw"
             maxW="90vw"
             boxShadow="lg"
-          >
+            >
             <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
               Personal Experience
             </Text>
@@ -182,7 +200,7 @@ const Profile = () => {
           minW="80vw"
           maxW="90vw"
           boxShadow="lg"
-        >
+          >
           <Text fontSize="lg" fontWeight="medium" mb={2} ml={2}>
             Employment History:
           </Text>
@@ -210,6 +228,7 @@ const Profile = () => {
           </Stack>
         </Box>
       </Flex>
+            </Layout>
     </>
   );
 };

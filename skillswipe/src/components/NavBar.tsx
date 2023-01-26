@@ -12,6 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import {toast} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { deleteCookie, getCookie } from "cookies-next";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -28,8 +31,7 @@ export default function NavBar() {
   const logout = () => {
     if (localStorage.getItem("jwt")) {
       localStorage.removeItem("jwt");
-
-      // More work To be done
+      toast("Successfully Logged Out")
     }
   };
 

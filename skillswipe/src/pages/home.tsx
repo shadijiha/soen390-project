@@ -13,6 +13,7 @@ import NavBar from "@/components/NavBar";
 import SmallWithLogoLeft from "@/components/footer";
 import { Box, Text, List, ListItem } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
+import Layout from "@/components/Layout";
 
 const Home = () => {
   const { toggleColorMode } = useColorMode();
@@ -32,6 +33,7 @@ const Home = () => {
 
   return (
     <>
+    <Layout>
 
       <NavBar></NavBar>
       <Box display="flex" justifyContent="center" alignItems="center" p={4}>
@@ -64,6 +66,7 @@ const Home = () => {
           </List>
         </Box>
       </Box>
+      </Layout>
     </>
   );
 };
