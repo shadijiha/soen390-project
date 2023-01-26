@@ -1,14 +1,15 @@
 import { ConflictException, UnauthorizedException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { Test, TestingModule } from "@nestjs/testing";
-import { UsersService } from "../users/users.service";
-import { DataSource, DataSourceOptions, Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { User } from "../models/user.entity";
 import { setupTestDB } from "../util/testUtil";
 import { AuthController } from "./auth.controller";
-import { AuthService } from "./auth.service";
 import { UsersModule } from "../users/users.module";
-import { getRepositoryToken, TypeOrmModule } from "@nestjs/typeorm";
+import { getRepositoryToken } from "@nestjs/typeorm";
+import { UsersService } from "../users/users.service";
+import { dataSourceMockFactory } from "../util/mockDataSource";
+import { AuthService } from "./auth.service";
 
 describe("AuthController", () => {
   let controller: AuthController;
@@ -17,6 +18,19 @@ describe("AuthController", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [...setupTestDB(), UsersModule],
+<<<<<<< HEAD
+=======
+      providers: [
+        UsersService,
+        AuthService,
+        JwtService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: {},
+        },
+        { provide: DataSource, useFactory: dataSourceMockFactory },
+      ],
+>>>>>>> origin/master
       controllers: [AuthController],
     }).compile();
 
