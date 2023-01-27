@@ -12,3 +12,12 @@ export const loginApi = async (LoginUser : any) =>{
   return axios.post(`${URL}/auth/login`,LoginUser);
 
 }
+
+export const checkLogin = async (token : any) => {
+  return axios.get(`${URL}/auth/me`,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+
+}
