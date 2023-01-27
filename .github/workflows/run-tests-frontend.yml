@@ -33,8 +33,12 @@ jobs:
 
       - name: Build
         working-directory: ./skillswipe
-        run: npm run build --if-present
+        run: npm run build
 
       - name: Run tests
         working-directory: ./skillswipe
         run: npm run test
+
+      - name: Check test coverage
+        working-directory: ./skillswipe
+        run: npm run test:cov
