@@ -16,6 +16,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import {emailValidator} from '../Util/Validator';
 import {register} from './api/api';
 import { useRouter } from "next/router";
+import { setCookie } from "cookies-next";
+import Layout from "@/components/Layout";
 
 
 
@@ -72,9 +74,7 @@ const Register = () => {
       if(emailValidator(User.email) == true){
         register(User).then((Response) => {
           toast("Successfully Registered the Account")
-          console.log(Response)
-          localStorage.setItem('jwt',Response.data.access_token)
-          // Redux to be initialized More work to be done
+          localStorage.setItem("jwt",Response.data.access_token);
           router.push('/home');
         }).catch((error) => {
           toast(error.message)
@@ -88,13 +88,15 @@ const Register = () => {
   }
   return (
     <>
+    <Layout>
+
       <Flex height="100vh" alignItems="center" justifyContent="center">
         <Flex
           direction="column"
           background={formBackground}
           p={12}
           rounded={25}
-        >
+          >
           <Heading mb={6}>Register 🧖🏼</Heading>
           <Input
             placeholder="First Name"
@@ -103,7 +105,7 @@ const Register = () => {
             type="text"
             background={placeholderBackground}
             onChange={FirstNameChange}
-          />
+            />
           
 
           <Input
@@ -113,7 +115,7 @@ const Register = () => {
             type="text"
             background={placeholderBackground}
             onChange={LastNameChange}
-          />
+            />
 
           <Input
             placeholder="Email"
@@ -122,7 +124,7 @@ const Register = () => {
             type="email"
             background={placeholderBackground}
             onChange={EmailChange}
-          />
+            />
           <Input
             placeholder="Password"
             variant="filled"
@@ -130,7 +132,7 @@ const Register = () => {
             type="password"
             background={placeholderBackground}
             onChange={passwordChange}
-          />
+            />
           <Input
             placeholder="Confirm Password"
             variant="filled"
@@ -138,7 +140,7 @@ const Register = () => {
             type="password"
             background={placeholderBackground}
             onChange={confirmpassChange}
-          />
+            />
           <Text color={"tomato"} fontSize='xs' noOfLines={[1, 2]} >{ConfirmPass != User.password ? "Password \n in both fields should be Same":""}</Text>
           
           <Select my={3} onChange={genderChange} placeholder='Select Gender' mb={6} variant="filled" background={placeholderBackground}>
@@ -155,7 +157,7 @@ const Register = () => {
             variant={"outline"}
             backgroundColor={googleBackground}
             leftIcon={<FcGoogle />}
-          >
+            >
             <Center>
               <Text>Sign Up with Google</Text>
             </Center>
@@ -176,6 +178,7 @@ const Register = () => {
           </Button>
         </Flex>
       </Flex>
+            </Layout>
     </>
   );
 };
