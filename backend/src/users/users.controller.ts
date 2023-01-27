@@ -27,21 +27,6 @@ export class UsersController {
 		return this.usersService.findAll();
 	}
 
-	@Get("me")
-	@ApiResponse({ type: User })
-	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-		return this.usersService.getByEmail(authedUser.email);
-	}
-
-	@Put()
-	@ApiResponse({ type: Users.UpdateUserResponse })
-	update(
-		@AuthUser() authedUser: BearerPayload,
-		@Body() user: Users.UpdateUserRequest
-	): Promise<User> {
-		return this.usersService.update(authedUser.id, user);
-	}
-
 	@Delete()
 	remove(@AuthUser() authedUser: BearerPayload) {
 		try {
