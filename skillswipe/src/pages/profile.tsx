@@ -137,7 +137,20 @@ const Profile = () => {
                   {profile.title}
                 </Text>
                 <Text fontSize="sm">{profile.location}</Text>
-                <Text>{profile.school}</Text>
+                <SimpleGrid columns={2} spacingX={1} spacingY={1}>
+                  <Text>{profile.school}</Text>
+                  <Button
+                    justifySelf={"flex-end"}
+                    variant="outline"
+                    size="md"
+                    borderRadius={1000}
+                    colorScheme="blue"
+                    justifyContent={"flex-end"}
+                    onClick={() => setIsEditing(!setIsEditing)}
+                  >
+                    Edit
+                  </Button>
+                </SimpleGrid>
               </Stack>
             </Flex>
           </Stack>
@@ -168,18 +181,19 @@ const Profile = () => {
                   Personal Experience
                 </Text>
                 <Button
-                  alignSelf={"flex-end"}
+                  justifySelf={"flex-end"}
+                  variant="outline"
+                  size="md"
+                  borderRadius={1000}
+                  colorScheme="blue"
                   justifyContent={"flex-end"}
-                  variant={"blue"}
-                  size="sm"
                   onClick={() => setIsEditing(!setIsEditing)}
-                  display="inline-flex"
                 >
                   Edit
                 </Button>
               </SimpleGrid>
 
-              <Stack ml={5}>
+              <Stack ml={5} marginTop={"1rem"}>
                 <ol>
                   <li>
                     <Text fontSize="sm" marginBottom={"1rem"}>
@@ -214,14 +228,18 @@ const Profile = () => {
             maxW="90vw"
             boxShadow="lg"
           >
-            <SimpleGrid columns={2} spacingX={1} spacingY={1}>
+            <SimpleGrid columns={2} spacingX={0} spacingY={1}>
               <Text fontSize="lg" fontWeight="medium" mb={2} ml={2}>
                 Employment History:
               </Text>
+
               <Button
+                justifySelf={"flex-end"}
+                variant="outline"
+                size="md"
+                borderRadius={1000}
+                colorScheme="blue"
                 justifyContent={"flex-end"}
-                variant={"blue"}
-                size="sm"
                 onClick={() => setIsEditing(!setIsEditing)}
               >
                 Edit
@@ -229,6 +247,7 @@ const Profile = () => {
             </SimpleGrid>
             {employmentHistory.map((history, index) => (
               <Box
+                marginTop={"1rem"}
                 key={index}
                 borderWidth="2px"
                 borderColor={formBorder}
