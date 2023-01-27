@@ -35,8 +35,12 @@ jobs:
 
       - name: Build
         working-directory: ./backend
-        run: npm run build --if-present
+        run: npm run build
 
       - name: Run tests
         working-directory: ./backend
         run: npm run test
+
+      - name: Check test coverage
+        working-directory: ./backend
+        run: npm run test:cov
