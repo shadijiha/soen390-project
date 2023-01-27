@@ -15,7 +15,6 @@ jobs:
         node-version: [15.x, 19.x]
 
     steps:
-    
       - name: Cope repository
         uses: actions/checkout@v3
 
@@ -24,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      -name: Install npm dependencies
+      - name: Install npm dependencies
         working-directory: ./skillswipe
         run: npm ci
 
