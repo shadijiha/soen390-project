@@ -36,6 +36,7 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 | Roger Sioufi      | 40177472   | [rogersi9](https://github.com/rogersi9)           |
 | Name              | 40034162   | [Aleksandr Vinokhodov](https://github.com/daxsis) |
 | Ahed              | 40112710   | [Ahed750](https://github.com/Ahed752)             |
+| Samdarshi Tiwari  | 40113256   | [Samdarshihawk](https://github.com/samdarshihawk) |
 
 <br />
 
