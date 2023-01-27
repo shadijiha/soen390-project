@@ -5,7 +5,7 @@ import {
 	DeleteDateColumn,
 	Entity,
 	PrimaryGeneratedColumn,
-	UpdateDateColumn,
+	UpdateDateColumn
 } from "typeorm";
 import { User } from "./user.entity";
 

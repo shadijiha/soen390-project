@@ -21,7 +21,7 @@ export class AuthController {
 	public async login(
 		@Body() body: Auth.LoginRequest
 	): Promise<Auth.LoginResponse> {
-		//try {
+		// try {
 		return await this.authService.login(body);
 		// } catch (e) {
 		// 	return error<Auth.LoginResponse>(e);
@@ -35,7 +35,9 @@ export class AuthController {
 	): Promise<Auth.LoginResponse> {
 		// Check if the user exists first
 		if (await this.userService.findOneByEmail(body.email)) {
-			throw new ConflictException("Email " + body.email + " already taken");
+			throw new ConflictException(
+				"Email " + body.email + " already taken"
+			);
 		}
 
 		await this.userService.create(body);
@@ -47,6 +49,6 @@ export class AuthController {
 	@ApiBearerAuth()
 	@UseGuards(JwtAuthGuard)
 	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-		return this.userService.getByEmail(authedUser.email);
+		return await this.userService.getByEmail(authedUser.email);
 	}
 }

@@ -4,7 +4,7 @@ import {
 	Get,
 	HttpException,
 	HttpStatus,
-	Request,
+	Request
 } from "@nestjs/common";
 import { Body, Put, UseGuards } from "@nestjs/common/decorators";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -24,22 +24,22 @@ export class UsersController {
 	@Get()
 	@ApiResponse({ type: Users.GetAllUsersResponse })
 	async findAll(): Promise<User[]> {
-		return this.usersService.findAll();
+		return await this.usersService.findAll();
 	}
 
 	@Get("me")
 	@ApiResponse({ type: User })
 	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-		return this.usersService.getByEmail(authedUser.email);
+		return await this.usersService.getByEmail(authedUser.email);
 	}
 
 	@Put()
 	@ApiResponse({ type: Users.UpdateUserResponse })
-	update(
+	async update(
 		@AuthUser() authedUser: BearerPayload,
 		@Body() user: Users.UpdateUserRequest
 	): Promise<User> {
-		return this.usersService.update(authedUser.id, user);
+		return await this.usersService.update(authedUser.id, user);
 	}
 
 	@Delete()

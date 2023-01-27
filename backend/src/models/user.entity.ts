@@ -11,7 +11,7 @@ import {
 	OneToMany,
 	PrimaryGeneratedColumn,
 	RelationCount,
-	UpdateDateColumn,
+	UpdateDateColumn
 } from "typeorm";
 import { Award } from "./award.entity";
 import { Course } from "./course.entity";
@@ -89,69 +89,70 @@ export class User extends BaseEntity {
 	 * @returns Returns the conversation between the current user and the other user
 	 */
 	public async getMessagesFrom(otherUser: User | number) {
-		const otherId = typeof otherUser === "number" ? otherUser : otherUser.id;
+		const otherId =
+			typeof otherUser === "number" ? otherUser : otherUser.id;
 		const messages = await Message.find({
 			where: [
 				{ senderId: this.id, receiverId: otherId },
-				{ senderId: otherId, receiverId: this.id },
+				{ senderId: otherId, receiverId: this.id }
 			],
-			order: { created_at: "ASC" },
+			order: { created_at: "ASC" }
 		});
 	}
 
 	// RELATIONS
-	//education
+	// education
 	@OneToMany(() => Education, (e) => e.user)
 	@ApiProperty({ type: [Education] })
 	educations: Education[];
 
-	//work experience
+	// work experience
 	@OneToMany(() => Work, (w) => w.user)
 	@ApiProperty({ type: [Work] })
 	workExperience: Work[];
 
-	//volunteering experience
+	// volunteering experience
 	@OneToMany(() => Volunteering, (v) => v.user)
 	@ApiProperty({ type: [Volunteering] })
 	volunteeringExperience: Volunteering[];
 
-	//connections
+	// connections
 	@ManyToMany(() => User, (user) => user.connections)
 	@ApiProperty({ type: [User] })
 	connections: User[];
 
-	//skills
+	// skills
 	@ManyToMany((type) => Skill, (skill) => skill.user)
 	@JoinTable()
 	@ApiProperty({ type: [Skill] })
 	skills: Skill[];
 
-	//recommendations received
+	// recommendations received
 	@OneToMany(() => User, (user) => user.recommendationsReceived)
 	@ApiProperty({ type: [Recommendation] })
 	recommendationsReceived: Recommendation[];
 
-	//recommendations given
+	// recommendations given
 	@OneToMany(() => User, (user) => user.recommendationsGiven)
 	@ApiProperty({ type: [Recommendation] })
 	recommendationsGiven: Recommendation[];
 
-	//courses
+	// courses
 	@OneToMany(() => Course, (course) => course.user)
 	@ApiProperty({ type: [Course] })
 	courses: Course[];
 
-	//projects
+	// projects
 	@OneToMany(() => Project, (project) => project.user)
 	@ApiProperty({ type: [Project] })
 	projects: Project[];
 
-	//awards
+	// awards
 	@OneToMany(() => Award, (award) => award.user)
 	@ApiProperty({ type: [Award] })
 	awards: Award[];
 
-	//languages
+	// languages
 	@ManyToMany((type) => Language, (language) => language.user)
 	@JoinTable()
 	@ApiProperty({ type: [Language] })

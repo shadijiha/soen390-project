@@ -1,33 +1,33 @@
 import { Injectable } from "@nestjs/common";
-import { Auth } from "../auth/auth.types";
+import { type Auth } from "../auth/auth.types";
 import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Repository } from "typeorm";
-import { Users } from "./users.types";
+import { type Users } from "./users.types";
 import * as argon2 from "argon2";
 
 @Injectable()
 export class UsersService {
 	constructor(
 		@InjectRepository(User)
-		private usersRepository: Repository<User>,
-		private dataSource: DataSource
+		private readonly usersRepository: Repository<User>,
+		private readonly dataSource: DataSource
 	) {}
 
 	public async getByEmail(email: string) {
 		return await this.usersRepository.findOne({ where: { email } });
 	}
 
-	findAll(): Promise<User[]> {
-		return this.usersRepository.find();
+	async findAll(): Promise<User[]> {
+		return await this.usersRepository.find();
 	}
 
-	findOneById(id: number): Promise<User> {
-		return this.usersRepository.findOneBy({ id });
+	async findOneById(id: number): Promise<User> {
+		return await this.usersRepository.findOneBy({ id });
 	}
 
-	findOneByEmail(email: string): Promise<User> {
-		return this.usersRepository.findOneBy({ email });
+	async findOneByEmail(email: string): Promise<User> {
+		return await this.usersRepository.findOneBy({ email });
 	}
 
 	public async create(body: Auth.RegisterRequest) {
@@ -38,13 +38,15 @@ export class UsersService {
 		user.lastName = body.lastName;
 		user.gender = body.gender;
 
-		const { password, ...userNoPass } = await this.usersRepository.save(user);
-		return await userNoPass;
+		const { password, ...userNoPass } = await this.usersRepository.save(
+			user
+		);
+		return userNoPass;
 	}
 
 	async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
-		let oldUser = await this.usersRepository.findOneBy({ id });
-		let updatedUser = new User();
+		const oldUser = await this.usersRepository.findOneBy({ id });
+		const updatedUser = new User();
 
 		updatedUser.firstName =
 			user.firstName != null ? user.firstName : oldUser.firstName;
@@ -54,7 +56,8 @@ export class UsersService {
 		updatedUser.password = oldUser.password;
 		updatedUser.mobileNo =
 			user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
-		updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
+		updatedUser.gender =
+			user.gender != null ? user.gender : oldUser.gender;
 		updatedUser.biography =
 			user.biography != null ? user.biography : oldUser.biography;
 		updatedUser.educations =
@@ -68,8 +71,11 @@ export class UsersService {
 				? user.volunteeringExperience
 				: oldUser.volunteeringExperience;
 		updatedUser.connections =
-			user.connections != null ? user.connections : oldUser.connections;
-		updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
+			user.connections != null
+				? user.connections
+				: oldUser.connections;
+		updatedUser.skills =
+			user.skills != null ? user.skills : oldUser.skills;
 		updatedUser.recommendationsReceived =
 			user.recommendationsReceived != null
 				? user.recommendationsReceived
@@ -78,16 +84,18 @@ export class UsersService {
 			user.recommendationsGiven != null
 				? user.recommendationsGiven
 				: oldUser.recommendationsGiven;
-		updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
+		updatedUser.courses =
+			user.courses != null ? user.courses : oldUser.courses;
 		updatedUser.projects =
 			user.projects != null ? user.projects : oldUser.projects;
-		updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
+		updatedUser.awards =
+			user.awards != null ? user.awards : oldUser.awards;
 		updatedUser.languages =
 			user.languages != null ? user.languages : oldUser.languages;
 		updatedUser.created_at = oldUser.created_at;
 
 		await this.usersRepository.update(id, updatedUser);
-		return this.usersRepository.findOneBy({ id });
+		return await this.usersRepository.findOneBy({ id });
 	}
 
 	async removeSoft(id: number) {
