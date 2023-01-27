@@ -47,6 +47,6 @@ export class AuthController {
 	@ApiBearerAuth()
 	@UseGuards(JwtAuthGuard)
 	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-		return this.userService.getByEmail(authedUser.email);
+		return await authedUser.getUser(["education"]);
 	}
 }
