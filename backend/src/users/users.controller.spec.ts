@@ -60,7 +60,7 @@ describe("UsersController", () => {
 
     it('should return updated user', async () => {
         const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
-        const body: Users.UpdateUserRequest = { firstName: "Test", lastName: null, email: null, gender: null   };
+        const body: Users.UpdateUserRequest = { firstName: "Test", lastName: null, email: null, gender: null, mobileNo: null, biography: null, educations: [], workExperience: [], volunteeringExperience: [], connections: [], skills: [], recommendationsGiven: [], recommendationsReceived: [], courses: [], projects: [], awards: [], languages: []   };
         const updatedUser = await controller.update(bearer, body);
         expect(service.update).toHaveBeenCalled;
     });
@@ -68,7 +68,7 @@ describe("UsersController", () => {
     it('should delete logged in user', async () => {
         const bearer: BearerPayload = { email: "test@gmail.com", id: 1 };
         const deletedUser = await controller.remove(bearer);
-        expect(service.remove).toHaveBeenCalled;
+        expect(service.removeSoft).toHaveBeenCalled;
     });
 
 });

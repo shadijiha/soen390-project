@@ -34,6 +34,7 @@ describe("UsersService", () => {
             save: () => mockUser,
             update: () => updatedUser,
             delete: () => deletedResult,
+            softRemove: () => null,
           },
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
@@ -76,9 +77,9 @@ describe("UsersService", () => {
   });
 
   //remove user
-  it("should return deleted user", async () => {
-    const result = await service.remove('1');
-    expect(result.affected).toEqual(1);
+  it("should deleted user", async () => {
+    let result = await service.removeSoft(1);
+    expect(result).toEqual(undefined);
   });
 
 });
