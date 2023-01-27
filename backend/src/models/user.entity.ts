@@ -10,7 +10,7 @@ import {
 	ManyToMany,
 	OneToMany,
 	PrimaryGeneratedColumn,
-	RelationCount,
+	TableInheritance,
 	UpdateDateColumn,
 } from "typeorm";
 import { Award } from "./award.entity";
@@ -25,6 +25,7 @@ import { Volunteering } from "./volunteering.entity";
 import { Work } from "./work.entity";
 
 @Entity("users")
+@TableInheritance({ column: { type: "varchar", name: "type" } })
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
@@ -47,10 +48,6 @@ export class User extends BaseEntity {
 
 	@Column({ select: false })
 	password: string;
-
-	@Column({ default: false })
-	@ApiProperty()
-	is_admin: boolean;
 
 	@Column({ default: null })
 	@ApiProperty()
