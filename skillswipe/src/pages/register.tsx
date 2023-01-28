@@ -106,7 +106,6 @@ const Register = () => {
             type="text"
             background={placeholderBackground}
             onChange={FirstNameChange}
-            name="fname"
             />
           
 
