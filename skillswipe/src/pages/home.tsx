@@ -36,7 +36,7 @@ const Home = () => {
     <Layout>
 
       <NavBar></NavBar>
-      <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+      <Box display="flex" justifyContent="center" alignItems="center" p={4} data-testid="Home-page">
 
 
         <Box>
