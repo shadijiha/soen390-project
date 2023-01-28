@@ -1,8 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Education } from "src/models/education.entity";
+import { BaseRequest } from "src/util/util";
 
 export namespace Profile {
-	export class ProfileAddEducationRequest {
+	export class ProfileAddEducationRequest extends BaseRequest {
 		@ApiProperty()
 		institution: string;
 
@@ -12,6 +12,9 @@ export namespace Profile {
 		@ApiProperty()
 		start_year: number;
 
+		@ApiProperty()
+		end_year: number;
+	}
 		@ApiProperty()
 		end_year: number;
 	}

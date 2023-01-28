@@ -1,23 +1,35 @@
 import { Injectable } from "@nestjs/common";
-import { Education } from "src/models/education.entity";
-import { User } from "src/models/user.entity";
+import { BaseRequest } from "src/util/util";
+import { BaseEntity } from "typeorm";
 import { Profile } from "./profile.types";
 
 @Injectable()
 export class ProfileService {
-	public async createAddEducation(
+	public async addEducation(
 		user: User,
 		data: Profile.ProfileAddEducationRequest
 	) {
-		const education = new Education();
-		education.institution = data.institution;
-		education.degree = data.degree;
-		education.start_year = data.start_year;
-		education.end_year = data.end_year;
-		education.user = user;
-		await education.save();
-
+		const education = new Education
+		this.createModel(data, education)
 		user.educations = [...user.educations, education];
 		await user.save();
+	}
+
+	public async removeEduction(
+		user: User,
+		id: number
+	) {
+		user.educations = user.educations.filter((e) => e.id !== id)
+		await user.save()
+	}
+	/*
+	* Assign only what exist in target, in case we have hydrated request after it arrived
+	*/
+	private createModel(source: BaseRequest, target: BaseEntity) {
+		for (let prop in source) {
+			if (target.hasOwnProperty(prop)) {
+				target[prop] = source[prop]
+			}
+		}
 	}
 }
