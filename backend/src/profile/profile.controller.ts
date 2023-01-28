@@ -44,11 +44,29 @@ export class ProfileController {
 		}
 	}
 
-			// For security reasons, we should only delete the education if it belongs to the user
-			const education = await Education.findOne({
-				where: { id, user: { id: user.id } },
-			});
-			await Education.remove(education);
+	@Put("add/course")
+	public async addCourse(
+		@AuthUser() userInfo: BearerPayload,
+		@Body() body: Profile.ProfileAddCourseRequest
+	) {
+		try {
+			this.profileService.addCourse(await userInfo.getUser(["courses"]), body)
+		} catch (e) {
+			throw new HttpException((<Error>e).message, 400);
+		}
+	}
+
+	@Delete("delete/course/:id")
+	public async deleteCourse(
+		@AuthUser() userInfo: BearerPayload,
+		@Param("id") id: number
+	) {
+		try {
+			this.profileService.removeCourse(await userInfo.getUser(["courses"]), id)
+		} catch (e) {
+			throw new HttpException((<Error>e).message, 400)
+		}
+	}
 		} catch (e) {
 			throw new HttpException((<Error>e).message, 400);
 		}

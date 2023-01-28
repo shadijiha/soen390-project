@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { BaseRequest } from "src/util/util";
 import { BaseEntity } from "typeorm";
+import { Course } from "../models/course.entity";
 import { Profile } from "./profile.types";
 
 @Injectable()
@@ -20,6 +21,24 @@ export class ProfileService {
 		id: number
 	) {
 		user.educations = user.educations.filter((e) => e.id !== id)
+		await user.save()
+	}
+
+	public async addCourse(
+		user: User,
+		data: Profile.ProfileAddCourseRequest
+	) {
+		const course = new Course
+		this.createModel(data, course)
+		user.courses = [...user.courses, course]
+		await user.save()
+	}
+
+	public async removeCourse(
+		user: User,
+		id: number
+	) {
+		user.courses = user.courses.filter((c) => c.id !== id)
 		await user.save()
 	}
 	/*

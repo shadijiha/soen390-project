@@ -15,6 +15,14 @@ export namespace Profile {
 		@ApiProperty()
 		end_year: number;
 	}
+
+	export class ProfileAddCourseRequest extends BaseRequest {
+		@ApiProperty()
+		courseName: string;
+
+		@ApiProperty()
+		courseNumber: string;
+	}
 		@ApiProperty()
 		end_year: number;
 	}
