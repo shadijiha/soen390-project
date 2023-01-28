@@ -11,7 +11,7 @@ describe('Home', () => {
         beforeAll(()=>{
           <Layout></Layout>
       })
-        it('should render NavBar without crashing', () => {
+        it('should render find job page without crashing', () => {
           renderHome();
           expect(screen.queryByTestId("find-jobs"));
       });
