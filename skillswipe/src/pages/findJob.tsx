@@ -8,7 +8,7 @@ const findJob = () => {
     <>
       <Layout>
       <NavBar></NavBar>
-      <Text>Find Jobs</Text>
+      <Text data-testid="find-jobs">Find Jobs</Text>
       </Layout>
     </>
   );
