@@ -39,3 +39,5 @@ export const AuthUser = createParamDecorator(
 		};
 	}
 );
+
+export class BaseRequest { }
