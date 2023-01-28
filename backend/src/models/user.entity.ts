@@ -98,17 +98,17 @@ export class User extends BaseEntity {
 
 	// RELATIONS
 	//education
-	@OneToMany(() => Education, (e) => e.user)
+	@OneToMany(() => Education, (e) => e.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Education] })
 	educations: Education[];
 
 	//work experience
-	@OneToMany(() => Work, (w) => w.user)
+	@OneToMany(() => Work, (w) => w.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Work] })
 	workExperience: Work[];
 
 	//volunteering experience
-	@OneToMany(() => Volunteering, (v) => v.user)
+	@OneToMany(() => Volunteering, (v) => v.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Volunteering] })
 	volunteeringExperience: Volunteering[];
 
@@ -118,7 +118,7 @@ export class User extends BaseEntity {
 	connections: User[];
 
 	//skills
-	@ManyToMany((type) => Skill, (skill) => skill.user)
+	@ManyToMany((type) => Skill, (skill) => skill.user, { cascade: true, orphanedRowAction: "delete" })
 	@JoinTable()
 	@ApiProperty({ type: [Skill] })
 	skills: Skill[];
@@ -134,22 +134,22 @@ export class User extends BaseEntity {
 	recommendationsGiven: Recommendation[];
 
 	//courses
-	@OneToMany(() => Course, (course) => course.user)
+	@OneToMany(() => Course, (course) => course.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Course] })
 	courses: Course[];
 
 	//projects
-	@OneToMany(() => Project, (project) => project.user)
+	@OneToMany(() => Project, (project) => project.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Project] })
 	projects: Project[];
 
 	//awards
-	@OneToMany(() => Award, (award) => award.user)
+	@OneToMany(() => Award, (award) => award.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Award] })
 	awards: Award[];
 
 	//languages
-	@ManyToMany((type) => Language, (language) => language.user)
+	@ManyToMany((type) => Language, (language) => language.user, { cascade: true, orphanedRowAction: "delete" })
 	@JoinTable()
 	@ApiProperty({ type: [Language] })
 	languages: Language[];
