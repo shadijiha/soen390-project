@@ -23,6 +23,23 @@ export namespace Profile {
 		@ApiProperty()
 		courseNumber: string;
 	}
+
+	export class ProfileAddProjectRequest extends BaseRequest {
+		@ApiProperty()
+		name: string;
+
+		@ApiProperty()
+		description: string;
+
+		@ApiProperty()
+		url: string;
+
+		@ApiProperty()
+		start_year: number;
+
+		@ApiProperty()
+		end_year: number;
+	}
 		@ApiProperty()
 		end_year: number;
 	}

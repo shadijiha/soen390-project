@@ -67,6 +67,30 @@ export class ProfileController {
 			throw new HttpException((<Error>e).message, 400)
 		}
 	}
+
+	@Put("add/project")
+	public async addProject(
+		@AuthUser() userInfo: BearerPayload,
+		@Body() body: Profile.ProfileAddProjectRequest
+	) {
+		try {
+			this.profileService.addProject(await userInfo.getUser(["projects"]), body)
+		} catch (e) {
+			throw new HttpException((<Error>e).message, 400);
+		}
+	}
+
+	@Delete("delete/project/:id")
+	public async deleteProject(
+		@AuthUser() userInfo: BearerPayload,
+		@Param("id") id: number
+	) {
+		try {
+			this.profileService.removeProject(await userInfo.getUser(["projects"]), id)
+		} catch (e) {
+			throw new HttpException((<Error>e).message, 400)
+		}
+	}
 		} catch (e) {
 			throw new HttpException((<Error>e).message, 400);
 		}
