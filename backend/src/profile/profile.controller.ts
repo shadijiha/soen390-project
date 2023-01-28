@@ -91,8 +91,28 @@ export class ProfileController {
 			throw new HttpException((<Error>e).message, 400)
 		}
 	}
+
+	@Put("add/volunteering")
+	public async addVolunteering(
+		@AuthUser() userInfo: BearerPayload,
+		@Body() body: Profile.ProfileAddVolunteeringRequest
+	) {
+		try {
+			this.profileService.addVolunteering(await userInfo.getUser(["volunteerings"]), body)
 		} catch (e) {
 			throw new HttpException((<Error>e).message, 400);
+		}
+	}
+
+	@Delete("delete/volunteering/:id")
+	public async deleteVolunteering(
+		@AuthUser() userInfo: BearerPayload,
+		@Param("id") id: number
+	) {
+		try {
+			this.profileService.removeVolunteering(await userInfo.getUser(["volunteerings"]), id)
+		} catch (e) {
+			throw new HttpException((<Error>e).message, 400)
 		}
 	}
 }

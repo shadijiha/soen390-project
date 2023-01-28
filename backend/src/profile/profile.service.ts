@@ -2,7 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { BaseRequest } from "src/util/util";
 import { BaseEntity } from "typeorm";
 import { Course } from "../models/course.entity";
+import { Education } from "../models/education.entity";
 import { Project } from "../models/project.entity";
+import { User } from "../models/user.entity";
+import { Volunteering } from "../models/volunteering.entity";
 import { Profile } from "./profile.types";
 
 @Injectable()
@@ -60,6 +63,25 @@ export class ProfileService {
 		user.projects = user.projects.filter((p) => p.id !== id)
 		await user.save()
 	}
+
+	public async addVolunteering(
+		user: User,
+		data: Profile.ProfileAddVolunteeringRequest
+	) {
+		const volunteering = new Volunteering
+		this.createModel(data, volunteering)
+		user.volunteeringExperience = [...user.volunteeringExperience, volunteering]
+		await user.save()
+	}
+
+	public async removeVolunteering(
+		user: User,
+		id: number
+	) {
+		user.volunteeringExperience = user.volunteeringExperience.filter((v) => v.id !== id)
+		await user.save()
+	}
+
 	/*
 	* Assign only what exist in target, in case we have hydrated request after it arrived
 	*/

@@ -40,6 +40,17 @@ export namespace Profile {
 		@ApiProperty()
 		end_year: number;
 	}
+
+	export class ProfileAddVolunteeringRequest extends BaseRequest {
+		@ApiProperty()
+		company: string;
+
+		@ApiProperty()
+		title: string;
+
+		@ApiProperty()
+		start_year: number;
+
 		@ApiProperty()
 		end_year: number;
 	}
