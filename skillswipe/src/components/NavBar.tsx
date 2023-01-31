@@ -12,9 +12,8 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
-import {toast} from "react-toastify"
-import 'react-toastify/dist/ReactToastify.css';
-import { deleteCookie, getCookie } from "cookies-next";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -31,7 +30,7 @@ export default function NavBar() {
   const logout = () => {
     if (localStorage.getItem("jwt")) {
       localStorage.removeItem("jwt");
-      toast("Successfully Logged Out")
+      toast("Successfully Logged Out");
     }
   };
 
@@ -59,25 +58,53 @@ export default function NavBar() {
           </Text>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
-              <Button variant="ghost" aria-label="Home" my={5} w="100%">
+              <Button
+                aria-label="Home"
+                my={5}
+                w="100%"
+                variant={
+                  window.location.pathname === "/home" ? "solid" : "ghost"
+                }
+              >
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/findJob" ? "solid" : "ghost"
+                }
+                aria-label="Find Jobs"
+                my={5}
+                w="100%"
+              >
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/inbox" ? "solid" : "ghost"
+                }
+                aria-label="Messages"
+                my={5}
+                w="100%"
+              >
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/profile" ? "solid" : "ghost"
+                }
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
                 My Account
               </Button>
             </NextLink>
@@ -89,7 +116,7 @@ export default function NavBar() {
                 my={5}
                 w="100%"
                 onClick={logout}
-                border="2px solid #D2173DAF"
+                border="2px solid #BD293F"
                 borderRadius="100px"
                 _hover={{
                   boxShadow: "md",

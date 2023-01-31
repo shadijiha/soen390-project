@@ -90,13 +90,16 @@ const Profile = () => {
     <>
       <Layout>
         <NavBar />
-
-        <Flex direction="column" align="right" p={12}>
+        <Flex
+          direction="column"
+          paddingRight={"1em"}
+          paddingBottom={"1em"}
+          paddingLeft={"1em"}
+        >
           <Stack
             borderWidth={borderWidth}
             borderColor={formBorder}
             backgroundColor={postBackground} // we should make this blurred so that the cover shows through a bit
-            padding="0rem"
             marginBottom="1rem"
             rounded={boxBorder}
             overflow="hidden"
@@ -104,7 +107,6 @@ const Profile = () => {
             minW="80vw"
             maxW="90vw"
             boxShadow="lg"
-            zIndex={"-1"}
           >
             <Image
               src={profile.cover}
@@ -193,7 +195,7 @@ const Profile = () => {
                 </Button>
               </SimpleGrid>
 
-              <Stack ml={5} marginTop={"1rem"}>
+              <Stack marginTop={"1rem"} marginLeft={"2rem"}>
                 <ol>
                   <li>
                     <Text fontSize="sm" marginBottom={"1rem"}>
@@ -241,30 +243,19 @@ const Profile = () => {
                 colorScheme="blue"
                 justifyContent={"flex-end"}
                 onClick={() => setIsEditing(!setIsEditing)}
+                marginBottom={"1rem"}
               >
                 Edit
               </Button>
             </SimpleGrid>
             {employmentHistory.map((history, index) => (
-              <Box
-                marginTop={"1rem"}
-                key={index}
-                borderWidth="2px"
-                borderColor={formBorder}
-                backgroundColor={postBackground}
-                padding="1rem"
-                marginBottom="1rem"
-                rounded="25"
-                overflow="hidden"
-                width="100%"
-                minW="80vw"
-                maxW="90vw"
-              >
+              // eslint-disable-next-line react/jsx-key
+              <SimpleGrid columns={4} spacingX={0} spacingY={1} ml={2}>
                 <Text fontWeight="bold">{history.company}</Text>
                 <Text>{history.position}</Text>
                 <Text>{history.duration}</Text>
                 <Text>{history.description}</Text>
-              </Box>
+              </SimpleGrid>
             ))}
           </Box>
         </Flex>
