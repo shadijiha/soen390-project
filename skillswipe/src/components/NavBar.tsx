@@ -182,25 +182,53 @@ export default function NavBar() {
 
           <Flex flexDir="column" align="center">
             <NextLink href="/home" passHref>
-              <Button variant="ghost" aria-label="Home" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/home" ? "solid" : "ghost"
+                }
+                aria-label="Home"
+                my={5}
+                w="100%"
+              >
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/findJob" ? "solid" : "ghost"
+                }
+                aria-label="Find Jobs"
+                my={5}
+                w="100%"
+              >
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/inbox" ? "solid" : "ghost"
+                }
+                aria-label="Messages"
+                my={5}
+                w="100%"
+              >
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
+              <Button
+                variant={
+                  window.location.pathname === "/profile" ? "solid" : "ghost"
+                }
+                aria-label="My Account"
+                my={5}
+                w="100%"
+              >
                 My Account
               </Button>
             </NextLink>
