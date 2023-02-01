@@ -280,8 +280,8 @@ const Home = () => {
       <NavBar />
       <div className="home-container">
         <Head>
-          <title>Royal Different Antelope</title>
-          <meta property="og:title" content="Royal Different Antelope" />
+          <title>SkillSwipe</title>
+          <meta property="og:title" content="SkillSwipe" />
         </Head>
         <div className="home-top-card">
           <img
