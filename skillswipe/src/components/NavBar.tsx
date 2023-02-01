@@ -12,8 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -37,7 +39,7 @@ export default function NavBar() {
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
   return (
-    <Box as="nav" p={15} w="100%" pt={"0px"}>
+    <Box as="nav" p={15} w="100%" pt={"0px"} data-testid="Nav-Bar">
       <Flex paddingBottom={"7em"}>
         {/* Desktop */}
         <Flex

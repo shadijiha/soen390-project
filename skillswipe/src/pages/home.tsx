@@ -23,6 +23,7 @@ const Home = () => {
 
   return (
     <>
+
       <Layout>
         <NavBar></NavBar>
         <Box display="flex" justifyContent="center" alignItems="center" p={4}>
@@ -52,6 +53,7 @@ const Home = () => {
               ))}
             </List>
           </Box>
+
         </Box>
       </Layout>
     </>

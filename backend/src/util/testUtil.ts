@@ -8,8 +8,7 @@ export function setupTestDB() {
       dropSchema: true,
       // 	name: process.env.DB_NAME,
       //   	username: process.env.DB_USERNAME,
-     
-      
+
       entities: ["dist/models/**/*.entity.{ts,js}"],
       synchronize: true,
     }),

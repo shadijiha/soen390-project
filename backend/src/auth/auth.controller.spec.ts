@@ -18,8 +18,6 @@ describe("AuthController", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       imports: [...setupTestDB(), UsersModule],
-<<<<<<< HEAD
-=======
       providers: [
         UsersService,
         AuthService,
@@ -30,7 +28,6 @@ describe("AuthController", () => {
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
       ],
->>>>>>> origin/master
       controllers: [AuthController],
     }).compile();
 
