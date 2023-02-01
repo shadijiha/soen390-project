@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 // import Router, { useRouter } from "next/router";
 import {
@@ -15,7 +15,6 @@ import NextLink from "next/link";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -38,6 +37,7 @@ export default function NavBar() {
 
   const [showDropdown1, setShowDropdown1] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
+
   return (
     <Box as="nav" p={15} w="100%" pt={"0px"} data-testid="Nav-Bar">
       <Flex paddingBottom={"7em"}>
@@ -60,53 +60,25 @@ export default function NavBar() {
           </Text>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
-              <Button
-                aria-label="Home"
-                my={5}
-                w="100%"
-                variant={
-                  window.location.pathname === "/home" ? "solid" : "ghost"
-                }
-              >
+              <Button aria-label="Home" my={5} w="100%" variant="ghost">
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/findJob" ? "solid" : "ghost"
-                }
-                aria-label="Find Jobs"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/inbox" ? "solid" : "ghost"
-                }
-                aria-label="Messages"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/profile" ? "solid" : "ghost"
-                }
-                aria-label="My Account"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
                 My Account
               </Button>
             </NextLink>
@@ -184,53 +156,25 @@ export default function NavBar() {
 
           <Flex flexDir="column" align="center">
             <NextLink href="/home" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/home" ? "solid" : "ghost"
-                }
-                aria-label="Home"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/findJob" ? "solid" : "ghost"
-                }
-                aria-label="Find Jobs"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/inbox" ? "solid" : "ghost"
-                }
-                aria-label="Messages"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button
-                variant={
-                  window.location.pathname === "/profile" ? "solid" : "ghost"
-                }
-                aria-label="My Account"
-                my={5}
-                w="100%"
-              >
+              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
                 My Account
               </Button>
             </NextLink>
