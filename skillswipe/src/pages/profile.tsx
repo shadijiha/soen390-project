@@ -323,7 +323,13 @@ const Profile = () => {
       <Layout>
         <NavBar />
 
-        <div id="profile" className="profile-container" style={{}}>
+        <div
+          id="profile"
+          className="profile-container"
+          style={{
+            marginTop: "-3em",
+          }}
+        >
           <Head>
             <title>SkillSwipe</title>
             <meta property="og:title" content="SkillSwipe" />
@@ -336,7 +342,6 @@ const Profile = () => {
               className="profile-image"
               style={{
                 aspectRatio: "1/1",
-                height: "100%",
                 objectFit: "cover",
               }}
             />
