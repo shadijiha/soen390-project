@@ -273,10 +273,15 @@
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import FeatureCard4 from "../components/feature-card4";
-import React, { useEffect, useState } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
 import Layout from "@/components/Layout";
+import { useColorMode, useColorModeValue } from "@chakra-ui/react";
+
 const Profile = () => {
+  const { toggleColorMode } = useColorMode();
+  const buttonColors = useColorModeValue("black", "white");
+
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
       checkLogin(localStorage.getItem("jwt"))
@@ -302,20 +307,28 @@ const Profile = () => {
     cover:
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
+
+  const BackgroundImageDiv = () => {
+    const divStyle: CSSProperties = {
+      backgroundImage: `url('https://example.com/image.jpg')`,
+      height: "200px",
+      width: "200px",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    };
+    return <div style={divStyle} />;
+  };
   return (
     <>
       <Layout>
         <NavBar />
-        <div
-          className="profile-container"
-          style={{
-            marginTop: "-4rem",
-          }}
-        >
+
+        <div id="profile" className="profile-container" style={{}}>
           <Head>
             <title>SkillSwipe</title>
             <meta property="og:title" content="SkillSwipe" />
           </Head>
+
           <div className="profile-top-card">
             <img
               alt="image"
@@ -336,6 +349,7 @@ const Profile = () => {
                 style={{
                   fontSize: "1.5em",
                   fontWeight: 700,
+                  textShadow: "0px 0px 30px #00000085",
                 }}
               >
                 {profile.name}
@@ -344,6 +358,7 @@ const Profile = () => {
                 className="profile-text02"
                 style={{
                   fontSize: "1em",
+                  textShadow: "0px 0px 30px #00000085",
                 }}
               >
                 {profile.school}
@@ -352,6 +367,7 @@ const Profile = () => {
                 className="profile-text03"
                 style={{
                   fontSize: "1em",
+                  textShadow: "0px 0px 30px #00000085",
                 }}
               >
                 <span>{profile.location}</span>
@@ -359,22 +375,47 @@ const Profile = () => {
               </span>
               <div className="profile-container03">
                 <div className="profile-container04">
-                  <span className="profile-text06">
+                  <span
+                    className="profile-text06"
+                    style={{
+                      textShadow: "0px 0px 30px #0000009C",
+                      marginLeft: "0px",
+                    }}
+                  >
                     I&apos;m great at _____
                   </span>
                 </div>
                 <div className="profile-container05">
-                  <button className="profile-button button">
+                  <button
+                    className="profile-button button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 30px #0000009C",
+                    }}
+                  >
                     <span>
                       <span>Message</span>
                       <br></br>
                     </span>
                   </button>
-                  <button className="profile-button1 button">Connect</button>
+                  <button
+                    className="profile-button1 button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 30px #0000009C",
+                    }}
+                  >
+                    Connect
+                  </button>
                 </div>
               </div>
             </div>
           </div>
+
           <div className="profile-steps">
             <h1 className="profile-text10">Career Journey</h1>
             <span className="profile-text11">
@@ -543,7 +584,6 @@ const Profile = () => {
               justify-content: space-between;
             }
             .profile-text {
-              color: var(--dl-color-gray-500);
               font-weight: 600;
               text-transform: uppercase;
             }
@@ -551,12 +591,10 @@ const Profile = () => {
               margin-bottom: var(--dl-space-space-twounits);
             }
             .profile-text02 {
-              color: var(--dl-color-gray-500);
               font-size: 1.25rem;
               margin-bottom: 0px;
             }
             .profile-text03 {
-              color: var(--dl-color-gray-500);
               font-size: 1.25rem;
               margin-bottom: 0px;
             }
