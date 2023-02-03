@@ -197,7 +197,6 @@ const Profile = () => {
                     <br></br>
                   </h1>
                   <h3 className="profile-heading1">2014 - 2015</h3>
-                  <h1 className="profile-text23"></h1>
                   <span className="profile-text24">
                     <span>Launched Edit Button</span>
                     <br></br>
