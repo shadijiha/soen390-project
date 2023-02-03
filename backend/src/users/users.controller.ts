@@ -1,10 +1,10 @@
 import {
-	Controller,
-	Delete,
-	Get,
-	HttpException,
-	HttpStatus,
-	Request,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Request,
 } from "@nestjs/common";
 import { Body, Put, UseGuards } from "@nestjs/common/decorators";
 import { ApiBearerAuth, ApiResponse, ApiTags } from "@nestjs/swagger";
@@ -19,13 +19,13 @@ import { AuthUser, BearerPayload, error } from "../util/util";
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-	constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
-	@Get()
-	@ApiResponse({ type: Users.GetAllUsersResponse })
-	async findAll(): Promise<User[]> {
-		return this.usersService.findAll();
-	}
+  @Get()
+  @ApiResponse({ type: Users.GetAllUsersResponse })
+  async findAll(): Promise<User[]> {
+    return this.usersService.findAll();
+  }
 
 	@Delete()
 	remove(@AuthUser() authedUser: BearerPayload) {

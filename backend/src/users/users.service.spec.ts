@@ -11,14 +11,14 @@ describe("UsersService", () => {
   let userRepository: Repository<User>;
   let mockUser: User = new User();
   mockUser.id = 1;
-  mockUser.email = 'test@gmail.com'
-  mockUser.password = '123';
+  mockUser.email = "test@gmail.com";
+  mockUser.password = "123";
   mockUser.firstName = "test";
-  mockUser.lastName = 'test';
-  mockUser.gender = 'male';
+  mockUser.lastName = "test";
+  mockUser.gender = "male";
   let updatedUser: User = new User();
-  updatedUser.email = 'updated@gmail.com'
-  let deletedResult :DeleteResult = new DeleteResult();
+  updatedUser.email = "updated@gmail.com";
+  let deletedResult: DeleteResult = new DeleteResult();
   deletedResult.affected = 1;
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -34,6 +34,7 @@ describe("UsersService", () => {
             save: () => mockUser,
             update: () => updatedUser,
             delete: () => deletedResult,
+            softRemove: () => null,
           },
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
@@ -58,27 +59,26 @@ describe("UsersService", () => {
 
   it("should return a user by email", async () => {
     const result = await service.getByEmail("test@gmail.com");
-    expect(result.email).toEqual('test@gmail.com' ); 
+    expect(result.email).toEqual("test@gmail.com");
   });
   it("should return a user by email", async () => {
     const result = await service.findOneByEmail("test@gmail.com");
-    expect(result.email).toEqual('test@gmail.com' ); 
+    expect(result.email).toEqual("test@gmail.com");
   });
 
   it("should return created user", async () => {
     const result = await service.create(mockUser);
-    expect(result.email).toEqual('test@gmail.com' ); 
+    expect(result.email).toEqual("test@gmail.com");
   });
 
   it("should return updated user", async () => {
     const result = await service.update(1, updatedUser);
-    expect(result.email).toEqual('test@gmail.com');
+    expect(result.email).toEqual("test@gmail.com");
   });
 
   //remove user
-  it("should return deleted user", async () => {
-    const result = await service.remove('1');
-    expect(result.affected).toEqual(1);
+  it("should deleted user", async () => {
+    let result = await service.removeSoft(1);
+    expect(result).toEqual(undefined);
   });
-
 });
