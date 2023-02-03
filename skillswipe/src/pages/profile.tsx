@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
 import FeatureCard4 from "../components/feature-card4";
@@ -66,7 +67,6 @@ const Profile = () => {
           </Head>
 
           <div className="profile-top-card">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               alt="image"
               src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
