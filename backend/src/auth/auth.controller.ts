@@ -42,11 +42,13 @@ export class AuthController {
     return await this.authService.login(body);
   }
 
-  @Get("me")
-  @ApiResponse({ type: User })
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
-  public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-    return this.userService.getByEmail(authedUser.email);
-  }
+	@Get("me")
+	@ApiResponse({ type: User })
+	@ApiBearerAuth()
+	@UseGuards(JwtAuthGuard)
+	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
+		const user = await authedUser.getUser(["educations"]);
+		console.log(user);
+		return user;
+	}
 }
