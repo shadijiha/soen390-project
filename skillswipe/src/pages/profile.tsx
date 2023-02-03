@@ -5,7 +5,6 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
 import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
-import { Image } from "@chakra-ui/react";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -67,7 +66,7 @@ const Profile = () => {
           </Head>
 
           <div className="profile-top-card">
-            <Image
+            <img
               alt="image"
               src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
               className="profile-image"
