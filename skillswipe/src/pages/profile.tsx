@@ -114,11 +114,11 @@ const Profile = () => {
                   <span
                     className="profile-text06"
                     style={{
-                      textShadow: "0px 0px 30px #0000009C",
+                      textShadow: "0px 0px 30px #000000B4",
                       marginLeft: "0px",
                     }}
                   >
-                    I&apos;m great at _____
+                    I&apos;m great at ______
                   </span>
                 </div>
                 <div className="profile-container05">
@@ -128,7 +128,8 @@ const Profile = () => {
                       color: buttonColors,
                       borderColor: buttonColors,
                       borderWidth: "2px",
-                      textShadow: "0px 0px 30px #0000009C",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
                     }}
                   >
                     <span>
@@ -142,7 +143,8 @@ const Profile = () => {
                       color: buttonColors,
                       borderColor: buttonColors,
                       borderWidth: "2px",
-                      textShadow: "0px 0px 30px #0000009C",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
                     }}
                   >
                     Connect
