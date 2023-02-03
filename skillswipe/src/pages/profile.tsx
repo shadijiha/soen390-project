@@ -53,7 +53,7 @@ const Profile = () => {
     <>
       <Layout>
         <NavBar />
-
+        <div data-testid="profile-page">
         <div
           id="profile"
           className="profile-container"
@@ -1337,6 +1337,7 @@ const Profile = () => {
             }
           `}
         </style>
+        </div>
       </Layout>
     </>
   );
