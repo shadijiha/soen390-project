@@ -268,6 +268,13 @@ const Profile = () => {
               />
             </div>
           </div>
+          {/* temporary div below for spacing under page, will need to remove in final sprint */}
+          <div
+            style={{
+              display: "flex",
+              paddingBottom: "10em",
+            }}
+          ></div>
         </div>
         <style jsx>
           {`
