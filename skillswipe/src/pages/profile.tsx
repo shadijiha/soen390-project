@@ -153,7 +153,14 @@ const Profile = () => {
           </div>
 
           <div className="profile-steps">
-            <h1 className="profile-text10">Career Journey</h1>
+            <h1
+              className="profile-text10"
+              style={{
+                fontWeight: 600,
+              }}
+            >
+              Career Journey
+            </h1>
             <span className="profile-text11">
               <span>i do bits and bytes for a living</span>
               <br></br>
@@ -251,7 +258,14 @@ const Profile = () => {
             </div>
           </div>
           <div className="profile-personal-projects">
-            <h1 className="profile-text39">Personal Projects</h1>
+            <h1
+              className="profile-text39"
+              style={{
+                fontWeight: 600,
+              }}
+            >
+              Personal Projects
+            </h1>
             <div className="profile-separator"></div>
             <div className="profile-container19">
               <div className="profile-container20">
