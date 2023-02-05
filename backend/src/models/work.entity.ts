@@ -41,7 +41,7 @@ export class Work extends BaseEntity {
   updated_at: Date;
 
   // RELATIONS
-  @ManyToOne(() => User, (u) => u.workExperience)
+  @ManyToOne(() => User, (u) => u.workExperiences)
   @ApiProperty({ type: () => User })
   user: User;
 }

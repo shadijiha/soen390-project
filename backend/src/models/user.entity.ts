@@ -111,7 +111,7 @@ export class User extends BaseEntity {
 		orphanedRowAction: "delete",
 	})
 	@ApiProperty({ type: [Work] })
-	workExperience: Work[];
+	workExperiences: Work[];
 
 	//volunteering experience
 	@OneToMany(() => Volunteering, (v) => v.user, {
