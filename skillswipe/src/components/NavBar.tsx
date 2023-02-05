@@ -97,7 +97,7 @@ export default function NavBar() {
                   transform: "scale(1.05)",
                 }}
               >
-                Sign In/Logout
+                Logout
               </Button>
             </NextLink>
             <NextLink href={""}>
