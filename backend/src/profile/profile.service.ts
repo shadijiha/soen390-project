@@ -1,6 +1,8 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { UsersService } from "src/users/users.service";
 import { BaseRequest } from "src/util/util";
-import { BaseEntity } from "typeorm";
+import { BaseEntity, DataSource, Repository } from "typeorm";
 import { Course } from "../models/course.entity";
 import { Education } from "../models/education.entity";
 import { Project } from "../models/project.entity";
@@ -10,6 +12,9 @@ import { Profile } from "./profile.types";
 
 @Injectable()
 export class ProfileService {
+
+
+	
 	public async addEducation(
 		user: User,
 		data: Profile.ProfileAddEducationRequest
@@ -81,6 +86,13 @@ export class ProfileService {
 		user.volunteeringExperience = user.volunteeringExperience.filter((v) => v.id !== id)
 		await user.save()
 	}
+
+
+	public async uploadProfilePicture(user: User, filepath: string): Promise<string>{
+		user.profile_pic = filepath;
+		return (await user.save()).profile_pic;
+	}
+
 
 	/*
 	* Assign only what exist in target, in case we have hydrated request after it arrived
