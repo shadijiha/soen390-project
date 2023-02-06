@@ -10,15 +10,16 @@ import {
 	UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBearerAuth, ApiConsumes, ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
 import path =  require("path");
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 import { AuthUser, BearerPayload } from "src/util/util";
 import { ProfileService } from "./profile.service";
 import { Profile } from "./profile.types";
 import { diskStorage } from "multer";
-import { UploadedFile } from "@nestjs/common/decorators";
+import { Get, Res, UploadedFile } from "@nestjs/common/decorators";
 import { Observable, of } from "rxjs";
+import { join } from "path";
 
 @Controller("profile")
 @ApiTags("Profile")
@@ -126,9 +127,21 @@ export class ProfileController {
 
 	//upload profile picture
 	@Post("upload/profile-picture")
+	@ApiConsumes('multipart/form-data')
+	@ApiBody({
+		schema: {
+		  type: 'object',
+		  properties: {
+			file: {
+			  type: 'string',
+			  format: 'binary',
+			},
+		  },
+		},
+	  })
 	@UseInterceptors(FileInterceptor('file', {
 		storage: diskStorage({
-			destination: '../images',
+			destination: './images',
 			filename: (req, file, cb) => {
 				
 				const fileName: string = path.parse(file.originalname).name.replace(/\s/g, '') + Date.now();
@@ -140,17 +153,22 @@ export class ProfileController {
 	}))
 	public async uploadProfilePicture(@AuthUser() authedUser: BearerPayload, @UploadedFile() file: Express.Multer.File) {
 		try{
-			console.log(file)
+			
 			const profile_pic =  await this.profileService.uploadProfilePicture(await authedUser.getUser(), file.filename)
 			return {profile_pic: profile_pic}
 		}
 		 catch (e) {
 			throw new HttpException((<Error>e).message, 400)
 		}
-		
 	}
 	
-	
+
+
+	@Get('profile-picture/:filename')
+	findProfilePicture(@Param('filename') filename: string, @Res() res): Observable<any> {
+		
+		return res.sendFile(join(process.cwd(), 'images/' + filename));
+	}
 
 
 
