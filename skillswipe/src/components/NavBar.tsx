@@ -86,7 +86,7 @@ export default function NavBar() {
             <NextLink href="/" passHref>
               <Button
                 variant="ghost"
-                aria-label="Sign In/Logout"
+                aria-label="Logout"
                 my={5}
                 w="100%"
                 onClick={logout}
@@ -97,7 +97,7 @@ export default function NavBar() {
                   transform: "scale(1.05)",
                 }}
               >
-                Sign In/Logout
+                Logout
               </Button>
             </NextLink>
             <NextLink href={""}>
