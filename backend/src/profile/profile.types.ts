@@ -55,10 +55,5 @@ export namespace Profile {
     end_year: number;
   }
 
-  export class ProfileAddProfilePictureRequest extends BaseRequest {
-    //accept file upload
-    //swagger file upload
-    @ApiProperty()
-    profilePicture: Express.Multer.File;
-  }
+
 }

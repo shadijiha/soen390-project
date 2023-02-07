@@ -71,13 +71,7 @@ export class ProfileService {
     await user.save();
   }
 
-  public async uploadProfilePicture(
-    user: User,
-    filepath: string
-  ): Promise<string> {
-    user.profile_pic = filepath;
-    return (await user.save()).profile_pic;
-  }
+
 
   /*
    * Assign only what exist in target, in case we have hydrated request after it arrived
