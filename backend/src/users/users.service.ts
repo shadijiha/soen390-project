@@ -45,15 +45,14 @@ export class UsersService {
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
     let updatedUser = new User();
-
+    
+    // shoul only update the old user. remove updated user
     updatedUser.firstName =
       user.firstName != null ? user.firstName : oldUser.firstName;
-    updatedUser.lastName =
-      user.lastName != null ? user.lastName : oldUser.lastName;
+    updatedUser.lastName = user.lastName != null ? user.lastName : oldUser.lastName;
     updatedUser.email = user.email != null ? user.email : oldUser.email;
     updatedUser.password = oldUser.password;
-    updatedUser.mobileNo =
-      user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
+    updatedUser.mobileNo =user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
     updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
     updatedUser.biography =
       user.biography != null ? user.biography : oldUser.biography;

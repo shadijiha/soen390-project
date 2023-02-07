@@ -54,6 +54,4 @@ export namespace Profile {
     @ApiProperty()
     end_year: number;
   }
-
-
 }

@@ -71,8 +71,6 @@ export class ProfileService {
     await user.save();
   }
 
-
-
   /*
    * Assign only what exist in target, in case we have hydrated request after it arrived
    */

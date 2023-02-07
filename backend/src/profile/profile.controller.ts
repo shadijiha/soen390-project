@@ -144,6 +144,4 @@ export class ProfileController {
       throw new HttpException((<Error>e).message, 400);
     }
   }
-
-
 }
