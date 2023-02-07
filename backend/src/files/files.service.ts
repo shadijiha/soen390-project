@@ -7,13 +7,13 @@ import { User } from 'src/models/user.entity';
 export class FileService {
   
 
-  public async uploadProfilePicture(
-    user: User,
-    filepath: string
-  ): Promise<string> {
-    user.profile_pic = filepath;
+  public async uploadProfilePicture(user: User,fileName: string): Promise<string> {
+    user.profile_pic = fileName;
     return (await user.save()).profile_pic;
   }
+
+
+
 
   
 }
