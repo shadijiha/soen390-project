@@ -17,6 +17,7 @@ import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 import { AuthUser, BearerPayload, error } from "../util/util";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { use } from "passport";
 
 @Controller()
 @ApiTags("Users")
@@ -66,9 +67,13 @@ export class UsersController {
     fileIsRequired: false,
   })) file: Express.Multer.File) {
 
-    console.log(file);
-    return this.usersService.update(authedUser.id, user, file);
+    return this.usersService.update(authedUser.id, user, file)
+
+    
   }
+
+
+
 
 
 }

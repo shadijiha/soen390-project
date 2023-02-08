@@ -57,7 +57,7 @@ export class User extends BaseEntity {
   @ApiProperty()
   gender: "male" | "female";
 
-  @Column({ default: null })
+  @Column({ default: null, type: "longtext"})
   @ApiProperty()
   profile_pic: string;
 
