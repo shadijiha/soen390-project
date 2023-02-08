@@ -61,6 +61,10 @@ export class User extends BaseEntity {
   @ApiProperty()
   profile_pic: string;
 
+  @Column({ default: null, type: "longtext"})
+  @ApiProperty()
+  cover_pic: string;
+
   @Column({ default: null })
   @ApiProperty()
   biography: string;

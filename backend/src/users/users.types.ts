@@ -56,9 +56,19 @@ export namespace Users {
           format: "binary",
         },
       }, required: false}
-    
   )
     profile_pic: Express.Multer.File;
+
+    @ApiProperty({
+      type: "file",
+      properties: {
+        file: {
+          type: "string",
+          format: "binary",
+        },
+      }, required: false}
+  )
+    cover_pic: Express.Multer.File;
 
     // @ApiProperty({ type: [Education] })
     // educations: Education[];

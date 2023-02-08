@@ -9,14 +9,14 @@ import {
   ParseFilePipe,
   Request,
 } from "@nestjs/common";
-import { Body, Put, Query, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common/decorators";
+import { Body, Put, Query, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from "@nestjs/common/decorators";
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "../models/user.entity";
 import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 import { AuthUser, BearerPayload, error } from "../util/util";
-import { FileInterceptor } from "@nestjs/platform-express";
+import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { use } from "passport";
 
 @Controller()
@@ -58,16 +58,22 @@ export class UsersController {
   @Put("user")
   @ApiConsumes("multipart/form-data")
   @ApiResponse({ type: Users.UpdateUserResponse })
-  @UseInterceptors(FileInterceptor('profile_pic'))
-  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFile(new ParseFilePipe({
+
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'profile_pic', maxCount: 1 },
+    { name: 'cover_pic', maxCount: 1}
+  ]))
+
+  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(new ParseFilePipe({
     validators: [
       new MaxFileSizeValidator({ maxSize: 5000000 }), //bytes
       new FileTypeValidator({ fileType: "image" }),
     ],
     fileIsRequired: false,
-  })) file: Express.Multer.File) {
+  })) files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}) {
 
-    return this.usersService.update(authedUser.id, user, file)
+    console.log(files)
+    //return this.usersService.update(authedUser.id, user, file)
 
     
   }
