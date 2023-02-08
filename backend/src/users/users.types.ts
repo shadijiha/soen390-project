@@ -3,6 +3,7 @@
  */
 
 import { ApiConsumes, ApiProperty } from "@nestjs/swagger";
+import { EMPTY } from "rxjs";
 import { App } from "../app.types";
 import { Award } from "../models/award.entity";
 import { Course } from "../models/course.entity";
@@ -42,13 +43,12 @@ export namespace Users {
     mobileNo: string;
 
     @ApiProperty({ examples: ["male", "female"], required: false })
-    gender: "male" | "female" | null;
+    gender: "male" | "female" | null | '';
 
     @ApiProperty({required: false})
     biography: string;
 
      @ApiProperty({
-    
       type: "file",
       properties: {
         file: {

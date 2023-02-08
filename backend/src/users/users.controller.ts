@@ -1,9 +1,12 @@
 import {
   Controller,
   Delete,
+  FileTypeValidator,
   Get,
   HttpException,
   HttpStatus,
+  MaxFileSizeValidator,
+  ParseFilePipe,
   Request,
 } from "@nestjs/common";
 import { Body, Put, Query, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common/decorators";
@@ -54,12 +57,19 @@ export class UsersController {
   @Put("user")
   @ApiConsumes("multipart/form-data")
   @ApiResponse({ type: Users.UpdateUserResponse })
-  @UseInterceptors(FileInterceptor('file'))
-  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFile() file: Express.Multer.File) {
+  @UseInterceptors(FileInterceptor('profile_pic'))
+  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFile(new ParseFilePipe({
+    validators: [
+      new MaxFileSizeValidator({ maxSize: 5000000 }), //bytes
+      new FileTypeValidator({ fileType: "image" }),
+    ],
+    fileIsRequired: false,
+  })) file: Express.Multer.File) {
+
     console.log(file);
-    console.log(user);
-    return this.usersService.update(authedUser.id, user);
+    return this.usersService.update(authedUser.id, user, file);
   }
 
 
 }
+

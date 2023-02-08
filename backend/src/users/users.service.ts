@@ -43,26 +43,30 @@ export class UsersService {
     return await userNoPass;
   }
 
-  async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
+  async update(id: number, user: Users.UpdateUserRequest, file: Express.Multer.File): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
 
-
+    // console.log("old user:");
+    // console.log(oldUser);
+    // console.log("user:");
+    // console.log(user);
     // shoul only update the old user. remove updated user
-    oldUser.firstName = user.firstName != null ? user.firstName : oldUser.firstName;
-    oldUser.lastName = user.lastName != null ? user.lastName : oldUser.lastName;
-    oldUser.email = user.email != null ? user.email : oldUser.email;
+    oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName;
+    oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName;
+    oldUser.email = user.email != '' ? user.email : oldUser.email;
     oldUser.password = oldUser.password;
-    oldUser.mobileNo = user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
-    oldUser.gender = user.gender != null ? user.gender : oldUser.gender;
-    oldUser.biography = user.biography != null ? user.biography : oldUser.biography;
+    oldUser.mobileNo = user.mobileNo != '' ? user.mobileNo : oldUser.mobileNo;
+    oldUser.gender = user.gender != '' ? user.gender : oldUser.gender;
+    oldUser.biography = user.biography != '' ? user.biography : oldUser.biography;
 
-
+   
     //convert image to base64
-  //   if(user.profile_pic != null){
-  //   let buff = fs.readFileSync(file);
-  //   let base64data = buff.toString('base64');
-  //   oldUser.profile_pic = base64data;
-  // }
+    if(file != null){
+      console.log("file is not null");
+      let buff = file.buffer;
+      let base64data = buff.toString('base64');
+      oldUser.profile_pic = base64data;
+  }
 
     oldUser.created_at = oldUser.created_at;
 
