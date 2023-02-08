@@ -2,7 +2,7 @@
  * Types for Request and Respose
  */
 
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiConsumes, ApiProperty } from "@nestjs/swagger";
 import { App } from "../app.types";
 import { Award } from "../models/award.entity";
 import { Course } from "../models/course.entity";
@@ -29,56 +29,69 @@ export namespace Users {
   }
 
   export class UpdateUserRequest {
-    @ApiProperty()
+    @ApiProperty({required: false})
     firstName: string | null;
 
-    @ApiProperty()
+    @ApiProperty({required: false})
     lastName: string | null;
 
-    @ApiProperty()
+    @ApiProperty({required: false})
     email: string | null;
 
-    @ApiProperty()
+    @ApiProperty({required: false})
     mobileNo: string;
 
-    @ApiProperty({ examples: ["male", "female"] })
+    @ApiProperty({ examples: ["male", "female"], required: false })
     gender: "male" | "female" | null;
 
-    @ApiProperty()
+    @ApiProperty({required: false})
     biography: string;
 
-    @ApiProperty({ type: [Education] })
-    educations: Education[];
+     @ApiProperty({
+    
+      type: "file",
+      properties: {
+        file: {
+          type: "string",
+          format: "binary",
+        },
+      }, required: false}
+    
+  )
+    profile_pic: Express.Multer.File;
 
-    @ApiProperty({ type: [Work] })
-    workExperience: Work[];
+    // @ApiProperty({ type: [Education] })
+    // educations: Education[];
 
-    @ApiProperty({ type: [Volunteering] })
-    volunteeringExperience: Volunteering[];
+    // @ApiProperty({ type: [Work] })
+    // workExperience: Work[];
 
-    @ApiProperty({ type: [User] })
-    connections: User[];
+    // @ApiProperty({ type: [Volunteering] })
+    // volunteeringExperience: Volunteering[];
 
-    @ApiProperty({ type: [Skill] })
-    skills: Skill[];
+    // @ApiProperty({ type: [User] })
+    // connections: User[];
 
-    @ApiProperty({ type: [Recommendation] })
-    recommendationsReceived: Recommendation[];
+    // @ApiProperty({ type: [Skill] })
+    // skills: Skill[];
 
-    @ApiProperty({ type: [Recommendation] })
-    recommendationsGiven: Recommendation[];
+    // @ApiProperty({ type: [Recommendation] })
+    // recommendationsReceived: Recommendation[];
 
-    @ApiProperty({ type: [Course] })
-    courses: Course[];
+    // @ApiProperty({ type: [Recommendation] })
+    // recommendationsGiven: Recommendation[];
 
-    @ApiProperty({ type: [Project] })
-    projects: Project[];
+    // @ApiProperty({ type: [Course] })
+    // courses: Course[];
 
-    @ApiProperty({ type: [Award] })
-    awards: Award[];
+    // @ApiProperty({ type: [Project] })
+    // projects: Project[];
 
-    @ApiProperty({ type: [Language] })
-    languages: Language[];
+    // @ApiProperty({ type: [Award] })
+    // awards: Award[];
+
+    // @ApiProperty({ type: [Language] })
+    // languages: Language[];
   }
 
   export class UpdateUserResponse extends App.WithStatus {

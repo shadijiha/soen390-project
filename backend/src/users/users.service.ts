@@ -5,6 +5,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Like, Repository } from "typeorm";
 import { Users } from "./users.types";
 import * as argon2 from "argon2";
+import fs from 'fs';  
 
 @Injectable()
 export class UsersService {
@@ -44,48 +45,44 @@ export class UsersService {
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
-    let updatedUser = new User();
-    
-    // shoul only update the old user. remove updated user
-    updatedUser.firstName =
-      user.firstName != null ? user.firstName : oldUser.firstName;
-    updatedUser.lastName = user.lastName != null ? user.lastName : oldUser.lastName;
-    updatedUser.email = user.email != null ? user.email : oldUser.email;
-    updatedUser.password = oldUser.password;
-    updatedUser.mobileNo =user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
-    updatedUser.gender = user.gender != null ? user.gender : oldUser.gender;
-    updatedUser.biography =
-      user.biography != null ? user.biography : oldUser.biography;
-    updatedUser.educations =
-      user.educations != null ? user.educations : oldUser.educations;
-    updatedUser.workExperiences =
-      user.workExperience != null
-        ? user.workExperience
-        : oldUser.workExperiences;
-    updatedUser.volunteeringExperience =
-      user.volunteeringExperience != null
-        ? user.volunteeringExperience
-        : oldUser.volunteeringExperience;
-    updatedUser.connections =
-      user.connections != null ? user.connections : oldUser.connections;
-    updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
-    updatedUser.recommendationsReceived =
-      user.recommendationsReceived != null
-        ? user.recommendationsReceived
-        : oldUser.recommendationsReceived;
-    updatedUser.recommendationsGiven =
-      user.recommendationsGiven != null
-        ? user.recommendationsGiven
-        : oldUser.recommendationsGiven;
-    updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
-    updatedUser.projects =
-      user.projects != null ? user.projects : oldUser.projects;
-    updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
-    updatedUser.languages =
-      user.languages != null ? user.languages : oldUser.languages;
-    updatedUser.created_at = oldUser.created_at;
 
-    await this.usersRepository.update(id, updatedUser);
+
+    // shoul only update the old user. remove updated user
+    oldUser.firstName = user.firstName != null ? user.firstName : oldUser.firstName;
+    oldUser.lastName = user.lastName != null ? user.lastName : oldUser.lastName;
+    oldUser.email = user.email != null ? user.email : oldUser.email;
+    oldUser.password = oldUser.password;
+    oldUser.mobileNo = user.mobileNo != null ? user.mobileNo : oldUser.mobileNo;
+    oldUser.gender = user.gender != null ? user.gender : oldUser.gender;
+    oldUser.biography = user.biography != null ? user.biography : oldUser.biography;
+
+
+    //convert image to base64
+  //   if(user.profile_pic != null){
+  //   let buff = fs.readFileSync(file);
+  //   let base64data = buff.toString('base64');
+  //   oldUser.profile_pic = base64data;
+  // }
+
+    oldUser.created_at = oldUser.created_at;
+
+    // updatedUser.educations = user.educations != null ? user.educations : oldUser.educations;
+    // updatedUser.workExperiences = user.workExperience != null ? user.workExperience : oldUser.workExperiences;
+    // updatedUser.volunteeringExperience =
+    // user.volunteeringExperience != null? user.volunteeringExperience : oldUser.volunteeringExperience;
+    // updatedUser.connections = user.connections != null ? user.connections : oldUser.connections;
+    // updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
+    // updatedUser.recommendationsReceived = user.recommendationsReceived != null ? user.recommendationsReceived : oldUser.recommendationsReceived;
+    // updatedUser.recommendationsGiven = user.recommendationsGiven != null ? user.recommendationsGiven : oldUser.recommendationsGiven;
+    // updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
+    // updatedUser.projects = user.projects != null ? user.projects : oldUser.projects;
+    // updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
+    // updatedUser.languages =  user.languages != null ? user.languages : oldUser.languages;
+
+
+
+
+    await this.usersRepository.update(id, oldUser);
     return this.usersRepository.findOneBy({ id });
   }
 

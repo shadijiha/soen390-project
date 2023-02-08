@@ -6,13 +6,14 @@ import {
   HttpStatus,
   Request,
 } from "@nestjs/common";
-import { Body, Put, Query, UseGuards } from "@nestjs/common/decorators";
-import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
+import { Body, Put, Query, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common/decorators";
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 import { User } from "../models/user.entity";
 import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 import { AuthUser, BearerPayload, error } from "../util/util";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller()
 @ApiTags("Users")
@@ -21,13 +22,13 @@ import { AuthUser, BearerPayload, error } from "../util/util";
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get("users")
+  @Get("user")
   @ApiResponse({ type: Users.GetAllUsersResponse })
   async findAll(): Promise<User[]> {
     return this.usersService.findAll();
   }
 
-  @Delete("users")
+  @Delete("user")
   remove(@AuthUser() authedUser: BearerPayload) {
     try {
       this.usersService.removeSoft(authedUser.id);
@@ -48,4 +49,17 @@ export class UsersController {
     if (query.length <= 0) return { users: [], companies: [] };
     return this.usersService.search(await authedUser.getUser(), query);
   }
+
+
+  @Put("user")
+  @ApiConsumes("multipart/form-data")
+  @ApiResponse({ type: Users.UpdateUserResponse })
+  @UseInterceptors(FileInterceptor('file'))
+  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFile() file: Express.Multer.File) {
+    console.log(file);
+    console.log(user);
+    return this.usersService.update(authedUser.id, user);
+  }
+
+
 }
