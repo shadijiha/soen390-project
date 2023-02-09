@@ -67,6 +67,7 @@ const Profile = () => {
               <meta property="og:title" content="SkillSwipe" />
             </Head>
 
+            {/* profile picture */}
             <div className="profile-top-card">
               <img
                 alt="image"
@@ -77,6 +78,7 @@ const Profile = () => {
                   objectFit: "cover",
                 }}
               />
+
               <div className="profile-container01">
                 <div className="profile-container02">
                   <span className="profile-text">

@@ -13,6 +13,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
+import { maxHeaderSize } from "http";
 
 const EditProfile = () => {
   const [selectedProfilePic, setProfilePic] = useState(null);
@@ -77,6 +78,7 @@ const EditProfile = () => {
             position: "relative",
           }}
         >
+          {/* profile picture */}
           <img
             alt="image"
             src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
@@ -87,6 +89,23 @@ const EditProfile = () => {
               borderRadius: "100%",
             }}
           />
+          <div
+            style={{
+              position: "absolute",
+              zIndex: -1,
+              width: "maxWidth",
+              top: "-30%",
+            }}
+          >
+            {/* cover photo */}
+            <img
+              src="https://timelinecovers.pro/facebook-cover/download/artistic-retro-wave-palm-trees-facebook-cover.jpg"
+              alt="Cover"
+              style={{
+                backgroundColor: "white",
+              }}
+            />
+          </div>
           <button style={{ position: "absolute", bottom: "0", right: "0" }}>
             {/* upload new profile picture button */}
             <input
@@ -100,8 +119,8 @@ const EditProfile = () => {
                 src="https://img.icons8.com/material-sharp/512/send-letter.png"
                 alt="Upload Icon"
                 style={{
-                  height: "40px",
-                  width: "40px",
+                  height: "35px",
+                  width: "35px",
                   borderRadius: "100%",
                   backgroundColor: "white",
                 }}
