@@ -87,6 +87,7 @@ const EditProfile = () => {
               aspectRatio: "1/1",
               objectFit: "cover",
               borderRadius: "100%",
+              boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
             }}
           />
           <div
@@ -98,13 +99,13 @@ const EditProfile = () => {
             }}
           >
             {/* cover photo */}
-            <img
+            {/* <img
               src="https://timelinecovers.pro/facebook-cover/download/artistic-retro-wave-palm-trees-facebook-cover.jpg"
               alt="Cover"
               style={{
                 backgroundColor: "white",
               }}
-            />
+            /> */}
           </div>
           <button style={{ position: "absolute", bottom: "0", right: "0" }}>
             {/* upload new profile picture button */}
