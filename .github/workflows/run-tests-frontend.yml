@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         working-directory: ./skillswipe
-        run: npm run test
+        run: npm run test:ci
 
       - name: Check test coverage
         working-directory: ./skillswipe
