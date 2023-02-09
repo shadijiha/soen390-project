@@ -6,6 +6,7 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
 import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
+import router from "next/router";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -153,6 +154,21 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
+                <button
+                  className="profile-button1 button"
+                  style={{
+                    color: buttonColors,
+                    borderColor: buttonColors,
+                    borderWidth: "2px",
+                    textShadow: "0px 0px 40px #000000CA",
+                    fontWeight: 600,
+                  }}
+                  onClick={() => {
+                    router.push("/editProfile");
+                  }}
+                >
+                  Edit Profile
+                </button>
               </div>
             </div>
 
