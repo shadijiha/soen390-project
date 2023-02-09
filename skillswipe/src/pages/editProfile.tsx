@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { maxHeaderSize } from "http";
+import axios from "axios";
 
 const EditProfile = () => {
   const [selectedProfilePic, setProfilePic] = useState(null);
@@ -22,13 +23,17 @@ const EditProfile = () => {
   const [school, setSchool] = useState("");
   const [location, setLocation] = useState("");
   const [title, setTitle] = useState("");
+  axios.get("").then((res) => {
+    console.log(res.data);
+  });
 
-  const handleSubmit = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const handleSubmit = (event: any) => {
     console.log(`Name: ${name}`);
     console.log(`School: ${school}`);
     console.log(`Location: ${location}`);
     console.log(`Title: ${title}`);
+
+    profile.name = name;
   };
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
