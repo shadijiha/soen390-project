@@ -1,5 +1,5 @@
 import { render,screen } from '@testing-library/react'
-import Home from '@/pages/home'
+import NavBar from '@/components/NavBar'
 import '@testing-library/jest-dom'
 import React from 'react';
 import Layout from '@/components/Layout';
@@ -7,12 +7,12 @@ import Layout from '@/components/Layout';
 jest.mock('next/router', () => require('next-router-mock'));
 describe('Home', () => {
   const renderHome = () =>
-        render(<Home />);
+        render(<NavBar />);
         beforeAll(()=>{
           <Layout></Layout>
       })
-        it('should display home page when rendered', () => {
+        it('should render NavBar without crashing', () => {
           renderHome();
-          expect(screen.queryByTestId("Home-page"));
+          expect(screen.queryByTestId("Nav-Bar"));
       });
 })

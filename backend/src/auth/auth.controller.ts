@@ -11,44 +11,44 @@ import { JwtAuthGuard } from "./jwt-auth.guard";
 @Controller("auth")
 @ApiTags("Authentication")
 export class AuthController {
-	constructor(
-		private readonly userService: UsersService,
-		private readonly authService: AuthService
-	) {}
+  constructor(
+    private readonly userService: UsersService,
+    private readonly authService: AuthService
+  ) {}
 
-	@Post("login")
-	@ApiResponse({ type: Auth.LoginResponse })
-	public async login(
-		@Body() body: Auth.LoginRequest
-	): Promise<Auth.LoginResponse> {
-		// try {
-		return await this.authService.login(body);
-		// } catch (e) {
-		// 	return error<Auth.LoginResponse>(e);
-		// }
-	}
+  @Post("login")
+  @ApiResponse({ type: Auth.LoginResponse })
+  public async login(
+    @Body() body: Auth.LoginRequest
+  ): Promise<Auth.LoginResponse> {
+    //try {
+    return await this.authService.login(body);
+    // } catch (e) {
+    // 	return error<Auth.LoginResponse>(e);
+    // }
+  }
 
-	@Post("register")
-	@ApiResponse({ type: Auth.LoginResponse })
-	public async register(
-		@Body() body: Auth.RegisterRequest
-	): Promise<Auth.LoginResponse> {
-		// Check if the user exists first
-		if (await this.userService.findOneByEmail(body.email)) {
-			throw new ConflictException(
-				"Email " + body.email + " already taken"
-			);
-		}
+  @Post("register")
+  @ApiResponse({ type: Auth.LoginResponse })
+  public async register(
+    @Body() body: Auth.RegisterRequest
+  ): Promise<Auth.LoginResponse> {
+    // Check if the user exists first
+    if (await this.userService.findOneByEmail(body.email)) {
+      throw new ConflictException("Email " + body.email + " already taken");
+    }
 
-		await this.userService.create(body);
-		return await this.authService.login(body);
-	}
+    await this.userService.create(body);
+    return await this.authService.login(body);
+  }
 
 	@Get("me")
 	@ApiResponse({ type: User })
 	@ApiBearerAuth()
 	@UseGuards(JwtAuthGuard)
 	public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
-		return await this.userService.getByEmail(authedUser.email);
+		const user = await authedUser.getUser(["educations"]);
+		console.log(user);
+		return user;
 	}
 }

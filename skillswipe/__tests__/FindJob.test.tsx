@@ -1,5 +1,5 @@
 import { render,screen } from '@testing-library/react'
-import Home from '@/pages/home'
+import FindJob from '@/pages/findJob'
 import '@testing-library/jest-dom'
 import React from 'react';
 import Layout from '@/components/Layout';
@@ -7,12 +7,12 @@ import Layout from '@/components/Layout';
 jest.mock('next/router', () => require('next-router-mock'));
 describe('Home', () => {
   const renderHome = () =>
-        render(<Home />);
+        render(<FindJob />);
         beforeAll(()=>{
           <Layout></Layout>
       })
-        it('should display home page when rendered', () => {
+        it('should render find job page without crashing', () => {
           renderHome();
-          expect(screen.queryByTestId("Home-page"));
+          expect(screen.queryByTestId("find-jobs"));
       });
 })

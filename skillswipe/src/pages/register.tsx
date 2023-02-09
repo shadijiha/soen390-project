@@ -90,7 +90,7 @@ const Register = () => {
     <>
     <Layout>
 
-      <Flex height="100vh" alignItems="center" justifyContent="center">
+      <Flex height="100vh" alignItems="center" justifyContent="center" data-testid="register-page">
         <Flex
           direction="column"
           background={formBackground}
@@ -99,6 +99,7 @@ const Register = () => {
           >
           <Heading mb={6}>Register 🧖🏼</Heading>
           <Input
+            data-testid="first-name"
             placeholder="First Name"
             variant="filled"
             mb={3}
@@ -109,6 +110,7 @@ const Register = () => {
           
 
           <Input
+            data-testid="last-name"
             placeholder="Last Name"
             variant="filled"
             mb={3}
@@ -118,6 +120,7 @@ const Register = () => {
             />
 
           <Input
+            data-testid="email"
             placeholder="Email"
             variant="filled"
             mb={3}
@@ -126,6 +129,7 @@ const Register = () => {
             onChange={EmailChange}
             />
           <Input
+            data-testid="password"
             placeholder="Password"
             variant="filled"
             mb={3}
@@ -134,6 +138,7 @@ const Register = () => {
             onChange={passwordChange}
             />
           <Input
+            data-testid="confirm-password"
             placeholder="Confirm Password"
             variant="filled"
        

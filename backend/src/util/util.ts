@@ -4,19 +4,24 @@ import {
 	Logger
 } from "@nestjs/common";
 import { ApiBody } from "@nestjs/swagger";
-import { type Request } from "express";
+import { Request } from "express";
+import { User } from "src/models/user.entity";
+import { FindOptionsRelationByString, FindOptionsRelations } from "typeorm";
 import { App } from "../app.types";
 
-export interface BearerPayload {
+export type BearerPayload = {
 	email: string;
 	id: number;
-}
+	getUser: (
+		relations?: FindOptionsRelations<User> | FindOptionsRelationByString
+	) => Promise<User>;
+};
 
 export function error<T extends App.WithStatus>(e: any): T {
 	const err = e as Error;
 	return {
 		errors: [err.message],
-		status: App.Status.Failed
+		status: App.Status.Failed,
 	} as T;
 }
 
@@ -26,8 +31,17 @@ export function error<T extends App.WithStatus>(e: any): T {
  */
 export const AuthUser = createParamDecorator(
 	(data: unknown, ctx: ExecutionContext) => {
-		const request = ctx.switchToHttp().getRequest();
+		const request = <Request>ctx.switchToHttp().getRequest();
 		const payload = request.user as BearerPayload;
-		return payload;
+		return {
+			...payload,
+			getUser: async (
+				relations: FindOptionsRelations<User> | FindOptionsRelationByString = []
+			) => {
+				return await User.findOne({ where: { id: payload.id }, relations });
+			},
+		};
 	}
 );
+
+export class BaseRequest { }

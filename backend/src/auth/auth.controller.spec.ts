@@ -15,24 +15,21 @@ describe("AuthController", () => {
 	let controller: AuthController;
 	let userRepository: Repository<User>;
 
-	beforeEach(async () => {
-		const module: TestingModule = await Test.createTestingModule({
-			imports: [...setupTestDB(), UsersModule],
-			providers: [
-				UsersService,
-				AuthService,
-				JwtService,
-				{
-					provide: getRepositoryToken(User),
-					useValue: {}
-				},
-				{
-					provide: DataSource,
-					useFactory: dataSourceMockFactory
-				}
-			],
-			controllers: [AuthController]
-		}).compile();
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      imports: [...setupTestDB(), UsersModule],
+      providers: [
+        UsersService,
+        AuthService,
+        JwtService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: {},
+        },
+        { provide: DataSource, useFactory: dataSourceMockFactory },
+      ],
+      controllers: [AuthController],
+    }).compile();
 
 		controller = module.get<AuthController>(AuthController);
 		userRepository = module.get(getRepositoryToken(User));

@@ -10,8 +10,8 @@ import {
 	ManyToMany,
 	OneToMany,
 	PrimaryGeneratedColumn,
-	RelationCount,
-	UpdateDateColumn
+	TableInheritance,
+	UpdateDateColumn,
 } from "typeorm";
 import { Award } from "./award.entity";
 import { Course } from "./course.entity";
@@ -25,6 +25,7 @@ import { Volunteering } from "./volunteering.entity";
 import { Work } from "./work.entity";
 
 @Entity("users")
+@TableInheritance({ column: { type: "varchar", name: "type" } })
 export class User extends BaseEntity {
 	@PrimaryGeneratedColumn()
 	@ApiProperty()
@@ -47,10 +48,6 @@ export class User extends BaseEntity {
 
 	@Column({ select: false })
 	password: string;
-
-	@Column({ default: false })
-	@ApiProperty()
-	is_admin: boolean;
 
 	@Column({ default: null })
 	@ApiProperty()
@@ -101,18 +98,18 @@ export class User extends BaseEntity {
 	}
 
 	// RELATIONS
-	// education
-	@OneToMany(() => Education, (e) => e.user)
+	//education
+	@OneToMany(() => Education, (e) => e.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Education] })
 	educations: Education[];
 
-	// work experience
-	@OneToMany(() => Work, (w) => w.user)
+	//work experience
+	@OneToMany(() => Work, (w) => w.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Work] })
 	workExperience: Work[];
 
-	// volunteering experience
-	@OneToMany(() => Volunteering, (v) => v.user)
+	//volunteering experience
+	@OneToMany(() => Volunteering, (v) => v.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Volunteering] })
 	volunteeringExperience: Volunteering[];
 
@@ -121,8 +118,8 @@ export class User extends BaseEntity {
 	@ApiProperty({ type: [User] })
 	connections: User[];
 
-	// skills
-	@ManyToMany((type) => Skill, (skill) => skill.user)
+	//skills
+	@ManyToMany((type) => Skill, (skill) => skill.user, { cascade: true, orphanedRowAction: "delete" })
 	@JoinTable()
 	@ApiProperty({ type: [Skill] })
 	skills: Skill[];
@@ -137,23 +134,23 @@ export class User extends BaseEntity {
 	@ApiProperty({ type: [Recommendation] })
 	recommendationsGiven: Recommendation[];
 
-	// courses
-	@OneToMany(() => Course, (course) => course.user)
+	//courses
+	@OneToMany(() => Course, (course) => course.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Course] })
 	courses: Course[];
 
-	// projects
-	@OneToMany(() => Project, (project) => project.user)
+	//projects
+	@OneToMany(() => Project, (project) => project.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Project] })
 	projects: Project[];
 
-	// awards
-	@OneToMany(() => Award, (award) => award.user)
+	//awards
+	@OneToMany(() => Award, (award) => award.user, { cascade: true, orphanedRowAction: "delete" })
 	@ApiProperty({ type: [Award] })
 	awards: Award[];
 
-	// languages
-	@ManyToMany((type) => Language, (language) => language.user)
+	//languages
+	@ManyToMany((type) => Language, (language) => language.user, { cascade: true, orphanedRowAction: "delete" })
 	@JoinTable()
 	@ApiProperty({ type: [Language] })
 	languages: Language[];

@@ -1,5 +1,5 @@
 import { render,screen } from '@testing-library/react'
-import Home from '@/pages/home'
+import Profile from '@/pages/profile'
 import '@testing-library/jest-dom'
 import React from 'react';
 import Layout from '@/components/Layout';
@@ -7,12 +7,12 @@ import Layout from '@/components/Layout';
 jest.mock('next/router', () => require('next-router-mock'));
 describe('Home', () => {
   const renderHome = () =>
-        render(<Home />);
+        render(<Profile />);
         beforeAll(()=>{
           <Layout></Layout>
       })
-        it('should display home page when rendered', () => {
+        it('Profile page should render without crashing', () => {
           renderHome();
-          expect(screen.queryByTestId("Home-page"));
+          expect(screen.queryByTestId("profile-page"));
       });
 })

@@ -6,7 +6,7 @@ import {
 	Entity,
 	ManyToOne,
 	PrimaryGeneratedColumn,
-	UpdateDateColumn
+	UpdateDateColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 
@@ -42,6 +42,5 @@ export class Education extends BaseEntity {
 
 	// RELATIONS
 	@ManyToOne(() => User, (u) => u.educations)
-	@ApiProperty({ type: () => User })
 	user: User;
 }

@@ -1,234 +1,1871 @@
-import React, { useEffect, useState } from "react";
-import imageFile from "../assets/images/image.jpeg";
-import {
-  Box,
-  Flex,
-  Text,
-  Image,
-  Button,
-  Input,
-  FormControl,
-  FormLabel,
-  FormHelperText,
-  Stack,
-  Divider,
-  useColorModeValue,
-  useColorMode,
-  VStack,
-  useBreakpointValue,
-} from "@chakra-ui/react";
-import NavBar from "../components/NavBar";
-import Layout from "@/components/Layout";
+/* eslint-disable @next/next/no-img-element */
+import Head from "next/head";
+import NavBar from "@/components/NavBar";
+import FeatureCard4 from "../components/feature-card4";
+import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
-
-var borderWidth = "3px";
-var boxBorder = "30";
+import Layout from "@/components/Layout";
+import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 const Profile = () => {
+  const { toggleColorMode } = useColorMode();
+  const buttonColors = useColorModeValue("black", "white");
+
   useEffect(() => {
-    if(localStorage.getItem('jwt')){
-      checkLogin(localStorage.getItem("jwt")).then((Response) => {
-        setProfile({
-          ...profile,
-          name : Response.data.firstName +" "+Response.data.lastName
+    if (localStorage.getItem("jwt")) {
+      checkLogin(localStorage.getItem("jwt"))
+        .then((Response) => {
+          setProfile({
+            ...profile,
+            name: Response.data.firstName + " " + Response.data.lastName,
+          });
         })
-
-      }).catch((error) => {
-
-      })
-
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  },[])
+  }, []);
   const [profile, setProfile] = useState({
     name: "John Smith",
     title: "Software Engineer",
-    location: "Montreal ,QC, CA",
+    location: "Montreal, QC, CA",
     school: "Concordia University",
     experience: "Five years of experience in full stack development",
     experience2: "Three years of experience in mobile development",
     experience3: "Two years of experience in data analysis",
     image:
-      "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
+      "https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg",
     cover:
-      "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
+      "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
-  const { toggleColorMode } = useColorMode();
-  const formBorder = useColorModeValue("gray.300", "gray.600");
-  const toggleTheme = useColorModeValue("🌙", "💡");
 
-  const [employmentHistory, setEmploymentHistory] = useState([
-    {
-      company: "ABC Inc",
-      position: "Software Engineer",
-      duration: "January 2020 - Present",
-      description:
-        "Working on building and maintaining the company's e-commerce platform using React and Node.js.",
-    },
-    {
-      company: "DEF Corp",
-      position: "Full Stack Developer",
-      duration: "June 2016 - December 2019",
-      description:
-        "Developed and implemented several features for the company's CRM system using Ruby on Rails and JavaScript.",
-    },
-  ]);
-
-  const handleEdit = () => {
-    setProfile({
-      ...profile,
-      name: "Full Name",
-      title: "Software Engineer",
-      location: "Montreal ,QC, CA",
-      experience: "Five years of experience in full stack development",
-      experience2: "Three years of experience in mobile development",
-      experience3: "Two years of experience in data analysis",
-      image:
-        "https://image.shutterstock.com/image-photo/young-handsome-man-beard-wearing-260nw-1768126784.jpg",
-      cover:
-        "https://cdn-images.zety.com/pages/software_developer_cover_letter_example_zety_us_4.jpg",
-    });
+  const BackgroundImageDiv = () => {
+    const divStyle: CSSProperties = {
+      backgroundImage: `url('https://example.com/image.jpg')`,
+      height: "200px",
+      width: "200px",
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+    };
+    return <div style={divStyle} />;
   };
-
-  const postBackground = useColorModeValue("gray.100", "gray.700");
   return (
     <>
       <Layout>
-        
-      <NavBar />
-
-      <Flex direction="column" align="right" p={12}>
-        <Stack
-          borderWidth={borderWidth}
-          borderColor={formBorder}
-          backgroundColor={postBackground} // we should make this blurred so that the cover shows through a bit
-          padding="0rem"
-          marginBottom="1rem"
-          rounded={boxBorder}
-          overflow="hidden"
-          width="100%"
-          minW="80vw"
-          maxW="90vw"
-          boxShadow="lg"
-          zIndex={"-1"}
-        >
-          <Image
-            src={profile.cover}
-            alt=""
-            w="100%"
-            h="300px"
-            bg="gray.100"
-            rounded="lg"
-            mb={6}
-            objectFit="cover"
-            />
-          <Flex align="center" direction={["column", "column", "row", "row"]}>
-            <Image
-              src={profile.image}
-              alt=""
-              w="150px"
-              h="150px"
-              rounded="full"
-              objectFit={"cover"}
-              mr={6}
-              mb={6}
-              marginLeft={10}
-              boxShadow="lg"
-              />
-            <Stack ml={6}>
-              <Text fontSize="2xl" fontWeight="bold">
-                {profile.name}
-              </Text>
-              <Text fontSize="lg" fontWeight="medium">
-                {profile.title}
-              </Text>
-              <Text fontSize="sm">{profile.location}</Text>
-              <Text>{profile.school}</Text>
-
-            </Stack>
-          </Flex>
-        </Stack>
-        <Divider my={6} w="100%" />
-        <Stack>
-          <Box
-            borderWidth={borderWidth}
-            borderColor={formBorder}
-            backgroundColor={postBackground}
-            padding="1rem"
-            marginBottom="1rem"
-            rounded={boxBorder}
-            overflow="hidden"
-            width="100%"
-            minW="80vw"
-            maxW="90vw"
-            boxShadow="lg"
-            >
-            <Text fontSize="lg" fontWeight="medium" mb={2} marginLeft={"1rem"}>
-              Personal Experience
-            </Text>
-
-            <Stack ml={5}>
-              <ol>
-                <li>
-                  <Text fontSize="sm" marginBottom={"1rem"}>
-                    {profile.experience}
-                  </Text>
-                </li>
-                <li>
-                  <Text fontSize="sm" marginBottom={"1rem"}>
-                    {profile.experience2}
-                  </Text>
-                </li>
-                <li>
-                  <Text fontSize="sm" marginBottom={"1rem"}>
-                    {profile.experience3}
-                  </Text>
-                </li>
-              </ol>
-            </Stack>
-          </Box>
-        </Stack>
-
-        <Box
-          borderWidth={borderWidth}
-          borderColor={formBorder}
-          backgroundColor={postBackground}
-          padding="1rem"
-          marginBottom="1rem"
-          rounded={boxBorder}
-          overflow="hidden"
-          width="100%"
-          minW="80vw"
-          maxW="90vw"
-          boxShadow="lg"
+        <NavBar />
+        <div data-testid="profile-page">
+          <div
+            id="profile"
+            className="profile-container"
+            style={{
+              marginTop: "-3em",
+            }}
           >
-          <Text fontSize="lg" fontWeight="medium" mb={2} ml={2}>
-            Employment History:
-          </Text>
-          <Stack>
-            {employmentHistory.map((history, index) => (
-              <Box
-                key={index}
-                borderWidth="2px"
-                borderColor={formBorder}
-                backgroundColor={postBackground}
-                padding="1rem"
-                marginBottom="1rem"
-                rounded="25"
-                overflow="hidden"
-                width="100%"
-                minW="80vw"
-                maxW="90vw"
+            <Head>
+              <title>SkillSwipe</title>
+              <meta property="og:title" content="SkillSwipe" />
+            </Head>
+
+            <div className="profile-top-card">
+              <img
+                alt="image"
+                src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
+                className="profile-image"
+                style={{
+                  aspectRatio: "1/1",
+                  objectFit: "cover",
+                }}
+              />
+              <div className="profile-container01">
+                <div className="profile-container02">
+                  <span className="profile-text">
+                    {profile.title} @ company
+                  </span>
+                </div>
+                <h1
+                  className="profile-text01"
+                  style={{
+                    fontSize: "1.5em",
+                    fontWeight: 700,
+                    textShadow: "0px 0px 30px #00000085",
+                  }}
+                >
+                  {profile.name}
+                </h1>
+                <span
+                  className="profile-text02"
+                  style={{
+                    fontSize: "1em",
+                    textShadow: "0px 0px 30px #00000085",
+                  }}
+                >
+                  {profile.school}
+                </span>
+                <span
+                  className="profile-text03"
+                  style={{
+                    fontSize: "1em",
+                    textShadow: "0px 0px 30px #00000085",
+                  }}
+                >
+                  <span>{profile.location}</span>
+                  <br></br>
+                </span>
+                <div className="profile-container03">
+                  <div className="profile-container04">
+                    <span
+                      className="profile-text06"
+                      style={{
+                        textShadow: "0px 0px 30px #000000B4",
+                        marginLeft: "0px",
+                      }}
+                    >
+                      I&apos;m great at ______
+                    </span>
+                  </div>
+                  <div className="profile-container05">
+                    <button
+                      className="profile-button button"
+                      style={{
+                        color: buttonColors,
+                        borderColor: buttonColors,
+                        borderWidth: "2px",
+                        textShadow: "0px 0px 40px #000000CA",
+                        fontWeight: 600,
+                      }}
+                    >
+                      <span>
+                        <span>Message</span>
+                        <br></br>
+                      </span>
+                    </button>
+                    <button
+                      className="profile-button1 button"
+                      style={{
+                        color: buttonColors,
+                        borderColor: buttonColors,
+                        borderWidth: "2px",
+                        textShadow: "0px 0px 40px #000000CA",
+                        fontWeight: 600,
+                      }}
+                    >
+                      Connect
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="profile-steps">
+              <h1
+                className="profile-text10"
+                style={{
+                  fontWeight: 600,
+                }}
               >
-                <Text fontWeight="bold">{history.company}</Text>
-                <Text>{history.position}</Text>
-                <Text>{history.duration}</Text>
-                <Text>{history.description}</Text>
-              </Box>
-            ))}
-          </Stack>
-        </Box>
-      </Flex>
-            </Layout>
+                Career Journey
+              </h1>
+              <span className="profile-text11">
+                <span>i do bits and bytes for a living</span>
+                <br></br>
+              </span>
+              <div className="profile-container06">
+                <div className="profile-step">
+                  <div className="profile-container07">
+                    <div className="profile-line"></div>
+                    <div className="profile-container08">
+                      <svg viewBox="0 0 1024 1024" className="profile-icon">
+                        <path d="M634 558q92-64 92-174 0-88-63-151t-151-63-151 63-63 151q0 46 27 96t65 78l36 26v98h172v-98zM512 86q124 0 211 87t87 211q0 156-128 244v98q0 18-12 30t-30 12h-256q-18 0-30-12t-12-30v-98q-128-88-128-244 0-124 87-211t211-87zM384 896v-42h256v42q0 18-12 30t-30 12h-172q-18 0-30-12t-12-30z"></path>
+                      </svg>
+                    </div>
+                    <div className="profile-line1"></div>
+                  </div>
+                  <div className="profile-container09">
+                    <h1 className="profile-text14">
+                      <span>Genetec</span>
+                      <br></br>
+                    </h1>
+                    <h3 className="profile-heading">2012 - 2014</h3>
+                    <span className="profile-text17">
+                      <span>Software Engineer Intern</span>
+                      <br></br>
+                    </span>
+                  </div>
+                </div>
+                <div className="profile-step1">
+                  <div className="profile-container10">
+                    <div className="profile-line2"></div>
+                    <div className="profile-container11">
+                      <svg viewBox="0 0 1024 1024" className="profile-icon2">
+                        <path d="M746 512q26 0 45-18t19-46-19-46-45-18-45 18-19 46 19 46 45 18zM618 342q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zM406 342q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zM278 512q26 0 45-18t19-46-19-46-45-18-45 18-19 46 19 46 45 18zM512 128q158 0 271 100t113 242q0 88-63 150t-151 62h-74q-28 0-46 19t-18 45q0 22 16 42t16 44q0 28-18 46t-46 18q-160 0-272-112t-112-272 112-272 272-112z"></path>
+                      </svg>
+                    </div>
+                    <div className="profile-line3"></div>
+                  </div>
+                  <div className="profile-container12">
+                    <h1 className="profile-text20">
+                      <span>Twitter</span>
+                      <br></br>
+                    </h1>
+                    <h3 className="profile-heading1">2014 - 2015</h3>
+                    <span className="profile-text24">
+                      <span>Launched Edit Button</span>
+                      <br></br>
+                    </span>
+                  </div>
+                </div>
+                <div className="profile-step2">
+                  <div className="profile-container13">
+                    <div className="profile-line4"></div>
+                    <div className="profile-container14">
+                      <svg viewBox="0 0 1024 1024" className="profile-icon4">
+                        <path d="M576 736l96 96 320-320-320-320-96 96 224 224z"></path>
+                        <path d="M448 288l-96-96-320 320 320 320 96-96-224-224z"></path>
+                      </svg>
+                    </div>
+                    <div className="profile-line5"></div>
+                  </div>
+                  <div className="profile-container15">
+                    <h1 className="profile-text27">
+                      <span>Facebook</span>
+                      <br></br>
+                    </h1>
+                    <h3 className="profile-heading2">2015 - 2018</h3>
+                    <span className="profile-text30">
+                      <span>Co-Created React Native</span>
+                      <br></br>
+                    </span>
+                  </div>
+                </div>
+                <div className="profile-step3">
+                  <div className="profile-container16">
+                    <div className="profile-line6"></div>
+                    <div className="profile-container17">
+                      <svg viewBox="0 0 1024 1024" className="profile-icon7">
+                        <path d="M480 64c-265.096 0-480 214.904-480 480 0 265.098 214.904 480 480 480 265.098 0 480-214.902 480-480 0-265.096-214.902-480-480-480zM751.59 704c8.58-40.454 13.996-83.392 15.758-128h127.446c-3.336 44.196-13.624 87.114-30.68 128h-112.524zM208.41 384c-8.58 40.454-13.996 83.392-15.758 128h-127.444c3.336-44.194 13.622-87.114 30.678-128h112.524zM686.036 384c9.614 40.962 15.398 83.854 17.28 128h-191.316v-128h174.036zM512 320v-187.338c14.59 4.246 29.044 11.37 43.228 21.37 26.582 18.74 52.012 47.608 73.54 83.486 14.882 24.802 27.752 52.416 38.496 82.484h-155.264zM331.232 237.516c21.528-35.878 46.956-64.748 73.54-83.486 14.182-10 28.638-17.124 43.228-21.37v187.34h-155.264c10.746-30.066 23.616-57.68 38.496-82.484zM448 384v128h-191.314c1.88-44.146 7.666-87.038 17.278-128h174.036zM95.888 704c-17.056-40.886-27.342-83.804-30.678-128h127.444c1.762 44.608 7.178 87.546 15.758 128h-112.524zM256.686 576h191.314v128h-174.036c-9.612-40.96-15.398-83.854-17.278-128zM448 768v187.34c-14.588-4.246-29.044-11.372-43.228-21.37-26.584-18.74-52.014-47.61-73.54-83.486-14.882-24.804-27.75-52.418-38.498-82.484h155.266zM628.768 850.484c-21.528 35.876-46.958 64.746-73.54 83.486-14.184 9.998-28.638 17.124-43.228 21.37v-187.34h155.266c-10.746 30.066-23.616 57.68-38.498 82.484zM512 704v-128h191.314c-1.88 44.146-7.666 87.040-17.28 128h-174.034zM767.348 512c-1.762-44.608-7.178-87.546-15.758-128h112.524c17.056 40.886 27.344 83.806 30.68 128h-127.446zM830.658 320h-95.9c-18.638-58.762-44.376-110.294-75.316-151.428 42.536 20.34 81.058 47.616 114.714 81.272 21.48 21.478 40.362 44.938 56.502 70.156zM185.844 249.844c33.658-33.658 72.18-60.932 114.714-81.272-30.942 41.134-56.676 92.666-75.316 151.428h-95.898c16.138-25.218 35.022-48.678 56.5-70.156zM129.344 768h95.898c18.64 58.762 44.376 110.294 75.318 151.43-42.536-20.34-81.058-47.616-114.714-81.274-21.48-21.478-40.364-44.938-56.502-70.156zM774.156 838.156c-33.656 33.658-72.18 60.934-114.714 81.274 30.942-41.134 56.678-92.668 75.316-151.43h95.9c-16.14 25.218-35.022 48.678-56.502 70.156z"></path>
+                      </svg>
+                    </div>
+                    <div className="profile-line7"></div>
+                  </div>
+                  <div className="profile-container18">
+                    <h1 className="profile-text33">
+                      <span>Instagram</span>
+                      <br></br>
+                    </h1>
+                    <h3 className="profile-heading3">2018 - Present</h3>
+                    <span className="profile-text36">
+                      <span>Working</span>
+                      <br></br>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* EDUCATION SECTION */}
+            <div className="edu-container">
+              <div className="edu-features">
+                <h1
+                  className="edu-text"
+                  style={{
+                    fontWeight: 600,
+                  }}
+                >
+                  <span>Education History</span>
+                </h1>
+                <span className="edu-text03">
+                  <span>
+                    Im a self-taught developer, but I have a degree in Computer
+                    Science.
+                  </span>
+                </span>
+                <div className="edu-container1">
+                  <div className="edu-feature-card1">
+                    <svg viewBox="0 0 1024 1024" className="edu-icon2">
+                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
+                    </svg>
+                    <h2 className="edu-text09">Harvard</h2>
+                    <span className="edu-text10">
+                      TA for CS50, Harvards introductory course to computer
+                      science.
+                    </span>
+                    <span className="edu-text11">2020-Present</span>
+                  </div>
+                  <div className="edu-feature-card">
+                    <svg viewBox="0 0 1024 1024" className="edu-icon">
+                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
+                    </svg>
+                    <h2 className="edu-text06">Concordia University</h2>
+                    <span className="edu-text07">
+                      Earned my bachelors degree in Computer Science, with a
+                      minor in Mathematics.
+                    </span>
+                    <span className="edu-text08">2015-2020</span>
+                  </div>
+                  <div className="edu-feature-card2">
+                    <svg viewBox="0 0 1024 1024" className="edu-icon4">
+                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
+                    </svg>
+                    <h2 className="edu-text12">Dawson</h2>
+                    <span className="edu-text13">
+                      Legally forced to complete my high school diploma in my
+                      youth
+                    </span>
+                    <span className="edu-text14">2015</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* PERSONAL PROJECTS */}
+
+            <div className="personalProj-container">
+              <div className="personalProj-features">
+                <h1
+                  className="personalProj-text"
+                  style={{
+                    fontWeight: 600,
+                  }}
+                >
+                  Personal Projects
+                </h1>
+                <div className="personalProj-container1">
+                  <div className="personalProj-feature-card">
+                    <h2 className="personalProj-text1">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card1">
+                    <h2 className="personalProj-text2">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image1"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card2">
+                    <h2 className="personalProj-text3">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image2"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card3">
+                    <h2 className="personalProj-text4">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image3"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card4">
+                    <h2 className="personalProj-text5">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image4"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card5">
+                    <h2 className="personalProj-text6">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image5"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card6">
+                    <h2 className="personalProj-text7">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image6"
+                    />
+                  </div>
+                  <div className="personalProj-feature-card7">
+                    <h2 className="personalProj-text8">Lorem ipsum</h2>
+                    <img
+                      alt="image"
+                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
+                      className="personalProj-image7"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* temporary div below for spacing under page, will need to remove in final sprint */}
+            <div
+              style={{
+                display: "flex",
+                paddingBottom: "10em",
+              }}
+            ></div>
+          </div>
+
+          <style jsx>
+            {`
+              .personalProj-container {
+                width: 100%;
+                display: flex;
+                overflow: auto;
+                align-items: center;
+                flex-direction: column;
+              }
+              .personalProj-features {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-threeunits);
+                max-width: var(--dl-size-size-maxwidth);
+                flex-direction: column;
+              }
+              .personalProj-text {
+                font-size: 3rem;
+                margin-bottom: var(--dl-space-space-threeunits);
+              }
+              .personalProj-container1 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: grid;
+                grid-gap: var(--dl-space-space-twounits);
+                align-items: flex-start;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+              }
+              .personalProj-feature-card {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text1 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card1 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card1:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text2 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image1 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card2 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card2:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text3 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image2 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card3 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card3:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text4 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image3 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card4 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card4:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text5 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image4 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card5 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card5:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text6 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image5 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card6 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card6:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text7 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image6 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              .personalProj-feature-card7 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-unit);
+                max-width: var(--dl-size-size-maxwidth);
+                box-shadow: 5px 5px 10px 0px rgba(18, 18, 18, 0.1);
+                transition: 0.3s;
+                align-items: flex-start;
+                flex-direction: column;
+                justify-content: flex-start;
+              }
+              .personalProj-feature-card7:hover {
+                transform: scale(1.02);
+              }
+              .personalProj-text8 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .personalProj-image7 {
+                width: var(--dl-size-size-medium);
+                height: var(--dl-size-size-medium);
+                object-fit: cover;
+                border-radius: var(--dl-radius-radius-radius4);
+              }
+              @media (max-width: 991px) {
+                .personalProj-text {
+                  align-self: center;
+                }
+                .personalProj-container1 {
+                  grid-template-columns: 1fr 1fr;
+                }
+              }
+              @media (max-width: 767px) {
+                .personalProj-features {
+                  padding-left: var(--dl-space-space-twounits);
+                  padding-right: var(--dl-space-space-twounits);
+                }
+              }
+              @media (max-width: 479px) {
+                .personalProj-features {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: var(--dl-space-space-unit);
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .personalProj-container1 {
+                  grid-gap: var(--dl-space-space-halfunit);
+                }
+              }
+
+              .edu-container {
+                width: 100%;
+                display: flex;
+                overflow: auto;
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-features {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-threeunits);
+                max-width: var(--dl-size-size-maxwidth);
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-text {
+                font-size: 3rem;
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .edu-text03 {
+                color: var(--dl-color-gray-700);
+                width: 70%;
+                font-size: 1.15rem;
+                text-align: center;
+                margin-bottom: -2em;
+              }
+              .edu-container1 {
+                width: 100%;
+                display: grid;
+                grid-gap: var(--dl-space-space-twounits);
+                margin-top: var(--dl-space-space-fourunits);
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+              }
+              .edu-feature-card {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-twounits);
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-icon {
+                fill: var(--dl-color-gray-500);
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+              }
+              .edu-text06 {
+                font-style: normal;
+                margin-top: var(--dl-space-space-unit);
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .edu-text07 {
+                color: var(--dl-color-gray-700);
+                text-align: center;
+              }
+              .edu-text08 {
+                font-size: 0.75rem;
+                margin-top: var(--dl-space-space-unit);
+                font-weight: 500;
+              }
+              .edu-feature-card1 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-twounits);
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-icon2 {
+                fill: var(--dl-color-gray-500);
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+              }
+              .edu-text09 {
+                font-style: normal;
+                margin-top: var(--dl-space-space-unit);
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .edu-text10 {
+                color: var(--dl-color-gray-700);
+                text-align: center;
+              }
+              .edu-text11 {
+                font-size: 0.75rem;
+                margin-top: var(--dl-space-space-unit);
+                font-weight: 500;
+              }
+              .edu-feature-card2 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-twounits);
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-icon4 {
+                fill: var(--dl-color-gray-500);
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+              }
+              .edu-text12 {
+                font-style: normal;
+                margin-top: var(--dl-space-space-unit);
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .edu-text13 {
+                color: var(--dl-color-gray-700);
+                text-align: center;
+              }
+              .edu-text14 {
+                font-size: 0.75rem;
+                margin-top: var(--dl-space-space-unit);
+                font-weight: 500;
+              }
+              .edu-feature-card3 {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-twounits);
+                align-items: center;
+                flex-direction: column;
+              }
+              .edu-icon6 {
+                fill: var(--dl-color-gray-500);
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+              }
+              .edu-text15 {
+                font-style: normal;
+                margin-top: var(--dl-space-space-unit);
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .edu-text16 {
+                color: var(--dl-color-gray-700);
+                text-align: center;
+              }
+              .edu-text17 {
+                font-size: 0.75rem;
+                margin-top: var(--dl-space-space-unit);
+                font-weight: 500;
+              }
+              @media (max-width: 991px) {
+                .edu-text {
+                  text-align: center;
+                }
+                .edu-text03 {
+                  text-align: center;
+                }
+                .edu-container1 {
+                  grid-template-columns: 1fr 1fr;
+                }
+              }
+              @media (max-width: 767px) {
+                .edu-features {
+                  padding-left: var(--dl-space-space-twounits);
+                  padding-right: var(--dl-space-space-twounits);
+                }
+                .edu-text {
+                  text-align: center;
+                }
+              }
+              @media (max-width: 479px) {
+                .edu-features {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: var(--dl-space-space-unit);
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .edu-container1 {
+                  grid-template-columns: 1fr;
+                }
+              }
+
+              .profile-container {
+                width: 100%;
+                display: flex;
+                overflow: auto;
+                min-height: 100vh;
+                align-items: center;
+                flex-direction: column;
+              }
+              .profile-top-card {
+                width: 100%;
+                display: flex;
+                max-width: 100%;
+                box-shadow: 4px 4px 10px 0px rgba(18, 18, 18, 0.1);
+                align-items: stretch;
+                flex-direction: row;
+                justify-content: space-between;
+              }
+              .profile-image {
+                width: auto;
+                height: 20em;
+                align-self: center;
+                object-fit: cover;
+                flex-shrink: 0;
+                border-radius: 0px;
+              }
+              .profile-container01 {
+                flex: 1;
+                width: auto;
+                display: flex;
+                align-items: flex-start;
+                padding-top: var(--dl-space-space-twounits);
+                padding-left: var(--dl-space-space-twounits);
+                padding-right: var(--dl-space-space-twounits);
+                flex-direction: column;
+                padding-bottom: var(--dl-space-space-twounits);
+                background-size: cover;
+                justify-content: space-between;
+                background-image: url("https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc");
+              }
+              .profile-container02 {
+                width: 100%;
+                display: flex;
+                align-items: flex-start;
+                margin-bottom: var(--dl-space-space-halfunit);
+                flex-direction: row;
+                justify-content: space-between;
+              }
+              .profile-text {
+                font-weight: 600;
+                text-transform: uppercase;
+              }
+              .profile-text01 {
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .profile-text02 {
+                font-size: 1.25rem;
+                margin-bottom: 0px;
+              }
+              .profile-text03 {
+                font-size: 1.25rem;
+                margin-bottom: 0px;
+              }
+              .profile-container03 {
+                flex: 0 0 auto;
+                width: auto;
+                height: 92px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: flex-start;
+              }
+              .profile-container04 {
+                width: 195px;
+                display: flex;
+                align-self: stretch;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+              }
+              .profile-text06 {
+                font-style: normal;
+                font-weight: 600;
+                margin-left: var(--dl-space-space-halfunit);
+              }
+              .profile-container05 {
+                width: 219px;
+                display: flex;
+                align-self: stretch;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+              }
+              .profile-button {
+                border-radius: 60px;
+                background-color: transparent;
+              }
+              .profile-button1 {
+                border-radius: 60px;
+                background-color: transparent;
+              }
+              .profile-steps {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-threeunits);
+                max-width: var(--dl-size-size-maxwidth);
+                align-self: center;
+                align-items: center;
+                align-content: center;
+                flex-direction: column;
+              }
+              .profile-text10 {
+                font-size: 3rem;
+              }
+              .profile-text11 {
+                color: var(--dl-color-gray-700);
+                font-size: 1.15rem;
+                max-width: 600px;
+                margin-top: var(--dl-space-space-unit);
+                text-align: center;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-container06 {
+                flex: 0 0 auto;
+                width: auto;
+                display: flex;
+                align-items: flex-start;
+                align-content: initial;
+                flex-direction: row;
+              }
+              .profile-step {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              }
+              .profile-container07 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: 2px;
+                padding-right: 2px;
+                flex-direction: row;
+                justify-content: center;
+              }
+              .profile-line {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: transparent;
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container08 {
+                flex: 0 0 auto;
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+                display: flex;
+                align-items: center;
+                border-radius: var(--dl-radius-radius-round);
+                flex-direction: row;
+                justify-content: center;
+                background-color: #f5f5f5ff;
+              }
+              .profile-icon {
+                fill: var(--dl-color-gray-500);
+                width: 24px;
+                height: 24px;
+              }
+              .profile-line1 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container09 {
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: var(--dl-space-space-twounits);
+                padding-right: var(--dl-space-space-twounits);
+                flex-direction: column;
+                padding-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text14 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-heading {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text17 {
+                color: var(--dl-color-gray-500);
+                font-size: 0.75rem;
+                text-align: center;
+              }
+              .profile-step1 {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              }
+              .profile-container10 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: 2px;
+                padding-right: 2px;
+                flex-direction: row;
+                justify-content: center;
+              }
+              .profile-line2 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container11 {
+                flex: 0 0 auto;
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+                display: flex;
+                align-items: center;
+                border-radius: var(--dl-radius-radius-round);
+                flex-direction: row;
+                justify-content: center;
+                background-color: #f5f5f5ff;
+              }
+              .profile-icon2 {
+                fill: var(--dl-color-gray-500);
+                width: 24px;
+                height: 24px;
+              }
+              .profile-line3 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container12 {
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: var(--dl-space-space-twounits);
+                padding-right: var(--dl-space-space-twounits);
+                flex-direction: column;
+                padding-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text20 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-heading1 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text23 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text24 {
+                color: var(--dl-color-gray-500);
+                font-size: 0.75rem;
+                text-align: center;
+              }
+              .profile-step2 {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              }
+              .profile-container13 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: 2px;
+                padding-right: 2px;
+                flex-direction: row;
+                justify-content: center;
+              }
+              .profile-line4 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container14 {
+                flex: 0 0 auto;
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+                display: flex;
+                align-items: center;
+                border-radius: var(--dl-radius-radius-round);
+                flex-direction: row;
+                justify-content: center;
+                background-color: #f5f5f5ff;
+              }
+              .profile-icon4 {
+                fill: var(--dl-color-gray-500);
+                width: 24px;
+                height: 24px;
+              }
+              .profile-line5 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container15 {
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: var(--dl-space-space-twounits);
+                padding-right: var(--dl-space-space-twounits);
+                flex-direction: column;
+                padding-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text27 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-heading2 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text30 {
+                color: var(--dl-color-gray-500);
+                font-size: 0.75rem;
+                text-align: center;
+              }
+              .profile-step3 {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+              }
+              .profile-container16 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: 2px;
+                padding-right: 2px;
+                flex-direction: row;
+                justify-content: center;
+              }
+              .profile-line6 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: var(--dl-color-gray-900);
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container17 {
+                flex: 0 0 auto;
+                width: var(--dl-size-size-small);
+                height: var(--dl-size-size-small);
+                display: flex;
+                align-items: center;
+                border-radius: var(--dl-radius-radius-round);
+                flex-direction: row;
+                justify-content: center;
+                background-color: #f5f5f5ff;
+              }
+              .profile-icon7 {
+                fill: var(--dl-color-gray-500);
+                width: 24px;
+                height: 24px;
+              }
+              .profile-line7 {
+                flex: 1;
+                height: 0px;
+                display: flex;
+                align-items: flex-start;
+                border-color: transparent;
+                border-style: dashed;
+                border-width: 2px;
+                flex-direction: row;
+                border-left-width: 0px;
+                border-right-width: 0px;
+                border-bottom-width: 0px;
+              }
+              .profile-container18 {
+                display: flex;
+                align-items: center;
+                padding-top: var(--dl-space-space-unit);
+                padding-left: var(--dl-space-space-twounits);
+                padding-right: var(--dl-space-space-twounits);
+                flex-direction: column;
+                padding-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text33 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-heading3 {
+                font-size: 1.5rem;
+                text-align: center;
+                font-weight: 500;
+                margin-bottom: var(--dl-space-space-unit);
+              }
+              .profile-text36 {
+                color: var(--dl-color-gray-500);
+                font-size: 0.75rem;
+                text-align: center;
+              }
+              .profile-personal-projects {
+                width: 100%;
+                display: flex;
+                padding: var(--dl-space-space-threeunits);
+                max-width: var(--dl-size-size-maxwidth);
+                flex-direction: column;
+              }
+              .profile-text39 {
+                font-size: 3rem;
+                margin-bottom: var(--dl-space-space-twounits);
+              }
+              .profile-separator {
+                width: 100px;
+                height: 2px;
+                background-color: var(--dl-color-gray-500);
+              }
+              .profile-container19 {
+                flex: 0 0 auto;
+                width: 100%;
+                display: flex;
+                margin-top: var(--dl-space-space-twounits);
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+              }
+              .profile-container20 {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+              }
+              .profile-image1 {
+                width: 450px;
+                height: 450px;
+                object-fit: cover;
+                flex-shrink: 0;
+                margin-left: var(--dl-space-space-fourunits);
+                border-radius: var(--dl-radius-radius-round);
+                object-position: left;
+              }
+              @media (max-width: 1600px) {
+                .profile-top-card {
+                  height: 331px;
+                }
+                .profile-image {
+                  width: auto;
+                  height: inherit;
+                }
+                .profile-text02 {
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-container04 {
+                  width: 174px;
+                  height: 60px;
+                  margin-right: 0px;
+                }
+                .profile-container05 {
+                  width: 216px;
+                  height: 60px;
+                  margin-right: 90px;
+                }
+                .profile-button {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-button1 {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-text10 {
+                  font-size: 3rem;
+                }
+                .profile-text11 {
+                  color: var(--dl-color-gray-700);
+                  font-size: 1.15rem;
+                }
+                .profile-container09 {
+                  width: 274px;
+                  height: 130px;
+                }
+                .profile-text14 {
+                  font-size: 1.5rem;
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-heading {
+                  font-size: 1rem;
+                }
+                .profile-text17 {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-text20 {
+                  font-size: 1.5rem;
+                  font-weight: 500;
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-heading1 {
+                  font-size: 1rem;
+                  font-weight: 500;
+                }
+                .profile-text23 {
+                  font-size: 1.5rem;
+                }
+                .profile-text24 {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-text27 {
+                  font-size: 1.5rem;
+                  font-weight: 500;
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-heading2 {
+                  font-size: 1rem;
+                  font-weight: 500;
+                }
+                .profile-text30 {
+                  color: var(--dl-color-gray-500);
+                  font-size: 0.75rem;
+                }
+                .profile-text33 {
+                  font-size: 1.5rem;
+                  font-weight: 500;
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-heading3 {
+                  font-size: 1rem;
+                  font-weight: 500;
+                }
+                .profile-text36 {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-text39 {
+                  font-size: 3rem;
+                }
+              }
+              @media (max-width: 991px) {
+                .profile-top-card {
+                  height: 300px;
+                  flex-direction: row;
+                  justify-content: space-between;
+                }
+                .profile-image {
+                  width: 299px;
+                  height: inherit;
+                }
+                .profile-container01 {
+                  flex: 1;
+                  height: 100%;
+                  align-self: stretch;
+                  background-position: center;
+                }
+                .profile-text {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-text01 {
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-text02 {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-text03 {
+                  color: var(--dl-color-gray-500);
+                }
+                .profile-container04 {
+                  width: 191px;
+                  margin-right: var(--dl-space-space-halfunit);
+                  justify-content: space-between;
+                }
+                .profile-text06 {
+                  font-style: normal;
+                  font-weight: 600;
+                  margin-right: var(--dl-space-space-fourunits);
+                }
+                .profile-container05 {
+                  width: 225px;
+                  margin-right: 0px;
+                  justify-content: space-between;
+                }
+                .profile-button {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-button1 {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-text10 {
+                  text-align: center;
+                }
+                .profile-text11 {
+                  text-align: center;
+                }
+                .profile-personal-projects {
+                  align-items: center;
+                }
+                .profile-container19 {
+                  flex-direction: column;
+                }
+                .profile-image1 {
+                  width: 300px;
+                  height: 300px;
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                }
+              }
+              @media (max-width: 767px) {
+                .profile-top-card {
+                  flex-direction: column;
+                  margin-bottom: 28em;
+                }
+                .profile-image {
+                  width: 100%;
+                  height: 429px;
+                }
+                .profile-container04 {
+                  padding-right: 0px;
+                }
+                .profile-button {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-button1 {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-steps {
+                  padding-left: var(--dl-space-space-twounits);
+                  padding-right: var(--dl-space-space-twounits);
+                }
+                .profile-container06 {
+                  align-items: flex-start;
+                  padding-left: var(--dl-space-space-fiveunits);
+                  flex-direction: column;
+                }
+                .profile-step {
+                  width: 100%;
+                  height: auto;
+                  flex-direction: row;
+                  justify-content: center;
+                }
+                .profile-container07 {
+                  width: var(--dl-size-size-small);
+                  height: auto;
+                  align-self: stretch;
+                  padding-top: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                  flex-direction: column;
+                  padding-bottom: 2px;
+                  justify-content: space-between;
+                }
+                .profile-line1 {
+                  border-color: var(--dl-color-gray-900);
+                  border-style: dashed;
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-container09 {
+                  width: 100%;
+                  align-items: flex-start;
+
+                  flex-direction: column;
+                  padding-bottom: var(--dl-space-space-twounits);
+                  justify-content: space-between;
+                }
+                .profile-text14 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                }
+                .profile-heading {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-text17 {
+                  text-align: left;
+                }
+                .profile-step1 {
+                  width: 100%;
+                  height: auto;
+                  flex-direction: row;
+                  justify-content: center;
+                }
+                .profile-container10 {
+                  width: var(--dl-size-size-small);
+                  height: auto;
+                  align-self: stretch;
+                  padding-top: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                  flex-direction: column;
+                  padding-bottom: 2px;
+                  justify-content: space-between;
+                }
+                .profile-line2 {
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-line3 {
+                  border-color: var(--dl-color-gray-900);
+                  border-style: dashed;
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-container12 {
+                  width: 100%;
+                  align-items: flex-start;
+                  padding-top: var(--dl-space-space-twounits);
+                  flex-direction: column;
+                  padding-bottom: var(--dl-space-space-twounits);
+                  justify-content: space-between;
+                }
+                .profile-text20 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-heading1 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-text23 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-text24 {
+                  text-align: left;
+                }
+                .profile-step2 {
+                  width: 100%;
+                  height: auto;
+                  flex-direction: row;
+                  justify-content: center;
+                }
+                .profile-container13 {
+                  width: var(--dl-size-size-small);
+                  height: auto;
+                  align-self: stretch;
+                  padding-top: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                  flex-direction: column;
+                  padding-bottom: 2px;
+                  justify-content: space-between;
+                }
+                .profile-line4 {
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-line5 {
+                  border-color: var(--dl-color-gray-900);
+                  border-style: dashed;
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-container15 {
+                  width: 100%;
+                  align-items: flex-start;
+                  padding-top: var(--dl-space-space-twounits);
+                  flex-direction: column;
+                  padding-bottom: var(--dl-space-space-twounits);
+                  justify-content: space-between;
+                }
+                .profile-text27 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-heading2 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-text30 {
+                  text-align: left;
+                }
+                .profile-step3 {
+                  width: 100%;
+                  height: auto;
+                  flex-direction: row;
+                  justify-content: center;
+                }
+                .profile-container16 {
+                  width: var(--dl-size-size-small);
+                  height: auto;
+                  align-self: stretch;
+                  padding-top: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                  flex-direction: column;
+                  padding-bottom: 2px;
+                  justify-content: space-between;
+                }
+                .profile-line6 {
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-line7 {
+                  border-color: transparent;
+                  border-style: dashed;
+                  border-top-width: 0px;
+                  border-left-width: 2px;
+                }
+                .profile-container18 {
+                  width: 100%;
+                  align-items: flex-start;
+                  padding-top: var(--dl-space-space-twounits);
+                  flex-direction: column;
+                  padding-bottom: var(--dl-space-space-twounits);
+                  justify-content: space-between;
+                }
+                .profile-text33 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-heading3 {
+                  margin-top: var(--dl-space-space-twounits);
+                  margin-left: 0px;
+                  margin-right: 0px;
+                  margin-bottom: var(--dl-space-space-unit);
+                }
+                .profile-text36 {
+                  text-align: left;
+                }
+                .profile-personal-projects {
+                  padding-left: var(--dl-space-space-twounits);
+                  padding-right: var(--dl-space-space-twounits);
+                }
+                .profile-text39 {
+                  text-align: center;
+                }
+                .profile-container19 {
+                  flex-direction: column;
+                }
+              }
+              @media (max-width: 479px) {
+                .profile-top-card {
+                  width: 100%;
+                  height: 700px;
+                  position: relative;
+                }
+                .profile-image {
+                  flex: 1;
+                  width: auto;
+                  height: 400px;
+                  align-self: stretch;
+                  border-radius: 0px;
+                }
+                .profile-container01 {
+                  width: 100%;
+                }
+                .profile-text02 {
+                  margin-bottom: var(--dl-space-space-halfunit);
+                }
+                .profile-container03 {
+                  width: 422px;
+                }
+                .profile-container04 {
+                  width: 200px;
+                  height: 92px;
+                  margin-right: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                }
+                .profile-container05 {
+                  width: 50%;
+                  height: 92px;
+                  margin-right: 0px;
+                  padding-left: 0px;
+                  padding-right: 0px;
+                }
+                .profile-button {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-button1 {
+                  border-radius: 60px;
+                  background-color: transparent;
+                }
+                .profile-steps {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: var(--dl-space-space-unit);
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-container06 {
+                  padding-left: 0px;
+                }
+                .profile-container09 {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: 0px;
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-text14 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-heading {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-container12 {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: 0px;
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-text20 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-heading1 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-text23 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-container15 {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: 0px;
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-text27 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-heading2 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-container18 {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: 0px;
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-text33 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-heading3 {
+                  margin-left: 0px;
+                  margin-right: var(--dl-space-space-twounits);
+                }
+                .profile-personal-projects {
+                  padding-top: var(--dl-space-space-twounits);
+                  padding-left: var(--dl-space-space-unit);
+                  padding-right: var(--dl-space-space-unit);
+                  padding-bottom: var(--dl-space-space-twounits);
+                }
+                .profile-container20 {
+                  grid-template-columns: 1fr;
+                }
+                .profile-image1 {
+                  width: 250px;
+                  height: 250px;
+                }
+              }
+            `}
+          </style>
+        </div>
+      </Layout>
     </>
   );
 };

@@ -3,17 +3,17 @@
  */
 
 import { ApiProperty } from "@nestjs/swagger";
-import { App } from "src/app.types";
-import { Award } from "src/models/award.entity";
-import { Course } from "src/models/course.entity";
-import { Education } from "src/models/education.entity";
-import { Language } from "src/models/language.entity";
-import { Project } from "src/models/project.entity";
-import { Recommendation } from "src/models/recommendation.entity";
-import { Skill } from "src/models/skill.entity";
-import { User } from "src/models/user.entity";
-import { Volunteering } from "src/models/volunteering.entity";
-import { Work } from "src/models/work.entity";
+import { App } from "../app.types";
+import { Award } from "../models/award.entity";
+import { Course } from "../models/course.entity";
+import { Education } from "../models/education.entity";
+import { Language } from "../models/language.entity";
+import { Project } from "../models/project.entity";
+import { Recommendation } from "../models/recommendation.entity";
+import { Skill } from "../models/skill.entity";
+import { User } from "../models/user.entity";
+import { Volunteering } from "../models/volunteering.entity";
+import { Work } from "../models/work.entity";
 
 export namespace Users {
 	export class GetAllUsersRequest {}
