@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { type Auth } from "../auth/auth.types";
 import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeleteResult, Repository } from "typeorm";
+import { DataSource, Repository } from "typeorm";
 import { type Users } from "./users.types";
 import * as argon2 from "argon2";
 
@@ -23,11 +23,11 @@ export class UsersService {
   }
 
   findOneById(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOneByOrFail({ id });
   }
 
   findOneByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOneBy({ email });
+    return this.usersRepository.findOneByOrFail({ email });
   }
 
   public async create(body: Auth.RegisterRequest) {
@@ -39,11 +39,11 @@ export class UsersService {
     user.gender = body.gender;
 
     const { password, ...userNoPass } = await this.usersRepository.save(user);
-    return await userNoPass;
+    return userNoPass;
   }
 
   async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
-    let oldUser = await this.usersRepository.findOneBy({ id });
+    let oldUser = await this.usersRepository.findOneByOrFail({ id });
     let updatedUser = new User();
 
     updatedUser.firstName =
@@ -87,7 +87,7 @@ export class UsersService {
     updatedUser.created_at = oldUser.created_at;
 
     await this.usersRepository.update(id, updatedUser);
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOneByOrFail({ id });
   }
 
   async removeSoft(id: number) {
