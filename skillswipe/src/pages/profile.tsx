@@ -154,6 +154,7 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
+                {/* to do: show this button only if user logged in == the profile that is shown */}
                 <button
                   className="profile-button1 button"
                   style={{

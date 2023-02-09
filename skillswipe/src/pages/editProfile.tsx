@@ -2,6 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar";
+
 import { checkLogin } from "./api/api";
 import {
   FormControl,
@@ -14,6 +15,8 @@ import {
 import Layout from "@/components/Layout";
 
 const EditProfile = () => {
+  const [selectedProfilePic, setProfilePic] = useState(null);
+
   const [name, setName] = useState("");
   const [school, setSchool] = useState("");
   const [location, setLocation] = useState("");
@@ -54,6 +57,10 @@ const EditProfile = () => {
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
 
+  const handleProfilePicture = (event: any) => {
+    setProfilePic(event.target.files[0]);
+  };
+
   return (
     <>
       <Layout>
@@ -67,6 +74,7 @@ const EditProfile = () => {
             height: "150px",
             width: "150px",
             margin: "auto",
+            position: "relative",
           }}
         >
           <img
@@ -79,7 +87,29 @@ const EditProfile = () => {
               borderRadius: "100%",
             }}
           />
+          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+            {/* upload new profile picture button */}
+            <input
+              type="file"
+              id="file-input"
+              style={{ display: "none" }}
+              onChange={handleProfilePicture}
+            />
+            <label htmlFor="file-input">
+              <img
+                src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                alt="Upload Icon"
+                style={{
+                  height: "40px",
+                  width: "40px",
+                  borderRadius: "100%",
+                  backgroundColor: "white",
+                }}
+              />
+            </label>
+          </button>
         </div>
+
         <Stack
           as="form"
           onSubmit={handleSubmit}
@@ -88,46 +118,6 @@ const EditProfile = () => {
           p={5}
           textAlign="center"
         >
-          <Box
-            minWidth={"auto"}
-            borderWidth="1px"
-            rounded="lg"
-            p={5}
-            width="auto"
-          >
-            <FormControl>
-              <FormLabel htmlFor="Profile Picture">Profile Picture</FormLabel>
-              <Input
-                borderColor={"transparent"}
-                minWidth={"100%"}
-                type="file"
-                id="Profile Picture"
-                placeholder={profile.image}
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                borderRadius="sm"
-                size="lg"
-                mb={5}
-                width="auto"
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel htmlFor="Cover">Cover Photo</FormLabel>
-              <Input
-                borderColor={"transparent"}
-                minWidth={"100%"}
-                type="file"
-                id="Cover"
-                placeholder={profile.cover}
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-                borderRadius="sm"
-                size="lg"
-                mb={5}
-                width="auto"
-              />
-            </FormControl>
-          </Box>
           <Box
             minWidth={"50vw"}
             borderWidth="1px"
