@@ -14,7 +14,7 @@ export class AuthController {
   constructor (
     private readonly userService: UsersService,
     private readonly authService: AuthService
-  ) {}
+  ) { }
 
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
@@ -33,10 +33,9 @@ export class AuthController {
   public async register (
     @Body() body: Auth.RegisterRequest
   ): Promise<Auth.LoginResponse> {
-    // Check if the user exists first
-    if (await this.userService.findOneByEmail(body.email)) {
-      throw new ConflictException('Email ' + body.email + ' already taken')
-    }
+    await this.userService.findOneByEmail(body.email)
+      // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
+      .catch((e) => { throw new ConflictException(`Email ${body.email} already taken`) })
 
     await this.userService.create(body)
     return await this.authService.login(body)
