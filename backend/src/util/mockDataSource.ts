@@ -1,6 +1,6 @@
 import { type DataSource } from 'typeorm'
 
-// @ts-expect-error
+// @ts-expect-error Used for testing, using hacks
 export const dataSourceMockFactory: () => MockType<DataSource> = jest.fn(
   () => ({
     findOneBy: jest.fn((entity) => entity),
@@ -9,5 +9,5 @@ export const dataSourceMockFactory: () => MockType<DataSource> = jest.fn(
 )
 
 export type MockType<T> = {
-  [P in keyof T]?: jest.Mock<{}>;
+  [P in keyof T]?: jest.Mock<unknown>;
 }
