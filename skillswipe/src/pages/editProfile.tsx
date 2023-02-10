@@ -235,8 +235,8 @@ const EditProfile = () => {
           <Box
             minWidth={"50vw"}
             borderWidth="1px"
-            rounded="lg"
-            p={5}
+            borderRadius={25}
+            p={8}
             width="auto"
           >
             <FormControl>
@@ -248,7 +248,7 @@ const EditProfile = () => {
                 placeholder={profile.name}
                 value={name}
                 onChange={changeName}
-                borderRadius="sm"
+                borderRadius="10"
                 size="lg"
                 mb={5}
                 width="auto"
@@ -263,7 +263,7 @@ const EditProfile = () => {
                 id="school"
                 value={school}
                 onChange={(event) => setSchool(event.target.value)}
-                borderRadius="sm"
+                borderRadius="10"
                 size="lg"
                 mb={5}
                 width="auto"
@@ -278,7 +278,7 @@ const EditProfile = () => {
                 id="title"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                borderRadius="sm"
+                borderRadius="10"
                 size="lg"
                 mb={5}
                 width="auto"
@@ -293,7 +293,7 @@ const EditProfile = () => {
                 id="location"
                 value={location}
                 onChange={(event) => setLocation(event.target.value)}
-                borderRadius="sm"
+                borderRadius="10"
                 size="lg"
                 mb={5}
                 width="auto"
