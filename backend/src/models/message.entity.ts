@@ -32,11 +32,11 @@ export class Message extends BaseEntity {
   @DeleteDateColumn()
     deleted_at: Date
 
-  public get sender () {
+  public get sender (): Promise<User | null> {
     return User.findOne({ where: { id: this.senderId } })
   }
 
-  public get receiver () {
+  public get receiver (): Promise<User | null> {
     return User.findOne({ where: { id: this.receiverId } })
   }
 }
