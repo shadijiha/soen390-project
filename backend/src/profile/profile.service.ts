@@ -13,7 +13,7 @@ export class ProfileService {
   public async addEducation (
     user: User,
     data: Profile.ProfileAddEducationRequest
-  ) {
+  ): Promise<void> {
     const education = new Education()
     this.createModel(data, education)
     user.educations = [...user.educations, education]
@@ -86,10 +86,8 @@ export class ProfileService {
   * Assign only what exist in target, in case we have hydrated request after it arrived
   */
   private createModel (source: BaseRequest, target: BaseEntity): void {
-    for (const prop in source) {
-      if (target.hasOwnProperty(prop)) {
-        target[prop] = source[prop]
-      }
+    for (const prop in target) {
+      target[prop] = source[prop]
     }
   }
 }
