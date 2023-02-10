@@ -16,8 +16,6 @@ import { Volunteering } from '../models/volunteering.entity'
 import { Work } from '../models/work.entity'
 
 export namespace Users {
-  export class GetAllUsersRequest {}
-
   export class GetAllUsersResponse extends App.WithStatus {
     @ApiProperty({ isArray: true, type: User })
       user: User[] | null
