@@ -11,17 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      matrix:
-        node-version: [19.x]
+      node-version: 19.x
 
     steps:
       - name: Cope repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ node-version }}
 
       - name: Install npm dependencies
         working-directory: ./backend
@@ -31,7 +30,7 @@ jobs:
 
       - name: Lint code
         working-directory: ./backend
-        run: npm run lint
+        run: npm run lint:ci
 
       - name: Build
         working-directory: ./backend
