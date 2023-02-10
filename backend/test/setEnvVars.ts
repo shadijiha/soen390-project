@@ -1,1 +1,1 @@
-require("dotenv").config({ path: "../.env.testing" });
+require('dotenv').config({ path: '../.env.testing' })
