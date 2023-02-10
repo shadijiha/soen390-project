@@ -1,4 +1,5 @@
 import { PipeTransform, Injectable, ArgumentMetadata, BadRequestException } from '@nestjs/common';
+import { cpSync } from 'fs';
 
 @Injectable()
 export class FileValidationPipe implements PipeTransform {
@@ -7,15 +8,14 @@ export class FileValidationPipe implements PipeTransform {
     const validTypes = ['image/'];
     const maxSize = 5 * 1024 * 1024; // 5 MB
 
-    
 
-    let profile_pic:Express.Multer.File  = files.profile_pic != null ? files.profile_pic[0] : null;
-    let cover_pic:Express.Multer.File  = files.cover_pic != null ? files.cover_pic[0] : null;
+    let profile_pic:Express.Multer.File  = files?.profile_pic != null ? files.profile_pic[0] : null;
+    let cover_pic:Express.Multer.File  = files?.cover_pic != null ? files.cover_pic[0] : null;
 
     let images: Express.Multer.File[] = [];
     if(profile_pic != null)
       images.push(profile_pic);
-      
+
     if(cover_pic != null)
       images.push(cover_pic);
 

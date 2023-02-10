@@ -56,14 +56,14 @@ export class UsersService {
 
    
     //convert image to base64
-    if(files.profile_pic != null){
+    if(files?.profile_pic != null){
       let buff = files.profile_pic[0].buffer;
       let base64data = buff.toString('base64');
       oldUser.profile_pic = base64data;
   }
 
       //convert image to base64
-      if(files.cover_pic != null){
+      if(files?.cover_pic != null){
         let buff = files.cover_pic[0].buffer;
         let base64data = buff.toString('base64');
         oldUser.cover_pic = base64data;
