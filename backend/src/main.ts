@@ -3,12 +3,12 @@ import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
 
-async function bootstrap () {
+async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(AppModule)
   app.enableCors()
   const config = new DocumentBuilder()
-    .setTitle(process.env.APP_NAME + ' API')
-    .setDescription('The ' + process.env.APP_NAME + ' API description')
+    .setTitle(`${process.env.APP_NAME} API`)
+    .setDescription(`The ${process.env.APP_NAME} API description`)
     .setVersion(process.env.VERSION ? process.env.VERSION : 'dev')
     .addBearerAuth()
     .build()
@@ -16,4 +16,4 @@ async function bootstrap () {
   SwaggerModule.setup('api', app, document)
   await app.listen(8080)
 }
-bootstrap()
+void bootstrap()
