@@ -16,10 +16,8 @@ export interface BearerPayload {
 
 export function error<T extends App.WithStatus> (e: any): T {
   const err = e as Error
-  return {
-    errors: [err.message],
-    status: App.Status.Failed
-  } as T
+  const t: T | any = { errors: [err?.message], status: App.Status?.Failed }
+  return t
 }
 
 /**
@@ -41,4 +39,6 @@ export const AuthUser = createParamDecorator(
   }
 )
 
-export class BaseRequest { }
+export class BaseRequest {
+  tempFunction (): any { return null }
+}
