@@ -1,1 +1,3 @@
-require('dotenv').config({ path: '../.env.testing' })
+import { config } from 'dotenv'
+
+config({ path: '../.env.testing' })
