@@ -4,7 +4,6 @@ import { User } from '../models/user.entity'
 import { dataSourceMockFactory } from '../util/mockDataSource'
 import { DataSource, DeleteResult, type Repository } from 'typeorm'
 import { UsersService } from './users.service'
-import * as argon2 from 'argon2'
 
 describe('UsersService', () => {
   let service: UsersService

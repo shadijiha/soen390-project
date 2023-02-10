@@ -77,18 +77,18 @@ export class User extends BaseEntity {
     deleted_at: Date
 
   // SPECIAL GETTERS AND METHODS
-  public get fullName () {
+  public get fullName (): string {
     return this.firstName + ' ' + this.lastName
   }
 
   /**
-	 * @param otherUser
-	 * @returns Returns the conversation between the current user and the other user
-	 */
-  public async getMessagesFrom (otherUser: User | number) {
+   * @param otherUser
+   * @returns Returns the conversation between the current user and the other user
+   */
+  public async getMessagesFrom (otherUser: User | number): Promise<Message[]> {
     const otherId =
-			typeof otherUser === 'number' ? otherUser : otherUser.id
-    const messages = await Message.find({
+      typeof otherUser === 'number' ? otherUser : otherUser.id
+    return await Message.find({
       where: [
         { senderId: this.id, receiverId: otherId },
         { senderId: otherId, receiverId: this.id }

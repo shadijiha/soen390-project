@@ -22,9 +22,9 @@ export class ProfileController {
 
   @Put('add/education')
   public async addEducation (
-  @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.ProfileAddEducationRequest
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Body() body: Profile.ProfileAddEducationRequest
+  ): Promise<void> {
     try {
       this.profileService.addEducation(await userInfo.getUser(['educations']), body)
     } catch (e) {
@@ -34,9 +34,9 @@ export class ProfileController {
 
   @Delete('delete/education/:id')
   public async deleteEducation (
-  @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Param('id') id: number
+  ): Promise<void> {
     try {
       this.profileService.removeEduction(await userInfo.getUser(['educations']), id)
     } catch (e) {
@@ -46,9 +46,9 @@ export class ProfileController {
 
   @Put('add/course')
   public async addCourse (
-  @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.ProfileAddCourseRequest
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Body() body: Profile.ProfileAddCourseRequest
+  ): Promise<void> {
     try {
       this.profileService.addCourse(await userInfo.getUser(['courses']), body)
     } catch (e) {
@@ -58,9 +58,9 @@ export class ProfileController {
 
   @Delete('delete/course/:id')
   public async deleteCourse (
-  @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Param('id') id: number
+  ): Promise<void> {
     try {
       this.profileService.removeCourse(await userInfo.getUser(['courses']), id)
     } catch (e) {
@@ -70,9 +70,9 @@ export class ProfileController {
 
   @Put('add/project')
   public async addProject (
-  @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.ProfileAddProjectRequest
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Body() body: Profile.ProfileAddProjectRequest
+  ): Promise<void> {
     try {
       this.profileService.addProject(await userInfo.getUser(['projects']), body)
     } catch (e) {
@@ -82,9 +82,9 @@ export class ProfileController {
 
   @Delete('delete/project/:id')
   public async deleteProject (
-  @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Param('id') id: number
+  ): Promise<void> {
     try {
       this.profileService.removeProject(await userInfo.getUser(['projects']), id)
     } catch (e) {
@@ -94,9 +94,9 @@ export class ProfileController {
 
   @Put('add/volunteering')
   public async addVolunteering (
-  @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.ProfileAddVolunteeringRequest
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Body() body: Profile.ProfileAddVolunteeringRequest
+  ): Promise<void> {
     try {
       this.profileService.addVolunteering(await userInfo.getUser(['volunteerings']), body)
     } catch (e) {
@@ -106,9 +106,9 @@ export class ProfileController {
 
   @Delete('delete/volunteering/:id')
   public async deleteVolunteering (
-  @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
-  ) {
+    @AuthUser() userInfo: BearerPayload,
+      @Param('id') id: number
+  ): Promise<void> {
     try {
       this.profileService.removeVolunteering(await userInfo.getUser(['volunteerings']), id)
     } catch (e) {

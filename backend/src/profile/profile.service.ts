@@ -23,7 +23,7 @@ export class ProfileService {
   public async removeEduction (
     user: User,
     id: number
-  ) {
+  ): Promise<void> {
     user.educations = user.educations.filter((e) => e.id !== id)
     await user.save()
   }
@@ -31,7 +31,7 @@ export class ProfileService {
   public async addCourse (
     user: User,
     data: Profile.ProfileAddCourseRequest
-  ) {
+  ): Promise<void> {
     const course = new Course()
     this.createModel(data, course)
     user.courses = [...user.courses, course]
@@ -41,7 +41,7 @@ export class ProfileService {
   public async removeCourse (
     user: User,
     id: number
-  ) {
+  ): Promise<void> {
     user.courses = user.courses.filter((c) => c.id !== id)
     await user.save()
   }
@@ -49,7 +49,7 @@ export class ProfileService {
   public async addProject (
     user: User,
     data: Profile.ProfileAddProjectRequest
-  ) {
+  ): Promise<void> {
     const project = new Project()
     this.createModel(data, project)
     user.projects = [...user.projects, project]
@@ -59,7 +59,7 @@ export class ProfileService {
   public async removeProject (
     user: User,
     id: number
-  ) {
+  ): Promise<void> {
     user.projects = user.projects.filter((p) => p.id !== id)
     await user.save()
   }
@@ -67,7 +67,7 @@ export class ProfileService {
   public async addVolunteering (
     user: User,
     data: Profile.ProfileAddVolunteeringRequest
-  ) {
+  ): Promise<void> {
     const volunteering = new Volunteering()
     this.createModel(data, volunteering)
     user.volunteeringExperience = [...user.volunteeringExperience, volunteering]
@@ -77,15 +77,15 @@ export class ProfileService {
   public async removeVolunteering (
     user: User,
     id: number
-  ) {
+  ): Promise<void> {
     user.volunteeringExperience = user.volunteeringExperience.filter((v) => v.id !== id)
     await user.save()
   }
 
   /*
-	* Assign only what exist in target, in case we have hydrated request after it arrived
-	*/
-  private createModel (source: BaseRequest, target: BaseEntity) {
+  * Assign only what exist in target, in case we have hydrated request after it arrived
+  */
+  private createModel (source: BaseRequest, target: BaseEntity): void {
     for (const prop in source) {
       if (target.hasOwnProperty(prop)) {
         target[prop] = source[prop]
