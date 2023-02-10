@@ -20,10 +20,10 @@ const Profile = () => {
   const router = useRouter();
 
   const [profile, setProfile] = useState({
-    name: "John Smith",
-    title: "Software Engineer",
-    location: "Montreal, QC, CA",
-    school: "Concordia University",
+    name: "",
+    title: "",
+    location: "",
+    school: "",
     experience: "Five years of experience in full stack development",
     experience2: "Three years of experience in mobile development",
     experience3: "Two years of experience in data analysis",
@@ -32,22 +32,12 @@ const Profile = () => {
     cover:
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
-
-  const BackgroundImageDiv = () => {
-    const divStyle: CSSProperties = {
-      backgroundImage: `url('https://example.com/image.jpg')`,
-      height: "200px",
-      width: "200px",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    };
-    return <div style={divStyle} />;
-  };
   return (
     <>
       <style jsx>{ProfileStyle}</style>
       <Layout>
         <NavBar />
+
         <div data-testid="profile-page">
           <div
             id="profile"
@@ -76,7 +66,7 @@ const Profile = () => {
               <div className="profile-container01">
                 <div className="profile-container02">
                   <span className="profile-text">
-                    {profile.title} @ company
+                    {User.auth.title} @ company
                   </span>
                 </div>
                 <h1
