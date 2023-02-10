@@ -1,5 +1,5 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
-import { User } from 'src/models/user.entity'
+import { User } from '../models/user.entity'
 import {
   type FindOptionsRelationByString,
   type FindOptionsRelations

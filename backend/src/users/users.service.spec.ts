@@ -29,6 +29,7 @@ describe('UsersService', () => {
           useValue: {
             find: () => [],
             findOneBy: () => mockUser,
+            findOneByOrFail: () => mockUser,
             findOne: () => mockUser,
             save: () => mockUser,
             update: () => updatedUser,
