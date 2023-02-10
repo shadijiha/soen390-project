@@ -8,11 +8,13 @@ import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
   const buttonColors = useColorModeValue("black", "white");
   const User = useSelector(state => state);
+  const router = useRouter();
 
   const [profile, setProfile] = useState({
     name: "John Smith",
