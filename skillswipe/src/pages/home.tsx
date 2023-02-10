@@ -11,7 +11,7 @@ const Home = () => {
   const formBorder = useColorModeValue("gray.100", "gray.600");
   const postBackground = useColorModeValue("gray.100", "gray.700");
   const toggleTheme = useColorModeValue("🌙", "💡");
-  const User = useSelector(state => state);
+  const User = useSelector((state) => state as any);
   const [posts, setPosts] = useState([
     { id: 1, title: "First Post", body: "This is a description" },
     {
@@ -24,7 +24,6 @@ const Home = () => {
 
   return (
     <>
-
       <Layout>
         <NavBar></NavBar>
         <Box display="flex" justifyContent="center" alignItems="center" p={4}>
@@ -55,7 +54,6 @@ const Home = () => {
               ))}
             </List>
           </Box>
-
         </Box>
       </Layout>
     </>

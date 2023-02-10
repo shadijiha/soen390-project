@@ -10,15 +10,13 @@ import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 import router from "next/router";
 import ProfileStyle from "@/styles/profilestyle";
 
-
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
   const buttonColors = useColorModeValue("black", "white");
-  const User = useSelector(state => state);
+  const User = useSelector((state) => state as any);
   const router = useRouter();
 
   const [profile, setProfile] = useState({
@@ -89,7 +87,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {User.auth.firstName + " "+ User.auth.lastName}
+                  {User.auth.firstName + " " + User.auth.lastName}
                 </h1>
                 <span
                   className="profile-text02"
