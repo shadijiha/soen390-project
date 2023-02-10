@@ -16,6 +16,7 @@ describe('UsersController', () => {
       provide: UsersService,
       useFactory: () => ({
         findAll: jest.fn(() => []),
+        findOne: jest.fn(() => {}),
         update: jest.fn(() => {}),
         getByEmail: jest.fn(() => {}),
         remove: jest.fn(() => {})

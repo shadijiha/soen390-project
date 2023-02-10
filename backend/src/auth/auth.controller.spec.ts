@@ -10,7 +10,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { UsersService } from "../users/users.service";
 import { dataSourceMockFactory } from "../util/mockDataSource";
 import { AuthService } from "./auth.service";
-import { createTestBearerPayload } from "src/util/util";
+import { createTestBearerPayload } from "../util/util";
 
 describe("AuthController", () => {
 	let controller: AuthController;
