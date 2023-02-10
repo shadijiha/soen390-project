@@ -19,6 +19,16 @@ const customJestConfig = {
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
   },
   moduleDirectories: ['node_modules', '<rootDir>/'],
+  collectCoverage: true,
+  coverageDirectory: "../coverage",
+  coverageThreshold: {
+    global: {
+      branches: 80,
+      functions: 80,
+      lines: 80,
+      statements: 80
+    }
+  },
   testEnvironment: 'jest-environment-jsdom',
 }
 
