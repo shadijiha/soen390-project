@@ -67,8 +67,7 @@ export class UsersService {
       user.volunteeringExperience != null
         ? user.volunteeringExperience
         : oldUser.volunteeringExperience;
-    updatedUser.connections =
-      user.connections != null ? user.connections : oldUser.connections;
+    
     updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
     updatedUser.recommendationsReceived =
       user.recommendationsReceived != null

@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+
 import {
 	BaseEntity,
 	Column,
@@ -14,6 +15,7 @@ import {
 	UpdateDateColumn,
 } from "typeorm";
 import { Award } from "./award.entity";
+import { Connection } from "./connection.entity";
 import { Course } from "./course.entity";
 import { Education } from "./education.entity";
 import { Language } from "./language.entity";
@@ -23,6 +25,7 @@ import { Recommendation } from "./recommendation.entity";
 import { Skill } from "./skill.entity";
 import { Volunteering } from "./volunteering.entity";
 import { Work } from "./work.entity";
+
 
 @Entity("users")
 @TableInheritance({ column: { type: "varchar", name: "type" } })
@@ -113,9 +116,16 @@ export class User extends BaseEntity {
 	volunteeringExperience: Volunteering[];
 
 	//connections
-	@ManyToMany(() => User, (user) => user.connections)
-	@ApiProperty({ type: [User] })
-	connections: User[];
+	// @ManyToMany(() => User, (user) => user.connections)
+	// @JoinTable()
+	// @ApiProperty({ type: [User] })
+	// connections: User[];
+	
+	@OneToMany(() => Connection, (conn) => conn.user1 || conn.user2, { cascade: true, orphanedRowAction: "delete" })
+	@ApiProperty({ type: [Connection] })
+	connections: Connection[];
+
+
 
 	//skills
 	@ManyToMany((type) => Skill, (skill) => skill.user, { cascade: true, orphanedRowAction: "delete" })
