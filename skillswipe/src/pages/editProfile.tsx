@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
@@ -15,6 +16,7 @@ import {
 import Layout from "@/components/Layout";
 import { maxHeaderSize } from "http";
 import axios from "axios";
+import { editProfile } from "./api/api";
 
 const EditProfile = () => {
   const [selectedProfilePic, setProfilePic] = useState(null);
@@ -27,13 +29,34 @@ const EditProfile = () => {
     console.log(res.data);
   });
 
+  const [User, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    email: "",
+    gender: "",
+  });
+
+  const changeName = (event: any) => {
+    setUser({
+      ...User,
+      firstName: event.target.value,
+    });
+  };
+
   const handleSubmit = (event: any) => {
     console.log(`Name: ${name}`);
     console.log(`School: ${school}`);
     console.log(`Location: ${location}`);
     console.log(`Title: ${title}`);
 
-    profile.name = name;
+    editProfile(User)
+      .then((Response) => {
+        console.log(Response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   useEffect(() => {
     if (localStorage.getItem("jwt")) {
@@ -158,7 +181,7 @@ const EditProfile = () => {
                 id="name"
                 placeholder={profile.name}
                 value={name}
-                onChange={(event) => setName(event.target.value)}
+                onChange={changeName}
                 borderRadius="sm"
                 size="lg"
                 mb={5}
@@ -219,6 +242,7 @@ const EditProfile = () => {
               size="lg"
               colorScheme={"blue"}
               borderRadius="100px"
+              onClick={handleSubmit}
             >
               Update
             </Button>
