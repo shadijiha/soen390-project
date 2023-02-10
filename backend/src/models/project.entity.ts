@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger'
 import {
   BaseEntity,
   Column,
@@ -6,46 +6,46 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
-import { User } from "./user.entity";
+  UpdateDateColumn
+} from 'typeorm'
+import { User } from './user.entity'
 
 @Entity()
 export class Project extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+    id: number
 
   @Column()
   @ApiProperty()
-  name: string;
+    name: string
 
   @Column()
   @ApiProperty()
-  description: string;
+    description: string
 
   @Column()
   @ApiProperty()
-  url: string;
+    url: string
 
   @Column()
   @ApiProperty()
-  start_year: number;
+    start_year: number
 
   @Column()
   @ApiProperty()
-  end_year: number;
+    end_year: number
 
   @CreateDateColumn()
   @ApiProperty()
-  created_at: Date;
+    created_at: Date
 
   @UpdateDateColumn()
   @ApiProperty()
-  updated_at: Date;
+    updated_at: Date
 
   // RELATIONS
   @ManyToOne(() => User, (u) => u.workExperience)
   @ApiProperty({ type: () => User })
-  user: User;
+    user: User
 }

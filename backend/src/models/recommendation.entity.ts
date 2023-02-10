@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger'
 import {
   BaseEntity,
   Column,
@@ -6,15 +6,15 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
-import { User } from "./user.entity";
+  UpdateDateColumn
+} from 'typeorm'
+import { User } from './user.entity'
 
 @Entity()
 export class Recommendation extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+    id: number
 
   //   @Column()
   //   @ApiProperty()
@@ -22,26 +22,26 @@ export class Recommendation extends BaseEntity {
 
   @Column()
   @ApiProperty()
-  relationship: string;
+    relationship: string
 
   @Column()
   @ApiProperty()
-  message: string;
+    message: string
 
   // RELATIONS
   @ManyToOne(() => User, (u) => u.recommendationsReceived)
   @ApiProperty({ type: () => User })
-  userRecommended: User;
+    userRecommended: User
 
   @ManyToOne(() => User, (u) => u.recommendationsGiven)
   @ApiProperty({ type: () => User })
-  userRecommending: User;
+    userRecommending: User
 
   @CreateDateColumn()
   @ApiProperty()
-  created_at: Date;
+    created_at: Date
 
   @UpdateDateColumn()
   @ApiProperty()
-  updated_at: Date;
+    updated_at: Date
 }

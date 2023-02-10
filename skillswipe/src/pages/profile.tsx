@@ -6,26 +6,21 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
 import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
+
 import router from "next/router";
 import ProfileStyle from "@/styles/profilestyle";
+
+
+import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+
+
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
   const buttonColors = useColorModeValue("black", "white");
+  const User = useSelector(state => state);
+  const router = useRouter();
 
-  useEffect(() => {
-    if (localStorage.getItem("jwt")) {
-      checkLogin(localStorage.getItem("jwt"))
-        .then((Response) => {
-          setProfile({
-            ...profile,
-            name: Response.data.firstName + " " + Response.data.lastName,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, []);
   const [profile, setProfile] = useState({
     name: "John Smith",
     title: "Software Engineer",
@@ -94,7 +89,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {profile.name}
+                  {User.auth.firstName + " "+ User.auth.lastName}
                 </h1>
                 <span
                   className="profile-text02"
