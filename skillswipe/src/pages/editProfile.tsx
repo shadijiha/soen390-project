@@ -12,11 +12,13 @@ import {
   Button,
   Stack,
   Box,
+  Heading,
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
 import { maxHeaderSize } from "http";
 import axios from "axios";
 import { editProfile } from "./api/api";
+import { useSelector } from "react-redux/es/exports";
 
 const EditProfile = () => {
   const [selectedProfilePic, setProfilePic] = useState(null);
@@ -28,7 +30,6 @@ const EditProfile = () => {
   axios.get("").then((res) => {
     console.log(res.data);
   });
-
   const [User, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -90,10 +91,30 @@ const EditProfile = () => {
     setProfilePic(event.target.files[0]);
   };
 
+  const [inputs, setInputs] = useState([{ value: "" }]);
+
+  const handleAddInput = () => {
+    setInputs([...inputs, { value: "" }]);
+  };
+
+  const handleInputChange = (event: any, index: any) => {
+    const updatedInputs = [...inputs];
+    updatedInputs[index].value = event.target.value;
+    setInputs(updatedInputs);
+  };
+
   return (
     <>
       <Layout>
         <NavBar />
+
+        <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+          <Box>
+            <Heading paddingBottom={10}>Hey, {profile.name}!</Heading>
+          </Box>
+        </Box>
+
+        {/* profile picture */}
         <div
           className="profile-picture"
           style={{
@@ -104,9 +125,9 @@ const EditProfile = () => {
             width: "150px",
             margin: "auto",
             position: "relative",
+            marginBottom: "10px",
           }}
         >
-          {/* profile picture */}
           <img
             alt="image"
             src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
@@ -125,16 +146,7 @@ const EditProfile = () => {
               width: "maxWidth",
               top: "-30%",
             }}
-          >
-            {/* cover photo */}
-            {/* <img
-              src="https://timelinecovers.pro/facebook-cover/download/artistic-retro-wave-palm-trees-facebook-cover.jpg"
-              alt="Cover"
-              style={{
-                backgroundColor: "white",
-              }}
-            /> */}
-          </div>
+          ></div>
           <button style={{ position: "absolute", bottom: "0", right: "0" }}>
             {/* upload new profile picture button */}
             <input
@@ -158,6 +170,60 @@ const EditProfile = () => {
           </button>
         </div>
 
+        {/* cover photo */}
+        <div
+          className="profile-cover"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "150px",
+            width: "300px",
+            margin: "auto",
+            position: "relative",
+            marginBottom: "10px",
+          }}
+        >
+          <img
+            alt="image"
+            src="https://timelinecovers.pro/facebook-cover/download/artistic-retro-wave-palm-trees-facebook-cover.jpg"
+            className="profile-cover"
+            style={{
+              objectFit: "cover",
+              borderRadius: "15px",
+              boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              zIndex: -1,
+              width: "maxWidth",
+              top: "-30%",
+            }}
+          ></div>
+          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+            {/* upload new profile picture button */}
+            <input
+              type="file"
+              id="file-input"
+              style={{ display: "none" }}
+              onChange={handleProfilePicture}
+            />
+            <label htmlFor="file-input">
+              <img
+                src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                alt="Upload Icon"
+                style={{
+                  height: "35px",
+                  width: "35px",
+                  borderRadius: "100%",
+                  backgroundColor: "white",
+                }}
+              />
+            </label>
+          </button>
+        </div>
         <Stack
           as="form"
           onSubmit={handleSubmit}
@@ -233,6 +299,7 @@ const EditProfile = () => {
                 width="auto"
               />
             </FormControl>
+
             <Button
               style={{
                 boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
