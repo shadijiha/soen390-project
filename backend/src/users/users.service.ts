@@ -30,7 +30,7 @@ export class UsersService {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create (body: Auth.RegisterRequest) {
+  public async create (body: Auth.RegisterRequest): Promise<Omit<User, 'password'>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)

@@ -18,16 +18,16 @@ import { AuthUser, BearerPayload } from '../util/util'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) { }
+  constructor (private readonly usersService: UsersService) { }
 
   @Get()
   @ApiResponse({ type: Users.GetAllUsersResponse })
-  async findAll(): Promise<User[]> {
+  async findAll (): Promise<User[]> {
     return await this.usersService.findAll()
   }
 
   @Delete()
-  async remove(@AuthUser() authedUser: BearerPayload): Promise<void> {
+  async remove (@AuthUser() authedUser: BearerPayload): Promise<void> {
     try {
       await this.usersService.removeSoft(authedUser.id); return
     } catch (e) {
