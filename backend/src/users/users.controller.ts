@@ -18,6 +18,7 @@ import { Users } from "./users.types";
 import { AuthUser, BearerPayload, error } from "../util/util";
 import { FileFieldsInterceptor, FileInterceptor } from "@nestjs/platform-express";
 import { use } from "passport";
+import { FileValidationPipe } from "src/util/fileValidationPipe";
 
 @Controller()
 @ApiTags("Users")
@@ -64,21 +65,12 @@ export class UsersController {
     { name: 'cover_pic', maxCount: 1}
   ]))
 
-  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(new ParseFilePipe({
-    validators: [
-      new MaxFileSizeValidator({ maxSize: 5000000 }), //bytes
-      new FileTypeValidator({ fileType: "image" }),
-    ],
-    fileIsRequired: false,
-  })) files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}) {
+  async update(@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(FileValidationPipe) files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}) {
 
     console.log(files)
-    //return this.usersService.update(authedUser.id, user, file)
-
+    return this.usersService.update(authedUser.id, user, files)
     
   }
-
-
 
 
 

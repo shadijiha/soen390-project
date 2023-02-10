@@ -43,14 +43,9 @@ export class UsersService {
     return await userNoPass;
   }
 
-  async update(id: number, user: Users.UpdateUserRequest, file: Express.Multer.File): Promise<User> {
+  async update(id: number, user: Users.UpdateUserRequest, files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}): Promise<User> {
     let oldUser = await this.usersRepository.findOneBy({ id });
 
-    // console.log("old user:");
-    // console.log(oldUser);
-    // console.log("user:");
-    // console.log(user);
-    // shoul only update the old user. remove updated user
     oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName;
     oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName;
     oldUser.email = user.email != '' ? user.email : oldUser.email;
@@ -61,33 +56,24 @@ export class UsersService {
 
    
     //convert image to base64
-    if(file != null){
-      console.log("file is not null");
-      let buff = file.buffer;
+    if(files.profile_pic != null){
+      let buff = files.profile_pic[0].buffer;
       let base64data = buff.toString('base64');
       oldUser.profile_pic = base64data;
   }
 
+      //convert image to base64
+      if(files.cover_pic != null){
+        let buff = files.cover_pic[0].buffer;
+        let base64data = buff.toString('base64');
+        oldUser.cover_pic = base64data;
+    }
+
     oldUser.created_at = oldUser.created_at;
-
-    // updatedUser.educations = user.educations != null ? user.educations : oldUser.educations;
-    // updatedUser.workExperiences = user.workExperience != null ? user.workExperience : oldUser.workExperiences;
-    // updatedUser.volunteeringExperience =
-    // user.volunteeringExperience != null? user.volunteeringExperience : oldUser.volunteeringExperience;
-    // updatedUser.connections = user.connections != null ? user.connections : oldUser.connections;
-    // updatedUser.skills = user.skills != null ? user.skills : oldUser.skills;
-    // updatedUser.recommendationsReceived = user.recommendationsReceived != null ? user.recommendationsReceived : oldUser.recommendationsReceived;
-    // updatedUser.recommendationsGiven = user.recommendationsGiven != null ? user.recommendationsGiven : oldUser.recommendationsGiven;
-    // updatedUser.courses = user.courses != null ? user.courses : oldUser.courses;
-    // updatedUser.projects = user.projects != null ? user.projects : oldUser.projects;
-    // updatedUser.awards = user.awards != null ? user.awards : oldUser.awards;
-    // updatedUser.languages =  user.languages != null ? user.languages : oldUser.languages;
-
-
 
 
     await this.usersRepository.update(id, oldUser);
-    return this.usersRepository.findOneBy({ id });
+    return await this.usersRepository.findOneBy({ id });
   }
 
   async removeSoft(id: number) {
