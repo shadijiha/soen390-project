@@ -6,6 +6,7 @@ import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "./api/api";
 import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
+
 import { useSelector } from "react-redux";
 
 const Profile = () => {
@@ -54,6 +55,7 @@ const Profile = () => {
               <meta property="og:title" content="SkillSwipe" />
             </Head>
 
+            {/* profile picture */}
             <div className="profile-top-card">
               <img
                 alt="image"
@@ -64,6 +66,7 @@ const Profile = () => {
                   objectFit: "cover",
                 }}
               />
+
               <div className="profile-container01">
                 <div className="profile-container02">
                   <span className="profile-text">
@@ -141,6 +144,22 @@ const Profile = () => {
                     </button>
                   </div>
                 </div>
+                {/* to do: show this button only if user logged in == the profile that is shown */}
+                <button
+                  className="profile-button1 button"
+                  style={{
+                    color: buttonColors,
+                    borderColor: buttonColors,
+                    borderWidth: "2px",
+                    textShadow: "0px 0px 40px #000000CA",
+                    fontWeight: 600,
+                  }}
+                  onClick={() => {
+                    router.push("/editProfile");
+                  }}
+                >
+                  Edit Profile
+                </button>
               </div>
             </div>
 

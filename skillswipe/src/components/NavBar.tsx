@@ -54,6 +54,7 @@ export default function NavBar() {
           pt={"0px"}
           paddingEnd={"2em"}
           paddingStart={"2em"}
+          zIndex="99999"
         >
           <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
             🚀 SkillSwipe
