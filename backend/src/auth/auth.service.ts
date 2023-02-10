@@ -13,7 +13,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
-  ) {}
+  ) { }
 
   public async validateUser (
     email: string,
@@ -36,16 +36,12 @@ export class AuthService {
     return null
   }
 
-  public async login ({ email, password }: Auth.LoginRequest) {
+  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
-    const user = await this.usersRepository.findOne({
-      where: { email }
-    })
-    if (user == null) {
-      throw new UnauthorizedException(
-        'Email  ' + email + ' is invalid'
-      )
-    }
+    const user = await this.usersRepository.findOneByOrFail({ email })
+      .catch(() => {
+        throw new UnauthorizedException(`Email ${email} is invalid`)
+      })
 
     // validate password
     if ((await this.validateUser(email, password)) != null) {
