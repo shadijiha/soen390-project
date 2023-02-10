@@ -8,29 +8,29 @@ import * as argon2 from 'argon2'
 
 @Injectable()
 export class UsersService {
-  constructor(
+  constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly dataSource: DataSource
   ) { }
 
-  public async getByEmail(email: string): Promise<User> {
+  public async getByEmail (email: string): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll (): Promise<User[]> {
     return await this.usersRepository.find()
   }
 
-  async findOneById(id: number): Promise<User> {
+  async findOneById (id: number): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ id })
   }
 
-  async findOneByEmail(email: string): Promise<User> {
+  async findOneByEmail (email: string): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create(body: Auth.RegisterRequest) {
+  public async create (body: Auth.RegisterRequest) {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -42,7 +42,7 @@ export class UsersService {
     return userNoPass
   }
 
-  async update(id: number, user: Users.UpdateUserRequest): Promise<User> {
+  async update (id: number, user: Users.UpdateUserRequest): Promise<User> {
     const oldUser = await this.usersRepository.findOneByOrFail({ id })
     const updatedUser = new User()
 
@@ -90,7 +90,7 @@ export class UsersService {
     return await this.usersRepository.findOneByOrFail({ id })
   }
 
-  async removeSoft(id: number) {
+  async removeSoft (id: number): Promise<void> {
     const user = await this.findOneById(id)
     await this.usersRepository.softRemove(user)
   }
