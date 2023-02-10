@@ -15,14 +15,11 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
-import { maxHeaderSize } from "http";
 import axios from "axios";
 import { editProfile } from "./api/api";
-import { useSelector } from "react-redux/es/exports";
 
 const EditProfile = () => {
   const [selectedProfilePic, setProfilePic] = useState(null);
-
   const [name, setName] = useState("");
   const [school, setSchool] = useState("");
   const [location, setLocation] = useState("");
