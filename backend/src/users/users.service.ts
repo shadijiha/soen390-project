@@ -12,7 +12,7 @@ export class UsersService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     private readonly dataSource: DataSource
-  ) { }
+  ) {}
 
   public async getByEmail (email: string): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ email })
@@ -30,7 +30,9 @@ export class UsersService {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create (body: Auth.RegisterRequest) {
+  public async create (
+    body: Auth.RegisterRequest
+  ): Promise<Record<string, any>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -38,7 +40,8 @@ export class UsersService {
     user.lastName = body.lastName
     user.gender = body.gender
 
-    const { password, ...userNoPass } = await this.usersRepository.save(user)
+    const { password, ...userNoPass }: Record<string, any> =
+      await this.usersRepository.save(user)
     return userNoPass
   }
 
@@ -60,9 +63,7 @@ export class UsersService {
     updatedUser.educations =
       user.educations != null ? user.educations : oldUser.educations
     updatedUser.workExperience =
-      user.workExperience != null
-        ? user.workExperience
-        : oldUser.workExperience
+      user.workExperience != null ? user.workExperience : oldUser.workExperience
     updatedUser.volunteeringExperience =
       user.volunteeringExperience != null
         ? user.volunteeringExperience

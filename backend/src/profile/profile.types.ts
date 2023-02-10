@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { BaseRequest } from 'src/util/util'
+import { BaseRequest } from '../util/util'
 
 export namespace Profile {
   export class ProfileAddEducationRequest extends BaseRequest {

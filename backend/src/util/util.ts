@@ -1,9 +1,10 @@
+import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
+import { User } from '../models/user.entity'
 import {
-  createParamDecorator,
-  type ExecutionContext
-} from '@nestjs/common'
-import { User } from 'src/models/user.entity'
-import { type FindOptionsRelationByString, type FindOptionsRelations } from 'typeorm'
+  type Repository,
+  type FindOptionsRelationByString,
+  type FindOptionsRelations
+} from 'typeorm'
 import { App } from '../app.types'
 
 export interface BearerPayload {
@@ -11,15 +12,38 @@ export interface BearerPayload {
   id: number
   getUser: (
     relations?: FindOptionsRelations<User> | FindOptionsRelationByString
-  ) => Promise<User>
+  ) => Promise<User | null>
+}
+
+/**
+ * This function is used to create a BearerPayload for testing purposes ONLY
+ * @param emailToTest
+ * @param repo
+ * @returns
+ */
+export async function createTestBearerPayload (
+  emailToTest: string,
+  repo: Repository<User>
+): Promise<BearerPayload> {
+  return {
+    email: emailToTest,
+    id:
+(
+  await repo.findOne({ where: { email: emailToTest } })
+)?.id ?? -1,
+    getUser: async (relations) => {
+      return await repo.findOne({
+        where: { email: emailToTest },
+        relations
+      })
+    }
+  }
 }
 
 export function error<T extends App.WithStatus> (e: any): T {
   const err = e as Error
-  return {
-    errors: [err.message],
-    status: App.Status.Failed
-  } as T
+  const t: T | any = { errors: [err?.message], status: App.Status?.Failed } // TODO: find a better solution for eslint
+  return t
 }
 
 /**
@@ -35,10 +59,17 @@ export const AuthUser = createParamDecorator(
       getUser: async (
         relations: FindOptionsRelations<User> | FindOptionsRelationByString = []
       ) => {
-        return await User.findOne({ where: { id: payload.id }, relations })
+        return await User.findOne({
+          where: { id: payload.id },
+          relations
+        })
       }
     }
   }
 )
 
-export class BaseRequest { }
+export class BaseRequest {
+  tempFunction (): any {
+    return null
+  } // TODO: find a better solution for eslint
+}

@@ -8,8 +8,8 @@ import {
   UseGuards
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { AuthUser, BearerPayload } from 'src/util/util'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { AuthUser, BearerPayload } from '../util/util'
 import { ProfileService } from './profile.service'
 import { Profile } from './profile.types'
 
@@ -18,18 +18,18 @@ import { Profile } from './profile.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ProfileController {
-  constructor (private readonly profileService: ProfileService) { }
+  constructor (private readonly profileService: ProfileService) {}
 
   @Put('add/education')
   public async addEducation (
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.ProfileAddEducationRequest
   ): Promise<void> {
-    try {
-      this.profileService.addEducation(await userInfo.getUser(['educations']), body)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .addEducation(await userInfo.getUser(['educations']), body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Delete('delete/education/:id')
@@ -37,11 +37,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Param('id') id: number
   ): Promise<void> {
-    try {
-      this.profileService.removeEduction(await userInfo.getUser(['educations']), id)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .removeEduction(await userInfo.getUser(['educations']), id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Put('add/course')
@@ -49,11 +49,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.ProfileAddCourseRequest
   ): Promise<void> {
-    try {
-      this.profileService.addCourse(await userInfo.getUser(['courses']), body)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .addCourse(await userInfo.getUser(['courses']), body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Delete('delete/course/:id')
@@ -61,11 +61,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Param('id') id: number
   ): Promise<void> {
-    try {
-      this.profileService.removeCourse(await userInfo.getUser(['courses']), id)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .removeCourse(await userInfo.getUser(['courses']), id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Put('add/project')
@@ -73,11 +73,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.ProfileAddProjectRequest
   ): Promise<void> {
-    try {
-      this.profileService.addProject(await userInfo.getUser(['projects']), body)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .addProject(await userInfo.getUser(['projects']), body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Delete('delete/project/:id')
@@ -85,11 +85,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Param('id') id: number
   ): Promise<void> {
-    try {
-      this.profileService.removeProject(await userInfo.getUser(['projects']), id)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .removeProject(await userInfo.getUser(['projects']), id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Put('add/volunteering')
@@ -97,11 +97,11 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.ProfileAddVolunteeringRequest
   ): Promise<void> {
-    try {
-      this.profileService.addVolunteering(await userInfo.getUser(['volunteerings']), body)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .addVolunteering(await userInfo.getUser(['volunteerings']), body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 
   @Delete('delete/volunteering/:id')
@@ -109,10 +109,10 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Param('id') id: number
   ): Promise<void> {
-    try {
-      this.profileService.removeVolunteering(await userInfo.getUser(['volunteerings']), id)
-    } catch (e) {
-      throw new HttpException((<Error>e).message, 400)
-    }
+    this.profileService
+      .removeVolunteering(await userInfo.getUser(['volunteerings']), id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
   }
 }
