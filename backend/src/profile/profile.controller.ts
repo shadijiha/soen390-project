@@ -18,7 +18,7 @@ import { Profile } from './profile.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ProfileController {
-  constructor (private readonly profileService: ProfileService) { }
+  constructor (private readonly profileService: ProfileService) {}
 
   @Put('add/education')
   public async addEducation (

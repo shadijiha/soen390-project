@@ -1,6 +1,7 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
 import { User } from '../models/user.entity'
 import {
+  type Repository,
   type FindOptionsRelationByString,
   type FindOptionsRelations
 } from 'typeorm'
@@ -11,7 +12,32 @@ export interface BearerPayload {
   id: number
   getUser: (
     relations?: FindOptionsRelations<User> | FindOptionsRelationByString
-  ) => Promise<User>
+  ) => Promise<User | null>
+}
+
+/**
+ * This function is used to create a BearerPayload for testing purposes ONLY
+ * @param emailToTest
+ * @param repo
+ * @returns
+ */
+export async function createTestBearerPayload (
+  emailToTest: string,
+  repo: Repository<User>
+): Promise<BearerPayload> {
+  return {
+    email: emailToTest,
+    id:
+(
+  await repo.findOne({ where: { email: emailToTest } })
+)?.id ?? -1,
+    getUser: async (relations) => {
+      return await repo.findOne({
+        where: { email: emailToTest },
+        relations
+      })
+    }
+  }
 }
 
 export function error<T extends App.WithStatus> (e: any): T {

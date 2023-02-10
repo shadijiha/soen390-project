@@ -35,7 +35,7 @@ export class AuthController {
   ): Promise<Auth.LoginResponse> {
     await this.userService
       .findOneByEmail(body.email)
-      // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
+    // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
       .catch((e) => {
         throw new ConflictException(`Email ${body.email} already taken`)
       })
@@ -48,9 +48,8 @@ export class AuthController {
   @ApiResponse({ type: User })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
+  public async me (@AuthUser() authedUser: BearerPayload): Promise<User | null> {
     const user = await authedUser.getUser(['educations'])
-    console.log(user)
     return user
   }
 }
