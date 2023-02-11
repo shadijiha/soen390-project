@@ -55,7 +55,7 @@ const Profile = () => {
             <div className="profile-top-card">
               <img
                 alt="image"
-                src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
+                src={profile.image}
                 className="profile-image"
                 style={{
                   aspectRatio: "1/1",
@@ -63,7 +63,12 @@ const Profile = () => {
                 }}
               />
 
-              <div className="profile-container01">
+              <div
+                className="profile-container01"
+                style={{
+                  backgroundImage: `url(${profile.cover})`,
+                }}
+              >
                 <div className="profile-container02">
                   <span className="profile-text">
                     {User.auth.title} @ company
@@ -111,7 +116,7 @@ const Profile = () => {
                     </span>
                   </div>
                 </div>
-                {/* to do: show this button only if user logged in == the profile that is shown */}
+
                 <div className="profile-container05">
                   <button
                     className="profile-button button"
@@ -141,6 +146,7 @@ const Profile = () => {
                   >
                     Connect
                   </button>
+                  {/* to do: show this edit button only if user logged in == the profile that is shown */}
                   <button
                     className="profile-button1 button"
                     style={{
@@ -290,6 +296,7 @@ const Profile = () => {
                       className="edu-icon"
                       width="50px"
                       height="50px"
+                      alt="Harvard"
                     />
                     <h2 className="edu-text09">Harvard</h2>
                     <span className="edu-text10">
@@ -304,6 +311,7 @@ const Profile = () => {
                       className="edu-icon"
                       width="50px"
                       height="50px"
+                      alt="Concordia University"
                     />
                     <h2 className="edu-text06">Concordia University</h2>
                     <span className="edu-text07">
@@ -318,6 +326,7 @@ const Profile = () => {
                       className="edu-icon"
                       width="50px"
                       height="50px"
+                      alt="Yale"
                     />
                     <h2 className="edu-text12">Dawson</h2>
                     <span className="edu-text13">

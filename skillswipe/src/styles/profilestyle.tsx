@@ -455,7 +455,7 @@ const ProfileStyle: React.ReactNode = css`
     padding-bottom: var(--dl-space-space-twounits);
     background-size: cover;
     justify-content: space-between;
-    background-image: url("https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc");
+
   }
   .profile-container02 {
     width: 100%;
