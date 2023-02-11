@@ -255,7 +255,7 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder={profile.name}
-                value={name}
+                // value={name}
                 onChange={changeName}
                 borderRadius="10"
                 size="lg"
@@ -315,16 +315,19 @@ const EditProfile = () => {
         <Stack
           as="form"
           onSubmit={handleSubmit}
-          justifyContent="center"
-          alignItems="center"
           p={5}
-          textAlign="center"
           style={{
-            display: "flex",
             flexDirection: "row",
             flexWrap: "wrap",
             justifyContent: "center",
+            alignContent: "center",
             alignItems: "center",
+            alignSelf: "center",
+            WebkitAlignContent: "center",
+            WebkitAlignItems: "center",
+            WebkitBoxAlign: "center",
+            WebkitFlexWrap: "wrap",
+            WebkitJustifyContent: "center",
           }}
         >
           <Box
@@ -352,8 +355,8 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="Company name"
-                value={name}
-                onChange={changeName}
+                // // value={name}
+                // onChange={changeName}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -367,8 +370,8 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="ex: Software Engineer Intern"
-                value={name}
-                onChange={changeName}
+                // // value={name}
+                // onChange={changeName}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -382,7 +385,7 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="Company name"
-                value={name}
+                // // value={name}
                 onChange={changeName}
                 borderRadius="10"
                 size="lg"
@@ -431,7 +434,7 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="Company name"
-                value={name}
+                // value={name}
                 onChange={changeName}
                 borderRadius="10"
                 size="lg"
@@ -446,7 +449,7 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="ex: Software Engineer Intern"
-                value={name}
+                // value={name}
                 onChange={changeName}
                 borderRadius="10"
                 size="lg"
@@ -461,7 +464,7 @@ const EditProfile = () => {
                 type="text"
                 id="name"
                 placeholder="Company name"
-                value={name}
+                // value={name}
                 onChange={changeName}
                 borderRadius="10"
                 size="lg"
@@ -514,29 +517,14 @@ const EditProfile = () => {
               Education History
             </p>
             <FormControl>
-              <FormLabel htmlFor="name">Name</FormLabel>
-              <Input
-                minWidth={"100%"}
-                type="text"
-                id="name"
-                placeholder={profile.name}
-                value={name}
-                onChange={changeName}
-                borderRadius="10"
-                size="lg"
-                mb={5}
-                width="auto"
-              />
-            </FormControl>
-            <FormControl>
               <FormLabel htmlFor="school">School</FormLabel>
               <Input
                 minWidth={"100%"}
                 type="text"
                 placeholder={profile.school}
                 id="school"
-                value={school}
-                onChange={(event) => setSchool(event.target.value)}
+                // value={school}
+                // onChange={(event) => setSchool(event.target.value)}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -544,14 +532,28 @@ const EditProfile = () => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="location">Title</FormLabel>
+              <FormLabel htmlFor="school-when">When?</FormLabel>
               <Input
                 minWidth={"100%"}
                 type="text"
-                placeholder={profile.title}
-                id="title"
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
+                id="name"
+                placeholder="2012-2015"
+                // value={name}
+                // onChange={changeName}
+                borderRadius="10"
+                size="lg"
+                mb={5}
+                width="auto"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="degree">Degree</FormLabel>
+              <Input
+                minWidth={"100%"}
+                type="text"
+                placeholder="B.S. Computer Science"
+                id="degree"
+                // onChange={(event) => setTitle(event.target.value)}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -565,8 +567,8 @@ const EditProfile = () => {
                 type="text"
                 placeholder={profile.location}
                 id="location"
-                value={location}
-                onChange={(event) => setLocation(event.target.value)}
+                // value={location}
+                // onChange={(event) => setLocation(event.target.value)}
                 borderRadius="10"
                 size="lg"
                 mb={5}
