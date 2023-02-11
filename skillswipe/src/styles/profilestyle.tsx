@@ -244,6 +244,8 @@ const ProfileStyle: React.ReactNode = css`
     overflow: auto;
     align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .edu-features {
     width: 100%;
@@ -252,6 +254,7 @@ const ProfileStyle: React.ReactNode = css`
     max-width: var(--dl-size-size-maxwidth);
     align-items: center;
     flex-direction: column;
+
   }
   .edu-text {
     font-size: 3rem;
@@ -269,7 +272,7 @@ const ProfileStyle: React.ReactNode = css`
     display: grid;
     grid-gap: var(--dl-space-space-twounits);
     margin-top: var(--dl-space-space-fourunits);
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   .edu-feature-card {
     width: 100%;
