@@ -174,8 +174,8 @@ const EditProfile = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "150px",
-            width: "300px",
+            height: "250px",
+            width: "400px",
             margin: "auto",
             position: "relative",
             marginBottom: "10px",
@@ -199,7 +199,9 @@ const EditProfile = () => {
               top: "-30%",
             }}
           ></div>
-          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+          <button
+            style={{ position: "absolute", bottom: "38px", right: "-15px" }}
+          >
             {/* upload new profile picture button */}
             <input
               type="file"
@@ -337,6 +339,7 @@ const EditProfile = () => {
             p={8}
             width="auto"
             mr={3}
+            mt={2}
           >
             <p
               style={{
