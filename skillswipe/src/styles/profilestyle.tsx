@@ -499,7 +499,7 @@ const ProfileStyle: React.ReactNode = css`
     margin-left: var(--dl-space-space-halfunit);
   }
   .profile-container05 {
-    width: 219px;
+    width: 300px;
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -940,7 +940,7 @@ const ProfileStyle: React.ReactNode = css`
       margin-right: 0px;
     }
     .profile-container05 {
-      width: 216px;
+      width: 300px;
       height: 60px;
       margin-right: 90px;
     }
@@ -1056,7 +1056,7 @@ const ProfileStyle: React.ReactNode = css`
       margin-right: var(--dl-space-space-fourunits);
     }
     .profile-container05 {
-      width: 225px;
+      width: 50%;
       margin-right: 0px;
       justify-content: space-between;
     }

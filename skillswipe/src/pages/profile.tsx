@@ -107,55 +107,56 @@ const Profile = () => {
                         marginLeft: "0px",
                       }}
                     >
-                      I&apos;m great at ______
+                      Hello! 👋
                     </span>
-                  </div>
-                  <div className="profile-container05">
-                    <button
-                      className="profile-button button"
-                      style={{
-                        color: buttonColors,
-                        borderColor: buttonColors,
-                        borderWidth: "2px",
-                        textShadow: "0px 0px 40px #000000CA",
-                        fontWeight: 600,
-                      }}
-                    >
-                      <span>
-                        <span>Message</span>
-                        <br></br>
-                      </span>
-                    </button>
-                    <button
-                      className="profile-button1 button"
-                      style={{
-                        color: buttonColors,
-                        borderColor: buttonColors,
-                        borderWidth: "2px",
-                        textShadow: "0px 0px 40px #000000CA",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Connect
-                    </button>
                   </div>
                 </div>
                 {/* to do: show this button only if user logged in == the profile that is shown */}
-                <button
-                  className="profile-button1 button"
-                  style={{
-                    color: buttonColors,
-                    borderColor: buttonColors,
-                    borderWidth: "2px",
-                    textShadow: "0px 0px 40px #000000CA",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => {
-                    router.push("/editProfile");
-                  }}
-                >
-                  Edit Profile
-                </button>
+                <div className="profile-container05">
+                  <button
+                    className="profile-button button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                      marginRight: "1em",
+                    }}
+                  >
+                    <span>
+                      <span>Message</span>
+                    </span>
+                  </button>
+                  <button
+                    className="profile-button1 button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                      marginRight: "1em",
+                    }}
+                  >
+                    Connect
+                  </button>
+                  <button
+                    className="profile-button1 button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                    }}
+                    onClick={() => {
+                      router.push("/editProfile");
+                    }}
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
             </div>
 
