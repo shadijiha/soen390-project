@@ -4,6 +4,7 @@ import { User } from '../models/user.entity'
 import { dataSourceMockFactory } from '../util/mockDataSource'
 import { DataSource, DeleteResult, type Repository } from 'typeorm'
 import { UsersService } from './users.service'
+import { Users } from './users.types'
 
 describe('UsersService', () => {
   let service: UsersService
@@ -15,7 +16,7 @@ describe('UsersService', () => {
   mockUser.firstName = 'test'
   mockUser.lastName = 'test'
   mockUser.gender = 'male'
-  const updatedUser: User = new User()
+  const updatedUser = new Users.UpdateUserRequest()
   updatedUser.email = 'updated@gmail.com'
   const deletedResult: DeleteResult = new DeleteResult()
   deletedResult.affected = 1
@@ -72,7 +73,7 @@ describe('UsersService', () => {
   })
 
   it('should return updated user', async () => {
-    const result = await service.update(1, updatedUser)
+    const result = await service.update(1, updatedUser, {profilePic: undefined, coverPic: undefined} )
     expect(result.email).toEqual('test@gmail.com')
   })
 

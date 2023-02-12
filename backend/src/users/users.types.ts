@@ -47,7 +47,7 @@ export namespace Users {
       required: false
     }
     )
-      profile_pic: Express.Multer.File
+      profilePic: Express.Multer.File
 
     @ApiProperty({
       type: 'file',
@@ -60,40 +60,8 @@ export namespace Users {
       required: false
     }
     )
-      cover_pic: Express.Multer.File
+      coverPic: Express.Multer.File
 
-    // @ApiProperty({ type: [Education] })
-    // educations: Education[];
-
-    // @ApiProperty({ type: [Work] })
-    // workExperience: Work[];
-
-    // @ApiProperty({ type: [Volunteering] })
-    // volunteeringExperience: Volunteering[];
-
-    // @ApiProperty({ type: [User] })
-    // connections: User[];
-
-    // @ApiProperty({ type: [Skill] })
-    // skills: Skill[];
-
-    // @ApiProperty({ type: [Recommendation] })
-    // recommendationsReceived: Recommendation[];
-
-    // @ApiProperty({ type: [Recommendation] })
-    // recommendationsGiven: Recommendation[];
-
-    // @ApiProperty({ type: [Course] })
-    // courses: Course[];
-
-    // @ApiProperty({ type: [Project] })
-    // projects: Project[];
-
-    // @ApiProperty({ type: [Award] })
-    // awards: Award[];
-
-    // @ApiProperty({ type: [Language] })
-    // languages: Language[];
   }
 
   export class UpdateUserResponse extends App.WithStatus {

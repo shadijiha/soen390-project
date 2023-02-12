@@ -8,8 +8,8 @@ import {
   UseGuards
 } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { AuthUser, BearerPayload } from 'src/util/util'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { AuthUser, BearerPayload } from '../util/util'
 import { ProfileService } from './profile.service'
 import { Profile } from './profile.types'
 

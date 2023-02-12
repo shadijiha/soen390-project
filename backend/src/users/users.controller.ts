@@ -13,7 +13,7 @@ import { UsersService } from './users.service'
 import { Users } from './users.types'
 import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
-import { FileValidationPipe } from 'src/util/fileValidationPipe'
+import { FileValidationPipe } from '../util/fileValidationPipe'
 
 @Controller()
 @ApiTags('Users')
