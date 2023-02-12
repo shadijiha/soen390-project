@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { Spinner } from "@chakra-ui/spinner";
 import { Box } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { actionCreator } from "@/Redux";
+import { actionCreator } from "../Redux/index";
 import { bindActionCreators } from "redux";
 
 const Layout = ({ children }: any) => {
