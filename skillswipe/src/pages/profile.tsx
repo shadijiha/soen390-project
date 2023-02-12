@@ -8,7 +8,7 @@ import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import router from "next/router";
-import ProfileStyle from "@/styles/profilestyle";
+import ProfileStyle from "../styles/profilestyle";
 
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
