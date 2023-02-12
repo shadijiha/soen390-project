@@ -2,27 +2,16 @@ import {
   Body,
   Controller,
   Delete,
-  FileTypeValidator,
   HttpException,
-  MaxFileSizeValidator,
   Param,
-  ParseFilePipe,
-  Post,
   Put,
-  UseGuards,
-  UseInterceptors
+  UseGuards
 } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
-import path = require('path')
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from 'src/util/util'
 import { ProfileService } from './profile.service'
 import { Profile } from './profile.types'
-import { diskStorage } from 'multer'
-import { Get, Res, UploadedFile } from '@nestjs/common/decorators'
-import { Observable, of } from 'rxjs'
-import { join } from 'path'
 
 @Controller('profile')
 @ApiTags('Profile')

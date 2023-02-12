@@ -45,28 +45,28 @@ export class UsersService {
     return userNoPass
   }
 
-  async update (id: number, user: Users.UpdateUserRequest, files: { profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File }): Promise<User> {
+  async update (id: number, user: Users.UpdateUserRequest, files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
     const oldUser = await this.findOneById(id)
 
-    oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName
-    oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName
-    oldUser.email = user.email != '' ? user.email : oldUser.email
-    oldUser.mobileNo = user.mobileNo != '' ? user.mobileNo : oldUser.mobileNo
-    oldUser.gender = user.gender != '' ? user.gender : oldUser.gender
-    oldUser.biography = user.biography != '' ? user.biography : oldUser.biography
+    oldUser.firstName = user.firstName !== '' ? user.firstName : oldUser.firstName
+    oldUser.lastName = user.lastName !== '' ? user.lastName : oldUser.lastName
+    oldUser.email = user.email !== '' ? user.email : oldUser.email
+    oldUser.mobileNo = user.mobileNo !== '' ? user.mobileNo : oldUser.mobileNo
+    oldUser.gender = user.gender !== '' ? user.gender : oldUser.gender
+    oldUser.biography = user.biography !== '' ? user.biography : oldUser.biography
 
     // convert image to base64
-    if (files?.profile_pic != null) {
-      const buff = files.profile_pic[0].buffer
+    if (files?.profilePic != null) {
+      const buff = files.profilePic[0].buffer
       const base64data = buff.toString('base64')
-      oldUser.profile_pic = base64data
+      oldUser.profilePic = base64data
     }
 
     // convert image to base64
-    if (files?.cover_pic != null) {
-      const buff = files.cover_pic[0].buffer
+    if (files?.coverPic != null) {
+      const buff = files.coverPic[0].buffer
       const base64data = buff.toString('base64')
-      oldUser.cover_pic = base64data
+      oldUser.coverPic = base64data
     }
 
     await this.usersRepository.update(id, oldUser)
@@ -78,7 +78,7 @@ export class UsersService {
     await this.usersRepository.softRemove(user)
   }
 
-  public async search (user: User | null, query: string) {
+  public async search (user: User | null, query: string): Promise<{ users: User[], companies: never[] }> {
     return {
       users: await this.usersRepository.find({
         where: [

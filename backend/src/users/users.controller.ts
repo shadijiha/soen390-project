@@ -1,23 +1,18 @@
 import {
   Controller,
   Delete,
-  FileTypeValidator,
   Get,
   HttpException,
-  HttpStatus,
-  MaxFileSizeValidator,
-  ParseFilePipe,
-  Request
+  HttpStatus
 } from '@nestjs/common'
-import { Body, Put, Query, UploadedFile, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Body, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
+import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { type User } from '../models/user.entity'
 import { UsersService } from './users.service'
 import { Users } from './users.types'
-import { AuthUser, BearerPayload, error } from '../util/util'
-import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express'
-import { use } from 'passport'
+import { AuthUser, BearerPayload } from '../util/util'
+import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { FileValidationPipe } from 'src/util/fileValidationPipe'
 
 @Controller()
@@ -34,12 +29,12 @@ export class UsersController {
   }
 
   @Delete('user')
-  remove (@AuthUser() authedUser: BearerPayload) {
+  async remove (@AuthUser() authedUser: BearerPayload): Promise<void> {
     try {
-      this.usersService.removeSoft(authedUser.id)
+      await this.usersService.removeSoft(authedUser.id)
     } catch (e) {
       throw new HttpException(
-        'Failed to delete user \n' + (<Error>e).message,
+        'Failed to delete user \n' + (e as Error).message,
         HttpStatus.PRECONDITION_FAILED
       )
     }
@@ -48,9 +43,9 @@ export class UsersController {
   @Get('search')
   @ApiQuery({ name: 'query', required: true })
   public async search (
-  @AuthUser() authedUser: BearerPayload,
-    @Query('query') query: string
-  ) {
+    @AuthUser() authedUser: BearerPayload,
+      @Query('query') query: string
+  ): Promise<{ users: User[], companies: never[] }> {
     if (query.length <= 0) return { users: [], companies: [] }
     return await this.usersService.search(await authedUser.getUser(), query)
   }
@@ -60,11 +55,11 @@ export class UsersController {
   @ApiResponse({ type: Users.UpdateUserResponse })
 
   @UseInterceptors(FileFieldsInterceptor([
-    { name: 'profile_pic', maxCount: 1 },
-    { name: 'cover_pic', maxCount: 1 }
+    { name: 'profilePic', maxCount: 1 },
+    { name: 'coverPic', maxCount: 1 }
   ]))
 
-  async update (@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(FileValidationPipe) files: { profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File }) {
+  async update (@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
     console.log(files)
     return await this.usersService.update(authedUser.id, user, files)
   }

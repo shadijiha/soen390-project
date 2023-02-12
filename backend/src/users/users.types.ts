@@ -2,19 +2,9 @@
  * Types for Request and Respose
  */
 
-import { ApiConsumes, ApiProperty } from '@nestjs/swagger'
-import { EMPTY } from 'rxjs'
+import { ApiProperty } from '@nestjs/swagger'
 import { App } from '../app.types'
-import { Award } from '../models/award.entity'
-import { Course } from '../models/course.entity'
-import { Education } from '../models/education.entity'
-import { Language } from '../models/language.entity'
-import { Project } from '../models/project.entity'
-import { Recommendation } from '../models/recommendation.entity'
-import { Skill } from '../models/skill.entity'
 import { User } from '../models/user.entity'
-import { Volunteering } from '../models/volunteering.entity'
-import { Work } from '../models/work.entity'
 
 export namespace Users {
   export class GetAllUsersResponse extends App.WithStatus {
