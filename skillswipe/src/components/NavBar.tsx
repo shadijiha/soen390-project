@@ -11,10 +11,15 @@ import {
   Text,
   Collapse,
   useDisclosure,
+  Hide,
+  Show,
+  background,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, SearchIcon, SpinnerIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, Variant } from "framer-motion";
 
 
 import { toast } from "react-toastify";
@@ -29,28 +34,21 @@ export default function NavBar() {
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [show, setShow] = useState(false);
-
-  const { getButtonProps, isOpen, onToggle, getDisclosureProps } = useDisclosure();
-  const [ hidden, setHidden ] = useState(!isOpen);
-
-
-
+  const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
   const [search, setSearch] = useState(false);
   const toggleSearch = () => setSearch(!search);
 
-
- 
-
-
-
-
+  
 
 
   const navColor = useColorModeValue(
     "rgba(255, 255, 255, 0.25)",
     "rgba(0, 0, 0, 0.25)"
   );
+
+
+
+
 
 
 
@@ -130,6 +128,7 @@ export default function NavBar() {
                 }}
               />
                   <SearchIcon
+                    
                     position="absolute"
                     top="50%"
                     transform="translateY(-50%)"
@@ -137,6 +136,7 @@ export default function NavBar() {
                     color="gray.500"
                     zIndex={1}
                     cursor="pointer"
+                    
                     // change color when hover over
                     _hover={{
                       color: "blue.300",
@@ -251,36 +251,41 @@ export default function NavBar() {
 
           <Flex flexDir="column" align="center">
                 {/* click search icon to expand*/}
-            
-             <Button {...getButtonProps()}><SearchIcon></SearchIcon></Button>
-             <motion.div {...getDisclosureProps()}
-             hidden = {hidden}
-             initial = {false}
-             onAnimationStart = {() => setHidden(false)}
-             onAnimationComplete = {() => setHidden(!isOpen)}
-             animate = {{width: isOpen ? "100%" : "0%"}} 
+
+                <Button onClick= {onToggle} variant = "ghost" aria-label="Search" backgroundColor="transparent">Search</Button>
+                <Collapse in={isOpen} animateOpacity>
+                  <InputGroup>
+
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      value={searchTerm}
+                      onChange={handleSearch}
+                      style={{
+                        
+                        width: "250px",
+                        height: "40px",
+                        paddingLeft: "10px",
+                        borderRadius: "100px",
+                        border: "none",
+                        outline: "1px  black",
+                        backgroundColor: formBackground,
+                      }}
+                    />
+                    <InputRightElement width={9}>
+                      <IconButton variant = "ghost" aria-label="Search" icon={<SearchIcon />} backgroundColor = "transparent" />
+
+                      </InputRightElement>
+
+                      
+                  </InputGroup>
+                </Collapse>
+
             
 
-             >
-                <input
-                  type="text"
-                  placeholder="Search"
-                  value={searchTerm}
-                  onChange={handleSearch}
-                  style={{
-                    width: "100%",
-                    height: "40px",
-                    paddingLeft: "30px",
-                    borderRadius: "100px",
-                    border: "none",
-                    outline: "1px solid black",
-                    backgroundColor: formBackground,
-                  }}
-                />
-                
-            </motion.div>
-                
               
+            
+            
               
                
             <NextLink href="/home" passHref>
