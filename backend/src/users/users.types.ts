@@ -61,7 +61,6 @@ export namespace Users {
     }
     )
       coverPic: Express.Multer.File
-
   }
 
   export class UpdateUserResponse extends App.WithStatus {
