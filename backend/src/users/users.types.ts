@@ -2,19 +2,19 @@
  * Types for Request and Respose
  */
 
-import { ApiConsumes, ApiProperty } from "@nestjs/swagger";
-import { EMPTY } from "rxjs";
-import { App } from "../app.types";
-import { Award } from "../models/award.entity";
-import { Course } from "../models/course.entity";
-import { Education } from "../models/education.entity";
-import { Language } from "../models/language.entity";
-import { Project } from "../models/project.entity";
-import { Recommendation } from "../models/recommendation.entity";
-import { Skill } from "../models/skill.entity";
-import { User } from "../models/user.entity";
-import { Volunteering } from "../models/volunteering.entity";
-import { Work } from "../models/work.entity";
+import { ApiConsumes, ApiProperty } from '@nestjs/swagger'
+import { EMPTY } from 'rxjs'
+import { App } from '../app.types'
+import { Award } from '../models/award.entity'
+import { Course } from '../models/course.entity'
+import { Education } from '../models/education.entity'
+import { Language } from '../models/language.entity'
+import { Project } from '../models/project.entity'
+import { Recommendation } from '../models/recommendation.entity'
+import { Skill } from '../models/skill.entity'
+import { User } from '../models/user.entity'
+import { Volunteering } from '../models/volunteering.entity'
+import { Work } from '../models/work.entity'
 
 export namespace Users {
   export class GetAllUsersResponse extends App.WithStatus {
@@ -28,45 +28,49 @@ export namespace Users {
   }
 
   export class UpdateUserRequest {
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
       firstName: string
 
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
       lastName: string
 
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
       email: string
 
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
       mobileNo: string
 
     @ApiProperty({ examples: ['male', 'female'], required: false })
       gender: 'male' | 'female' | ''
 
-    @ApiProperty({required: false})
+    @ApiProperty({ required: false })
       biography: string
 
-     @ApiProperty({
-      type: "file",
+    @ApiProperty({
+      type: 'file',
       properties: {
         file: {
-          type: "string",
-          format: "binary",
-        },
-      }, required: false}
-  )
-    profile_pic: Express.Multer.File;
+          type: 'string',
+          format: 'binary'
+        }
+      },
+      required: false
+    }
+    )
+      profile_pic: Express.Multer.File
 
     @ApiProperty({
-      type: "file",
+      type: 'file',
       properties: {
         file: {
-          type: "string",
-          format: "binary",
-        },
-      }, required: false}
-  )
-    cover_pic: Express.Multer.File;
+          type: 'string',
+          format: 'binary'
+        }
+      },
+      required: false
+    }
+    )
+      cover_pic: Express.Multer.File
 
     // @ApiProperty({ type: [Education] })
     // educations: Education[];

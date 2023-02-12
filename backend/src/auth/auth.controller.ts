@@ -44,18 +44,18 @@ export class AuthController {
     return await this.authService.login(body)
   }
 
-  @Get("me")
+  @Get('me')
   @ApiResponse({ type: User })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
+  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
     const user = await authedUser.getUser([
-      "educations",
-      "workExperiences",
-      "skills",
-      "projects",
-      "awards",
-    ]);
-    return user as User;
+      'educations',
+      'workExperiences',
+      'skills',
+      'projects',
+      'awards'
+    ])
+    return user as User
   }
 }

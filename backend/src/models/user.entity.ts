@@ -31,21 +31,20 @@ export class User extends BaseEntity {
   @ApiProperty()
     id: number
 
-
   @Column()
   @Index({ fulltext: true })
   @ApiProperty()
-  firstName: string;
+    firstName: string
 
   @Column({ default: null })
   @Index({ fulltext: true })
   @ApiProperty()
-  lastName: string;
+    lastName: string
 
   @Column()
   @Index({ unique: true, fulltext: true })
   @ApiProperty()
-  email: string;
+    email: string
 
   @Column({ select: false })
     password: string
@@ -58,13 +57,13 @@ export class User extends BaseEntity {
   @ApiProperty()
     gender: 'male' | 'female'
 
-  @Column({ default: null, type: "longtext"})
+  @Column({ default: null, type: 'longtext' })
   @ApiProperty()
-  profile_pic: string;
+    profile_pic: string
 
-  @Column({ default: null, type: "longtext"})
+  @Column({ default: null, type: 'longtext' })
   @ApiProperty()
-  cover_pic: string;
+    cover_pic: string
 
   @Column({ default: null })
   @ApiProperty()

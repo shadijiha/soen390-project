@@ -1,16 +1,10 @@
-import { Injectable } from "@nestjs/common";
-
-import { User } from "../models/user.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, DeleteResult, Like, Repository } from "typeorm";
-import { Users } from "./users.types";
-import * as argon2 from "argon2";
-import fs from 'fs';  
+import { Injectable } from '@nestjs/common'
+import { User } from '../models/user.entity'
+import { InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Like, Repository } from 'typeorm'
+import { type Users } from './users.types'
+import * as argon2 from 'argon2'
 import { type Auth } from '../auth/auth.types'
-
-
-
-
 
 @Injectable()
 export class UsersService {
@@ -51,39 +45,32 @@ export class UsersService {
     return userNoPass
   }
 
-  async update(id: number, user: Users.UpdateUserRequest, files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}): Promise<User> {
-    let oldUser = await this.findOneById(id);
+  async update (id: number, user: Users.UpdateUserRequest, files: { profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File }): Promise<User> {
+    const oldUser = await this.findOneById(id)
 
+    oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName
+    oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName
+    oldUser.email = user.email != '' ? user.email : oldUser.email
+    oldUser.mobileNo = user.mobileNo != '' ? user.mobileNo : oldUser.mobileNo
+    oldUser.gender = user.gender != '' ? user.gender : oldUser.gender
+    oldUser.biography = user.biography != '' ? user.biography : oldUser.biography
 
-
-    oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName;
-    oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName;
-    oldUser.email = user.email != '' ? user.email : oldUser.email;
-    oldUser.password = oldUser.password;
-    oldUser.mobileNo = user.mobileNo != '' ? user.mobileNo : oldUser.mobileNo;
-    oldUser.gender = user.gender != '' ? user.gender : oldUser.gender;
-    oldUser.biography = user.biography != '' ? user.biography : oldUser.biography;
-
-   
-    //convert image to base64
-    if(files?.profile_pic != null){
-      let buff = files.profile_pic[0].buffer;
-      let base64data = buff.toString('base64');
-      oldUser.profile_pic = base64data;
-  }
-
-      //convert image to base64
-      if(files?.cover_pic != null){
-        let buff = files.cover_pic[0].buffer;
-        let base64data = buff.toString('base64');
-        oldUser.cover_pic = base64data;
+    // convert image to base64
+    if (files?.profile_pic != null) {
+      const buff = files.profile_pic[0].buffer
+      const base64data = buff.toString('base64')
+      oldUser.profile_pic = base64data
     }
 
-    oldUser.created_at = oldUser.created_at;
+    // convert image to base64
+    if (files?.cover_pic != null) {
+      const buff = files.cover_pic[0].buffer
+      const base64data = buff.toString('base64')
+      oldUser.cover_pic = base64data
+    }
 
-
-    await this.usersRepository.update(id, oldUser);
-    return await this.findOneById(id);
+    await this.usersRepository.update(id, oldUser)
+    return await this.findOneById(id)
   }
 
   async removeSoft (id: number): Promise<void> {
@@ -91,19 +78,17 @@ export class UsersService {
     await this.usersRepository.softRemove(user)
   }
 
-
-  public async search(user: User | null, query: string) {
+  public async search (user: User | null, query: string) {
     return {
       users: await this.usersRepository.find({
         where: [
           { firstName: Like(`%${query}%`) },
           { lastName: Like(`%${query}%`) },
-          { email: Like(`%${query}%`) },
+          { email: Like(`%${query}%`) }
         ],
-        take: 10,
+        take: 10
       }),
-      companies: [],
-    };
+      companies: []
+    }
   }
-
 }

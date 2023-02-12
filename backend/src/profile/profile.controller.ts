@@ -10,19 +10,19 @@ import {
   Post,
   Put,
   UseGuards,
-  UseInterceptors,
-} from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from "@nestjs/swagger";
-import path = require("path");
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { AuthUser, BearerPayload } from "src/util/util";
-import { ProfileService } from "./profile.service";
-import { Profile } from "./profile.types";
-import { diskStorage } from "multer";
-import { Get, Res, UploadedFile } from "@nestjs/common/decorators";
-import { Observable, of } from "rxjs";
-import { join } from "path";
+  UseInterceptors
+} from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger'
+import path = require('path')
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { AuthUser, BearerPayload } from 'src/util/util'
+import { ProfileService } from './profile.service'
+import { Profile } from './profile.types'
+import { diskStorage } from 'multer'
+import { Get, Res, UploadedFile } from '@nestjs/common/decorators'
+import { Observable, of } from 'rxjs'
+import { join } from 'path'
 
 @Controller('profile')
 @ApiTags('Profile')
