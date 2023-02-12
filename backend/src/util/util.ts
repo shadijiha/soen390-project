@@ -1,24 +1,49 @@
-import { createParamDecorator, ExecutionContext, Logger } from "@nestjs/common";
-import { ApiBody } from "@nestjs/swagger";
-import { Request } from "express";
-import { User } from "src/models/user.entity";
-import { FindOptionsRelationByString, FindOptionsRelations } from "typeorm";
-import { App } from "../app.types";
+import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
+import { User } from '../models/user.entity'
+import {
+  type Repository,
+  type FindOptionsRelationByString,
+  type FindOptionsRelations
+} from 'typeorm'
+import { App } from '../app.types'
 
-export type BearerPayload = {
-  email: string;
-  id: number;
+export interface BearerPayload {
+  email: string
+  id: number
   getUser: (
     relations?: FindOptionsRelations<User> | FindOptionsRelationByString
-  ) => Promise<User>;
-};
+  ) => Promise<User | null>
+}
 
-export function error<T extends App.WithStatus>(e: any): T {
-  const err = e as Error;
+/**
+ * This function is used to create a BearerPayload for testing purposes ONLY
+ * @param emailToTest
+ * @param repo
+ * @returns
+ */
+export async function createTestBearerPayload (
+  emailToTest: string,
+  repo: Repository<User>
+): Promise<BearerPayload> {
   return {
-    errors: [err.message],
-    status: App.Status.Failed,
-  } as T;
+    email: emailToTest,
+    id:
+(
+  await repo.findOne({ where: { email: emailToTest } })
+)?.id ?? -1,
+    getUser: async (relations) => {
+      return await repo.findOne({
+        where: { email: emailToTest },
+        relations
+      })
+    }
+  }
+}
+
+export function error<T extends App.WithStatus> (e: any): T {
+  const err = e as Error
+  const t: T | any = { errors: [err?.message], status: App.Status?.Failed } // TODO: find a better solution for eslint
+  return t
 }
 
 /**
@@ -27,17 +52,24 @@ export function error<T extends App.WithStatus>(e: any): T {
  */
 export const AuthUser = createParamDecorator(
   (data: unknown, ctx: ExecutionContext) => {
-    const request = <Request>ctx.switchToHttp().getRequest();
-    const payload = request.user as BearerPayload;
+    const request = ctx.switchToHttp().getRequest()
+    const payload = request.user as BearerPayload
     return {
       ...payload,
       getUser: async (
         relations: FindOptionsRelations<User> | FindOptionsRelationByString = []
       ) => {
-        return await User.findOne({ where: { id: payload.id }, relations });
-      },
-    };
+        return await User.findOne({
+          where: { id: payload.id },
+          relations
+        })
+      }
+    }
   }
-);
+)
 
-export class BaseRequest {}
+export class BaseRequest {
+  tempFunction (): any {
+    return null
+  } // TODO: find a better solution for eslint
+}

@@ -1,4 +1,4 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger'
 import {
   BaseEntity,
   Column,
@@ -11,25 +11,26 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   TableInheritance,
-  UpdateDateColumn,
-} from "typeorm";
-import { Award } from "./award.entity";
-import { Course } from "./course.entity";
-import { Education } from "./education.entity";
-import { Language } from "./language.entity";
-import { Message } from "./message.entity";
-import { Project } from "./project.entity";
-import { Recommendation } from "./recommendation.entity";
-import { Skill } from "./skill.entity";
-import { Volunteering } from "./volunteering.entity";
-import { Work } from "./work.entity";
+  UpdateDateColumn
+} from 'typeorm'
+import { Award } from './award.entity'
+import { Course } from './course.entity'
+import { Education } from './education.entity'
+import { Language } from './language.entity'
+import { Message } from './message.entity'
+import { Project } from './project.entity'
+import { Recommendation } from './recommendation.entity'
+import { Skill } from './skill.entity'
+import { Volunteering } from './volunteering.entity'
+import { Work } from './work.entity'
 
-@Entity("users")
-@TableInheritance({ column: { type: "varchar", name: "type" } })
+@Entity('users')
+@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+    id: number
+
 
   @Column()
   @Index({ fulltext: true })
@@ -47,15 +48,15 @@ export class User extends BaseEntity {
   email: string;
 
   @Column({ select: false })
-  password: string;
+    password: string
 
   @Column({ default: null })
   @ApiProperty()
-  mobileNo: string;
+    mobileNo: string
 
   @Column()
   @ApiProperty()
-  gender: "male" | "female";
+    gender: 'male' | 'female'
 
   @Column({ default: null, type: "longtext"})
   @ApiProperty()
@@ -67,118 +68,118 @@ export class User extends BaseEntity {
 
   @Column({ default: null })
   @ApiProperty()
-  biography: string;
+    biography: string
 
   @CreateDateColumn()
   @ApiProperty()
-  created_at: Date;
+    created_at: Date
 
   @UpdateDateColumn()
   @ApiProperty()
-  updated_at: Date;
+    updated_at: Date
 
   @DeleteDateColumn()
-  deleted_at: Date;
+    deleted_at: Date
 
   // SPECIAL GETTERS AND METHODS
-  public get fullName() {
-    return this.firstName + " " + this.lastName;
+  public get fullName (): string {
+    return this.firstName + ' ' + this.lastName
   }
 
   /**
    * @param otherUser
    * @returns Returns the conversation between the current user and the other user
    */
-  public async getMessagesFrom(otherUser: User | number) {
-    const otherId = typeof otherUser === "number" ? otherUser : otherUser.id;
-    const messages = await Message.find({
+  public async getMessagesFrom (otherUser: User | number): Promise<Message[]> {
+    const otherId = typeof otherUser === 'number' ? otherUser : otherUser.id
+    return await Message.find({
       where: [
         { senderId: this.id, receiverId: otherId },
-        { senderId: otherId, receiverId: this.id },
+        { senderId: otherId, receiverId: this.id }
       ],
-      order: { created_at: "ASC" },
-    });
+      order: { created_at: 'ASC' }
+    })
   }
 
   // RELATIONS
-  //education
+  // education
   @OneToMany(() => Education, (e) => e.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Education] })
-  educations: Education[];
+    educations: Education[]
 
-  //work experience
+  // work experience
   @OneToMany(() => Work, (w) => w.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Work] })
-  workExperiences: Work[];
+    workExperience: Work[]
 
-  //volunteering experience
+  // volunteering experience
   @OneToMany(() => Volunteering, (v) => v.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Volunteering] })
-  volunteeringExperience: Volunteering[];
+    volunteeringExperience: Volunteering[]
 
-  //connections
+  // connections
   @ManyToMany(() => User, (user) => user.connections)
   @ApiProperty({ type: [User] })
-  connections: User[];
+    connections: User[]
 
-  //skills
+  // skills
   @ManyToMany((type) => Skill, (skill) => skill.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @JoinTable()
   @ApiProperty({ type: [Skill] })
-  skills: Skill[];
+    skills: Skill[]
 
-  //recommendations received
+  // recommendations received
   @OneToMany(() => User, (user) => user.recommendationsReceived)
   @ApiProperty({ type: [Recommendation] })
-  recommendationsReceived: Recommendation[];
+    recommendationsReceived: Recommendation[]
 
-  //recommendations given
+  // recommendations given
   @OneToMany(() => User, (user) => user.recommendationsGiven)
   @ApiProperty({ type: [Recommendation] })
-  recommendationsGiven: Recommendation[];
+    recommendationsGiven: Recommendation[]
 
-  //courses
+  // courses
   @OneToMany(() => Course, (course) => course.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Course] })
-  courses: Course[];
+    courses: Course[]
 
-  //projects
+  // projects
   @OneToMany(() => Project, (project) => project.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Project] })
-  projects: Project[];
+    projects: Project[]
 
-  //awards
+  // awards
   @OneToMany(() => Award, (award) => award.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Award] })
-  awards: Award[];
+    awards: Award[]
 
-  //languages
+  // languages
   @ManyToMany((type) => Language, (language) => language.user, {
     cascade: true,
-    orphanedRowAction: "delete",
+    orphanedRowAction: 'delete'
   })
   @JoinTable()
   @ApiProperty({ type: [Language] })
-  languages: Language[];
+    languages: Language[]
 }

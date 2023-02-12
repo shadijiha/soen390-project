@@ -21,16 +21,16 @@ import { use } from "passport";
 import { FileValidationPipe } from "src/util/fileValidationPipe";
 
 @Controller()
-@ApiTags("Users")
+@ApiTags('Users')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor (private readonly usersService: UsersService) {}
 
   @Get("user")
   @ApiResponse({ type: Users.GetAllUsersResponse })
-  async findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findAll (): Promise<User[]> {
+    return await this.usersService.findAll()
   }
 
   @Delete("user")

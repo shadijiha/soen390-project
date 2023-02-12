@@ -1,12 +1,11 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { AuthModule } from "./auth/auth.module";
-import { UsersModule } from "./users/users.module";
-import { ProfileModule } from "./profile/profile.module";
-import { FilesModule } from "./files/files.module";
+import { Module } from '@nestjs/common'
+import { ConfigModule } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { AuthModule } from './auth/auth.module'
+import { UsersModule } from './users/users.module'
+import { ProfileModule } from './profile/profile.module'
 
 @Module({
   imports: [
@@ -18,16 +17,15 @@ import { FilesModule } from "./files/files.module";
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: ["dist/models/**/*.entity.{ts,js}"],
+      entities: ['dist/models/**/*.entity.{ts,js}'],
       synchronize: true,
-      autoLoadEntities: true,
+      autoLoadEntities: true
     }),
     UsersModule,
     AuthModule,
-    ProfileModule,
-    FilesModule,
+    ProfileModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule {}

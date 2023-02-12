@@ -10,7 +10,11 @@ export const register =  async (RegisterUser : any) =>{
 
 export const loginApi = async (LoginUser : any) =>{
   return axios.post(`${URL}/auth/login`,LoginUser);
+}
 
+export const editProfile = async (editProfile: any) => {
+  //do put
+  return axios.put(`${URL}/auth/login`,editProfile);
 }
 
 export const checkLogin = async (token : any) => {

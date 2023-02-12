@@ -17,36 +17,34 @@ import { Volunteering } from "../models/volunteering.entity";
 import { Work } from "../models/work.entity";
 
 export namespace Users {
-  export class GetAllUsersRequest {}
-
   export class GetAllUsersResponse extends App.WithStatus {
     @ApiProperty({ isArray: true, type: User })
-    user: User[] | null;
+      user: User[] | null
   }
 
   export class GetUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+      user: User | null
   }
 
   export class UpdateUserRequest {
     @ApiProperty({required: false})
-    firstName: string | null;
+      firstName: string
 
     @ApiProperty({required: false})
-    lastName: string | null;
+      lastName: string
 
     @ApiProperty({required: false})
-    email: string | null;
+      email: string
 
     @ApiProperty({required: false})
-    mobileNo: string;
+      mobileNo: string
 
-    @ApiProperty({ examples: ["male", "female"], required: false })
-    gender: "male" | "female" | null | '';
+    @ApiProperty({ examples: ['male', 'female'], required: false })
+      gender: 'male' | 'female' | ''
 
     @ApiProperty({required: false})
-    biography: string;
+      biography: string
 
      @ApiProperty({
       type: "file",
@@ -106,6 +104,6 @@ export namespace Users {
 
   export class UpdateUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+      user: User | null
   }
 }

@@ -1,0 +1,42 @@
+name: Backend CI pipeline
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Cope repository
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 19.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+
+      - name: Install npm dependencies
+        working-directory: ./backend
+        run: |
+          cp .env.testing .env
+          npm ci
+
+      - name: Lint code
+        working-directory: ./backend
+        run: npm run lint:ci
+
+      - name: Build
+        working-directory: ./backend
+        run: npm run build
+
+      - name: Run tests
+        working-directory: ./backend
+        run: npm run test
+
+      - name: Check test coverage
+        working-directory: ./backend
+        run: npm run test:cov

@@ -1,50 +1,60 @@
 import { Injectable } from "@nestjs/common";
-import { Auth } from "../auth/auth.types";
+
 import { User } from "../models/user.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DataSource, DeleteResult, Like, Repository } from "typeorm";
 import { Users } from "./users.types";
 import * as argon2 from "argon2";
 import fs from 'fs';  
+import { type Auth } from '../auth/auth.types'
+
+
+
+
 
 @Injectable()
 export class UsersService {
-  constructor(
+  constructor (
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
-    private dataSource: DataSource
+    private readonly usersRepository: Repository<User>,
+    private readonly dataSource: DataSource
   ) {}
 
-  public async getByEmail(email: string) {
-    return await this.usersRepository.findOne({ where: { email } });
+  public async getByEmail (email: string): Promise<User> {
+    return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
+  async findAll (): Promise<User[]> {
+    return await this.usersRepository.find()
   }
 
-  findOneById(id: number): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+  async findOneById (id: number): Promise<User> {
+    return await this.usersRepository.findOneByOrFail({ id })
   }
 
-  findOneByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOneBy({ email });
+  async findOneByEmail (email: string): Promise<User> {
+    return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create(body: Auth.RegisterRequest) {
-    const user = new User();
-    user.email = body.email;
-    user.password = await argon2.hash(body.password);
-    user.firstName = body.firstName;
-    user.lastName = body.lastName;
-    user.gender = body.gender;
+  public async create (
+    body: Auth.RegisterRequest
+  ): Promise<Record<string, any>> {
+    const user = new User()
+    user.email = body.email
+    user.password = await argon2.hash(body.password)
+    user.firstName = body.firstName
+    user.lastName = body.lastName
+    user.gender = body.gender
 
-    const { password, ...userNoPass } = await this.usersRepository.save(user);
-    return await userNoPass;
+    const { password, ...userNoPass }: Record<string, any> =
+      await this.usersRepository.save(user)
+    return userNoPass
   }
 
   async update(id: number, user: Users.UpdateUserRequest, files: {profile_pic?: Express.Multer.File, cover_pic?: Express.Multer.File}): Promise<User> {
-    let oldUser = await this.usersRepository.findOneBy({ id });
+    let oldUser = await this.findOneById(id);
+
+
 
     oldUser.firstName = user.firstName != '' ? user.firstName : oldUser.firstName;
     oldUser.lastName = user.lastName != '' ? user.lastName : oldUser.lastName;
@@ -73,15 +83,16 @@ export class UsersService {
 
 
     await this.usersRepository.update(id, oldUser);
-    return await this.usersRepository.findOneBy({ id });
+    return await this.findOneById(id);
   }
 
-  async removeSoft(id: number) {
-    const user = await this.findOneById(id);
-    await this.usersRepository.softRemove(user);
+  async removeSoft (id: number): Promise<void> {
+    const user = await this.findOneById(id)
+    await this.usersRepository.softRemove(user)
   }
 
-  public async search(user: User, query: string) {
+
+  public async search(user: User | null, query: string) {
     return {
       users: await this.usersRepository.find({
         where: [
@@ -94,4 +105,5 @@ export class UsersService {
       companies: [],
     };
   }
+
 }

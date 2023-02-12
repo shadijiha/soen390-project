@@ -4,3 +4,5 @@ build/
 .env
 .vscode
 images
+
+.DS_Store

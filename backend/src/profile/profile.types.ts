@@ -1,57 +1,57 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { BaseRequest } from "src/util/util";
+import { ApiProperty } from '@nestjs/swagger'
+import { BaseRequest } from '../util/util'
 
 export namespace Profile {
   export class ProfileAddEducationRequest extends BaseRequest {
     @ApiProperty()
-    institution: string;
+      institution: string
 
     @ApiProperty()
-    degree: string;
+      degree: string
 
     @ApiProperty()
-    start_year: number;
+      start_year: number
 
     @ApiProperty()
-    end_year: number;
+      end_year: number
   }
 
   export class ProfileAddCourseRequest extends BaseRequest {
     @ApiProperty()
-    courseName: string;
+      courseName: string
 
     @ApiProperty()
-    courseNumber: string;
+      courseNumber: string
   }
 
   export class ProfileAddProjectRequest extends BaseRequest {
     @ApiProperty()
-    name: string;
+      name: string
 
     @ApiProperty()
-    description: string;
+      description: string
 
     @ApiProperty()
-    url: string;
+      url: string
 
     @ApiProperty()
-    start_year: number;
+      start_year: number
 
     @ApiProperty()
-    end_year: number;
+      end_year: number
   }
 
   export class ProfileAddVolunteeringRequest extends BaseRequest {
     @ApiProperty()
-    company: string;
+      company: string
 
     @ApiProperty()
-    title: string;
+      title: string
 
     @ApiProperty()
-    start_year: number;
+      start_year: number
 
     @ApiProperty()
-    end_year: number;
+      end_year: number
   }
 }

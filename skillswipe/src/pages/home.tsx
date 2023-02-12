@@ -5,12 +5,13 @@ import SmallWithLogoLeft from "@/components/footer";
 import { Box, Text, List, ListItem } from "@chakra-ui/react";
 import { useState } from "react";
 import Layout from "@/components/Layout";
+import { useSelector } from "react-redux";
 
 const Home = () => {
   const formBorder = useColorModeValue("gray.100", "gray.600");
   const postBackground = useColorModeValue("gray.100", "gray.700");
   const toggleTheme = useColorModeValue("🌙", "💡");
-
+  const User = useSelector((state) => state as any);
   const [posts, setPosts] = useState([
     { id: 1, title: "First Post", body: "This is a description" },
     {
@@ -23,11 +24,11 @@ const Home = () => {
 
   return (
     <>
-
       <Layout>
         <NavBar></NavBar>
         <Box display="flex" justifyContent="center" alignItems="center" p={4}>
           <Box>
+            <Heading paddingBottom={10}>Welcome {User.auth.firstName}</Heading>
             <Heading paddingBottom={5}>Recent Posts</Heading>
             <List>
               {posts.map((post) => (
@@ -53,7 +54,6 @@ const Home = () => {
               ))}
             </List>
           </Box>
-
         </Box>
       </Layout>
     </>
