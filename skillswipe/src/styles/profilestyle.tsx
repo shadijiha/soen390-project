@@ -244,6 +244,8 @@ const ProfileStyle: React.ReactNode = css`
     overflow: auto;
     align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .edu-features {
     width: 100%;
@@ -252,6 +254,7 @@ const ProfileStyle: React.ReactNode = css`
     max-width: var(--dl-size-size-maxwidth);
     align-items: center;
     flex-direction: column;
+
   }
   .edu-text {
     font-size: 3rem;
@@ -269,7 +272,7 @@ const ProfileStyle: React.ReactNode = css`
     display: grid;
     grid-gap: var(--dl-space-space-twounits);
     margin-top: var(--dl-space-space-fourunits);
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
   .edu-feature-card {
     width: 100%;
@@ -452,7 +455,7 @@ const ProfileStyle: React.ReactNode = css`
     padding-bottom: var(--dl-space-space-twounits);
     background-size: cover;
     justify-content: space-between;
-    background-image: url("https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc");
+
   }
   .profile-container02 {
     width: 100%;
@@ -499,7 +502,7 @@ const ProfileStyle: React.ReactNode = css`
     margin-left: var(--dl-space-space-halfunit);
   }
   .profile-container05 {
-    width: 219px;
+    width: 300px;
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -940,7 +943,7 @@ const ProfileStyle: React.ReactNode = css`
       margin-right: 0px;
     }
     .profile-container05 {
-      width: 216px;
+      width: 300px;
       height: 60px;
       margin-right: 90px;
     }
@@ -1056,7 +1059,7 @@ const ProfileStyle: React.ReactNode = css`
       margin-right: var(--dl-space-space-fourunits);
     }
     .profile-container05 {
-      width: 225px;
+      width: 50%;
       margin-right: 0px;
       justify-content: space-between;
     }

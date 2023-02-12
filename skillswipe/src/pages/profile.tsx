@@ -20,10 +20,10 @@ const Profile = () => {
   const router = useRouter();
 
   const [profile, setProfile] = useState({
-    name: "John Smith",
-    title: "Software Engineer",
-    location: "Montreal, QC, CA",
-    school: "Concordia University",
+    name: "",
+    title: "",
+    location: "",
+    school: "",
     experience: "Five years of experience in full stack development",
     experience2: "Three years of experience in mobile development",
     experience3: "Two years of experience in data analysis",
@@ -32,22 +32,12 @@ const Profile = () => {
     cover:
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
-
-  const BackgroundImageDiv = () => {
-    const divStyle: CSSProperties = {
-      backgroundImage: `url('https://example.com/image.jpg')`,
-      height: "200px",
-      width: "200px",
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-    };
-    return <div style={divStyle} />;
-  };
   return (
     <>
       <style jsx>{ProfileStyle}</style>
       <Layout>
         <NavBar />
+
         <div data-testid="profile-page">
           <div
             id="profile"
@@ -65,7 +55,7 @@ const Profile = () => {
             <div className="profile-top-card">
               <img
                 alt="image"
-                src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
+                src={profile.image}
                 className="profile-image"
                 style={{
                   aspectRatio: "1/1",
@@ -73,10 +63,15 @@ const Profile = () => {
                 }}
               />
 
-              <div className="profile-container01">
+              <div
+                className="profile-container01"
+                style={{
+                  backgroundImage: `url(${profile.cover})`,
+                }}
+              >
                 <div className="profile-container02">
                   <span className="profile-text">
-                    {profile.title} @ company
+                    {User.auth.title} @ company
                   </span>
                 </div>
                 <h1
@@ -117,55 +112,57 @@ const Profile = () => {
                         marginLeft: "0px",
                       }}
                     >
-                      I&apos;m great at ______
+                      Hello! 👋
                     </span>
                   </div>
-                  <div className="profile-container05">
-                    <button
-                      className="profile-button button"
-                      style={{
-                        color: buttonColors,
-                        borderColor: buttonColors,
-                        borderWidth: "2px",
-                        textShadow: "0px 0px 40px #000000CA",
-                        fontWeight: 600,
-                      }}
-                    >
-                      <span>
-                        <span>Message</span>
-                        <br></br>
-                      </span>
-                    </button>
-                    <button
-                      className="profile-button1 button"
-                      style={{
-                        color: buttonColors,
-                        borderColor: buttonColors,
-                        borderWidth: "2px",
-                        textShadow: "0px 0px 40px #000000CA",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Connect
-                    </button>
-                  </div>
                 </div>
-                {/* to do: show this button only if user logged in == the profile that is shown */}
-                <button
-                  className="profile-button1 button"
-                  style={{
-                    color: buttonColors,
-                    borderColor: buttonColors,
-                    borderWidth: "2px",
-                    textShadow: "0px 0px 40px #000000CA",
-                    fontWeight: 600,
-                  }}
-                  onClick={() => {
-                    router.push("/editProfile");
-                  }}
-                >
-                  Edit Profile
-                </button>
+
+                <div className="profile-container05">
+                  <button
+                    className="profile-button button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                      marginRight: "1em",
+                    }}
+                  >
+                    <span>
+                      <span>Message</span>
+                    </span>
+                  </button>
+                  <button
+                    className="profile-button1 button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                      marginRight: "1em",
+                    }}
+                  >
+                    Connect
+                  </button>
+                  {/* to do: show this edit button only if user logged in == the profile that is shown */}
+                  <button
+                    className="profile-button1 button"
+                    style={{
+                      color: buttonColors,
+                      borderColor: buttonColors,
+                      borderWidth: "2px",
+                      textShadow: "0px 0px 40px #000000CA",
+                      fontWeight: 600,
+                    }}
+                    onClick={() => {
+                      router.push("/editProfile");
+                    }}
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -294,9 +291,13 @@ const Profile = () => {
                 </span>
                 <div className="edu-container1">
                   <div className="edu-feature-card1">
-                    <svg viewBox="0 0 1024 1024" className="edu-icon2">
-                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
-                    </svg>
+                    <img
+                      src="https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png"
+                      className="edu-icon"
+                      width="50px"
+                      height="50px"
+                      alt="Harvard"
+                    />
                     <h2 className="edu-text09">Harvard</h2>
                     <span className="edu-text10">
                       TA for CS50, Harvards introductory course to computer
@@ -305,9 +306,13 @@ const Profile = () => {
                     <span className="edu-text11">2020-Present</span>
                   </div>
                   <div className="edu-feature-card">
-                    <svg viewBox="0 0 1024 1024" className="edu-icon">
-                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
-                    </svg>
+                    <img
+                      src="https://www.concordia.ca/content/concordia/en/social/guidelines-conduct.img.png/1650398601839.png"
+                      className="edu-icon"
+                      width="50px"
+                      height="50px"
+                      alt="Concordia University"
+                    />
                     <h2 className="edu-text06">Concordia University</h2>
                     <span className="edu-text07">
                       Earned my bachelors degree in Computer Science, with a
@@ -316,9 +321,13 @@ const Profile = () => {
                     <span className="edu-text08">2015-2020</span>
                   </div>
                   <div className="edu-feature-card2">
-                    <svg viewBox="0 0 1024 1024" className="edu-icon4">
-                      <path d="M809.003 291.328l-297.003 171.819-297.003-171.819 275.456-157.397c4.779-2.731 9.899-4.48 15.147-5.333 9.301-1.451 18.987 0.128 27.904 5.291zM491.776 979.669c6.016 3.243 12.928 5.077 20.224 5.077 7.381 0 14.336-1.877 20.395-5.163 15.189-2.475 29.909-7.68 43.392-15.36l298.709-170.709c26.368-15.232 45.269-38.315 55.424-64.597 5.675-14.592 8.619-30.165 8.747-46.251v-341.333c0-20.395-4.821-39.723-13.397-56.917-0.939-3.029-2.219-5.973-3.883-8.832-1.963-3.371-4.267-6.357-6.912-8.96-1.323-1.835-2.731-3.669-4.139-5.419-9.813-12.203-21.845-22.528-35.456-30.507l-299.051-170.88c-26.027-15.019-55.467-19.84-83.328-15.531-15.531 2.432-30.507 7.637-44.288 15.488l-298.709 170.709c-16.341 9.429-29.824 21.888-40.149 36.267-2.56 2.56-4.864 5.547-6.784 8.832-1.664 2.901-2.987 5.888-3.925 8.96-1.707 3.456-3.243 6.955-4.608 10.496-5.632 14.635-8.576 30.208-8.704 45.995v341.632c0.043 30.293 10.581 58.197 28.331 80.128 9.813 12.203 21.845 22.528 35.456 30.507l299.051 170.88c13.824 7.979 28.587 13.099 43.605 15.445zM469.333 537.045v340.949l-277.12-158.336c-4.736-2.773-8.832-6.315-12.16-10.411-5.931-7.381-9.387-16.512-9.387-26.581v-318.379zM554.667 877.995v-340.949l298.667-172.757v318.379c-0.043 5.163-1.067 10.496-2.987 15.445-3.413 8.789-9.6 16.384-18.176 21.333z"></path>
-                    </svg>
+                    <img
+                      src="https://penji.co/wp-content/uploads/2019/02/yale-university-School-Logo-Design-1-975x1024.png"
+                      className="edu-icon"
+                      width="50px"
+                      height="50px"
+                      alt="Yale"
+                    />
                     <h2 className="edu-text12">Dawson</h2>
                     <span className="edu-text13">
                       Legally forced to complete my high school diploma in my
