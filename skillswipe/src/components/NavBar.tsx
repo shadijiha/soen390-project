@@ -9,12 +9,17 @@ import {
   useColorModeValue,
   Box,
   Text,
+  Collapse,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import { motion } from "framer-motion";
+
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { transform } from "typescript";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -22,11 +27,46 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const { getButtonProps, isOpen, onToggle, getDisclosureProps } = useDisclosure();
+  const [ hidden, setHidden ] = useState(!isOpen);
+
+
+
+  const [search, setSearch] = useState(false);
+  const toggleSearch = () => setSearch(!search);
+
+
+ 
+
+
+
+
+
 
   const navColor = useColorModeValue(
     "rgba(255, 255, 255, 0.25)",
     "rgba(0, 0, 0, 0.25)"
   );
+
+
+
+
+ const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+     setSearchTerm(e.target.value);
+    };
+    
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+      e.preventDefault();
+      console.log(searchTerm);
+
+    };
+
+
+    
 
   const logout = () => {
     if (localStorage.getItem("jwt")) {
@@ -35,8 +75,7 @@ export default function NavBar() {
     }
   };
 
-  const [showDropdown1, setShowDropdown1] = useState(false);
-  const [showDropdown2, setShowDropdown2] = useState(false);
+
 
   return (
     <Box as="nav" p={15} w="100%" pt={"0px"} data-testid="Nav-Bar">
@@ -58,6 +97,58 @@ export default function NavBar() {
           <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
             🚀 SkillSwipe
           </Text>
+
+
+
+          <Flex ml={"auto"} display={["none", "none", "flex", "flex"]}>
+           
+            <Box
+
+              display={["none", "none", "flex", "flex"]}
+              ml={"auto"}
+              mr={"auto"}
+              w="100%"
+              position="relative"
+              // search 
+            >
+              <input
+
+
+
+                type="text"
+                placeholder="Search"
+                value={searchTerm}
+                onChange={handleSearch}
+                style={{
+                  width: "100%",
+                  height: "40px",
+                  paddingLeft: "30px",
+                  borderRadius: "100px",
+                  border: "none",
+                  outline: "1px solid black",
+                  backgroundColor: formBackground,
+                }}
+              />
+                  <SearchIcon
+                    position="absolute"
+                    top="50%"
+                    transform="translateY(-50%)"
+                    left="180px"
+                    color="gray.500"
+                    zIndex={1}
+                    cursor="pointer"
+                    // change color when hover over
+                    _hover={{
+                      color: "blue.300",
+                    }}
+
+                    onClick={toggleSearch}
+                  />
+            </Box>
+
+          
+          </Flex>
+
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
               <Button aria-label="Home" my={5} w="100%" variant="ghost">
@@ -154,7 +245,44 @@ export default function NavBar() {
             />
           </Flex>
 
+        
+            
+
+
           <Flex flexDir="column" align="center">
+                {/* click search icon to expand*/}
+            
+             <Button {...getButtonProps()}><SearchIcon></SearchIcon></Button>
+             <motion.div {...getDisclosureProps()}
+             hidden = {hidden}
+             initial = {false}
+             onAnimationStart = {() => setHidden(false)}
+             onAnimationComplete = {() => setHidden(!isOpen)}
+             animate = {{width: isOpen ? "100%" : "0%"}} 
+            
+
+             >
+                <input
+                  type="text"
+                  placeholder="Search"
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    paddingLeft: "30px",
+                    borderRadius: "100px",
+                    border: "none",
+                    outline: "1px solid black",
+                    backgroundColor: formBackground,
+                  }}
+                />
+                
+            </motion.div>
+                
+              
+              
+               
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
