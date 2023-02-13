@@ -96,17 +96,17 @@ export class UsersService {
     await this.usersRepository.softRemove(user)
   }
 
-  public async search(user: User|null, query: string) {
-	return {
-		users: await this.usersRepository.find({
-			where: [
-				{ firstName: Like(`%${query}%`) },
-				{ lastName: Like(`%${query}%`) },
-				{ email: Like(`%${query}%`) },
-			],
-			take: 10,
-		}),
-		companies: [],
-	};
-	}
+  public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
+    return {
+      users: await this.usersRepository.find({
+        where: [
+          { firstName: Like(`%${query}%`) },
+          { lastName: Like(`%${query}%`) },
+          { email: Like(`%${query}%`) }
+        ],
+        take: 10
+      }),
+      companies: []
+    }
+  }
 }

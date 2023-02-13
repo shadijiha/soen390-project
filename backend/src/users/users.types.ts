@@ -83,4 +83,12 @@ export namespace Users {
     @ApiProperty({ type: User })
       user: User | null
   }
+
+  export class SearchResponse {
+    @ApiProperty({ type: [User] })
+      users: User[]
+
+    @ApiProperty({ type: [] })
+      companies: any[] // TODO: Add Company type
+  }
 }

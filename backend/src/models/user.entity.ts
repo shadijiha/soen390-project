@@ -32,12 +32,12 @@ export class User extends BaseEntity {
     id: number
 
   @Column()
-  @Index({fulltext: true})
+  @Index({ fulltext: true })
   @ApiProperty()
     firstName: string
 
   @Column({ default: null })
-  @Index({fulltext: true})
+  @Index({ fulltext: true })
   @ApiProperty()
     lastName: string
 
