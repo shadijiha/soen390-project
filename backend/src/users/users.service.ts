@@ -27,7 +27,7 @@ export class UsersService {
   }
 
   async findOneByEmail (email: string): Promise<User | null> {
-    return await this.usersRepository.findOneBy({ email })
+    return await this.usersRepository.findOneByOrFail({ email })
   }
 
   public async create (
