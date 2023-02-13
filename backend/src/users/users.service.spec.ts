@@ -64,7 +64,7 @@ describe('UsersService', () => {
   })
   it('should return a user by email', async () => {
     const result = await service.findOneByEmail('test@gmail.com')
-    expect(result.email).toEqual('test@gmail.com')
+    expect(result?.email).toEqual('test@gmail.com')
   })
 
   it('should return created user', async () => {
