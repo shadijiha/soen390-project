@@ -74,7 +74,7 @@ describe('UsersService', () => {
 
   it('should return updated user', async () => {
     const result = await service.update(1, updatedUser, {profilePic: undefined, coverPic: undefined} )
-    expect(result.email).toEqual('test@gmail.com')
+    expect(result.email).toEqual('updated@gmail.com')
   })
 
   // remove user
