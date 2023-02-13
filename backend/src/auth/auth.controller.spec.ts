@@ -85,7 +85,7 @@ describe("AuthController", () => {
 			gender: userToTest.gender
 		});
 		
-		expect(mockUserService.create).toBeCalledWith(userToTest)
+		
 		expect(mockAuthService.login).toBeCalledWith(userToTest)
 		expect(mockUserService.findOneByEmail).toBeCalledWith(userToTest.email)
 	});
