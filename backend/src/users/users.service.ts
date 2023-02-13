@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { type Auth } from '../auth/auth.types'
 import { User } from '../models/user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, Like, Repository } from 'typeorm'
 import { type Users } from './users.types'
 import * as argon2 from 'argon2'
 
@@ -62,8 +62,8 @@ export class UsersService {
       user.biography != null ? user.biography : oldUser.biography
     updatedUser.educations =
       user.educations != null ? user.educations : oldUser.educations
-    updatedUser.workExperience =
-      user.workExperience != null ? user.workExperience : oldUser.workExperience
+    updatedUser.workExperiences =
+      user.workExperiences != null ? user.workExperiences : oldUser.workExperiences
     updatedUser.volunteeringExperience =
       user.volunteeringExperience != null
         ? user.volunteeringExperience
@@ -94,5 +94,19 @@ export class UsersService {
   async removeSoft (id: number): Promise<void> {
     const user = await this.findOneById(id)
     await this.usersRepository.softRemove(user)
+  }
+
+  public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
+    return {
+      users: await this.usersRepository.find({
+        where: [
+          { firstName: Like(`%${query}%`) },
+          { lastName: Like(`%${query}%`) },
+          { email: Like(`%${query}%`) }
+        ],
+        take: 10
+      }),
+      companies: []
+    }
   }
 }

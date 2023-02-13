@@ -49,7 +49,7 @@ export namespace Users {
       educations: Education[]
 
     @ApiProperty({ type: [Work] })
-      workExperience: Work[]
+      workExperiences: Work[]
 
     @ApiProperty({ type: [Volunteering] })
       volunteeringExperience: Volunteering[]
@@ -82,5 +82,13 @@ export namespace Users {
   export class UpdateUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
       user: User | null
+  }
+
+  export class SearchResponse {
+    @ApiProperty({ type: [User] })
+      users: User[]
+
+    @ApiProperty({ type: [] })
+      companies: any[] // TODO: Add Company type
   }
 }
