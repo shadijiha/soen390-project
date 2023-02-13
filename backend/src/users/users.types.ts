@@ -49,7 +49,7 @@ export namespace Users {
       educations: Education[]
 
     @ApiProperty({ type: [Work] })
-      workExperience: Work[]
+      workExperiences: Work[]
 
     @ApiProperty({ type: [Volunteering] })
       volunteeringExperience: Volunteering[]

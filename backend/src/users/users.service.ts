@@ -63,7 +63,7 @@ export class UsersService {
     updatedUser.educations =
       user.educations != null ? user.educations : oldUser.educations
     updatedUser.workExperiences =
-      user.workExperience != null ? user.workExperience : oldUser.workExperiences
+      user.workExperiences != null ? user.workExperiences : oldUser.workExperiences
     updatedUser.volunteeringExperience =
       user.volunteeringExperience != null
         ? user.volunteeringExperience
