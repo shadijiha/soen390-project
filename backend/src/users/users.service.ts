@@ -78,7 +78,7 @@ export class UsersService {
     await this.usersRepository.softRemove(user)
   }
 
-  public async search (user: User | null, query: string): Promise<{ users: User[], companies: never[] }> {
+  public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
     return {
       users: await this.usersRepository.find({
         where: [

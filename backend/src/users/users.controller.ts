@@ -16,6 +16,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { FileValidationPipe } from '../util/fileValidationPipe'
 
 @Controller()
+@Controller()
 @ApiTags('Users')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
@@ -45,7 +46,7 @@ export class UsersController {
   public async search (
     @AuthUser() authedUser: BearerPayload,
       @Query('query') query: string
-  ): Promise<{ users: User[], companies: never[] }> {
+  ): Promise<Users.SearchResponse> {
     if (query.length <= 0) return { users: [], companies: [] }
     return await this.usersService.search(await authedUser.getUser(), query)
   }
