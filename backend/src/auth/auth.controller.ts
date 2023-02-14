@@ -37,7 +37,6 @@ export class AuthController {
       // Will fail if email is NOT taken
       await this.userService.findOneByEmail(body.email)
     } catch (e) {
-      
       await this.userService.create(body)
       return await this.authService.login(body)
       // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
@@ -46,7 +45,6 @@ export class AuthController {
     // If we are here this means that email is taken since we did not return from the try block
     throw new ConflictException(`Email ${body.email} already taken`)
   }
- 
 
   @Get('me')
   @ApiResponse({ type: User })
