@@ -33,14 +33,17 @@ export class AuthController {
   public async register (
     @Body() body: Auth.RegisterRequest
   ): Promise<Auth.LoginResponse> {
-    await this.userService
-      .findOneByEmail(body.email)
-    // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
-      .catch((e) => {
-        throw new ConflictException(`Email ${body.email} already taken`)
-      })
+    try {
+      const existingUser = await this.userService.findOneByEmail(body.email)
 
-    await this.userService.create(body)
+      if (existingUser != null) {
+        throw new ConflictException(`Email ${body.email} already taken`)
+      }
+    } catch (e) {
+      await this.userService.create(body)
+      // from security point we should not tell to a user that this email was taken already. Message should tell there was an error but not that this email is alrady in the database. Kinda aan easy wau for the hackers.
+    }
+
     return await this.authService.login(body)
   }
 
@@ -48,8 +51,14 @@ export class AuthController {
   @ApiResponse({ type: User })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me (@AuthUser() authedUser: BearerPayload): Promise<User | null> {
-    const user = await authedUser.getUser(['educations'])
-    return user
+  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
+    const user = await authedUser.getUser([
+      'educations',
+      'workExperiences',
+      'skills',
+      'projects',
+      'awards'
+    ])
+    return user as User
   }
 }

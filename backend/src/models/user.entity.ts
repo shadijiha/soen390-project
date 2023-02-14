@@ -32,17 +32,17 @@ export class User extends BaseEntity {
     id: number
 
   @Column()
-  @Index()
+  @Index({ fulltext: true })
   @ApiProperty()
     firstName: string
 
   @Column({ default: null })
-  @Index()
+  @Index({ fulltext: true })
   @ApiProperty()
     lastName: string
 
   @Column()
-  @Index({ unique: true })
+  @Index({ unique: true, fulltext: true })
   @ApiProperty()
     email: string
 
@@ -57,9 +57,13 @@ export class User extends BaseEntity {
   @ApiProperty()
     gender: 'male' | 'female'
 
-  @Column({ default: null })
+  @Column({ default: null, type: 'longtext' })
   @ApiProperty()
-    profile_pic: string
+    profilePic: string
+
+  @Column({ default: null, type: 'longtext' })
+  @ApiProperty()
+    coverPic: string
 
   @Column({ default: null })
   @ApiProperty()
@@ -111,7 +115,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Work] })
-    workExperience: Work[]
+    workExperiences: Work[]
 
   // volunteering experience
   @OneToMany(() => Volunteering, (v) => v.user, {

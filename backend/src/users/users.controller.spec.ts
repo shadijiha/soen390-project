@@ -1,7 +1,7 @@
 import { Test, type TestingModule } from '@nestjs/testing'
 import { getRepositoryToken } from '@nestjs/typeorm'
 import { dataSourceMockFactory } from '../util/mockDataSource'
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, FindOptionsRelationByString, FindOptionsRelations, Repository } from 'typeorm'
 import { User } from '../models/user.entity'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
@@ -19,7 +19,7 @@ describe('UsersController', () => {
         findOne: jest.fn(() => {}),
         update: jest.fn(() => {}),
         getByEmail: jest.fn(() => {}),
-        remove: jest.fn(() => {})
+        removeSoft: jest.fn(() => {})
       })
     }
     const module: TestingModule = await Test.createTestingModule({
@@ -78,9 +78,13 @@ describe('UsersController', () => {
   //   expect(service.update).toHaveBeenCalled
   // })
 
-  it('should delete logged in user', async () => {
-    const bearer: BearerPayload = await createTestBearerPayload('test@gmail.com', userRepository)
+   it('should delete logged in user', async () => {
+  //   const bearer: BearerPayload = await createTestBearerPayload('test@gmail.com', userRepository)
+    const bearer: BearerPayload = {email: 'test@gmail.com'} as BearerPayload;
+    
     const deletedUser = await controller.remove(bearer)
     expect(service.removeSoft).toHaveBeenCalled()
+
+
   })
 })
