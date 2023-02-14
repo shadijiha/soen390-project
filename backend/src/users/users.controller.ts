@@ -5,14 +5,17 @@ import {
   HttpException,
   HttpStatus
 } from '@nestjs/common'
-import { Query, UseGuards } from '@nestjs/common/decorators'
-import { ApiBearerAuth, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { Body, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
+import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { type User } from '../models/user.entity'
 import { UsersService } from './users.service'
 import { Users } from './users.types'
 import { AuthUser, BearerPayload } from '../util/util'
+import { FileFieldsInterceptor } from '@nestjs/platform-express'
+import { FileValidationPipe } from '../util/fileValidationPipe'
 
+@Controller()
 @Controller()
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -20,14 +23,14 @@ import { AuthUser, BearerPayload } from '../util/util'
 export class UsersController {
   constructor (private readonly usersService: UsersService) {}
 
-  @Get('users')
+  @Get('user')
   @ApiResponse({ type: Users.GetAllUsersResponse })
   async findAll (): Promise<User[]> {
     return await this.usersService.findAll()
   }
 
-  @Delete('users')
-  public async remove (@AuthUser() authedUser: BearerPayload): Promise<void> {
+  @Delete('user')
+  async remove (@AuthUser() authedUser: BearerPayload): Promise<void> {
     try {
       await this.usersService.removeSoft(authedUser.id)
     } catch (e) {
@@ -46,5 +49,19 @@ export class UsersController {
   ): Promise<Users.SearchResponse> {
     if (query.length <= 0) return { users: [], companies: [] }
     return await this.usersService.search(await authedUser.getUser(), query)
+  }
+
+  @Put('user')
+  @ApiConsumes('multipart/form-data')
+  @ApiResponse({ type: Users.UpdateUserResponse })
+
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'profilePic', maxCount: 1 },
+    { name: 'coverPic', maxCount: 1 }
+  ]))
+
+  async update (@AuthUser() authedUser: BearerPayload, @Body() user: Users.UpdateUserRequest, @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
+    console.log(files)
+    return await this.usersService.update(authedUser.id, user, files)
   }
 }
