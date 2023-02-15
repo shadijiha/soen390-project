@@ -1,13 +1,13 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger'
 
 export namespace Connections {
   export class AddConnectionRequest {
     @ApiProperty()
-    toUser: number;
+      toUser: number
   }
 
   export class AcceptConnectionRequest {
     @ApiProperty()
-    id: number;
+      id: number
   }
 }
