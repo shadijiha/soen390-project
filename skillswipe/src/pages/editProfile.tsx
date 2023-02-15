@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar";
-import { checkLogin } from "./api/api";
+import { checkLogin, editPersonalInformation } from "./api/api";
 import {
   FormControl,
   FormLabel,
@@ -16,22 +16,23 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import Layout from "@/components/Layout";
-import axios from "axios";
-import { editProfile } from "./api/api";
-import Experience from "@/components/Forms/Experience";
-import EducationHistory from "@/components/Forms/EducationHistory";
-import LayoutForm from "@/components/Forms/LayoutForm";
-import Information from "@/components/Forms/Information";
+import user from  "../assets/images/user.png";
+
 import InformationBox from "@/components/EditProfile/InformationBox";
 import ExperienceBox from "@/components/EditProfile/ExperienceBox";
 import EducationHistoryBox from "@/components/EditProfile/EductationHistoryBox";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
   const currentUser = useSelector((state) => state as any);
+  const [Pic, setPic] = useState({
+    profilePic: "",
+    coverPic: ""
+  });
   useEffect(() => {
-    console.log(currentUser.auth)
-  },[])
+    setPic({ coverPic: currentUser.auth.coverPic, profilePic: currentUser.auth.profilePic })
+  }, [currentUser])
 
   const [profile, setProfile] = useState({
     name: "John Smith",
@@ -46,16 +47,58 @@ const EditProfile = () => {
     cover:
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
+
+
+  const coverImageHandler = (e: any) => {
+    const token = localStorage.getItem("jwt");
+    const fd = new FormData()
+    if(e.target.files[0]) {
+      fd.append("coverPic", e.target.files[0], e.target.files[0].name);
+      editPersonalInformation(token, fd).then((response) => {
+        console.log(response)
+        setPic({ ...Pic, coverPic: response.data.coverPic })
+        toast("Successfully Update Cover Picture")
+      }).catch((error) => {
+        toast(error.message);
+  
+      })
+    }
+  }
+
+  const ProfileImageHandler = (e: any) => {
+    console.log(e.target)
+    const token = localStorage.getItem("jwt");
+    const fd = new FormData()
+    if(e.target.files[0]){
+      fd.append("profilePic", e.target.files[0], e.target.files[0].name);
+      editPersonalInformation(token, fd).then((response) => {
+        
+        setPic({ ...Pic, profilePic: response.data.profilePic })
+        toast("Successfully Updated Profile picture")
+      }).catch((error) => {
+        toast(error.message)
+      })
+
+    }
+  }
+  const clickCover =() =>{
+    document.getElementById("input")?.click();
+  }
+  const clickProfile =() =>{
+    document.getElementById("file-input")?.click();
+  }
+ 
   return (
     <>
       <Layout>
         <NavBar />
-
         <Box display="flex" justifyContent="center" alignItems="center" p={4}>
           <Box>
-            <Heading paddingBottom={10}>Hey, {profile.name}!</Heading>
+            <Heading paddingBottom={10}>Hey, {currentUser.auth.firstName}!</Heading>
           </Box>
         </Box>
+      
+
 
         {/* profile picture */}
         <div
@@ -70,10 +113,13 @@ const EditProfile = () => {
             position: "relative",
             marginBottom: "10px",
           }}
-        >
+          >
+          <a onClick={clickProfile}>
+
           <img
             alt="image"
-            src="https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg"
+            src={Pic.profilePic ? `data:image/jpeg;base64,${Pic.profilePic}`: profile.image }
+
             className="profile-image"
             style={{
               aspectRatio: "1/1",
@@ -81,39 +127,20 @@ const EditProfile = () => {
               borderRadius: "100%",
               boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
             }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              zIndex: -1,
-              width: "maxWidth",
-              top: "-30%",
-            }}
-          ></div>
-          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
-            {/* upload new profile picture button */}
+            />
+            </a>
+          
             <input
               type="file"
               id="file-input"
               style={{ display: "none" }}
-         
-            />
-            <label htmlFor="file-input">
-              <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
-                style={{
-                  height: "35px",
-                  width: "35px",
-                  borderRadius: "100%",
-                  backgroundColor: "white",
-                }}
+              onChange = {ProfileImageHandler}
               />
-            </label>
-          </button>
+           
         </div>
 
         {/* cover photo */}
+
         <div
           className="profile-cover"
           style={{
@@ -126,58 +153,41 @@ const EditProfile = () => {
             position: "relative",
             marginBottom: "10px",
           }}
-        >
+          >
+        <a onClick={clickCover} >
           <img
             alt="image"
-            src="https://timelinecovers.pro/facebook-cover/download/artistic-retro-wave-palm-trees-facebook-cover.jpg"
+            src={Pic.coverPic ? `data:image/jpeg;base64,${Pic.coverPic}`: profile.cover }
             className="profile-cover"
             style={{
               objectFit: "cover",
               borderRadius: "15px",
               boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
             }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              zIndex: -1,
-              width: "maxWidth",
-              top: "-30%",
-            }}
-          ></div>
-          <button
-            style={{ position: "absolute", bottom: "38px", right: "-15px" }}
-          >
-            {/* upload new profile picture button */}
+            />
+           
+          </a>
             <input
               type="file"
-              id="file-input"
+              id="input"
               style={{ display: "none" }}
-        
+              onChange = {coverImageHandler}
             />
-            <label htmlFor="file-input">
-              <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
-                style={{
-                  height: "35px",
-                  width: "35px",
-                  borderRadius: "100%",
-                  backgroundColor: "white",
-                }}
-              />
-            </label>
-          </button>
         </div>
-
+        <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+          <Box>
+            <Text fontSize='xl' as='b' paddingBottom={10}>Click to Edit Picture !</Text>
+          </Box>
+        </Box>
+              
         {/* my profile */}
-        <InformationBox/>
+        <InformationBox />
 
         {/* work experience */}
-        <ExperienceBox/>
+        <ExperienceBox />
 
         {/* Education History */}
-        <EducationHistoryBox/>
+        <EducationHistoryBox />
 
       </Layout>
     </>

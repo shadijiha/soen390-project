@@ -35,9 +35,7 @@ const EducationHistory = () => {
                 <Button>
                     <DeleteIcon />
                 </Button>
-            </Stack>
-
-
+                </Stack>
             <FormControl>
                 <FormLabel htmlFor="school">School</FormLabel>
                 <Input

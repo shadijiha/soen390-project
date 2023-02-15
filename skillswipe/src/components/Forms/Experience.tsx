@@ -39,7 +39,6 @@ const Experience = () => {
             <Button>
                 <DeleteIcon/>
             </Button>
-
             </Stack>
             <FormControl>
               <FormLabel htmlFor="experience1">Company</FormLabel>

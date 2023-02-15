@@ -25,3 +25,10 @@ export const checkLogin = async (token : any) => {
   })
 
 }
+export const editPersonalInformation = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}/user`,UpdatedUser,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+}

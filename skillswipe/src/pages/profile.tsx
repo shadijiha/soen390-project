@@ -18,6 +18,9 @@ const Profile = () => {
   const buttonColors = useColorModeValue("black", "white");
   const User = useSelector((state) => state as any);
   const router = useRouter();
+  useEffect(() => {
+    console.log(User)
+  },[User])
 
   const [profile, setProfile] = useState({
     name: "",
@@ -32,6 +35,9 @@ const Profile = () => {
     cover:
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
+
+
+
   return (
     <>
       <style jsx>{ProfileStyle}</style>
@@ -55,7 +61,7 @@ const Profile = () => {
             <div className="profile-top-card">
               <img
                 alt="image"
-                src={profile.image}
+                src={User.auth.profilePic ? `data:image/jpeg;base64,${User.auth.profilePic}`: profile.image }
                 className="profile-image"
                 style={{
                   aspectRatio: "1/1",
@@ -69,11 +75,7 @@ const Profile = () => {
                   backgroundImage: `url(${profile.cover})`,
                 }}
               >
-                <div className="profile-container02">
-                  <span className="profile-text">
-                    {User.auth.title} @ company
-                  </span>
-                </div>
+                
                 <h1
                   className="profile-text01"
                   style={{
@@ -91,7 +93,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {profile.school}
+                  {User.auth.email}
                 </span>
                 <span
                   className="profile-text03"
@@ -100,7 +102,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  <span>{profile.location}</span>
+                  <span>{User.auth.mobileNo}</span>
                   <br></br>
                 </span>
                 <div className="profile-container03">
@@ -112,7 +114,7 @@ const Profile = () => {
                         marginLeft: "0px",
                       }}
                     >
-                      Hello! 👋
+                      {User.auth.biography}
                     </span>
                   </div>
                 </div>

@@ -8,8 +8,15 @@ import {
     Box,
     Heading,
     Textarea,
+    Select,
   } from "@chakra-ui/react";
-const Information =() => {
+import { useSelector } from "react-redux";
+const Information =({update} : any) => {
+  const currentUser = useSelector(state => state as any);
+  const setState = (updateUserObj : any) =>{
+    update(updateUserObj);
+  }
+
     return(
         <Box
             minWidth={"60vw"}
@@ -29,14 +36,14 @@ const Information =() => {
               My Profile
             </p>
             <FormControl>
-              <FormLabel htmlFor="name">Name</FormLabel>
+              <FormLabel htmlFor="name">First Name</FormLabel>
               <Input
                 minWidth={"100%"}
                 type="text"
                 id="name"
-                // placeholder={profile.name}
+                placeholder={currentUser.auth.firstName}
                 // value={name}
-                // onChange={changeName}
+                onChange={(event) => setState({firstName : event.target.value})}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -44,14 +51,14 @@ const Information =() => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="school">School</FormLabel>
+              <FormLabel htmlFor="name">Last Name</FormLabel>
               <Input
                 minWidth={"100%"}
                 type="text"
-                // placeholder={profile.school}
+                placeholder={currentUser.auth.lastName}
+                onChange={(event) => setState({lastName : event.target.value})}
                 id="school"
                 // value={school}
-                // onChange={(event) => setSchool(event.target.value)}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -59,14 +66,14 @@ const Information =() => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="location">Title</FormLabel>
+              <FormLabel htmlFor="email">Email</FormLabel>
               <Input
                 minWidth={"100%"}
-                type="text"
-                // placeholder={profile.title}
+                type="email"
+                placeholder={currentUser.auth.email}
                 id="title"
                 // value={title}
-                // onChange={(event) => setTitle(event.target.value)}
+                onChange={(event) => setState({email : event.target.value})}
                 borderRadius="10"
                 size="lg"
                 mb={5}
@@ -74,14 +81,52 @@ const Information =() => {
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="location">Location</FormLabel>
+              <FormLabel htmlFor="number">Mobile No</FormLabel>
+              <Input
+                minWidth={"100%"}
+                type="tel"
+                placeholder={currentUser.auth.mobileNo == null ? "Please add Mobile No " : currentUser.auth.mobileNo}
+                id="location"
+               onChange={(event) => setState({mobileNo : event.target.value})}
+                borderRadius="10"
+                size="lg"
+                mb={5}
+                width="auto"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="gender">Sex</FormLabel>
+              <Select
+                minWidth={"100%"}
+                // placeholder={profile.location}
+                id="location"
+                borderRadius="10"
+                size="lg"
+                mb={5}
+                width="auto"
+                onChange={(event) => setState({gender : event.target.value})}
+              >
+                {currentUser.auth.gender == "MALE" ? 
+                    <>
+                    <option selected value="MALE">MALE</option>
+                    <option value="FEMALE">FEMALE</option>
+                    </>
+                    :
+                    <>
+                    <option value="MALE">MALE</option>
+                    <option selected value="FEMALE">FEMALE</option>
+                    </>
+                }
+              </Select>
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="text">Bio</FormLabel>
               <Input
                 minWidth={"100%"}
                 type="text"
-                // placeholder={profile.location}
+                placeholder={currentUser.auth.biography == null ? "Please add a bio " : currentUser.auth.biography}
                 id="location"
-                // value={location}
-                // onChange={(event) => setLocation(event.target.value)}
+                onChange={(event) => setState({biography : event.target.value})}
                 borderRadius="10"
                 size="lg"
                 mb={5}
