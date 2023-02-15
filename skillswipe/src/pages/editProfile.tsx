@@ -119,7 +119,8 @@ const EditProfile = () => {
               height: "150px",
               width: "150px",
               position: "relative",
-              margin: "1%",
+              margin: "2%",
+              marginBottom: "5%",
             }}
           >
             <button style={{ position: "absolute", bottom: "0", right: "0" }}>
@@ -177,7 +178,7 @@ const EditProfile = () => {
               position: "relative",
               height: "250px",
               width: "max-content",
-              margin: "1%",
+              margin: "2%",
             }}
           >
             <button
