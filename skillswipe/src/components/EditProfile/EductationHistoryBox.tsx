@@ -17,11 +17,30 @@ const EducationHistoryBox = () => {
   return (
     <Stack
       as="form"
-      justifyContent="center"
-      alignItems="center"
       p={5}
-      textAlign="center"
+      style={{
+        flexDirection: "column",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        WebkitAlignContent: "center",
+        WebkitAlignItems: "center",
+        WebkitBoxAlign: "center",
+        WebkitFlexWrap: "wrap",
+        WebkitJustifyContent: "center",
+      }}
     >
+      <Text
+        style={{
+          alignSelf: "flex-start",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        }}
+      >
+        Education History
+      </Text>
       <EducationHistory />
       <EducationHistory />
       <Button>

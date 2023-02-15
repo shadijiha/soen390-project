@@ -29,7 +29,7 @@ const EducationHistory = () => {
             marginBottom: "20px",
           }}
         >
-          Education History
+          Education 1
         </p>
         <Spacer />
         <Button

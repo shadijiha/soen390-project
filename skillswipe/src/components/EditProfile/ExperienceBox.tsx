@@ -34,7 +34,15 @@ const WorkProfile = () => {
         WebkitJustifyContent: "center",
       }}
     >
-      <Text fontSize={40}>Work Experience</Text>
+      <Text
+        style={{
+          alignSelf: "flex-start",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        }}
+      >
+        Work Experience
+      </Text>
       <Experience />
       <Experience />
       <Button>
