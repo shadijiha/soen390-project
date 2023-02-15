@@ -2,35 +2,35 @@
  * Types for Request and Respose
  */
 
-import { ApiProperty } from "@nestjs/swagger";
-import { App } from "../app.types";
-import { User } from "../models/user.entity";
+import { ApiProperty } from '@nestjs/swagger'
+import { App } from '../app.types'
+import { User } from '../models/user.entity'
 
 export namespace Auth {
   export class LoginRequest {
     @ApiProperty()
-    email: string;
+      email: string
 
     @ApiProperty()
-    password: string;
+      password: string
   }
 
   export class LoginResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | Partial<User> | null;
+      user: User | Partial<User> | null
 
     @ApiProperty()
-    access_token: string;
+      access_token: string
   }
 
   export class RegisterRequest extends LoginRequest {
     @ApiProperty()
-    firstName: string;
+      firstName: string
 
     @ApiProperty()
-    lastName: string;
+      lastName: string
 
-    @ApiProperty({ examples: ["male", "female"] })
-    gender: "male" | "female";
+    @ApiProperty({ examples: ['male', 'female'] })
+      gender: 'male' | 'female'
   }
 }

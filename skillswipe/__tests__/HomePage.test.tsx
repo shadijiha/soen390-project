@@ -1,18 +1,27 @@
-import { render,screen } from '@testing-library/react'
-import Home from '@/pages/home'
-import '@testing-library/jest-dom'
-import React from 'react';
-import Layout from '@/components/Layout';
+import { render, screen } from "@testing-library/react";
+import Home from "@/pages/home";
+import "@testing-library/jest-dom";
+import React from "react";
+import Layout from "@/components/Layout";
+import { Provider } from "react-redux";
+import store from "../src/Redux/store";
 
-jest.mock('next/router', () => require('next-router-mock'));
-describe('Home', () => {
+jest.mock("next/router", () => require("next-router-mock"));
+describe("Home", () => {
   const renderHome = () =>
-        render(<Home />);
-        beforeAll(()=>{
-          <Layout></Layout>
-      })
-        it('should display home page when rendered', () => {
-          renderHome();
-          expect(screen.queryByTestId("Home-page"));
-      });
-})
+    render(
+      <Provider store={store}>
+        {" "}
+        <Layout>
+          <Home />
+        </Layout>
+      </Provider>
+    );
+  //   beforeAll(()=>{
+
+  // })
+  it("should display home page when rendered", () => {
+    renderHome();
+    expect(screen.queryByTestId("Home-page"));
+  });
+});
