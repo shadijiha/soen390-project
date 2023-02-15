@@ -1,30 +1,44 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Users } from "src/users/users.types";
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from "typeorm";
 import { User } from "./user.entity";
 
-
-
-
 @Entity()
-export class Connection extends BaseEntity{
-    
-    @PrimaryGeneratedColumn()
-	@ApiProperty()
-	id: number;
+@Unique(["user_1", "user_2"])
+export class Connection extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  @ApiProperty()
+  id: number;
 
-    @Column()
-    @ApiProperty()
-    accepted: boolean
+  @Column({default: false})
+  @ApiProperty()
+  isAccepted: boolean;
 
-    
-    @ManyToOne(() => User, (user) => user.connections)
-    @ApiProperty({ type: () => User })
-    user1: User
+  // user_id1 is the id of the sender
+  @ManyToOne(() => User, (user) => user.connection_1)
+  @ApiProperty()
+  user_1;
 
-    @ManyToOne(() => User, (user) => user.connections)
-    @ApiProperty({ type: () => User })
-    user2: User
+  @ManyToOne(() => User, (user) => user.connection_2)
+  @ApiProperty()
+  user_2;
+  
+  @CreateDateColumn()
+  @ApiProperty()
+  created_at: Date;
 
-
+  @UpdateDateColumn()
+  @ApiProperty()
+  updated_at: Date;
 
 }

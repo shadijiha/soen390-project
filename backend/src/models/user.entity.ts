@@ -115,16 +115,18 @@ export class User extends BaseEntity {
 	@ApiProperty({ type: [Volunteering] })
 	volunteeringExperience: Volunteering[];
 
-	//connections
-	// @ManyToMany(() => User, (user) => user.connections)
-	// @JoinTable()
-	// @ApiProperty({ type: [User] })
-	// connections: User[];
+	@OneToMany(() => Connection, connection => connection.user_1)
+	connection_1: Connection[];
 	
-	@OneToMany(() => Connection, (conn) => conn.user1 || conn.user2, { cascade: true, orphanedRowAction: "delete" })
-	@ApiProperty({ type: [Connection] })
-	connections: Connection[];
+	@OneToMany(() => Connection, connection => connection.user_2)
+	connection_2: Connection[];
 
+	// User1 <-> User2 (Many to many)
+	// conenction: 
+	// connection belongs to User1
+	// User1 has many connection
+	// connection belongs to User2
+	// User2 has many connection
 
 
 	//skills
