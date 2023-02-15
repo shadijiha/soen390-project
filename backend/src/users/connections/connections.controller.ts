@@ -1,6 +1,5 @@
 import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { userInfo } from 'os';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { AuthUser, BearerPayload } from 'src/util/util';
 import { ConnectionsService } from './connections.service';
@@ -38,7 +37,7 @@ export class ConnectionsController {
              throw new HttpException((<Error>e).message, 400);
          }
     }
-    
+
     @Get("pending")
     public async getPendingRequest(
         @AuthUser() userInfo: BearerPayload,
