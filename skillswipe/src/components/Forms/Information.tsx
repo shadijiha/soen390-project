@@ -39,7 +39,7 @@ const Information = ({ update }: any) => {
             marginBottom: "20px",
           }}
         >
-          My Details
+          My Profile
         </p>
         <Spacer />
         <Button

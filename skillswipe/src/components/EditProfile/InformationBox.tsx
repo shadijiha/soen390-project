@@ -1,82 +1,84 @@
 import React, { useEffect, useState } from "react";
 import {
-    FormControl,
-    FormLabel,
-    Input,
-    Button,
-    Stack,
-    Box,
-    Heading,
-    Text,
-    Textarea,
-  } from "@chakra-ui/react";
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Stack,
+  Box,
+  Heading,
+  Text,
+  Textarea,
+} from "@chakra-ui/react";
 import Information from "../Forms/Information";
 import { useSelector } from "react-redux";
 import { editPersonalInformation } from "@/pages/api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
-const InformationBox = () =>{
-  const user = useSelector(state => state as any);
-  const [UpdateUser,setUpdateUser] = useState({
-    firstName : "",
-    lastName : "",
-    mobileNo : "",
-    email : "",
-    biography : "",
-    gender : ""
+const InformationBox = () => {
+  const user = useSelector((state) => state as any);
+  const [UpdateUser, setUpdateUser] = useState({
+    firstName: "",
+    lastName: "",
+    mobileNo: "",
+    email: "",
+    biography: "",
+    gender: "",
   });
-  const update = (updateUser : any) => {
-    var User = Object.assign(UpdateUser,updateUser);
-    setUpdateUser(User)
-  }
+  const update = (updateUser: any) => {
+    var User = Object.assign(UpdateUser, updateUser);
+    setUpdateUser(User);
+  };
   const handleSubmit = async () => {
     const token = localStorage.getItem("jwt");
-    
-    if(UpdateUser.firstName || UpdateUser.lastName || UpdateUser.gender || UpdateUser.mobileNo || UpdateUser.email || UpdateUser.biography){
-      if(UpdateUser.email && !emailValidator(UpdateUser.email)){
-        toast("Please add Valid email")
-      }
-      else{
-        editPersonalInformation(token,UpdateUser).then((response) => {
-          console.log(response);
-          toast("Updated Successfully")
-        }).catch((error) => {
-          toast(error.message);
-    
-        })
-      }
 
+    if (
+      UpdateUser.firstName ||
+      UpdateUser.lastName ||
+      UpdateUser.gender ||
+      UpdateUser.mobileNo ||
+      UpdateUser.email ||
+      UpdateUser.biography
+    ) {
+      if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
+        toast("Please add Valid email");
+      } else {
+        editPersonalInformation(token, UpdateUser)
+          .then((response) => {
+            console.log(response);
+            toast("Updated Successfully");
+          })
+          .catch((error) => {
+            toast(error.message);
+          });
+      }
     }
+  };
 
-  }
-  
-  
-    return(
-        <Stack
-          as="form"
-          justifyContent="center"
-          alignItems="center"
-          p={5}
-          textAlign="center"
-        >
-          <Information update ={update}/>
+  return (
+    <Stack
+      as="form"
+      justifyContent="center"
+      alignItems="center"
+      p={5}
+      textAlign="center"
+    >
+      <Information update={update} />
 
-          <Button
-            style={{
-              boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-              border: "3px solid rgba(255, 255, 255, 0.3)"
-            }}
-
-            size="lg"
-            colorScheme={"blue"}
-            borderRadius="100px"
-       
-            onClick={handleSubmit}
-            >
-            Update Personal Information
-        </Button>
-        </Stack>
-    )
-}
+      <Button
+        style={{
+          boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
+          border: "3px solid rgba(255, 255, 255, 0.3)",
+        }}
+        size="lg"
+        colorScheme={"blue"}
+        borderRadius="100px"
+        onClick={handleSubmit}
+      >
+        Update Personal Information
+      </Button>
+    </Stack>
+  );
+};
 export default InformationBox;
