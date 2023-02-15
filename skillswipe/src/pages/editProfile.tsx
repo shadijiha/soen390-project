@@ -95,11 +95,9 @@ const EditProfile = () => {
     <>
       <Layout>
         <NavBar />
-        <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+        <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
           <Box>
-            <Heading paddingBottom={0}>
-              Hey, {currentUser.auth.firstName}!
-            </Heading>
+            <Heading>Hey, {currentUser.auth.firstName}!</Heading>
           </Box>
         </Box>
 
@@ -169,18 +167,16 @@ const EditProfile = () => {
         <div
           className="profile-cover"
           style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "250px",
-            width: "400px",
-            margin: "auto",
             position: "relative",
+            height: "300px",
+            width: "max-content",
+            margin: "0 auto",
             marginBottom: "17px",
           }}
         >
-          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+          <button
+            style={{ position: "absolute", bottom: "-10px", right: "-10px" }}
+          >
             {/* upload new profile cover button */}
             <input
               type="file"
@@ -211,8 +207,10 @@ const EditProfile = () => {
               }
               className="profile-cover"
               style={{
+                width: "100%",
+                height: "100%",
                 objectFit: "cover",
-                borderRadius: "15px",
+                borderRadius: "30px",
                 boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
               }}
             />
