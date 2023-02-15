@@ -101,127 +101,134 @@ const EditProfile = () => {
           </Box>
         </Box>
 
-        {/* profile picture */}
-        <div
-          className="profile-picture"
+        <Stack
           style={{
             display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
             justifyContent: "center",
             alignItems: "center",
-            height: "150px",
-            width: "150px",
-            margin: "auto",
-            position: "relative",
-            marginBottom: "17px",
           }}
         >
-          <button style={{ position: "absolute", bottom: "0", right: "0" }}>
-            {/* upload new profile pic button */}
-            <input
-              type="file"
-              id="file-input"
-              style={{ display: "none" }}
-              onClick={clickCover}
-            />
-            <label htmlFor="file-input">
-              <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
-                style={{
-                  height: "35px",
-                  width: "35px",
-                  borderRadius: "100%",
-                  backgroundColor: "white",
-                }}
-              />
-            </label>
-          </button>
-          <a onClick={clickProfile}>
-            <img
-              alt="image"
-              src={
-                Pic.profilePic
-                  ? `data:image/jpeg;base64,${Pic.profilePic}`
-                  : profile.image
-              }
-              className="profile-image"
-              style={{
-                aspectRatio: "1/1",
-                objectFit: "cover",
-                borderRadius: "100%",
-                boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
-              }}
-            />
-          </a>
-
-          <input
-            type="file"
-            id="file-input"
-            style={{ display: "none" }}
-            onChange={ProfileImageHandler}
-          />
-        </div>
-
-        {/* cover photo */}
-
-        <div
-          className="profile-cover"
-          style={{
-            position: "relative",
-            height: "300px",
-            width: "max-content",
-            margin: "0 auto",
-            marginBottom: "17px",
-          }}
-        >
-          <button
-            style={{ position: "absolute", bottom: "-10px", right: "-10px" }}
+          {/* profile picture */}
+          <div
+            className="profile-picture"
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              height: "150px",
+              width: "150px",
+              position: "relative",
+              margin: "1%",
+            }}
           >
-            {/* upload new profile cover button */}
+            <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+              {/* upload new profile pic button */}
+              <input
+                type="file"
+                id="file-input"
+                style={{ display: "none" }}
+                onClick={clickCover}
+              />
+              <label htmlFor="file-input">
+                <img
+                  src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                  alt="Upload Icon"
+                  style={{
+                    height: "35px",
+                    width: "35px",
+                    borderRadius: "100%",
+                    backgroundColor: "white",
+                  }}
+                />
+              </label>
+            </button>
+            <a onClick={clickProfile}>
+              <img
+                alt="image"
+                src={
+                  Pic.profilePic
+                    ? `data:image/jpeg;base64,${Pic.profilePic}`
+                    : profile.image
+                }
+                className="profile-image"
+                style={{
+                  aspectRatio: "1/1",
+                  objectFit: "cover",
+                  borderRadius: "100%",
+                  boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
+                }}
+              />
+            </a>
+
             <input
               type="file"
               id="file-input"
               style={{ display: "none" }}
-              onClick={clickCover}
+              onChange={ProfileImageHandler}
             />
-            <label htmlFor="file-input">
+          </div>
+
+          {/* cover photo */}
+
+          <div
+            className="profile-cover"
+            style={{
+              position: "relative",
+              height: "250px",
+              width: "max-content",
+              margin: "1%",
+            }}
+          >
+            <button
+              style={{ position: "absolute", bottom: "-10px", right: "-10px" }}
+            >
+              {/* upload new profile cover button */}
+              <input
+                type="file"
+                id="file-input"
+                style={{ display: "none" }}
+                onClick={clickCover}
+              />
+              <label htmlFor="file-input">
+                <img
+                  src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                  alt="Upload Icon"
+                  style={{
+                    height: "35px",
+                    width: "35px",
+                    borderRadius: "100%",
+                    backgroundColor: "white",
+                  }}
+                />
+              </label>
+            </button>
+            <a>
               <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
+                alt="image"
+                src={
+                  Pic.coverPic
+                    ? `data:image/jpeg;base64,${Pic.coverPic}`
+                    : profile.cover
+                }
+                className="profile-cover"
                 style={{
-                  height: "35px",
-                  width: "35px",
-                  borderRadius: "100%",
-                  backgroundColor: "white",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "30px",
+                  boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
                 }}
               />
-            </label>
-          </button>
-          <a>
-            <img
-              alt="image"
-              src={
-                Pic.coverPic
-                  ? `data:image/jpeg;base64,${Pic.coverPic}`
-                  : profile.cover
-              }
-              className="profile-cover"
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "30px",
-                boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
-              }}
+            </a>
+            <input
+              type="file"
+              id="input"
+              style={{ display: "none" }}
+              onChange={coverImageHandler}
             />
-          </a>
-          <input
-            type="file"
-            id="input"
-            style={{ display: "none" }}
-            onChange={coverImageHandler}
-          />
-        </div>
+          </div>
+        </Stack>
 
         {/* my profile */}
         <InformationBox />
