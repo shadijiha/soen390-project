@@ -1,9 +1,13 @@
-import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common/decorators'
+import { HttpException } from '@nestjs/common/exceptions/http.exception'
+import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
+import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from 'src/util/util'
-import { ConnectionsService } from './connections.service'
-import { Connections } from './connections.types'
+import { ConnectionsService } from 'src/users/connections/connections.service'
+import { Connections } from 'src/users/connections/connections.types'
+
+
 
 @Controller('connections')
 @ApiTags('Connections')

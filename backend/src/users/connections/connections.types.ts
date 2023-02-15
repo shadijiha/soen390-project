@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty } from "@nestjs/swagger/dist/decorators/api-property.decorator"
 
 export namespace Connections {
   export class AddConnectionRequest {

@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Connection } from 'src/models/connection.entity'
-import { Repository } from 'typeorm'
+import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator"
+import { InjectRepository } from "@nestjs/typeorm/dist/common/typeorm.decorators"
+import { Connection } from "src/models/connection.entity"
+import { Repository } from "typeorm/repository/Repository"
+
 
 @Injectable()
 export class ConnectionsService {
