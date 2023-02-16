@@ -7,8 +7,6 @@ import { AuthUser, BearerPayload } from '../../util/util'
 import { ConnectionsService } from '../../users/connections/connections.service'
 import { Connections } from '../../users/connections/connections.types'
 
-
-
 @Controller('connections')
 @ApiTags('Connections')
 @ApiBearerAuth()
