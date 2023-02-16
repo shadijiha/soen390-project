@@ -75,8 +75,8 @@ const Profile = () => {
                 className="profile-container01"
                 style={{
                   backgroundImage: `url(${
-                    User.auth.profilePic
-                      ? `data:image/jpeg;base64,${User.auth.profilePic}`
+                    User.auth.coverPic
+                      ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
                   })`,
                 }}
