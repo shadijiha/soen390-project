@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar";
-import { checkLogin, editPersonalInformation } from "./api/api";
+import { checkLogin, editPersonalInformation } from "../api/api";
 import {
   FormControl,
   FormLabel,

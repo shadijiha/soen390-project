@@ -32,3 +32,10 @@ export const editPersonalInformation = async (token : any,UpdatedUser : any) => 
     }
   })
 }
+export const getUserById = async (token : any,id : any) =>{
+  return axios.get(`${URL}/user/${id}`,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+}

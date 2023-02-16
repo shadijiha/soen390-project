@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
-import FeatureCard4 from "../components/feature-card4";
+import FeatureCard4 from "../../components/feature-card4";
 import React, { CSSProperties, useEffect, useState } from "react";
-import { checkLogin } from "./api/api";
+import { checkLogin } from "../api/api";
 import Layout from "@/components/Layout";
 import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import router from "next/router";
-import ProfileStyle from "../styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -164,7 +164,7 @@ const Profile = () => {
                       fontWeight: 600,
                     }}
                     onClick={() => {
-                      router.push("/editProfile");
+                      router.push("/profile/editProfile");
                     }}
                   >
                     Edit
