@@ -2,10 +2,10 @@ import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nes
 import { HttpException } from '@nestjs/common/exceptions/http.exception'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { AuthUser, BearerPayload } from 'src/util/util'
-import { ConnectionsService } from 'src/users/connections/connections.service'
-import { Connections } from 'src/users/connections/connections.types'
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
+import { AuthUser, BearerPayload } from '../../util/util'
+import { ConnectionsService } from '../../users/connections/connections.service'
+import { Connections } from '../../users/connections/connections.types'
 
 
 

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common/decorators/core/injectable.decorator"
 import { InjectRepository } from "@nestjs/typeorm/dist/common/typeorm.decorators"
-import { Connection } from "src/models/connection.entity"
+import { Connection } from "../../models/connection.entity"
 import { Repository } from "typeorm/repository/Repository"
 
 
