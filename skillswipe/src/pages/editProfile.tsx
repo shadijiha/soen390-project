@@ -97,7 +97,14 @@ const EditProfile = () => {
         <NavBar />
         <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
           <Box>
-            <Heading>Hey, {currentUser.auth.firstName}!</Heading>
+            <Heading
+              style={{
+                fontSize: "2.5rem",
+                fontWeight: "200",
+              }}
+            >
+              Hey, {currentUser.auth.firstName}!
+            </Heading>
           </Box>
         </Box>
 
