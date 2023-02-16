@@ -11,13 +11,14 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import EducationHistory from "../Forms/EducationHistory";
-import { SmallAddIcon } from "@chakra-ui/icons";
+import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
 
 const EducationHistoryBox = () => {
   return (
     <Stack
       as="form"
       p={5}
+      mb={5}
       style={{
         flexDirection: "column",
         flexWrap: "wrap",
@@ -40,26 +41,23 @@ const EducationHistoryBox = () => {
         }}
       >
         Education History
+        <Button
+          style={{
+            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
+            border: "3px solid rgba(255, 255, 255, 0.3)",
+            marginLeft: "15px",
+            marginBottom: "5px",
+          }}
+          type="submit"
+          colorScheme={"teal"}
+          borderRadius="100px"
+        >
+          <AddIcon />
+        </Button>
       </Text>
+
       <EducationHistory />
       <EducationHistory />
-      <Button>
-        <SmallAddIcon boxSize={10} />
-      </Button>
-      <Button
-        style={{
-          boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-          border: "3px solid rgba(255, 255, 255, 0.3)",
-        }}
-        type="submit"
-        size="lg"
-        colorScheme={"blue"}
-        borderRadius="100px"
-        mt={50}
-        // onClick={handleSubmit}
-      >
-        Update Educational History
-      </Button>
     </Stack>
   );
 };

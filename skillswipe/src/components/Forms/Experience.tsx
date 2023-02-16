@@ -46,17 +46,7 @@ const Experience = () => {
         >
           Update
         </Button>
-        <Button
-          style={{
-            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-            border: "3px solid rgba(255, 255, 255, 0.3)",
-          }}
-          type="submit"
-          colorScheme={"teal"}
-          borderRadius="100px"
-        >
-          <AddIcon />
-        </Button>
+
         <Button
           style={{
             boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",

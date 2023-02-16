@@ -85,10 +85,10 @@ const EditProfile = () => {
     }
   };
   const clickCover = () => {
-    document.getElementById("input")?.click();
+    document.getElementById("file-input-coverPic")?.click();
   };
   const clickProfile = () => {
-    document.getElementById("file-input")?.click();
+    document.getElementById("file-input-profilePic")?.click();
   };
 
   return (
@@ -127,11 +127,12 @@ const EditProfile = () => {
               {/* upload new profile pic button */}
               <input
                 type="file"
-                id="file-input"
+                id="file-input-profilePic"
                 style={{ display: "none" }}
-                onClick={clickCover}
+                onClick={clickProfile}
+                onChange={ProfileImageHandler}
               />
-              <label htmlFor="file-input">
+              <label htmlFor="file-input-profilePic">
                 <img
                   src="https://img.icons8.com/material-sharp/512/send-letter.png"
                   alt="Upload Icon"
@@ -164,7 +165,7 @@ const EditProfile = () => {
 
             <input
               type="file"
-              id="file-input"
+              id="file-input-profilePic"
               style={{ display: "none" }}
               onChange={ProfileImageHandler}
             />
@@ -187,11 +188,12 @@ const EditProfile = () => {
               {/* upload new profile cover button */}
               <input
                 type="file"
-                id="file-input"
+                id="file-input-coverPic"
                 style={{ display: "none" }}
                 onClick={clickCover}
+                onChange={coverImageHandler}
               />
-              <label htmlFor="file-input">
+              <label htmlFor="file-input-coverPic">
                 <img
                   src="https://img.icons8.com/material-sharp/512/send-letter.png"
                   alt="Upload Icon"
@@ -204,7 +206,7 @@ const EditProfile = () => {
                 />
               </label>
             </button>
-            <a>
+            <a onClick={clickCover}>
               <img
                 alt="image"
                 src={
@@ -224,7 +226,7 @@ const EditProfile = () => {
             </a>
             <input
               type="file"
-              id="input"
+              id="file-input-coverPic"
               style={{ display: "none" }}
               onChange={coverImageHandler}
             />

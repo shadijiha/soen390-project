@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import {
   FormControl,
@@ -31,7 +32,7 @@ const Information = ({ update }: any) => {
       mt={30}
     >
       <Stack direction={"row"}>
-        <p
+        <image
           style={{
             textAlign: "left",
             fontSize: "20px",
@@ -39,8 +40,14 @@ const Information = ({ update }: any) => {
             marginBottom: "20px",
           }}
         >
-          My Profile
-        </p>
+          <img
+            src="https://img.icons8.com/fluency/512/gender-neutral-user.png"
+            alt="profile"
+            width="30px"
+            height="30px"
+          />
+        </image>
+
         <Spacer />
         <Button
           style={{

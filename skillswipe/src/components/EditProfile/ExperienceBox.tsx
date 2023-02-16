@@ -11,7 +11,7 @@ import {
   Textarea,
 } from "@chakra-ui/react";
 import Experience from "../Forms/Experience";
-import { SmallAddIcon } from "@chakra-ui/icons";
+import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
 
 const WorkProfile = () => {
   // Api calls
@@ -42,13 +42,25 @@ const WorkProfile = () => {
         }}
       >
         Work Experience
+        <Button
+          style={{
+            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
+            border: "3px solid rgba(255, 255, 255, 0.3)",
+            marginLeft: "15px",
+            marginBottom: "5px",
+          }}
+          type="submit"
+          colorScheme={"teal"}
+          borderRadius="100px"
+        >
+          <AddIcon />
+        </Button>
       </Text>
+
       <Experience />
       <Experience />
-      <Button>
-        <SmallAddIcon cursor={"pointer"} boxSize={10} />
-      </Button>
-      <Button
+
+      {/* <Button
         style={{
           boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
           border: "3px solid rgba(255, 255, 255, 0.3)",
@@ -61,7 +73,7 @@ const WorkProfile = () => {
         // onClick={handleSubmit}
       >
         Update Work Experience
-      </Button>
+      </Button> */}
     </Stack>
   );
 };

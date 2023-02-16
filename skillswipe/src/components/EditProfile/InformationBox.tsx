@@ -59,13 +59,32 @@ const InformationBox = () => {
   return (
     <Stack
       as="form"
-      justifyContent="center"
-      alignItems="center"
       p={5}
-      textAlign="center"
+      style={{
+        flexDirection: "column",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        alignContent: "center",
+        alignItems: "center",
+        alignSelf: "center",
+        WebkitAlignContent: "center",
+        WebkitAlignItems: "center",
+        WebkitBoxAlign: "center",
+        WebkitFlexWrap: "wrap",
+        WebkitJustifyContent: "center",
+      }}
     >
+      <Text
+        style={{
+          alignSelf: "flex-start",
+          fontSize: "1.5rem",
+          fontWeight: "bold",
+        }}
+      >
+        Personal Information
+      </Text>
       <Information update={update} />
-
+      {/* 
       <Button
         style={{
           boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
@@ -77,7 +96,7 @@ const InformationBox = () => {
         onClick={handleSubmit}
       >
         Update Personal Information
-      </Button>
+      </Button> */}
     </Stack>
   );
 };
