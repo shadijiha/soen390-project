@@ -98,7 +98,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {User.auth.email}
+                  📨 {User.auth.email}
                 </span>
                 <span
                   className="profile-text03"
@@ -107,7 +107,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  <span>{User.auth.mobileNo}</span>
+                  <span>📲 {User.auth.mobileNo}</span>
                   <br></br>
                   <br></br>
                 </span>
