@@ -11,15 +11,15 @@ export class ConnectionsService {
   ) {}
 
   public async addConnection (user1Id, user2Id): Promise<void> {
-    if (user1Id == user2Id) throw new Error('Illegal request!')
+    if (user1Id === user2Id) throw new Error('Illegal request!')
     const connection = new Connection()
     connection.user_1 = user1Id
     connection.user_2 = user2Id
     await connection.save()
   }
 
-  public async deleteConnection (user1Id: number, user2Id: number) {
-    if (user1Id == user2Id) throw new Error('No connection found!')
+  public async deleteConnection (user1Id: number, user2Id: number): Promise<{ success: boolean, message: string }> {
+    if (user1Id === user2Id) throw new Error('No connection found!')
     const connection = await this.connectionRepository.findOne({
       where: [
         { user_1: { id: user1Id }, user_2: { id: user2Id } },
@@ -29,7 +29,7 @@ export class ConnectionsService {
 
     if (connection == null) throw new Error('No connection found!')
     else {
-      this.connectionRepository.delete({ id: connection.id })
+      await this.connectionRepository.delete({ id: connection.id })
       return {
         success: true,
         message: 'Connection delete successfully'
