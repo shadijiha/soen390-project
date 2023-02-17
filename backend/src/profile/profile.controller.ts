@@ -210,6 +210,51 @@ export class ProfileController {
       })
   }
 
+  @Post('work')
+  public async addWork(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.AddWorkRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['workExperiences'])
+    if (!user) return;
+
+    this.profileService
+      .addWork(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Put('work/:id')
+  public async editWork(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditWorkRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['workExperiences'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editWork(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('work/:id')
+  public async deleteWork(
+    @AuthUser() userInfo: BearerPayload,
+    @Param('id') id: number
+  ): Promise<void> {
+    let user = await userInfo.getUser(['workExperiences'])
+    if (!user) return;
+
+    this.profileService
+      .removeWork(user, id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
 
   @Post('skill')
   public async addSkill(

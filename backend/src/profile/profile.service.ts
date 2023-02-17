@@ -10,6 +10,7 @@ import { Project } from '../models/project.entity'
 import { Skill } from '../models/skill.entity'
 import { type User } from '../models/user.entity'
 import { Volunteering } from '../models/volunteering.entity'
+import { Work } from '../models/work.entity'
 import { type Profile } from './profile.types'
 
 @Injectable()
@@ -22,6 +23,7 @@ export class ProfileService {
     @InjectRepository(Award) private readonly awardRepository: Repository<Award>,
     @InjectRepository(Language) private readonly languageRepository: Repository<Language>,
     @InjectRepository(Skill) private readonly skillRepository: Repository<Skill>,
+    @InjectRepository(Work) private readonly workRepository: Repository<Work>,
   ) { }
 
   public async addEducation(
@@ -221,6 +223,35 @@ export class ProfileService {
     }
     let skill: Skill = found as Skill
     return this.skillRepository.update(skill.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addWork(
+    user: User,
+    data: Profile.AddWorkRequest
+  ): Promise<void> {
+    const work = new Work()
+    this.createModel(data, work)
+    user.workExperiences = [...user.workExperiences, work]
+    await user.save()
+  }
+
+  public async removeWork(
+    user: User,
+    id: number
+  ): Promise<void> {
+    user.workExperiences = user.workExperiences.filter(
+      (w) => w.id !== id
+    )
+    await user.save()
+  }
+
+  public editWork(user: User, request: Profile.EditWorkRequest): Promise<boolean> {
+    let found = user.workExperiences.find((l) => l.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let work: Work = found as Work
+    return this.workRepository.update(work.id, request).then((res: UpdateResult) => res.affected ? true : false)
   }
 
   /*
