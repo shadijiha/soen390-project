@@ -13,6 +13,7 @@ import {
   useColorModeValue,
   Text,
   Image,
+  Stack,
 } from "@chakra-ui/react";
 
 import router from "next/router";
@@ -190,6 +191,17 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
+            <Stack
+              spacing={2}
+              style={{
+                flexDirection: "row",
+                flexWrap: "wrap",
+                marginTop: "1em",
+                alignContent: "center",
+                justifyContent: "center",
+              }}
+            ></Stack>
             {/* SKILLS SECTION */}
             <Skills />
             {/* CAREER JOURNEY WORK EXPERIENCE */}

@@ -60,7 +60,7 @@ const Skills = () => {
             paddingBottom: "2rem",
           }}
         >
-          <span>My Skills</span>
+          <span>🚀 My Skills</span>
         </h1>
       </div>
       <Stack

@@ -102,7 +102,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
     <HStack
       flex={1}
       p={{ base: 3, sm: 6 }}
-      bg={useColorModeValue("gray.100", "gray.800")}
+      bg={useColorModeValue("gray.100", "gray.900")}
       spacing={5}
       rounded="lg"
       alignItems="center"
@@ -113,7 +113,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
         h: "0",
         borderColor: `transparent ${useColorModeValue(
           "#edf2f6",
-          "#1a202c"
+          "#2D394E"
         )} transparent`,
         borderStyle: "solid",
         borderWidth: borderWidthValue,
@@ -124,7 +124,7 @@ const Card = ({ id, title, description, date }: CardProps) => {
       }}
     >
       <Box>
-        <Text fontSize="lg" color={isEvenId ? "teal.400" : "blue.400"}>
+        <Text fontSize="lg" color={isEvenId ? "teal.400" : "blue.300"}>
           {date}
         </Text>
 
