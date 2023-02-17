@@ -9,9 +9,9 @@ import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import router from "next/router";
 import ProfileStyle from "../styles/profilestyle";
-
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Education from "@/components/Profile/education";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -89,7 +89,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {User.auth.firstName + " " + User.auth.lastName}
+                  {User.auth.firstName + " " + User.auth.lastName} 👋🏼
                 </h1>
                 <span
                   className="profile-text02"
@@ -98,7 +98,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {User.auth.email}
+                  📨 {User.auth.email}
                 </span>
                 <span
                   className="profile-text03"
@@ -107,24 +107,28 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  <span>{User.auth.mobileNo}</span>
+                  <span>📱 {User.auth.mobileNo}</span>
+                  <br></br>
                   <br></br>
                 </span>
                 <div className="profile-container03">
-                  <div className="profile-container04">
-                    <span
-                      className="profile-text06"
-                      style={{
-                        textShadow: "0px 0px 30px #000000B4",
-                        marginLeft: "0px",
-                      }}
-                    >
-                      {User.auth.biography}
-                    </span>
-                  </div>
+                  <span
+                    className="profile-text06"
+                    style={{
+                      textShadow: "0px 0px 30px #000000B4",
+                      marginLeft: "0px",
+                    }}
+                  >
+                    💬 {User.auth.biography}
+                  </span>
                 </div>
 
-                <div className="profile-container05">
+                <div
+                  className="profile-container05"
+                  style={{
+                    marginTop: "-1em",
+                  }}
+                >
                   <button
                     className="profile-button button"
                     style={{
@@ -279,6 +283,9 @@ const Profile = () => {
               </div>
             </div>
 
+            {/* return education component */}
+            <Education />
+
             {/* EDUCATION SECTION */}
             <div className="edu-container">
               <div className="edu-features">
@@ -296,6 +303,7 @@ const Profile = () => {
                     Science.
                   </span>
                 </span>
+
                 <div className="edu-container1">
                   <div className="edu-feature-card1">
                     <img

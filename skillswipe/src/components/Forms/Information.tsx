@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
 import InformationBox from "../EditProfile/InformationBox";
 
-const Information = ({ update ,handleSubmit}: any) => {
+const Information = ({ update, handleSubmit }: any) => {
   const currentUser = useSelector((state) => state as any);
   const setState = (updateUserObj: any) => {
     update(updateUserObj);
@@ -54,7 +54,6 @@ const Information = ({ update ,handleSubmit}: any) => {
             boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
             border: "3px solid rgba(255, 255, 255, 0.3)",
           }}
-        
           colorScheme={"blue"}
           borderRadius="100px"
           onClick={handleSubmit}
@@ -157,9 +156,8 @@ const Information = ({ update ,handleSubmit}: any) => {
       </FormControl>
       <FormControl>
         <FormLabel htmlFor="text">Bio</FormLabel>
-        <Input
+        <Textarea
           minWidth={"100%"}
-          type="text"
           placeholder={
             currentUser.auth.biography == null
               ? "Please add a bio "

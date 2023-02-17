@@ -1,3 +1,4 @@
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios'
 const URL = 'http://localhost:8080'
@@ -27,6 +28,14 @@ export const checkLogin = async (token : any) => {
 }
 export const editPersonalInformation = async (token : any,UpdatedUser : any) => {
   return axios.put(`${URL}/user`,UpdatedUser,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+}
+
+export const editEducationHistory = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}/Profile/add/education`,UpdatedUser,{
     headers : {
       "Authorization" : `Bearer ${token}`
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   FormControl,
   FormLabel,
@@ -12,8 +12,23 @@ import {
 } from "@chakra-ui/react";
 import EducationHistory from "../Forms/EducationHistory";
 import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
+import { editEducationHistory } from "@/pages/api/api";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { emailValidator } from "@/Util/Validator";
+
+
+
 
 const EducationHistoryBox = () => {
+  // call API to get education history
+  const profile = useSelector((state) => state as any);
+  let educations = profile.auth.educations;
+  const deleteEducation = (id: number) => {
+    educations = educations.filter((education: any) => education.id !== id);
+    console.log(educations)
+  };
   return (
     <Stack
       as="form"
@@ -56,8 +71,11 @@ const EducationHistoryBox = () => {
         </Button>
       </Text>
 
-      <EducationHistory />
-      <EducationHistory />
+      {educations.map((education: any, index: number) => (
+        <div key={education.id}>
+          <EducationHistory education={education} index={index} deleteEducation={deleteEducation}/>
+        </div>
+      ))}
     </Stack>
   );
 };
