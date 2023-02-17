@@ -21,7 +21,7 @@ const EducationHistory = (props: any) => {
     end_year: "",
     id: null
   });
-  if(educationHistory.institution =="") setEducationHistory(props.education);
+  if (educationHistory.institution == "") setEducationHistory(props.education);
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setEducationHistory((prevState) => ({
@@ -29,22 +29,21 @@ const EducationHistory = (props: any) => {
       [name]: value,
     }));
   };
-
   const handleSubmit = (event: any) => {
     const token = localStorage.getItem("jwt");
-      // call API to update education history
-      if(educationHistory.start_year > educationHistory.end_year){
-        toast("Please add Valid start and end year");
-      } else {
-        // editEducationHistory(token, educationHistory).then((response) => {
-        //     console.log(response);
-        //     toast("Updated Successfully");
-        //   })
-        //   .catch((error) => {
-        //     toast(error.message);
-        //   });
-      }
-    
+    // call API to update education history
+    if (educationHistory.start_year > educationHistory.end_year) {
+      toast("Please add Valid start and end year");
+    } else {
+      // editEducationHistory(token, educationHistory).then((response) => {
+      //     console.log(response);
+      //     toast("Updated Successfully");
+      //   })
+      //   .catch((error) => {
+      //     toast(error.message);
+      //   });
+    }
+
     event.preventDefault();
     console.log(educationHistory); // this will print out the form values
     // You can now use the form values to update the user's education history
@@ -70,21 +69,37 @@ const EducationHistory = (props: any) => {
             marginBottom: "20px",
           }}
         >
-          Education {props.index+1}
+          Education {props.index} {props.isNew}
         </p>
         <Spacer />
-        <Button
-          style={{
-            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-            border: "3px solid rgba(255, 255, 255, 0.3)",
-          }}
-          type="button"
-          colorScheme={"blue"}
-          borderRadius="100px"
-          onClick={handleSubmit}
-        >
-          Update
-        </Button>
+        {!props.isNew &&
+          <Button
+            style={{
+              boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
+              border: "3px solid rgba(255, 255, 255, 0.3)",
+            }}
+            type="button"
+            colorScheme={"blue"}
+            borderRadius="100px"
+            onClick={handleSubmit}
+          >
+            Update
+          </Button>
+        }
+        {props.isNew &&
+          <Button
+            style={{
+              boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
+              border: "3px solid rgba(255, 255, 255, 0.3)",
+            }}
+            type="button"
+            colorScheme={"blue"}
+            borderRadius="100px"
+            onClick={handleSubmit}
+          >
+            Add
+          </Button>
+        }
         <Button
           style={{
             boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
