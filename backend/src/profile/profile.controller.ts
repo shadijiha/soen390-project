@@ -210,6 +210,53 @@ export class ProfileController {
       })
   }
 
+
+  @Post('language')
+  public async addLanguage(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.AddLanguageRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['language'])
+    if (!user) return;
+
+    this.profileService
+      .addLanguage(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Put('language/:id')
+  public async editLanguage(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditLanguageRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['language'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editLanguage(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('language/:id')
+  public async deleteLanguage(
+    @AuthUser() userInfo: BearerPayload,
+    @Param('id') id: number
+  ): Promise<void> {
+    let user = await userInfo.getUser(['language'])
+    if (!user) return;
+
+    this.profileService
+      .removeLanguage(user, id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
   @Post('award')
   public async addAward(
     @AuthUser() userInfo: BearerPayload,
