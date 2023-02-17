@@ -32,7 +32,7 @@ export class ConnectionsController {
   public async getConnectionStatus (
     @AuthUser() userInfo: BearerPayload,
       @Param('id') user2Id: number
-  ): Promise<Promise<{ isAccepted } | string>> {
+  ): Promise<"Connected" | "Pending" | "NotConnected"> {
     try {
       return await this.connectionService.getConnectionstatus(userInfo.id, user2Id)
     } catch (e) {
@@ -43,7 +43,7 @@ export class ConnectionsController {
   @Get('pending')
   public async getPendingRequest (
     @AuthUser() userInfo: BearerPayload
-  ): Promise<any> {
+  ): Promise<{ user: any; since: Date }[]> {
     try {
       return await this.connectionService.getPendingConnections(userInfo.id)
     } catch (e) {
@@ -54,7 +54,7 @@ export class ConnectionsController {
   @Get('accepted')
   public async getAcceptedRequests (
     @AuthUser() userInfo: BearerPayload
-  ): Promise<any> {
+  ): Promise<{ user: any; since: Date }[]> {
     try {
       return await this.connectionService.getAcceptedConnections(userInfo.id)
     } catch (e) {
