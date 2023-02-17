@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { BaseRequest } from '../util/util'
 
 export namespace Profile {
-  export class ProfileAddEducationRequest extends BaseRequest {
+  export class AddEducationRequest extends BaseRequest {
     @ApiProperty()
       institution: string
 

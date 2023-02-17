@@ -23,7 +23,7 @@ export class ProfileController {
   @Put('add/education')
   public async addEducation (
     @AuthUser() userInfo: BearerPayload,
-      @Body() body: Profile.ProfileAddEducationRequest
+    @Body() body: Profile.AddEducationRequest
   ): Promise<void> {
     this.profileService
       .addEducation(await userInfo.getUser(['educations']), body)
