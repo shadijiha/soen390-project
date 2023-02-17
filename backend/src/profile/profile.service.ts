@@ -5,6 +5,7 @@ import { Repository, UpdateResult, type BaseEntity } from 'typeorm'
 import { Award } from '../models/award.entity'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
+import { Language } from '../models/language.entity'
 import { Project } from '../models/project.entity'
 import { type User } from '../models/user.entity'
 import { Volunteering } from '../models/volunteering.entity'
@@ -18,6 +19,7 @@ export class ProfileService {
     @InjectRepository(Project) private readonly projectRepository: Repository<Project>,
     @InjectRepository(Volunteering) private readonly volunteeringRepository: Repository<Volunteering>,
     @InjectRepository(Award) private readonly awardRepository: Repository<Award>,
+    @InjectRepository(Language) private readonly languageRepository: Repository<Language>,
   ) { }
 
   public async addEducation(
@@ -158,6 +160,36 @@ export class ProfileService {
     }
     let award: Award = found as Award
     return this.awardRepository.update(award.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addLanguage(
+    user: User,
+    data: Profile.AddLanguageRequest
+  ): Promise<void> {
+    const language = new Language()
+    this.createModel(data, language)
+    user.languages = [...user.languages, language]
+    await user.save()
+  }
+
+  public async removeLanguage(
+    user: User,
+    id: number
+  ): Promise<void> {
+
+    user.languages = user.languages.filter(
+      (l) => l.id !== id
+    )
+    await user.save()
+  }
+
+  public editLanguage(user: User, request: Profile.EditLanguageRequest): Promise<boolean> {
+    let found = user.languages.find((l) => l.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let language: Language = found as Language
+    return this.languageRepository.update(language.id, request).then((res: UpdateResult) => res.affected ? true : false)
   }
 
   /*

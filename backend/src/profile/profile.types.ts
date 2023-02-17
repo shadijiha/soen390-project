@@ -72,6 +72,14 @@ export namespace Profile {
     description: string
   }
 
+  export class AddLanguageRequest extends BaseRequest {
+    @ApiProperty()
+    languageName: string
+
+    @ApiProperty()
+    proficiency: string
+  }
+
   export class EditEducationRequest extends BaseRequest {
     @ApiProperty()
     id: number
@@ -155,5 +163,16 @@ export namespace Profile {
 
     @ApiProperty({ required: false })
     description: string
+  }
+
+  export class EditLanguageRequest extends BaseRequest {
+    @ApiProperty()
+    id: number
+
+    @ApiProperty({ required: false })
+    languageName: string
+
+    @ApiProperty({ required: false })
+    proficiency: string
   }
 }
