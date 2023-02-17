@@ -20,7 +20,6 @@ export namespace Users {
       connectionStatus: 'Connected' | 'Pending' | 'NotConnected'
   }
 
-
   export class GetUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
       user: User | null
