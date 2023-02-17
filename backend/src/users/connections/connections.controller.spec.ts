@@ -27,9 +27,9 @@ describe("ConnectionsController", () => {
     
     }),
 
-    rejectConnection: jest.fn(() => {
+    deleteConnection: jest.fn(() => {
       return {
-        user: { id: 5}
+        success: true
       }
     })
 
@@ -95,10 +95,10 @@ describe("ConnectionsController", () => {
 
   it("should reject pending connection requests", async () => {
     const bearer: BearerPayload = { id: 1, email: "test@gmail.com" } as BearerPayload;
-    const user2: Connections.AcceptConnectionRequest = {id: 2};
+    const user2 = 2;
 
-    expect(await controller.rejectConnectionRequest(bearer, user2)).toEqual({user: {id: 5}});
-    expect(mockConnectionsService.rejectConnection).toHaveBeenCalled();
+    expect(await controller.removeConnection(bearer, user2)).toEqual({success: true});
+    expect(mockConnectionsService.deleteConnection).toHaveBeenCalled();
   });
 
 

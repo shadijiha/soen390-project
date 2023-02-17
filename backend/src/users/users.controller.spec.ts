@@ -21,7 +21,6 @@ describe("UsersController", () => {
     getByEmail: jest.fn(() => {}),
 
     removeSoft: jest.fn((id) => {
-      console.log("removeSoft called", id);
       if (id == 1) return true;
       else throw new Error();
     }),
