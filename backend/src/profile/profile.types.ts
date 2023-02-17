@@ -80,6 +80,20 @@ export namespace Profile {
     proficiency: string
   }
 
+  export class AddSkillRequest extends BaseRequest {
+    @ApiProperty()
+    company: string
+
+    @ApiProperty()
+    title: string
+
+    @ApiProperty()
+    start_year: number
+
+    @ApiProperty()
+    end_year: number
+  }
+
   export class EditEducationRequest extends BaseRequest {
     @ApiProperty()
     id: number
@@ -174,5 +188,22 @@ export namespace Profile {
 
     @ApiProperty({ required: false })
     proficiency: string
+  }
+
+  export class EditSkillRequest extends BaseRequest {
+    @ApiProperty()
+    id: number
+
+    @ApiProperty({ required: false })
+    company: string
+
+    @ApiProperty({ required: false })
+    title: string
+
+    @ApiProperty({ required: false })
+    start_year: number
+
+    @ApiProperty({ required: false })
+    end_year: number
   }
 }

@@ -7,6 +7,7 @@ import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
 import { Language } from '../models/language.entity'
 import { Project } from '../models/project.entity'
+import { Skill } from '../models/skill.entity'
 import { type User } from '../models/user.entity'
 import { Volunteering } from '../models/volunteering.entity'
 import { type Profile } from './profile.types'
@@ -20,6 +21,7 @@ export class ProfileService {
     @InjectRepository(Volunteering) private readonly volunteeringRepository: Repository<Volunteering>,
     @InjectRepository(Award) private readonly awardRepository: Repository<Award>,
     @InjectRepository(Language) private readonly languageRepository: Repository<Language>,
+    @InjectRepository(Skill) private readonly skillRepository: Repository<Skill>,
   ) { }
 
   public async addEducation(
@@ -190,6 +192,35 @@ export class ProfileService {
     }
     let language: Language = found as Language
     return this.languageRepository.update(language.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addSkill(
+    user: User,
+    data: Profile.AddSkillRequest
+  ): Promise<void> {
+    const skill = new Skill()
+    this.createModel(data, skill)
+    user.skills = [...user.skills, skill]
+    await user.save()
+  }
+
+  public async removeSkill(
+    user: User,
+    id: number
+  ): Promise<void> {
+    user.skills = user.skills.filter(
+      (s) => s.id !== id
+    )
+    await user.save()
+  }
+
+  public editSkill(user: User, request: Profile.EditSkillRequest): Promise<boolean> {
+    let found = user.skills.find((l) => l.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let skill: Skill = found as Skill
+    return this.skillRepository.update(skill.id, request).then((res: UpdateResult) => res.affected ? true : false)
   }
 
   /*

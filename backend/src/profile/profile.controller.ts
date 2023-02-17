@@ -211,6 +211,52 @@ export class ProfileController {
   }
 
 
+  @Post('skill')
+  public async addSkill(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.AddSkillRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['skill'])
+    if (!user) return;
+
+    this.profileService
+      .addSkill(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Put('skill/:id')
+  public async editSkill(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditSkillRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['skill'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editSkill(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('skill/:id')
+  public async deleteSkill(
+    @AuthUser() userInfo: BearerPayload,
+    @Param('id') id: number
+  ): Promise<void> {
+    let user = await userInfo.getUser(['skill'])
+    if (!user) return;
+
+    this.profileService
+      .removeSkill(user, id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
   @Post('language')
   public async addLanguage(
     @AuthUser() userInfo: BearerPayload,
