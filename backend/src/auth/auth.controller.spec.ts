@@ -18,7 +18,7 @@ describe("AuthController", () => {
 	let controller: AuthController;
 	let userRepository: Repository<User>;
 	const mockUserService = {
-		findOneByEmail: jest.fn(() => null),
+		findOneByEmail: jest.fn(() => {throw new ConflictException(`Email already taken`)} ),
 		create: jest.fn((dto) => {
 			return {
 				id: 1,
@@ -88,6 +88,7 @@ describe("AuthController", () => {
 		
 		expect(mockAuthService.login).toBeCalledWith(userToTest)
 		expect(mockUserService.findOneByEmail).toBeCalledWith(userToTest.email)
+		
 	});
 
 	// Test the register with the same email
