@@ -35,6 +35,7 @@ const Education = () => {
             className="edu-text"
             style={{
               fontWeight: 600,
+              fontSize: "2.5rem",
             }}
           >
             <span>Education History</span>

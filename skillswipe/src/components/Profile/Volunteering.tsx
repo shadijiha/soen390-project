@@ -34,6 +34,7 @@ const Volunteering = () => {
           className="edu-text"
           style={{
             fontWeight: 600,
+            fontSize: "2.5rem",
           }}
         >
           <span>Volunteering History</span>
