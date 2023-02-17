@@ -123,7 +123,12 @@ const Profile = () => {
                   </span>
                 </div>
 
-                <div className="profile-container05">
+                <div
+                  className="profile-container05"
+                  style={{
+                    marginTop: "-1em",
+                  }}
+                >
                   <button
                     className="profile-button button"
                     style={{
