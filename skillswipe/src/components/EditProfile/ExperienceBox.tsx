@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   FormControl,
   FormLabel,
@@ -12,10 +12,34 @@ import {
 } from "@chakra-ui/react";
 import Experience from "../Forms/Experience";
 import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { editExperience } from "@/pages/api/api";
+import "react-toastify/dist/ReactToastify.css";
+import { emailValidator } from "@/Util/Validator";
 
-const WorkProfile = () => {
+type Experience = {
+  company?: string,
+  title?: string,
+  start_year?: string,
+  end_year?: string,
+  id: number
+}
+
+const ExperienceBox = () => {
   // Api calls
-
+  const profile = useSelector((state) => state as any);
+  const [experienceList, setExperienceList] = useState(profile.auth.experiences as Experience[]);
+  const deleteExperience = (id: number) => {
+    setExperienceList(experienceList.filter((experience: any) => experience.id !== id))
+  };
+  const addExperience = () => {
+    let exp: Experience = { id: 8 };
+    setExperienceList(oldArray => [...(oldArray || []), exp]);
+  }
+  const isNew = (experience: Experience)=> {
+    return !(experience.company && experience.start_year && experience.end_year && experience.title)
+  }
   return (
     <Stack
       as="form"
@@ -49,32 +73,28 @@ const WorkProfile = () => {
             marginLeft: "15px",
             marginBottom: "5px",
           }}
-          type="submit"
+          type="button"
           colorScheme={"teal"}
           borderRadius="100px"
+          onClick={addExperience}
         >
           <AddIcon />
         </Button>
       </Text>
-
-      <Experience />
-      <Experience />
-
-      {/* <Button
-        style={{
-          boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-          border: "3px solid rgba(255, 255, 255, 0.3)",
-        }}
-        type="submit"
-        size="lg"
-        colorScheme={"blue"}
-        borderRadius="100px"
-        mt={50}
-        // onClick={handleSubmit}
-      >
-        Update Work Experience
-      </Button> */}
+      <div style={{ display: "flex", flexDirection: "column-reverse" }}>
+        {experienceList && experienceList.map((experience: Experience, index: number) => (
+          <div key={index}>
+            <Experience
+              experience={experience}
+              deleteExperience={deleteExperience}
+              isNew={isNew(experience)}
+              index={index+1}
+            />
+          </div>
+        ))}
+      </div>  
+    
     </Stack>
   );
 };
-export default WorkProfile;
+export default ExperienceBox;

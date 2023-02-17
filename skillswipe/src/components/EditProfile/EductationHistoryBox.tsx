@@ -18,17 +18,28 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
 
-
+type Education = {
+  institution?: string,
+  start_year?: string,
+  end_year?: string,
+  degree?: string,
+  id: number
+}
 
 
 const EducationHistoryBox = () => {
-  // call API to get education history
   const profile = useSelector((state) => state as any);
-  let educations = profile.auth.educations;
+  const [educationList, setEducationList] = useState(profile.auth.educations as Education[]);
   const deleteEducation = (id: number) => {
-    educations = educations.filter((education: any) => education.id !== id);
-    console.log(educations)
+    setEducationList(educationList.filter((education: any) => education.id !== id))
   };
+  const addEducation = () => {
+    let educ: Education = { id: 10 };
+    setEducationList(oldArray => [...oldArray, educ]);
+  }
+  const isNew = (education: Education)=> {
+    return !(education.institution && education.start_year && education.end_year && education.degree)
+  }
   return (
     <Stack
       as="form"
@@ -63,19 +74,23 @@ const EducationHistoryBox = () => {
             marginLeft: "15px",
             marginBottom: "5px",
           }}
-          type="submit"
+          type="button"
           colorScheme={"teal"}
           borderRadius="100px"
+          onClick={addEducation}
         >
           <AddIcon />
         </Button>
       </Text>
 
-      {educations.map((education: any, index: number) => (
-        <div key={education.id}>
-          <EducationHistory education={education} index={index} deleteEducation={deleteEducation}/>
-        </div>
-      ))}
+      <div style={{ display: "flex", flexDirection: "column-reverse" }}>
+        {educationList && educationList.map((education: any, index: number) => (
+          <div key={education.id} >
+            <EducationHistory education={education} index={index+1} deleteEducation={deleteEducation} isNew={isNew(education)}/>
+          </div>
+        ))}
+      </div>
+
     </Stack>
   );
 };
