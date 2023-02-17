@@ -292,12 +292,11 @@ const Profile = () => {
                 </h1>
                 <span className="edu-text03">
                   <span>
-                    
                     Im a self-taught developer, but I have a degree in Computer
                     Science.
                   </span>
                 </span>
-              
+
                 <div className="edu-container1">
                   <div className="edu-feature-card1">
                     <img
