@@ -119,7 +119,7 @@ const Profile = () => {
                       marginLeft: "0px",
                     }}
                   >
-                    {User.auth.biography}
+                    💬 {User.auth.biography}
                   </span>
                 </div>
 
