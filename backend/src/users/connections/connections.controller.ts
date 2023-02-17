@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common/decorators'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UseGuards
+} from '@nestjs/common/decorators'
 import { HttpException } from '@nestjs/common/exceptions/http.exception'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
@@ -12,9 +21,7 @@ import { Connections } from '../../users/connections/connections.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ConnectionsController {
-  constructor (private readonly connectionService: ConnectionsService) {
-
-  }
+  constructor (private readonly connectionService: ConnectionsService) {}
 
   @Post('add')
   public async sendConnectionRequest (
@@ -28,13 +35,28 @@ export class ConnectionsController {
     }
   }
 
+  @Delete('delete/:id')
+  public async removeConnection (
+    @AuthUser() userInfo: BearerPayload,
+      @Param('id') id: number
+  ): Promise<any> {
+    try {
+      return await this.connectionService.deleteConnection(userInfo.id, id)
+    } catch (e) {
+      throw new HttpException((e as Error).message, 400)
+    }
+  }
+
   @Get('status/:id')
   public async getConnectionStatus (
     @AuthUser() userInfo: BearerPayload,
       @Param('id') user2Id: number
-  ): Promise<Promise<{ isAccepted } | string>> {
+  ): Promise<'Connected' | 'Pending' | 'NotConnected'> {
     try {
-      return await this.connectionService.getConnectionstatus(userInfo.id, user2Id)
+      return await this.connectionService.getConnectionStatus(
+        userInfo.id,
+        user2Id
+      )
     } catch (e) {
       throw new HttpException((e as Error).message, 400)
     }
@@ -68,19 +90,10 @@ export class ConnectionsController {
       @Body() body: Connections.AcceptConnectionRequest
   ): Promise<any> {
     try {
-      return await this.connectionService.acceptConnection(body.id, userInfo.id)
-    } catch (e) {
-      throw new HttpException((e as Error).message, 400)
-    }
-  }
-
-  @Delete('reject')
-  public async rejectConnectionRequest (
-    @AuthUser() userInfo: BearerPayload,
-      @Body() body: Connections.AcceptConnectionRequest
-  ): Promise<any> {
-    try {
-      return await this.connectionService.rejectConnection(body.id, userInfo.id)
+      return await this.connectionService.acceptConnection(
+        body.id,
+        userInfo.id
+      )
     } catch (e) {
       throw new HttpException((e as Error).message, 400)
     }

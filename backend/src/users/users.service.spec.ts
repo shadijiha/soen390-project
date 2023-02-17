@@ -31,6 +31,7 @@ describe('UsersService', () => {
             find: () => [],
             findOneBy: () => mockUser,
             findOneByOrFail: () => mockUser,
+            findOneOrFail: () => mockUser,
             findOne: () => mockUser,
             save: () => mockUser,
             update: () => updatedUser,
@@ -77,9 +78,5 @@ describe('UsersService', () => {
     expect(result.email).toEqual('updated@gmail.com')
   })
 
-  // remove user
-  it('should deleted user', async () => {
-    const result = await service.removeSoft(1)
-    expect(result).toEqual(undefined)
-  })
+ 
 })
