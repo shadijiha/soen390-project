@@ -5,12 +5,16 @@ import { DataSource, FindOptionsRelationByString, FindOptionsRelations, Reposito
 import { User } from '../models/user.entity'
 import { UsersController } from './users.controller'
 import { UsersService } from './users.service'
+import { ConnectionsService } from './connections/connections.service'
+import { Connection } from '../models/connection.entity'
 import { createTestBearerPayload, type BearerPayload } from '../util/util'
 
 describe('UsersController', () => {
   let controller: UsersController
   let service: UsersService
+  let connectionService: ConnectionsService
   let userRepository: Repository<User>;
+  let connectionRepository: Repository<Connection>;
   beforeEach(async () => {
     const ApiServiceProvider = {
       provide: UsersService,
@@ -25,8 +29,13 @@ describe('UsersController', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
+        ConnectionsService,
         {
           provide: getRepositoryToken(User),
+          useValue: {}
+        },
+        {
+          provide: getRepositoryToken(Connection),
           useValue: {}
         },
         { provide: DataSource, useFactory: dataSourceMockFactory },
@@ -36,7 +45,9 @@ describe('UsersController', () => {
     }).compile()
     controller = module.get<UsersController>(UsersController)
     service = module.get<UsersService>(UsersService)
+    connectionService = module.get<ConnectionsService>(ConnectionsService)
     userRepository = module.get(getRepositoryToken(User))
+    connectionRepository = module.get(getRepositoryToken(Connection))
   })
   it('should be defined', () => {
     expect(controller).toBeDefined()
