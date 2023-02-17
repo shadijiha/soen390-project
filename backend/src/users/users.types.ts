@@ -18,6 +18,9 @@ export namespace Users {
 
     @ApiProperty({ enum: ['Connected', 'Pending', 'NotConnected'] })
       connectionStatus: 'Connected' | 'Pending' | 'NotConnected'
+
+    @ApiProperty({ type: User, isArray: true })
+      connections: User[]
   }
 
   export class GetUserResponse extends App.WithStatus {
