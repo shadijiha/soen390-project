@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { type BaseRequest } from 'src/util/util'
-import { type BaseEntity } from 'typeorm'
+import { Repository, UpdateResult, type BaseEntity } from 'typeorm'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
 import { Project } from '../models/project.entity'
@@ -10,30 +11,42 @@ import { type Profile } from './profile.types'
 
 @Injectable()
 export class ProfileService {
-  public async addEducation (
-    user: User | null,
-    data: Profile.ProfileAddEducationRequest
-  ): Promise<void> {
-    if (user == null) return
+  constructor(
+    @InjectRepository(Education) private readonly educationRepository: Repository<Education>,
+    @InjectRepository(Course) private readonly courseRepository: Repository<Course>,
+    @InjectRepository(Project) private readonly projectRepository: Repository<Project>,
+    @InjectRepository(Volunteering) private readonly volunteeringRepository: Repository<Volunteering>,
+  ) { }
 
+  public async addEducation(
+    user: User,
+    data: Profile.AddEducationRequest
+  ): Promise<void> {
     const education = new Education()
     this.createModel(data, education)
     user.educations = [...user.educations, education]
     await user.save()
   }
 
-  public async removeEduction (user: User | null, id: number): Promise<void> {
-    if (user == null) return
+  public async removeEduction(user: User, id: number): Promise<void> {
 
     user.educations = user.educations.filter((e) => e.id !== id)
     await user.save()
   }
 
-  public async addCourse (
-    user: User | null,
-    data: Profile.ProfileAddCourseRequest
+  public editEducation(user: User, request: Profile.EditEducationRequest): Promise<boolean> {
+    let found = user.educations.find((e) => e.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let education: Education = found as Education
+    return this.educationRepository.update(education.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addCourse(
+    user: User,
+    data: Profile.AddCourseRequest
   ): Promise<void> {
-    if (user == null) return
 
     const course = new Course()
     this.createModel(data, course)
@@ -41,18 +54,25 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeCourse (user: User | null, id: number): Promise<void> {
-    if (user == null) return
+  public async removeCourse(user: User, id: number): Promise<void> {
 
     user.courses = user.courses.filter((c) => c.id !== id)
     await user.save()
   }
 
-  public async addProject (
-    user: User | null,
-    data: Profile.ProfileAddProjectRequest
+  public editCourse(user: User, request: Profile.EditCourseRequest): Promise<boolean> {
+    let found = user.courses.find((c) => c.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let course: Course = found as Course
+    return this.courseRepository.update(course.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addProject(
+    user: User,
+    data: Profile.AddProjectRequest
   ): Promise<void> {
-    if (user == null) return
 
     const project = new Project()
     this.createModel(data, project)
@@ -60,17 +80,24 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeProject (user: User | null, id: number): Promise<void> {
-    if (user == null) return
+  public async removeProject(user: User, id: number): Promise<void> {
     user.projects = user.projects.filter((p) => p.id !== id)
     await user.save()
   }
 
-  public async addVolunteering (
-    user: User | null,
-    data: Profile.ProfileAddVolunteeringRequest
+  public editProject(user: User, request: Profile.EditProjectRequest): Promise<boolean> {
+    let found = user.projects.find((p) => p.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let project: Project = found as Project
+    return this.projectRepository.update(project.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addVolunteering(
+    user: User,
+    data: Profile.AddVolunteeringRequest
   ): Promise<void> {
-    if (user == null) return
 
     const volunteering = new Volunteering()
     this.createModel(data, volunteering)
@@ -81,11 +108,10 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeVolunteering (
-    user: User | null,
+  public async removeVolunteering(
+    user: User,
     id: number
   ): Promise<void> {
-    if (user == null) return
 
     user.volunteeringExperience = user.volunteeringExperience.filter(
       (v) => v.id !== id
@@ -93,10 +119,19 @@ export class ProfileService {
     await user.save()
   }
 
+  public editvolunteering(user: User, request: Profile.EditVolunteeringRequest): Promise<boolean> {
+    let found = user.volunteeringExperience.find((v) => v.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let volunteering: Volunteering = found as Volunteering
+    return this.volunteeringRepository.update(volunteering.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
   /*
-	 * Assign only what exist in target, in case we have hydrated request after it arrived
-	 */
-  private createModel (source: BaseRequest, target: BaseEntity): void {
+   * Assign only what exist in target, in case we have hydrated request after it arrived
+   */
+  private createModel(source: BaseRequest, target: BaseEntity): void {
     for (const prop in target) {
       target[prop] = source[prop]
     }
