@@ -125,34 +125,7 @@ const Profile = () => {
                 </div>
 
                 <div className="profile-container05">
-                  <button
-                    className="profile-button button"
-                    style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    <span>
-                      <span>Message</span>
-                    </span>
-                  </button>
-                  <button
-                    className="profile-button1 button"
-                    style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    Connect
-                  </button>
+                  
                   {/* to do: show this edit button only if user logged in == the profile that is shown */}
                   <button
                     className="profile-button1 button"
