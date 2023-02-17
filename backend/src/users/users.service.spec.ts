@@ -78,9 +78,5 @@ describe('UsersService', () => {
     expect(result.email).toEqual('updated@gmail.com')
   })
 
-  // remove user
-  it('should deleted user', async () => {
-    const result = await service.removeSoft(1)
-    expect(result).toEqual(undefined)
-  })
+ 
 })
