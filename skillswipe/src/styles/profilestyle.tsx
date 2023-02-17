@@ -3,7 +3,16 @@ import css from "styled-jsx/css";
 
 const ProfileStyle: React.ReactNode = css`
 
-
+.skill {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  display: flex;
+  
+  
+}
   .home-container {
             width: 100%;
             display: flex;
@@ -47,11 +56,11 @@ const ProfileStyle: React.ReactNode = css`
             display: flex;
             padding: var(--dl-space-space-twounits);
             max-width: var(--dl-size-size-maxwidth);
-            background: #fff;
+            /* background: #FFFFFF; */
             box-shadow: 0px 0px 10px 10px rgba(18, 18, 18, 0.1);
             align-items: center;
             flex-direction: column;
-
+            outline: {useColorModeValue("1px solid #000", "1px solid #fff")};
             justify-content: space-between;
           }
           .home-icon {
@@ -65,7 +74,7 @@ const ProfileStyle: React.ReactNode = css`
             justify-content: space-between;
           }
           .home-text05 {
-            color: var(--dl-color-gray-500);
+
             text-align: center;
             margin-bottom: var(--dl-space-space-threeunits);
           }
@@ -98,7 +107,7 @@ const ProfileStyle: React.ReactNode = css`
             justify-content: space-between;
           }
           .home-text08 {
-            color: var(--dl-color-gray-500);
+
             text-align: center;
             margin-bottom: var(--dl-space-space-threeunits);
           }
@@ -131,7 +140,7 @@ const ProfileStyle: React.ReactNode = css`
             justify-content: space-between;
           }
           .home-text11 {
-            color: var(--dl-color-gray-500);
+
             text-align: center;
             margin-bottom: var(--dl-space-space-threeunits);
           }
