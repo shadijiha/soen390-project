@@ -12,6 +12,15 @@ export namespace Users {
       user: User[] | null
   }
 
+  export class GetUserByIdResponse extends App.WithStatus {
+    @ApiProperty({ type: User })
+      user: User | null
+
+    @ApiProperty({ enum: ['Connected', 'Pending', 'NotConnected'] })
+      connectionStatus: 'Connected' | 'Pending' | 'NotConnected'
+  }
+
+
   export class GetUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
       user: User | null
