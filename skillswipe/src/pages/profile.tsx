@@ -9,9 +9,13 @@ import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import router from "next/router";
 import ProfileStyle from "../styles/profilestyle";
-
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+
+import Volunteering from "@/components/Profile/Volunteering";
+import Recommendations from "@/components/Profile/Recommendations";
+import Skills from "@/components/Profile/Skills/Skills";
+import Education from "@/components/Profile/Education";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -177,6 +181,10 @@ const Profile = () => {
               </div>
             </div>
 
+            {/* SKILLS SECTION */}
+            <Skills />
+
+            {/* CAREER JOURNEY WORK EXPERIENCE */}
             <div className="profile-steps">
               <h1
                 className="profile-text10"
@@ -284,72 +292,13 @@ const Profile = () => {
             </div>
 
             {/* EDUCATION SECTION */}
-            <div className="edu-container">
-              <div className="edu-features">
-                <h1
-                  className="edu-text"
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  <span>Education History</span>
-                </h1>
-                <span className="edu-text03">
-                  <span>
-                    Im a self-taught developer, but I have a degree in Computer
-                    Science.
-                  </span>
-                </span>
+            <Education />
 
-                <div className="edu-container1">
-                  <div className="edu-feature-card1">
-                    <img
-                      src="https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png"
-                      className="edu-icon"
-                      width="50px"
-                      height="50px"
-                      alt="Harvard"
-                    />
-                    <h2 className="edu-text09">Harvard</h2>
-                    <span className="edu-text10">
-                      TA for CS50, Harvards introductory course to computer
-                      science.
-                    </span>
-                    <span className="edu-text11">2020-Present</span>
-                  </div>
-                  <div className="edu-feature-card">
-                    <img
-                      src="https://www.concordia.ca/content/concordia/en/social/guidelines-conduct.img.png/1650398601839.png"
-                      className="edu-icon"
-                      width="50px"
-                      height="50px"
-                      alt="Concordia University"
-                    />
-                    <h2 className="edu-text06">Concordia University</h2>
-                    <span className="edu-text07">
-                      Earned my bachelors degree in Computer Science, with a
-                      minor in Mathematics.
-                    </span>
-                    <span className="edu-text08">2015-2020</span>
-                  </div>
-                  <div className="edu-feature-card2">
-                    <img
-                      src="https://penji.co/wp-content/uploads/2019/02/yale-university-School-Logo-Design-1-975x1024.png"
-                      className="edu-icon"
-                      width="50px"
-                      height="50px"
-                      alt="Yale"
-                    />
-                    <h2 className="edu-text12">Dawson</h2>
-                    <span className="edu-text13">
-                      Legally forced to complete my high school diploma in my
-                      youth
-                    </span>
-                    <span className="edu-text14">2015</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* VOLUNTEERING SECTION */}
+            <Volunteering />
+
+            {/* RECOMMENDATIONS SECTION */}
+            <Recommendations />
 
             {/* PERSONAL PROJECTS */}
             <div className="personalProj-container">
