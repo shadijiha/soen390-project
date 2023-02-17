@@ -11,9 +11,11 @@ import router from "next/router";
 import ProfileStyle from "../styles/profilestyle";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-import Education from "@/components/Profile/education";
+
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
+import Skills from "@/components/Profile/Skills/Skills";
+import Education from "@/components/Profile/Education";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -179,6 +181,10 @@ const Profile = () => {
               </div>
             </div>
 
+            {/* SKILLS SECTION */}
+            <Skills />
+
+            {/* CAREER JOURNEY WORK EXPERIENCE */}
             <div className="profile-steps">
               <h1
                 className="profile-text10"

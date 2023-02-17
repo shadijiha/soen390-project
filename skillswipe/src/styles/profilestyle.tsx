@@ -3,7 +3,16 @@ import css from "styled-jsx/css";
 
 const ProfileStyle: React.ReactNode = css`
 
-
+.skill {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  display: flex;
+  
+  
+}
   .home-container {
             width: 100%;
             display: flex;
