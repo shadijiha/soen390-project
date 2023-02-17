@@ -24,7 +24,7 @@ import { Profile } from './profile.types'
 export class ProfileController {
   constructor(private readonly profileService: ProfileService) { }
 
-  @Post('add/education')
+  @Post('education')
   public async addEducation(
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddEducationRequest
@@ -57,7 +57,7 @@ export class ProfileController {
       })
   }
 
-  @Delete('delete/education/:id')
+  @Delete('education/:id')
   public async deleteEducation(
     @AuthUser() userInfo: BearerPayload,
     @Param('id') id: number
@@ -74,7 +74,7 @@ export class ProfileController {
       })
   }
 
-  @Post('add/course')
+  @Post('course')
   public async addCourse(
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddCourseRequest
@@ -88,7 +88,23 @@ export class ProfileController {
       })
   }
 
-  @Delete('delete/course/:id')
+  @Put('course/:id')
+  public async editCourse(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditCourseRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['courses'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editCourse(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('course/:id')
   public async deleteCourse(
     @AuthUser() userInfo: BearerPayload,
     @Param('id') id: number
@@ -103,7 +119,7 @@ export class ProfileController {
       })
   }
 
-  @Post('add/project')
+  @Post('project')
   public async addProject(
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddProjectRequest
@@ -117,7 +133,23 @@ export class ProfileController {
       })
   }
 
-  @Delete('delete/project/:id')
+  @Put('project/:id')
+  public async editProject(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditProjectRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['projects'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editProject(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('project/:id')
   public async deleteProject(
     @AuthUser() userInfo: BearerPayload,
     @Param('id') id: number
@@ -132,12 +164,12 @@ export class ProfileController {
       })
   }
 
-  @Post('add/volunteering')
+  @Post('volunteering')
   public async addVolunteering(
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddVolunteeringRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['volunteerings'])
+    let user = await userInfo.getUser(['volunteeringExperience'])
     if (!user) return;
 
     this.profileService
@@ -147,7 +179,23 @@ export class ProfileController {
       })
   }
 
-  @Delete('delete/volunteering/:id')
+  @Put('volunteering/:id')
+  public async editVolunteering(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditVolunteeringRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['volunteeringExperience'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editvolunteering(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('volunteering/:id')
   public async deleteVolunteering(
     @AuthUser() userInfo: BearerPayload,
     @Param('id') id: number
