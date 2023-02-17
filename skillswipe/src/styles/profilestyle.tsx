@@ -261,7 +261,7 @@ const ProfileStyle: React.ReactNode = css`
     margin-bottom: var(--dl-space-space-twounits);
   }
   .edu-text03 {
-    color: var(--dl-color-gray-700);
+
     width: 70%;
     font-size: 1.15rem;
     text-align: center;
@@ -489,7 +489,6 @@ const ProfileStyle: React.ReactNode = css`
     justify-content: flex-start;
   }
   .profile-container04 {
-    width: 195px;
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -1043,10 +1042,10 @@ const ProfileStyle: React.ReactNode = css`
       margin-bottom: var(--dl-space-space-halfunit);
     }
     .profile-text02 {
-      color: var(--dl-color-gray-500);
+
     }
     .profile-text03 {
-      color: var(--dl-color-gray-500);
+
     }
     .profile-container04 {
       width: 191px;

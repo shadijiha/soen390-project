@@ -109,19 +109,18 @@ const Profile = () => {
                 >
                   <span>{User.auth.mobileNo}</span>
                   <br></br>
+                  <br></br>
                 </span>
                 <div className="profile-container03">
-                  <div className="profile-container04">
-                    <span
-                      className="profile-text06"
-                      style={{
-                        textShadow: "0px 0px 30px #000000B4",
-                        marginLeft: "0px",
-                      }}
-                    >
-                      {User.auth.biography}
-                    </span>
-                  </div>
+                  <span
+                    className="profile-text06"
+                    style={{
+                      textShadow: "0px 0px 30px #000000B4",
+                      marginLeft: "0px",
+                    }}
+                  >
+                    {User.auth.biography}
+                  </span>
                 </div>
 
                 <div className="profile-container05">
