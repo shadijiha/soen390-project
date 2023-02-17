@@ -57,7 +57,7 @@ const Skills = () => {
             fontWeight: 600,
             fontSize: "1.5rem",
             paddingTop: "2rem",
-            paddingBottom: "1rem",
+            paddingBottom: "2rem",
           }}
         >
           <span>My Skills</span>
@@ -69,8 +69,8 @@ const Skills = () => {
           flexDirection: "row",
           flexWrap: "wrap",
           alignContent: "center",
-          paddingRight: "2rem",
-          paddingLeft: "2rem",
+          paddingRight: "3rem",
+          paddingLeft: "3rem",
           justifyContent: "center",
           alignItems: "center",
           alignSelf: "center",
@@ -87,6 +87,7 @@ const Skills = () => {
               fontWeight: 600,
               marginRight: "1em",
               borderRadius: "100px",
+              marginBottom: "1em",
             }}
           >
             {skill}
