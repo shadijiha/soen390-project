@@ -9,9 +9,9 @@ import { useColorMode, useColorModeValue } from "@chakra-ui/react";
 
 import router from "next/router";
 import ProfileStyle from "../styles/profilestyle";
-
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import Education from "@/components/Profile/education";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -282,6 +282,9 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
+            {/* return education component */}
+            <Education />
 
             {/* EDUCATION SECTION */}
             <div className="edu-container">
