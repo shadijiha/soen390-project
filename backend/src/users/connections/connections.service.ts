@@ -17,7 +17,7 @@ export class ConnectionsService {
     await connection.save()
   }
 
-  public async getPendingConnections (userId: number): Promise<{ user: any; since: Date }[]> {
+  public async getPendingConnections (userId: number): Promise<any[]> {
     const connections = await this.connectionRepository
       .createQueryBuilder('connection')
       .leftJoinAndSelect('connection.user_1', 'user_1')
@@ -42,7 +42,7 @@ export class ConnectionsService {
     else return 'NotConnected'
   }
 
-  public async getAcceptedConnections (userId: number): Promise<{ user: any; since: Date }[]> {
+  public async getAcceptedConnections (userId: number): Promise<any[]> {
     const connections = await this.connectionRepository
       .createQueryBuilder('connection')
       .leftJoinAndSelect('connection.user_1', 'user_1')

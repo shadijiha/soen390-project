@@ -43,7 +43,7 @@ export class ConnectionsController {
   @Get('pending')
   public async getPendingRequest (
     @AuthUser() userInfo: BearerPayload
-  ): Promise<{ user: any; since: Date }[]> {
+  ): Promise<any> {
     try {
       return await this.connectionService.getPendingConnections(userInfo.id)
     } catch (e) {
@@ -54,7 +54,7 @@ export class ConnectionsController {
   @Get('accepted')
   public async getAcceptedRequests (
     @AuthUser() userInfo: BearerPayload
-  ): Promise<{ user: any; since: Date }[]> {
+  ): Promise<any> {
     try {
       return await this.connectionService.getAcceptedConnections(userInfo.id)
     } catch (e) {
