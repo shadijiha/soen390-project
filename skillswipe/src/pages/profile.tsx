@@ -89,7 +89,7 @@ const Profile = () => {
                     textShadow: "0px 0px 30px #00000085",
                   }}
                 >
-                  {User.auth.firstName + " " + User.auth.lastName}
+                  {User.auth.firstName + " " + User.auth.lastName} 👋🏼
                 </h1>
                 <span
                   className="profile-text02"
