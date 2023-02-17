@@ -34,7 +34,7 @@ export class ConnectionsController {
       @Param('id') user2Id: number
   ): Promise<"Connected" | "Pending" | "NotConnected"> {
     try {
-      return await this.connectionService.getConnectionstatus(userInfo.id, user2Id)
+      return await this.connectionService.getConnectionStatus(userInfo.id, user2Id)
     } catch (e) {
       throw new HttpException((e as Error).message, 400)
     }

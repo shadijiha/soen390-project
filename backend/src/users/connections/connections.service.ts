@@ -31,7 +31,7 @@ export class ConnectionsService {
     })
   }
 
-  public async getConnectionstatus (user1Id: number, user2Id: number): Promise<'Connected' | 'Pending' | 'NotConnected'> {
+  public async getConnectionStatus (user1Id: number, user2Id: number): Promise<'Connected' | 'Pending' | 'NotConnected'> {
     const connection = await this.connectionRepository.findOne({
       where: [
         { user_1: { id: user1Id }, user_2: { id: user2Id } },

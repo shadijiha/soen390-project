@@ -8,7 +8,7 @@ describe("ConnectionsController", () => {
   let controller: ConnectionsController;
   const mockConnectionsService = {
     addConnection: jest.fn(() => {}),
-    getConnectionstatus: jest.fn(() => "pending"),
+    getConnectionStatus: jest.fn(() => "pending"),
     getPendingConnections: jest.fn(() => {
       return {
           user: { id: 2}
@@ -21,6 +21,17 @@ describe("ConnectionsController", () => {
         Since: new Date('2021-01-01')
       }
     }),
+
+    acceptConnection: jest.fn(() => {
+      return []
+    
+    }),
+
+    rejectConnection: jest.fn(() => {
+      return {
+        user: { id: 5}
+      }
+    })
 
   };
 
@@ -54,7 +65,7 @@ describe("ConnectionsController", () => {
     const userId2 = 2;
 
     expect(await controller.getConnectionStatus(bearer, userId2)).toEqual("pending");
-    expect(mockConnectionsService.getConnectionstatus).toBeCalledWith(bearer.id, userId2);
+    expect(mockConnectionsService.getConnectionStatus).toBeCalledWith(bearer.id, userId2);
   });
 
 
@@ -71,6 +82,23 @@ describe("ConnectionsController", () => {
 
     expect(await controller.getAcceptedRequests(bearer)).toEqual({user: { id: 2}, Since: new Date('2021-01-01')});
     expect(mockConnectionsService.getAcceptedConnections).toHaveBeenCalled();
+  });
+
+  it("should accepted pending connection requests", async () => {
+    const bearer: BearerPayload = { id: 1, email: "test@gmail.com" } as BearerPayload;
+    const user2: Connections.AcceptConnectionRequest = {id: 2};
+
+    expect(await controller.acceptConnectionRequest(bearer, user2)).toEqual([]);
+    expect(mockConnectionsService.acceptConnection).toHaveBeenCalled();
+  });
+
+
+  it("should reject pending connection requests", async () => {
+    const bearer: BearerPayload = { id: 1, email: "test@gmail.com" } as BearerPayload;
+    const user2: Connections.AcceptConnectionRequest = {id: 2};
+
+    expect(await controller.rejectConnectionRequest(bearer, user2)).toEqual({user: {id: 5}});
+    expect(mockConnectionsService.rejectConnection).toHaveBeenCalled();
   });
 
 
