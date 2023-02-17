@@ -32,7 +32,7 @@ const Recommendations = (props: any) => {
               <div
                 className="home-testimonial-card"
                 style={{
-                  borderRadius: "20px",
+                  borderRadius: "40px",
                 }}
               >
                 <svg viewBox="0 0 950.8571428571428 1024" className="home-icon">
@@ -59,7 +59,7 @@ const Recommendations = (props: any) => {
               <div
                 className="home-testimonial-card"
                 style={{
-                  borderRadius: "20px",
+                  borderRadius: "40px",
                 }}
               >
                 <svg
@@ -88,7 +88,7 @@ const Recommendations = (props: any) => {
               <div
                 className="home-testimonial-card"
                 style={{
-                  borderRadius: "20px",
+                  borderRadius: "40px",
                 }}
               >
                 <svg
