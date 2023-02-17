@@ -74,10 +74,8 @@ export const acceptRequest = async (token : any,id : any) =>{
     }
   })
 }
-export const rejectRequest = async (token : any,id : any) =>{
-  return axios.delete(`${URL}/connections/reject`,{data :{
-    id : id
-    },
+export const removeConnection = async (token : any,id : any) =>{
+  return axios.delete(`${URL}/connections/delete/${id}`,{
     headers : {
       "Authorization" : `Bearer ${token}`
     }

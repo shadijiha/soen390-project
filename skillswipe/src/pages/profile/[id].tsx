@@ -1,12 +1,24 @@
-import Layout from "@/components/Layout"
-import NavBar from "@/components/NavBar"
-import { useRouter } from "next/router"
-import React, { useEffect, useState } from "react"
+import Layout from "@/components/Layout";
+import NavBar from "@/components/NavBar";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import ProfileStyle from "../../styles/profilestyle";
-import { acceptRequest, getPendingRequest, getStatus, getUserById, rejectRequest, sendRequest } from "../api/api";
+import {
+  acceptRequest,
+  getPendingRequest,
+  getStatus,
+  getUserById,
+  removeConnection,
+  sendRequest,
+} from "../api/api";
 import { toast } from "react-toastify";
-import { Spinner, Toast, useColorMode, useColorModeValue } from "@chakra-ui/react";
+import {
+  Spinner,
+  Toast,
+  useColorMode,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 
 const profile = () => {
@@ -15,108 +27,104 @@ const profile = () => {
   const buttonColors = useColorModeValue("black", "white");
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({
-    "firstName": "",
-    "lastName": "",
-    "email": "",
-    "mobileNo": "",
-    "gender": "",
-    "profilePic": "",
-    "coverPic": "",
-    "biography": ""
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobileNo: "",
+    gender: "",
+    profilePic: "",
+    coverPic: "",
+    biography: "",
   });
-  const [Status, setStatus] = useState({ connected: false, Requested: false, Pending: false })
+  const [Status, setStatus] = useState({
+    connected: false,
+    Requested: false,
+    Pending: false,
+  });
   const currentUser = useSelector((state) => state as any);
 
   useEffect(() => {
-    console.log(Status)
+    console.log(Status);
+  }, [Status]);
 
-  }, [Status])
-
-  const Request = () =>{
-    const token = localStorage.getItem("jwt")
-    sendRequest(token,router.query.id).then((reponse) =>{
-      setStatus({...Status,Requested : true})
-    }).catch((error) => {
-      toast(error.message)
-    })
-  }
+  const Request = () => {
+    const token = localStorage.getItem("jwt");
+    sendRequest(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ ...Status, Requested: true });
+      })
+      .catch((error) => {
+        toast(error.message);
+      });
+  };
   const Accept = () => {
-    const token = localStorage.getItem("jwt")
-    acceptRequest(token,router.query.id).then((reponse) =>{
-      setStatus({...Status,connected : true})
-    }).catch((error) => {
-      toast(error.message)
-    })
-  }
-  const Reject = () =>{
-    const token = localStorage.getItem("jwt")
-    rejectRequest(token,router.query.id).then((reponse) =>{
-      setStatus({connected: false, Requested: false, Pending: false })
-    }).catch((error) => {
-      toast(error.message)
-    })
+    const token = localStorage.getItem("jwt");
+    acceptRequest(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ ...Status, connected: true });
+      })
+      .catch((error) => {
+        toast(error.message);
+      });
+  };
+  const Reject = () => {
+    const token = localStorage.getItem("jwt");
+    removeConnection(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ connected: false, Requested: false, Pending: false });
+      })
+      .catch((error) => {
+        toast(error.message);
+      });
+  };
 
-  }
-   useEffect(() => {
+
+  useEffect(() => {
     if (router.query.id) {
-      console.log(currentUser)
+      console.log(currentUser);
       if (router.query.id == currentUser.auth.id) {
-        console.log("same url")
-        router.push("/home")
-      }
-      else {
+        console.log("same url");
+        router.push("/home");
+      } else {
         const token = localStorage.getItem("jwt");
-        getUserById(token, router.query.id).then((response) => {
-          setUser(response.data)
-          getStatus(token, response.data.id).then((response) => {
-            console.log(response.data)
-            if (response.data == "Users are not connected") {
-              setStatus({ ...Status, connected: false })
-
-            } else {
-
-              if (response.data.isAccepted == false) {
-
+        getUserById(token, router.query.id)
+          .then((response: any) => {
+            setUser(response.data.user);
+            if (response.data.connectionStatus == "NotConnected") setStatus({ ...Status, connected: false });
+            else {
+              if (response.data.connectionStatus == "Pending") {
                 getPendingRequest(token).then((response) => {
-                  console.log(response)
+                  console.log(response);
                   if (response.data.length > 0) {
                     var found = false;
-                    console.log(response.data)
+                    console.log(response.data);
                     response.data.map((element: any) => {
                       if (element.user.id == router.query.id) {
-                        setStatus({ ...Status, Pending: true })
+                        setStatus({ ...Status, Pending: true });
                         found = true;
                       }
-                    })
+                    });
                     if (found == false) {
-                      setStatus({ ...Status, Requested: true })
+                      setStatus({ ...Status, Requested: true });
                     }
-
+                  } else {
+                    setStatus({ ...Status, Requested: true });
                   }
-                  else {
-                    setStatus({ ...Status, Requested: true })
-
-                  }
-                })
-              }
-              else {
-                setStatus({ ...Status, connected: true })
-
+                });
+              } else {
+                setStatus({ ...Status, connected: true });
               }
             }
-          }).catch((error) => {
-            toast(error.message)
+            console.log(Status);
+            setLoading(false);
           })
-          console.log(Status);
-          setLoading(false)
-        }).catch((error) => {
-          toast("User not found")
-          router.push("/");
-        })
+          .catch((error) => {
+            toast("User not found");
+            router.push("/");
+          });
       }
     }
-
-  }, [router.query])
+  }, [router.query]);
 
   const [profile, setProfile] = useState({
     image:
@@ -125,14 +133,13 @@ const profile = () => {
       "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
   });
 
-
-
   return (
-
     <>
       <style jsx>{ProfileStyle}</style>
       <Layout>
-        {loading ? <Spinner /> :
+        {loading ? (
+          <Spinner />
+        ) : (
           <>
             <NavBar />
             <div data-testid="profile-page">
@@ -167,10 +174,11 @@ const profile = () => {
                   <div
                     className="profile-container01"
                     style={{
-                      backgroundImage: `url(${user.coverPic
+                      backgroundImage: `url(${
+                        user.coverPic
                           ? `data:image/jpeg;base64,${user.coverPic}`
                           : profile.image
-                        })`,
+                      })`,
                     }}
                   >
                     <h1
@@ -217,11 +225,7 @@ const profile = () => {
                     </div>
 
                     <div className="profile-container05">
-
-
-
-
-                      {Status.connected == true ?
+                      {Status.connected == true ? (
                         <button
                           className="profile-button button"
                           style={{
@@ -237,10 +241,28 @@ const profile = () => {
                             <span>Message</span>
                           </span>
                         </button>
-                        :
-                        Status.Requested == true ?
+                      ) : Status.Requested == true ? (
+                        <button
+                          className="profile-button button"
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: "2px",
+                            textShadow: "0px 0px 40px #000000CA",
+                            fontWeight: 600,
+                            marginRight: "1em",
+                          }}
+                          onClick={Reject}
+                        >
+                          <span>
+                            <span>Delete Request</span>
+                          </span>
+                        </button>
+                      ) : Status.Pending == true ? (
+                        <>
                           <button
                             className="profile-button button"
+                            onClick={Accept}
                             style={{
                               color: buttonColors,
                               borderColor: buttonColors,
@@ -251,70 +273,48 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Delete Request</span>
+                              <span>Accept</span>
                             </span>
                           </button>
-                          :
-                          Status.Pending == true ?
-                            <>
-                              <button
-                                className="profile-button button"
-                                onClick={Accept}
-                                style={{
-                                  color: buttonColors,
-                                  borderColor: buttonColors,
-                                  borderWidth: "2px",
-                                  textShadow: "0px 0px 40px #000000CA",
-                                  fontWeight: 600,
-                                  marginRight: "1em",
-                                }}
-                              >
-                                <span>
-                                  <span>Accept</span>
-                                </span>
-                              </button>
-                              <button
-                                className="profile-button button"
-                                onClick={Reject}
-                                style={{
-                                  color: buttonColors,
-                                  borderColor: buttonColors,
-                                  borderWidth: "2px",
-                                  textShadow: "0px 0px 40px #000000CA",
-                                  fontWeight: 600,
-                                  marginRight: "1em",
-                                }}
-                              >
-                                <span>
-                                  <span>Decline</span>
-                                </span>
-                              </button>
-                            </>
-                            :
-                            <>
-                              <button
-                                className="profile-button button"
-                                onClick={Request}
-                                style={{
-                                  color: buttonColors,
-                                  borderColor: buttonColors,
-                                  borderWidth: "2px",
-                                  textShadow: "0px 0px 40px #000000CA",
-                                  fontWeight: 600,
-                                  marginRight: "1em",
-                                }}
-                              >
-                                <span>
-                                  <span>Connect</span>
-                                </span>
-                              </button>
+                          <button
+                            className="profile-button button"
+                            onClick={Reject}
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: "2px",
+                              textShadow: "0px 0px 40px #000000CA",
+                              fontWeight: 600,
+                              marginRight: "1em",
+                            }}
+                          >
+                            <span>
+                              <span>Decline</span>
+                            </span>
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className="profile-button button"
+                            onClick={Request}
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: "2px",
+                              textShadow: "0px 0px 40px #000000CA",
+                              fontWeight: 600,
+                              marginRight: "1em",
+                            }}
+                          >
+                            <span>
+                              <span>Connect</span>
+                            </span>
+                          </button>
+                        </>
+                      )}
 
-                            </>
-                  }
-
-                      
                       {/* to do: show this edit button only if user logged in == the profile that is shown */}
-
                     </div>
                   </div>
                 </div>
@@ -359,7 +359,10 @@ const profile = () => {
                       <div className="profile-container10">
                         <div className="profile-line2"></div>
                         <div className="profile-container11">
-                          <svg viewBox="0 0 1024 1024" className="profile-icon2">
+                          <svg
+                            viewBox="0 0 1024 1024"
+                            className="profile-icon2"
+                          >
                             <path d="M746 512q26 0 45-18t19-46-19-46-45-18-45 18-19 46 19 46 45 18zM618 342q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zM406 342q26 0 45-19t19-45-19-45-45-19-45 19-19 45 19 45 45 19zM278 512q26 0 45-18t19-46-19-46-45-18-45 18-19 46 19 46 45 18zM512 128q158 0 271 100t113 242q0 88-63 150t-151 62h-74q-28 0-46 19t-18 45q0 22 16 42t16 44q0 28-18 46t-46 18q-160 0-272-112t-112-272 112-272 272-112z"></path>
                           </svg>
                         </div>
@@ -381,7 +384,10 @@ const profile = () => {
                       <div className="profile-container13">
                         <div className="profile-line4"></div>
                         <div className="profile-container14">
-                          <svg viewBox="0 0 1024 1024" className="profile-icon4">
+                          <svg
+                            viewBox="0 0 1024 1024"
+                            className="profile-icon4"
+                          >
                             <path d="M576 736l96 96 320-320-320-320-96 96 224 224z"></path>
                             <path d="M448 288l-96-96-320 320 320 320 96-96-224-224z"></path>
                           </svg>
@@ -404,7 +410,10 @@ const profile = () => {
                       <div className="profile-container16">
                         <div className="profile-line6"></div>
                         <div className="profile-container17">
-                          <svg viewBox="0 0 1024 1024" className="profile-icon7">
+                          <svg
+                            viewBox="0 0 1024 1024"
+                            className="profile-icon7"
+                          >
                             <path d="M480 64c-265.096 0-480 214.904-480 480 0 265.098 214.904 480 480 480 265.098 0 480-214.902 480-480 0-265.096-214.902-480-480-480zM751.59 704c8.58-40.454 13.996-83.392 15.758-128h127.446c-3.336 44.196-13.624 87.114-30.68 128h-112.524zM208.41 384c-8.58 40.454-13.996 83.392-15.758 128h-127.444c3.336-44.194 13.622-87.114 30.678-128h112.524zM686.036 384c9.614 40.962 15.398 83.854 17.28 128h-191.316v-128h174.036zM512 320v-187.338c14.59 4.246 29.044 11.37 43.228 21.37 26.582 18.74 52.012 47.608 73.54 83.486 14.882 24.802 27.752 52.416 38.496 82.484h-155.264zM331.232 237.516c21.528-35.878 46.956-64.748 73.54-83.486 14.182-10 28.638-17.124 43.228-21.37v187.34h-155.264c10.746-30.066 23.616-57.68 38.496-82.484zM448 384v128h-191.314c1.88-44.146 7.666-87.038 17.278-128h174.036zM95.888 704c-17.056-40.886-27.342-83.804-30.678-128h127.444c1.762 44.608 7.178 87.546 15.758 128h-112.524zM256.686 576h191.314v128h-174.036c-9.612-40.96-15.398-83.854-17.278-128zM448 768v187.34c-14.588-4.246-29.044-11.372-43.228-21.37-26.584-18.74-52.014-47.61-73.54-83.486-14.882-24.804-27.75-52.418-38.498-82.484h155.266zM628.768 850.484c-21.528 35.876-46.958 64.746-73.54 83.486-14.184 9.998-28.638 17.124-43.228 21.37v-187.34h155.266c-10.746 30.066-23.616 57.68-38.498 82.484zM512 704v-128h191.314c-1.88 44.146-7.666 87.040-17.28 128h-174.034zM767.348 512c-1.762-44.608-7.178-87.546-15.758-128h112.524c17.056 40.886 27.344 83.806 30.68 128h-127.446zM830.658 320h-95.9c-18.638-58.762-44.376-110.294-75.316-151.428 42.536 20.34 81.058 47.616 114.714 81.272 21.48 21.478 40.362 44.938 56.502 70.156zM185.844 249.844c33.658-33.658 72.18-60.932 114.714-81.272-30.942 41.134-56.676 92.666-75.316 151.428h-95.898c16.138-25.218 35.022-48.678 56.5-70.156zM129.344 768h95.898c18.64 58.762 44.376 110.294 75.318 151.43-42.536-20.34-81.058-47.616-114.714-81.274-21.48-21.478-40.364-44.938-56.502-70.156zM774.156 838.156c-33.656 33.658-72.18 60.934-114.714 81.274 30.942-41.134 56.678-92.668 75.316-151.43h95.9c-16.14 25.218-35.022 48.678-56.502 70.156z"></path>
                           </svg>
                         </div>
@@ -438,8 +447,8 @@ const profile = () => {
                     </h1>
                     <span className="edu-text03">
                       <span>
-                        Im a self-taught developer, but I have a degree in Computer
-                        Science.
+                        Im a self-taught developer, but I have a degree in
+                        Computer Science.
                       </span>
                     </span>
                     <div className="edu-container1">
@@ -483,8 +492,8 @@ const profile = () => {
                         />
                         <h2 className="edu-text12">Dawson</h2>
                         <span className="edu-text13">
-                          Legally forced to complete my high school diploma in my
-                          youth
+                          Legally forced to complete my high school diploma in
+                          my youth
                         </span>
                         <span className="edu-text14">2015</span>
                       </div>
@@ -582,11 +591,9 @@ const profile = () => {
               </div>
             </div>
           </>
-        }
+        )}
       </Layout>
     </>
-
-  )
-
-}
-export default profile
+  );
+};
+export default profile;
