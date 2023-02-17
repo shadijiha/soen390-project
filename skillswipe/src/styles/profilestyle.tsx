@@ -2,6 +2,7 @@ import React from "react";
 import css from "styled-jsx/css";
 
 const ProfileStyle: React.ReactNode = css`
+
   .personalProj-container {
     width: 100%;
     display: flex;
