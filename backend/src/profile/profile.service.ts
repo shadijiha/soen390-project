@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { type BaseRequest } from 'src/util/util'
-import { Repository, UpdateResult, type BaseEntity } from 'typeorm'
+import { Repository, type UpdateResult, type BaseEntity } from 'typeorm'
 import { Award } from '../models/award.entity'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
@@ -15,7 +15,7 @@ import { type Profile } from './profile.types'
 
 @Injectable()
 export class ProfileService {
-  constructor(
+  constructor (
     @InjectRepository(Education) private readonly educationRepository: Repository<Education>,
     @InjectRepository(Course) private readonly courseRepository: Repository<Course>,
     @InjectRepository(Project) private readonly projectRepository: Repository<Project>,
@@ -23,10 +23,10 @@ export class ProfileService {
     @InjectRepository(Award) private readonly awardRepository: Repository<Award>,
     @InjectRepository(Language) private readonly languageRepository: Repository<Language>,
     @InjectRepository(Skill) private readonly skillRepository: Repository<Skill>,
-    @InjectRepository(Work) private readonly workRepository: Repository<Work>,
+    @InjectRepository(Work) private readonly workRepository: Repository<Work>
   ) { }
 
-  public async addEducation(
+  public async addEducation (
     user: User,
     data: Profile.AddEducationRequest
   ): Promise<void> {
@@ -36,77 +36,72 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeEduction(user: User, id: number): Promise<void> {
-
+  public async removeEduction (user: User, id: number): Promise<void> {
     user.educations = user.educations.filter((e) => e.id !== id)
     await user.save()
   }
 
-  public editEducation(user: User, request: Profile.EditEducationRequest): Promise<boolean> {
-    let found = user.educations.find((e) => e.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editEducation (user: User, request: Profile.EditEducationRequest): Promise<boolean> {
+    const found = user.educations.find((e) => e.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let education: Education = found as Education
-    return this.educationRepository.update(education.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const education: Education = found
+    return await this.educationRepository.update(education.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addCourse(
+  public async addCourse (
     user: User,
     data: Profile.AddCourseRequest
   ): Promise<void> {
-
     const course = new Course()
     this.createModel(data, course)
     user.courses = [...user.courses, course]
     await user.save()
   }
 
-  public async removeCourse(user: User, id: number): Promise<void> {
-
+  public async removeCourse (user: User, id: number): Promise<void> {
     user.courses = user.courses.filter((c) => c.id !== id)
     await user.save()
   }
 
-  public editCourse(user: User, request: Profile.EditCourseRequest): Promise<boolean> {
-    let found = user.courses.find((c) => c.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editCourse (user: User, request: Profile.EditCourseRequest): Promise<boolean> {
+    const found = user.courses.find((c) => c.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let course: Course = found as Course
-    return this.courseRepository.update(course.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const course: Course = found
+    return await this.courseRepository.update(course.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addProject(
+  public async addProject (
     user: User,
     data: Profile.AddProjectRequest
   ): Promise<void> {
-
     const project = new Project()
     this.createModel(data, project)
     user.projects = [...user.projects, project]
     await user.save()
   }
 
-  public async removeProject(user: User, id: number): Promise<void> {
+  public async removeProject (user: User, id: number): Promise<void> {
     user.projects = user.projects.filter((p) => p.id !== id)
     await user.save()
   }
 
-  public editProject(user: User, request: Profile.EditProjectRequest): Promise<boolean> {
-    let found = user.projects.find((p) => p.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editProject (user: User, request: Profile.EditProjectRequest): Promise<boolean> {
+    const found = user.projects.find((p) => p.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let project: Project = found as Project
-    return this.projectRepository.update(project.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const project: Project = found
+    return await this.projectRepository.update(project.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addVolunteering(
+  public async addVolunteering (
     user: User,
     data: Profile.AddVolunteeringRequest
   ): Promise<void> {
-
     const volunteering = new Volunteering()
     this.createModel(data, volunteering)
     user.volunteeringExperience = [
@@ -116,27 +111,26 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeVolunteering(
+  public async removeVolunteering (
     user: User,
     id: number
   ): Promise<void> {
-
     user.volunteeringExperience = user.volunteeringExperience.filter(
       (v) => v.id !== id
     )
     await user.save()
   }
 
-  public editvolunteering(user: User, request: Profile.EditVolunteeringRequest): Promise<boolean> {
-    let found = user.volunteeringExperience.find((v) => v.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editvolunteering (user: User, request: Profile.EditVolunteeringRequest): Promise<boolean> {
+    const found = user.volunteeringExperience.find((v) => v.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let volunteering: Volunteering = found as Volunteering
-    return this.volunteeringRepository.update(volunteering.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const volunteering: Volunteering = found
+    return await this.volunteeringRepository.update(volunteering.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addAward(
+  public async addAward (
     user: User,
     data: Profile.AddAwardRequest
   ): Promise<void> {
@@ -146,27 +140,26 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeAward(
+  public async removeAward (
     user: User,
     id: number
   ): Promise<void> {
-
     user.awards = user.awards.filter(
       (a) => a.id !== id
     )
     await user.save()
   }
 
-  public editAward(user: User, request: Profile.EditAwardRequest): Promise<boolean> {
-    let found = user.awards.find((v) => v.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editAward (user: User, request: Profile.EditAwardRequest): Promise<boolean> {
+    const found = user.awards.find((v) => v.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let award: Award = found as Award
-    return this.awardRepository.update(award.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const award: Award = found
+    return await this.awardRepository.update(award.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addLanguage(
+  public async addLanguage (
     user: User,
     data: Profile.AddLanguageRequest
   ): Promise<void> {
@@ -176,27 +169,26 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeLanguage(
+  public async removeLanguage (
     user: User,
     id: number
   ): Promise<void> {
-
     user.languages = user.languages.filter(
       (l) => l.id !== id
     )
     await user.save()
   }
 
-  public editLanguage(user: User, request: Profile.EditLanguageRequest): Promise<boolean> {
-    let found = user.languages.find((l) => l.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editLanguage (user: User, request: Profile.EditLanguageRequest): Promise<boolean> {
+    const found = user.languages.find((l) => l.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let language: Language = found as Language
-    return this.languageRepository.update(language.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const language: Language = found
+    return await this.languageRepository.update(language.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addSkill(
+  public async addSkill (
     user: User,
     data: Profile.AddSkillRequest
   ): Promise<void> {
@@ -206,7 +198,7 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeSkill(
+  public async removeSkill (
     user: User,
     id: number
   ): Promise<void> {
@@ -216,16 +208,16 @@ export class ProfileService {
     await user.save()
   }
 
-  public editSkill(user: User, request: Profile.EditSkillRequest): Promise<boolean> {
-    let found = user.skills.find((l) => l.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editSkill (user: User, request: Profile.EditSkillRequest): Promise<boolean> {
+    const found = user.skills.find((l) => l.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let skill: Skill = found as Skill
-    return this.skillRepository.update(skill.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const skill: Skill = found
+    return await this.skillRepository.update(skill.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
-  public async addWork(
+  public async addWork (
     user: User,
     data: Profile.AddWorkRequest
   ): Promise<void> {
@@ -235,7 +227,7 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeWork(
+  public async removeWork (
     user: User,
     id: number
   ): Promise<void> {
@@ -245,19 +237,19 @@ export class ProfileService {
     await user.save()
   }
 
-  public editWork(user: User, request: Profile.EditWorkRequest): Promise<boolean> {
-    let found = user.workExperiences.find((l) => l.id == request.id)
-    if (!found) {
-      throw new NotFoundException
+  public async editWork (user: User, request: Profile.EditWorkRequest): Promise<boolean> {
+    const found = user.workExperiences.find((l) => l.id == request.id)
+    if (found == null) {
+      throw new NotFoundException()
     }
-    let work: Work = found as Work
-    return this.workRepository.update(work.id, request).then((res: UpdateResult) => res.affected ? true : false)
+    const work: Work = found
+    return await this.workRepository.update(work.id, request).then((res: UpdateResult) => !!res.affected)
   }
 
   /*
    * Assign only what exist in target, in case we have hydrated request after it arrived
    */
-  private createModel(source: BaseRequest, target: BaseEntity): void {
+  private createModel (source: BaseRequest, target: BaseEntity): void {
     for (const prop in target) {
       target[prop] = source[prop]
     }

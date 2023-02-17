@@ -4,237 +4,237 @@ import { BaseRequest } from '../util/util'
 export namespace Profile {
   export class AddEducationRequest extends BaseRequest {
     @ApiProperty()
-    institution: string
+      institution: string
 
     @ApiProperty()
-    degree: string
+      degree: string
 
     @ApiProperty()
-    start_year: number
+      start_year: number
 
     @ApiProperty()
-    end_year: number
+      end_year: number
   }
 
   export class AddCourseRequest extends BaseRequest {
     @ApiProperty()
-    courseName: string
+      courseName: string
 
     @ApiProperty()
-    courseNumber: string
+      courseNumber: string
   }
 
   export class AddProjectRequest extends BaseRequest {
     @ApiProperty()
-    name: string
+      name: string
 
     @ApiProperty()
-    description: string
+      description: string
 
     @ApiProperty()
-    url: string
+      url: string
 
     @ApiProperty()
-    start_year: number
+      start_year: number
 
     @ApiProperty()
-    end_year: number
+      end_year: number
   }
 
   export class AddVolunteeringRequest extends BaseRequest {
     @ApiProperty()
-    company: string
+      company: string
 
     @ApiProperty()
-    title: string
+      title: string
 
     @ApiProperty()
-    start_year: number
+      start_year: number
 
     @ApiProperty()
-    end_year: number
+      end_year: number
   }
 
   export class AddAwardRequest extends BaseRequest {
     @ApiProperty()
-    title: string
+      title: string
 
     @ApiProperty()
-    issuer: string
+      issuer: string
 
     @ApiProperty()
-    url: string
+      url: string
 
     @ApiProperty()
-    issue_date: Date
+      issue_date: Date
 
     @ApiProperty()
-    description: string
+      description: string
   }
 
   export class AddLanguageRequest extends BaseRequest {
     @ApiProperty()
-    languageName: string
+      languageName: string
 
     @ApiProperty()
-    proficiency: string
+      proficiency: string
   }
 
   export class AddSkillRequest extends BaseRequest {
     @ApiProperty()
-    company: string
+      company: string
 
     @ApiProperty()
-    title: string
+      title: string
 
     @ApiProperty()
-    start_year: number
+      start_year: number
 
     @ApiProperty()
-    end_year: number
+      end_year: number
   }
 
   export class AddWorkRequest extends BaseRequest {
     @ApiProperty()
-    company: string
+      company: string
 
     @ApiProperty()
-    title: string
+      title: string
 
     @ApiProperty()
-    start_year: number
+      start_year: number
 
     @ApiProperty()
-    end_year: number
+      end_year: number
   }
 
   export class EditEducationRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    institution: string
+      institution: string
 
     @ApiProperty({ required: false })
-    degree: string
+      degree: string
 
     @ApiProperty({ required: false })
-    start_year: number
+      start_year: number
 
     @ApiProperty({ required: false })
-    end_year: number
+      end_year: number
   }
 
   export class EditCourseRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    courseName: string
+      courseName: string
 
     @ApiProperty({ required: false })
-    courseNumber: string
+      courseNumber: string
   }
 
   export class EditProjectRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    name: string
+      name: string
 
     @ApiProperty({ required: false })
-    description: string
+      description: string
 
     @ApiProperty({ required: false })
-    url: string
+      url: string
 
     @ApiProperty({ required: false })
-    start_year: number
+      start_year: number
 
     @ApiProperty({ required: false })
-    end_year: number
+      end_year: number
   }
 
   export class EditVolunteeringRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    company: string
+      company: string
 
     @ApiProperty({ required: false })
-    title: string
+      title: string
 
     @ApiProperty({ required: false })
-    start_year: number
+      start_year: number
 
     @ApiProperty({ required: false })
-    end_year: number
+      end_year: number
   }
 
   export class EditAwardRequest extends BaseRequest {
     @ApiProperty({ required: false })
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    title: string
+      title: string
 
     @ApiProperty({ required: false })
-    issuer: string
+      issuer: string
 
     @ApiProperty({ required: false })
-    url: string
+      url: string
 
     @ApiProperty({ required: false })
-    issue_date: Date
+      issue_date: Date
 
     @ApiProperty({ required: false })
-    description: string
+      description: string
   }
 
   export class EditLanguageRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    languageName: string
+      languageName: string
 
     @ApiProperty({ required: false })
-    proficiency: string
+      proficiency: string
   }
 
   export class EditSkillRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    company: string
+      company: string
 
     @ApiProperty({ required: false })
-    title: string
+      title: string
 
     @ApiProperty({ required: false })
-    start_year: number
+      start_year: number
 
     @ApiProperty({ required: false })
-    end_year: number
+      end_year: number
   }
 
   export class EditWorkRequest extends BaseRequest {
     @ApiProperty()
-    id: number
+      id: number
 
     @ApiProperty({ required: false })
-    company: string
+      company: string
 
     @ApiProperty({ required: false })
-    title: string
+      title: string
 
     @ApiProperty({ required: false })
-    start_year: number
+      start_year: number
 
     @ApiProperty({ required: false })
-    end_year: number
+      end_year: number
   }
 }

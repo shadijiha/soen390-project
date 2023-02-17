@@ -22,16 +22,16 @@ import { Profile } from './profile.types'
 // temporary shim for this issue
 @UseGuards(JwtAuthGuard)
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) { }
+  constructor (private readonly profileService: ProfileService) { }
 
   @Post('education')
-  public async addEducation(
+  public async addEducation (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddEducationRequest
+      @Body() body: Profile.AddEducationRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['educations'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['educations'])
+    if (user == null) {
+      return
     }
 
     this.profileService
@@ -42,13 +42,13 @@ export class ProfileController {
   }
 
   @Put('edication/:id')
-  public async editEdication(
+  public async editEdication (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditEducationRequest
+      @Body() body: Profile.EditEducationRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['educations'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['educations'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editEducation(user, body)
@@ -58,13 +58,13 @@ export class ProfileController {
   }
 
   @Delete('education/:id')
-  public async deleteEducation(
+  public async deleteEducation (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['educations'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['educations'])
+    if (user == null) {
+      return
     }
 
     this.profileService
@@ -75,12 +75,12 @@ export class ProfileController {
   }
 
   @Post('course')
-  public async addCourse(
+  public async addCourse (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddCourseRequest
+      @Body() body: Profile.AddCourseRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['courses'])
-    if (!user) return;
+    const user = await userInfo.getUser(['courses'])
+    if (user == null) return
     this.profileService
       .addCourse(user, body)
       .catch((e) => {
@@ -89,13 +89,13 @@ export class ProfileController {
   }
 
   @Put('course/:id')
-  public async editCourse(
+  public async editCourse (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditCourseRequest
+      @Body() body: Profile.EditCourseRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['courses'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['courses'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editCourse(user, body)
@@ -105,13 +105,12 @@ export class ProfileController {
   }
 
   @Delete('course/:id')
-  public async deleteCourse(
+  public async deleteCourse (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-
-    let user = await userInfo.getUser(['courses'])
-    if (!user) return;
+    const user = await userInfo.getUser(['courses'])
+    if (user == null) return
     this.profileService
       .removeCourse(user, id)
       .catch((e) => {
@@ -120,12 +119,12 @@ export class ProfileController {
   }
 
   @Post('project')
-  public async addProject(
+  public async addProject (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddProjectRequest
+      @Body() body: Profile.AddProjectRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['projects'])
-    if (!user) return;
+    const user = await userInfo.getUser(['projects'])
+    if (user == null) return
     this.profileService
       .addProject(user, body)
       .catch((e) => {
@@ -134,13 +133,13 @@ export class ProfileController {
   }
 
   @Put('project/:id')
-  public async editProject(
+  public async editProject (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditProjectRequest
+      @Body() body: Profile.EditProjectRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['projects'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['projects'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editProject(user, body)
@@ -150,12 +149,12 @@ export class ProfileController {
   }
 
   @Delete('project/:id')
-  public async deleteProject(
+  public async deleteProject (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['projects'])
-    if (!user) return;
+    const user = await userInfo.getUser(['projects'])
+    if (user == null) return
 
     this.profileService
       .removeProject(user, id)
@@ -165,12 +164,12 @@ export class ProfileController {
   }
 
   @Post('volunteering')
-  public async addVolunteering(
+  public async addVolunteering (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddVolunteeringRequest
+      @Body() body: Profile.AddVolunteeringRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['volunteeringExperience'])
-    if (!user) return;
+    const user = await userInfo.getUser(['volunteeringExperience'])
+    if (user == null) return
 
     this.profileService
       .addVolunteering(user, body)
@@ -180,13 +179,13 @@ export class ProfileController {
   }
 
   @Put('volunteering/:id')
-  public async editVolunteering(
+  public async editVolunteering (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditVolunteeringRequest
+      @Body() body: Profile.EditVolunteeringRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['volunteeringExperience'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['volunteeringExperience'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editvolunteering(user, body)
@@ -196,12 +195,12 @@ export class ProfileController {
   }
 
   @Delete('volunteering/:id')
-  public async deleteVolunteering(
+  public async deleteVolunteering (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['volunteerings'])
-    if (!user) return;
+    const user = await userInfo.getUser(['volunteerings'])
+    if (user == null) return
 
     this.profileService
       .removeVolunteering(user, id)
@@ -211,12 +210,12 @@ export class ProfileController {
   }
 
   @Post('work')
-  public async addWork(
+  public async addWork (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddWorkRequest
+      @Body() body: Profile.AddWorkRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['workExperiences'])
-    if (!user) return;
+    const user = await userInfo.getUser(['workExperiences'])
+    if (user == null) return
 
     this.profileService
       .addWork(user, body)
@@ -226,13 +225,13 @@ export class ProfileController {
   }
 
   @Put('work/:id')
-  public async editWork(
+  public async editWork (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditWorkRequest
+      @Body() body: Profile.EditWorkRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['workExperiences'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['workExperiences'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editWork(user, body)
@@ -242,12 +241,12 @@ export class ProfileController {
   }
 
   @Delete('work/:id')
-  public async deleteWork(
+  public async deleteWork (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['workExperiences'])
-    if (!user) return;
+    const user = await userInfo.getUser(['workExperiences'])
+    if (user == null) return
 
     this.profileService
       .removeWork(user, id)
@@ -257,12 +256,12 @@ export class ProfileController {
   }
 
   @Post('skill')
-  public async addSkill(
+  public async addSkill (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddSkillRequest
+      @Body() body: Profile.AddSkillRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['skills'])
-    if (!user) return;
+    const user = await userInfo.getUser(['skills'])
+    if (user == null) return
 
     this.profileService
       .addSkill(user, body)
@@ -272,13 +271,13 @@ export class ProfileController {
   }
 
   @Put('skill/:id')
-  public async editSkill(
+  public async editSkill (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditSkillRequest
+      @Body() body: Profile.EditSkillRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['skills'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['skills'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editSkill(user, body)
@@ -288,12 +287,12 @@ export class ProfileController {
   }
 
   @Delete('skill/:id')
-  public async deleteSkill(
+  public async deleteSkill (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['skills'])
-    if (!user) return;
+    const user = await userInfo.getUser(['skills'])
+    if (user == null) return
 
     this.profileService
       .removeSkill(user, id)
@@ -303,12 +302,12 @@ export class ProfileController {
   }
 
   @Post('language')
-  public async addLanguage(
+  public async addLanguage (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddLanguageRequest
+      @Body() body: Profile.AddLanguageRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['language'])
-    if (!user) return;
+    const user = await userInfo.getUser(['language'])
+    if (user == null) return
 
     this.profileService
       .addLanguage(user, body)
@@ -318,13 +317,13 @@ export class ProfileController {
   }
 
   @Put('language/:id')
-  public async editLanguage(
+  public async editLanguage (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditLanguageRequest
+      @Body() body: Profile.EditLanguageRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['language'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['language'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editLanguage(user, body)
@@ -334,12 +333,12 @@ export class ProfileController {
   }
 
   @Delete('language/:id')
-  public async deleteLanguage(
+  public async deleteLanguage (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['language'])
-    if (!user) return;
+    const user = await userInfo.getUser(['language'])
+    if (user == null) return
 
     this.profileService
       .removeLanguage(user, id)
@@ -349,12 +348,12 @@ export class ProfileController {
   }
 
   @Post('award')
-  public async addAward(
+  public async addAward (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddAwardRequest
+      @Body() body: Profile.AddAwardRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['award'])
-    if (!user) return;
+    const user = await userInfo.getUser(['award'])
+    if (user == null) return
 
     this.profileService
       .addAward(user, body)
@@ -364,13 +363,13 @@ export class ProfileController {
   }
 
   @Put('award/:id')
-  public async editAward(
+  public async editAward (
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditAwardRequest
+      @Body() body: Profile.EditAwardRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['award'])
-    if (!user) {
-      return;
+    const user = await userInfo.getUser(['award'])
+    if (user == null) {
+      return
     }
 
     this.profileService.editAward(user, body)
@@ -380,12 +379,12 @@ export class ProfileController {
   }
 
   @Delete('award/:id')
-  public async deleteAward(
+  public async deleteAward (
     @AuthUser() userInfo: BearerPayload,
-    @Param('id') id: number
+      @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['award'])
-    if (!user) return;
+    const user = await userInfo.getUser(['award'])
+    if (user == null) return
 
     this.profileService
       .removeAward(user, id)
