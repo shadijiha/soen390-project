@@ -209,4 +209,50 @@ export class ProfileController {
         throw new HttpException((e as Error).message, 400)
       })
   }
+
+  @Post('award')
+  public async addAward(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.AddVolunteeringRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['work'])
+    if (!user) return;
+
+    this.profileService
+      .addVolunteering(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Put('award/:id')
+  public async editAward(
+    @AuthUser() userInfo: BearerPayload,
+    @Body() body: Profile.EditVolunteeringRequest
+  ): Promise<void> {
+    let user = await userInfo.getUser(['volunteeringExperience'])
+    if (!user) {
+      return;
+    }
+
+    this.profileService.editvolunteering(user, body)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
+
+  @Delete('award/:id')
+  public async deleteAward(
+    @AuthUser() userInfo: BearerPayload,
+    @Param('id') id: number
+  ): Promise<void> {
+    let user = await userInfo.getUser(['award'])
+    if (!user) return;
+
+    this.profileService
+      .removeAward(user, id)
+      .catch((e) => {
+        throw new HttpException((e as Error).message, 400)
+      })
+  }
 }

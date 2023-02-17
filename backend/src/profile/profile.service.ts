@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { type BaseRequest } from 'src/util/util'
 import { Repository, UpdateResult, type BaseEntity } from 'typeorm'
+import { Award } from '../models/award.entity'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
 import { Project } from '../models/project.entity'
@@ -16,6 +17,7 @@ export class ProfileService {
     @InjectRepository(Course) private readonly courseRepository: Repository<Course>,
     @InjectRepository(Project) private readonly projectRepository: Repository<Project>,
     @InjectRepository(Volunteering) private readonly volunteeringRepository: Repository<Volunteering>,
+    @InjectRepository(Award) private readonly awardRepository: Repository<Award>,
   ) { }
 
   public async addEducation(
@@ -126,6 +128,36 @@ export class ProfileService {
     }
     let volunteering: Volunteering = found as Volunteering
     return this.volunteeringRepository.update(volunteering.id, request).then((res: UpdateResult) => res.affected ? true : false)
+  }
+
+  public async addAward(
+    user: User,
+    data: Profile.AddAwardRequest
+  ): Promise<void> {
+    const award = new Award()
+    this.createModel(data, award)
+    user.awards = [...user.awards, award]
+    await user.save()
+  }
+
+  public async removeAward(
+    user: User,
+    id: number
+  ): Promise<void> {
+
+    user.awards = user.awards.filter(
+      (a) => a.id !== id
+    )
+    await user.save()
+  }
+
+  public editAward(user: User, request: Profile.EditAwardRequest): Promise<boolean> {
+    let found = user.awards.find((v) => v.id == request.id)
+    if (!found) {
+      throw new NotFoundException
+    }
+    let award: Award = found as Award
+    return this.awardRepository.update(award.id, request).then((res: UpdateResult) => res.affected ? true : false)
   }
 
   /*

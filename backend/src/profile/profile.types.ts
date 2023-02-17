@@ -55,6 +55,23 @@ export namespace Profile {
     end_year: number
   }
 
+  export class AddAwardRequest extends BaseRequest {
+    @ApiProperty()
+    title: string
+
+    @ApiProperty()
+    issuer: string
+
+    @ApiProperty()
+    url: string
+
+    @ApiProperty()
+    issue_date: Date
+
+    @ApiProperty()
+    description: string
+  }
+
   export class EditEducationRequest extends BaseRequest {
     @ApiProperty()
     id: number
@@ -118,5 +135,25 @@ export namespace Profile {
 
     @ApiProperty({ required: false })
     end_year: number
+  }
+
+  export class EditAwardRequest extends BaseRequest {
+    @ApiProperty({ required: false })
+    id: number
+
+    @ApiProperty({ required: false })
+    title: string
+
+    @ApiProperty({ required: false })
+    issuer: string
+
+    @ApiProperty({ required: false })
+    url: string
+
+    @ApiProperty({ required: false })
+    issue_date: Date
+
+    @ApiProperty({ required: false })
+    description: string
   }
 }
