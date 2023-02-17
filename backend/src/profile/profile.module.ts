@@ -6,10 +6,11 @@ import { Education } from '../models/education.entity'
 import { Volunteering } from '../models/volunteering.entity'
 import { Project } from '../models/project.entity'
 import { Course } from '../models/course.entity'
+import { Award } from '../models/award.entity'
 
 @Module({
   providers: [ProfileService],
   controllers: [ProfileController],
-  imports: [TypeOrmModule.forFeature([Education, Course, Volunteering, Project])]
+  imports: [TypeOrmModule.forFeature([Education, Course, Volunteering, Project, Award])]
 })
 export class ProfileModule { }

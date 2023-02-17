@@ -215,7 +215,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddVolunteeringRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['work'])
+    let user = await userInfo.getUser(['award'])
     if (!user) return;
 
     this.profileService
@@ -230,7 +230,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.EditVolunteeringRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['volunteeringExperience'])
+    let user = await userInfo.getUser(['award'])
     if (!user) {
       return;
     }
