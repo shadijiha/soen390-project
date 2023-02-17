@@ -261,7 +261,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.AddSkillRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['skill'])
+    let user = await userInfo.getUser(['skills'])
     if (!user) return;
 
     this.profileService
@@ -276,7 +276,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
     @Body() body: Profile.EditSkillRequest
   ): Promise<void> {
-    let user = await userInfo.getUser(['skill'])
+    let user = await userInfo.getUser(['skills'])
     if (!user) {
       return;
     }
@@ -292,7 +292,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
     @Param('id') id: number
   ): Promise<void> {
-    let user = await userInfo.getUser(['skill'])
+    let user = await userInfo.getUser(['skills'])
     if (!user) return;
 
     this.profileService
