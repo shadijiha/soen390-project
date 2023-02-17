@@ -213,13 +213,13 @@ export class ProfileController {
   @Post('award')
   public async addAward(
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.AddVolunteeringRequest
+    @Body() body: Profile.AddAwardRequest
   ): Promise<void> {
     let user = await userInfo.getUser(['award'])
     if (!user) return;
 
     this.profileService
-      .addVolunteering(user, body)
+      .addAward(user, body)
       .catch((e) => {
         throw new HttpException((e as Error).message, 400)
       })
@@ -228,14 +228,14 @@ export class ProfileController {
   @Put('award/:id')
   public async editAward(
     @AuthUser() userInfo: BearerPayload,
-    @Body() body: Profile.EditVolunteeringRequest
+    @Body() body: Profile.EditAwardRequest
   ): Promise<void> {
     let user = await userInfo.getUser(['award'])
     if (!user) {
       return;
     }
 
-    this.profileService.editvolunteering(user, body)
+    this.profileService.editAward(user, body)
       .catch((e) => {
         throw new HttpException((e as Error).message, 400)
       })
