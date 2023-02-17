@@ -26,11 +26,11 @@ export class UsersController {
 
   @Get('user/:id')
   @ApiResponse({ type: Users.GetUserByIdResponse })
-  async findOne (@Param('id') id: number): Promise<Users.GetUserByIdResponse> {
+  async findOne (@Param('id') id: number, @AuthUser() authedUser: BearerPayload): Promise<Users.GetUserByIdResponse> {
     try {
       const res: Users.GetUserByIdResponse = new Users.GetUserByIdResponse()
       res.user = await this.usersService.findOneById(id)
-      res.connectionStatus = await this.connectionsService.getConnectionstatus(res.user.id, id)
+      res.connectionStatus = await this.connectionsService.getConnectionstatus(authedUser.id, id)
       res.connections = await this.connectionsService.getAcceptedConnections(res.user.id)
 
       return res
