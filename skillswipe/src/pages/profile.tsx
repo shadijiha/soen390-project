@@ -12,6 +12,7 @@ import ProfileStyle from "../styles/profilestyle";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Education from "@/components/Profile/education";
+import Volunteering from "@/components/Profile/Volunteering";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -285,6 +286,9 @@ const Profile = () => {
 
             {/* EDUCATION SECTION */}
             <Education />
+
+            {/* VOLUNTEERING SECTION */}
+            <Volunteering />
 
             {/* PERSONAL PROJECTS */}
             <div className="personalProj-container">

@@ -21,7 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
 import ProfileStyle from "@/styles/profilestyle";
 
-const education = () => {
+const Education = () => {
   // call API to get education history
   const profile = useSelector((state) => state as any);
   let educations = profile.auth.educations;
@@ -40,10 +40,7 @@ const education = () => {
             <span>Education History</span>
           </h1>
           <span className="edu-text03">
-            <span>
-              Im a self-taught developer, but I have a degree in Computer
-              Science.
-            </span>
+            <span></span>
           </span>
 
           <div className="edu-container1">
@@ -96,4 +93,4 @@ const education = () => {
     </>
   );
 };
-export default education;
+export default Education;
