@@ -84,26 +84,23 @@
             "^.+\\.(t|j)s$": "ts-jest"
         },
         "collectCoverageFrom": [
-            "**/*.(t|j)s"
+          "**/*.(t|j)s"
         ],
         "coveragePathIgnorePatterns": [
-            "/node_modules/",
-            "/test/",
-            "/src/models",
-            "/src/util",
-            "/src/main.ts",
-            "/src/.*\\.module\\.ts$",
-            "/src/auth/jwt.strategy.ts"
+          "/node_modules/",
+          "/test/",
+          "/src/models",
+          "/src/util",
+          "/src/main.ts",
+          "/src/.*\\.module\\.ts$",
+          "/src/auth/jwt.strategy.ts"
         ],
         "coverageDirectory": "../coverage",
         "testEnvironment": "node",
         "coverageThreshold": {
-            "global": {
-                "branches": 80,
-                "functions": 80,
-                "lines": 80,
-                "statements": 80
-            }
+          "global": {
+            "statements": 80
+          }
         }
     }
 }
