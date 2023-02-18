@@ -41,7 +41,7 @@ export class ProfileController {
       })
   }
 
-  @Put('edication/:id')
+  @Put('education/:id')
   public async editEdication (
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.EditEducationRequest
