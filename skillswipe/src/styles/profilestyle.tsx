@@ -1,7 +1,28 @@
-import React from "react";
 import css from "styled-jsx/css";
 
-const ProfileStyle: React.ReactNode = css`
+const ProfileStyle = css`
+
+/* Make it a marquee */
+.marquee {
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 1s linear infinite;
+}
+
+/* Make it move */
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
 
 .skill {
   background-color: #f5f5f5;

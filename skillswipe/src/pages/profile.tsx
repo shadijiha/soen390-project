@@ -27,6 +27,7 @@ import Skills from "@/components/Profile/Skills/Skills";
 import Education from "../components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
+import Courses from "@/components/Profile/Courses";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -85,11 +86,18 @@ const Profile = () => {
                   objectFit: "cover",
                 }}
               />
-
               <div
                 className="profile-container01"
                 style={{
-                  backgroundImage: `url(${User.auth.coverPic
+                  //make the background image repeat itself
+                  backgroundRepeat: "repeat",
+                  // make the background image to be 50% opacity
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  // make the background image to be 50% opacity
+                  backgroundBlendMode: "multiply",
+                  // make the container take the entire screens width
+                  backgroundImage: `url(${
+                    User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
                     })`,
@@ -191,115 +199,20 @@ const Profile = () => {
               </div>
             </div>
 
-            <Stack
-              spacing={2}
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                marginTop: "1em",
-                alignContent: "center",
-                justifyContent: "center",
-              }}
-            ></Stack>
             {/* SKILLS SECTION */}
-            <Skills skillsArray={["Node js"]} />
+            <Skills skillsArray = {User.auth.skills}/>
             {/* CAREER JOURNEY WORK EXPERIENCE */}
-            <WorkExperience experience={[
-              {
-                id: 1,
-                date: "2019 - Present",
-                title: "Google",
-                description: `Worked as a Software Engineer at Google, where I worked on the Google Cloud Platform. I was part of the team that built the Google Cloud Platform.`,
-              }
-            ]} />
+            <WorkExperience experience={User.auth.workExperiences} />
             {/* EDUCATION SECTION */}
-          <Education education={[{institution : "Concordia University",degree : "Software",start_year : 2020,end : 2024},
-                                  {institution : "Concordia University",degree : "Software",start_year : 2020}
-                                
-                                ]}/>
+          <Education education={User.auth.educations}/>
             {/* VOLUNTEERING SECTION */}
-            <Volunteering volunteer={[{company : "Real channel",title : "Development volunteer",start_year : 2020,end_year : 2021}]}/>
+            <Volunteering  volunteer={User.auth.volunteer}/>
             {/* RECOMMENDATIONS SECTION */}
-            <Recommendations />
+            <Recommendations rocommendations = {User.auth.recommendationsReceived}/>
             {/* PERSONAL PROJECTS */}
-            <div className="personalProj-container">
-              <div className="personalProj-features">
-                <h1
-                  className="personalProj-text"
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  Personal Projects
-                </h1>
-                <div className="personalProj-container1">
-                  <div className="personalProj-feature-card">
-                    <h2 className="personalProj-text1">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card1">
-                    <h2 className="personalProj-text2">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image1"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card2">
-                    <h2 className="personalProj-text3">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image2"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card3">
-                    <h2 className="personalProj-text4">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image3"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card4">
-                    <h2 className="personalProj-text5">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image4"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card5">
-                    <h2 className="personalProj-text6">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image5"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card6">
-                    <h2 className="personalProj-text7">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image6"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card7">
-                    <h2 className="personalProj-text8">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image7"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+                      
+            {/* COURSES DONE */}
+            <Courses courses={User.auth.courses}/>
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
               style={{

@@ -42,7 +42,8 @@ const WorkExperience = ({experience} : any) => {
     experience &&
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
-        Career Journey
+        Career Journey 👨🏼‍💻
+        <br></br>
       </chakra.h3>
       {experience.map((milestone : any) => (
         <Flex key={milestone.id} mb="10px">

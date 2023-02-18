@@ -51,10 +51,10 @@ const Recommendations = ({ rocommendations }: any) => {
                     </svg>
                     <div className="home-testimonial1">
                       <span className="home-text05">
-                       {rocommendations.message}
+                       {element.message}
                       </span>
                       <span className="home-text06">Jane Doe</span>
-                      <span className="home-text07">{rocommendations.relationship}</span>
+                      <span className="home-text07">{element.relationship}</span>
                       <img
                         alt="profile"
                         src="https://images.unsplash.com/photo-1557053910-d9eadeed1c58?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHdvbWFuJTIwcG9ydHJhaXR8ZW58MHx8fHwxNjI2NDUxOTgy&amp;ixlib=rb-1.2.1&amp;h=1200"
