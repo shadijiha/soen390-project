@@ -14,8 +14,7 @@ const Skills = ({skillsArray} :any) => {
   // call API to get education history
   
   return (
-    
-    skillsArray.length >0 && 
+    skillsArray && 
     <>
       <style jsx>{ProfileStyle}</style>
       <div>

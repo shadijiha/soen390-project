@@ -14,6 +14,8 @@ import {
   Text,
   Image,
   Stack,
+  Grid,
+  Divider,
 } from "@chakra-ui/react";
 
 import router from "next/router";
@@ -28,6 +30,8 @@ import Education from "../components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
+import Awards from "@/components/Profile/Awards";
+import PersonalProjectsProfile from "@/components/Profile/PersonalProjectsProfile";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -92,7 +96,7 @@ const Profile = () => {
                   //make the background image repeat itself
                   backgroundRepeat: "repeat",
                   // make the background image to be 50% opacity
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  backgroundColor: "rgba(0, 0, 0, 0.15)",
                   // make the background image to be 50% opacity
                   backgroundBlendMode: "multiply",
                   // make the container take the entire screens width
@@ -109,6 +113,7 @@ const Profile = () => {
                     fontSize: "1.5em",
                     fontWeight: 700,
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   {User.auth.firstName + " " + User.auth.lastName} 👋🏼
@@ -118,6 +123,7 @@ const Profile = () => {
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   📨 {User.auth.email}
@@ -127,6 +133,7 @@ const Profile = () => {
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   <span>📱 {User.auth.mobileNo}</span>
@@ -139,6 +146,7 @@ const Profile = () => {
                     style={{
                       textShadow: "0px 0px 30px #000000B4",
                       marginLeft: "0px",
+                      color: "white",
                     }}
                   >
                     💬 {User.auth.biography}
@@ -154,23 +162,27 @@ const Profile = () => {
                   <button
                     className="profile-button button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
                       marginRight: "1em",
                     }}
                   >
-                    <span>
+                    <span
+                      style={{
+                        color: "white",
+                      }}
+                    >
                       <span>Message</span>
                     </span>
                   </button>
                   <button
                     className="profile-button1 button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
@@ -183,8 +195,8 @@ const Profile = () => {
                   <button
                     className="profile-button1 button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
@@ -199,20 +211,39 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* SKILLS SECTION */}
-            <Skills skillsArray = {User.auth.skills}/>
+            <Stack
+              direction={"row"}
+              paddingTop="1rem"
+              style={{
+                flexWrap: "wrap",
+              }}
+            >
+              {/* SKILLS SECTION */}
+              <Skills skillsArray ={User.auth.skills} />
+              {/* AWARDS SECTION */}
+              <Awards awards={User.auth.awards} />
+            </Stack >
+
+            <br></br>
+            <Divider />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
-            <WorkExperience experience={User.auth.workExperiences} />
+            <WorkExperience experience={User.auth.workExperiences}/>
+            <Divider />
             {/* EDUCATION SECTION */}
-          <Education education={User.auth.educations}/>
+            <Education education={User.auth.educations} />
+            <Divider />
             {/* VOLUNTEERING SECTION */}
-            <Volunteering  volunteer={User.auth.volunteer}/>
+            <Volunteering volunteer={User.auth.volunteeringExperience} />
+            <Divider />
             {/* RECOMMENDATIONS SECTION */}
-            <Recommendations rocommendations = {User.auth.recommendationsReceived}/>
+            <Recommendations rocommendations={User.auth.recommendationsReceived} />
+            <Divider />
             {/* PERSONAL PROJECTS */}
-                      
-            {/* COURSES DONE */}
-            <Courses courses={User.auth.courses}/>
+            <PersonalProjectsProfile Project={User.auth.projects} />
+            <Divider />
+
+            {/* COURSES ACCOMPLISHED */}
+            <Courses courses={User.auth.courses} />
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
               style={{

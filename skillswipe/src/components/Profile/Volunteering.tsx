@@ -32,6 +32,7 @@ const Volunteering = ({volunteer} : any) => {
           style={{
             fontWeight: 600,
             fontSize: "2.5rem",
+            paddingTop: "1rem",
           }}
         >
           <span>Volunteering History</span>
@@ -75,12 +76,6 @@ const Volunteering = ({volunteer} : any) => {
         })}
 
 
-       
-
-        {/* second volunteer card */}
-       
-
-        {/* third volunteer card */}
       
       </Stack>
     </>
