@@ -1,7 +1,8 @@
+/* eslint-disable */
 import { type CanActivate, type DynamicModule } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-export function setupTestDB (): [DynamicModule] {
+export function setupTestDB(): [DynamicModule] {
   return [
     TypeOrmModule.forRoot({
       type: 'sqlite',
@@ -22,13 +23,13 @@ export function setupTestDB (): [DynamicModule] {
  * @param guardType is the type of the Guard, e.g. JwtAuthGuard.
  * @returns true if the specified Guard is applied.
  */
-export function isGuarded (
+export function isGuarded(
   route: ((...args: any[]) => any) | (new (...args: any[]) => unknown),
   guardType: new (...args: any[]) => CanActivate
 ): boolean {
   const guards: any[] = Reflect.getMetadata('__guards__', route)
 
-  if (guards == null) {
+  if (!guards) {
     throw Error(
       `Expected: ${route.name} to be protected with ${guardType.name}\nReceived: No guard`
     )
