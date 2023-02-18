@@ -142,12 +142,12 @@ export class User extends BaseEntity {
     skills: Skill[]
 
   // recommendations received
-  @OneToMany(() => User, (user) => user.recommendationsReceived)
+  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommended)
   @ApiProperty({ type: [Recommendation] })
     recommendationsReceived: Recommendation[]
 
   // recommendations given
-  @OneToMany(() => User, (user) => user.recommendationsGiven)
+  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommending)
   @ApiProperty({ type: [Recommendation] })
     recommendationsGiven: Recommendation[]
 
