@@ -27,6 +27,7 @@ import Skills from "@/components/Profile/Skills/Skills";
 import Education from "@/components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
+import Courses from "@/components/Profile/Courses";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -89,6 +90,13 @@ const Profile = () => {
               <div
                 className="profile-container01"
                 style={{
+                  //make the background image repeat itself
+                  backgroundRepeat: "repeat",
+                  // make the background image to be 50% opacity
+                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  // make the background image to be 50% opacity
+                  backgroundBlendMode: "multiply",
+                  // make the container take the entire screens width
                   backgroundImage: `url(${
                     User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
@@ -202,6 +210,7 @@ const Profile = () => {
                 justifyContent: "center",
               }}
             ></Stack>
+            <Courses />
             {/* SKILLS SECTION */}
             <Skills />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
