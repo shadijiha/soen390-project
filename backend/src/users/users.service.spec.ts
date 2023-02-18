@@ -20,23 +20,6 @@ describe('UsersService', () => {
   updatedUser.email = 'updated@gmail.com'
   const deletedResult: DeleteResult = new DeleteResult()
   deletedResult.affected = 1
-
-
-
-  let mockUsersRepository = {
-    find: jest.fn(() => []),
-    findOneBy: jest.fn(() => mockUser),
-    findOneByOrFail: jest.fn(() => mockUser),
-    findOneOrFail: jest.fn(() => mockUser),
-    findOne: jest.fn(() => mockUser),
-    save: jest.fn(() => mockUser),
-    update: jest.fn(() => updatedUser),
-    delete: jest.fn(() => deletedResult),
-    softRemove: jest.fn( () => null)
-  
-  }
-
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -44,7 +27,16 @@ describe('UsersService', () => {
         {
           provide: getRepositoryToken(User),
           // define a fake repository that returns the fake users
-          useValue: mockUsersRepository,
+          useValue: {
+            find: () => [],
+            findOneBy: () => mockUser,
+            findOneByOrFail: () => mockUser,
+            findOne: () => mockUser,
+            save: () => mockUser,
+            update: () => updatedUser,
+            delete: () => deletedResult,
+            softRemove: () => null
+          }
         },
         { provide: DataSource, useFactory: dataSourceMockFactory }
       ]
@@ -85,16 +77,9 @@ describe('UsersService', () => {
     expect(result.email).toEqual('updated@gmail.com')
   })
 
-  it('should soft delete user', async () => {
+  // remove user
+  it('should deleted user', async () => {
     const result = await service.removeSoft(1)
-    expect(mockUsersRepository.softRemove).toHaveBeenCalled()
+    expect(result).toEqual(undefined)
   })
-
-  it('should return search results', async () => {
-    const result = await service.search(null , 'test');
-    expect(mockUsersRepository.find).toHaveBeenCalled()
-  })
-
-
- 
 })

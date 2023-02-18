@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
 import * as React from "react";
 import {
@@ -42,31 +43,28 @@ const projectsList: ProjectCardProps[] = [
   },
 ];
 
-const PersonalProjectsProfile = ({Project}: any) => {
+const PersonalProjectsProfile = ({ Project }: any) => {
   const textColor = useColorModeValue("gray.700", "gray.100");
   const [isOpen, setIsOpen] = React.useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    Project.length > 0 &&
-    <>
-      <div>
-        <h1
-          style={{
-            fontWeight: 600,
-            fontSize: "1.5rem",
-            paddingTop: "2rem",
-          }}
-        >
-          <span>Personal Projects</span>
-        </h1>
-      </div>
-      <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-        <VStack spacing={4}>
-          {
-          
-          projectsList.map((element) => (
-            <chakra.div onClick={toggleOpen} key={id}>
+    Project.length > 0 && (
+      <>
+        <div>
+          <h1
+            style={{
+              fontWeight: 600,
+              fontSize: "1.5rem",
+              paddingTop: "2rem",
+            }}
+          >
+            <span>Personal Projects</span>
+          </h1>
+        </div>
+        <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+          <VStack spacing={4}>
+            {projectsList.map((element) => (
               <HStack
                 p={8}
                 bg={useColorModeValue("#FFFFFF", "#171923")}
@@ -84,7 +82,6 @@ const PersonalProjectsProfile = ({Project}: any) => {
                 cursor="pointer"
                 _hover={{ shadow: "xl" }}
               >
-                
                 <VStack align="start" justify="flex-start">
                   <VStack spacing={0} align="start">
                     <HStack>
@@ -99,7 +96,6 @@ const PersonalProjectsProfile = ({Project}: any) => {
                       >
                         {Project.title}
                       </Text>
-                    
                     </HStack>
 
                     <Text
@@ -118,11 +114,11 @@ const PersonalProjectsProfile = ({Project}: any) => {
                   </VStack>
                 </VStack>
               </HStack>
-            </chakra.div>
-          ))}
-        </VStack>
-      </Container>
-    </>
+            ))}
+          </VStack>
+        </Container>
+      </>
+    )
   );
 };
 

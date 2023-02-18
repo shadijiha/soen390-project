@@ -25,6 +25,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import VolunteeringBox from "@/components/EditProfile/VolunteeringBox";
 import PersonalProjectsBox from "@/components/EditProfile/PersonalProjectsBox";
+import AwardsBox from "@/components/EditProfile/AwardsBox";
+import SkillsBox from "@/components/EditProfile/SkillsBox";
+import CoursesBox from "@/components/EditProfile/CoursesBox";
+import LanguagesBox from "@/components/EditProfile/LanguagesBox";
 
 const EditProfile = () => {
   const currentUser = useSelector((state) => state as any);
@@ -245,6 +249,12 @@ const EditProfile = () => {
         {/* my profile */}
         <InformationBox />
 
+        {/* awards */}
+        <AwardsBox />
+
+        {/* skills */}
+        <SkillsBox />
+
         {/* work experience */}
         <ExperienceBox />
 
@@ -254,8 +264,14 @@ const EditProfile = () => {
         {/* Volunteering */}
         <VolunteeringBox />
 
+         {/* Certifications */}
+         <CoursesBox />
+
         {/* Personal Projects */}
         <PersonalProjectsBox />
+
+        {/* languages */}
+        <LanguagesBox />
         
       </Layout>
     </>

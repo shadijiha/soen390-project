@@ -67,3 +67,34 @@ export const editPersonalProjects = async (token : any,UpdatedUser : any) => {
   })
 }
 
+export const editAwards = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}/profile/add/award`,UpdatedUser,{
+    headers : {
+      "authorization" : `Bearer ${token}`
+    }
+  })
+}
+
+export const editSkills = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}/profile/add/skill`,UpdatedUser,{
+    headers : {
+      "authorization" : `Bearer ${token}`
+    }
+  })
+}
+
+export const editCourses = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}`,UpdatedUser,{
+    headers : {
+      "authorization" : `Bearer ${token}`
+    }
+  })
+}
+
+export const editLanguages = async (token : any,UpdatedUser : any) => {
+  return axios.put(`${URL}`,UpdatedUser,{
+    headers : {
+      "authorization" : `Bearer ${token}`
+    }
+  })
+}

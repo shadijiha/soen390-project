@@ -39,7 +39,10 @@
         "typeorm": "^0.3.11"
     },
     "devDependencies": {
+<<<<<<< HEAD
       "@golevelup/ts-jest": "^0.3.4",
+=======
+>>>>>>> b092966f6564b1f414fc53478b0f9359e15f7e08
         "@nestjs/cli": "^9.0.0",
         "@nestjs/schematics": "^9.0.0",
         "@nestjs/testing": "^9.0.0",
@@ -92,8 +95,12 @@
             "/src/models",
             "/src/util",
             "/src/main.ts",
+<<<<<<< HEAD
             "/src/.*\\.module\\.ts$",
             "/src/auth/jwt.strategy.ts"
+=======
+            "/src/.*\\.module\\.ts$"
+>>>>>>> b092966f6564b1f414fc53478b0f9359e15f7e08
         ],
         "coverageDirectory": "../coverage",
         "testEnvironment": "node",

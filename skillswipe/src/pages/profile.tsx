@@ -26,11 +26,12 @@ import { useRouter } from "next/router";
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
 import Skills from "@/components/Profile/Skills/Skills";
-import Education from "../components/Profile/Education";
+import Education from "@/components/Profile/education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
 import Awards from "@/components/Profile/Awards";
+import PersonalProjects from "@/components/Forms/PersonalProjects";
 import PersonalProjectsProfile from "@/components/Profile/PersonalProjectsProfile";
 
 const Profile = () => {
@@ -104,7 +105,7 @@ const Profile = () => {
                     User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
-                    })`,
+                  })`,
                 }}
               >
                 <h1
@@ -219,15 +220,15 @@ const Profile = () => {
               }}
             >
               {/* SKILLS SECTION */}
-              <Skills skillsArray ={User.auth.skills} />
+              <Skills skillsArray={User.auth.skills} />
               {/* AWARDS SECTION */}
               <Awards awards={User.auth.awards} />
-            </Stack >
+            </Stack>
 
             <br></br>
             <Divider />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
-            <WorkExperience experience={User.auth.workExperiences}/>
+            <WorkExperience experience={User.auth.workExperiences} />
             <Divider />
             {/* EDUCATION SECTION */}
             <Education education={User.auth.educations} />
@@ -236,7 +237,9 @@ const Profile = () => {
             <Volunteering volunteer={User.auth.volunteeringExperience} />
             <Divider />
             {/* RECOMMENDATIONS SECTION */}
-            <Recommendations rocommendations={User.auth.recommendationsReceived} />
+            <Recommendations
+              rocommendations={User.auth.recommendationsReceived}
+            />
             <Divider />
             {/* PERSONAL PROJECTS */}
             <PersonalProjectsProfile Project={User.auth.projects} />

@@ -7,6 +7,7 @@ import {
   Stack,
   Box,
   Heading,
+  Text,
   Textarea,
   Spacer,
 } from "@chakra-ui/react";
