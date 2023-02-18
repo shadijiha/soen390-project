@@ -22,11 +22,11 @@ export class ProfileController {
       return;
     }
 
-    try{
-    this.profileService.addEducation(user, body)
-    }catch(e) {
+    try {
+      this.profileService.addEducation(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    };
+    }
   }
 
   @Put("education/:id")
@@ -50,18 +50,23 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.removeEduction(user, id).catch((e) => {
+    try {
+      this.profileService.removeEducation(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("course")
   public async addCourse(@AuthUser() userInfo: BearerPayload, @Body() body: Profile.AddCourseRequest): Promise<void> {
     const user = await userInfo.getUser(["courses"]);
     if (user == null) return;
-    this.profileService.addCourse(user, body).catch((e) => {
+
+    try {
+      this.profileService.addCourse(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("course/:id")
@@ -71,27 +76,33 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.editCourse(user, body).catch((e) => {
+    try {
+      this.profileService.editCourse(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("course/:id")
   public async deleteCourse(@AuthUser() userInfo: BearerPayload, @Param("id") id: number): Promise<void> {
     const user = await userInfo.getUser(["courses"]);
     if (user == null) return;
-    this.profileService.removeCourse(user, id).catch((e) => {
+    try {
+      this.profileService.removeCourse(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("project")
   public async addProject(@AuthUser() userInfo: BearerPayload, @Body() body: Profile.AddProjectRequest): Promise<void> {
     const user = await userInfo.getUser(["projects"]);
     if (user == null) return;
-    this.profileService.addProject(user, body).catch((e) => {
+    try {
+      this.profileService.addProject(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("project/:id")
@@ -100,10 +111,11 @@ export class ProfileController {
     if (user == null) {
       return;
     }
-
-    this.profileService.editProject(user, body).catch((e) => {
+    try {
+      this.profileService.editProject(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("project/:id")
@@ -111,19 +123,22 @@ export class ProfileController {
     const user = await userInfo.getUser(["projects"]);
     if (user == null) return;
 
-    this.profileService.removeProject(user, id).catch((e) => {
+    try {
+      this.profileService.removeProject(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("volunteering")
   public async addVolunteering(@AuthUser() userInfo: BearerPayload, @Body() body: Profile.AddVolunteeringRequest): Promise<void> {
     const user = await userInfo.getUser(["volunteeringExperience"]);
     if (user == null) return;
-
-    this.profileService.addVolunteering(user, body).catch((e) => {
+    try {
+      this.profileService.addVolunteering(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("volunteering/:id")
@@ -133,9 +148,11 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.editvolunteering(user, body).catch((e) => {
+    try {
+      this.profileService.editvolunteering(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("volunteering/:id")
@@ -143,9 +160,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["volunteerings"]);
     if (user == null) return;
 
-    this.profileService.removeVolunteering(user, id).catch((e) => {
+    try {
+      this.profileService.removeVolunteering(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("work")
@@ -153,9 +172,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["workExperiences"]);
     if (user == null) return;
 
-    this.profileService.addWork(user, body).catch((e) => {
+    try {
+      this.profileService.addWork(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("work/:id")
@@ -165,9 +186,11 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.editWork(user, body).catch((e) => {
+    try {
+      this.profileService.editWork(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("work/:id")
@@ -175,9 +198,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["workExperiences"]);
     if (user == null) return;
 
-    this.profileService.removeWork(user, id).catch((e) => {
+    try {
+      this.profileService.removeWork(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("skill")
@@ -185,9 +210,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["skills"]);
     if (user == null) return;
 
-    this.profileService.addSkill(user, body).catch((e) => {
+    try {
+      this.profileService.addSkill(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("skill/:id")
@@ -197,9 +224,11 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.editSkill(user, body).catch((e) => {
+    try {
+      this.profileService.editSkill(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("skill/:id")
@@ -207,9 +236,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["skills"]);
     if (user == null) return;
 
-    this.profileService.removeSkill(user, id).catch((e) => {
+    try {
+      this.profileService.removeSkill(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("language")
@@ -217,9 +248,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["language"]);
     if (user == null) return;
 
-    this.profileService.addLanguage(user, body).catch((e) => {
+    try {
+      this.profileService.addLanguage(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("language/:id")
@@ -229,9 +262,11 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.editLanguage(user, body).catch((e) => {
+    try {
+      this.profileService.editLanguage(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("language/:id")
@@ -239,9 +274,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["language"]);
     if (user == null) return;
 
-    this.profileService.removeLanguage(user, id).catch((e) => {
+    try {
+      this.profileService.removeLanguage(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Post("award")
@@ -249,9 +286,11 @@ export class ProfileController {
     const user = await userInfo.getUser(["award"]);
     if (user == null) return;
 
-    this.profileService.addAward(user, body).catch((e) => {
+    try {
+      this.profileService.addAward(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Put("award/:id")
@@ -260,19 +299,21 @@ export class ProfileController {
     if (user == null) {
       return;
     }
-
-    this.profileService.editAward(user, body).catch((e) => {
+    try {
+      this.profileService.editAward(user, body);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 
   @Delete("award/:id")
   public async deleteAward(@AuthUser() userInfo: BearerPayload, @Param("id") id: number): Promise<void> {
     const user = await userInfo.getUser(["award"]);
     if (user == null) return;
-
-    this.profileService.removeAward(user, id).catch((e) => {
+    try {
+      this.profileService.removeAward(user, id);
+    } catch (e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    }
   }
 }

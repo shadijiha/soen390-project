@@ -36,7 +36,7 @@ export class ProfileService {
     await user.save()
   }
 
-  public async removeEduction (user: User, id: number): Promise<void> {
+  public async removeEducation (user: User, id: number): Promise<void> {
     user.educations = user.educations.filter((e) => e.id !== id)
     await user.save()
   }

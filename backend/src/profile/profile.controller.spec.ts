@@ -14,7 +14,7 @@ describe("ProfileController", () => {
   let mockProfileService = {
     addEducation: jest.fn(),
     editEducation: jest.fn(() => {}),
-    deleteEducation: jest.fn(),
+    removeEducation: jest.fn(),
     addCourse: jest.fn(),
     editCourse: jest.fn(),
     removeCourse: jest.fn(),
@@ -119,7 +119,16 @@ describe("ProfileController", () => {
     const eduId = 1;
 
     controller.deleteEducation(bearer, eduId);
-    expect(mockProfileService.deleteEducation).not.toHaveBeenCalled();
+    expect(mockProfileService.removeEducation).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteEducation(bearer, eduId);
+    expect(await mockProfileService.removeEducation).toHaveBeenCalled();
   });
 
   it("should add course to the authenticated user", async () => {
@@ -132,6 +141,15 @@ describe("ProfileController", () => {
     controller.addCourse(bearer, data);
 
     expect(mockProfileService.addCourse).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addCourse(bearer, data);
+    expect(await mockProfileService.addCourse).toHaveBeenCalled();
   });
 
   it("should edit course", async () => {
@@ -144,6 +162,15 @@ describe("ProfileController", () => {
 
     controller.editCourse(bearer, data);
     expect(mockProfileService.editCourse).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editCourse(bearer, data);
+    expect(await mockProfileService.editCourse).toHaveBeenCalled();
   });
 
   it("should delete course", async () => {
@@ -152,6 +179,15 @@ describe("ProfileController", () => {
 
     controller.deleteEducation(bearer, courseId);
     expect(mockProfileService.removeCourse).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteCourse(bearer, courseId);
+    expect(await mockProfileService.removeCourse).toHaveBeenCalled();
   });
 
   it("should add project to the authenticated user", async () => {
@@ -166,6 +202,14 @@ describe("ProfileController", () => {
     controller.addProject(bearer, data);
 
     expect(mockProfileService.addProject).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+    controller.addProject(bearer, data);
+    expect(await mockProfileService.addProject).toHaveBeenCalled();
   });
 
   it("should edit project", async () => {
@@ -177,6 +221,15 @@ describe("ProfileController", () => {
 
     controller.editProject(bearer, data);
     expect(mockProfileService.editProject).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editProject(bearer, data);
+    expect(await mockProfileService.editProject).toHaveBeenCalled();
   });
 
   it("should delete project", async () => {
@@ -185,6 +238,15 @@ describe("ProfileController", () => {
 
     controller.deleteProject(bearer, projectId);
     expect(mockProfileService.removeProject).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteProject(bearer, projectId);
+    expect(await mockProfileService.removeProject).toHaveBeenCalled();
   });
 
   it("should add volunteering to the authenticated user", async () => {
@@ -199,6 +261,15 @@ describe("ProfileController", () => {
     controller.addVolunteering(bearer, data);
 
     expect(mockProfileService.addVolunteering).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addVolunteering(bearer, data);
+    expect(await mockProfileService.addVolunteering).toHaveBeenCalled();
   });
 
   it("should edit volunteering", async () => {
@@ -211,6 +282,15 @@ describe("ProfileController", () => {
 
     controller.editVolunteering(bearer, data);
     expect(mockProfileService.editvolunteering).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editVolunteering(bearer, data);
+    expect(await mockProfileService.editvolunteering).toHaveBeenCalled();
   });
 
   it("should delete volunteering", async () => {
@@ -219,6 +299,15 @@ describe("ProfileController", () => {
 
     controller.deleteVolunteering(bearer, projectId);
     expect(mockProfileService.removeVolunteering).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteVolunteering(bearer, projectId);
+    expect(await mockProfileService.removeVolunteering).toHaveBeenCalled();
   });
 
   it("should add work to the authenticated user", async () => {
@@ -233,6 +322,15 @@ describe("ProfileController", () => {
     controller.addVolunteering(bearer, data);
 
     expect(mockProfileService.addWork).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addWork(bearer, data);
+    expect(await mockProfileService.addWork).toHaveBeenCalled();
   });
 
   it("should edit work", async () => {
@@ -243,8 +341,17 @@ describe("ProfileController", () => {
     data.title = "Concordia";
     data.title = "tutor";
 
-    controller.editSkill(bearer, data);
+    controller.editWork(bearer, data);
     expect(mockProfileService.editSkill).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editWork(bearer, data);
+    expect(await mockProfileService.editWork).toHaveBeenCalled();
   });
 
   it("should delete work", async () => {
@@ -253,6 +360,15 @@ describe("ProfileController", () => {
 
     controller.deleteWork(bearer, projectId);
     expect(mockProfileService.removeWork).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteWork(bearer, projectId);
+    expect(await mockProfileService.removeWork).toHaveBeenCalled();
   });
 
   it("should add skill to the authenticated user", async () => {
@@ -267,6 +383,14 @@ describe("ProfileController", () => {
     controller.addSkill(bearer, data);
 
     expect(mockProfileService.addSkill).not.toHaveBeenCalled();
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addSkill(bearer, data);
+    expect(await mockProfileService.addSkill).toHaveBeenCalled();
   });
 
   it("should edit skill", async () => {
@@ -279,6 +403,15 @@ describe("ProfileController", () => {
 
     controller.editWork(bearer, data);
     expect(mockProfileService.editWork).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editWork(bearer, data);
+    expect(await mockProfileService.editWork).toHaveBeenCalled();
   });
 
   it("should delete skill", async () => {
@@ -287,6 +420,15 @@ describe("ProfileController", () => {
 
     controller.deleteSkill(bearer, skillId);
     expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteSkill(bearer, skillId);
+    expect(await mockProfileService.removeSkill).toHaveBeenCalled();
   });
 
   it("should add language to the authenticated user", async () => {
@@ -298,6 +440,15 @@ describe("ProfileController", () => {
     controller.addLanguage(bearer, data);
 
     expect(mockProfileService.addLanguage).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addLanguage(bearer, data);
+    expect(await mockProfileService.addLanguage).toHaveBeenCalled();
   });
 
   it("should edit language", async () => {
@@ -308,6 +459,15 @@ describe("ProfileController", () => {
 
     controller.editLanguage(bearer, data);
     expect(mockProfileService.editLanguage).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editLanguage(bearer, data);
+    expect(await mockProfileService.editLanguage).toHaveBeenCalled();
   });
 
   it("should delete language", async () => {
@@ -316,6 +476,15 @@ describe("ProfileController", () => {
 
     controller.deleteLanguage(bearer, languageId);
     expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteLanguage(bearer, languageId);
+    expect(await mockProfileService.removeLanguage).toHaveBeenCalled();
   });
 
   it("should add award to the authenticated user", async () => {
@@ -327,6 +496,15 @@ describe("ProfileController", () => {
     controller.addAward(bearer, data);
 
     expect(mockProfileService.addAward).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addAward(bearer, data);
+    expect(await mockProfileService.addAward).toHaveBeenCalled();
   });
 
   it("should edit award", async () => {
@@ -337,6 +515,15 @@ describe("ProfileController", () => {
 
     controller.editAward(bearer, data);
     expect(mockProfileService.editAward).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.editAward(bearer, data);
+    expect(await mockProfileService.editAward).toHaveBeenCalled();
   });
 
   it("should delete award", async () => {
@@ -345,5 +532,14 @@ describe("ProfileController", () => {
 
     controller.deleteAward(bearer, languageId);
     expect(mockProfileService.removeAward).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.deleteAward(bearer, languageId);
+    expect(await mockProfileService.removeAward).toHaveBeenCalled();
   });
 });
