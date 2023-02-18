@@ -200,17 +200,6 @@ const Profile = () => {
               </div>
             </div>
 
-            <Stack
-              spacing={2}
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                marginTop: "1em",
-                alignContent: "center",
-                justifyContent: "center",
-              }}
-            ></Stack>
-            <Courses />
             {/* SKILLS SECTION */}
             <Skills />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
@@ -300,6 +289,8 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+            {/* COURSES DONE */}
+            <Courses />
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
               style={{

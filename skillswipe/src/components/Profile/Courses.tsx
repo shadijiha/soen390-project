@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
@@ -15,78 +16,80 @@ import {
   Stack,
   Tooltip,
   useColorModeValue,
+  Grid,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
 import ProfileStyle from "@/styles/profilestyle";
 import { AddIcon } from "@chakra-ui/icons";
-import { FaSchool } from "react-icons/fa";
+import { FaPencilAlt, FaPencilRuler, FaSchool } from "react-icons/fa";
+const courseTitles = ["Shopify Course", "React Course", "Node Course"];
+const courseDescriptions = [
+  "Shopify Course Description",
+  "React Course Description",
+  "Node Course Description",
+];
+const courseYears = ["2015", "2016", "2017"];
 
 const Courses = () => {
   const profile = useSelector((state) => state as any);
-  let educations = profile.auth.educations;
+  let courses = profile.auth.course;
 
   return (
     <>
       <style jsx>{ProfileStyle}</style>
-      <Container maxW="5xl" p={{ base: 5, md: 6 }}>
-        <Stack
-          w="17rem"
-          spacing={2}
-          p={4}
-          border="1px solid"
-          borderColor={useColorModeValue("gray.400", "gray.600")}
-          rounded="md"
-          margin="0 auto"
-          _hover={{
-            boxShadow: useColorModeValue(
-              "0 4px 6px rgba(160, 174, 192, 0.6)",
-              "0 4px 6px rgba(9, 17, 28, 0.4)"
-            ),
+      <div>
+        <h1
+          style={{
+            fontWeight: 600,
+            fontSize: "1.5rem",
+            paddingTop: "2rem",
+            paddingBottom: "1rem",
           }}
         >
-          <HStack justifyContent="space-between" alignItems="baseline">
-            <Tooltip
-              label="Lahore, Pakistan"
-              aria-label="Lahore, Pakistan"
-              placement="right-end"
-              size="sm"
-              // Sizes for Tooltip are not implemented in the default theme. You can extend the theme to implement them
+          <span>Accomplished Courses</span>
+        </h1>
+      </div>
+      {/* map through each course and make a container for each course */}
+      <Grid templateColumns="repeat(3, 1fr)" gap={6}>
+        {/* map through each course and make a container for each course */}
+        {courseTitles.map((courseTitles, courseYears, courseDescriptions) => (
+          <Container p={{ base: 5, md: 6 }}>
+            <Stack
+              w="17rem"
+              spacing={2}
+              p={4}
+              border="1px solid"
+              borderColor={useColorModeValue("gray.400", "gray.600")}
+              rounded="md"
+              margin="0"
+              _hover={{
+                boxShadow: useColorModeValue(
+                  "0 4px 6px rgba(160, 174, 192, 0.6)",
+                  "0 4px 6px rgba(9, 17, 28, 0.4)"
+                ),
+              }}
             >
-              <Box pos="relative">
-                <Avatar
-                  src="https://avatars2.githubusercontent.com/u/37842853?v=4"
-                  name="Muhammad Ahmad"
-                  size="xl"
-                  borderRadius="md"
-                />
-                <Avatar
-                  src="https://flagcdn.com/pk.svg"
-                  name="Pakistan Flag"
-                  size="xs"
-                  borderRadius="full"
-                  pos="absolute"
-                  bottom={0}
-                  right="-12px"
-                />
-              </Box>
-            </Tooltip>
-            <Link isExternal href="https://github.com/MA-Ahmad">
-              <Icon as={FaSchool} w={6} h={6} />
-            </Link>
-          </HStack>
-          <chakra.h1 fontSize="xl" fontWeight="bold">
-            Muhammad Ahmad
-          </chakra.h1>
-          <Text fontSize="md" color="gray.500">
-            Software Engineer, Creator of TemplatesKart
-          </Text>
-          <Divider />
-          <Text fontSize="md" color="gray.500">
-            Sports lover ⚽️, exercise addict 🏋 and lifelong learner 👨🏻‍💻
-          </Text>
-        </Stack>
-      </Container>
+              <HStack justifyContent="space-between" alignItems="baseline">
+                <Box pos="relative">
+                  <Avatar
+                    src="https://img.icons8.com/external-becris-flat-becris/512/external-math-literary-genres-becris-flat-becris.png"
+                    name="Course"
+                    size="xl"
+                    borderRadius="md"
+                  />
+                </Box>
+                <Icon as={FaPencilRuler} w={6} h={6} />
+              </HStack>
+              <chakra.h1 fontSize="xl" fontWeight="bold">
+                {courseTitles}
+              </chakra.h1>
+              <Text fontSize="md">{courseYears}</Text>
+              <Text fontSize="md">{courseDescriptions}</Text>
+            </Stack>
+          </Container>
+        ))}
+      </Grid>
     </>
   );
 };
