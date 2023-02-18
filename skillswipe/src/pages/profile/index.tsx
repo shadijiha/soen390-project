@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
-import FeatureCard4 from "../components/feature-card4";
+import FeatureCard4 from "../../components/feature-card4";
 import React, { CSSProperties, useEffect, useState } from "react";
-import { checkLogin } from "./api/api";
+import { checkLogin } from "../api/api";
 import Layout from "@/components/Layout";
 import {
   Box,
@@ -19,14 +19,14 @@ import {
 } from "@chakra-ui/react";
 
 import router from "next/router";
-import ProfileStyle from "../styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
 import Skills from "@/components/Profile/Skills/Skills";
-import Education from "../components/Profile/Education";
+import Education from "../../components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
@@ -153,44 +153,8 @@ const Profile = () => {
                   </span>
                 </div>
 
-                <div
-                  className="profile-container05"
-                  style={{
-                    marginTop: "-1em",
-                  }}
-                >
-                  <button
-                    className="profile-button button"
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "white",
-                      }}
-                    >
-                      <span>Message</span>
-                    </span>
-                  </button>
-                  <button
-                    className="profile-button1 button"
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    Connect
-                  </button>
+                <div className="profile-container05">
+                  
                   {/* to do: show this edit button only if user logged in == the profile that is shown */}
                   <button
                     className="profile-button1 button"
@@ -202,7 +166,7 @@ const Profile = () => {
                       fontWeight: 600,
                     }}
                     onClick={() => {
-                      router.push("/editProfile");
+                      router.push("/profile/editProfile");
                     }}
                   >
                     Edit

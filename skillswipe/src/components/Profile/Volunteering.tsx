@@ -23,7 +23,7 @@ import ProfileStyle from "@/styles/profilestyle";
 
 const Volunteering = ({volunteer} : any) => {
   return (
-    volunteer &&
+    (volunteer && volunteer.length > 0) &&
     <>
       <style jsx>{ProfileStyle}</style>
       <div>

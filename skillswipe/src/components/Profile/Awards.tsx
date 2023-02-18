@@ -26,7 +26,7 @@ const Awards = ({awards} :any) => {
   // call API to get education history
   
   return (
-    awards &&
+    (awards && awards.length > 0) &&
     
     <>
       <style jsx>{ProfileStyle}</style>

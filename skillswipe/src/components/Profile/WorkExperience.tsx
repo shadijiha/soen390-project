@@ -17,7 +17,7 @@ const WorkExperience = ({experience} : any) => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
-    experience  &&
+    (experience && experience.length > 0) &&
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         Career Journey 👨🏼‍💻

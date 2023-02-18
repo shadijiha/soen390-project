@@ -35,7 +35,7 @@ const Courses = ({courses} : any) => {
   
   
   return (
-    courses &&  
+    (courses && courses.length > 0) &&  
     <>
       <style jsx>{ProfileStyle}</style>
       <div>

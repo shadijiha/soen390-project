@@ -44,7 +44,9 @@ const InformationBox = () => {
       if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
         toast("Please add Valid email");
       } else {
+        console.log(UpdateUser)
         editPersonalInformation(token, UpdateUser)
+        
           .then((response) => {
             console.log(response);
             toast("Updated Successfully");

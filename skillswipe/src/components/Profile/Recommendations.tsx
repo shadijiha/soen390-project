@@ -6,7 +6,7 @@ import React from "react";
 const Recommendations = ({ rocommendations }: any) => {
   
   return (
-    rocommendations &&
+    (rocommendations && rocommendations.length >0) &&
 
     <>
       <style jsx>{ProfileStyle}</style>

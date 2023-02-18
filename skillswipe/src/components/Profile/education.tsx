@@ -7,7 +7,7 @@ import ProfileStyle from "@/styles/profilestyle";
 const Education = ({ education }: any) => {
 
   return (
-    education &&
+    (education && education.length > 0) &&
     <>
       <style jsx>{ProfileStyle}</style>
       <div className="edu-container">
