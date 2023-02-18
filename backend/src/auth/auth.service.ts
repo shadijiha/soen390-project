@@ -15,10 +15,7 @@ export class AuthService {
     private readonly usersRepository: Repository<User>
   ) {}
 
-  public async validateUser (
-    email: string,
-    pass: string
-  ): Promise<Partial<User> | null> {
+  public async validateUser (email: string, pass: string): Promise<Partial<User> | null> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .select('user.password')
@@ -36,16 +33,14 @@ export class AuthService {
     return null
   }
 
-  public async login ({
-    email,
-    password
-  }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
+  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
-    const user = await this.usersRepository
-      .findOneByOrFail({ email })
-      .catch(() => {
-        throw new UnauthorizedException(`Email ${email} is invalid`)
-      })
+    let user: User
+    try {
+      user = await this.usersRepository.findOneByOrFail({ email })
+    } catch (e) {
+      throw new UnauthorizedException(`Email ${email} is invalid`)
+    }
 
     // validate password
     if ((await this.validateUser(email, password)) != null) {
