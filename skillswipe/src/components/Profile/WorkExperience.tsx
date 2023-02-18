@@ -11,35 +11,13 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 
-const milestones = [
-  {
-    id: 1,
-    date: "2019 - Present",
-    title: "Google",
-    description: `Worked as a Software Engineer at Google, where I worked on the Google Cloud Platform. I was part of the team that built the Google Cloud Platform.`,
-  },
-  {
-    id: 2,
-    date: "2018 - 2019",
-    title: "Twitter",
-    description: `Worked as a Software Engineer at Twitter, where I worked on the Twitter Platform. I was part of the team that built the Twitter Platform. I learned a lot, like SQL and NoSQL databases, and how to work with a team.`,
-  },
-  {
-    id: 3,
-    date: "2016 - 2018",
-    title: "Freelancing as a Fullstack Developer",
-    description:
-      "I started my own business consulting for companies as a fullstack developer. Clients include UK Government departments, UK banks, global fintechs and startups.",
-  },
-];
-
 const WorkExperience = ({experience} : any) => {
 
   const isMobile = useBreakpointValue({ base: true, md: false });
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
-    experience &&
+    experience.length >0 &&
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         Career Journey 👨🏼‍💻
