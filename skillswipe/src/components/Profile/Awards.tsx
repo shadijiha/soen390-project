@@ -72,7 +72,7 @@ const Awards = () => {
               style={{
                 backgroundColor: "transparent",
                 borderWidth: "2px",
-                textShadow: "0px 0px 40px #000000CA",
+                textShadow: "0px 0px 0px #000000CA",
                 fontWeight: 600,
                 marginRight: "1em",
                 borderRadius: "100px",
