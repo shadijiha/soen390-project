@@ -92,7 +92,7 @@ export default function Search (){
 
 
           <li key={user.id}>
-            <Link href={`/user?id=${user.id}&firstName=${user.firstName}&lastName=${user.lastName}&picture=${user.picture}`}>
+            <Link href={`/profile/${user.id}}`}>
               
                 <Heading fontSize={30} padding={1} >{user.firstName} {user.lastName}</Heading>
                 <div
