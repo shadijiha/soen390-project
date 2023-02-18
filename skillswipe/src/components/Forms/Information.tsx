@@ -16,7 +16,7 @@ import { useSelector } from "react-redux";
 import { DeleteIcon } from "@chakra-ui/icons";
 import InformationBox from "../EditProfile/InformationBox";
 
-const Information = ({ update ,handleSubmit}: any) => {
+const Information = ({ update, handleSubmit }: any) => {
   const currentUser = useSelector((state) => state as any);
   const setState = (updateUserObj: any) => {
     update(updateUserObj);
@@ -54,7 +54,7 @@ const Information = ({ update ,handleSubmit}: any) => {
             boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
             border: "3px solid rgba(255, 255, 255, 0.3)",
           }}
-        
+          type="button"
           colorScheme={"blue"}
           borderRadius="100px"
           onClick={handleSubmit}
@@ -69,7 +69,7 @@ const Information = ({ update ,handleSubmit}: any) => {
           minWidth={"100%"}
           type="text"
           id="name"
-          placeholder={currentUser.auth.firstName}
+          defaultValue={currentUser.auth.firstName}
           // value={name}
           onChange={(event) => setState({ firstName: event.target.value })}
           borderRadius="10"
@@ -83,7 +83,7 @@ const Information = ({ update ,handleSubmit}: any) => {
         <Input
           minWidth={"100%"}
           type="text"
-          placeholder={currentUser.auth.lastName}
+          defaultValue={currentUser.auth.lastName}
           onChange={(event) => setState({ lastName: event.target.value })}
           id="school"
           // value={school}
@@ -98,7 +98,7 @@ const Information = ({ update ,handleSubmit}: any) => {
         <Input
           minWidth={"100%"}
           type="email"
-          placeholder={currentUser.auth.email}
+          defaultValue={currentUser.auth.email}
           id="title"
           // value={title}
           onChange={(event) => setState({ email: event.target.value })}
@@ -113,7 +113,7 @@ const Information = ({ update ,handleSubmit}: any) => {
         <Input
           minWidth={"100%"}
           type="tel"
-          placeholder={
+          defaultValue={
             currentUser.auth.mobileNo == null
               ? "Please add Mobile No "
               : currentUser.auth.mobileNo
@@ -130,7 +130,7 @@ const Information = ({ update ,handleSubmit}: any) => {
         <FormLabel htmlFor="gender">Sex</FormLabel>
         <Select
           minWidth={"100%"}
-          // placeholder={profile.location}
+          // defaultValue={profile.location}
           id="location"
           borderRadius="10"
           size="lg"
@@ -157,9 +157,8 @@ const Information = ({ update ,handleSubmit}: any) => {
       </FormControl>
       <FormControl>
         <FormLabel htmlFor="text">Bio</FormLabel>
-        <Input
+        <Textarea
           minWidth={"100%"}
-          type="text"
           placeholder={
             currentUser.auth.biography == null
               ? "Please add a bio "

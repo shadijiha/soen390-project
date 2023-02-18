@@ -1,7 +1,288 @@
-import React from "react";
 import css from "styled-jsx/css";
 
-const ProfileStyle: React.ReactNode = css`
+const ProfileStyle = css`
+
+/* Make it a marquee */
+.marquee {
+    margin: 0 auto;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
+
+}
+
+.marquee span {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 1s linear infinite;
+}
+
+/* Make it move */
+@keyframes marquee {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(-100%, 0); }
+}
+
+
+.skill {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  width: 100%;
+  display: flex;
+  
+  
+}
+  .home-container {
+            width: 100%;
+            display: flex;
+            overflow: auto;
+            min-height: 100vh;
+            align-items: center;
+            flex-direction: column;
+          }
+          .home-testimonial {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: 232323;
+          }
+          .home-container1 {
+            width: 100%;
+            display: flex;
+            padding: var(--dl-space-space-threeunits);
+            max-width: var(--dl-size-size-maxwidth);
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+          }
+          .home-text {
+            color: var(--dl-color-gray-white);
+          }
+          .home-text03 {
+            font-size: 0.75rem;
+            max-width: 600px;
+            margin-top: var(--dl-space-space-unit);
+            text-align: center;
+            margin-bottom: var(--dl-space-space-twounits);
+          }
+          .home-container2 {
+            width: 100%;
+            display: grid;
+            grid-gap: var(--dl-space-space-twounits);
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+          .home-testimonial-card {
+            display: flex;
+            padding: var(--dl-space-space-twounits);
+            max-width: var(--dl-size-size-maxwidth);
+            /* background: #FFFFFF; */
+            box-shadow: 0px 0px 10px 10px rgba(18, 18, 18, 0.1);
+            align-items: center;
+            flex-direction: column;
+            outline: {useColorModeValue("1px solid #000", "1px solid #fff")};
+            justify-content: space-between;
+          }
+          .home-icon {
+            width: 2rem;
+            margin-bottom: var(--dl-space-space-twounits);
+          }
+          .home-testimonial1 {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .home-text05 {
+
+            text-align: center;
+            margin-bottom: var(--dl-space-space-threeunits);
+          }
+          .home-text06 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: var(--dl-space-space-halfunit);
+          }
+          .home-text07 {
+            color: var(--dl-color-gray-500);
+            font-weight: 600;
+            margin-bottom: var(--dl-space-space-unit);
+            text-transform: uppercase;
+          }
+          .home-image {
+            width: var(--dl-size-size-medium);
+            height: var(--dl-size-size-medium);
+            object-fit: cover;
+            border-radius: var(--dl-radius-radius-round);
+          }
+
+          .home-icon2 {
+            width: 2rem;
+            margin-bottom: var(--dl-space-space-twounits);
+          }
+          .home-testimonial2 {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .home-text08 {
+
+            text-align: center;
+            margin-bottom: var(--dl-space-space-threeunits);
+          }
+          .home-text09 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: var(--dl-space-space-halfunit);
+          }
+          .home-text10 {
+            color: var(--dl-color-gray-500);
+            font-weight: 600;
+            margin-bottom: var(--dl-space-space-unit);
+            text-transform: uppercase;
+          }
+          .home-image1 {
+            width: var(--dl-size-size-medium);
+            height: var(--dl-size-size-medium);
+            object-fit: cover;
+            border-radius: var(--dl-radius-radius-round);
+          }
+
+          .home-icon4 {
+            width: 2rem;
+            margin-bottom: var(--dl-space-space-twounits);
+          }
+          .home-testimonial3 {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+          }
+          .home-text11 {
+
+            text-align: center;
+            margin-bottom: var(--dl-space-space-threeunits);
+          }
+          .home-text12 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: var(--dl-space-space-halfunit);
+          }
+          .home-text13 {
+            color: var(--dl-color-gray-500);
+            font-weight: 600;
+            margin-bottom: var(--dl-space-space-unit);
+            text-transform: uppercase;
+          }
+          .home-image2 {
+            width: var(--dl-size-size-medium);
+            height: var(--dl-size-size-medium);
+            object-fit: cover;
+            border-radius: var(--dl-radius-radius-round);
+          }
+          @media (max-width: 991px) {
+            .home-text {
+              text-align: center;
+            }
+            .home-text03 {
+              text-align: center;
+            }
+            .home-container2 {
+              grid-template-columns: 1fr;
+            }
+            .home-text07 {
+              align-self: center;
+            }
+            .home-text10 {
+              align-self: center;
+            }
+            .home-text13 {
+              align-self: center;
+            }
+          }
+          @media (max-width: 767px) {
+            .home-container1 {
+              padding-left: var(--dl-space-space-twounits);
+              padding-right: var(--dl-space-space-twounits);
+            }
+            .home-testimonial-card {
+              padding-left: var(--dl-space-space-twounits);
+              padding-right: var(--dl-space-space-twounits);
+            }
+            .home-testimonial-card {
+              padding-left: var(--dl-space-space-twounits);
+              padding-right: var(--dl-space-space-twounits);
+            }
+            .home-testimonial-card {
+              padding-left: var(--dl-space-space-twounits);
+              padding-right: var(--dl-space-space-twounits);
+            }
+          }
+          @media (max-width: 479px) {
+            .home-container1 {
+              padding-top: var(--dl-space-space-twounits);
+              padding-left: var(--dl-space-space-unit);
+              padding-right: var(--dl-space-space-unit);
+              padding-bottom: var(--dl-space-space-twounits);
+            }
+            .home-testimonial-card {
+              padding-top: var(--dl-space-space-twounits);
+              padding-left: var(--dl-space-space-unit);
+              padding-right: var(--dl-space-space-unit);
+              padding-bottom: var(--dl-space-space-twounits);
+            }
+            .home-icon {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+            .home-text05 {
+              margin-bottom: var(--dl-space-space-twounits);
+            }
+            .home-text06 {
+              margin-bottom: var(--dl-space-space-halfunit);
+            }
+            .home-text07 {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+            .home-testimonial-card {
+              padding-top: var(--dl-space-space-twounits);
+              padding-left: var(--dl-space-space-unit);
+              padding-right: var(--dl-space-space-unit);
+              padding-bottom: var(--dl-space-space-twounits);
+            }
+            .home-icon2 {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+            .home-text08 {
+              margin-bottom: var(--dl-space-space-twounits);
+            }
+            .home-text09 {
+              margin-bottom: var(--dl-space-space-halfunit);
+            }
+            .home-text10 {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+            .home-testimonial-card {
+              padding-top: var(--dl-space-space-twounits);
+              padding-left: var(--dl-space-space-unit);
+              padding-right: var(--dl-space-space-unit);
+              padding-bottom: var(--dl-space-space-twounits);
+            }
+            .home-icon4 {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+            .home-text11 {
+              margin-bottom: var(--dl-space-space-twounits);
+            }
+            .home-text12 {
+              margin-bottom: var(--dl-space-space-halfunit);
+            }
+            .home-text13 {
+              margin-bottom: var(--dl-space-space-unit);
+            }
+          }
+          
   .personalProj-container {
     width: 100%;
     display: flex;
@@ -261,7 +542,7 @@ const ProfileStyle: React.ReactNode = css`
     margin-bottom: var(--dl-space-space-twounits);
   }
   .edu-text03 {
-    color: var(--dl-color-gray-700);
+
     width: 70%;
     font-size: 1.15rem;
     text-align: center;
@@ -489,7 +770,6 @@ const ProfileStyle: React.ReactNode = css`
     justify-content: flex-start;
   }
   .profile-container04 {
-    width: 195px;
     display: flex;
     align-self: stretch;
     align-items: center;
@@ -1043,10 +1323,10 @@ const ProfileStyle: React.ReactNode = css`
       margin-bottom: var(--dl-space-space-halfunit);
     }
     .profile-text02 {
-      color: var(--dl-color-gray-500);
+
     }
     .profile-text03 {
-      color: var(--dl-color-gray-500);
+
     }
     .profile-container04 {
       width: 191px;

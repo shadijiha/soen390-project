@@ -7,6 +7,7 @@ import { ProfileService } from "./profile.service";
 import { BearerPayload, createTestBearerPayload } from "../util/util";
 import { Profile } from "./profile.types";
 
+<<<<<<< HEAD
 
 describe("ProfileController", () => {
   let controller: ProfileController;
@@ -91,10 +92,16 @@ describe("ProfileController", () => {
     findOne: jest.fn(() => {}),
   };
 
+=======
+describe('ProfileController', () => {
+  let controller: ProfileController
+  let service: ProfileService
+>>>>>>> b092966f6564b1f414fc53478b0f9359e15f7e08
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProfileController],
       providers: [
+<<<<<<< HEAD
         ProfileService,
         {
           provide: getRepositoryToken(User),
@@ -830,3 +837,17 @@ describe("ProfileController", () => {
     } catch (e) {}
   });
 });
+=======
+        ProfileService
+      ]
+    }).compile()
+
+    controller = module.get<ProfileController>(ProfileController)
+    service = module.get<ProfileService>(ProfileService)
+  })
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined()
+  })
+})
+>>>>>>> b092966f6564b1f414fc53478b0f9359e15f7e08
