@@ -3,52 +3,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState } from "react";
 import {
-  FormControl,
-  FormLabel,
-  Input,
   Button,
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Textarea,
+  Stack
 } from "@chakra-ui/react";
-import EducationHistory from "../../Forms/EducationHistory";
-import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
-import { useSelector } from "react-redux";
-import { editEducationHistory } from "@/pages/api/api";
-import { toast } from "react-toastify";
+
 import "react-toastify/dist/ReactToastify.css";
-import { emailValidator } from "@/Util/Validator";
 import ProfileStyle from "@/styles/profilestyle";
 
-const Skills = () => {
+const Skills = ({skillsArray} :any) => {
   // call API to get education history
-  const profile = useSelector((state) => state as any);
-  let educations = profile.auth.educations;
-  const skills = profile.auth.skills;
-  const skillsArray = [
-    "Java",
-    "Python",
-    "C++",
-    "C",
-    "JavaScript",
-    "React",
-    "nextJS",
-    "HTML",
-    "CSS",
-    "SQL",
-    "MongoDB",
-    "NodeJS",
-    "Express",
-    "Git",
-    "GitHub",
-    "Linux",
-    "Windows",
-    "MacOS",
-  ];
-
+  
   return (
+    skillsArray && 
     <>
       <style jsx>{ProfileStyle}</style>
       <div>
@@ -77,7 +43,8 @@ const Skills = () => {
         }}
       >
         {/* map through the skillsArray and create a button for each */}
-        {skillsArray.map((skill) => (
+
+        {skillsArray.map((skill : any) => (
           <Button
             className="skill"
             style={{

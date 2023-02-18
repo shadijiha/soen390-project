@@ -21,12 +21,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
 import ProfileStyle from "@/styles/profilestyle";
 
-const Volunteering = () => {
-  // call API to get education history
-  const profile = useSelector((state) => state as any);
-  let educations = profile.auth.educations;
-
+const Volunteering = ({volunteer} : any) => {
   return (
+    volunteer &&
     <>
       <style jsx>{ProfileStyle}</style>
       <div>
@@ -51,59 +48,40 @@ const Volunteering = () => {
       >
         {/* volunteer */}
         {/* first volunteer card */}
-        <div>
-          <div className="edu-feature-card1">
-            <img
-              src="https://img.icons8.com/doodle/512/volunteering.png"
-              className="edu-icon"
-              width="50px"
-              height="50px"
-              alt="Harvard"
-            />
-            <h2 className="edu-text09">Title1</h2>
-            <span className="edu-text10">
-              Description1 for volunteer history here.
-            </span>
-            <span className="edu-text11">2020</span>
+
+
+        {volunteer.map((element : any) => {
+          return(
+            <div>
+            <div className="edu-feature-card1">
+              <img
+                src="https://img.icons8.com/doodle/512/volunteering.png"
+                className="edu-icon"
+                width="50px"
+                height="50px"
+                alt="Harvard"
+              />
+              <h2 className="edu-text09">{element.company}</h2>
+              <span className="edu-text10">
+                {element.title}
+              </span>
+              <span className="edu-text11">{`${element.start_year}-${element.end_year ? element.end_year : "Present"}`}</span>
+            </div>
           </div>
-        </div>
+          )
+
+
+
+        })}
+
+
+       
 
         {/* second volunteer card */}
-        <div>
-          <div className="edu-feature-card1">
-            <img
-              src="https://img.icons8.com/doodle/512/volunteering.png"
-              className="edu-icon"
-              width="50px"
-              height="50px"
-              alt="Harvard"
-            />
-            <h2 className="edu-text09">Title2</h2>
-            <span className="edu-text10">
-              Description2 for volunteer history here.
-            </span>
-            {/* DATE API HERE */}
-            <span className="edu-text11">2020</span>
-          </div>
-        </div>
+       
 
         {/* third volunteer card */}
-        <div>
-          <div className="edu-feature-card1">
-            <img
-              src="https://img.icons8.com/doodle/512/volunteering.png"
-              className="edu-icon"
-              width="50px"
-              height="50px"
-              alt="Harvard"
-            />
-            <h2 className="edu-text09">Title3</h2>
-            <span className="edu-text10">
-              Description3 for volunteer history here.
-            </span>
-            <span className="edu-text11">2020</span>
-          </div>
-        </div>
+      
       </Stack>
     </>
   );

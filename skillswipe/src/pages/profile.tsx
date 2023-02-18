@@ -24,7 +24,7 @@ import { useRouter } from "next/router";
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
 import Skills from "@/components/Profile/Skills/Skills";
-import Education from "@/components/Profile/Education";
+import Education from "../components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 
@@ -89,11 +89,10 @@ const Profile = () => {
               <div
                 className="profile-container01"
                 style={{
-                  backgroundImage: `url(${
-                    User.auth.coverPic
+                  backgroundImage: `url(${User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
-                  })`,
+                    })`,
                 }}
               >
                 <h1
@@ -203,13 +202,23 @@ const Profile = () => {
               }}
             ></Stack>
             {/* SKILLS SECTION */}
-            <Skills />
+            <Skills skillsArray={["Node js"]} />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
-            <WorkExperience />
+            <WorkExperience experience={[
+              {
+                id: 1,
+                date: "2019 - Present",
+                title: "Google",
+                description: `Worked as a Software Engineer at Google, where I worked on the Google Cloud Platform. I was part of the team that built the Google Cloud Platform.`,
+              }
+            ]} />
             {/* EDUCATION SECTION */}
-            <Education />
+          <Education education={[{institution : "Concordia University",degree : "Software",start_year : 2020,end : 2024},
+                                  {institution : "Concordia University",degree : "Software",start_year : 2020}
+                                
+                                ]}/>
             {/* VOLUNTEERING SECTION */}
-            <Volunteering />
+            <Volunteering volunteer={[{company : "Real channel",title : "Development volunteer",start_year : 2020,end_year : 2021}]}/>
             {/* RECOMMENDATIONS SECTION */}
             <Recommendations />
             {/* PERSONAL PROJECTS */}

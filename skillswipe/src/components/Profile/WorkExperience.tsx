@@ -33,16 +33,18 @@ const milestones = [
   },
 ];
 
-const WorkExperience = () => {
+const WorkExperience = ({experience} : any) => {
+
   const isMobile = useBreakpointValue({ base: true, md: false });
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
+    experience &&
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         Career Journey
       </chakra.h3>
-      {milestones.map((milestone) => (
+      {experience.map((milestone : any) => (
         <Flex key={milestone.id} mb="10px">
           {/* Desktop view(left card) */}
           {isDesktop && milestone.id % 2 === 0 && (
