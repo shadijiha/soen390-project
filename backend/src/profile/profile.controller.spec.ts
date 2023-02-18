@@ -4,21 +4,17 @@ import { ProfileService } from './profile.service'
 
 describe('ProfileController', () => {
   let controller: ProfileController
-  
-  let mockProfileService = {}
-
-
+  let service: ProfileService
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProfileController],
       providers: [
         ProfileService
       ]
-    }).overrideProvider(ProfileService).useValue(mockProfileService)
-    .compile()
+    }).compile()
 
     controller = module.get<ProfileController>(ProfileController)
-    
+    service = module.get<ProfileService>(ProfileService)
   })
 
   it('should be defined', () => {

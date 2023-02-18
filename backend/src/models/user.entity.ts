@@ -14,7 +14,6 @@ import {
   UpdateDateColumn
 } from 'typeorm'
 import { Award } from './award.entity'
-import { Connection } from './connection.entity'
 import { Course } from './course.entity'
 import { Education } from './education.entity'
 import { Language } from './language.entity'
@@ -126,11 +125,10 @@ export class User extends BaseEntity {
   @ApiProperty({ type: [Volunteering] })
     volunteeringExperience: Volunteering[]
 
-  @OneToMany(() => Connection, (connection) => connection.user_1)
-    connection_1: Connection[]
-
-  @OneToMany(() => Connection, (connection) => connection.user_2)
-    connection_2: Connection[]
+  // connections
+  @ManyToMany(() => User, (user) => user.connections)
+  @ApiProperty({ type: [User] })
+    connections: User[]
 
   // skills
   @ManyToMany((type) => Skill, (skill) => skill.user, {
@@ -142,12 +140,12 @@ export class User extends BaseEntity {
     skills: Skill[]
 
   // recommendations received
-  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommended)
+  @OneToMany(() => User, (user) => user.recommendationsReceived)
   @ApiProperty({ type: [Recommendation] })
     recommendationsReceived: Recommendation[]
 
   // recommendations given
-  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommending)
+  @OneToMany(() => User, (user) => user.recommendationsGiven)
   @ApiProperty({ type: [Recommendation] })
     recommendationsGiven: Recommendation[]
 

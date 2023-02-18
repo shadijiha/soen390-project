@@ -9,16 +9,12 @@ import {
   useColorModeValue,
   Box,
   Text,
-  Collapse,
-  InputGroup,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Search from "./Search/Search";
-import MobileSearchBar from "./Search/mobileSearchBar";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -26,7 +22,6 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
-  
 
   const navColor = useColorModeValue(
     "rgba(255, 255, 255, 0.25)",
@@ -64,8 +59,6 @@ export default function NavBar() {
           <Text style={{ fontWeight: "bold", fontSize: 25 }} ml={"15px"}>
             🚀 SkillSwipe
           </Text>
-          
-          <Search/>
           <Flex display={["none", "none", "flex", "flex"]} ml={"auto"}>
             <NextLink href="/home" passHref>
               <Button aria-label="Home" my={5} w="100%" variant="ghost">
@@ -134,12 +127,10 @@ export default function NavBar() {
             display={["flex", "flex", "none", "none"]}
             ml={"auto"}
             variant={"ghost"}
-            />
+          />
         </Flex>
 
         {/* Mobile Content */}
-
-
         <Flex
           w="100vw"
           display={display}
@@ -161,12 +152,10 @@ export default function NavBar() {
               icon={<CloseIcon />}
               onClick={() => changeDisplay("none")}
               backgroundColor="transparent"
-              />
+            />
           </Flex>
 
           <Flex flexDir="column" align="center">
-          
-
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
@@ -190,7 +179,6 @@ export default function NavBar() {
                 My Account
               </Button>
             </NextLink>
-              <MobileSearchBar/>
 
             <NextLink href="/" passHref>
               <Button
@@ -204,7 +192,7 @@ export default function NavBar() {
                   boxShadow: "md",
                   transform: "scale(1.05)",
                 }}
-                >
+              >
                 Sign In/Logout
               </Button>
             </NextLink>
@@ -216,7 +204,7 @@ export default function NavBar() {
               _hover={{
                 transform: "scale(1.25)",
               }}
-              >
+            >
               {toggleTheme}
             </Button>
           </Flex>
