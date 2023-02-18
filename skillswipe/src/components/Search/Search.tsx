@@ -1,6 +1,7 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Box, Flex, List, ListIcon, ListItem, Select, useColorModeValue, useDisclosure, Stack, border } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { SetStateAction, useState } from "react";
 
 const Search = () => {
   const [search, setSearch] = useState(false);
@@ -9,9 +10,22 @@ const Search = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
-  const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchTerm(e.target.value);
+  
+ 
+  
+
+  const router = useRouter();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    router.push(`/search?q=${searchTerm}`);
   };
+
+  const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSearchTerm(event.target.value);
+};
+
+ 
   return (
     <>
       <Flex ml={"auto"} display={["none", "none", "flex", "flex"]}>
@@ -27,12 +41,12 @@ const Search = () => {
           // search 
           >
 
-
+            <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Search"
               value={searchTerm}
-              onChange={handleSearch}
+              onChange={handleChange}
               list="browser"
               style={{
                 width: "420px",
@@ -58,24 +72,12 @@ const Search = () => {
                 color: "blue.300",
               }}
 
-              onClick={toggleSearch}
+              onClick={handleSubmit}
             />
-
+            </form>
 
           </Box>
-          {/* <div>
-            <List >
-              <ListItem style={{border : "2px solid white"}}>
-                <ListIcon  color='green.500' />
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit
-              </ListItem>
-            </List>
-            <List>
-              <ListItem>
-                Hello
-              </ListItem>
-            </List>
-          </div> */}
+         
 
         </Stack>
       </Flex>
@@ -84,3 +86,7 @@ const Search = () => {
 
 }
 export default Search
+
+function setSearchTerm(value: SetStateAction<string>) {
+  throw new Error("Function not implemented.");
+}

@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Search from "./Search/Search";
 import MobileSearchBar from "./Search/mobileSearchBar";
+import { useRouter } from "next/router";
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -26,6 +27,9 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  
+
+
   
 
   const navColor = useColorModeValue(
@@ -176,6 +180,12 @@ export default function NavBar() {
             <NextLink href="/findJob" passHref>
               <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
+              </Button>
+            </NextLink>
+
+            <NextLink href="/FindPeople" passHref>
+              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
+                Find People
               </Button>
             </NextLink>
 

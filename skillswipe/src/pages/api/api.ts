@@ -39,3 +39,11 @@ export const getUserById = async (token : any,id : any) =>{
     }
   })
 }
+
+export const search = async (token : any, query: string) => {
+  return axios.get(`${URL}/search?query=${query}`,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+}
