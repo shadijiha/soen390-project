@@ -40,8 +40,10 @@ export class ProfileService {
   }
 
   public async removeEducation (user: User, id: number): Promise<void> {
-    user.educations = user.educations.filter((e) => e.id !== id)
-    await user.save()
+    // user.educations = user.educations.filter((e) => e.id !== id)
+    await this.educationRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (e: Education) => await this.educationRepository.delete({ id: e.id }))
   }
 
   public async editEducation (user: User, request: Profile.EditEducationRequest): Promise<void> {
