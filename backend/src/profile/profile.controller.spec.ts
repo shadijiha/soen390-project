@@ -7,35 +7,84 @@ import { ProfileService } from "./profile.service";
 import { BearerPayload, createTestBearerPayload } from "../util/util";
 import { Profile } from "./profile.types";
 
+
 describe("ProfileController", () => {
   let controller: ProfileController;
   let userRepository: Repository<User>;
 
   let mockProfileService = {
-    addEducation: jest.fn(),
-    editEducation: jest.fn(() => {}),
-    removeEducation: jest.fn(),
-    addCourse: jest.fn(),
-    editCourse: jest.fn(),
-    removeCourse: jest.fn(),
-    addProject: jest.fn(),
-    editProject: jest.fn(),
-    removeProject: jest.fn(),
-    addVolunteering: jest.fn(),
-    editvolunteering: jest.fn(),
-    removeVolunteering: jest.fn(),
-    addWork: jest.fn(),
-    editWork: jest.fn(),
-    removeWork: jest.fn(),
-    addSkill: jest.fn(),
-    editSkill: jest.fn(),
-    removeSkill: jest.fn(),
-    addLanguage: jest.fn(),
-    editLanguage: jest.fn(),
-    removeLanguage: jest.fn(),
-    addAward: jest.fn(),
-    editAward: jest.fn(),
-    removeAward: jest.fn(),
+    addEducation: jest.fn((user, body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editEducation: jest.fn((user, body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeEducation: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addCourse: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editCourse: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeCourse: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addProject: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editProject: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeProject: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addVolunteering: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editvolunteering: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeVolunteering: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addWork: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editWork: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeWork: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addSkill: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editSkill: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeSkill: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addLanguage: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editLanguage: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeLanguage: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    addAward: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    editAward: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
+    removeAward: jest.fn((user, Body) => {
+      if (user.id != 1) throw new Error();
+    }),
   };
 
   const mockUsersRepository = {
@@ -83,10 +132,18 @@ describe("ProfileController", () => {
     } as User;
 
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
-
     controller.addEducation(bearer, data);
-
     expect(await mockProfileService.addEducation).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addEducation(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit education", async () => {
@@ -112,6 +169,16 @@ describe("ProfileController", () => {
     controller.editEducation(bearer, data);
 
     expect(await mockProfileService.editEducation).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editEducation(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete education", async () => {
@@ -129,6 +196,16 @@ describe("ProfileController", () => {
 
     controller.deleteEducation(bearer, eduId);
     expect(await mockProfileService.removeEducation).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteEducation(bearer, eduId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add course to the authenticated user", async () => {
@@ -150,6 +227,16 @@ describe("ProfileController", () => {
 
     controller.addCourse(bearer, data);
     expect(await mockProfileService.addCourse).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addCourse(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit course", async () => {
@@ -171,13 +258,23 @@ describe("ProfileController", () => {
 
     controller.editCourse(bearer, data);
     expect(await mockProfileService.editCourse).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editCourse(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete course", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
     const courseId = 1;
 
-    controller.deleteEducation(bearer, courseId);
+    controller.deleteCourse(bearer, courseId);
     expect(mockProfileService.removeCourse).not.toHaveBeenCalled();
 
     const user: User = {
@@ -188,6 +285,16 @@ describe("ProfileController", () => {
 
     controller.deleteCourse(bearer, courseId);
     expect(await mockProfileService.removeCourse).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteCourse(bearer, courseId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add project to the authenticated user", async () => {
@@ -210,6 +317,16 @@ describe("ProfileController", () => {
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
     controller.addProject(bearer, data);
     expect(await mockProfileService.addProject).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addProject(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit project", async () => {
@@ -230,6 +347,16 @@ describe("ProfileController", () => {
 
     controller.editProject(bearer, data);
     expect(await mockProfileService.editProject).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editProject(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete project", async () => {
@@ -247,6 +374,16 @@ describe("ProfileController", () => {
 
     controller.deleteProject(bearer, projectId);
     expect(await mockProfileService.removeProject).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteProject(bearer, projectId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add volunteering to the authenticated user", async () => {
@@ -270,6 +407,16 @@ describe("ProfileController", () => {
 
     controller.addVolunteering(bearer, data);
     expect(await mockProfileService.addVolunteering).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addVolunteering(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit volunteering", async () => {
@@ -291,13 +438,23 @@ describe("ProfileController", () => {
 
     controller.editVolunteering(bearer, data);
     expect(await mockProfileService.editvolunteering).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editVolunteering(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete volunteering", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const projectId = 1;
+    const volunteeringId = 1;
 
-    controller.deleteVolunteering(bearer, projectId);
+    controller.deleteVolunteering(bearer, volunteeringId);
     expect(mockProfileService.removeVolunteering).not.toHaveBeenCalled();
 
     const user: User = {
@@ -306,8 +463,18 @@ describe("ProfileController", () => {
 
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
 
-    controller.deleteVolunteering(bearer, projectId);
+    controller.deleteVolunteering(bearer, volunteeringId);
     expect(await mockProfileService.removeVolunteering).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteVolunteering(bearer, volunteeringId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add work to the authenticated user", async () => {
@@ -319,7 +486,7 @@ describe("ProfileController", () => {
     data.start_year = 2014;
     data.end_year = 2020;
 
-    controller.addVolunteering(bearer, data);
+    controller.addWork(bearer, data);
 
     expect(mockProfileService.addWork).not.toHaveBeenCalled();
 
@@ -331,6 +498,16 @@ describe("ProfileController", () => {
 
     controller.addWork(bearer, data);
     expect(await mockProfileService.addWork).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addWork(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit work", async () => {
@@ -352,13 +529,23 @@ describe("ProfileController", () => {
 
     controller.editWork(bearer, data);
     expect(await mockProfileService.editWork).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editWork(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete work", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const projectId = 1;
+    const workId = 1;
 
-    controller.deleteWork(bearer, projectId);
+    controller.deleteWork(bearer, workId);
     expect(mockProfileService.removeWork).not.toHaveBeenCalled();
 
     const user: User = {
@@ -367,8 +554,18 @@ describe("ProfileController", () => {
 
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
 
-    controller.deleteWork(bearer, projectId);
+    controller.deleteWork(bearer, workId);
     expect(await mockProfileService.removeWork).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteWork(bearer, workId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add skill to the authenticated user", async () => {
@@ -391,6 +588,16 @@ describe("ProfileController", () => {
 
     controller.addSkill(bearer, data);
     expect(await mockProfileService.addSkill).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addSkill(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit skill", async () => {
@@ -401,8 +608,8 @@ describe("ProfileController", () => {
     data.title = "Concordia";
     data.title = "tutor";
 
-    controller.editWork(bearer, data);
-    expect(mockProfileService.editWork).not.toHaveBeenCalled();
+    controller.editSkill(bearer, data);
+    expect(mockProfileService.editSkill).not.toHaveBeenCalled();
 
     const user: User = {
       id: 1,
@@ -410,8 +617,18 @@ describe("ProfileController", () => {
 
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
 
-    controller.editWork(bearer, data);
-    expect(await mockProfileService.editWork).toHaveBeenCalled();
+    controller.editSkill(bearer, data);
+    expect(await mockProfileService.editSkill).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editSkill(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete skill", async () => {
@@ -429,6 +646,16 @@ describe("ProfileController", () => {
 
     controller.deleteSkill(bearer, skillId);
     expect(await mockProfileService.removeSkill).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteSkill(bearer, skillId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add language to the authenticated user", async () => {
@@ -449,6 +676,16 @@ describe("ProfileController", () => {
 
     controller.addLanguage(bearer, data);
     expect(await mockProfileService.addLanguage).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addLanguage(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit language", async () => {
@@ -468,6 +705,16 @@ describe("ProfileController", () => {
 
     controller.editLanguage(bearer, data);
     expect(await mockProfileService.editLanguage).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editLanguage(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete language", async () => {
@@ -485,6 +732,16 @@ describe("ProfileController", () => {
 
     controller.deleteLanguage(bearer, languageId);
     expect(await mockProfileService.removeLanguage).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteLanguage(bearer, languageId)).toThrowError;
+    } catch (e) {}
   });
 
   it("should add award to the authenticated user", async () => {
@@ -505,6 +762,16 @@ describe("ProfileController", () => {
 
     controller.addAward(bearer, data);
     expect(await mockProfileService.addAward).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.addAward(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should edit award", async () => {
@@ -524,13 +791,23 @@ describe("ProfileController", () => {
 
     controller.editAward(bearer, data);
     expect(await mockProfileService.editAward).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.editAward(bearer, data)).toThrowError;
+    } catch (e) {}
   });
 
   it("should delete award", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const languageId = 1;
+    const awardId = 1;
 
-    controller.deleteAward(bearer, languageId);
+    controller.deleteAward(bearer, awardId);
     expect(mockProfileService.removeAward).not.toHaveBeenCalled();
 
     const user: User = {
@@ -539,7 +816,17 @@ describe("ProfileController", () => {
 
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
 
-    controller.deleteAward(bearer, languageId);
+    controller.deleteAward(bearer, awardId);
     expect(await mockProfileService.removeAward).toHaveBeenCalled();
+
+    const user2: User = {
+      id: 2,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
+
+    try {
+      expect(await controller.deleteAward(bearer, awardId)).toThrowError;
+    } catch (e) {}
   });
 });
