@@ -29,7 +29,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.AddEducationRequest
   ): Promise<void> {
-    const user = await userInfo.getUser(['educations'])
+    const user = await userInfo.getUser(['education'])
     if (user == null) {
       return
     }
@@ -46,7 +46,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Body() body: Profile.EditEducationRequest
   ): Promise<void> {
-    const user = await userInfo.getUser(['educations'])
+    const user = await userInfo.getUser(['education'])
     if (user == null) {
       return
     }
@@ -62,7 +62,7 @@ export class ProfileController {
     @AuthUser() userInfo: BearerPayload,
       @Param('id') id: number
   ): Promise<void> {
-    const user = await userInfo.getUser(['educations'])
+    const user = await userInfo.getUser(['education'])
     if (user == null) {
       return
     }

@@ -16,10 +16,14 @@ import { Work } from '../models/work.entity'
 import { ProfileController } from './profile.controller'
 import { ProfileService } from './profile.service'
 import { isGuarded } from '../util/testUtil';
+import { BearerPayload, createTestBearerPayload } from '../util/util';
+import { Profile } from './profile.types';
 
 describe('ProfileController', () => {
   let controller: ProfileController
   let service: ProfileService
+
+  let loggedInUser: BearerPayload
 
   let educationRepository: Repository<Education>
 
@@ -59,7 +63,11 @@ describe('ProfileController', () => {
         {
           provide: getRepositoryToken(Work),
           useValue: createMock<Repository<Work>>(),
-        }
+        },
+        {
+          provide: getRepositoryToken(User),
+          useValue: { findOne: jest.fn((emai) => user) }
+        },
       ]
     }).overrideGuard(JwtAuthGuard) // to bypass JWT auth
       .useValue({
@@ -73,12 +81,16 @@ describe('ProfileController', () => {
     service = module.get<ProfileService>(ProfileService)
     educationRepository = module.get<Repository<Education>>(getRepositoryToken(Education));
 
-    let user: User = new User();
+    const userRepository: Repository<User> = module.get(getRepositoryToken(User));
+    const user: User = new User
     user.firstName = 'test'
     user.lastName = 'test'
     user.email = 'test@test.ca'
     user.password = 'test'
     user.gender = 'male'
+    loggedInUser = await createTestBearerPayload(user.email,
+      userRepository);
+
 
   })
 
@@ -112,10 +124,15 @@ describe('ProfileController', () => {
     expect(isGuarded(ProfileController.prototype.editProject, JwtAuthGuard)).toBe(true)
   })
 
-  it('should successfully post an education to the authenticated user', () => {
-    const education = { institution: 'Concordia', degree: 'Bachelor' };
+  it('should successfully post an education to the authenticated user', async () => {
+    let test = new Profile.AddEducationRequest
+    const education: Profile.AddEducationRequest = new Profile.AddEducationRequest()
+    education.institution = 'Concordia'
+    education.degree = 'Bachelor'
+    education.start_year = 2014
+    education.end_year = 202
 
     // tslint:disable-next-line: no-invalid-await
-    expect(await repo.find()).toEqual([cat]);
+    expect(await controller.addEducation(loggedInUser, education)).toBe(null);
   })
 })
