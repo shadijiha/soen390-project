@@ -30,7 +30,7 @@ export default function NavBar() {
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
   const [searchTerm, setSearchTerm] = useState("");
-  const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
+  const { onToggle, isOpen } = useDisclosure();
   
   const MobilehandleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
       setSearchTerm(e.target.value);
