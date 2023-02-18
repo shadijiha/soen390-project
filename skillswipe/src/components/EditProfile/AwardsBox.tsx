@@ -14,16 +14,17 @@ import {
 import Awards from "../Forms/Awards";
 import {AddIcon, SmallAddIcon} from "@chakra-ui/icons";
 import {useSelector} from "react-redux";
-import {editAwards} from "@/pages/api/api";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {emailValidator} from "@/Util/Validator";
 
 type Award = {
+   id?: number,
    title?: string,
    description?: string,
-   year?: string,
-   id: number
+   issue_date?: string,
+   issuer?: string,
+   url?: string,
 }
 
 const AwardsBox = () => {
@@ -33,11 +34,11 @@ const AwardsBox = () => {
       setAwardsList(awardsList.filter((award: any) => award.id !== id))
    };
    const addAward = () => {
-      let award: Award = {id: 10};
+      let award: Award = {};
       setAwardsList(oldArray => [...oldArray, award]);
    }
    const isNew = (award: Award) => {
-      return !(award.title && award.description && award.year)
+      return !(award.title && award.description && award.issue_date)
    }
    return (
          <Stack
@@ -84,7 +85,7 @@ const AwardsBox = () => {
 
             <div style={{display: "flex", flexDirection: "column-reverse"}}>
                {awardsList && awardsList.map((award: any, index:number) => (
-                  <div key={Awards.id}>
+                  <div key={index}>
                      <Awards index={index+1} award={award} deleteAward={deleteAward} isNew={isNew(award)}/>
                   </div>
                ))}

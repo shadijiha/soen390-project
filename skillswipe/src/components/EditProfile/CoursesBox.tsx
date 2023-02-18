@@ -13,7 +13,6 @@ import {
 import Courses from "../Profile/Courses";
 import {AddIcon, SmallAddIcon} from "@chakra-ui/icons";
 import {useSelector} from "react-redux";
-import {editCourses} from "@/pages/api/api";
 import {toast} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {emailValidator} from "@/Util/Validator";
@@ -23,7 +22,7 @@ type Course = {
    start_year?: string,
    end_year?: string,
    description?: string,
-   id: number
+   id?: number
 }
 
 
@@ -34,7 +33,7 @@ const CoursesBox = () => {
       setCoursesList(coursesList.filter((course: any) => course.id !== id))
    };
    const addCourse = () => {
-      let course: Course = {id: 10};
+      let course: Course = {};
       setCoursesList(oldArray => [...(oldArray || []), course]);
    }
    const isNew = (course: Course) => {

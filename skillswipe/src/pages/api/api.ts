@@ -67,8 +67,8 @@ export const editPersonalProjects = async (token : any,UpdatedUser : any) => {
   })
 }
 
-export const editAwards = async (token : any,UpdatedUser : any) => {
-  return axios.put(`${URL}/profile/add/award`,UpdatedUser,{
+export const editAwards = async (token : any,updatedAward : any) => {
+  return axios.put(`${URL}/profile/add/award/${updatedAward.id}`,updatedAward,{
     headers : {
       "authorization" : `Bearer ${token}`
     }

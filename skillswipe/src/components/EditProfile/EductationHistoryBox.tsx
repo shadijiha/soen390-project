@@ -23,7 +23,7 @@ type Education = {
   start_year?: string,
   end_year?: string,
   degree?: string,
-  id: number
+  id?: number
 }
 
 
@@ -34,7 +34,7 @@ const EducationHistoryBox = () => {
     setEducationList(educationList.filter((education: any) => education.id !== id))
   };
   const addEducation = () => {
-    let educ: Education = { id: 10 };
+    let educ: Education = {};
     setEducationList(oldArray => [...oldArray, educ]);
   }
   const isNew = (education: Education)=> {
@@ -85,7 +85,7 @@ const EducationHistoryBox = () => {
 
       <div style={{ display: "flex", flexDirection: "column-reverse" }}>
         {educationList && educationList.map((education: any, index: number) => (
-          <div key={education.id} >
+          <div key={index} >
             <EducationHistory education={education} index={index+1} deleteEducation={deleteEducation} isNew={isNew(education)}/>
           </div>
         ))}

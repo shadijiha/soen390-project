@@ -13,16 +13,18 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { toast } from "react-toastify";
-import { editEducationHistory } from "@/pages/api/api";
+import { addEducationHistoryRequest, deleteEducationHistoryRequest, editEducationHistoryRequest } from "@/pages/api/profile_api";
 const EducationHistory = (props: any) => {
   const [educationHistory, setEducationHistory] = useState({
     institution: "",
     degree: "",
     start_year: "",
     end_year: "",
-    id: null
+    id: 0
   });
-  if (educationHistory.institution == "") setEducationHistory(props.education);
+
+  if (educationHistory.institution == "") setEducationHistory(props.education)
+    ;
   const handleChange = (event: any) => {
     const { name, value } = event.target;
     setEducationHistory((prevState) => ({
@@ -30,29 +32,64 @@ const EducationHistory = (props: any) => {
       [name]: value,
     }));
   };
-  const handleSubmit = (event: any) => {
+  const addEducation = (event: any) => {
     const token = localStorage.getItem("jwt");
-    // call API to update education history
+    event.preventDefault();
+    if (!educationHistory.degree || !educationHistory.institution || !educationHistory.start_year || !educationHistory.end_year) {
+      toast("Please fill all the fields");
+      return;
+    }
     if (educationHistory.start_year > educationHistory.end_year) {
       toast("Please add Valid start and end year");
+      return;
     } else {
-      // editEducationHistory(token, educationHistory).then((response) => {
-      //     console.log(response);
-      //     toast("Updated Successfully");
-      //   })
-      //   .catch((error) => {
-      //     toast(error.message);
-      //   });
+      addEducationHistoryRequest(token, educationHistory).then((res) => {
+        if (res.status == 201) {
+          toast.success("Education updated successfully");
+        } else {
+          toast.error("Error updaing education");
+        }
+      })
     }
+  }
 
+  const deleteEducation = (event: any) => {
+    const token = localStorage.getItem("jwt");
     event.preventDefault();
-    console.log(educationHistory); // this will print out the form values
-    // You can now use the form values to update the user's education history
+
+    deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
+      if (res.status == 201) {
+        toast.success("Education updated successfully");
+        props.deleteEducation(props.education.id);
+      } else {
+        toast.error("Error deleting education");
+      }
+    })
+
+  }
+  const updateEducation = (event: any) => {
+    const token = localStorage.getItem("jwt");
+    event.preventDefault();
+    // call API to update education history
+    if (!educationHistory.degree || !educationHistory.institution || !educationHistory.start_year || !educationHistory.end_year) {
+      toast("Please fill all the fields");
+      return;
+    }
+    if (educationHistory.start_year > educationHistory.end_year) {
+      toast("Please add Valid start and end year");
+      return;
+    } else {
+      editEducationHistoryRequest(token, educationHistory).then((res) => {
+        if (res.status == 201) {
+          toast.success("Education updated successfully");
+        } else {
+          toast.error("Error updaing education");
+        }
+      })
+    }
   };
 
-  const deleteItem = () => {
-    props.deleteEducation(props.education.id);
-  };
+
   return (
     <Box
       minWidth={"60vw"}
@@ -82,7 +119,7 @@ const EducationHistory = (props: any) => {
             type="button"
             colorScheme={"blue"}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateEducation}
           >
             Update
           </Button>
@@ -96,7 +133,7 @@ const EducationHistory = (props: any) => {
             type="button"
             colorScheme={"blue"}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addEducation}
           >
             Add
           </Button>
@@ -109,7 +146,7 @@ const EducationHistory = (props: any) => {
           type="button"
           colorScheme={"red"}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteEducation}
         >
           <DeleteIcon />
         </Button>

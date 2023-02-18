@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { toast } from "react-toastify";
-import { editVolunteering } from "@/pages/api/api";
 const Volunteering = (props: any) => {
    const [volunteering, setVolunteering] = useState({
       company: "",

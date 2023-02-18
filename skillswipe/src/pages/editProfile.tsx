@@ -249,23 +249,21 @@ const EditProfile = () => {
         {/* my profile */}
         <InformationBox />
 
-        {/* awards */}
-        <AwardsBox />
-
-        {/* skills */}
-        <SkillsBox />
-
         {/* work experience */}
         <ExperienceBox />
 
         {/* Education History */}
         <EducationHistoryBox />
 
+
+        {/* awards */}
+        <AwardsBox />
+
+        {/* skills */}
+        <SkillsBox />
+
         {/* Volunteering */}
         <VolunteeringBox />
-
-         {/* Certifications */}
-         <CoursesBox />
 
         {/* Personal Projects */}
         <PersonalProjectsBox />
@@ -273,6 +271,8 @@ const EditProfile = () => {
         {/* languages */}
         <LanguagesBox />
         
+        {/* Certifications */}
+        <CoursesBox />
       </Layout>
     </>
   );

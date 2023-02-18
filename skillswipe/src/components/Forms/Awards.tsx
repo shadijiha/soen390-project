@@ -12,13 +12,15 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { toast } from "react-toastify";
-import { editAwards } from "@/pages/api/api";
+import { addAwardsRequest, deleteAwardsRequest, editAwardsRequest } from "@/pages/api/profile_api";
 const Awards = (props: any) => {
    const [award, setAward] = useState({
+      id: null,
       title: "",
       description: "",
-      year: "",
-      id: null
+      issue_date: "",
+      issuer: "",
+      url: "",
    });
    if (award.title == "") setAward(props.award);
    const handleChange = (event: any) => {
@@ -28,28 +30,56 @@ const Awards = (props: any) => {
          [name]: value,
       }));
    };
-   const handleSubmit = (event: any) => {
-      const token = localStorage.getItem("jwt");
-      // call API to update award
-      if (award.year > "1921") {
-         toast("Please add Valid year");
-      } else {
-         // editAwards(token, award).then((response) => {
-         //     console.log(response);
-         //     toast("Updated Successfully");
-         //   })
-         //   .catch((error) => {
-         //     toast(error.message);
-         //   });
-      }
 
+   const addAward = (event: any) => { 
+      const token = localStorage.getItem("jwt");
       event.preventDefault();
-      console.log(award); // this will print out the form values
-      // You can now use the form values to update the user's award
+      console.log(award)
+      if(!award.title || !award.description || !award.issue_date) {
+         toast.error("Please fill in all fields");
+         return;
+      }else{
+         addAwardsRequest(token, award).then((res) => {
+            if (res.status == 201) {
+               toast.success("Award added successfully");
+            } else {
+               toast.error("Error adding award");
+            }
+         });
+      }
+      // You can now use the form values to add the user's award
+   }
+
+   const editAward = (event: any) => {
+      const token = localStorage.getItem("jwt");
+      event.preventDefault();
+      if(award.title == "" || award.description == "" || award.issue_date == "") {
+         toast.error("Please fill in all fields");
+         return;
+      }else{
+         editAwardsRequest(token, award).then((res) => {
+            if (res.status == 201) {
+               toast.success("Award updated successfully");
+            } else {
+               toast.error("Error updating award");
+            }
+         });
+      }
    };
 
-   const deleteItem = () => {
-      props.deleteAward(props.award.id);
+   const deleteAward = (event: any) => {
+      const token = localStorage.getItem("jwt");
+      event.preventDefault();
+
+         deleteAwardsRequest(token, award.id).then((res) => {
+            if (res.status == 201) {
+               toast.success("Award delete successfully");
+               props.deleteAward(props.award.id);
+            } else {
+               toast.error("Error deleting award");
+            }
+         });
+      
    };
    return (
       <Box
@@ -81,7 +111,7 @@ const Awards = (props: any) => {
                 type="button"
                 colorScheme={"blue"}
                 borderRadius="100px"
-                onClick={handleSubmit}
+                onClick={editAward}
               >
                 Update
               </Button>
@@ -96,7 +126,7 @@ const Awards = (props: any) => {
                 type="button"
                 colorScheme={"blue"}
                 borderRadius="100px"
-                onClick={handleSubmit}
+                onClick={addAward}
               >
                 Add
               </Button>
@@ -109,7 +139,7 @@ const Awards = (props: any) => {
               type="button"
               colorScheme={"red"}
               borderRadius="100px"
-              onClick={deleteItem}
+              onClick={deleteAward}
             >
               <DeleteIcon />
             </Button>
@@ -144,14 +174,14 @@ const Awards = (props: any) => {
                   onChange={handleChange}
                />
             </FormControl>
-            <FormControl id="year">
-               <FormLabel htmlFor="year">Year</FormLabel>
+            <FormControl id="issue_date">
+               <FormLabel htmlFor="issue_date">Year</FormLabel>
                <Input
                   minWidth={"100%"}
                   type="text"
-                  id="year"
-                  defaultValue={props.award.year}
-                  name="year"
+                  id="issue_date"
+                  defaultValue={props.award.issue_date}
+                  name="issue_date"
                   borderRadius="10"
                   size="lg"
                   mb={5}

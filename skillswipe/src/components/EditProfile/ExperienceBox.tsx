@@ -23,18 +23,18 @@ type Experience = {
   title?: string,
   start_year?: string,
   end_year?: string,
-  id: number
+  id?: number
 }
 
 const ExperienceBox = () => {
   // Api calls
   const profile = useSelector((state) => state as any);
-  const [experienceList, setExperienceList] = useState(profile.auth.experiences as Experience[]);
+  const [experienceList, setExperienceList] = useState(profile.auth.workExperiences as Experience[]);
   const deleteExperience = (id: number) => {
     setExperienceList(experienceList.filter((experience: any) => experience.id !== id))
   };
   const addExperience = () => {
-    let exp: Experience = { id: 8 };
+    let exp: Experience = { };
     setExperienceList(oldArray => [...(oldArray || []), exp]);
   }
   const isNew = (experience: Experience)=> {

@@ -14,6 +14,7 @@ import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FcRight, FcRightUp } from "react-icons/fc";
 import { toast } from "react-toastify";
 import { editExperience } from "@/pages/api/api";
+import { addWorkExperienceRequest, deleteWorkExperienceRequest, editWorkEperienceRequest } from "@/pages/api/profile_api";
 
 const Experience = (props: any) => {
   const [experience, setExperience] = useState({
@@ -21,7 +22,7 @@ const Experience = (props: any) => {
     title: "",
     start_year: "",
     end_year: "",
-    id: null,
+    id: 0,
   });
   if (experience.company == "") setExperience(props.experience);
   const handleChange = (event: any) => {
@@ -31,29 +32,64 @@ const Experience = (props: any) => {
       [name]: value,
     }));
   };
-  const handleSubmit = (event: any) => {
+
+  const updateWorkExperience = (event: any) => {
     const token = localStorage.getItem("jwt");
-    // call API to update education history
+    event.preventDefault();
+    if (!experience.start_year || !experience.end_year || !experience.company || !experience.title) {
+      toast("Please fill all the fields");
+      return;
+    }
     if (experience.start_year > experience.end_year) {
       toast("Please add Valid start and end year");
+      return;
     } else {
-      // editExperience(token, experience).then((response) => {
-      //     console.log(response);
-      //     toast("Updated Successfully");
-      //   })
-      //   .catch((error) => {
-      //     toast(error.message);
-      //   });
+      editWorkEperienceRequest(token, experience).then((res) => {
+        if (res.status == 201) {
+          toast.success("Experience updated successfully");
+        } else {
+          toast.error("Error updaing experience");
+        }
+      })
     }
-
-    event.preventDefault();
-    console.log(experience); // this will print out the form values
-    // You can now use the form values to update the user's education history
   };
 
+  const addWorkExperience = (event: any) => {
+    const token = localStorage.getItem("jwt");
+    event.preventDefault();
+    if (!experience.start_year || !experience.end_year || !experience.company || !experience.title) {
+      toast("Please fill all the fields");
+      return;
+    }
+    if (experience.start_year > experience.end_year) {
+      toast("Please add Valid start and end year");
+      return;
+    } else {
+      addWorkExperienceRequest(token, experience).then((res) => {
+        if (res.status == 201) {
+          toast.success("Experience added successfully");
+        } else {
+          toast.error("Error adding experience");
+        }
+      })
+    }
+  };
+
+  const deleteWorkExperience = (event: any) => {
+    const token = localStorage.getItem("jwt");
+    event.preventDefault();
+    deleteWorkExperienceRequest(token, experience.id).then((res) => {
+      if (res.status == 201) {
+        toast.success("Experience deleted successfully");
+      } else {
+        toast.error("Error deleting experience");
+      }
+    })
+
+  };
   const deleteItem = () => {
     props.deleteExperience(props.experience.id);
-  };  
+  };
   return (
     <Box
       minWidth={"60vw"}
@@ -75,7 +111,7 @@ const Experience = (props: any) => {
           Experience {props.index} {props.isNew}
         </p>
         <Spacer />
-        {!props.isNew && 
+        {!props.isNew &&
           <Button
             style={{
               boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
@@ -84,7 +120,7 @@ const Experience = (props: any) => {
             type="button"
             colorScheme={"blue"}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateWorkExperience}
           >
             Update
           </Button>
@@ -98,9 +134,9 @@ const Experience = (props: any) => {
             type="button"
             colorScheme={"blue"}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addWorkExperience}
           >
-            Add 
+            Add
           </Button>
         }
         <Button
@@ -111,7 +147,7 @@ const Experience = (props: any) => {
           type="button"
           colorScheme={"red"}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteWorkExperience}
         >
           <DeleteIcon />
         </Button>
