@@ -13,7 +13,7 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import EducationHistory from "../../Forms/EducationHistory";
+
 import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
 import { editEducationHistory } from "@/pages/api/api";
@@ -22,30 +22,17 @@ import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
 import ProfileStyle from "@/styles/profilestyle";
 
-const Skills = () => {
+const Awards = () => {
   // call API to get education history
   const profile = useSelector((state) => state as any);
   let educations = profile.auth.educations;
   const skills = profile.auth.skills;
-  const skillsArray = [
-    "Java",
-    "Python",
-    "C++",
-    "C",
-    "JavaScript",
-    "React",
-    "nextJS",
-    "HTML",
-    "CSS",
-    "SQL",
-    "MongoDB",
-    "NodeJS",
-    "Express",
-    "Git",
-    "GitHub",
-    "Linux",
-    "Windows",
-    "MacOS",
+  const awards = [
+    "1st Place - Microsoft Intern Challenge 2021",
+    "2nd Place - Google Code Jam 2021",
+    "3rd Place - Concordia Hackathon 2023",
+    "1st Place - Shopify Challenge 2021",
+    "2nd Place - Google Code Jam 2021",
   ];
 
   return (
@@ -62,7 +49,7 @@ const Skills = () => {
               textAlign: "center",
             }}
           >
-            <span>🚀 My Skills</span>
+            <text>🏅 Awards</text>
           </h1>
         </div>
         <Stack
@@ -79,7 +66,7 @@ const Skills = () => {
           }}
         >
           {/* map through the skillsArray and create a button for each */}
-          {skillsArray.map((skill) => (
+          {awards.map((awards) => (
             <Button
               className="skill"
               style={{
@@ -92,7 +79,7 @@ const Skills = () => {
                 marginBottom: "1em",
               }}
             >
-              {skill}
+              {awards}
             </Button>
           ))}
         </Stack>
@@ -100,4 +87,4 @@ const Skills = () => {
     </>
   );
 };
-export default Skills;
+export default Awards;

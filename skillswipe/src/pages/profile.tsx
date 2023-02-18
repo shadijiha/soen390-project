@@ -14,6 +14,7 @@ import {
   Text,
   Image,
   Stack,
+  Grid,
 } from "@chakra-ui/react";
 
 import router from "next/router";
@@ -28,6 +29,7 @@ import Education from "@/components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
+import Awards from "@/components/Profile/Awards";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -200,8 +202,18 @@ const Profile = () => {
               </div>
             </div>
 
-            {/* SKILLS SECTION */}
-            <Skills />
+            <Stack
+              direction={"row"}
+              paddingTop="1rem"
+              style={{
+                flexWrap: "wrap",
+              }}
+            >
+              {/* SKILLS SECTION */}
+              <Skills />
+              {/* AWARDS SECTION */}
+              <Awards />
+            </Stack>
             {/* CAREER JOURNEY WORK EXPERIENCE */}
             <WorkExperience />
             {/* EDUCATION SECTION */}
@@ -289,7 +301,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            {/* COURSES DONE */}
+            {/* COURSES ACCOMPLISHED */}
             <Courses />
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
