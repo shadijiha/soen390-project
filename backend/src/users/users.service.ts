@@ -22,17 +22,22 @@ export class UsersService {
     return await this.usersRepository.find()
   }
 
-  async findOneById (id: number): Promise<User> {
-    return await this.usersRepository.findOneByOrFail({ id })
+  async findOneById (userId: number, relations?: string[]): Promise<User> {
+    const user: User = (await this.usersRepository.findOneOrFail({
+      where: {
+        id: userId
+      },
+      relations: ['educations', 'workExperiences', 'volunteeringExperience', 'skills', 'courses', 'projects', 'awards', 'languages', 'recommendationsReceived']
+    }))
+
+    return user
   }
 
   async findOneByEmail (email: string): Promise<User | null> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create (
-    body: Auth.RegisterRequest
-  ): Promise<Record<string, any>> {
+  public async create (body: Auth.RegisterRequest): Promise<Record<string, any>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -40,12 +45,15 @@ export class UsersService {
     user.lastName = body.lastName
     user.gender = body.gender
 
-    const { password, ...userNoPass }: Record<string, any> =
-      await this.usersRepository.save(user)
+    const { password, ...userNoPass }: Record<string, any> = await this.usersRepository.save(user)
     return userNoPass
   }
 
-  async update (id: number, user: Users.UpdateUserRequest, files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
+  async update (
+    id: number,
+    user: Users.UpdateUserRequest,
+    files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
+  ): Promise<User> {
     const oldUser = await this.findOneById(id)
 
     oldUser.firstName = user.firstName !== '' ? user.firstName : oldUser.firstName
@@ -81,11 +89,7 @@ export class UsersService {
   public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
     return {
       users: await this.usersRepository.find({
-        where: [
-          { firstName: Like(`%${query}%`) },
-          { lastName: Like(`%${query}%`) },
-          { email: Like(`%${query}%`) }
-        ],
+        where: [{ firstName: Like(`%${query}%`) }, { lastName: Like(`%${query}%`) }, { email: Like(`%${query}%`) }],
         take: 10
       }),
       companies: []
