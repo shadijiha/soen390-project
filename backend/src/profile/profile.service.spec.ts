@@ -10,7 +10,7 @@ import { Volunteering } from '../models/volunteering.entity'
 import { Work } from '../models/work.entity'
 import { ProfileService } from './profile.service'
 import { createMock } from '@golevelup/ts-jest';
-import { DataSource, Repository } from 'typeorm'
+import { DataSource, Repository, UpdateResult } from 'typeorm'
 import { User } from '../models/user.entity'
 import { Profile } from './profile.types'
 import { dataSourceMockFactory, MockType } from '../util/mockDataSource'
@@ -19,15 +19,15 @@ import { dataSourceMockFactory, MockType } from '../util/mockDataSource'
 describe('ProfileService', () => {
   let service: ProfileService
   let dataSourceMock: MockType<DataSource>
-  let EducationRepository: Repository<Education>
-  let CourseRepository: Repository<Course>
-  let ProjectRepository: Repository<Project>
-  let VolunteeringRepository: Repository<Volunteering>
-  let AwardRepository: Repository<Award>
-  let LanguageRepository: Repository<Language>
-  let SkillRepository: Repository<Skill>
-  let WorkRepository: Repository<Work>
-  let UserRepository: Repository<User>
+  const EducationRepository = createMock<Repository<Education>>()
+  const CourseRepository = createMock<Repository<Course>>()
+  const ProjectRepository = createMock<Repository<Project>>()
+  const VolunteeringRepository = createMock<Repository<Volunteering>>()
+  const AwardRepository = createMock<Repository<Award>>()
+  const LanguageRepository = createMock<Repository<Language>>()
+  const SkillRepository = createMock<Repository<Skill>>()
+  const WorkRepository = createMock<Repository<Work>>()
+  const UserRepository = createMock<Repository<User>>()
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -36,39 +36,39 @@ describe('ProfileService', () => {
         { provide: DataSource, useFactory: dataSourceMockFactory },
         {
           provide: getRepositoryToken(Education),
-          useValue: createMock<Repository<Education>>()
+          useValue: EducationRepository
         },
         {
           provide: getRepositoryToken(Course),
-          useValue: createMock<Repository<Course>>()
+          useValue: CourseRepository
         },
         {
           provide: getRepositoryToken(Project),
-          useValue: createMock<Repository<Project>>()
+          useValue: ProjectRepository
         },
         {
           provide: getRepositoryToken(Volunteering),
-          useValue: createMock<Repository<Volunteering>>()
+          useValue: VolunteeringRepository
         },
         {
           provide: getRepositoryToken(Award),
-          useValue: createMock<Repository<Award>>()
+          useValue: AwardRepository
         },
         {
           provide: getRepositoryToken(Language),
-          useValue: createMock<Repository<Language>>()
+          useValue: LanguageRepository
         },
         {
           provide: getRepositoryToken(Skill),
-          useValue: createMock<Repository<Skill>>()
+          useValue: SkillRepository
         },
         {
           provide: getRepositoryToken(Work),
-          useValue: createMock<Repository<Work>>()
+          useValue: WorkRepository
         },
         {
           provide: getRepositoryToken(User),
-          useValue: createMock<Repository<User>>()
+          useValue: UserRepository
         }
       ]
     }).compile()
@@ -93,7 +93,6 @@ describe('ProfileService', () => {
   })
 
   it('should add education to a user', async () => {
-
     const data: Profile.AddEducationRequest = new Profile.AddEducationRequest
     data.institution = "Concordia";
     data.degree = "Bachelor";
@@ -108,5 +107,25 @@ describe('ProfileService', () => {
 
     await service.addEducation(user, data)
     expect(user.save).toBeCalledTimes(1)
+  })
+
+  it('should edit education of a user', async () => {
+    const data: Profile.EditEducationRequest = new Profile.EditEducationRequest
+    data.id = 1
+    data.institution = "Concordia";
+    data.degree = "Bachelor";
+    data.start_year = 2014;
+    data.end_year = 2020;
+    const user: User = new User
+    user.id = 1
+    user.firstName = 'test'
+    user.educations = [data as unknown as Education]
+    const res = new UpdateResult
+
+    EducationRepository.update.mockImplementation((user, data) => Promise.resolve(res))
+
+    await service.editEducation(user, data)
+    expect(EducationRepository.update).toBeCalledTimes(1)
+    expect(EducationRepository.update).toBeCalledWith(user.id, data)
   })
 })
