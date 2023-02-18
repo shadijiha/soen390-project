@@ -9,12 +9,11 @@ import { Profile } from "./profile.types";
 
 describe("ProfileController", () => {
   let controller: ProfileController;
-  let service: ProfileService;
   let userRepository: Repository<User>;
 
   let mockProfileService = {
     addEducation: jest.fn(),
-    editEducation: jest.fn(),
+    editEducation: jest.fn(() => {}),
     deleteEducation: jest.fn(),
     addCourse: jest.fn(),
     editCourse: jest.fn(),
@@ -22,6 +21,21 @@ describe("ProfileController", () => {
     addProject: jest.fn(),
     editProject: jest.fn(),
     removeProject: jest.fn(),
+    addVolunteering: jest.fn(),
+    editvolunteering: jest.fn(),
+    removeVolunteering: jest.fn(),
+    addWork: jest.fn(),
+    editWork: jest.fn(),
+    removeWork: jest.fn(),
+    addSkill: jest.fn(),
+    editSkill: jest.fn(),
+    removeSkill: jest.fn(),
+    addLanguage: jest.fn(),
+    editLanguage: jest.fn(),
+    removeLanguage: jest.fn(),
+    addAward: jest.fn(),
+    editAward: jest.fn(),
+    removeAward: jest.fn(),
   };
 
   const mockUsersRepository = {
@@ -44,7 +58,6 @@ describe("ProfileController", () => {
       .compile();
 
     controller = module.get<ProfileController>(ProfileController);
-    service = module.get<ProfileService>(ProfileService);
     userRepository = module.get(getRepositoryToken(User));
   });
 
@@ -64,6 +77,16 @@ describe("ProfileController", () => {
     controller.addEducation(bearer, data);
 
     expect(mockProfileService.addEducation).not.toHaveBeenCalled();
+
+    const user: User = {
+      id: 1,
+    } as User;
+
+    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
+
+    controller.addEducation(bearer, data);
+
+    expect(await mockProfileService.addEducation).toHaveBeenCalled();
   });
 
   it("should edit education", async () => {
@@ -80,10 +103,15 @@ describe("ProfileController", () => {
       id: 1,
     } as User;
 
+    controller.editEducation(bearer, data);
+
+    expect(await mockProfileService.editEducation).not.toHaveBeenCalled();
+
     jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
 
     controller.editEducation(bearer, data);
-    expect(mockProfileService.editEducation).not.toHaveBeenCalled();
+
+    expect(await mockProfileService.editEducation).toHaveBeenCalled();
   });
 
   it("should delete education", async () => {
@@ -94,7 +122,6 @@ describe("ProfileController", () => {
     expect(mockProfileService.deleteEducation).not.toHaveBeenCalled();
   });
 
-
   it("should add course to the authenticated user", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
 
@@ -102,12 +129,10 @@ describe("ProfileController", () => {
     data.courseName = "OS";
     data.courseNumber = "COMP 346";
 
-
     controller.addCourse(bearer, data);
 
     expect(mockProfileService.addCourse).not.toHaveBeenCalled();
   });
-
 
   it("should edit course", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
@@ -116,7 +141,6 @@ describe("ProfileController", () => {
     data.id = 1;
     data.courseName = "OS";
     data.courseNumber = "COMP 346";
-    
 
     controller.editCourse(bearer, data);
     expect(mockProfileService.editCourse).not.toHaveBeenCalled();
@@ -130,7 +154,6 @@ describe("ProfileController", () => {
     expect(mockProfileService.removeCourse).not.toHaveBeenCalled();
   });
 
-
   it("should add project to the authenticated user", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
 
@@ -138,8 +161,7 @@ describe("ProfileController", () => {
     data.description = "OS";
     data.end_year = 2020;
     data.start_year = 2019;
-    data.url = ''
-
+    data.url = "";
 
     controller.addProject(bearer, data);
 
@@ -152,7 +174,7 @@ describe("ProfileController", () => {
     const data: Profile.EditProjectRequest = new Profile.EditProjectRequest();
     data.id = 1;
     data.description = "Concordia";
-   
+
     controller.editProject(bearer, data);
     expect(mockProfileService.editProject).not.toHaveBeenCalled();
   });
@@ -165,6 +187,163 @@ describe("ProfileController", () => {
     expect(mockProfileService.removeProject).not.toHaveBeenCalled();
   });
 
+  it("should add volunteering to the authenticated user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
 
+    const data: Profile.AddVolunteeringRequest = new Profile.AddVolunteeringRequest();
+    data.company = "Concordia";
+    data.title = "wtv";
+    data.start_year = 2014;
+    data.end_year = 2020;
 
+    controller.addVolunteering(bearer, data);
+
+    expect(mockProfileService.addVolunteering).not.toHaveBeenCalled();
+  });
+
+  it("should edit volunteering", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.EditVolunteeringRequest = new Profile.EditVolunteeringRequest();
+    data.id = 1;
+    data.title = "Concordia";
+    data.title = "tutor";
+
+    controller.editVolunteering(bearer, data);
+    expect(mockProfileService.editvolunteering).not.toHaveBeenCalled();
+  });
+
+  it("should delete volunteering", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const projectId = 1;
+
+    controller.deleteVolunteering(bearer, projectId);
+    expect(mockProfileService.removeVolunteering).not.toHaveBeenCalled();
+  });
+
+  it("should add work to the authenticated user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.AddWorkRequest = new Profile.AddWorkRequest();
+    data.company = "Concordia";
+    data.title = "wtv";
+    data.start_year = 2014;
+    data.end_year = 2020;
+
+    controller.addVolunteering(bearer, data);
+
+    expect(mockProfileService.addWork).not.toHaveBeenCalled();
+  });
+
+  it("should edit work", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.EditSkillRequest = new Profile.EditSkillRequest();
+    data.id = 1;
+    data.title = "Concordia";
+    data.title = "tutor";
+
+    controller.editSkill(bearer, data);
+    expect(mockProfileService.editSkill).not.toHaveBeenCalled();
+  });
+
+  it("should delete work", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const projectId = 1;
+
+    controller.deleteWork(bearer, projectId);
+    expect(mockProfileService.removeWork).not.toHaveBeenCalled();
+  });
+
+  it("should add skill to the authenticated user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.AddSkillRequest = new Profile.AddSkillRequest();
+    data.company = "Concordia";
+    data.title = "wtv";
+    data.start_year = 2014;
+    data.end_year = 2020;
+
+    controller.addSkill(bearer, data);
+
+    expect(mockProfileService.addSkill).not.toHaveBeenCalled();
+  });
+
+  it("should edit skill", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.EditWorkRequest = new Profile.EditWorkRequest();
+    data.id = 1;
+    data.title = "Concordia";
+    data.title = "tutor";
+
+    controller.editWork(bearer, data);
+    expect(mockProfileService.editWork).not.toHaveBeenCalled();
+  });
+
+  it("should delete skill", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const skillId = 1;
+
+    controller.deleteSkill(bearer, skillId);
+    expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
+  });
+
+  it("should add language to the authenticated user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.AddLanguageRequest = new Profile.AddLanguageRequest();
+    data.languageName = "english";
+
+    controller.addLanguage(bearer, data);
+
+    expect(mockProfileService.addLanguage).not.toHaveBeenCalled();
+  });
+
+  it("should edit language", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.EditLanguageRequest = new Profile.EditLanguageRequest();
+    data.id = 1;
+
+    controller.editLanguage(bearer, data);
+    expect(mockProfileService.editLanguage).not.toHaveBeenCalled();
+  });
+
+  it("should delete language", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const languageId = 1;
+
+    controller.deleteLanguage(bearer, languageId);
+    expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
+  });
+
+  it("should add award to the authenticated user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.AddAwardRequest = new Profile.AddAwardRequest();
+    data.description = "best student";
+
+    controller.addAward(bearer, data);
+
+    expect(mockProfileService.addAward).not.toHaveBeenCalled();
+  });
+
+  it("should edit award", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+
+    const data: Profile.EditAwardRequest = new Profile.EditAwardRequest();
+    data.description = "best student";
+
+    controller.editAward(bearer, data);
+    expect(mockProfileService.editAward).not.toHaveBeenCalled();
+  });
+
+  it("should delete award", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const languageId = 1;
+
+    controller.deleteAward(bearer, languageId);
+    expect(mockProfileService.removeAward).not.toHaveBeenCalled();
+  });
 });

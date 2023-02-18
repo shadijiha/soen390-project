@@ -22,9 +22,11 @@ export class ProfileController {
       return;
     }
 
-    this.profileService.addEducation(user, body).catch((e) => {
+    try{
+    this.profileService.addEducation(user, body)
+    }catch(e) {
       throw new HttpException((e as Error).message, 400);
-    });
+    };
   }
 
   @Put("education/:id")
