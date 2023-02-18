@@ -15,6 +15,7 @@ import {
   Image,
   Stack,
   Grid,
+  Divider,
 } from "@chakra-ui/react";
 
 import router from "next/router";
@@ -30,6 +31,7 @@ import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
 import Awards from "@/components/Profile/Awards";
+import PersonalProjectsProfile from "@/components/Profile/PersonalProjectsProfile";
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -95,7 +97,7 @@ const Profile = () => {
                   //make the background image repeat itself
                   backgroundRepeat: "repeat",
                   // make the background image to be 50% opacity
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
+                  backgroundColor: "rgba(0, 0, 0, 0.15)",
                   // make the background image to be 50% opacity
                   backgroundBlendMode: "multiply",
                   // make the container take the entire screens width
@@ -112,6 +114,7 @@ const Profile = () => {
                     fontSize: "1.5em",
                     fontWeight: 700,
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   {User.auth.firstName + " " + User.auth.lastName} 👋🏼
@@ -121,6 +124,7 @@ const Profile = () => {
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   📨 {User.auth.email}
@@ -130,6 +134,7 @@ const Profile = () => {
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+                    color: "white",
                   }}
                 >
                   <span>📱 {User.auth.mobileNo}</span>
@@ -142,6 +147,7 @@ const Profile = () => {
                     style={{
                       textShadow: "0px 0px 30px #000000B4",
                       marginLeft: "0px",
+                      color: "white",
                     }}
                   >
                     💬 {User.auth.biography}
@@ -157,23 +163,27 @@ const Profile = () => {
                   <button
                     className="profile-button button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
                       marginRight: "1em",
                     }}
                   >
-                    <span>
+                    <span
+                      style={{
+                        color: "white",
+                      }}
+                    >
                       <span>Message</span>
                     </span>
                   </button>
                   <button
                     className="profile-button1 button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
@@ -186,8 +196,8 @@ const Profile = () => {
                   <button
                     className="profile-button1 button"
                     style={{
-                      color: buttonColors,
-                      borderColor: buttonColors,
+                      color: "white",
+                      borderColor: "white",
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
@@ -214,93 +224,25 @@ const Profile = () => {
               {/* AWARDS SECTION */}
               <Awards />
             </Stack>
+
+            <br></br>
+            <Divider />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
             <WorkExperience />
+            <Divider />
             {/* EDUCATION SECTION */}
             <Education />
+            <Divider />
             {/* VOLUNTEERING SECTION */}
             <Volunteering />
+            <Divider />
             {/* RECOMMENDATIONS SECTION */}
             <Recommendations />
+            <Divider />
             {/* PERSONAL PROJECTS */}
-            <div className="personalProj-container">
-              <div className="personalProj-features">
-                <h1
-                  className="personalProj-text"
-                  style={{
-                    fontWeight: 600,
-                  }}
-                >
-                  Personal Projects
-                </h1>
-                <div className="personalProj-container1">
-                  <div className="personalProj-feature-card">
-                    <h2 className="personalProj-text1">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card1">
-                    <h2 className="personalProj-text2">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image1"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card2">
-                    <h2 className="personalProj-text3">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image2"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card3">
-                    <h2 className="personalProj-text4">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image3"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card4">
-                    <h2 className="personalProj-text5">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image4"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card5">
-                    <h2 className="personalProj-text6">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image5"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card6">
-                    <h2 className="personalProj-text7">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image6"
-                    />
-                  </div>
-                  <div className="personalProj-feature-card7">
-                    <h2 className="personalProj-text8">Lorem ipsum</h2>
-                    <img
-                      alt="image"
-                      src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?ixid=Mnw5MTMyMXwwfDF8c2VhcmNofDF8fHllbGxvdyUyMHRlY2h8ZW58MHx8fHwxNjI2MjU1NDk0&amp;ixlib=rb-1.2.1&amp;w=1000"
-                      className="personalProj-image7"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PersonalProjectsProfile />
+            <Divider />
+
             {/* COURSES ACCOMPLISHED */}
             <Courses />
             {/* temporary div below for spacing under page, will need to remove in final sprint */}

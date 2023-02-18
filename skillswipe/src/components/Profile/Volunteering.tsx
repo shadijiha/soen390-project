@@ -35,6 +35,7 @@ const Volunteering = () => {
           style={{
             fontWeight: 600,
             fontSize: "2.5rem",
+            paddingTop: "1rem",
           }}
         >
           <span>Volunteering History</span>
