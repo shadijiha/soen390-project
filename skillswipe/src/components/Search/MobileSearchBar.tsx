@@ -14,7 +14,7 @@ const MobileSearchBar = () =>{
 
        const handleSubmit = (e: any) => {
          e.preventDefault();
-         router.push(`/search?q=${searchTerm}`);
+         router.push(`/searchResultpage?q=${searchTerm}`);
        };
      
        const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
