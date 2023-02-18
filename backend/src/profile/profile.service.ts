@@ -40,7 +40,6 @@ export class ProfileService {
   }
 
   public async removeEducation (user: User, id: number): Promise<void> {
-    // user.educations = user.educations.filter((e) => e.id !== id)
     await this.educationRepository
       .findOneOrFail({ where: { id } })
       .then(async (e: Education) => await this.educationRepository.delete({ id: e.id }))
@@ -68,8 +67,9 @@ export class ProfileService {
   }
 
   public async removeCourse (user: User, id: number): Promise<void> {
-    user.courses = user.courses.filter((c) => c.id !== id)
-    await user.save()
+    await this.courseRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (c: Course) => await this.courseRepository.delete({ id: c.id }))
   }
 
   public async editCourse (user: User, request: Profile.EditCourseRequest): Promise<void> {
@@ -97,8 +97,9 @@ export class ProfileService {
   }
 
   public async removeProject (user: User, id: number): Promise<void> {
-    user.projects = user.projects.filter((p) => p.id !== id)
-    await user.save()
+    await this.projectRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (p: Project) => await this.projectRepository.delete({ id: p.id }))
   }
 
   public async editProject (user: User, request: Profile.EditProjectRequest): Promise<void> {
@@ -131,10 +132,9 @@ export class ProfileService {
     user: User,
     id: number
   ): Promise<void> {
-    user.volunteeringExperience = user.volunteeringExperience.filter(
-      (v) => v.id !== id
-    )
-    await user.save()
+    await this.volunteeringRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (v: Volunteering) => await this.volunteeringRepository.delete({ id: v.id }))
   }
 
   public async editvolunteering (user: User, request: Profile.EditVolunteeringRequest): Promise<void> {
@@ -165,10 +165,9 @@ export class ProfileService {
     user: User,
     id: number
   ): Promise<void> {
-    user.awards = user.awards.filter(
-      (a) => a.id !== id
-    )
-    await user.save()
+    await this.awardRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (a: Award) => await this.awardRepository.delete({ id: a.id }))
   }
 
   public async editAward (user: User, request: Profile.EditAwardRequest): Promise<void> {
@@ -196,10 +195,9 @@ export class ProfileService {
     user: User,
     id: number
   ): Promise<void> {
-    user.languages = user.languages.filter(
-      (l) => l.id !== id
-    )
-    await user.save()
+    await this.languageRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (l: Language) => await this.languageRepository.delete({ id: l.id }))
   }
 
   public async editLanguage (user: User, request: Profile.EditLanguageRequest): Promise<void> {
@@ -229,10 +227,9 @@ export class ProfileService {
     user: User,
     id: number
   ): Promise<void> {
-    user.skills = user.skills.filter(
-      (s) => s.id !== id
-    )
-    await user.save()
+    await this.skillRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (s: Skill) => await this.skillRepository.delete({ id: s.id }))
   }
 
   public async editSkill (user: User, request: Profile.EditSkillRequest): Promise<void> {
@@ -262,10 +259,9 @@ export class ProfileService {
     user: User,
     id: number
   ): Promise<void> {
-    user.workExperiences = user.workExperiences.filter(
-      (w) => w.id !== id
-    )
-    await user.save()
+    await this.workRepository
+      .findOneOrFail({ where: { id } })
+      .then(async (w: Work) => await this.workRepository.delete({ id: w.id }))
   }
 
   public async editWork (user: User, request: Profile.EditWorkRequest): Promise<void> {
