@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { type BaseRequest } from 'src/util/util'
-import { Repository, type UpdateResult, type BaseEntity } from 'typeorm'
+import { Repository, type BaseEntity } from 'typeorm'
 import { Award } from '../models/award.entity'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
@@ -41,13 +41,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editEducation (user: User, request: Profile.EditEducationRequest): Promise<boolean> {
-    const found = user.educations.find((e) => e.id == request.id)
+  public async editEducation (user: User, request: Profile.EditEducationRequest): Promise<void> {
+    const found = user.educations.find((e) => e.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const education: Education = found
-    return await this.educationRepository.update(education.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.educationRepository.update(education.id, request)
   }
 
   public async addCourse (
@@ -65,13 +65,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editCourse (user: User, request: Profile.EditCourseRequest): Promise<boolean> {
-    const found = user.courses.find((c) => c.id == request.id)
+  public async editCourse (user: User, request: Profile.EditCourseRequest): Promise<void> {
+    const found = user.courses.find((c) => c.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const course: Course = found
-    return await this.courseRepository.update(course.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.courseRepository.update(course.id, request)
   }
 
   public async addProject (
@@ -89,13 +89,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editProject (user: User, request: Profile.EditProjectRequest): Promise<boolean> {
-    const found = user.projects.find((p) => p.id == request.id)
+  public async editProject (user: User, request: Profile.EditProjectRequest): Promise<void> {
+    const found = user.projects.find((p) => p.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const project: Project = found
-    return await this.projectRepository.update(project.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.projectRepository.update(project.id, request)
   }
 
   public async addVolunteering (
@@ -121,13 +121,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editvolunteering (user: User, request: Profile.EditVolunteeringRequest): Promise<boolean> {
-    const found = user.volunteeringExperience.find((v) => v.id == request.id)
+  public async editvolunteering (user: User, request: Profile.EditVolunteeringRequest): Promise<void> {
+    const found = user.volunteeringExperience.find((v) => v.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const volunteering: Volunteering = found
-    return await this.volunteeringRepository.update(volunteering.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.volunteeringRepository.update(volunteering.id, request)
   }
 
   public async addAward (
@@ -150,13 +150,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editAward (user: User, request: Profile.EditAwardRequest): Promise<boolean> {
-    const found = user.awards.find((v) => v.id == request.id)
+  public async editAward (user: User, request: Profile.EditAwardRequest): Promise<void> {
+    const found = user.awards.find((v) => v.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const award: Award = found
-    return await this.awardRepository.update(award.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.awardRepository.update(award.id, request)
   }
 
   public async addLanguage (
@@ -179,13 +179,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editLanguage (user: User, request: Profile.EditLanguageRequest): Promise<boolean> {
-    const found = user.languages.find((l) => l.id == request.id)
+  public async editLanguage (user: User, request: Profile.EditLanguageRequest): Promise<void> {
+    const found = user.languages.find((l) => l.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const language: Language = found
-    return await this.languageRepository.update(language.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.languageRepository.update(language.id, request)
   }
 
   public async addSkill (
@@ -208,13 +208,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editSkill (user: User, request: Profile.EditSkillRequest): Promise<boolean> {
-    const found = user.skills.find((l) => l.id == request.id)
+  public async editSkill (user: User, request: Profile.EditSkillRequest): Promise<void> {
+    const found = user.skills.find((l) => l.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const skill: Skill = found
-    return await this.skillRepository.update(skill.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.skillRepository.update(skill.id, request)
   }
 
   public async addWork (
@@ -237,13 +237,13 @@ export class ProfileService {
     await user.save()
   }
 
-  public async editWork (user: User, request: Profile.EditWorkRequest): Promise<boolean> {
-    const found = user.workExperiences.find((l) => l.id == request.id)
+  public async editWork (user: User, request: Profile.EditWorkRequest): Promise<void> {
+    const found = user.workExperiences.find((w) => w.id === request.id)
     if (found == null) {
       throw new NotFoundException()
     }
     const work: Work = found
-    return await this.workRepository.update(work.id, request).then((res: UpdateResult) => !!res.affected)
+    await this.workRepository.update(work.id, request)
   }
 
   /*
