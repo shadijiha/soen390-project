@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { type BaseRequest } from 'src/util/util'
-import { Repository, type BaseEntity } from 'typeorm'
+import { Repository } from 'typeorm'
 import { Award } from '../models/award.entity'
 import { Course } from '../models/course.entity'
 import { Education } from '../models/education.entity'
@@ -31,7 +30,11 @@ export class ProfileService {
     data: Profile.AddEducationRequest
   ): Promise<void> {
     const education = new Education()
-    this.createModel(data, education)
+    education.institution = data.institution
+    education.start_year = data.start_year
+    education.end_year = data.end_year
+    education.degree = data.degree
+
     user.educations = [...user.educations, education]
     await user.save()
   }
@@ -55,7 +58,9 @@ export class ProfileService {
     data: Profile.AddCourseRequest
   ): Promise<void> {
     const course = new Course()
-    this.createModel(data, course)
+    course.courseName = data.courseName
+    course.courseNumber = data.courseNumber
+
     user.courses = [...user.courses, course]
     await user.save()
   }
@@ -79,7 +84,12 @@ export class ProfileService {
     data: Profile.AddProjectRequest
   ): Promise<void> {
     const project = new Project()
-    this.createModel(data, project)
+    project.description = data.description
+    project.start_year = data.start_year
+    project.end_year = data.end_year
+    project.url = data.url
+    project.name = data.name
+
     user.projects = [...user.projects, project]
     await user.save()
   }
@@ -103,7 +113,11 @@ export class ProfileService {
     data: Profile.AddVolunteeringRequest
   ): Promise<void> {
     const volunteering = new Volunteering()
-    this.createModel(data, volunteering)
+    volunteering.company = data.company
+    volunteering.title = data.title
+    volunteering.start_year = data.start_year
+    volunteering.end_year = data.end_year
+
     user.volunteeringExperience = [
       ...user.volunteeringExperience,
       volunteering
@@ -135,7 +149,12 @@ export class ProfileService {
     data: Profile.AddAwardRequest
   ): Promise<void> {
     const award = new Award()
-    this.createModel(data, award)
+    award.description = data.description
+    award.issue_date = data.issue_date
+    award.issuer = data.issuer
+    award.title = data.title
+    award.url = data.url
+
     user.awards = [...user.awards, award]
     await user.save()
   }
@@ -164,7 +183,9 @@ export class ProfileService {
     data: Profile.AddLanguageRequest
   ): Promise<void> {
     const language = new Language()
-    this.createModel(data, language)
+    language.languageName = data.languageName
+    language.proficiency = data.proficiency
+
     user.languages = [...user.languages, language]
     await user.save()
   }
@@ -193,7 +214,11 @@ export class ProfileService {
     data: Profile.AddSkillRequest
   ): Promise<void> {
     const skill = new Skill()
-    this.createModel(data, skill)
+    skill.company = data.company
+    skill.title = data.title
+    skill.start_year = data.start_year
+    skill.end_year = data.end_year
+
     user.skills = [...user.skills, skill]
     await user.save()
   }
@@ -222,7 +247,11 @@ export class ProfileService {
     data: Profile.AddWorkRequest
   ): Promise<void> {
     const work = new Work()
-    this.createModel(data, work)
+    work.company = data.company
+    work.title = data.title
+    work.start_year = data.start_year
+    work.end_year = data.end_year
+
     user.workExperiences = [...user.workExperiences, work]
     await user.save()
   }
@@ -244,14 +273,5 @@ export class ProfileService {
     }
     const work: Work = found
     await this.workRepository.update(work.id, request)
-  }
-
-  /*
-   * Assign only what exist in target, in case we have hydrated request after it arrived
-   */
-  private createModel (source: BaseRequest, target: BaseEntity): void {
-    for (const prop in target) {
-      target[prop] = source[prop]
-    }
   }
 }
