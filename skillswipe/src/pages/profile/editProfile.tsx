@@ -23,6 +23,7 @@ import ExperienceBox from "@/components/EditProfile/ExperienceBox";
 import EducationHistoryBox from "@/components/EditProfile/EductationHistoryBox";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
 import VolunteeringBox from "@/components/EditProfile/VolunteeringBox";
 import PersonalProjectsBox from "@/components/EditProfile/PersonalProjectsBox";
 
@@ -251,12 +252,13 @@ const EditProfile = () => {
         {/* Education History */}
         <EducationHistoryBox />
 
+
         {/* Volunteering */}
         <VolunteeringBox />
 
         {/* Personal Projects */}
         <PersonalProjectsBox />
-        
+
       </Layout>
     </>
   );

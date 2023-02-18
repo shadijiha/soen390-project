@@ -14,14 +14,17 @@ import {
 } from "../api/api";
 import { toast } from "react-toastify";
 import {
+
   Divider,
   Spinner,
   Stack,
+  Spinner,
   Toast,
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+
 import Skills from "@/components/Profile/Skills/Skills";
 import Awards from "@/components/Profile/Awards";
 import WorkExperience from "@/components/Profile/WorkExperience";
@@ -368,10 +371,6 @@ const profile = () => {
                 paddingBottom: "10em",
               }}
             ></div>
-
-                
-
-                
               </div>
             </div>
           </>

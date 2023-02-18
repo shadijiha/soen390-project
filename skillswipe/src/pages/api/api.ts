@@ -85,7 +85,6 @@ export const removeConnection = async (token : any,id : any) =>{
 }
 
 
-
 export const editEducationHistory = async (token : any,UpdatedUser : any) => {
   return axios.put(`${URL}/Profile/add/education`,UpdatedUser,{
     headers : {

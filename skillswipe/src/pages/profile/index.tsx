@@ -5,6 +5,7 @@ import FeatureCard4 from "../../components/feature-card4";
 import React, { CSSProperties, useEffect, useState } from "react";
 import { checkLogin } from "../api/api";
 import Layout from "@/components/Layout";
+
 import {
   Box,
   Flex,
@@ -32,6 +33,7 @@ import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
 import Awards from "@/components/Profile/Awards";
 import PersonalProjectsProfile from "@/components/Profile/PersonalProjectsProfile";
+
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -90,6 +92,7 @@ const Profile = () => {
                   objectFit: "cover",
                 }}
               />
+
               <div
                 className="profile-container01"
                 style={{
@@ -100,11 +103,14 @@ const Profile = () => {
                   // make the background image to be 50% opacity
                   backgroundBlendMode: "multiply",
                   // make the container take the entire screens width
+
                   backgroundImage: `url(${
                     User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
+
                     })`,
+
                 }}
               >
                 <h1
@@ -113,26 +119,31 @@ const Profile = () => {
                     fontSize: "1.5em",
                     fontWeight: 700,
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
                   {User.auth.firstName + " " + User.auth.lastName} 👋🏼
+
                 </h1>
                 <span
                   className="profile-text02"
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
                   📨 {User.auth.email}
+
                 </span>
                 <span
                   className="profile-text03"
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
@@ -159,8 +170,10 @@ const Profile = () => {
                   <button
                     className="profile-button1 button"
                     style={{
+
                       color: "white",
                       borderColor: "white",
+
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
@@ -174,6 +187,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
 
             <Stack
               direction={"row"}
@@ -208,6 +222,7 @@ const Profile = () => {
 
             {/* COURSES ACCOMPLISHED */}
             <Courses courses={User.auth.courses} />
+
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
               style={{
