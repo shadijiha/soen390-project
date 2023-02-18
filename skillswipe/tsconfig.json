@@ -21,7 +21,7 @@
     }
     
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/header.tsxx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/header.tsxx", "src/components/EditProfile"],
   "exclude": ["node_modules"]
   
 }
