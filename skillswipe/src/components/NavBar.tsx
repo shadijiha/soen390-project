@@ -40,7 +40,7 @@ export default function NavBar() {
 
      const MobilehandleSubmit = (e: any) => {
        e.preventDefault();
-       router.push(`/search?q=${searchTerm}`);
+       router.push(`/searchResultpage?q=${searchTerm}`);
      };
    
    

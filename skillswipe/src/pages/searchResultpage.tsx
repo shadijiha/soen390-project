@@ -109,7 +109,7 @@ export default function Search (){
             }}
           ></div>
                 
-                <img src={user.profilePic} alt={`${user.firstName} ${user.lastName}`}  />
+                <img src={`/userpic/${user.profilePic}`} alt={`${user.firstName} ${user.lastName}`}  />
             </Link>
           </li>
           </Box>
