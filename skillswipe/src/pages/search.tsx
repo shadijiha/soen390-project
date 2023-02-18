@@ -37,16 +37,19 @@ export default function Search (){
               
                 if(response.data !== null && response.data.users !== null) {
                     const searchedUsers = response.data.users.filter((user:any) => user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) || user.lastName.toLowerCase().includes(searchQuery.toLowerCase()));
-                    if(searchedUsers.length === 0) {
-                        toast("No results found");
-                    }
+
+
+                   
                     setSearchResults(searchedUsers);
                     console.log(searchResults);
                   } else {
+                    
                     setSearchResults([]);
                     
                 }
-            }
+            
+
+        }
         })
         .catch((error) => {
 
@@ -93,7 +96,7 @@ export default function Search (){
               
                 <Heading fontSize={30} padding={1} >{user.firstName} {user.lastName}</Heading>
                 <div
-            className="profile-picture"
+            
             style={{
               justifyContent: "center",
               alignItems: "center",
@@ -102,10 +105,11 @@ export default function Search (){
               position: "absolute",
               margin: "2%",
               marginBottom: "1%",
+        
             }}
           ></div>
                 
-                <img src={user.profilePic} alt={`${user.firstName} ${user.lastName}`} />
+                <img src={user.profilePic} alt={`${user.firstName} ${user.lastName}`}  />
             </Link>
           </li>
           </Box>

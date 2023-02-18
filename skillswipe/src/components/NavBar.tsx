@@ -11,14 +11,16 @@ import {
   Text,
   Collapse,
   InputGroup,
+  useDisclosure,
+  InputRightElement,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Search from "./Search/Search";
-import MobileSearchBar from "./Search/mobileSearchBar";
+import MobileSearchBar from "./Search/MobileSearchBar";
 import { useRouter } from "next/router";
 
 export default function NavBar() {
@@ -27,7 +29,37 @@ export default function NavBar() {
   const [display, changeDisplay] = useState("none");
   const toggleTheme = useColorModeValue("🌙", "💡");
   const formBackground = useColorModeValue("gray.100", "gray.700");
+  const [searchTerm, setSearchTerm] = useState("");
+  const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
   
+  const MobilehandleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+      setSearchTerm(e.target.value);
+     };
+     
+     const router = useRouter();
+
+     const MobilehandleSubmit = (e: any) => {
+       e.preventDefault();
+       router.push(`/search?q=${searchTerm}`);
+     };
+   
+   
+  const searchIcon = document.getElementsByClassName("mobile-search-icon");
+
+  try{
+
+  searchIcon[0].addEventListener("click", function (){
+    setTimeout(function(){
+    if (display === "none") {
+      changeDisplay("block");
+    } else {
+      changeDisplay("none");
+    }
+  }, 100);
+  });
+  }catch(e){
+    console.log(e);
+  }
 
 
   
@@ -44,9 +76,7 @@ export default function NavBar() {
     }
   };
 
-  const [showDropdown1, setShowDropdown1] = useState(false);
-  const [showDropdown2, setShowDropdown2] = useState(false);
-
+  
   return (
     <Box as="nav" p={15} w="100%" pt={"0px"} data-testid="Nav-Bar">
       <Flex paddingBottom={"7em"}>
@@ -183,11 +213,7 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
-            <NextLink href="/FindPeople" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
-                Find People
-              </Button>
-            </NextLink>
+           
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
@@ -200,7 +226,53 @@ export default function NavBar() {
                 My Account
               </Button>
             </NextLink>
-              <MobileSearchBar/>
+              {/* <MobileSearchBar/> */}
+              <Button  onClick= {onToggle} variant = "ghost" aria-label="Search" backgroundColor="transparent">Search</Button>
+                <Collapse in={isOpen} animateOpacity>
+                  <InputGroup>
+                    <form onSubmit={MobilehandleSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      value={searchTerm}
+                      onChange={MobilehandleChange}
+                      style={{
+                        
+                        width: "250px",
+                        height: "40px",
+                        paddingLeft: "10px",
+                        borderRadius: "100px",
+                        border: "none",
+                        outline: "1px  black",
+                        backgroundColor: formBackground,
+                    }}
+                    />
+
+                    <InputRightElement width={9}>
+                    <SearchIcon className="mobile-search-icon"
+              position="absolute"
+              top="50%"
+              transform="translateY(-50%)"
+              left="10px"
+              color="gray.500"
+              zIndex={1}
+              cursor="pointer"
+
+              // change color when hover over
+              _hover={{
+                color: "blue.300",
+              }}
+
+              onClick={MobilehandleSubmit}
+            />
+                      
+
+                      </InputRightElement>
+                    </form>
+
+                      
+                  </InputGroup>
+            </Collapse>
 
             <NextLink href="/" passHref>
               <Button

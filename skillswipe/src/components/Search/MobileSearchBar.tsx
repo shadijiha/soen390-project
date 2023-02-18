@@ -1,27 +1,37 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Collapse, IconButton, InputGroup, InputRightElement, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { SetStateAction, useState } from "react";
 const MobileSearchBar = () =>{
-    const [search, setSearch] = useState(false);
-    const toggleSearch = () => setSearch(!search);
+   
     const [searchTerm, setSearchTerm] = useState("");
-     const [searchOpen, setSearchOpen] = useState(false);
-     const formBackground = useColorModeValue("gray.100", "gray.700");
-     const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    const formBackground = useColorModeValue("gray.100", "gray.700");
+    const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
         setSearchTerm(e.target.value);
        };
        const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
+       const router = useRouter();
+
+       const handleSubmit = (e: any) => {
+         e.preventDefault();
+         router.push(`/search?q=${searchTerm}`);
+       };
+     
+       const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+         setSearchTerm(event.target.value);
+     };
+     
     return(
         <>
         <Button  onClick= {onToggle} variant = "ghost" aria-label="Search" backgroundColor="transparent">Search</Button>
                 <Collapse in={isOpen} animateOpacity>
                   <InputGroup>
-
+                    <form onSubmit={handleSubmit}>
                     <input
                       type="text"
                       placeholder="Search"
                       value={searchTerm}
-                      onChange={handleSearch}
+                      onChange={handleChange}
                       style={{
                         
                         width: "250px",
@@ -33,10 +43,28 @@ const MobileSearchBar = () =>{
                         backgroundColor: formBackground,
                     }}
                     />
+
                     <InputRightElement width={9}>
-                      <IconButton variant = "ghost" aria-label="Search" icon={<SearchIcon />} backgroundColor = "transparent" />
+                    <SearchIcon
+              position="absolute"
+              top="50%"
+              transform="translateY(-50%)"
+              left="10px"
+              color="gray.500"
+              zIndex={1}
+              cursor="pointer"
+
+              // change color when hover over
+              _hover={{
+                color: "blue.300",
+              }}
+
+              onClick={handleSubmit}
+            />
+                      
 
                       </InputRightElement>
+                    </form>
 
                       
                   </InputGroup>
@@ -45,3 +73,7 @@ const MobileSearchBar = () =>{
     )
 }
 export default MobileSearchBar
+
+function setSearchTerm(event: { target: { value: SetStateAction<string>; }; }) {
+    throw new Error('Function not implemented.');
+}
