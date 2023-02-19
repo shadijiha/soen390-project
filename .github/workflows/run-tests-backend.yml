@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: backend/package-lock.json
 
       - name: Install npm dependencies
@@ -35,10 +35,6 @@ jobs:
         working-directory: ./backend
         run: npm run build
 
-      - name: Run tests
-        working-directory: ./backend
-        run: npm run test
-
-      - name: Check test coverage
+      - name: Run tests and check code coverage
         working-directory: ./backend
         run: npm run test:cov

@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
-          cache: 'npm'
+          cache: "npm"
           cache-dependency-path: skillswipe/package-lock.json
 
       - name: Install npm dependencies
@@ -36,7 +36,3 @@ jobs:
       - name: Run tests with coverage
         working-directory: ./skillswipe
         run: npm run test:ci
-
-      # - name: Check test coverage
-      #   working-directory: ./skillswipe
-      #   run: npm run test:cov
