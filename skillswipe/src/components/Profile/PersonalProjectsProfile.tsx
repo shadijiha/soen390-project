@@ -49,7 +49,8 @@ const PersonalProjectsProfile = ({ Project }: any) => {
   const toggleOpen = () => setIsOpen(!isOpen);
 
   return (
-    Project.length > 0 && (
+    
+     (
       <>
         <div>
           <h1
