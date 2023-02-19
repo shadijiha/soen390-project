@@ -2,9 +2,13 @@ name: Backend CI pipeline
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+    paths: "backend/**"
   pull_request:
-    branches: [master]
+    branches:
+      - master
+    paths: "backend/**"
 
 jobs:
   build:
@@ -18,6 +22,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
+          cache: "npm"
+          cache-dependency-path: backend/package-lock.json
 
       - name: Install npm dependencies
         working-directory: ./backend
@@ -33,10 +39,6 @@ jobs:
         working-directory: ./backend
         run: npm run build
 
-      - name: Run tests
-        working-directory: ./backend
-        run: npm run test
-
-      - name: Check test coverage
+      - name: Run tests and check code coverage
         working-directory: ./backend
         run: npm run test:cov
