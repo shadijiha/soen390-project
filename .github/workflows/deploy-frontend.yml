@@ -1,0 +1,44 @@
+name: Deploy Skillswipe Vercel
+
+on:
+  release:
+    types:
+      - published
+
+  push:
+    branches:
+      - master
+    paths: "skillswipe/**"
+
+  workflow_dispatch:
+
+jobs:
+  vercel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: use Node 19.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 19.x
+          cache: "npm"
+          cache-dependency-path: skillswipe/package.lock.json
+
+      - name: Build Project
+        run: npm install ci
+
+      - name: Run Tests Locally
+        run: npm run test
+
+      - name: Deploy to Production
+        uses: amondnet/vercel-action@v20
+        id: deploy-vercel-production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_TL_ENGINE }}
+          vercel-args: "--prod"
+          scope: ${{ secrets.VERCEL_ORG_ID }}
