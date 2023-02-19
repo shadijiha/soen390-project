@@ -20,11 +20,12 @@ import { editEducationHistory } from "@/pages/api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
-import ProfileStyle from "@/styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 
 const Volunteering = ({ volunteer }: any) => {
   return (
     volunteer && (
+      <div data-testid="volunteering"> 
       <>
         <style jsx>{ProfileStyle}</style>
         <div>
@@ -73,6 +74,7 @@ const Volunteering = ({ volunteer }: any) => {
           })}
         </Stack>
       </>
+      </div>
     )
   );
 };

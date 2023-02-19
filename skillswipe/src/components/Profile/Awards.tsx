@@ -20,14 +20,14 @@ import { editEducationHistory } from "@/pages/api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";
-import ProfileStyle from "@/styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 
 const Awards = ({awards} :any) => {
   // call API to get education history
   
   return (
     awards &&
-    
+    <div data-testid="awards">
     <>
       <style jsx>{ProfileStyle}</style>
       <div>
@@ -77,6 +77,7 @@ const Awards = ({awards} :any) => {
         </Stack>
       </div>
     </>
+    </div>
   );
 };
 export default Awards;
