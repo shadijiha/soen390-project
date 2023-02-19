@@ -45,7 +45,7 @@ const Experience = (props: any) => {
       return;
     } else {
       editWorkEperienceRequest(token, experience).then((res) => {
-        if (res.status == 201) {
+        if (res.status == 201 || res.status == 200) {
           toast.success("Experience updated successfully");
         } else {
           toast.error("Error updaing experience");
@@ -66,7 +66,7 @@ const Experience = (props: any) => {
       return;
     } else {
       addWorkExperienceRequest(token, experience).then((res) => {
-        if (res.status == 201) {
+        if (res.status == 201 || res.status == 200) {
           toast.success("Experience added successfully");
         } else {
           toast.error("Error adding experience");
@@ -79,8 +79,9 @@ const Experience = (props: any) => {
     const token = localStorage.getItem("jwt");
     event.preventDefault();
     deleteWorkExperienceRequest(token, experience.id).then((res) => {
-      if (res.status == 201) {
+      if (res.status == 201 || res.status == 200) {
         toast.success("Experience deleted successfully");
+        props.deleteExperience(props.experience.id);
       } else {
         toast.error("Error deleting experience");
       }
