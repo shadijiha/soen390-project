@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react";
 
 import "react-toastify/dist/ReactToastify.css";
-import ProfileStyle from "@/styles/profilestyle";
+import ProfileStyle from "../../../styles/profilestyle";
 
 const Skills = ({skillsArray} :any) => {
   // call API to get education history

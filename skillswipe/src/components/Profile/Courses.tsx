@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import "react-toastify/dist/ReactToastify.css";
-import ProfileStyle from "@/styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 import { AddIcon } from "@chakra-ui/icons";
 import { FaPencilAlt, FaPencilRuler, FaSchool } from "react-icons/fa";
 const courseTitles = ["Shopify Course", "React Course", "Node Course"];
@@ -35,7 +35,8 @@ const Courses = ({courses} : any) => {
   
   
   return (
-    courses &&  
+    courses && 
+    <div data-testid="courses"> 
     <>
       <style jsx>{ProfileStyle}</style>
       <div>
@@ -90,6 +91,7 @@ const Courses = ({courses} : any) => {
         ))}
       </Grid>
     </>
+    </div>
   );
 };
 export default Courses;
