@@ -2,9 +2,13 @@ name: Backend CI pipeline
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+    paths: "backend/**"
   pull_request:
-    branches: [master]
+    branches:
+      - master
+    paths: "backend/**"
 
 jobs:
   build:

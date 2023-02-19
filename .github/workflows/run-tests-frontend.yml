@@ -2,9 +2,13 @@ name: Frontend CI pipeline
 
 on:
   push:
-    branches: [master]
+    branches:
+      - master
+    paths: "skillswipe/**"
   pull_request:
-    branches: [master]
+    branches:
+      - master
+    paths: "skillswipe/**"
 
 jobs:
   build:
