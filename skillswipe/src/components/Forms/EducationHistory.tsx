@@ -44,7 +44,7 @@ const EducationHistory = (props: any) => {
       return;
     } else {
       addEducationHistoryRequest(token, educationHistory).then((res) => {
-        if (res.status == 201) {
+        if (res.status == 201 || res.status == 200) {
           toast.success("Education updated successfully");
         } else {
           toast.error("Error updaing education");
@@ -58,8 +58,9 @@ const EducationHistory = (props: any) => {
     event.preventDefault();
 
     deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
-      if (res.status == 201) {
+      if (res.status == 201 || res.status == 200) {
         toast.success("Education updated successfully");
+        console.log("Chilld:" + props.education.id)
         props.deleteEducation(props.education.id);
       } else {
         toast.error("Error deleting education");
@@ -80,7 +81,7 @@ const EducationHistory = (props: any) => {
       return;
     } else {
       editEducationHistoryRequest(token, educationHistory).then((res) => {
-        if (res.status == 201) {
+        if (res.status == 201 || res.status == 200) {
           toast.success("Education updated successfully");
         } else {
           toast.error("Error updaing education");

@@ -31,7 +31,11 @@ const EducationHistoryBox = () => {
   const profile = useSelector((state) => state as any);
   const [educationList, setEducationList] = useState(profile.auth.educations as Education[]);
   const deleteEducation = (id: number) => {
+    console.log("delete education", id)
+    console.log("educationList", educationList);
     setEducationList(educationList.filter((education: any) => education.id !== id))
+    console.log("educationList", educationList);
+    
   };
   const addEducation = () => {
     let educ: Education = {};
