@@ -5,11 +5,11 @@ import { search } from './api/api';
 import axios from 'axios';
 import NavBar from '@/components/NavBar';
 import { toast } from 'react-toastify';
-import { Box, Heading, List, ListItem, Stack } from '@chakra-ui/react';
+import { Box, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import Layout from '@/components/Layout';
 import { useColorModeValue } from '@chakra-ui/color-mode';
-
+import NextLink from 'next/link';
 
 
 export default function Search (){
@@ -70,7 +70,8 @@ export default function Search (){
         <Layout>
         <NavBar></NavBar>
         <Heading padding={3}>Search Results: {searchResults.length}</Heading>
-        <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+        <Flex flexDir="column" align="center">
+       
         <Stack>
         <div>
         <List>
@@ -85,14 +86,22 @@ export default function Search (){
               rounded="20"
               overflow="hidden"
               width="100%"
-              minW="10vw"
-              maxW="20vw"
+              maxW={350}
+              minW={350}
+
+              key={user.id}
+
+
+
+            
+
+           
 
           >
 
 
           <li key={user.id}>
-            <Link href={`/profile/${user.id}}`}>
+            <NextLink href={`/profile/${user.id}}`} passHref>
               
                 <Heading fontSize={30} padding={1} >{user.firstName} {user.lastName}</Heading>
                 <div
@@ -110,7 +119,7 @@ export default function Search (){
           ></div>
                 
                 <img src={`/userpic/${user.profilePic}`} alt={`${user.firstName} ${user.lastName}`}  />
-            </Link>
+            </NextLink>
           </li>
           </Box>
           </ListItem>
@@ -118,7 +127,8 @@ export default function Search (){
       </List>
         </div>
         </Stack>
-        </Box>
+        
+        </Flex>
         </Layout>
         
       );
