@@ -18,7 +18,7 @@ describe("AuthController", () => {
 	let controller: AuthController;
 	let userRepository: Repository<User>;
 	const mockUserService = {
-		findOneByEmail: jest.fn(() => null),
+		findOneByEmail: jest.fn(() => {throw new Error()} ),
 		create: jest.fn((dto) => {
 			return {
 				id: 1,

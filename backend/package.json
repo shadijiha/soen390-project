@@ -20,6 +20,7 @@
         "test:e2e": "jest --config ./test/jest-e2e.json"
     },
     "dependencies": {
+        "@golevelup/ts-jest": "^0.3.4",
         "@nestjs/common": "^9.0.0",
         "@nestjs/config": "^2.2.0",
         "@nestjs/core": "^9.0.0",
@@ -83,23 +84,23 @@
             "^.+\\.(t|j)s$": "ts-jest"
         },
         "collectCoverageFrom": [
-          "**/*.(t|j)s"
+            "**/*.(t|j)s"
         ],
         "coveragePathIgnorePatterns": [
-          "/node_modules/",
-          "/test/",
-          "/src/models",
-          "/src/util",
-          "/src/main.ts",
-          "/src/.*\\.module\\.ts$",
-          "/src/auth/jwt.strategy.ts"
+            "/node_modules/",
+            "/test/",
+            "/src/models",
+            "/src/util",
+            "/src/main.ts",
+            "/src/.*\\.module\\.ts$",
+            "/src/auth/jwt.strategy.ts"
         ],
         "coverageDirectory": "../coverage",
         "testEnvironment": "node",
         "coverageThreshold": {
-          "global": {
-            "statements": 80
-          }
+            "global": {
+                "statements": 80
+            }
         }
     }
 }
