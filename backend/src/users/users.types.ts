@@ -75,4 +75,15 @@ export namespace Users {
     @ApiProperty({ type: [] })
       companies: any[] // TODO: Add Company type
   }
+
+  export class GetUserByIdResponse extends App.WithStatus {
+    @ApiProperty({ type: User })
+      user: User | null
+
+    @ApiProperty({ enum: ['Connected', 'Pending', 'NotConnected'] })
+      connectionStatus: 'Connected' | 'Pending' | 'NotConnected'
+
+    @ApiProperty({ type: User, isArray: true })
+      connections: User[]
+  }
 }
