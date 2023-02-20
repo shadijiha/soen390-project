@@ -2,7 +2,7 @@
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios'
-const URL = 'http://localhost:8080'
+const URL = process.env.BASE_URL ?? 'http://localhost:8080'
 
 
 
