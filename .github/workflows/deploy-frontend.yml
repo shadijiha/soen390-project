@@ -19,12 +19,12 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: use Node 19.x
+      - name: Use Node.js 19.x
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
           cache: "npm"
-          cache-dependency-path: skillswipe/package.lock.json
+          cache-dependency-path: skillswipe/package-lock.json
 
       - name: Build Project
         run: npm install ci
