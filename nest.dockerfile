@@ -1,11 +1,11 @@
-ARG NODE_ENV
-
 ###################
 # BUILD FOR LOCAL DEVELOPMENT
 ###################
 
 FROM node:slim as development
+ARG NODE_ENV=production
 ENV NODE_ENV ${NODE_ENV}
+USER node
 
 # Add a work directory
 WORKDIR /usr/src/app
@@ -23,15 +23,16 @@ RUN npm i -g @nestjs/cli nodemon
 # Expose port
 EXPOSE 3000
 # Start the app
-USER node
 
 ###################
 # BUILD FOR PRODUCTION
 ###################
 
 FROM node:current-alpine as build
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
+USER node
 
-ENV NODE_ENV ${NODE_ENV}
 # Add a work directory
 WORKDIR /usr/src/app
 
@@ -52,13 +53,16 @@ ENV NODE_ENV production
 # run `npm ci` to remove existing node_modules with --only-production
 RUN npm ci --only-production && npm cache clean --force
 
-USER node
-
 ###################
 # PRODUCTION
 ###################
 
 FROM node:19.6-alpine as production
+ARG NODE_ENV=production
+ENV NODE_ENV=$NODE_ENV
+
+WORKDIR /usr/src/app
+USER node
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
