@@ -1,0 +1,59 @@
+version: "3.5"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: next.dockerfile
+    links:
+      - backend
+    volumes:
+      - ./skillswipe:/usr/app
+    ports:
+      - "${FPORT}:3000"
+
+  admin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+     - mariadb
+    depends_on:
+     - mariadb
+    ports:
+     - "8080:80"
+    environment:
+      # MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      # PMA_ARBITRARY: 1
+      PMA_HOST: ${MARIADB_HOST}
+      PMA_PORT: ${MARIADB_PORT}
+
+  mariadb:
+    image: mariadb:latest
+    restart: on-failure
+    volumes:
+      - ../database:/var/lib/mysql
+    ports:
+      - "${MARIADB_PORT}:${MARIADB_PORT}"
+    environment:
+      # MARIADB_TCP_PORT: ${MARIADB_PORT}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DB_NAME}
+
+  backend:
+    build:
+      context: .
+      dockerfile: nest.dockerfile
+      target: "development"
+    working_dir: /app
+    restart: on-failure
+    links:
+      - mariadb
+    depends_on:
+      - mariadb
+    ports:
+      - "${BPORT}:8080"
+    volumes:
+      - ./backend:/app
+    expose:
+      - "${BPORT}"
+    command: "nodemon --watch './src/**/*' -e ts,tsx --exec 'npm run start'"
+    env_file: .env

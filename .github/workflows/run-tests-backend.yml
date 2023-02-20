@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Cope repository
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Use Node.js 19.x
