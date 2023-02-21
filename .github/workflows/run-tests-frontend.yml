@@ -81,30 +81,4 @@ jobs:
 
       - name: Tests with coverage
         working-directory: ./skillswipe
-        run:
-          npm run test:ci
-
-          ############ old
-
-      # - name: Use Node.js 19.x
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 19.x
-      #     cache: "npm"
-      #     cache-dependency-path: skillswipe/package-lock.json
-
-      # - name: Install npm dependencies
-      #   working-directory: ./skillswipe
-      #   run: npm ci
-
-      # - name: Lint code
-      #   working-directory: ./skillswipe
-      #   run: npm run lint
-
-      # - name: Build
-      #   working-directory: ./skillswipe
-      #   run: npm run build
-
-      # - name: Run tests with coverage
-      #   working-directory: ./skillswipe
-      #   run: npm run test:ci
+        run: npm run test:ci
