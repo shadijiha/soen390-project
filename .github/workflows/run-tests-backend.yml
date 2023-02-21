@@ -44,10 +44,13 @@ jobs:
         working-directory: ./backend
         run: npm ci --prefer-offline --no-audit
 
-      - run: npm run lint:ci
+      - name: Run lint check
+        working-directory: ./backend
+        run: npm run lint:ci
         continue-on-error: false
 
-      - name: build
+      - name: Build project
+        working-directory: ./backend
         run: |
           node -v
           npm -v
@@ -74,7 +77,8 @@ jobs:
         uses: rlespinasse/github-slug-action@v4
 
       - name: Tests with coverage
-        run: GIT_BRANCH=${GITHUB_REF_NAME_SLUG} npm run test:cov
+        working-directory: ./backend
+        run: npm run test:cov
 
     # - name: Use Node.js 19.x
     #     uses: actions/setup-node@v3
