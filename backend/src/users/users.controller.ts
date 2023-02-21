@@ -15,7 +15,7 @@ import { FileValidationPipe } from '../util/fileValidationPipe'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor (private readonly usersService: UsersService) {}
+  constructor (private readonly usersService: UsersService) { }
 
   @Get('users')
   @ApiResponse({ type: Users.GetAllUsersResponse })
@@ -29,7 +29,7 @@ export class UsersController {
     try {
       return await this.usersService.findOneById(id)
     } catch (e) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND)
+      throw new HttpException('User not found or', HttpStatus.NOT_FOUND)
     }
   }
 
