@@ -84,7 +84,7 @@ jobs:
         uses: dkershner6/vercel-set-env-action@v1
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          projectName: skillswipe # project name in Vercel
+          projectName: skilswipe # project name in Vercel
           envVariableKeys: BASE_URL
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
