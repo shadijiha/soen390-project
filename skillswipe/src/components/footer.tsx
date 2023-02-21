@@ -18,7 +18,7 @@ const Logo = (props: any) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      {/* SVG logo, rn its blank lol  */}
+      {/* SVG logo, rn its blank */}
       <path
         d="M0 0h120v28H0V0z"
         fill={useColorModeValue("gray.900", "white")}
