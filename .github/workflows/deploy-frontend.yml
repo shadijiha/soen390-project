@@ -87,7 +87,7 @@ jobs:
           projectName: skilswipe # project name in Vercel
           envVariableKeys: BASE_URL
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL: ${{ secrets.BASE_API_URL }}
           TARGET_BASE_URL: preview,development,production # comma delimited, one of [production, preview, development]
           TYPE_BASE_URL: encrypted # one of [plain, encrypted]
 
