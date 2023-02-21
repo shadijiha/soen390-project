@@ -18,7 +18,7 @@ RUN npm install ci
 COPY --chown=node:node ./backend/ ./
 
 # Install dev run dependencies
-RUN npm i -g @nestjs/cli nodemon
+RUN npm i -g nodemon
 # Expose port
 EXPOSE 3000
 # Start the app
