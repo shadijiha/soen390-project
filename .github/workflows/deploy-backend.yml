@@ -8,12 +8,12 @@ on:
   push:
     branches:
       - master
-    paths: "backend/**"
+    paths: 'backend/**'
 
   workflow_dispatch:
     inputs:
       version:
-        description: "Deployment version"
+        description: 'Deployment version'
         required: true
 
 # on:
@@ -35,8 +35,8 @@ concurrency:
 env:
   FORCE_COLOR: 1
   GIT_COMMIT: ${{ github.sha }}
-  REGISTRY: "registry.digitalocean.com/skillswipe"
-  IMAGE_NAME: "skillswipe-backend"
+  REGISTRY: 'registry.digitalocean.com/skillswipe'
+  IMAGE_NAME: 'skillswipe-backend'
 
 jobs:
   build_and_push:
@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build container image
-        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) -f nest.dockerfile
+        run: docker build -f nest.dockerfile -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
