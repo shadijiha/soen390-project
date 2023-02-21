@@ -15,7 +15,7 @@ import { FileValidationPipe } from '../util/fileValidationPipe'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor (private readonly usersService: UsersService) {}
+  constructor (private readonly usersService: UsersService) { }
 
   @Get('users')
   @ApiResponse({ type: Users.GetAllUsersResponse })
