@@ -10,6 +10,17 @@ on:
       - master
     paths: "backend/**"
 
+concurrency:
+  # For pull requests, cancel all currently-running jobs for this workflow
+  # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#concurrency
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+env:
+  # Force terminal colors. @see https://www.npmjs.com/package/colors
+  FORCE_COLOR: 1
+  GIT_COMMIT: ${{ github.sha }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,28 +28,75 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      - name: Use Node.js 19.x
-        uses: actions/setup-node@v3
         with:
-          node-version: 19.x
+          node-version-file: ".nvmrc"
           cache: "npm"
-          cache-dependency-path: backend/package-lock.json
 
-      - name: Install npm dependencies
+      - name: Cache NPM dependencies
+        uses: actions/cache@v3
+        id: cache-primes
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-npm-v3-${{ hashFiles('backend/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-primes.outputs.cache-hit != 'true'
         working-directory: ./backend
+        run: npm ci --prefer-offline --no-audit
+
+      - run: npm run lint:ci
+        continue-on-error: false
+
+      - name: build
         run: |
-          cp .env.testing .env
-          npm ci
+          node -v
+          npm -v
+          npm run build
 
-      - name: Lint code
-        working-directory: ./backend
-        run: npm run lint:ci
+  test:
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
 
-      - name: Build
-        working-directory: ./backend
-        run: npm run build
+      - name: Cache NPM dependencies
+        uses: actions/cache@v3
+        with:
+          path: backend/node_modules
+          key: ${{ runner.os }}-npm-v3-${{ hashFiles('backend/package-lock.json') }}
 
-      - name: Run tests and check code coverage
-        working-directory: ./backend
-        run: npm run test:cov
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Tests with coverage
+        run: GIT_BRANCH=${GITHUB_REF_NAME_SLUG} npm run test:cov
+
+    # - name: Use Node.js 19.x
+    #     uses: actions/setup-node@v3
+    #     with:
+    #       node-version: 19.x
+    #       cache: "npm"
+    #       cache-dependency-path: backend/package-lock.json
+
+    #   - name: Install npm dependencies
+    #     working-directory: ./backend
+    #     run: |
+    #       cp .env.testing .env
+    #       npm ci
+
+    #   - name: Lint code
+    #     working-directory: ./backend
+    #     run: npm run lint:ci
+
+    #   - name: Build
+    #     working-directory: ./backend
+    #     run: npm run build
+
+    #   - name: Run tests and check code coverage
+    #     working-directory: ./backend
+    #     run: npm run test:cov
