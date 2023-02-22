@@ -8,12 +8,12 @@ on:
   push:
     branches:
       - master
-    paths: 'backend/**'
+    paths: "backend/**"
 
   workflow_dispatch:
     inputs:
       version:
-        description: 'Deployment version'
+        description: "Deployment version"
         required: true
 
 # on:
@@ -35,12 +35,12 @@ concurrency:
 env:
   FORCE_COLOR: 1
   GIT_COMMIT: ${{ github.sha }}
-  REGISTRY: 'registry.digitalocean.com/skillswipe'
-  IMAGE_NAME: 'skillswipe-backend'
+  REGISTRY: "registry.digitalocean.com/skillswipe"
+  IMAGE_NAME: "skillswipe-backend"
 
 jobs:
   build_and_push:
-    environment: production
+    environment: production-backend
     runs-on: ubuntu-latest
 
     steps:
@@ -65,7 +65,7 @@ jobs:
         run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
 
   deploy:
-    environment: production
+    environment: production-backend
     runs-on: ubuntu-latest
     needs: build_and_push
 
