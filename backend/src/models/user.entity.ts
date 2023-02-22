@@ -29,59 +29,59 @@ import { Work } from './work.entity'
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-    id: number
+  id: number
 
   @Column()
-  @Index({ fulltext: true })
+  @Index()
   @ApiProperty()
-    firstName: string
+  firstName: string
 
   @Column({ default: null })
-  @Index({ fulltext: true })
+  @Index()
   @ApiProperty()
-    lastName: string
+  lastName: string
 
   @Column()
-  @Index({ unique: true, fulltext: true })
+  @Index({ unique: true })
   @ApiProperty()
-    email: string
+  email: string
 
   @Column({ select: false })
-    password: string
+  password: string
 
   @Column({ default: null })
   @ApiProperty()
-    mobileNo: string
+  mobileNo: string
 
   @Column()
   @ApiProperty()
-    gender: 'male' | 'female'
+  gender: 'male' | 'female'
 
   @Column({ default: null, type: 'longtext' })
   @ApiProperty()
-    profilePic: string
+  profilePic: string
 
   @Column({ default: null, type: 'longtext' })
   @ApiProperty()
-    coverPic: string
+  coverPic: string
 
   @Column({ default: null })
   @ApiProperty()
-    biography: string
+  biography: string
 
   @CreateDateColumn()
   @ApiProperty()
-    created_at: Date
+  created_at: Date
 
   @UpdateDateColumn()
   @ApiProperty()
-    updated_at: Date
+  updated_at: Date
 
   @DeleteDateColumn()
-    deleted_at: Date
+  deleted_at: Date
 
   // SPECIAL GETTERS AND METHODS
-  public get fullName (): string {
+  public get fullName(): string {
     return this.firstName + ' ' + this.lastName
   }
 
@@ -89,7 +89,7 @@ export class User extends BaseEntity {
    * @param otherUser
    * @returns Returns the conversation between the current user and the other user
    */
-  public async getMessagesFrom (otherUser: User | number): Promise<Message[]> {
+  public async getMessagesFrom(otherUser: User | number): Promise<Message[]> {
     const otherId = typeof otherUser === 'number' ? otherUser : otherUser.id
     return await Message.find({
       where: [
@@ -107,7 +107,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Education] })
-    educations: Education[]
+  educations: Education[]
 
   // work experience
   @OneToMany(() => Work, (w) => w.user, {
@@ -115,7 +115,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Work] })
-    workExperiences: Work[]
+  workExperiences: Work[]
 
   // volunteering experience
   @OneToMany(() => Volunteering, (v) => v.user, {
@@ -123,12 +123,12 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Volunteering] })
-    volunteeringExperience: Volunteering[]
+  volunteeringExperience: Volunteering[]
 
   // connections
   @ManyToMany(() => User, (user) => user.connections)
   @ApiProperty({ type: [User] })
-    connections: User[]
+  connections: User[]
 
   // skills
   @ManyToMany((type) => Skill, (skill) => skill.user, {
@@ -137,17 +137,17 @@ export class User extends BaseEntity {
   })
   @JoinTable()
   @ApiProperty({ type: [Skill] })
-    skills: Skill[]
+  skills: Skill[]
 
   // recommendations received
   @OneToMany(() => User, (user) => user.recommendationsReceived)
   @ApiProperty({ type: [Recommendation] })
-    recommendationsReceived: Recommendation[]
+  recommendationsReceived: Recommendation[]
 
   // recommendations given
   @OneToMany(() => User, (user) => user.recommendationsGiven)
   @ApiProperty({ type: [Recommendation] })
-    recommendationsGiven: Recommendation[]
+  recommendationsGiven: Recommendation[]
 
   // courses
   @OneToMany(() => Course, (course) => course.user, {
@@ -155,7 +155,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Course] })
-    courses: Course[]
+  courses: Course[]
 
   // projects
   @OneToMany(() => Project, (project) => project.user, {
@@ -163,7 +163,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Project] })
-    projects: Project[]
+  projects: Project[]
 
   // awards
   @OneToMany(() => Award, (award) => award.user, {
@@ -171,7 +171,7 @@ export class User extends BaseEntity {
     orphanedRowAction: 'delete'
   })
   @ApiProperty({ type: [Award] })
-    awards: Award[]
+  awards: Award[]
 
   // languages
   @ManyToMany((type) => Language, (language) => language.user, {
@@ -180,5 +180,5 @@ export class User extends BaseEntity {
   })
   @JoinTable()
   @ApiProperty({ type: [Language] })
-    languages: Language[]
+  languages: Language[]
 }
