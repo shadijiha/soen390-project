@@ -6,7 +6,7 @@ import { AppModule } from './app.module'
 async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(AppModule)
   app.enableCors({
-    origin: 'skilswipe.vercel.app',
+    origin: 'skillswipe.app',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204
