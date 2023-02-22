@@ -16,11 +16,11 @@ async function bootstrap (): Promise<void> {
     .setDescription(
       `The ${process.env.APP_NAME ?? 'skillswipe-dev'} API description`
     )
-    .setVersion(process.env.VERSION ?? 'dev')
+    .setVersion(process.env.APP_VERSION ?? 'dev')
     .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
-  await app.listen(process.env.PORT ?? 8080)
+  await app.listen(process.env.APP_PORT ?? 8080)
 }
 void bootstrap()
