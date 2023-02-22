@@ -23,6 +23,7 @@ import { Recommendation } from './recommendation.entity'
 import { Skill } from './skill.entity'
 import { Volunteering } from './volunteering.entity'
 import { Work } from './work.entity'
+import { Connection } from './connection.entity'
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -126,9 +127,11 @@ export class User extends BaseEntity {
   volunteeringExperience: Volunteering[]
 
   // connections
-  @ManyToMany(() => User, (user) => user.connections)
-  @ApiProperty({ type: [User] })
-  connections: User[]
+  @OneToMany(() => Connection, (connection) => connection.user_1)
+    connection_1: Connection[]
+
+  @OneToMany(() => Connection, (connection) => connection.user_2)
+    connection_2: Connection[]
 
   // skills
   @ManyToMany((type) => Skill, (skill) => skill.user, {
@@ -140,12 +143,12 @@ export class User extends BaseEntity {
   skills: Skill[]
 
   // recommendations received
-  @OneToMany(() => User, (user) => user.recommendationsReceived)
+  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommended)
   @ApiProperty({ type: [Recommendation] })
   recommendationsReceived: Recommendation[]
 
   // recommendations given
-  @OneToMany(() => User, (user) => user.recommendationsGiven)
+  @OneToMany(() => Recommendation, (recommendation) => recommendation.userRecommending)
   @ApiProperty({ type: [Recommendation] })
   recommendationsGiven: Recommendation[]
 

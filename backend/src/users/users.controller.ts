@@ -8,6 +8,7 @@ import { Users } from './users.types'
 import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { FileValidationPipe } from '../util/fileValidationPipe'
+import { ConnectionsService } from './connections/connections.service'
 
 @Controller()
 @Controller()
@@ -15,7 +16,7 @@ import { FileValidationPipe } from '../util/fileValidationPipe'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor (private readonly usersService: UsersService) { }
+  constructor (private readonly usersService: UsersService, private readonly connectionsService: ConnectionsService) {}
 
   @Get('users')
   @ApiResponse({ type: Users.GetAllUsersResponse })
@@ -24,10 +25,15 @@ export class UsersController {
   }
 
   @Get('user/:id')
-  @ApiResponse({ type: Users.GetAllUsersResponse })
-  async findOne (@Param('id') id: number): Promise<User> {
+  @ApiResponse({ type: Users.GetUserByIdResponse })
+  async findOne (@Param('id') id: number, @AuthUser() authedUser: BearerPayload): Promise<Users.GetUserByIdResponse> {
     try {
-      return await this.usersService.findOneById(id)
+      const res: Users.GetUserByIdResponse = new Users.GetUserByIdResponse()
+      res.user = await this.usersService.findOneById(id)
+      res.connectionStatus = await this.connectionsService.getConnectionStatus(authedUser.id, id)
+      res.connections = await this.connectionsService.getAcceptedConnections(res.user.id)
+
+      return res
     } catch (e) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND)
     }
@@ -63,7 +69,6 @@ export class UsersController {
       @Body() user: Users.UpdateUserRequest,
       @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
   ): Promise<User> {
-    console.log(files)
     return await this.usersService.update(authedUser.id, user, files)
   }
 }
