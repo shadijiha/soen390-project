@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from "@/components/Layout";
 import NavBar from "@/components/NavBar";
 import { useRouter } from "next/router";
@@ -47,6 +50,14 @@ const profile = () => {
     profilePic: "",
     coverPic: "",
     biography: "",
+    skills : [],
+    awards: [],
+    workExperiences: [],
+    educations:[],
+    volunteeringExperience:[],
+    recommendationsReceived:[],
+    projects:[],
+    courses:[]
   });
   const [Status, setStatus] = useState({
     connected: false,
@@ -55,10 +66,6 @@ const profile = () => {
   });
   const currentUser = useSelector((state) => state as any);
 
-  useEffect(() => {
-
-    console.log(user);
-  }, [Status]);
 
   const Request = () => {
     const token = localStorage.getItem("jwt");

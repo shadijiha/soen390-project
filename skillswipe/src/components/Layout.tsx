@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { checkLogin } from "@/pages/api/api";
 
 import { useRouter } from "next/router";
