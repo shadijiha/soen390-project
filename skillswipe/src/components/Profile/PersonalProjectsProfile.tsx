@@ -50,7 +50,7 @@ const PersonalProjectsProfile = ({ Project }: any) => {
 
   return (
     
-     (
+  (
       <>
         <div>
           <h1
@@ -88,7 +88,7 @@ const PersonalProjectsProfile = ({ Project }: any) => {
                     <HStack>
                       <Text
                         as={Link}
-                        href={Project.link}
+                        href={Project.url}
                         fontWeight="bold"
                         fontSize="md"
                         noOfLines={1}

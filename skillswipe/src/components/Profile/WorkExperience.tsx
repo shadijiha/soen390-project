@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   chakra,
@@ -17,20 +17,19 @@ const WorkExperience = ({experience} : any) => {
   const isDesktop = useBreakpointValue({ base: false, md: true });
 
   return (
-    experience  &&
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         Career Journey 👨🏼‍💻
         <br></br>
       </chakra.h3>
-      {experience.map((milestone : any) => (
-        <Flex key={milestone.id} mb="10px">
+      {experience.map((milestone : any,index : any) => (   
+        <Flex key={index} mb="10px">
           {/* Desktop view(left card) */}
-          {isDesktop && milestone.id % 2 === 0 && (
+          {isDesktop && index % 2 === 0 && (
             <>
               <EmptyCard />
               <LineWithDot />
-              <Card {...milestone} />
+              <Card {...milestone} id ={index} />
             </>
           )}
 
@@ -38,14 +37,14 @@ const WorkExperience = ({experience} : any) => {
           {isMobile && (
             <>
               <LineWithDot />
-              <Card {...milestone} />
+              <Card {...milestone} id ={index} />
             </>
           )}
 
           {/* Desktop view(right card) */}
-          {isDesktop && milestone.id % 2 !== 0 && (
+          {isDesktop && index % 2 !== 0 && (
             <>
-              <Card {...milestone} />
+              <Card {...milestone} id={index} />
 
               <LineWithDot />
               <EmptyCard />
@@ -57,17 +56,12 @@ const WorkExperience = ({experience} : any) => {
   );
 };
 
-interface CardProps {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-}
 
-const Card = ({ id, title, description, date }: CardProps) => {
+const Card = (props : any) => {
   // For even id show card on left side
   // For odd id show card on right side
-  const isEvenId = id % 2 == 0;
+
+  const isEvenId = props.id % 2 == 0;
   let borderWidthValue = isEvenId ? "15px 15px 15px 0" : "15px 0 15px 15px";
   let leftValue = isEvenId ? "-15px" : "unset";
   let rightValue = isEvenId ? "unset" : "-15px";
@@ -106,14 +100,14 @@ const Card = ({ id, title, description, date }: CardProps) => {
     >
       <Box>
         <Text fontSize="lg" color={isEvenId ? "teal.400" : "blue.300"}>
-          {date}
+          {props.company}
         </Text>
 
         <VStack spacing={2} mb={3} textAlign="left">
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
-            {title}
+            {props.title}
+          <Text fontSize="md">{`${props.start_year}-${props.end_year}`}</Text>
           </chakra.h1>
-          <Text fontSize="md">{description}</Text>
         </VStack>
       </Box>
     </HStack>

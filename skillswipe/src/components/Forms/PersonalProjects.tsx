@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
    FormControl,
    FormLabel,
@@ -22,7 +22,10 @@ const PersonalProjects = (props: any) => {
       end_year: "",
       id: null
    });
-   if (personalProject.name == "") setPersonalProject(props.personalProject);
+
+
+      if (personalProject && personalProject.name == "") setPersonalProject(props.personalProjects);
+
    const handleChange = (event: any) => {
       const { name, value } = event.target;
       setPersonalProject((prevState) => ({
@@ -49,7 +52,7 @@ const PersonalProjects = (props: any) => {
       // You can now use the form values to update the user's personalProject
    }
    const deleteItem = () => {
-      props.deletePersonalProject(props.personalProject.id);
+         props.deletePersonalProjects(props.personalProjects.id);  
    }
    return (
       <Box

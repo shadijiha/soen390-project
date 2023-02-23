@@ -5,7 +5,6 @@ import "react-toastify/dist/ReactToastify.css";
 import ProfileStyle from "../../styles/profilestyle";
 
 const Education = ({ education }: any) => {
-
   return (
     education &&
     <div data-testid="education">
@@ -45,7 +44,7 @@ const Education = ({ education }: any) => {
                     <span className="edu-text07">
                       {element.degree}
                     </span>
-                    <span className="edu-text08">{`${element.start_year}-${element.end ? element.end : "Present"}`}</span>
+                    <span className="edu-text08">{`${element.start_year}-${element.end_year}`}</span>
                   </div>
                 </>
               )
