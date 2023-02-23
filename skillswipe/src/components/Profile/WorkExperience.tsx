@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })

@@ -1,19 +1,8 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import user from '../assets/images/user.png'
-import { checkLogin, editPersonalInformation } from './api/api'
+import { editPersonalInformation } from './api/api'
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
@@ -24,7 +13,7 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 const EditProfile = () => {

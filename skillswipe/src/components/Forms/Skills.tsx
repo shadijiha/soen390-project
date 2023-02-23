@@ -1,20 +1,15 @@
-import { editSkills } from '@/pages/api/api'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Spacer,
   Stack,
-  Text,
-  Textarea,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
+
 const Skill = (props: any) => {
   const [skill, setSkill] = useState({
     skill: '',

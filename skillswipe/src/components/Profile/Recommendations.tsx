@@ -1,7 +1,4 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @next/next/no-img-element */
-import { useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import ProfileStyle from '../../styles/profilestyle'
 

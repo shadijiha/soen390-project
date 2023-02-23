@@ -1,5 +1,5 @@
 import { Button, Stack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../../styles/profilestyle'

@@ -1,5 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react'
-// import Router, { useRouter } from "next/router";
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -11,6 +9,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import React, { useState } from 'react'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'

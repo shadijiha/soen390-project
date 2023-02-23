@@ -1,25 +1,19 @@
-import { AddIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Box,
-  Button,
   chakra,
   Container,
-  Divider,
   Grid,
   HStack,
   Icon,
-  Link,
   Stack,
-  Text,
-  Tooltip,
   useColorModeValue,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { FaPencilAlt, FaPencilRuler, FaSchool } from 'react-icons/fa'
-import { useSelector } from 'react-redux'
+import React from 'react'
+import { FaPencilRuler } from 'react-icons/fa'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
+
 const courseTitles = ['Shopify Course', 'React Course', 'Node Course']
 const courseDescriptions = [
   'Shopify Course Description',

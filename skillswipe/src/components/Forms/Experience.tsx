@@ -1,23 +1,19 @@
-import { editExperience } from '@/pages/api/api'
 import {
   addWorkExperienceRequest,
   deleteWorkExperienceRequest,
   editWorkEperienceRequest,
 } from '@/pages/api/profile_api'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Spacer,
   Stack,
-  Textarea,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { FcRight, FcRightUp } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 
 const Experience = (props: any) => {

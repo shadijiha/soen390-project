@@ -1,11 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
-import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Select,
   Spacer,
@@ -14,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import InformationBox from '../EditProfile/InformationBox'
 
 const Information = ({ update, handleSubmit }: any) => {
   const currentUser = useSelector((state) => state as any)

@@ -1,26 +1,7 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/rules-of-hooks */
-import { editEducationHistory } from '@/pages/api/api'
-import { emailValidator } from '@/Util/Validator'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
+import { Stack } from '@chakra-ui/react'
+import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-import EducationHistory from '../Forms/EducationHistory'
 
 const Volunteering = ({ volunteer }: any) => {
   return (

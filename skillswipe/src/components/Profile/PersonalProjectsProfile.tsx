@@ -1,13 +1,7 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable react-hooks/rules-of-hooks */
 import {
-  chakra,
   Container,
   HStack,
-  Image,
   Link,
-  Stack,
-  Tag,
   Text,
   useColorModeValue,
   VStack,

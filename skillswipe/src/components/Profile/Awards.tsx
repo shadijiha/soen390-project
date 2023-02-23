@@ -1,21 +1,6 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { Button, Stack } from '@chakra-ui/react'
+import React from 'react'
 
-import { editEducationHistory } from '@/pages/api/api'
-import { emailValidator } from '@/Util/Validator'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 

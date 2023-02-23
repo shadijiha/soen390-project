@@ -3,20 +3,19 @@ import {
   deleteAwardsRequest,
   editAwardsRequest,
 } from '@/pages/api/profile_api'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
   FormControl,
   FormLabel,
-  Heading,
   Input,
   Spacer,
   Stack,
-  Textarea,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+
 const Awards = (props: any) => {
   const [award, setAward] = useState({
     id: null,
