@@ -1,8 +1,13 @@
 {
   "compilerOptions": {
     "useUnknownInCatchVariables": false,
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext", "ES2022"],
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ES2022"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -17,11 +22,26 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
-    
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "allowSyntheticDefaultImports": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/header.tsxx", "src/components/EditProfile"],
-  "exclude": ["node_modules"]
-  
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/components/header.tsxx",
+    "src/components/EditProfile"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
