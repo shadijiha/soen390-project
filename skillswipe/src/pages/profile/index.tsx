@@ -27,7 +27,7 @@ import { useRouter } from "next/router";
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
 import Skills from "@/components/Profile/Skills/Skills";
-import Education from "../../components/Profile/Education";
+import Education from "../../components/Profile/education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
