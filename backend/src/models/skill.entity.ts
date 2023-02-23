@@ -18,19 +18,7 @@ export class Skill extends BaseEntity {
 
   @Column()
   @ApiProperty()
-    company: string
-
-  @Column()
-  @ApiProperty()
     title: string
-
-  @Column()
-  @ApiProperty()
-    start_year: number
-
-  @Column()
-  @ApiProperty()
-    end_year: number
 
   @CreateDateColumn()
   @ApiProperty()
