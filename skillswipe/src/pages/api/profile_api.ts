@@ -1,4 +1,6 @@
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
 import axios from 'axios'
 const URL = 'http://localhost:8080'
 
@@ -116,13 +118,45 @@ export const deleteWorkExperienceRequest = async (
     })
 }
 
-export const editVolunteering = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/Profile/add/volunteering`, UpdatedUser, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+export const editVolunteeringRequest = async (token: any, UpdatedUser: any) => {
+  return axios
+    .put(`${URL}/Profile/volunteering/${UpdatedUser.id}`, UpdatedUser, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
+
+export const addVolunteeringRequest = async (token: any, volunteering: any) => {
+  return axios
+    .post(`${URL}/Profile/volunteering`, volunteering, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteVolunteeringRequest = async (
+  token: any, 
+  VolunteeringId: number
+  ) => {
+  return axios
+    .delete(`${URL}/Profile/volunteering/${VolunteeringId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
 
 export const editPersonalProjects = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}/profile/add/Project`, UpdatedUser, {
