@@ -1,4 +1,4 @@
-import css from "styled-jsx/css";
+import css from 'styled-jsx/css'
 
 const ProfileStyle = css`
 
@@ -1738,6 +1738,6 @@ const ProfileStyle = css`
       height: 250px;
     }
   
-`;
+`
 
-export default ProfileStyle;
+export default ProfileStyle

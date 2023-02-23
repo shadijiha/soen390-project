@@ -44,7 +44,7 @@ export const editEducationHistoryRequest = async (token: any, education: any) =>
 }
 
 export const addEducationHistoryRequest = async (token: any, education: any) => {
-   return axios.post(`${URL}/profile/education`,education, {
+   return axios.post(`${URL}/profile/education`, education, {
       headers: {
          "Authorization": `Bearer ${token}`
       }
@@ -74,7 +74,7 @@ export const editWorkEperienceRequest = async (token: any, workExperience: any) 
 }
 
 export const addWorkExperienceRequest = async (token: any, workExperience: any) => {
-   return axios.post(`${URL}/profile/work`,workExperience, {
+   return axios.post(`${URL}/profile/work`, workExperience, {
       headers: {
          "Authorization": `Bearer ${token}`
       }

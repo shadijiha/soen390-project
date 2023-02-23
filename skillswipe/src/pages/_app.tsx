@@ -1,9 +1,9 @@
-import "@/styles/globals.css";
-import type { AppProps } from "next/app";
-import { ChakraProvider, theme } from "@chakra-ui/react";
-import { ToastContainer } from "react-toastify";
-import { Provider, useDispatch } from "react-redux";
-import store from "../Redux/store";
+import '@/styles/globals.css'
+import type { AppProps } from 'next/app'
+import { ChakraProvider, theme } from '@chakra-ui/react'
+import { ToastContainer } from 'react-toastify'
+import { Provider, useDispatch } from 'react-redux'
+import store from '../Redux/store'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -24,5 +24,5 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         />
       </ChakraProvider>
     </Provider>
-  );
+  )
 }

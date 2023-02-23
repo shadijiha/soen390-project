@@ -1,26 +1,26 @@
-import { Heading, useColorModeValue } from "@chakra-ui/react";
+import { Heading, useColorModeValue } from '@chakra-ui/react'
 
-import NavBar from "@/components/NavBar";
-import SmallWithLogoLeft from "@/components/footer";
-import { Box, Text, List, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
-import Layout from "@/components/Layout";
-import { useSelector } from "react-redux";
+import NavBar from '@/components/NavBar'
+import SmallWithLogoLeft from '@/components/footer'
+import { Box, Text, List, ListItem } from '@chakra-ui/react'
+import { useState } from 'react'
+import Layout from '@/components/Layout'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
-  const formBorder = useColorModeValue("gray.100", "gray.600");
-  const postBackground = useColorModeValue("gray.100", "gray.700");
-  const toggleTheme = useColorModeValue("🌙", "💡");
-  const User = useSelector((state) => state as any);
+  const formBorder = useColorModeValue('gray.100', 'gray.600')
+  const postBackground = useColorModeValue('gray.100', 'gray.700')
+  const toggleTheme = useColorModeValue('🌙', '💡')
+  const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
-    { id: 1, title: "First Post", body: "This is a description" },
+    { id: 1, title: 'First Post', body: 'This is a description' },
     {
       id: 2,
-      title: "Second Post",
+      title: 'Second Post',
       body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
-    { id: 3, title: "Third Post", body: "This is a description" },
-  ]);
+    { id: 3, title: 'Third Post', body: 'This is a description' },
+  ])
 
   return (
     <>
@@ -45,7 +45,7 @@ const Home = () => {
                     minW="80vw"
                     maxW="90vw"
                   >
-                    <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                       {post.title}
                     </Text>
                     <Text>{post.body}</Text>
@@ -57,7 +57,7 @@ const Home = () => {
         </Box>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

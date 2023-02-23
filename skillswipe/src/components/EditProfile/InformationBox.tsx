@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   FormControl,
   FormLabel,
@@ -9,29 +9,29 @@ import {
   Heading,
   Text,
   Textarea,
-} from "@chakra-ui/react";
-import Information from "../Forms/Information";
-import { useSelector } from "react-redux";
-import { editPersonalInformation } from "@/pages/api/api";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { emailValidator } from "@/Util/Validator";
+} from '@chakra-ui/react'
+import Information from '../Forms/Information'
+import { useSelector } from 'react-redux'
+import { editPersonalInformation } from '@/pages/api/api'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { emailValidator } from '@/Util/Validator'
 const InformationBox = () => {
-  const user = useSelector((state) => state as any);
+  const user = useSelector((state) => state as any)
   const [UpdateUser, setUpdateUser] = useState({
-    firstName: "",
-    lastName: "",
-    mobileNo: "",
-    email: "",
-    biography: "",
-    gender: "",
-  });
+    firstName: '',
+    lastName: '',
+    mobileNo: '',
+    email: '',
+    biography: '',
+    gender: '',
+  })
   const update = (updateUser: any) => {
-    var User = Object.assign(UpdateUser, updateUser);
-    setUpdateUser(User);
-  };
+    var User = Object.assign(UpdateUser, updateUser)
+    setUpdateUser(User)
+  }
   const handleSubmit = async () => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt')
 
     if (
       UpdateUser.firstName ||
@@ -42,50 +42,49 @@ const InformationBox = () => {
       UpdateUser.biography
     ) {
       if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
-        toast("Please add Valid email");
+        toast('Please add Valid email')
       } else {
         editPersonalInformation(token, UpdateUser)
           .then((response) => {
-            console.log(response);
-            toast("Updated Successfully");
+            console.log(response)
+            toast('Updated Successfully')
           })
           .catch((error) => {
-            toast(error.message);
-          });
+            toast(error.message)
+          })
       }
     }
-  };
+  }
 
   return (
     <Stack
       as="form"
       p={5}
       style={{
-        flexDirection: "column",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
-        alignSelf: "center",
-        WebkitAlignContent: "center",
-        WebkitAlignItems: "center",
-        WebkitBoxAlign: "center",
-        WebkitFlexWrap: "wrap",
-        WebkitJustifyContent: "center",
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        WebkitAlignContent: 'center',
+        WebkitAlignItems: 'center',
+        WebkitBoxAlign: 'center',
+        WebkitFlexWrap: 'wrap',
+        WebkitJustifyContent: 'center',
       }}
     >
       <Text
         style={{
-          alignSelf: "flex-start",
-          fontSize: "1.5rem",
-          fontWeight: "bold",
+          alignSelf: 'flex-start',
+          fontSize: '1.5rem',
+          fontWeight: 'bold',
         }}
       >
         Personal Information
       </Text>
-      <Information update={update}  handleSubmit={handleSubmit}/>
-      
+      <Information update={update} handleSubmit={handleSubmit} />
     </Stack>
-  );
-};
-export default InformationBox;
+  )
+}
+export default InformationBox

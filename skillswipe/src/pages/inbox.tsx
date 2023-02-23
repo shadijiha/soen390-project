@@ -1,6 +1,6 @@
-import NavBar from "@/components/NavBar";
-import { Text } from "@chakra-ui/react";
-import Layout from "@/components/Layout";
+import NavBar from '@/components/NavBar'
+import { Text } from '@chakra-ui/react'
+import Layout from '@/components/Layout'
 
 const inbox = () => {
   return (
@@ -10,7 +10,7 @@ const inbox = () => {
         <Text>Messages</Text>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default inbox;
+export default inbox

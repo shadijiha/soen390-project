@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import Layout from "@/components/Layout";
+import Layout from '@/components/Layout'
 import {
   Icon,
   Flex,
@@ -10,65 +9,60 @@ import {
   useColorModeValue,
   Center,
   Text,
-} from "@chakra-ui/react";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { loginApi } from "./api/api";
+} from '@chakra-ui/react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { FcGoogle } from 'react-icons/fc'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { loginApi } from './api/api'
 
 const login = () => {
-  const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue("gray.100", "gray.700");
-  const placeholderBackground = useColorModeValue("gray.200", "gray.600");
-  const toggleTheme = useColorModeValue("🌙", "💡");
-  const googleBackground = useColorModeValue("white", "gray.700");
-  const [User, setUser] = useState({ email: "", password: "" });
-  const router = useRouter();
+  const { toggleColorMode } = useColorMode()
+  const formBackground = useColorModeValue('gray.100', 'gray.700')
+  const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
+  const toggleTheme = useColorModeValue('🌙', '💡')
+  const googleBackground = useColorModeValue('white', 'gray.700')
+  const [User, setUser] = useState({ email: '', password: '' })
+  const router = useRouter()
   const changeEmail = (event: any) => {
     setUser({
       ...User,
       email: event.target.value,
-    });
-  };
+    })
+  }
   const changePassword = (event: any) => {
     setUser({
       ...User,
       password: event.target.value,
-    });
-  };
+    })
+  }
   const submitForm = () => {
     if (!(User.email && User.password)) {
-      toast("Please fill all the fields");
+      toast('Please fill all the fields')
     } else {
       loginApi(User)
         .then((Response: any) => {
-          toast("Successfully Logged In");
-          router.push("/home");
-          localStorage.setItem("jwt", Response.data.access_token);
+          toast('Successfully Logged In')
+          router.push('/home')
+          localStorage.setItem('jwt', Response.data.access_token)
         })
         .catch((error: any) => {
           if (error.response.status == 401) {
-            toast("Please fill correct details");
+            toast('Please fill correct details')
           } else {
-            toast(error.message);
+            toast(error.message)
           }
-        });
+        })
     }
-  };
+  }
 
   return (
     <>
       <Layout>
         <Flex height="100vh" alignItems="center" justifyContent="center">
-          <Flex
-            direction="column"
-            background={formBackground}
-            p={12}
-            rounded={25}
-          >
+          <Flex direction="column" background={formBackground} p={12} rounded={25}>
             <Heading mb={6}>SkillSwipe 🚀</Heading>
             <Input
               placeholder="Email"
@@ -92,8 +86,8 @@ const login = () => {
             {/* Google */}
             <Button
               mb={6}
-              w={"full"}
-              variant={"outline"}
+              w={'full'}
+              variant={'outline'}
               backgroundColor={googleBackground}
               leftIcon={<FcGoogle />}
             >
@@ -106,7 +100,7 @@ const login = () => {
             </Button>
             <Button
               onClick={toggleColorMode}
-              _hover={{ bg: "transparent" }}
+              _hover={{ bg: 'transparent' }}
               bg="transparent"
             >
               {toggleTheme}
@@ -115,6 +109,6 @@ const login = () => {
         </Flex>
       </Layout>
     </>
-  );
-};
-export default login;
+  )
+}
+export default login

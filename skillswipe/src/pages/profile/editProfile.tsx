@@ -1,9 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
-import React, { useState, useEffect } from "react";
-import NavBar from "@/components/NavBar";
-import { checkLogin, editPersonalInformation } from "../api/api";
+import React, { useState, useEffect } from 'react'
+import NavBar from '@/components/NavBar'
+import { checkLogin, editPersonalInformation } from '../api/api'
 import {
   FormControl,
   FormLabel,
@@ -14,89 +11,89 @@ import {
   Heading,
   Text,
   Textarea,
-} from "@chakra-ui/react";
-import Layout from "@/components/Layout";
-import user from "../assets/images/user.png";
+} from '@chakra-ui/react'
+import Layout from '@/components/Layout'
+import user from '../assets/images/user.png'
 
-import InformationBox from "@/components/EditProfile/InformationBox";
-import ExperienceBox from "@/components/EditProfile/ExperienceBox";
-import EducationHistoryBox from "@/components/EditProfile/EductationHistoryBox";
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
+import InformationBox from '@/components/EditProfile/InformationBox'
+import ExperienceBox from '@/components/EditProfile/ExperienceBox'
+import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
+import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
-import VolunteeringBox from "@/components/EditProfile/VolunteeringBox";
-import PersonalProjectsBox from "@/components/EditProfile/PersonalProjectsBox";
-import AwardsBox from "@/components/EditProfile/AwardsBox";
-import SkillsBox from "@/components/EditProfile/SkillsBox";
-import LanguagesBox from "@/components/EditProfile/LanguagesBox";
-import CoursesBox from "@/components/EditProfile/CoursesBox";
+import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
+import AwardsBox from '@/components/EditProfile/AwardsBox'
+import SkillsBox from '@/components/EditProfile/SkillsBox'
+import LanguagesBox from '@/components/EditProfile/LanguagesBox'
+import CoursesBox from '@/components/EditProfile/CoursesBox'
 
 const EditProfile = () => {
-  const currentUser = useSelector((state) => state as any);
+  const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
-    profilePic: "",
-    coverPic: "",
-  });
+    profilePic: '',
+    coverPic: '',
+  })
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
-    });
-  }, [currentUser]);
+    })
+  }, [currentUser])
 
   const [profile, setProfile] = useState({
-    name: "John Smith",
-    title: "Software Engineer",
-    location: "Montreal, QC, CA",
-    school: "Concordia University",
-    experience: "Five years of experience in full stack development",
-    experience2: "Three years of experience in mobile development",
-    experience3: "Two years of experience in data analysis",
+    name: 'John Smith',
+    title: 'Software Engineer',
+    location: 'Montreal, QC, CA',
+    school: 'Concordia University',
+    experience: 'Five years of experience in full stack development',
+    experience2: 'Three years of experience in mobile development',
+    experience3: 'Two years of experience in data analysis',
     image:
-      "https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg",
+      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
     cover:
-      "https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc",
-  });
+      'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
+  })
 
   const coverImageHandler = (e: any) => {
-    const token = localStorage.getItem("jwt");
-    const fd = new FormData();
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
     if (e.target.files[0]) {
-      fd.append("coverPic", e.target.files[0], e.target.files[0].name);
+      fd.append('coverPic', e.target.files[0], e.target.files[0].name)
       editPersonalInformation(token, fd)
         .then((response) => {
-          console.log(response);
-          setPic({ ...Pic, coverPic: response.data.coverPic });
-          toast("Successfully Update Cover Picture");
+          console.log(response)
+          setPic({ ...Pic, coverPic: response.data.coverPic })
+          toast('Successfully Update Cover Picture')
         })
         .catch((error) => {
-          toast(error.message);
-        });
+          toast(error.message)
+        })
     }
-  };
+  }
 
   const ProfileImageHandler = (e: any) => {
-    console.log(e.target);
-    const token = localStorage.getItem("jwt");
-    const fd = new FormData();
+    console.log(e.target)
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
     if (e.target.files[0]) {
-      fd.append("profilePic", e.target.files[0], e.target.files[0].name);
+      fd.append('profilePic', e.target.files[0], e.target.files[0].name)
       editPersonalInformation(token, fd)
         .then((response) => {
-          setPic({ ...Pic, profilePic: response.data.profilePic });
-          toast("Successfully Updated Profile picture");
+          setPic({ ...Pic, profilePic: response.data.profilePic })
+          toast('Successfully Updated Profile picture')
         })
         .catch((error) => {
-          toast(error.message);
-        });
+          toast(error.message)
+        })
     }
-  };
+  }
   const clickCover = () => {
-    document.getElementById("file-input-coverPic")?.click();
-  };
+    document.getElementById('file-input-coverPic')?.click()
+  }
   const clickProfile = () => {
-    document.getElementById("file-input-profilePic")?.click();
-  };
+    document.getElementById('file-input-profilePic')?.click()
+  }
 
   return (
     <>
@@ -106,8 +103,8 @@ const EditProfile = () => {
           <Box>
             <Heading
               style={{
-                fontSize: "2.5rem",
-                fontWeight: "200",
+                fontSize: '2.5rem',
+                fontWeight: '200',
               }}
             >
               Hey, {currentUser.auth.firstName}!
@@ -117,32 +114,32 @@ const EditProfile = () => {
 
         <Stack
           style={{
-            display: "flex",
-            flexDirection: "row",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           {/* profile picture */}
           <div
             className="profile-picture"
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              height: "150px",
-              width: "150px",
-              position: "relative",
-              margin: "2%",
-              marginBottom: "5%",
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '150px',
+              width: '150px',
+              position: 'relative',
+              margin: '2%',
+              marginBottom: '5%',
             }}
           >
-            <button style={{ position: "absolute", bottom: "0", right: "0" }}>
+            <button style={{ position: 'absolute', bottom: '0', right: '0' }}>
               {/* upload new profile pic button */}
               <input
                 type="file"
                 id="file-input-profilePic"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 onClick={clickProfile}
                 onChange={ProfileImageHandler}
               />
@@ -151,10 +148,10 @@ const EditProfile = () => {
                   src="https://img.icons8.com/material-sharp/512/send-letter.png"
                   alt="Upload Icon"
                   style={{
-                    height: "35px",
-                    width: "35px",
-                    borderRadius: "100%",
-                    backgroundColor: "white",
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
                   }}
                 />
               </label>
@@ -169,10 +166,10 @@ const EditProfile = () => {
                 }
                 className="profile-image"
                 style={{
-                  aspectRatio: "1/1",
-                  objectFit: "cover",
-                  borderRadius: "100%",
-                  boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
+                  aspectRatio: '1/1',
+                  objectFit: 'cover',
+                  borderRadius: '100%',
+                  boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
             </a>
@@ -180,7 +177,7 @@ const EditProfile = () => {
             <input
               type="file"
               id="file-input-profilePic"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={ProfileImageHandler}
             />
           </div>
@@ -190,20 +187,20 @@ const EditProfile = () => {
           <div
             className="profile-cover"
             style={{
-              position: "relative",
-              height: "250px",
-              width: "max-content",
-              margin: "2%",
+              position: 'relative',
+              height: '250px',
+              width: 'max-content',
+              margin: '2%',
             }}
           >
             <button
-              style={{ position: "absolute", bottom: "-10px", right: "-10px" }}
+              style={{ position: 'absolute', bottom: '-10px', right: '-10px' }}
             >
               {/* upload new profile cover button */}
               <input
                 type="file"
                 id="file-input-coverPic"
-                style={{ display: "none" }}
+                style={{ display: 'none' }}
                 onClick={clickCover}
                 onChange={coverImageHandler}
               />
@@ -212,10 +209,10 @@ const EditProfile = () => {
                   src="https://img.icons8.com/material-sharp/512/send-letter.png"
                   alt="Upload Icon"
                   style={{
-                    height: "35px",
-                    width: "35px",
-                    borderRadius: "100%",
-                    backgroundColor: "white",
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
                   }}
                 />
               </label>
@@ -230,18 +227,18 @@ const EditProfile = () => {
                 }
                 className="profile-cover"
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  borderRadius: "30px",
-                  boxShadow: "0 5px 17px 0px rgba(0, 0, 0, 0.6)",
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '30px',
+                  boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
             </a>
             <input
               type="file"
               id="file-input-coverPic"
-              style={{ display: "none" }}
+              style={{ display: 'none' }}
               onChange={coverImageHandler}
             />
           </div>
@@ -256,14 +253,12 @@ const EditProfile = () => {
         {/* Education History */}
         <EducationHistoryBox />
 
-
         {/* Volunteering */}
         <VolunteeringBox />
 
         {/* Personal Projects */}
         <PersonalProjectsBox />
 
-        
         {/* awards */}
         <AwardsBox />
 
@@ -278,13 +273,12 @@ const EditProfile = () => {
 
         {/* languages */}
         <LanguagesBox />
-        
+
         {/* Certifications */}
         <CoursesBox />
-
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default EditProfile;
+export default EditProfile

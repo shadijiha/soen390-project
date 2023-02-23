@@ -1,63 +1,62 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { checkLogin } from "@/pages/api/api";
+import { checkLogin } from '@/pages/api/api'
 
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { Spinner } from "@chakra-ui/spinner";
-import { Box } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
-import { actionCreator } from "../Redux/index";
-import { bindActionCreators } from "redux";
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { Spinner } from '@chakra-ui/spinner'
+import { Box } from '@chakra-ui/react'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionCreator } from '../Redux/index'
+import { bindActionCreators } from 'redux'
 
 const Layout = ({ children }: any) => {
-  const [Loading, setLoading] = useState(true);
-  const router = useRouter();
-  const dispatch = useDispatch();
-  const actions = bindActionCreators(actionCreator,dispatch);
-  const user = useSelector(state => state);
+  const [Loading, setLoading] = useState(true)
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const actions = bindActionCreators(actionCreator, dispatch)
+  const user = useSelector((state) => state)
   useEffect(() => {
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt')
     if (token) {
       checkLogin(token)
         .then((response) => {
-          if (router.asPath == "/register" || router.asPath == "/") {
-            actions.setUser(response.data);
-            router.push("/home");
+          if (router.asPath == '/register' || router.asPath == '/') {
+            actions.setUser(response.data)
+            router.push('/home')
             setTimeout(() => {
-              setLoading(false);
-            }, 100);
+              setLoading(false)
+            }, 100)
           } else {
-            actions.setUser(response.data);
+            actions.setUser(response.data)
             setTimeout(() => {
-            setLoading(false);
-          })
+              setLoading(false)
+            })
           }
         })
         .catch((error) => {
-          router.push("/");
+          router.push('/')
           setTimeout(() => {
-            setLoading(false);
-          }, 100);
-          localStorage.removeItem("jwt");
-        });
+            setLoading(false)
+          }, 100)
+          localStorage.removeItem('jwt')
+        })
     } else {
-      if (router.asPath != "/register") {
-        router.push("/");
+      if (router.asPath != '/register') {
+        router.push('/')
         setTimeout(() => {
-          setLoading(false);
-        }, 100);
+          setLoading(false)
+        }, 100)
       } else {
         setTimeout(() => {
-          setLoading(false);
-        }, 100);
+          setLoading(false)
+        }, 100)
       }
     }
-  }, []);
+  }, [])
   return (
     <>
       <main>
         {Loading ? (
-          <Box alignContent={"center"}>
+          <Box alignContent={'center'}>
             <Spinner />
           </Box>
         ) : (
@@ -65,6 +64,6 @@ const Layout = ({ children }: any) => {
         )}
       </main>
     </>
-  );
-};
-export default Layout;
+  )
+}
+export default Layout

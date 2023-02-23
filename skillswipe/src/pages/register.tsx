@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import {
   Flex,
   Heading,
@@ -11,66 +11,66 @@ import {
   Select,
   Alert,
   AlertIcon,
-} from "@chakra-ui/react";
-import Link from "next/link";
-import { FcGoogle } from "react-icons/fc";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { emailValidator } from "../Util/Validator";
-import { register } from "./api/api";
-import { useRouter } from "next/router";
-import { setCookie } from "cookies-next";
-import Layout from "@/components/Layout";
+} from '@chakra-ui/react'
+import Link from 'next/link'
+import { FcGoogle } from 'react-icons/fc'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { emailValidator } from '../Util/Validator'
+import { register } from './api/api'
+import { useRouter } from 'next/router'
+import { setCookie } from 'cookies-next'
+import Layout from '@/components/Layout'
 
 const Register = () => {
-  const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue("gray.100", "gray.700");
-  const googleBackground = useColorModeValue("white", "gray.700");
-  const placeholderBackground = useColorModeValue("gray.200", "gray.600");
-  const toggleTheme = useColorModeValue("🌙", "💡");
+  const { toggleColorMode } = useColorMode()
+  const formBackground = useColorModeValue('gray.100', 'gray.700')
+  const googleBackground = useColorModeValue('white', 'gray.700')
+  const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
+  const toggleTheme = useColorModeValue('🌙', '💡')
   const [User, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    password: "",
-    email: "",
-    gender: "",
-  });
-  const [ConfirmPass, setConfirmPass] = useState("");
-  const router = useRouter();
+    firstName: '',
+    lastName: '',
+    password: '',
+    email: '',
+    gender: '',
+  })
+  const [ConfirmPass, setConfirmPass] = useState('')
+  const router = useRouter()
 
   const FirstNameChange = (event: any) => {
     setUser({
       ...User,
       firstName: event.target.value,
-    });
-  };
+    })
+  }
   const LastNameChange = (event: any) => {
     setUser({
       ...User,
       lastName: event.target.value,
-    });
-  };
+    })
+  }
   const EmailChange = (event: any) => {
     setUser({
       ...User,
       email: event.target.value,
-    });
-  };
+    })
+  }
   const passwordChange = (event: any) => {
     setUser({
       ...User,
       password: event.target.value,
-    });
-  };
+    })
+  }
   const confirmpassChange = (event: any) => {
-    setConfirmPass(event.target.value);
-  };
+    setConfirmPass(event.target.value)
+  }
   const genderChange = (event: any) => {
     setUser({
       ...User,
       gender: event.target.value,
-    });
-  };
+    })
+  }
   const submitForm = () => {
     if (
       !(
@@ -82,23 +82,23 @@ const Register = () => {
         User.password == ConfirmPass
       )
     ) {
-      toast("Please fill all the fields");
+      toast('Please fill all the fields')
     } else {
       if (emailValidator(User.email) == true) {
         register(User)
           .then((Response) => {
-            toast("Successfully Registered the Account");
-            localStorage.setItem("jwt", Response.data.access_token);
-            router.push("/home");
+            toast('Successfully Registered the Account')
+            localStorage.setItem('jwt', Response.data.access_token)
+            router.push('/home')
           })
           .catch((error) => {
-            toast(error.message);
-          });
+            toast(error.message)
+          })
       } else {
-        toast("Invalid Inputs");
+        toast('Invalid Inputs')
       }
     }
-  };
+  }
   return (
     <>
       <Layout>
@@ -108,12 +108,7 @@ const Register = () => {
           justifyContent="center"
           data-testid="register-page"
         >
-          <Flex
-            direction="column"
-            background={formBackground}
-            p={12}
-            rounded={25}
-          >
+          <Flex direction="column" background={formBackground} p={12} rounded={25}>
             <Heading mb={6}>Register 🧖🏼</Heading>
             <Input
               data-testid="first-name"
@@ -161,10 +156,10 @@ const Register = () => {
               background={placeholderBackground}
               onChange={confirmpassChange}
             />
-            <Text color={"tomato"} fontSize="xs" noOfLines={[1, 2]}>
+            <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
               {ConfirmPass != User.password
-                ? "Password \n in both fields should be Same"
-                : ""}
+                ? 'Password \n in both fields should be Same'
+                : ''}
             </Text>
 
             <Select
@@ -184,8 +179,8 @@ const Register = () => {
             {/* Google */}
             <Button
               mb={4}
-              w={"full"}
-              variant={"outline"}
+              w={'full'}
+              variant={'outline'}
               backgroundColor={googleBackground}
               leftIcon={<FcGoogle />}
             >
@@ -197,7 +192,7 @@ const Register = () => {
             <Button
               mb={4}
               onClick={toggleColorMode}
-              _hover={{ bg: "transparent" }}
+              _hover={{ bg: 'transparent' }}
               bg="transparent"
             >
               {toggleTheme}
@@ -211,7 +206,7 @@ const Register = () => {
         </Flex>
       </Layout>
     </>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
