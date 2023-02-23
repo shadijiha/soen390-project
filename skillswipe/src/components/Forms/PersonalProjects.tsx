@@ -23,12 +23,9 @@ const PersonalProjects = (props: any) => {
       id: null
    });
 
-   useEffect(() => {
-      console.log(props)
+
       if (personalProject && personalProject.name == "") setPersonalProject(props.personalProjects);
 
-
-   },[])
    const handleChange = (event: any) => {
       const { name, value } = event.target;
       setPersonalProject((prevState) => ({
