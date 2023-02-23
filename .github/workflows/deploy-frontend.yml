@@ -56,7 +56,7 @@ jobs:
 
   deploy:
     environment: production-frontend
-    runs_on: ubuntu-latest
+    runs-on: ubuntu-latest
     needs:
       - build
 
