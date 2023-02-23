@@ -13,7 +13,6 @@ import {
 import PersonalProjects from "../Forms/PersonalProjects";
 import { AddIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { useSelector } from "react-redux";
-import { editPersonalProjects } from "@/pages/api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { emailValidator } from "@/Util/Validator";

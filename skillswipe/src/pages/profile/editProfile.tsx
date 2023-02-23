@@ -3,7 +3,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar";
-import { checkLogin, editPersonalInformation } from "./api/api";
+import { checkLogin, editPersonalInformation } from "../api/api";
 import {
   FormControl,
   FormLabel,
@@ -23,12 +23,13 @@ import ExperienceBox from "@/components/EditProfile/ExperienceBox";
 import EducationHistoryBox from "@/components/EditProfile/EductationHistoryBox";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+
 import VolunteeringBox from "@/components/EditProfile/VolunteeringBox";
 import PersonalProjectsBox from "@/components/EditProfile/PersonalProjectsBox";
 import AwardsBox from "@/components/EditProfile/AwardsBox";
 import SkillsBox from "@/components/EditProfile/SkillsBox";
-import CoursesBox from "@/components/EditProfile/CoursesBox";
 import LanguagesBox from "@/components/EditProfile/LanguagesBox";
+import CoursesBox from "@/components/EditProfile/CoursesBox";
 
 const EditProfile = () => {
   const currentUser = useSelector((state) => state as any);
@@ -255,6 +256,14 @@ const EditProfile = () => {
         {/* Education History */}
         <EducationHistoryBox />
 
+
+        {/* Volunteering */}
+        <VolunteeringBox />
+
+        {/* Personal Projects */}
+        <PersonalProjectsBox />
+
+        
         {/* awards */}
         <AwardsBox />
 
@@ -272,6 +281,7 @@ const EditProfile = () => {
         
         {/* Certifications */}
         <CoursesBox />
+
       </Layout>
     </>
   );

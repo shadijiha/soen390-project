@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import NavBar from "@/components/NavBar";
-import FeatureCard4 from "../components/feature-card4";
+import FeatureCard4 from "../../components/feature-card4";
 import React, { CSSProperties, useEffect, useState } from "react";
-import { checkLogin } from "./api/api";
+import { checkLogin } from "../api/api";
 import Layout from "@/components/Layout";
+
 import {
   Box,
   Flex,
@@ -19,20 +20,20 @@ import {
 } from "@chakra-ui/react";
 
 import router from "next/router";
-import ProfileStyle from "../styles/profilestyle";
+import ProfileStyle from "../../styles/profilestyle";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 
 import Volunteering from "@/components/Profile/Volunteering";
 import Recommendations from "@/components/Profile/Recommendations";
 import Skills from "@/components/Profile/Skills/Skills";
-import Education from "@/components/Profile/education";
+import Education from "../../components/Profile/Education";
 import WorkExperience from "@/components/Profile/WorkExperience";
 import { FaSuitcase, FaMapPin, FaEnvelope } from "react-icons/fa";
 import Courses from "@/components/Profile/Courses";
 import Awards from "@/components/Profile/Awards";
-import PersonalProjects from "@/components/Forms/PersonalProjects";
 import PersonalProjectsProfile from "@/components/Profile/PersonalProjectsProfile";
+
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode();
@@ -91,6 +92,7 @@ const Profile = () => {
                   objectFit: "cover",
                 }}
               />
+
               <div
                 className="profile-container01"
                 style={{
@@ -101,11 +103,14 @@ const Profile = () => {
                   // make the background image to be 50% opacity
                   backgroundBlendMode: "multiply",
                   // make the container take the entire screens width
+
                   backgroundImage: `url(${
                     User.auth.coverPic
                       ? `data:image/jpeg;base64,${User.auth.coverPic}`
                       : profile.image
-                  })`,
+
+                    })`,
+
                 }}
               >
                 <h1
@@ -114,26 +119,31 @@ const Profile = () => {
                     fontSize: "1.5em",
                     fontWeight: 700,
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
                   {User.auth.firstName + " " + User.auth.lastName} 👋🏼
+
                 </h1>
                 <span
                   className="profile-text02"
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
                   📨 {User.auth.email}
+
                 </span>
                 <span
                   className="profile-text03"
                   style={{
                     fontSize: "1em",
                     textShadow: "0px 0px 30px #00000085",
+
                     color: "white",
                   }}
                 >
@@ -154,56 +164,22 @@ const Profile = () => {
                   </span>
                 </div>
 
-                <div
-                  className="profile-container05"
-                  style={{
-                    marginTop: "-1em",
-                  }}
-                >
-                  <button
-                    className="profile-button button"
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    <span
-                      style={{
-                        color: "white",
-                      }}
-                    >
-                      <span>Message</span>
-                    </span>
-                  </button>
-                  <button
-                    className="profile-button1 button"
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                      borderWidth: "2px",
-                      textShadow: "0px 0px 40px #000000CA",
-                      fontWeight: 600,
-                      marginRight: "1em",
-                    }}
-                  >
-                    Connect
-                  </button>
+                <div className="profile-container05">
+                  
                   {/* to do: show this edit button only if user logged in == the profile that is shown */}
                   <button
                     className="profile-button1 button"
                     style={{
+
                       color: "white",
                       borderColor: "white",
+
                       borderWidth: "2px",
                       textShadow: "0px 0px 40px #000000CA",
                       fontWeight: 600,
                     }}
                     onClick={() => {
-                      router.push("/editProfile");
+                      router.push("/profile/editProfile");
                     }}
                   >
                     Edit
@@ -211,6 +187,7 @@ const Profile = () => {
                 </div>
               </div>
             </div>
+
 
             <Stack
               direction={"row"}
@@ -220,33 +197,67 @@ const Profile = () => {
               }}
             >
               {/* SKILLS SECTION */}
-              <Skills skillsArray={User.auth.skills} />
+
+              {
+                (User.auth.skills && User.auth.skills.length > 0) ? <Skills skillsArray ={User.auth.skills} />:<></>
+
+              }
+
+
               {/* AWARDS SECTION */}
-              <Awards awards={User.auth.awards} />
-            </Stack>
+              {
+
+              (User.auth.awards && User.auth.awards.length >0)  ? <Awards awards={User.auth.awards} /> : <></>
+              }
+
+            </Stack >
 
             <br></br>
             <Divider />
             {/* CAREER JOURNEY WORK EXPERIENCE */}
-            <WorkExperience experience={User.auth.workExperiences} />
+            {
+
+            (User.auth.workExperiences && User.auth.workExperiences.length > 0) ? <WorkExperience experience={User.auth.workExperiences}/> : <></>
+            }
+
             <Divider />
             {/* EDUCATION SECTION */}
-            <Education education={User.auth.educations} />
+
+            {
+              (User.auth.educations && User.auth.educations.length > 0) ? <Education education={User.auth.educations} /> : <></>
+
+            }
             <Divider />
             {/* VOLUNTEERING SECTION */}
-            <Volunteering volunteer={User.auth.volunteeringExperience} />
+
+            {
+
+              (User.auth.volunteeringExperience && User.auth.volunteeringExperience.length > 0)  ? <Volunteering volunteer={User.auth.volunteeringExperience} /> : <></>
+
+            }
             <Divider />
             {/* RECOMMENDATIONS SECTION */}
-            <Recommendations
-              rocommendations={User.auth.recommendationsReceived}
-            />
+
+            {
+              (User.auth.recommendationsReceived && User.auth.recommendationsReceived.length > 0)  ? <Recommendations rocommendations={User.auth.recommendationsReceived} />: <></>
+            }
+
             <Divider />
             {/* PERSONAL PROJECTS */}
-            <PersonalProjectsProfile Project={User.auth.projects} />
+            {
+              (User.auth.projects && User.auth.projects.length >0)  ? <PersonalProjectsProfile Project={User.auth.projects} /> : <></>
+
+            }
             <Divider />
 
             {/* COURSES ACCOMPLISHED */}
-            <Courses courses={User.auth.courses} />
+
+            {
+
+             (User.auth.courses && User.auth.courses.length >0)  ?  <Courses courses={User.auth.courses} /> : <></>
+
+            }
+
             {/* temporary div below for spacing under page, will need to remove in final sprint */}
             <div
               style={{
