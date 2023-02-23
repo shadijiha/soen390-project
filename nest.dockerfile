@@ -5,7 +5,6 @@
 FROM node:slim as development
 ARG NODE_ENV=development
 ENV NODE_ENV ${NODE_ENV}
-RUN echo "NODE_ENV in development" $NODE_ENV
 
 # Add a work directory
 WORKDIR /usr/src/app
@@ -33,7 +32,6 @@ USER node
 FROM node:current-alpine as build
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
-RUN echo "NODE_ENV in build" $NODE_ENV
 
 # Add a work directory
 WORKDIR /usr/src/app
@@ -63,13 +61,10 @@ USER node
 FROM node:19.6-alpine as production
 ARG NODE_ENV=production
 ENV NODE_ENV=$NODE_ENV
-RUN echo "NODE_ENV in production" $NODE_ENV
 
 WORKDIR /usr/src/app
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
 COPY --chown=node:node --from=build /usr/src/app/dist ./dist
-
-EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
