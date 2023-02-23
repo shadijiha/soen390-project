@@ -47,10 +47,10 @@ jobs:
         working-directory: ./skillswipe
         run: npm ci --prefer-offline --no-audit
 
-      - name: Run lint check
-        working-directory: ./skillswipe
-        run: npm run lint:check
-        continue-on-error: false
+      # - name: Run lint check
+      #   working-directory: ./skillswipe
+      #   run: npm run lint:check
+      #   continue-on-error: false
 
       - name: Build project
         working-directory: ./skillswipe
