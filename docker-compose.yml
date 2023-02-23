@@ -14,19 +14,19 @@ services:
     # command: "nodemon"
 
 
-  admin:
-    image: phpmyadmin/phpmyadmin:latest
-    links:
-     - mariadb
-    depends_on:
-     - mariadb
-    ports:
-     - "8080:80"
-    environment:
-      # MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      # PMA_ARBITRARY: 1
-      PMA_HOST: ${MARIADB_HOST}
-      PMA_PORT: ${MARIADB_PORT}
+  # admin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   links:
+  #    - mariadb
+  #   depends_on:
+  #    - mariadb
+  #   ports:
+  #    - "8080:80"
+  #   environment:
+  #     # MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+  #     # PMA_ARBITRARY: 1
+  #     PMA_HOST: ${MARIADB_HOST}
+  #     PMA_PORT: ${MARIADB_PORT}
 
   mariadb:
     image: mariadb:latest
