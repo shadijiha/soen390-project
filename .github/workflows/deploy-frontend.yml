@@ -89,7 +89,7 @@ jobs:
         env:
           BASE_URL: ${{ secrets.BASE_API_URL }}
           TARGET_BASE_URL: preview,development,production # comma delimited, one of [production, preview, development]
-          TYPE_BASE_URL: encrypted # one of [plain, encrypted]
+          TYPE_BASE_URL: plain # one of [plain, encrypted]
 
       - name: Deploy to Production
         uses: amondnet/vercel-action@v20
