@@ -43,71 +43,74 @@ const PersonalProjectsProfile = ({ Project }: any) => {
   const toggleOpen = () => setIsOpen(!isOpen)
 
   return (
-    <>
-      <div>
-        <h1
-          style={{
-            fontWeight: 600,
-            fontSize: '1.5rem',
-            paddingTop: '2rem',
-          }}
-        >
-          <span>Personal Projects</span>
-        </h1>
-      </div>
-      <Container maxW="5xl" p={{ base: 5, md: 10 }}>
-        <VStack spacing={4}>
-          {projectsList.map((element) => (
-            <HStack
-              p={8}
-              bg={useColorModeValue('#FFFFFF', '#171923')}
-              rounded="35px"
-              borderWidth="2px"
-              borderColor={useColorModeValue(
-                'solid 2px #00000032',
-                'solid 2px #F5F5F588'
-              )}
-              w="100%"
-              h="100%"
-              textAlign="left"
-              align="start"
-              spacing={4}
-              cursor="pointer"
-              _hover={{ shadow: 'xl' }}
-            >
-              <VStack align="start" justify="flex-start">
-                <VStack spacing={0} align="start">
-                  <HStack>
-                    <Text
-                      as={Link}
-                      href={Project.url}
-                      fontWeight="bold"
-                      fontSize="md"
-                      noOfLines={1}
-                      onClick={(e) => e.stopPropagation()}
-                      isExternal
-                    >
-                      {Project.title}
-                    </Text>
-                  </HStack>
+    Project &&
+    Project.length > 0 && (
+      <>
+        <div>
+          <h1
+            style={{
+              fontWeight: 600,
+              fontSize: "1.5rem",
+              paddingTop: "2rem",
+            }}
+          >
+            <span>Personal Projects</span>
+          </h1>
+        </div>
+        <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+          <VStack spacing={4}>
+            {projectsList.map((element) => (
+              <HStack
+                p={8}
+                bg={useColorModeValue("#FFFFFF", "#171923")}
+                rounded="35px"
+                borderWidth="2px"
+                borderColor={useColorModeValue(
+                  "solid 2px #00000032",
+                  "solid 2px #F5F5F588"
+                )}
+                w="100%"
+                h="100%"
+                textAlign="left"
+                align="start"
+                spacing={4}
+                cursor="pointer"
+                _hover={{ shadow: "xl" }}
+              >
+                <VStack align="start" justify="flex-start">
+                  <VStack spacing={0} align="start">
+                    <HStack>
+                      <Text
+                        as={Link}
+                        href={Project.link}
+                        fontWeight="bold"
+                        fontSize="md"
+                        noOfLines={1}
+                        onClick={(e) => e.stopPropagation()}
+                        isExternal
+                      >
+                        {Project.title}
+                      </Text>
+                    </HStack>
 
-                  <Text fontSize="sm" color={textColor} noOfLines={{ base: 2 }}>
-                    {Project.description}
-                  </Text>
-
-                  {isOpen && (
-                    <Text fontSize="sm" color={textColor}>
+                    <Text fontSize="sm" color={textColor} noOfLines={{ base: 2 }}>
                       {Project.description}
                     </Text>
-                  )}
+
+                    {isOpen && (
+                      <Text fontSize="sm" color={textColor}>
+                        {Project.description}
+                      </Text>
+                    )}
+                  </VStack>
                 </VStack>
-              </VStack>
-            </HStack>
-          ))}
-        </VStack>
-      </Container>
-    </>
-  )
-}
+              </HStack>
+            ))}
+          </VStack>
+        </Container>
+      </>
+    )
+  );
+};
 
 export default PersonalProjectsProfile
