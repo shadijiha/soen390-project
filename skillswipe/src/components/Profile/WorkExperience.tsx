@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
 import {
   Box,
   chakra,
   Container,
-  Text,
-  HStack,
-  VStack,
   Flex,
-  useColorModeValue,
+  HStack,
+  Text,
   useBreakpointValue,
+  useColorModeValue,
+  VStack,
 } from '@chakra-ui/react'
+import React, { useEffect } from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })

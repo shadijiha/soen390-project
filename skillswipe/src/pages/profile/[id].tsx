@@ -1,8 +1,18 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import {
+  Divider,
+  Spinner,
+  Stack,
+  Toast,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import Head from 'next/head'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import ProfileStyle from '../../styles/profilestyle'
 import {
   acceptRequest,
@@ -12,25 +22,15 @@ import {
   removeConnection,
   sendRequest,
 } from '../api/api'
-import { toast } from 'react-toastify'
-import {
-  Divider,
-  Stack,
-  Spinner,
-  Toast,
-  useColorMode,
-  useColorModeValue,
-} from '@chakra-ui/react'
-import { useSelector } from 'react-redux'
 
-import Skills from '@/components/Profile/Skills/Skills'
 import Awards from '@/components/Profile/Awards'
+import Courses from '@/components/Profile/Courses'
+import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
+import Recommendations from '@/components/Profile/Recommendations'
+import Skills from '@/components/Profile/Skills/Skills'
+import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
-import Volunteering from '@/components/Profile/Volunteering'
-import Recommendations from '@/components/Profile/Recommendations'
-import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
-import Courses from '@/components/Profile/Courses'
 
 const profile = () => {
   const router = useRouter()

@@ -1,18 +1,18 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
-import * as React from 'react'
 import {
   chakra,
   Container,
   HStack,
-  VStack,
-  Text,
-  Tag,
-  Link,
   Image,
-  useColorModeValue,
+  Link,
   Stack,
+  Tag,
+  Text,
+  useColorModeValue,
+  VStack,
 } from '@chakra-ui/react'
+import * as React from 'react'
 
 interface ProjectCardProps {
   id: number

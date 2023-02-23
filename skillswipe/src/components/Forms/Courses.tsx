@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+import { editCourses } from '@/pages/api/api'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
+  Input,
+  Spacer,
+  Stack,
   Text,
   Textarea,
-  Spacer,
 } from '@chakra-ui/react'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { editCourses } from '@/pages/api/api'
 const Courses = (props: any) => {
   const [course, setCourse] = useState({
     institution: '',

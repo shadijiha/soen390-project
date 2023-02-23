@@ -1,10 +1,10 @@
 import { Heading, useColorModeValue } from '@chakra-ui/react'
 
-import NavBar from '@/components/NavBar'
 import SmallWithLogoLeft from '@/components/footer'
-import { Box, Text, List, ListItem } from '@chakra-ui/react'
-import { useState } from 'react'
 import Layout from '@/components/Layout'
+import NavBar from '@/components/NavBar'
+import { Box, List, ListItem, Text } from '@chakra-ui/react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const Home = () => {

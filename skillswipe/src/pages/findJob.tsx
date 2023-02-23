@@ -1,7 +1,7 @@
-import React from 'react'
-import { Text } from '@chakra-ui/react'
-import NavBar from '../components/NavBar'
 import Layout from '@/components/Layout'
+import { Text } from '@chakra-ui/react'
+import React from 'react'
+import NavBar from '../components/NavBar'
 
 const findJob = () => {
   return (

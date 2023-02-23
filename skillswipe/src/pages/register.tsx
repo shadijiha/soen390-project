@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import Layout from '@/components/Layout'
 import {
+  Alert,
+  AlertIcon,
+  Button,
+  Center,
   Flex,
   Heading,
   Input,
-  Button,
-  useColorMode,
-  Center,
-  Text,
-  useColorModeValue,
   Select,
-  Alert,
-  AlertIcon,
+  Text,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react'
+import { setCookie } from 'cookies-next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'
-import { useRouter } from 'next/router'
-import { setCookie } from 'cookies-next'
-import Layout from '@/components/Layout'
 
 const Register = () => {
   const { toggleColorMode } = useColorMode()

@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
-  Textarea,
+  Input,
   Spacer,
+  Stack,
+  Textarea,
 } from '@chakra-ui/react'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 const Volunteering = (props: any) => {
   const [volunteering, setVolunteering] = useState({

@@ -1,37 +1,36 @@
-import Head from 'next/head'
-import NavBar from '@/components/NavBar'
-import FeatureCard4 from '../../components/feature-card4'
-import React, { CSSProperties, useEffect, useState } from 'react'
-import { checkLogin } from '../api/api'
 import Layout from '@/components/Layout'
+import NavBar from '@/components/NavBar'
+import Head from 'next/head'
+import React, { CSSProperties, useEffect, useState } from 'react'
+import FeatureCard4 from '../../components/feature-card4'
+import { checkLogin } from '../api/api'
 
 import {
   Box,
+  Divider,
   Flex,
+  Grid,
   HStack,
-  useColorMode,
-  useColorModeValue,
-  Text,
   Image,
   Stack,
-  Grid,
-  Divider,
+  Text,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react'
 
-import router from 'next/router'
-import ProfileStyle from '../../styles/profilestyle'
+import router, { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import ProfileStyle from '../../styles/profilestyle'
 
-import Volunteering from '@/components/Profile/Volunteering'
+import Awards from '@/components/Profile/Awards'
+import Courses from '@/components/Profile/Courses'
+import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
 import Recommendations from '@/components/Profile/Recommendations'
 import Skills from '@/components/Profile/Skills/Skills'
-import Education from '../../components/Profile/education'
+import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
-import { FaSuitcase, FaMapPin, FaEnvelope } from 'react-icons/fa'
-import Courses from '@/components/Profile/Courses'
-import Awards from '@/components/Profile/Awards'
-import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
+import { FaEnvelope, FaMapPin, FaSuitcase } from 'react-icons/fa'
+import Education from '../../components/Profile/education'
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode()

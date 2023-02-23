@@ -1,12 +1,12 @@
 import { checkLogin } from '@/pages/api/api'
 
+import { Box } from '@chakra-ui/react'
+import { Spinner } from '@chakra-ui/spinner'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Spinner } from '@chakra-ui/spinner'
-import { Box } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionCreator } from '../Redux/index'
 import { bindActionCreators } from 'redux'
+import { actionCreator } from '../Redux/index'
 
 const Layout = ({ children }: any) => {
   const [Loading, setLoading] = useState(true)

@@ -1,14 +1,14 @@
 import Layout from '@/components/Layout'
 import {
-  Icon,
+  Button,
+  Center,
   Flex,
   Heading,
+  Icon,
   Input,
-  Button,
+  Text,
   useColorMode,
   useColorModeValue,
-  Center,
-  Text,
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

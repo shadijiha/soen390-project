@@ -1,22 +1,9 @@
+import { AddIcon } from '@chakra-ui/icons'
+import { Button, Stack, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import Experience from '../Forms/Experience'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import { editExperience } from '@/pages/api/api'
 import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '@/Util/Validator'
+import Experience from '../Forms/Experience'
 
 type Experience = {
   company?: string

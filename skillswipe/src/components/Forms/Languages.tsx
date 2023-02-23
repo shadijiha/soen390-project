@@ -1,20 +1,20 @@
-import React, { useState } from 'react'
+import { editCourses } from '@/pages/api/api'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
+  Input,
+  Select,
+  Spacer,
+  Stack,
   Text,
   Textarea,
-  Spacer,
-  Select,
 } from '@chakra-ui/react'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { editCourses } from '@/pages/api/api'
 const Languages = (props: any) => {
   const [language, setLanguage] = useState({
     language: '',

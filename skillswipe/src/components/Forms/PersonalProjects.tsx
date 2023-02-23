@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import { editVolunteering } from '@/pages/api/api'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
-  Textarea,
+  Input,
   Spacer,
+  Stack,
+  Textarea,
 } from '@chakra-ui/react'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { editVolunteering } from '@/pages/api/api'
 const PersonalProjects = (props: any) => {
   const [personalProject, setPersonalProject] = useState({
     name: '',

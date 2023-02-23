@@ -1,21 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import Information from '../Forms/Information'
-import { useSelector } from 'react-redux'
 import { editPersonalInformation } from '@/pages/api/api'
+import { emailValidator } from '@/Util/Validator'
+import { Stack, Text } from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '@/Util/Validator'
+import Information from '../Forms/Information'
+
 const InformationBox = () => {
   const user = useSelector((state) => state as any)
   const [UpdateUser, setUpdateUser] = useState({

@@ -1,9 +1,9 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
-import ProfileStyle from '../../styles/profilestyle'
 import { useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
+import ProfileStyle from '../../styles/profilestyle'
 
 const Recommendations = ({ rocommendations }: any) => {
   return (

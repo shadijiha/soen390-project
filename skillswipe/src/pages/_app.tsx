@@ -1,8 +1,8 @@
 import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
 import { ChakraProvider, theme } from '@chakra-ui/react'
-import { ToastContainer } from 'react-toastify'
+import type { AppProps } from 'next/app'
 import { Provider, useDispatch } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
 import store from '../Redux/store'
 
 export default function MyApp({ Component, pageProps }: AppProps) {

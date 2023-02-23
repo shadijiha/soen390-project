@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Textarea,
-  Spacer,
-} from '@chakra-ui/react'
-import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
-import { toast } from 'react-toastify'
 import {
   addAwardsRequest,
   deleteAwardsRequest,
   editAwardsRequest,
 } from '@/pages/api/profile_api'
+import { AddIcon, DeleteIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Spacer,
+  Stack,
+  Textarea,
+} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 const Awards = (props: any) => {
   const [award, setAward] = useState({
     id: null,

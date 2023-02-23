@@ -1,6 +1,6 @@
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Text } from '@chakra-ui/react'
-import Layout from '@/components/Layout'
 
 const inbox = () => {
   return (

@@ -1,19 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-import React from 'react'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
-  Textarea,
+  Input,
   Select,
   Spacer,
+  Stack,
+  Textarea,
 } from '@chakra-ui/react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { DeleteIcon } from '@chakra-ui/icons'
 import InformationBox from '../EditProfile/InformationBox'
 
 const Information = ({ update, handleSubmit }: any) => {

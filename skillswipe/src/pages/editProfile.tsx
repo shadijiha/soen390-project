@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { checkLogin, editPersonalInformation } from './api/api'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
+  Input,
+  Stack,
   Text,
   Textarea,
 } from '@chakra-ui/react'
-import Layout from '@/components/Layout'
+import React, { useEffect, useState } from 'react'
 import user from '../assets/images/user.png'
+import { checkLogin, editPersonalInformation } from './api/api'
 
-import InformationBox from '@/components/EditProfile/InformationBox'
-import ExperienceBox from '@/components/EditProfile/ExperienceBox'
+import AwardsBox from '@/components/EditProfile/AwardsBox'
+import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
+import ExperienceBox from '@/components/EditProfile/ExperienceBox'
+import InformationBox from '@/components/EditProfile/InformationBox'
+import LanguagesBox from '@/components/EditProfile/LanguagesBox'
+import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
+import SkillsBox from '@/components/EditProfile/SkillsBox'
+import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
-import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
-import AwardsBox from '@/components/EditProfile/AwardsBox'
-import SkillsBox from '@/components/EditProfile/SkillsBox'
-import CoursesBox from '@/components/EditProfile/CoursesBox'
-import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 
 const EditProfile = () => {
   const currentUser = useSelector((state) => state as any)

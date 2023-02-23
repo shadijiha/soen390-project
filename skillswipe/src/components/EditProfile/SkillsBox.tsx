@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import { editSkills } from '@/pages/api/api'
+import { emailValidator } from '@/Util/Validator'
+import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
   Heading,
+  Input,
+  Stack,
   Text,
   Textarea,
 } from '@chakra-ui/react'
-import Skills from '../Forms/Skills'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { editSkills } from '@/pages/api/api'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '@/Util/Validator'
+import Skills from '../Forms/Skills'
 
 type Skill = {
   skill?: string

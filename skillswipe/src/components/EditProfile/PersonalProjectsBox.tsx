@@ -1,22 +1,9 @@
-import axios from 'axios'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import PersonalProjects from '../Forms/PersonalProjects'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '@/Util/Validator'
+import { AddIcon } from '@chakra-ui/icons'
+import { Button, Stack, Text } from '@chakra-ui/react'
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import 'react-toastify/dist/ReactToastify.css'
+import PersonalProjects from '../Forms/PersonalProjects'
 
 type PersonalProjects = {
   name?: string

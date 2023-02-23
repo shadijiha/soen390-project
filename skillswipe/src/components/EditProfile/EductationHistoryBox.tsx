@@ -1,22 +1,9 @@
+import { AddIcon } from '@chakra-ui/icons'
+import { Button, Stack, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
-import EducationHistory from '../Forms/EducationHistory'
-import { AddIcon, SmallAddIcon } from '@chakra-ui/icons'
 import { useSelector } from 'react-redux'
-import { editEducationHistory } from '@/pages/api/api'
-import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '@/Util/Validator'
+import EducationHistory from '../Forms/EducationHistory'
 
 type Education = {
   institution?: string
