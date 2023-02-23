@@ -1,7 +1,5 @@
 import Layout from '@/components/Layout'
 import {
-  Alert,
-  AlertIcon,
   Button,
   Center,
   Flex,
@@ -12,12 +10,11 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
-import { setCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'

@@ -1,6 +1,5 @@
 import { Heading, useColorModeValue } from '@chakra-ui/react'
 
-import SmallWithLogoLeft from '@/components/footer'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, List, ListItem, Text } from '@chakra-ui/react'

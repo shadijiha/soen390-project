@@ -1,7 +1,7 @@
 import '@/styles/globals.css'
-import { ChakraProvider, theme } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
-import { Provider, useDispatch } from 'react-redux'
+import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import store from '../Redux/store'
 

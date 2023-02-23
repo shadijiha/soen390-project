@@ -1,24 +1,13 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import {
-  Box,
-  Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { checkLogin, editPersonalInformation } from '../api/api'
-import user from '../assets/images/user.png'
+import { editPersonalInformation } from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'

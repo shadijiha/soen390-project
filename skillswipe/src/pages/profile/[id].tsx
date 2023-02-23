@@ -4,7 +4,6 @@ import {
   Divider,
   Spinner,
   Stack,
-  Toast,
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
@@ -17,7 +16,6 @@ import ProfileStyle from '../../styles/profilestyle'
 import {
   acceptRequest,
   getPendingRequest,
-  getStatus,
   getUserById,
   removeConnection,
   sendRequest,

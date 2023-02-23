@@ -1,24 +1,11 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import Head from 'next/head'
-import React, { CSSProperties, useEffect, useState } from 'react'
-import FeatureCard4 from '../../components/feature-card4'
-import { checkLogin } from '../api/api'
+import React, { useEffect, useState } from 'react'
 
-import {
-  Box,
-  Divider,
-  Flex,
-  Grid,
-  HStack,
-  Image,
-  Stack,
-  Text,
-  useColorMode,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
 
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import ProfileStyle from '../../styles/profilestyle'
 
@@ -29,7 +16,6 @@ import Recommendations from '@/components/Profile/Recommendations'
 import Skills from '@/components/Profile/Skills/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
-import { FaEnvelope, FaMapPin, FaSuitcase } from 'react-icons/fa'
 import Education from '../../components/Profile/education'
 
 const Profile = () => {

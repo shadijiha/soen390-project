@@ -4,7 +4,6 @@ import {
   Center,
   Flex,
   Heading,
-  Icon,
   Input,
   Text,
   useColorMode,
