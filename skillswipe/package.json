@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint:check": "next lint",
-        "lint:fix": "prettier --write 'src/**/*.tsx'",
+        "lint:fix": "prettier --write '**/*.{tsx,ts}'",
         "test": "jest --watch",
         "test:cov": "jest --coverage",
         "test:ci": "jest --ci"
