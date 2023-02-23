@@ -97,9 +97,24 @@ const Card = (props: any) => {
       }}
     >
       <Box>
-        <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
-          {props.company}
-        </Text>
+        {/* stack items side by side */}
+        <HStack spacing={0} textAlign="left">
+          <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
+            {props.company}
+          </Text>
+          <image
+            style={{
+              marginLeft: '5px',
+            }}
+          >
+            <img
+              src={'https://www.' + props.company + '.com/favicon.ico'}
+              width="25px"
+              height="25px"
+              alt="logo"
+            />
+          </image>
+        </HStack>
 
         <VStack spacing={2} mb={3} textAlign="left">
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
