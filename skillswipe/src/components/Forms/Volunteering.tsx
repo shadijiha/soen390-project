@@ -1,3 +1,8 @@
+import {
+  addVolunteeringRequest,
+  editVolunteeringRequest,
+  deleteVolunteeringRequest,
+} from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -17,7 +22,7 @@ const Volunteering = (props: any) => {
     title: '',
     start_year: '',
     end_year: '',
-    id: null,
+    id: 0,
   })
   if (volunteering.company == '') setVolunteering(props.volunteering)
   const handleChange = (event: any) => {
@@ -27,27 +32,73 @@ const Volunteering = (props: any) => {
       [name]: value,
     }))
   }
-  const handleSubmit = (event: any) => {
+  const addVolunteering = (event: any) => {
     const token = localStorage.getItem('jwt')
-    // call API to update volunteering
+    event.preventDefault()
+    if (
+      !volunteering.company ||
+      !volunteering.title ||
+      !volunteering.start_year ||
+      !volunteering.end_year
+    ) {
+      toast('Please fill all the fields')
+      return
+    }
     if (volunteering.start_year > volunteering.end_year) {
       toast('Please add Valid start and end year')
+      return
     } else {
-      // editVolunteering(token, volunteering).then((response) => {
-      //     console.log(response);
-      //     toast("Updated Successfully");
-      //   })
-      //   .catch((error) => {
-      //     toast(error.message);
-      //   });
+      addVolunteeringRequest(token, volunteering).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Volunteering added successfully')
+        } else {
+          toast.error('Error updaing volunteering')
+        }
+      })
     }
+  }
+
+  const deleteVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
-    console.log(volunteering) // this will print out the form values
-    // You can now use the form values to update the user's volunteering
+
+    deleteVolunteeringRequest(token, volunteering.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Volunteering deleted successfully')
+        console.log('Child' + props.volunteering.id)
+        props.deleteVolunteering(props.volunteering.id)
+      } else {
+        toast.error('Error deleting volunteering')
+      }
+    })
   }
-  const deleteItem = () => {
-    props.deleteVolunteering(props.volunteering.id)
+  const updateVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !volunteering.company ||
+      !volunteering.title ||
+      !volunteering.start_year ||
+      !volunteering.end_year
+    ) {
+      toast('Please fill all the fields')
+      return
+    }
+    if (volunteering.start_year > volunteering.end_year) {
+      toast('Please add Valid start and end year')
+      return
+    } else {
+      editVolunteeringRequest(token, volunteering).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Volunteering updated successfully')
+        } else {
+          toast.error('Error updaing volunteering')
+        }
+      })
+    }
   }
+
+  
   return (
     <Box
       minWidth={'60vw'}
@@ -78,7 +129,7 @@ const Volunteering = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateVolunteering}
           >
             Update
           </Button>
@@ -92,7 +143,7 @@ const Volunteering = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addVolunteering}
           >
             Add
           </Button>
@@ -105,7 +156,7 @@ const Volunteering = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteVolunteering}
         >
           <DeleteIcon />
         </Button>

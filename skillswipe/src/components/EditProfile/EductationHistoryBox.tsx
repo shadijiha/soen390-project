@@ -11,6 +11,7 @@ type Education = {
   end_year?: string
   degree?: string
   id?: number
+
 }
 
 const EducationHistoryBox = () => {
@@ -24,6 +25,9 @@ const EducationHistoryBox = () => {
     setEducationList(educationList.filter((education: any) => education.id !== id))
     console.log('educationList', educationList)
   }
+
+  
+
   const addEducation = () => {
     let educ: Education = {}
     setEducationList((oldArray) => [...oldArray, educ])
