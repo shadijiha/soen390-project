@@ -81,17 +81,8 @@ export namespace Profile {
   }
 
   export class AddSkillRequest extends BaseRequest {
-    @ApiProperty()
-      company: string
-
-    @ApiProperty()
+    @ApiProperty({ description: 'List of skill separated by a comma. ex. NextJs,NestJs,Flying broom', example: 'NextJs, NestJs, Flying broom' })
       title: string
-
-    @ApiProperty()
-      start_year: number
-
-    @ApiProperty()
-      end_year: number
   }
 
   export class AddWorkRequest extends BaseRequest {
@@ -202,23 +193,6 @@ export namespace Profile {
 
     @ApiProperty({ required: false })
       proficiency: string
-  }
-
-  export class EditSkillRequest extends BaseRequest {
-    @ApiProperty()
-      id: number
-
-    @ApiProperty({ required: false })
-      company: string
-
-    @ApiProperty({ required: false })
-      title: string
-
-    @ApiProperty({ required: false })
-      start_year: number
-
-    @ApiProperty({ required: false })
-      end_year: number
   }
 
   export class EditWorkRequest extends BaseRequest {

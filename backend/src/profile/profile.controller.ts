@@ -217,20 +217,6 @@ export class ProfileController {
     }
   }
 
-  @Put('skill/:id')
-  public async editSkill (@AuthUser() userInfo: BearerPayload, @Body() body: Profile.EditSkillRequest): Promise<void> {
-    const user = await userInfo.getUser(['skills'])
-    if (user == null) {
-      return
-    }
-
-    try {
-      await this.profileService.editSkill(user, body)
-    } catch (e) {
-      throw new HttpException((e as Error).message, 400)
-    }
-  }
-
   @Delete('skill/:id')
   public async deleteSkill (@AuthUser() userInfo: BearerPayload, @Param('id') id: number): Promise<void> {
     const user = await userInfo.getUser(['skills'])
