@@ -1,18 +1,17 @@
-import { render,screen } from '@testing-library/react'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import '@testing-library/jest-dom'
-import React from 'react';
-import Layout from '@/components/Layout';
+import { render, screen } from '@testing-library/react'
+import React from 'react'
 
-jest.mock('next/router', () => require('next-router-mock'));
+jest.mock('next/router', () => require('next-router-mock'))
 describe('Home', () => {
-  const renderHome = () =>
-        render(<NavBar />);
-        beforeAll(()=>{
-          <Layout></Layout>
-      })
-        it('should render NavBar without crashing', () => {
-          renderHome();
-          expect(screen.queryByTestId("Nav-Bar"));
-      });
+  const renderHome = () => render(<NavBar />)
+  beforeAll(() => {
+    ;<Layout></Layout>
+  })
+  it('should render NavBar without crashing', () => {
+    renderHome()
+    expect(screen.queryByTestId('Nav-Bar'))
+  })
 })

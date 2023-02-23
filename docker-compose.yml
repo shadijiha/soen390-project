@@ -11,6 +11,8 @@ services:
       - ./skillswipe:/usr/src/app
     ports:
       - "${FPORT}:3000"
+    # command: "nodemon"
+
 
   admin:
     image: phpmyadmin/phpmyadmin:latest
@@ -54,5 +56,5 @@ services:
       - ./backend:/usr/src/app
     expose:
       - "${BPORT}"
-    command: "nodemon --watch './src/**/*' -e ts,tsx --exec 'npm run start'"
+    # command: "nodemon"
     env_file: .env

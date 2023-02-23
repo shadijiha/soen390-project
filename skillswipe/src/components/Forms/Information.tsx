@@ -1,43 +1,39 @@
-/* eslint-disable @next/next/no-img-element */
-import React from "react";
 import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Textarea,
   Select,
   Spacer,
-} from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { DeleteIcon } from "@chakra-ui/icons";
-import InformationBox from "../EditProfile/InformationBox";
+  Stack,
+  Textarea,
+} from '@chakra-ui/react'
+import React from 'react'
+import { useSelector } from 'react-redux'
 
 const Information = ({ update, handleSubmit }: any) => {
-  const currentUser = useSelector((state) => state as any);
+  const currentUser = useSelector((state) => state as any)
   const setState = (updateUserObj: any) => {
-    update(updateUserObj);
-  };
+    update(updateUserObj)
+  }
 
   return (
     <Box
-      minWidth={"60vw"}
+      minWidth={'60vw'}
       borderWidth="1px"
       borderRadius={25}
       p={8}
       width="auto"
       mt={30}
     >
-      <Stack direction={"row"}>
+      <Stack direction={'row'}>
         <image
           style={{
-            textAlign: "left",
-            fontSize: "20px",
-            fontWeight: "bold",
-            marginBottom: "20px",
+            textAlign: 'left',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            marginBottom: '20px',
           }}
         >
           <img
@@ -51,11 +47,11 @@ const Information = ({ update, handleSubmit }: any) => {
         <Spacer />
         <Button
           style={{
-            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-            border: "3px solid rgba(255, 255, 255, 0.3)",
+            boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
+            border: '3px solid rgba(255, 255, 255, 0.3)',
           }}
           type="button"
-          colorScheme={"blue"}
+          colorScheme={'blue'}
           borderRadius="100px"
           onClick={handleSubmit}
         >
@@ -66,7 +62,7 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="name">First Name</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           id="name"
           defaultValue={currentUser.auth.firstName}
@@ -81,7 +77,7 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="name">Last Name</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           defaultValue={currentUser.auth.lastName}
           onChange={(event) => setState({ lastName: event.target.value })}
@@ -96,7 +92,7 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="email">Email</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="email"
           defaultValue={currentUser.auth.email}
           id="title"
@@ -111,11 +107,11 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="number">Mobile No</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="tel"
           defaultValue={
             currentUser.auth.mobileNo == null
-              ? "Please add Mobile No "
+              ? 'Please add Mobile No '
               : currentUser.auth.mobileNo
           }
           id="location"
@@ -129,7 +125,7 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="gender">Sex</FormLabel>
         <Select
-          minWidth={"100%"}
+          minWidth={'100%'}
           // defaultValue={profile.location}
           id="location"
           borderRadius="10"
@@ -138,7 +134,7 @@ const Information = ({ update, handleSubmit }: any) => {
           width="auto"
           onChange={(event) => setState({ gender: event.target.value })}
         >
-          {currentUser.auth.gender == "MALE" ? (
+          {currentUser.auth.gender == 'MALE' ? (
             <>
               <option selected value="MALE">
                 MALE
@@ -158,10 +154,10 @@ const Information = ({ update, handleSubmit }: any) => {
       <FormControl>
         <FormLabel htmlFor="text">Bio</FormLabel>
         <Textarea
-          minWidth={"100%"}
+          minWidth={'100%'}
           placeholder={
             currentUser.auth.biography == null
-              ? "Please add a bio "
+              ? 'Please add a bio '
               : currentUser.auth.biography
           }
           id="location"
@@ -173,6 +169,6 @@ const Information = ({ update, handleSubmit }: any) => {
         />
       </FormControl>
     </Box>
-  );
-};
-export default Information;
+  )
+}
+export default Information

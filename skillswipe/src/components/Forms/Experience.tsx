@@ -1,152 +1,161 @@
-import React, { useState } from "react";
 import {
+  addWorkExperienceRequest,
+  deleteWorkExperienceRequest,
+  editWorkEperienceRequest,
+} from '@/pages/api/profile_api'
+import { DeleteIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Button,
   FormControl,
   FormLabel,
   Input,
-  Button,
-  Stack,
-  Box,
-  Heading,
-  Textarea,
   Spacer,
-} from "@chakra-ui/react";
-import { AddIcon, DeleteIcon } from "@chakra-ui/icons";
-import { FcRight, FcRightUp } from "react-icons/fc";
-import { toast } from "react-toastify";
-import { editExperience } from "@/pages/api/api";
-import { addWorkExperienceRequest, deleteWorkExperienceRequest, editWorkEperienceRequest } from "@/pages/api/profile_api";
+  Stack,
+} from '@chakra-ui/react'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Experience = (props: any) => {
   const [experience, setExperience] = useState({
-    company: "",
-    title: "",
-    start_year: "",
-    end_year: "",
+    company: '',
+    title: '',
+    start_year: '',
+    end_year: '',
     id: 0,
-  });
-  if (experience.company == "") setExperience(props.experience);
+  })
+  if (experience.company == '') setExperience(props.experience)
   const handleChange = (event: any) => {
-    const { name, value } = event.target;
+    const { name, value } = event.target
     setExperience((prevState) => ({
       ...prevState,
       [name]: value,
-    }));
-  };
+    }))
+  }
 
   const updateWorkExperience = (event: any) => {
-    const token = localStorage.getItem("jwt");
-    event.preventDefault();
-    if (!experience.start_year || !experience.end_year || !experience.company || !experience.title) {
-      toast("Please fill all the fields");
-      return;
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !experience.start_year ||
+      !experience.end_year ||
+      !experience.company ||
+      !experience.title
+    ) {
+      toast('Please fill all the fields')
+      return
     }
     if (experience.start_year > experience.end_year) {
-      toast("Please add Valid start and end year");
-      return;
+      toast('Please add Valid start and end year')
+      return
     } else {
       editWorkEperienceRequest(token, experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success("Experience updated successfully");
+          toast.success('Experience updated successfully')
         } else {
-          toast.error("Error updaing experience");
+          toast.error('Error updaing experience')
         }
       })
     }
-  };
+  }
 
   const addWorkExperience = (event: any) => {
-    const token = localStorage.getItem("jwt");
-    event.preventDefault();
-    if (!experience.start_year || !experience.end_year || !experience.company || !experience.title) {
-      toast("Please fill all the fields");
-      return;
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !experience.start_year ||
+      !experience.end_year ||
+      !experience.company ||
+      !experience.title
+    ) {
+      toast('Please fill all the fields')
+      return
     }
     if (experience.start_year > experience.end_year) {
-      toast("Please add Valid start and end year");
-      return;
+      toast('Please add Valid start and end year')
+      return
     } else {
       addWorkExperienceRequest(token, experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success("Experience added successfully");
+          toast.success('Experience added successfully')
         } else {
-          toast.error("Error adding experience");
+          toast.error('Error adding experience')
         }
       })
     }
-  };
+  }
 
   const deleteWorkExperience = (event: any) => {
-    const token = localStorage.getItem("jwt");
-    event.preventDefault();
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
     deleteWorkExperienceRequest(token, experience.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
-        toast.success("Experience deleted successfully");
-        props.deleteExperience(props.experience.id);
+        toast.success('Experience deleted successfully')
+        props.deleteExperience(props.experience.id)
       } else {
-        toast.error("Error deleting experience");
+        toast.error('Error deleting experience')
       }
     })
-
-  };
+  }
   const deleteItem = () => {
-    props.deleteExperience(props.experience.id);
-  };
+    props.deleteExperience(props.experience.id)
+  }
   return (
     <Box
-      minWidth={"60vw"}
+      minWidth={'60vw'}
       borderWidth="1px"
       borderRadius={25}
       p={8}
       width="auto"
       mt={30}
     >
-      <Stack direction={"row"}>
+      <Stack direction={'row'}>
         <p
           style={{
-            textAlign: "left",
-            fontSize: "20px",
-            fontWeight: "bold",
-            marginBottom: "20px",
+            textAlign: 'left',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            marginBottom: '20px',
           }}
         >
           Experience {props.index} {props.isNew}
         </p>
         <Spacer />
-        {!props.isNew &&
+        {!props.isNew && (
           <Button
             style={{
-              boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-              border: "3px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
+              border: '3px solid rgba(255, 255, 255, 0.3)',
             }}
             type="button"
-            colorScheme={"blue"}
+            colorScheme={'blue'}
             borderRadius="100px"
             onClick={updateWorkExperience}
           >
             Update
           </Button>
-        }
-        {props.isNew &&
+        )}
+        {props.isNew && (
           <Button
             style={{
-              boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-              border: "3px solid rgba(255, 255, 255, 0.3)",
+              boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
+              border: '3px solid rgba(255, 255, 255, 0.3)',
             }}
             type="button"
-            colorScheme={"blue"}
+            colorScheme={'blue'}
             borderRadius="100px"
             onClick={addWorkExperience}
           >
             Add
           </Button>
-        }
+        )}
         <Button
           style={{
-            boxShadow: "0 5px 17px 0px rgba(0, 100, 500, 0.3)",
-            border: "3px solid rgba(255, 255, 255, 0.3)",
+            boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
+            border: '3px solid rgba(255, 255, 255, 0.3)',
           }}
           type="button"
-          colorScheme={"red"}
+          colorScheme={'red'}
           borderRadius="100px"
           onClick={deleteWorkExperience}
         >
@@ -156,7 +165,7 @@ const Experience = (props: any) => {
       <FormControl id="company">
         <FormLabel htmlFor="company">Company</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           defaultValue={props.experience.company}
           id="company"
@@ -171,7 +180,7 @@ const Experience = (props: any) => {
       <FormControl id="title">
         <FormLabel htmlFor="title">Title</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           defaultValue={props.experience.title}
           id="title"
@@ -186,7 +195,7 @@ const Experience = (props: any) => {
       <FormControl id="start_year">
         <FormLabel htmlFor="start_year-when">Start date</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           id="start_year"
           defaultValue={props.experience.start_year}
@@ -201,7 +210,7 @@ const Experience = (props: any) => {
       <FormControl id="end_year">
         <FormLabel htmlFor="end_year">End date</FormLabel>
         <Input
-          minWidth={"100%"}
+          minWidth={'100%'}
           type="text"
           id="end_year"
           defaultValue={props.experience.end_year}
@@ -214,6 +223,6 @@ const Experience = (props: any) => {
         />
       </FormControl>
     </Box>
-  );
-};
-export default Experience;
+  )
+}
+export default Experience

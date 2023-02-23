@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types'
 
 const FeatureCard4 = (props: {
-  rootClassName: any;
+  rootClassName: any
   title2:
     | string
     | number
@@ -12,7 +12,7 @@ const FeatureCard4 = (props: {
     | React.ReactFragment
     | React.ReactPortal
     | null
-    | undefined;
+    | undefined
   description:
     | string
     | number
@@ -21,7 +21,7 @@ const FeatureCard4 = (props: {
     | React.ReactFragment
     | React.ReactPortal
     | null
-    | undefined;
+    | undefined
 }) => {
   return (
     <>
@@ -69,20 +69,20 @@ const FeatureCard4 = (props: {
         `}
       </style>
     </>
-  );
-};
+  )
+}
 
 FeatureCard4.defaultProps = {
-  title2: "Dropbox",
-  rootClassName: "",
+  title2: 'Dropbox',
+  rootClassName: '',
   description:
-    "What profile did at current company so far  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lorem lorem, malesuada in metus vitae, scelerisque accumsan ipsum.",
-};
+    'What profile did at current company so far  Lorem ipsum dolor sit amet, consectetur adipiscing elit. In lorem lorem, malesuada in metus vitae, scelerisque accumsan ipsum.',
+}
 
 FeatureCard4.propTypes = {
   title2: PropTypes.string,
   rootClassName: PropTypes.string,
   description: PropTypes.string,
-};
+}
 
-export default FeatureCard4;
+export default FeatureCard4
