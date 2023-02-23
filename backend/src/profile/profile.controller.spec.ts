@@ -88,7 +88,7 @@ describe("ProfileController", () => {
   };
 
   const mockUsersRepository = {
-    findOne: jest.fn(() => {}),
+    findOne: jest.fn(() => { }),
   };
 
   beforeEach(async () => {
@@ -143,7 +143,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addEducation(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit education", async () => {
@@ -178,7 +178,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editEducation(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete education", async () => {
@@ -205,7 +205,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteEducation(bearer, eduId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add course to the authenticated user", async () => {
@@ -236,7 +236,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addCourse(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit course", async () => {
@@ -267,7 +267,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editCourse(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete course", async () => {
@@ -294,7 +294,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteCourse(bearer, courseId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add project to the authenticated user", async () => {
@@ -326,7 +326,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addProject(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit project", async () => {
@@ -356,7 +356,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editProject(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete project", async () => {
@@ -383,7 +383,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteProject(bearer, projectId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add volunteering to the authenticated user", async () => {
@@ -416,7 +416,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addVolunteering(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit volunteering", async () => {
@@ -447,7 +447,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editVolunteering(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete volunteering", async () => {
@@ -474,7 +474,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteVolunteering(bearer, volunteeringId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add work to the authenticated user", async () => {
@@ -507,19 +507,19 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addWork(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit work", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
 
-    const data: Profile.EditSkillRequest = new Profile.EditSkillRequest();
+    const data: Profile.EditWorkRequest = new Profile.EditWorkRequest;
     data.id = 1;
     data.title = "Concordia";
     data.title = "tutor";
 
     controller.editWork(bearer, data);
-    expect(mockProfileService.editSkill).not.toHaveBeenCalled();
+    expect(mockProfileService.editWork).not.toHaveBeenCalled();
 
     const user: User = {
       id: 1,
@@ -538,7 +538,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editWork(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete work", async () => {
@@ -565,17 +565,14 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteWork(bearer, workId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add skill to the authenticated user", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
 
     const data: Profile.AddSkillRequest = new Profile.AddSkillRequest();
-    data.company = "Concordia";
     data.title = "wtv";
-    data.start_year = 2014;
-    data.end_year = 2020;
 
     controller.addSkill(bearer, data);
 
@@ -597,38 +594,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addSkill(bearer, data)).toThrowError;
-    } catch (e) {}
-  });
-
-  it("should edit skill", async () => {
-    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-
-    const data: Profile.EditWorkRequest = new Profile.EditWorkRequest();
-    data.id = 1;
-    data.title = "Concordia";
-    data.title = "tutor";
-
-    controller.editSkill(bearer, data);
-    expect(mockProfileService.editSkill).not.toHaveBeenCalled();
-
-    const user: User = {
-      id: 1,
-    } as User;
-
-    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user));
-
-    controller.editSkill(bearer, data);
-    expect(await mockProfileService.editSkill).toHaveBeenCalled();
-
-    const user2: User = {
-      id: 2,
-    } as User;
-
-    jest.spyOn(bearer, "getUser").mockImplementation(() => Promise.resolve(user2));
-
-    try {
-      expect(await controller.editSkill(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete skill", async () => {
@@ -655,7 +621,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteSkill(bearer, skillId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add language to the authenticated user", async () => {
@@ -685,7 +651,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addLanguage(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit language", async () => {
@@ -714,7 +680,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editLanguage(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete language", async () => {
@@ -741,7 +707,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteLanguage(bearer, languageId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add award to the authenticated user", async () => {
@@ -771,7 +737,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.addAward(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should edit award", async () => {
@@ -800,7 +766,7 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.editAward(bearer, data)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should delete award", async () => {
@@ -827,6 +793,6 @@ describe("ProfileController", () => {
 
     try {
       expect(await controller.deleteAward(bearer, awardId)).toThrowError;
-    } catch (e) {}
+    } catch (e) { }
   });
 });
