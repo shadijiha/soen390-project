@@ -1,0 +1,10 @@
+{
+    "ext": "ts",
+    "watch": "./src/**/*",
+    "verbose": true,
+    "exec": "npm run start",
+    "delay": "2500",
+    "env": {
+        "NODE_ENV": "development"
+    }
+}

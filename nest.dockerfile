@@ -3,7 +3,7 @@
 ###################
 
 FROM node:slim as development
-ARG NODE_ENV=production
+ARG NODE_ENV=development
 ENV NODE_ENV ${NODE_ENV}
 
 # Add a work directory
@@ -12,16 +12,17 @@ WORKDIR /usr/src/app
 # Cache and Install dependencies
 COPY --chown=node:node ./backend/package.json ./
 COPY --chown=node:node ./backend/package-lock.json ./
-RUN npm install ci
+RUN npm ci
 
 # Copy app files
 COPY --chown=node:node ./backend/ ./
 
 # Install dev run dependencies
-RUN npm i -g @nestjs/cli nodemon
+RUN npm i -g nodemon
 # Expose port
 EXPOSE 3000
 # Start the app
+CMD [ -d "node_modules" ] && nodemon || npm ci && nodemon
 USER node
 
 ###################
