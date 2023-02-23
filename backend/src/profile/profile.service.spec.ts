@@ -432,10 +432,7 @@ describe('ProfileService', () => {
 
   it('should add Skill to a user', async () => {
     const data: Profile.AddSkillRequest = new Profile.AddSkillRequest
-    data.company = "Concordia"
     data.title = "President"
-    data.start_year = 1000
-    data.end_year = 3000
     const user: User = new User
     user.id = 1
     user.firstName = 'test'
@@ -447,33 +444,50 @@ describe('ProfileService', () => {
     expect(user.save).toBeCalledTimes(1)
   })
 
-  it('should edit Skill of a user', async () => {
-    const data: Profile.EditSkillRequest = new Profile.EditSkillRequest
-    data.id = 1
-    data.company = "Concordia"
-    data.title = "President"
-    data.start_year = 1000
-    data.end_year = 3000
+  it('should add Skills to a user', async () => {
+    const data: Profile.AddSkillRequest = new Profile.AddSkillRequest
+    data.title = "President,Developer,Magician"
     const user: User = new User
     user.id = 1
     user.firstName = 'test'
-    user.skills = [data as unknown as Skill]
-    const res = new UpdateResult
+    user.skills = []
 
-    SkillRepository.update.mockImplementation((user, data) => Promise.resolve(res))
+    let savedUser = JSON.parse(JSON.stringify(user)) // deep cope
+    const s1 = new Skill
+    s1.title = 'President'
+    const s2 = new Skill
+    s2.title = 'Developer'
+    const s3 = new Skill
+    s3.title = 'Magician'
+    savedUser.skills = [s1, s2, s3]
 
-    await service.editSkill(user, data)
-    expect(SkillRepository.update).toBeCalledTimes(1)
-    expect(SkillRepository.update).toBeCalledWith(user.id, data)
+    jest.spyOn(user, 'save').mockImplementation(() => Promise.resolve(user))
+
+    await service.addSkill(user, data)
+    expect(user.save).toBeCalledTimes(1)
+    expect(user).toMatchObject(savedUser)
+  })
+
+  it('should not add an empty skill to a user', async () => {
+    const data: Profile.AddSkillRequest = new Profile.AddSkillRequest
+    data.title = ""
+    const user: User = new User
+    user.id = 1
+    user.firstName = 'test'
+    user.skills = []
+
+    let savedUser = JSON.parse(JSON.stringify(user)) // deep cope
+    jest.spyOn(user, 'save').mockImplementation(() => Promise.resolve(user))
+
+    await service.addSkill(user, data)
+    expect(user.save).toBeCalledTimes(0)
+    expect(user).toMatchObject(savedUser)
   })
 
   it('should remove Skill of a user', async () => {
     const data: Skill = new Skill
     data.id = 1
-    data.company = "Concordia"
     data.title = "President"
-    data.start_year = 1000
-    data.end_year = 3000
     const user: User = new User
     user.id = 1
     user.firstName = 'test'

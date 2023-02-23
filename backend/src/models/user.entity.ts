@@ -33,17 +33,17 @@ export class User extends BaseEntity {
     id: number
 
   @Column()
-  @Index({ fulltext: true })
+  @Index()
   @ApiProperty()
     firstName: string
 
   @Column({ default: null })
-  @Index({ fulltext: true })
+  @Index()
   @ApiProperty()
     lastName: string
 
   @Column()
-  @Index({ unique: true, fulltext: true })
+  @Index({ unique: true })
   @ApiProperty()
     email: string
 

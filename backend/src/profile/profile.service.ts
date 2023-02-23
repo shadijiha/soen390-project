@@ -243,13 +243,17 @@ export class ProfileService {
     user: User,
     data: Profile.AddSkillRequest
   ): Promise<void> {
-    const skill = new Skill()
-    skill.company = data.company
-    skill.title = data.title
-    skill.start_year = data.start_year
-    skill.end_year = data.end_year
+    const skills: Skill[] = []
+    data.title.split(',')
+      .filter(s => s !== '')
+      .forEach((s: string, i: number): void => {
+        skills[i] = new Skill()
+        skills[i].title = s
+      })
 
-    user.skills = [...user.skills, skill]
+    if (skills.length === 0) return
+
+    user.skills = [...user.skills, ...skills]
     await user.save()
   }
 
@@ -265,15 +269,6 @@ export class ProfileService {
         ]
       })
       .then(async (s: Skill) => await this.skillRepository.delete({ id: s.id }))
-  }
-
-  public async editSkill (user: User, request: Profile.EditSkillRequest): Promise<void> {
-    const found = user.skills.find((l) => l.id === request.id)
-    if (found == null) {
-      throw new NotFoundException()
-    }
-    const skill: Skill = found
-    await this.skillRepository.update(skill.id, request)
   }
 
   public async addWork (

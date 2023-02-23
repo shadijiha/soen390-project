@@ -29,7 +29,7 @@ env:
 
 jobs:
   build:
-    environment: production
+    environment: production-frontend
     runs-on: ubuntu-latest
 
     steps:
@@ -55,8 +55,8 @@ jobs:
         run: npm ci --prefer-offline --no-audit
 
   deploy:
-    environment: production
-    runs_on: ubuntu-latest
+    environment: production-frontend
+    runs-on: ubuntu-latest
     needs:
       - build
 
@@ -84,18 +84,19 @@ jobs:
         uses: dkershner6/vercel-set-env-action@v1
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
-          projectName: skillswipe # project name in Vercel
+          projectName: skilswipe # project name in Vercel
           envVariableKeys: BASE_URL
         env:
-          BASE_URL: ${{ secrets.BASE_URL }}
+          BASE_URL: ${{ secrets.BASE_API_URL }}
           TARGET_BASE_URL: preview,development,production # comma delimited, one of [production, preview, development]
-          TYPE_BASE_URL: encrypted # one of [plain, encrypted]
+          TYPE_BASE_URL: plain # one of [plain, encrypted]
 
       - name: Deploy to Production
         uses: amondnet/vercel-action@v20
         id: deploy-vercel-production
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         with:
+          working-directory: ./skillswipe
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
