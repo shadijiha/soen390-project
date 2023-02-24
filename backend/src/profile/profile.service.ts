@@ -42,10 +42,10 @@ export class ProfileService {
   public async removeEducation (user: User, id: number): Promise<void> {
     await this.educationRepository
       .findOneOrFail({
-        where: [
-          { id },
-          { user: { id: user.id } }
-        ]
+        where: {
+           id: id ,
+           user: { id: user.id }
+        }
       })
       .then(async (e: Education) => await this.educationRepository.delete({ id: e.id }))
   }
