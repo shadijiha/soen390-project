@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons'
+import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Box,
   Button,
@@ -7,6 +7,10 @@ import {
   Text,
   useColorMode,
   useColorModeValue,
+  Collapse,
+  InputGroup,
+  useDisclosure,
+  InputRightElement,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import router from 'next/router'
@@ -14,6 +18,9 @@ import React, { useState } from 'react'
 
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import Search from "./Search/Search";
+import MobileSearchBar from "./Search/MobileSearchBar";
+import { useRouter } from "next/router"
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -21,6 +28,38 @@ export default function NavBar() {
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
   const formBackground = useColorModeValue('gray.100', 'gray.700')
+  const [searchTerm, setSearchTerm] = useState("");
+  const { onToggle, isOpen } = useDisclosure();
+
+  const MobilehandleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchTerm(e.target.value);
+   };
+   
+   const router = useRouter();
+
+   const MobilehandleSubmit = (e: any) => {
+     e.preventDefault();
+     router.push(`/searchResultpage?q=${searchTerm}`);
+   };
+ 
+ 
+const searchIcon = document.getElementsByClassName("mobile-search-icon");
+
+try{
+
+searchIcon[0].addEventListener("click", function (){
+  setTimeout(function(){
+  if (display === "none") {
+    changeDisplay("block");
+  } else {
+    changeDisplay("none");
+  }
+}, 100);
+});
+}catch(e){
+  console.log(e);
+}
+
 
   const navColor = useColorModeValue(
     'rgba(255, 255, 255, 0.25)',
@@ -64,6 +103,8 @@ export default function NavBar() {
           >
             🚀 SkillSwipe
           </Text>
+
+          <Search/>
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
             <NextLink href="/home" passHref>
               <Button aria-label="Home" my={5} w="100%" variant="ghost">
@@ -184,6 +225,54 @@ export default function NavBar() {
                 My Account
               </Button>
             </NextLink>
+
+             {/* <MobileSearchBar/> */}
+             <Button  onClick= {onToggle} variant = "ghost" aria-label="Search" backgroundColor="transparent">Search</Button>
+                <Collapse in={isOpen} animateOpacity>
+                  <InputGroup>
+                    <form onSubmit={MobilehandleSubmit}>
+                    <input
+                      type="text"
+                      placeholder="Search"
+                      value={searchTerm}
+                      onChange={MobilehandleChange}
+                      style={{
+                        
+                        width: "250px",
+                        height: "40px",
+                        paddingLeft: "10px",
+                        borderRadius: "100px",
+                        border: "none",
+                        outline: "1px  black",
+                        backgroundColor: formBackground,
+                    }}
+                    />
+
+                    <InputRightElement width={9}>
+                    <SearchIcon className="mobile-search-icon"
+              position="absolute"
+              top="50%"
+              transform="translateY(-50%)"
+              left="10px"
+              color="gray.500"
+              zIndex={1}
+              cursor="pointer"
+
+              // change color when hover over
+              _hover={{
+                color: "blue.300",
+              }}
+
+              onClick={MobilehandleSubmit}
+            />
+                      
+
+                      </InputRightElement>
+                    </form>
+
+                      
+                  </InputGroup>
+            </Collapse>
 
             <NextLink href="/" passHref>
               <Button

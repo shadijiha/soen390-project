@@ -145,6 +145,7 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
 }
 
 
+
 export const editEducationHistoryRequest = async (token: any, education: any) => {
   return axios
     .put(`${URL}/profile/education/${education.id}`, education, {
@@ -183,3 +184,12 @@ export const deleteEducationHistoryRequest = async (
       return { status: 500, data: err }
     })
 }
+=======
+export const search = async (token : any, query: string) => {
+  return axios.get(`${URL}/search?query=${query}`,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
+  })
+}
+
