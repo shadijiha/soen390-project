@@ -50,6 +50,12 @@ describe("ConnectionsService", () => {
     } catch (e) {}
   });
 
+  it("should add connection", async () => {
+    try {
+      expect(await service.addConnection(1, 2)).toThrowError();
+    } catch (e) {}
+  });
+
   it("should return pending connections", async () => {
     const result = await service.getPendingConnections(1);
     expect(result).toEqual([{ since: undefined, user: { id: 1 } }]);

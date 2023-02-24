@@ -61,6 +61,11 @@ describe('UsersService', () => {
     expect(user.id).toEqual(1)
   })
 
+  it('should return a user by id with no relations', async () => {
+    const user = await service.findOneByIdNoRelations(1)
+    expect(user.id).toEqual(1)
+  })
+  
   it('should return a user by email', async () => {
     const result = await service.getByEmail('test@gmail.com')
     expect(result.email).toEqual('test@gmail.com')
