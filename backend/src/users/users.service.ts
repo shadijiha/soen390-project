@@ -33,13 +33,13 @@ export class UsersService {
     return user
   }
 
-  async findOneByIdNoRelations(userId: number): Promise<User> {
+  async findOneByIdNoRelations (userId: number): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {
-        id: userId,
-      },
-    });
-    return user;
+        id: userId
+      }
+    })
+    return user
   }
 
   async findOneByEmail (email: string): Promise<User | null> {
