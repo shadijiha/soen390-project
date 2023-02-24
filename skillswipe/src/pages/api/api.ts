@@ -184,7 +184,7 @@ export const deleteEducationHistoryRequest = async (
       return { status: 500, data: err }
     })
 }
-=======
+
 export const search = async (token : any, query: string) => {
   return axios.get(`${URL}/search?query=${query}`,{
     headers : {
