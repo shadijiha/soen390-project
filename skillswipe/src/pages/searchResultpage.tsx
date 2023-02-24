@@ -56,13 +56,20 @@ export default function Search() {
   return (
     <Layout>
       <NavBar></NavBar>
-      <Heading padding={3}>Search Results: {searchResults.length}</Heading>
+      <Heading
+        textAlign={'center'}
+        style={{
+          paddingBottom: '1rem',
+        }}
+      >
+        Total Results: {searchResults.length}
+      </Heading>
       <Flex flexDir="column" align="center">
         <Stack>
           <div>
             <List>
               {searchResults.map((user: any) => (
-                <ListItem>
+                <Stack>
                   <Box
                     borderWidth="1px"
                     borderColor={formBorder}
@@ -78,7 +85,12 @@ export default function Search() {
                   >
                     <li key={user.id}>
                       <NextLink href={`/profile/${user.id}}`} passHref>
-                        <Heading fontSize={30} padding={1}>
+                        <Heading
+                          fontSize={20}
+                          style={{
+                            paddingBottom: '1rem',
+                          }}
+                        >
                           {user.firstName} {user.lastName}
                         </Heading>
                         <div
@@ -104,7 +116,7 @@ export default function Search() {
                       </NextLink>
                     </li>
                   </Box>
-                </ListItem>
+                </Stack>
               ))}
             </List>
           </div>
