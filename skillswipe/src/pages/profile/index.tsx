@@ -81,8 +81,8 @@ const Profile = () => {
                 style={{
                   //make the background image repeat itself
                   backgroundRepeat: 'repeat',
-                  // make the background image to be 50% opacity
-                  backgroundColor: 'rgba(0, 0, 0, 0.15)',
+                  // make the background image to be 35% opacity
+                  backgroundColor: 'rgba(0, 0, 0, 0.35)',
                   // make the background image to be 50% opacity
                   backgroundBlendMode: 'multiply',
                   // make the container take the entire screens width
