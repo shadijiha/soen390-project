@@ -168,7 +168,7 @@ const Awards = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.awards.title}
+          defaultValue={props.award.title}
           name="title"
           id="title"
           borderRadius="10"
@@ -184,7 +184,7 @@ const Awards = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.Awards.description}
+          defaultValue={props.award.description}
           name="description"
           id="description"
           borderRadius="10"
@@ -200,7 +200,7 @@ const Awards = (props: any) => {
           minWidth={'100%'}
           type="text"
           id="issue_date"
-          defaultValue={props.Awards.issue_date}
+          defaultValue={props.award.issue_date}
           name="issue_date"
           borderRadius="10"
           size="lg"
@@ -215,7 +215,7 @@ const Awards = (props: any) => {
           minWidth={'100%'}
           type="text"
           id="issuer"
-          defaultValue={props.awards.issuer}
+          defaultValue={props.award.issuer}
           name="issuer"
           borderRadius="10"
           size="lg"
@@ -230,7 +230,7 @@ const Awards = (props: any) => {
           minWidth={'100%'}
           type="text"
           id="url"
-          defaultValue={props.awards.url}
+          defaultValue={props.award.url}
           name="url"
           borderRadius="10"
           size="lg"
