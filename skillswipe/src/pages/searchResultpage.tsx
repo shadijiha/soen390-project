@@ -59,7 +59,7 @@ export default function Search() {
       <Heading
         textAlign={'center'}
         style={{
-          paddingBottom: '1rem',
+          paddingBottom: '1.5rem',
         }}
       >
         Total Results: {searchResults.length}
@@ -76,11 +76,11 @@ export default function Search() {
                     backgroundColor={postBackground}
                     padding="1rem"
                     marginBottom="1rem"
-                    rounded="20"
+                    rounded="25px"
                     overflow="hidden"
                     width="100%"
-                    maxW={350}
-                    minW={350}
+                    maxW={300}
+                    minW={300}
                     key={user.id}
                   >
                     <li key={user.id}>
@@ -89,6 +89,7 @@ export default function Search() {
                           fontSize={20}
                           style={{
                             paddingBottom: '1rem',
+                            paddingLeft: '5px',
                           }}
                         >
                           {user.firstName} {user.lastName}
@@ -111,6 +112,9 @@ export default function Search() {
                               ? `data:image/jpeg;base64,${user.profilePic}`
                               : profile.image
                           }
+                          style={{
+                            borderRadius: '15px',
+                          }}
                           alt={`${user.firstName} ${user.lastName}`}
                         />
                       </NextLink>
