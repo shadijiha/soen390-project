@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react'
 import axios from 'axios'
 import { default as Link, default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
@@ -84,7 +84,7 @@ export default function Search() {
                     key={user.id}
                   >
                     <li key={user.id}>
-                      <NextLink href={`/profile/${user.id}}`} passHref>
+                      <NextLink href={`profile/${user.id}`} >
                         <Heading
                           fontSize={20}
                           style={{
