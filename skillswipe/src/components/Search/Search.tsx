@@ -35,7 +35,7 @@ const Search = () => {
 
   return (
     <>
-      <Flex ml={'auto'} display={['none', 'none', 'flex', 'flex']}>
+      <Flex display={['none', 'none', 'flex', 'flex']} marginLeft="auto">
         <Stack>
           <Box
             display={['none', 'none', 'flex', 'flex']}
