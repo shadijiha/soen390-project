@@ -102,8 +102,8 @@ export class ProfileService {
       .findOneOrFail({
         where: {
           id: id,
-          user: { id: user.id }
-      },
+          user: { id: user.id },
+        },
       })
       .then(async (p: Project) => await this.projectRepository.delete({ id: p.id }));
   }
@@ -131,7 +131,10 @@ export class ProfileService {
   public async removeVolunteering(user: User, id: number): Promise<void> {
     await this.volunteeringRepository
       .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }],
+        where: {
+          id: id,
+          user: { id: user.id },
+        },
       })
       .then(async (v: Volunteering) => await this.volunteeringRepository.delete({ id: v.id }));
   }
