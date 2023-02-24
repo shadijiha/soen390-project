@@ -241,7 +241,10 @@ export class ProfileService {
   public async removeWork(user: User, id: number): Promise<void> {
     await this.workRepository
       .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }],
+        where: {
+          id: id,
+          user: { id: user.id },
+        },
       })
       .then(async (w: Work) => await this.workRepository.delete({ id: w.id }));
   }
