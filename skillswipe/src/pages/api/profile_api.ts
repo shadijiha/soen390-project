@@ -1,6 +1,7 @@
 
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+
 import axios from 'axios'
 const URL = 'http://localhost:8080'
 
@@ -166,13 +167,6 @@ export const editPersonalProjects = async (token: any, UpdatedUser: any) => {
   })
 }
 
-export const editSkills = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/profile/add/skill`, UpdatedUser, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
-}
 
 export const editCourses = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}`, UpdatedUser, {
@@ -188,4 +182,43 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
       authorization: `Bearer ${token}`,
     },
   })
+}
+
+export const editSkillRequest = async (token: any, Skill: any) => {
+  return axios
+    .put(`${URL}/profile/work/${Skill.id}`, Skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const addSkillRequest = async (token: any, Skill: any) => {
+  return axios
+    .post(`${URL}/profile/Skill`, Skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteSkillRequest = async (
+  token: any,
+  Skill: number
+) => {
+  return axios
+    .delete(`${URL}/profile/Skill/${Skill}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
