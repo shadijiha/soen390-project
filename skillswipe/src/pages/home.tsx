@@ -25,10 +25,18 @@ const Home = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-        <Box display="flex" justifyContent="center" alignItems="center" p={4}>
+        <Box display="flex" justifyContent="center" alignItems="center">
           <Box>
-            <Heading paddingBottom={10}>Welcome {User.auth.firstName}</Heading>
-            <Heading paddingBottom={5}>Recent Posts</Heading>
+            <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
+            <Heading
+              paddingBottom={5}
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: '300',
+              }}
+            >
+              Recent Posts
+            </Heading>
             <List>
               {posts.map((post) => (
                 <ListItem key={post.id}>

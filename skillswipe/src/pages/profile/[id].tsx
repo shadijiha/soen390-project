@@ -189,6 +189,14 @@ const profile = () => {
                   <div
                     className="profile-container01"
                     style={{
+                      //make the background image repeat itself
+                      backgroundRepeat: 'repeat',
+                      // make the background image to be 35% opacity
+                      backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                      // make the background image to be 50% opacity
+                      backgroundBlendMode: 'multiply',
+                      // make the container take the entire screens width
+
                       backgroundImage: `url(${
                         user.coverPic
                           ? `data:image/jpeg;base64,${user.coverPic}`
@@ -202,41 +210,47 @@ const profile = () => {
                         fontSize: '1.5em',
                         fontWeight: 700,
                         textShadow: '0px 0px 30px #00000085',
+
+                        color: 'white',
                       }}
                     >
-                      {user.firstName + ' ' + user.lastName}
+                      {user.firstName + ' ' + user.lastName} 👋🏼
                     </h1>
                     <span
                       className="profile-text02"
                       style={{
                         fontSize: '1em',
                         textShadow: '0px 0px 30px #00000085',
+
+                        color: 'white',
                       }}
                     >
-                      {user.email}
+                      📨 {user.email}
                     </span>
                     <span
                       className="profile-text03"
                       style={{
                         fontSize: '1em',
                         textShadow: '0px 0px 30px #00000085',
+
+                        color: 'white',
                       }}
                     >
                       <span>📱 {user.mobileNo}</span>
                       <br></br>
+                      <br></br>
                     </span>
                     <div className="profile-container03">
-                      <div className="profile-container04">
-                        <span
-                          className="profile-text06"
-                          style={{
-                            textShadow: '0px 0px 30px #000000B4',
-                            marginLeft: '0px',
-                          }}
-                        >
-                          💬 {user.biography}
-                        </span>
-                      </div>
+                      <span
+                        className="profile-text06"
+                        style={{
+                          textShadow: '0px 0px 30px #000000B4',
+                          marginLeft: '0px',
+                          color: 'white',
+                        }}
+                      >
+                        💬 {user.biography}
+                      </span>
                     </div>
 
                     <div className="profile-container05">

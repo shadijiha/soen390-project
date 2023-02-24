@@ -9,6 +9,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import router from 'next/router'
 import React, { useState } from 'react'
 
 import { toast } from 'react-toastify'
@@ -54,7 +55,13 @@ export default function NavBar() {
           paddingStart={'2em'}
           zIndex="99999"
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 25 }} ml={'15px'}>
+          <Text
+            style={{ fontWeight: 'bold', fontSize: 25 }}
+            ml={'15px'}
+            onClick={() => {
+              router.push('/')
+            }}
+          >
             🚀 SkillSwipe
           </Text>
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
