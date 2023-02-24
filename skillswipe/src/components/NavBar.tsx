@@ -342,17 +342,6 @@ export default function NavBar() {
                 Sign In/Logout
               </Button>
             </NextLink>
-            <Button
-              size="lg"
-              marginLeft={3}
-              onClick={toggleColorMode}
-              variant="ghost"
-              _hover={{
-                transform: 'scale(1.25)',
-              }}
-            >
-              {toggleTheme}
-            </Button>
           </Flex>
         </Flex>
       </Flex>
