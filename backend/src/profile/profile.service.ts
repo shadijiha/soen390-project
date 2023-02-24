@@ -100,7 +100,10 @@ export class ProfileService {
   public async removeProject(user: User, id: number): Promise<void> {
     await this.projectRepository
       .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }],
+        where: {
+          id: id,
+          user: { id: user.id }
+      },
       })
       .then(async (p: Project) => await this.projectRepository.delete({ id: p.id }));
   }
