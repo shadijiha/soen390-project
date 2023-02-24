@@ -1,3 +1,4 @@
+import { useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
@@ -29,7 +30,11 @@ const Education = ({ education }: any) => {
                     <>
                       <div className="edu-feature-card">
                         <img
-                          src="https://k20plus.com/wp-content/uploads/2017/11/uni-icon-300x300.png"
+                          // different picture URL if the colormode is dark
+                          src={useColorModeValue(
+                            'https://img.icons8.com/3d-fluency/512/student-male.png',
+                            'https://img.icons8.com/3d-fluency/512/student-male.png'
+                          )}
                           className="edu-icon"
                           width="50px"
                           height="50px"
