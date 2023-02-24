@@ -18,13 +18,16 @@ import { toast } from 'react-toastify'
 
 const Awards = (props: any) => {
   const [award, setAward] = useState({
-    id: null,
     title: '',
     description: '',
     issue_date: '',
     issuer: '',
     url: '',
+    id: 0,
+
   })
+
+
   if (award.title == '') setAward(props.award)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -34,37 +37,47 @@ const Awards = (props: any) => {
     }))
   }
 
-  const addAward = (event: any) => {
+  const updateAward = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    console.log(award)
-    if (!award.title || !award.description || !award.issue_date) {
-      toast.error('Please fill in all fields')
-      return
-    } else {
-      addAwardsRequest(token, award).then((res) => {
-        if (res.status == 201) {
-          toast.success('Award added successfully')
-        } else {
-          toast.error('Error adding award')
-        }
-      })
-    }
-    // You can now use the form values to add the user's award
-  }
-
-  const editAward = (event: any) => {
-    const token = localStorage.getItem('jwt')
-    event.preventDefault()
-    if (award.title == '' || award.description == '' || award.issue_date == '') {
-      toast.error('Please fill in all fields')
+    if (
+      !award.title ||
+      !award.description ||
+      !award.issue_date ||
+      !award.issuer ||
+      !award.url
+    ) {
+      toast('Please fill all the fields')
       return
     } else {
       editAwardsRequest(token, award).then((res) => {
-        if (res.status == 201) {
+        if (res.status == 201 || res.status == 200) {
           toast.success('Award updated successfully')
         } else {
-          toast.error('Error updating award')
+          toast.error('Error updaing award')
+        }
+      })
+    }
+  }
+
+  const addAward = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !award.title ||
+      !award.description ||
+      !award.issue_date ||
+      !award.issuer ||
+      !award.url
+    ) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      addAwardsRequest(token, award).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Award added successfully')
+        } else {
+          toast.error('Error adding award')
         }
       })
     }
@@ -73,28 +86,39 @@ const Awards = (props: any) => {
   const deleteAward = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-
     deleteAwardsRequest(token, award.id).then((res) => {
-      if (res.status == 201) {
-        toast.success('Award delete successfully')
-        props.deleteAward(props.award.id)
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Award deleted successfully')
+        props.deleteAward(props.Award.id)
       } else {
         toast.error('Error deleting award')
       }
     })
   }
+  const deleteItem = () => {
+    props.deleteAward(props.Award.id)
+  }
+
+  
+
   return (
-    <Box minWidth={'60vw'} borderWidth="1px" borderRadius={25} p={8} width="auto">
+    <Box 
+     minWidth={'60vw'} 
+     borderWidth="1px"
+     borderRadius={25} 
+     p={8}
+     width="auto"
+    >
       <Stack direction={'row'}>
         <p
           style={{
             textAlign: 'left',
-            /* fonstSize: "20px",*/
+            // fonstSize: "20px",
             fontWeight: 'bold',
             marginBottom: '20px',
           }}
         >
-          Award {props.index} {props.isNew}
+          Awards {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -106,7 +130,7 @@ const Awards = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={editAward}
+            onClick={updateAward}
           >
             Update
           </Button>
@@ -144,7 +168,7 @@ const Awards = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.award.title}
+          defaultValue={props.awards.title}
           name="title"
           id="title"
           borderRadius="10"
@@ -153,13 +177,14 @@ const Awards = (props: any) => {
           width="auto"
           onChange={handleChange}
         />
+        
       </FormControl>
       <FormControl id="description">
         <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.award.description}
+          defaultValue={props.Awards.description}
           name="description"
           id="description"
           borderRadius="10"
@@ -175,7 +200,7 @@ const Awards = (props: any) => {
           minWidth={'100%'}
           type="text"
           id="issue_date"
-          defaultValue={props.award.issue_date}
+          defaultValue={props.Awards.issue_date}
           name="issue_date"
           borderRadius="10"
           size="lg"
@@ -184,6 +209,37 @@ const Awards = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
+      <FormControl id="issuer">
+        <FormLabel htmlFor="issuer">Issuer</FormLabel>
+        <Input
+          minWidth={'100%'}
+          type="text"
+          id="issuer"
+          defaultValue={props.awards.issuer}
+          name="issuer"
+          borderRadius="10"
+          size="lg"
+          mb={5}
+          width="auto"
+          onChange={handleChange}
+        />
+      </FormControl>
+      <FormControl id="url">
+        <FormLabel htmlFor="url">URL</FormLabel>
+        <Input
+          minWidth={'100%'}
+          type="text"
+          id="url"
+          defaultValue={props.awards.url}
+          name="url"
+          borderRadius="10"
+          size="lg"
+          mb={5}
+          width="auto"
+          onChange={handleChange}
+        />
+      </FormControl>
+      
     </Box>
   )
 }

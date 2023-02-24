@@ -36,6 +36,7 @@ const EducationHistory = (props: any) => {
       [name]: value,
     }))
   }
+  
   const addEducation = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()

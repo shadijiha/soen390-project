@@ -31,10 +31,31 @@ const Skills = (props: any) => {
     }))
   }
 
-  const addSkills = (event: any) => {
+  const updateSkills = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (!skill.title) {
+    if (
+      !skill.title
+      ) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      editSkillRequest(token, skill).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Skill updated successfully')
+        } else {
+          toast.error('Error updaing skill')
+        }
+      })
+    }
+  }
+
+  const addSkill = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !skill.title
+      ) {
       toast('Please fill all the fields')
       return
     } else {
@@ -51,38 +72,19 @@ const Skills = (props: any) => {
   const deleteSkill = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if(props.isNew){
-      props.deleteSkill(props.skill.id)
-    }else{
-      deleteSkillRequest(token, skill.id).then((res) => {
-        if (res.status == 201 || res.status == 200) {
-          toast.success('Skill deleted successfully')
-          props.deleteSkill(props.skill.id)
-        } else {
-          toast.error('Error deleting skill')
-        }
-      })
-    }
+    deleteSkillRequest(token, skill.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Skill deleted successfully')
+        props.deleteSkill(props.skill.id)
+      } else {
+        toast.error('Error deleting skill')
+      }
+    })
+  }
+  const deleteItem = (event: any) => {
+    props.deleteSkill(props.skill.id)
   }
 
-  const editSkill = (event: any) => {
-    const token = localStorage.getItem('jwt')
-    event.preventDefault()
-    if (
-      !skill.title
-      ) {
-      toast('Please fill all the fields')
-      return
-    } else {
-      editSkillRequest(token, skill).then((res) => {
-        if (res.status == 201 || res.status == 200) {
-          toast.success('Skill updated successfully')
-        } else {
-          toast.error('Error updating skill')
-        }
-      })
-    }
-  }
 
     
 
@@ -105,7 +107,7 @@ const Skills = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Skills {props.index} {props.isNew}
+          Skill {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -117,7 +119,7 @@ const Skills = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={editSkill}
+            onClick={updateSkills}
           >
             Update
           </Button>
@@ -131,7 +133,7 @@ const Skills = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={addSkills}
+            onClick={addSkill}
           >
             Add
           </Button>
@@ -154,9 +156,9 @@ const Skills = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.skill.title}
-          name="skill"
-          id="skill"
+          defaultValue={skill.title}
+          name="title"
+          id="title"
           borderRadius="10"
           size="lg"
           mb={5}

@@ -186,7 +186,7 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
 
 export const editSkillRequest = async (token: any, Skill: any) => {
   return axios
-    .put(`${URL}/profile/work/${Skill.id}`, Skill, {
+    .put(`${URL}/profile/skill/${Skill.id}`, Skill, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -198,7 +198,7 @@ export const editSkillRequest = async (token: any, Skill: any) => {
 
 export const addSkillRequest = async (token: any, Skill: any) => {
   return axios
-    .post(`${URL}/profile/Skill`, Skill, {
+    .post(`${URL}/profile/skill`, Skill, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -213,7 +213,7 @@ export const deleteSkillRequest = async (
   Skill: number
 ) => {
   return axios
-    .delete(`${URL}/profile/Skill/${Skill}`, {
+    .delete(`${URL}/profile/skill/${Skill}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

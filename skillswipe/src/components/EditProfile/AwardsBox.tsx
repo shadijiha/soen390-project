@@ -5,27 +5,40 @@ import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Awards from '../Forms/Awards'
 
-type Award = {
-  id?: number
+type Awards = {
   title?: string
   description?: string
   issue_date?: string
   issuer?: string
   url?: string
+  id?: number
 }
+
 
 const AwardsBox = () => {
   const profile = useSelector((state) => state as any)
-  const [awardsList, setAwardsList] = useState(profile.auth.awards as Award[])
+  const [awardsList, setAwardsList] = useState(
+    [] as Awards[]
+    )
   const deleteAward = (id: number) => {
-    setAwardsList(awardsList.filter((award: any) => award.id !== id))
+    console.log('delete award', id)
+    console.log('awardsList', awardsList)
+    setAwardsList([] ||
+      awardsList.filter((award: any) => award.id !== id))
+    console.log('awardsList', awardsList)
   }
   const addAward = () => {
-    let award: Award = {}
+    let award: Awards = {}
     setAwardsList((oldArray) => [...oldArray, award])
   }
-  const isNew = (award: Award) => {
-    return !(award.title && award.description && award.issue_date)
+  const isNew = (award: Awards) => {
+    return !(
+      award.title && 
+      award.description && 
+      award.issue_date &&
+      award.issuer &&
+      award.url
+      )
   }
   return (
     <Stack

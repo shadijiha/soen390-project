@@ -78,7 +78,7 @@ const SkillsBox = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {skillsList.map((skill: any, index: number) => (
-          <div key={skill.id}>
+          <div key={index}>
             <Skills
               skill={skill}
               index={index + 1}
