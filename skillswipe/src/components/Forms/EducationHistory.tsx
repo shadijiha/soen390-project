@@ -23,7 +23,10 @@ const EducationHistory = (props: any) => {
     start_year: '',
     end_year: '',
     id: 0,
+ 
   })
+
+
 
   if (educationHistory.institution == '') setEducationHistory(props.education)
   const handleChange = (event: any) => {
@@ -33,6 +36,7 @@ const EducationHistory = (props: any) => {
       [name]: value,
     }))
   }
+  
   const addEducation = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -62,16 +66,19 @@ const EducationHistory = (props: any) => {
   const deleteEducation = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-
-    deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Education updated successfully')
-        console.log('Chilld:' + props.education.id)
-        props.deleteEducation(props.education.id)
-      } else {
-        toast.error('Error deleting education')
-      }
-    })
+    if(props.isNew){
+      props.deleteEducation(props.education.id)
+    }else{
+      deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Education updated successfully')
+          console.log('Chilld:' + props.education.id)
+          props.deleteEducation(props.education.id)
+        } else {
+          toast.error('Error deleting education')
+        }
+      })
+    }
   }
   const updateEducation = (event: any) => {
     const token = localStorage.getItem('jwt')

@@ -13,6 +13,7 @@ import {
   InputRightElement,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
+import router from 'next/router'
 import React, { useState } from 'react'
 
 import { toast } from 'react-toastify'
@@ -93,7 +94,13 @@ searchIcon[0].addEventListener("click", function (){
           paddingStart={'2em'}
           zIndex="99999"
         >
-          <Text style={{ fontWeight: 'bold', fontSize: 25 }} ml={'15px'}>
+          <Text
+            style={{ fontWeight: 'bold', fontSize: 25 }}
+            ml={'15px'}
+            onClick={() => {
+              router.push('/')
+            }}
+          >
             🚀 SkillSwipe
           </Text>
 

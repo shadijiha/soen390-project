@@ -1,5 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { useEffect } from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
@@ -10,7 +11,7 @@ type Volunteering = {
   title?: string
   start_year?: string
   end_year?: string
-  id: number
+  id?: number
 }
 
 const VolunteeringBox = () => {
@@ -18,13 +19,18 @@ const VolunteeringBox = () => {
   const [volunteeringList, setVolunteeringList] = useState(
     profile.auth.volunteerings as Volunteering[]
   )
+  useEffect(() =>{
+    console.log(profile)
+  },[])
   const deleteVolunteering = (id: number) => {
+    console.log('delete volunteering', id)
+    console.log('volunteeringList', volunteeringList)
     setVolunteeringList(
       volunteeringList.filter((volunteering: any) => volunteering.id !== id)
     )
   }
   const addVolunteering = () => {
-    let vol: Volunteering = { id: 10 }
+    let vol: Volunteering = {}
     setVolunteeringList((oldArray) => [...(oldArray || []), vol])
   }
   const isNew = (volunteering: Volunteering) => {
@@ -81,6 +87,7 @@ const VolunteeringBox = () => {
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {volunteeringList &&
           volunteeringList.map((volunteering: any, index: number) => (
+            console.log('volunteering', volunteering),
             <div key={index}>
               <Volunteering
                 volunteering={volunteering}

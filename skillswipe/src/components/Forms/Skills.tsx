@@ -1,3 +1,8 @@
+import {
+  addSkillRequest,
+  editSkillRequest,
+  deleteSkillRequest,
+} from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -9,14 +14,15 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
-const Skill = (props: any) => {
+const Skills = (props: any) => {
   const [skill, setSkill] = useState({
-    skill: '',
-    description: '',
-    id: null,
+    title: '',
+    id: 0,
   })
-  if (skill.skill == '') setSkill(props.skill)
+
+  if (skill.title == '') setSkill(props.skill)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setSkill((prevState) => ({
@@ -24,24 +30,64 @@ const Skill = (props: any) => {
       [name]: value,
     }))
   }
-  const handleSubmit = (event: any) => {
+
+  const updateSkills = (event: any) => {
     const token = localStorage.getItem('jwt')
-    // call API to update education history
-    // editSkills(token, skill).then((response) => {
-    //     console.log(response);
-    //     toast("Updated Successfully");
-    //   })
-    //   .catch((error) => {
-    //     toast(error.message);
-    //   });
     event.preventDefault()
-    console.log(skill) // this will print out the form values
-    // You can now use the form values to update the user's education history
+    if (
+      !skill.title
+      ) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      editSkillRequest(token, skill).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Skill updated successfully')
+        } else {
+          toast.error('Error updaing skill')
+        }
+      })
+    }
   }
 
-  const deleteItem = () => {
+  const addSkill = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !skill.title
+      ) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      addSkillRequest(token, skill).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Skill added successfully')
+        } else {
+          toast.error('Error adding skill')
+        }
+      })
+    }
+  }
+
+  const deleteSkill = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    deleteSkillRequest(token, skill.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Skill deleted successfully')
+        props.deleteSkill(props.skill.id)
+      } else {
+        toast.error('Error deleting skill')
+      }
+    })
+  }
+  const deleteItem = (event: any) => {
     props.deleteSkill(props.skill.id)
   }
+
+
+    
+
 
   return (
     <Box
@@ -61,7 +107,7 @@ const Skill = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Skills {props.index} {props.isNew}
+          Skill {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -73,7 +119,7 @@ const Skill = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateSkills}
           >
             Update
           </Button>
@@ -87,7 +133,7 @@ const Skill = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addSkill}
           >
             Add
           </Button>
@@ -100,7 +146,7 @@ const Skill = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteSkill}
         >
           <DeleteIcon />
         </Button>
@@ -110,32 +156,18 @@ const Skill = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.skill.skill}
-          name="skill"
-          id="skill"
+          defaultValue={skill.title}
+          name="title"
+          id="title"
           borderRadius="10"
           size="lg"
           mb={5}
           onChange={handleChange}
         />
       </FormControl>
-      <FormControl id="description">
-        <FormLabel htmlFor="description">Description</FormLabel>
-        <Input
-          minWidth={'100%'}
-          type="text"
-          id="description"
-          name="description"
-          defaultValue={props.skill.description}
-          borderRadius="10"
-          size="lg"
-          mb={5}
-          width="auto"
-          onChange={handleChange}
-        />
-      </FormControl>
+      
     </Box>
   )
 }
 
-export default Skill
+export default Skills

@@ -6,24 +6,33 @@ import 'react-toastify/dist/ReactToastify.css'
 import Skills from '../Forms/Skills'
 
 type Skill = {
-  skill?: string
-  description?: string
-  id: number
+  title?: string
+  id?: number
 }
 
 const SkillsBox = () => {
   const profile = useSelector((state) => state as any)
-  const [skillsList, setSkillsList] = useState(profile.auth.skills as Skill[])
-  const deleteSkill = (id: number) => {
-    setSkillsList(skillsList.filter((skill: any) => skill.id !== id))
-  }
-  const addSkill = () => {
-    let skill: Skill = { id: 10 }
-    setSkillsList((oldArray) => [...oldArray, skill])
-  }
-  const isNew = (skill: Skill) => {
-    return !(skill.skill && skill.description)
-  }
+  const [skillsList, setSkillsList] = useState(
+    profile.auth.skills as Skill[]
+    )
+    const deleteSkill = (id: number) => {
+      console.log('delete skill', id)
+      console.log('skillsList', skillsList)
+      setSkillsList(skillsList.filter((skill: any) => skill.id !== id))
+      console.log('skillsList', skillsList)
+    }
+
+    const addSkill = () => {
+      let skill: Skill = {
+      }
+      setSkillsList((oldArray) => [...oldArray, skill])
+    }
+    const isNew = (skill: Skill) => {
+      return !(
+        skill.title
+      )
+    }
+    
   return (
     <Stack
       as="form"
@@ -69,7 +78,7 @@ const SkillsBox = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {skillsList.map((skill: any, index: number) => (
-          <div key={skill.id}>
+          <div key={index}>
             <Skills
               skill={skill}
               index={index + 1}

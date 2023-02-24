@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
@@ -71,6 +71,19 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
+  const [imgSrc, setImgSrc] = useState(
+    `https://www.${props.company}.com/favicon.ico`
+  )
+
+  const handleImageError = () => {
+    setImgSrc('https://img.icons8.com/emoji/512/carp-streamer.png')
+    console.log('Error loading logo image')
+  }
+
+  const handleImageLoad = () => {
+    console.log('Logo image loaded successfully')
+  }
+
   return (
     <HStack
       flex={1}
@@ -97,9 +110,26 @@ const Card = (props: any) => {
       }}
     >
       <Box>
-        <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
-          {props.company}
-        </Text>
+        {/* stack items side by side */}
+        <HStack spacing={0} textAlign="left">
+          <image
+            style={{
+              marginRight: '8px',
+            }}
+          >
+            <img
+              src={imgSrc}
+              width="20px"
+              height="20px"
+              alt="logo"
+              onError={handleImageError}
+              onLoad={handleImageLoad}
+            />
+          </image>
+          <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
+            {props.company}
+          </Text>
+        </HStack>
 
         <VStack spacing={2} mb={3} textAlign="left">
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">

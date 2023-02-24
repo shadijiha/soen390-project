@@ -24,6 +24,7 @@ const EducationHistoryBox = () => {
     setEducationList(educationList.filter((education: any) => education.id !== id))
     console.log('educationList', educationList)
   }
+
   const addEducation = () => {
     let educ: Education = {}
     setEducationList((oldArray) => [...oldArray, educ])
@@ -82,7 +83,12 @@ const EducationHistoryBox = () => {
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {educationList &&
           educationList.map((education: any, index: number) => (
-            <div key={index}>
+            <div
+              key={index}
+              style={{
+                marginBottom: '1.5em',
+              }}
+            >
               <EducationHistory
                 education={education}
                 index={index + 1}

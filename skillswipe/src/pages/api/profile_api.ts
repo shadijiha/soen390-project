@@ -1,4 +1,7 @@
+
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+
 import axios from 'axios'
 const URL = 'http://localhost:8080'
 
@@ -116,13 +119,45 @@ export const deleteWorkExperienceRequest = async (
     })
 }
 
-export const editVolunteering = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/Profile/add/volunteering`, UpdatedUser, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
+export const editVolunteeringRequest = async (token: any, UpdatedUser: any) => {
+  return axios
+    .put(`${URL}/Profile/volunteering/${UpdatedUser.id}`, UpdatedUser, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
+
+export const addVolunteeringRequest = async (token: any, volunteering: any) => {
+  return axios
+    .post(`${URL}/Profile/volunteering`, volunteering, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteVolunteeringRequest = async (
+  token: any, 
+  VolunteeringId: number
+  ) => {
+  return axios
+    .delete(`${URL}/Profile/volunteering/${VolunteeringId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
 
 export const editPersonalProjects = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}/profile/add/Project`, UpdatedUser, {
@@ -132,13 +167,6 @@ export const editPersonalProjects = async (token: any, UpdatedUser: any) => {
   })
 }
 
-export const editSkills = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/profile/add/skill`, UpdatedUser, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
-}
 
 export const editCourses = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}`, UpdatedUser, {
@@ -154,4 +182,43 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
       authorization: `Bearer ${token}`,
     },
   })
+}
+
+export const editSkillRequest = async (token: any, Skill: any) => {
+  return axios
+    .put(`${URL}/profile/skill/${Skill.id}`, Skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const addSkillRequest = async (token: any, Skill: any) => {
+  return axios
+    .post(`${URL}/profile/skill`, Skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteSkillRequest = async (
+  token: any,
+  Skill: number
+) => {
+  return axios
+    .delete(`${URL}/profile/skill/${Skill}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }

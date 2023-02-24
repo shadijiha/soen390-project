@@ -550,13 +550,11 @@ const ProfileStyle = css`
   }
   .edu-container1 {
     width: 100%;
-    display: grid;
-    grid-gap: var(--dl-space-space-twounits);
+    display: flex;
+    flex-wrap: wrap;
     margin-top: var(--dl-space-space-fourunits);
-    grid-template-columns: 1fr 1fr 1fr;
   }
   .edu-feature-card {
-    width: 100%;
     display: flex;
     padding: var(--dl-space-space-twounits);
     align-items: center;
