@@ -33,6 +33,15 @@ export class UsersService {
     return user
   }
 
+  async findOneByIdNoRelations(userId: number): Promise<User> {
+    const user: User = await this.usersRepository.findOneOrFail({
+      where: {
+        id: userId,
+      },
+    });
+    return user;
+  }
+
   async findOneByEmail (email: string): Promise<User | null> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
@@ -53,7 +62,7 @@ export class UsersService {
   }
 
   async update (id: number, user: Users.UpdateUserRequest, files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
-    const oldUser = await this.findOneById(id)
+    const oldUser = await this.findOneByIdNoRelations(id)
 
     oldUser.firstName = user.firstName !== '' ? user.firstName : oldUser.firstName
     oldUser.lastName = user.lastName !== '' ? user.lastName : oldUser.lastName
