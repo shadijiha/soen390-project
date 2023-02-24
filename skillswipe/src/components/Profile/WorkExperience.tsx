@@ -99,21 +99,27 @@ const Card = (props: any) => {
       <Box>
         {/* stack items side by side */}
         <HStack spacing={0} textAlign="left">
-          <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
-            {props.company}
-          </Text>
           <image
             style={{
-              marginLeft: '5px',
+              marginRight: '8px',
             }}
           >
             <img
               src={'https://www.' + props.company + '.com/favicon.ico'}
-              width="25px"
-              height="25px"
+              width="20px"
+              height="20px"
               alt="logo"
+              onError={(e: any) => {
+                e.target.onerror = null
+                // show default image if company logo is not available
+                e.target.src =
+                  'https://img.icons8.com/3d-fluency/512/student-male.png'
+              }}
             />
           </image>
+          <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
+            {props.company}
+          </Text>
         </HStack>
 
         <VStack spacing={2} mb={3} textAlign="left">
