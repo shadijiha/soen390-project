@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useState } from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
@@ -71,6 +71,19 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
+  const [imgSrc, setImgSrc] = useState(
+    `https://www.${props.company}.com/favicon.ico`
+  )
+
+  const handleImageError = () => {
+    setImgSrc('https://img.icons8.com/emoji/512/carp-streamer.png')
+    console.log('Error loading logo image')
+  }
+
+  const handleImageLoad = () => {
+    console.log('Logo image loaded successfully')
+  }
+
   return (
     <HStack
       flex={1}
@@ -105,16 +118,12 @@ const Card = (props: any) => {
             }}
           >
             <img
-              src={'https://www.' + props.company + '.com/favicon.ico'}
+              src={imgSrc}
               width="20px"
               height="20px"
               alt="logo"
-              onError={(e: any) => {
-                e.target.onerror = null
-                // show default image if company logo is not available
-                e.target.src =
-                  'https://img.icons8.com/3d-fluency/512/student-male.png'
-              }}
+              onError={handleImageError}
+              onLoad={handleImageLoad}
             />
           </image>
           <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
