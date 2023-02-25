@@ -67,7 +67,7 @@ const findJob = () => {
   return (
     <>
       <NavBar />
-      <Container maxW="5xl" p={{ base: 5, md: 10 }}>
+      <Container maxW="5xl" p={{ base: 10, md: 0 }}>
         <Flex justify="left" mb={3}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
             Open Jobs
