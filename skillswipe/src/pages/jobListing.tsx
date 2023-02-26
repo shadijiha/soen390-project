@@ -81,10 +81,10 @@ const JobListing = () => {
               />
             </image>
             {/* recruiters company name here that they made from the job listing creation page*/}
-            <Heading fontSize="4xl" mb={3} fontWeight={200} letterSpacing={2}>
+            <Heading fontSize="4xl" mb={5} fontWeight={200} letterSpacing={2}>
               Google
             </Heading>
-            <Heading fontSize="4xl" mb={6} fontWeight={700}>
+            <Heading fontSize="4xl" mb={10} fontWeight={700}>
               Software Engineer Intern - Summer 2022
             </Heading>
             <Flex
@@ -113,12 +113,12 @@ const JobListing = () => {
             </Flex>
 
             {/* Top 3 boxes */}
-            <Container maxW="5xl" paddingBottom={5}>
+            <Container maxW="5xl" paddingBottom={8}>
               <SimpleGrid
                 columns={{ base: 1, sm: 2, md: 3 }}
                 spacing={5}
                 mt={5}
-                mb={4}
+                mb={2}
               >
                 {ListingData.map((data) => (
                   <Box
@@ -136,6 +136,7 @@ const JobListing = () => {
                 ))}
               </SimpleGrid>
             </Container>
+            <Divider />
           </Flex>
           <Flex align="left" direction="column">
             <Text
@@ -153,6 +154,7 @@ const JobListing = () => {
               fontSize="18px"
               textAlign="justify"
               fontFamily="roboto"
+              paddingBottom={1}
               mx={{ base: 25, sm: 3, md: 130 }}
             >
               As a Google Software Engineer Intern, you'll work on our core products
@@ -161,7 +163,7 @@ const JobListing = () => {
               collaborate with experienced engineers and designers, contribute to
               open-source projects, and develop new features that will be used by
               people all around the world.
-            </Text>{' '}
+            </Text>
           </Flex>
 
           <VStack
