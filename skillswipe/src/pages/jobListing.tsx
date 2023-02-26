@@ -186,12 +186,13 @@ const JobListing = () => {
             as="form"
             maxW="5xl"
             spacing={8}
-            bg={useColorModeValue('#FFFFFF26', '#00000026')}
+            bg="transparent"
             rounded="30px"
             width="100%"
-            boxShadow="0px 6px 30px #00000045"
             p={{ base: 5, sm: 10 }}
             alignSelf="center"
+            borderWidth={2}
+            borderColor={useColorModeValue('gray.200', 'gray.700')}
           >
             <VStack spacing={8} w="100%">
               <Text
