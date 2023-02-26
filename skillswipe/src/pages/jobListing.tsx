@@ -300,9 +300,9 @@ const JobListing = () => {
                 _hover={{
                   bg: 'green.500',
                 }}
-                borderRadius="100px"
-                w={{ base: '100%', md: 'max-content' }}
-                textShadow="0px 0px 20px #0000003E"
+                borderRadius="200px"
+                w={{ base: '100%', md: '150px' }}
+                textShadow="0px 0px 20px #00000076"
                 shadow={'0px 4px 30px #0000001F'}
               >
                 Apply
