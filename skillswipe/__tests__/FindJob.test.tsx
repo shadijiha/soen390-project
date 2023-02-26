@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout'
 import FindJob from '@/pages/findJob'
 import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from '../src/Redux/store'
@@ -20,8 +20,10 @@ describe('Jobs', () => {
   //   beforeAll(()=>{
   //     <Layout></Layout>
   // })
-  it('should render find job page without crashing', () => {
+  it('should render find job page without crashing', async() => {
     renderJobs()
-    expect(screen.queryByTestId('find-jobs'))
+    await waitFor(() => {
+      expect(screen.getByTestId('find-jobs')).toBeInTheDocument()
+    })
   })
 })
