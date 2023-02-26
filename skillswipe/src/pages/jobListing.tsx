@@ -81,7 +81,7 @@ const JobListing = () => {
               />
             </image>
             {/* recruiters company name here that they made from the job listing creation page*/}
-            <Heading fontSize="3xl" mb={3} fontWeight={300}>
+            <Heading fontSize="4xl" mb={3} fontWeight={200} letterSpacing={2}>
               Google
             </Heading>
             <Heading fontSize="4xl" mb={6} fontWeight={700}>
@@ -136,9 +136,12 @@ const JobListing = () => {
                 ))}
               </SimpleGrid>
             </Container>
+          </Flex>
+          <Flex align="left" direction="column">
             <Text
+              mx={{ base: 25, sm: 3, md: 130 }}
               style={{
-                fontWeight: 800,
+                fontWeight: 600,
                 fontSize: '2rem',
                 textShadow: '0px 0px 10px #00000010',
                 paddingBottom: '0.5em',
@@ -150,7 +153,7 @@ const JobListing = () => {
               fontSize="18px"
               textAlign="justify"
               fontFamily="roboto"
-              mx={{ base: 25, sm: 3, md: 150 }}
+              mx={{ base: 25, sm: 3, md: 130 }}
             >
               As a Google Software Engineer Intern, you'll work on our core products
               and services, gaining real-world experience and working on projects
@@ -158,7 +161,7 @@ const JobListing = () => {
               collaborate with experienced engineers and designers, contribute to
               open-source projects, and develop new features that will be used by
               people all around the world.
-            </Text>
+            </Text>{' '}
           </Flex>
 
           <VStack
