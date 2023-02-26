@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/jsx-key */
 import {
   Box,
   Button,
@@ -64,10 +66,10 @@ const JobListing = () => {
     <>
       <NavBar />
       <Container maxW="7xl" px={{ base: 5, md: 8 }}>
-        <Stack spacing={10}>
+        <Stack spacing={10} paddingBottom={'100px'}>
           <Flex align="center" justify="center" direction="column">
-            <Heading fontSize="4xl" mb={6}>
-              Job Title
+            <Heading fontSize="4xl" mb={6} fontWeight={700}>
+              Software Engineer Intern - Summer 2022
             </Heading>
             <Flex
               align="center"
@@ -82,8 +84,8 @@ const JobListing = () => {
                   style={{
                     backgroundColor: 'transparent',
                     borderWidth: '2px',
-                    textShadow: '0px 0px 40px #000000CA',
-                    fontWeight: 600,
+                    textShadow: '0px 0px 30px #00000014',
+                    fontWeight: 400,
                     marginRight: '1em',
                     borderRadius: '100px',
                     marginBottom: '1em',
@@ -110,11 +112,7 @@ const JobListing = () => {
                     rounded="md"
                     borderWidth={1}
                   >
-                    <Text
-                      fontWeight="extrabold"
-                      fontSize="x-large"
-                      textAlign={'center'}
-                    >
+                    <Text fontWeight="bold" fontSize="x-large" textAlign={'center'}>
                       {data.text}
                     </Text>
                     <Text textAlign={'center'}>{data.label}</Text>
@@ -124,14 +122,15 @@ const JobListing = () => {
             </Container>
             <Text
               style={{
-                fontWeight: 700,
+                fontWeight: 800,
                 fontSize: '2rem',
-                textShadow: '0px 0px 40px #000000CA',
+                textShadow: '0px 0px 10px #00000010',
+                paddingBottom: '0.5em',
               }}
             >
               Description
             </Text>
-            <Text fontSize="16px" textAlign="left" mx={{ base: 5, md: 8 }}>
+            <Text fontSize="18px" textAlign="justify" mx={{ base: 5, md: 8 }}>
               The Google Cloud Platform team helps customers transform and build
               what's next for their business — all with technology built in the
               cloud. Our products are engineered for security, reliability and
@@ -177,9 +176,9 @@ const JobListing = () => {
             as="form"
             spacing={8}
             w="100%"
-            bg={useColorModeValue('white', 'gray.700')}
-            rounded="lg"
-            boxShadow="lg"
+            bg={useColorModeValue('#FFFFFF26', '#00000026')}
+            rounded="30px"
+            boxShadow="0px 6px 30px #00000045"
             p={{ base: 5, sm: 10 }}
           >
             <VStack spacing={4} w="100%">
