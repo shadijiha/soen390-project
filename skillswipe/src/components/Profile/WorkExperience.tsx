@@ -71,10 +71,6 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
-  const [imgSrc, setImgSrc] = useState(
-    `https://www.${props.company}.com/favicon.ico`
-  )
-
   const handleImageError = () => {
     setImgSrc('https://img.icons8.com/emoji/512/carp-streamer.png')
     console.log('Error loading logo image')
@@ -118,7 +114,9 @@ const Card = (props: any) => {
             }}
           >
             <img
-              src={imgSrc}
+              src={
+                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png'
+              }
               width="20px"
               height="20px"
               alt="logo"

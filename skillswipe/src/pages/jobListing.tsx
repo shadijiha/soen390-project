@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 import {
@@ -19,7 +21,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 // Here we have used react-icons package for the icons
 import NavBar from '@/components/NavBar'
 
@@ -63,8 +65,25 @@ const JobListing = () => {
     <>
       <NavBar />
       <Container maxW="7xl" px={{ base: 5, md: 8 }}>
-        <Stack spacing={10} paddingBottom={'100px'}>
+        <Stack spacing={10}>
           <Flex align="center" justify="center" direction="column">
+            {/* Recruiter's profile picture here */}
+            <image
+              style={{
+                marginBottom: '8px',
+              }}
+            >
+              <img
+                //recruiters profile picture
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
+                width="50px"
+                alt="logo"
+              />
+            </image>
+            {/* recruiters company name here that they made from the job listing creation page*/}
+            <Heading fontSize="3xl" mb={3} fontWeight={300}>
+              Google
+            </Heading>
             <Heading fontSize="4xl" mb={6} fontWeight={700}>
               Software Engineer Intern - Summer 2022
             </Heading>
@@ -106,8 +125,8 @@ const JobListing = () => {
                     key={data.id}
                     p={5}
                     boxShadow="md"
-                    rounded="md"
-                    borderWidth={1}
+                    rounded="36px"
+                    borderWidth={2}
                   >
                     <Text fontWeight="bold" fontSize="x-large" textAlign={'center'}>
                       {data.text}
@@ -123,6 +142,7 @@ const JobListing = () => {
                 fontSize: '2rem',
                 textShadow: '0px 0px 10px #00000010',
                 paddingBottom: '0.5em',
+                fontFamily: 'Roboto',
               }}
             >
               Description
@@ -158,31 +178,32 @@ const JobListing = () => {
               cutting-edge technology – all on the cleanest cloud in the industry.
               Customers in more than 200 countries and territories turn to Google
               Cloud as their trusted partner to enable growth and solve their most
-              critical business problems. The US base salary range for this full-time
-              position is $150,000-$238,000 + bonus + equity + benefits. Our salary
-              ranges are determined by role, level, and location. The range displayed
-              on each job posting reflects the minimum and maximum target for new
-              hire salaries for the position across all US locations. Within the
-              range, individual pay is determined by work location and additional
-              factors, including job-related skills, experience, and relevant
-              education or training. Your recruiter can share more about the specific
-              salary range for your preferred location during the hiring process.
-              Please note that the compensation details listed in US role postings
-              reflect the base salary only, and do not include bonus, equity, or
-              benefits. Learn more about benefits at Google.
+              critical business problems.
             </Text>
           </Flex>
 
           <VStack
             as="form"
+            maxW="5xl"
             spacing={8}
-            w="100%"
             bg={useColorModeValue('#FFFFFF26', '#00000026')}
             rounded="30px"
+            width="100%"
             boxShadow="0px 6px 30px #00000045"
             p={{ base: 5, sm: 10 }}
+            alignSelf="center"
           >
-            <VStack spacing={6} w="100%">
+            <VStack spacing={8} w="100%">
+              <Text
+                style={{
+                  fontWeight: 800,
+                  fontSize: '1.5rem',
+                  textShadow: '0px 0px 10px #00000010',
+                  paddingBottom: '0.2em',
+                }}
+              >
+                Submit Application 🚀
+              </Text>
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 {/* frontend!!! name, email, phone is read only,
                  we will pull it from the user's logged in account 
@@ -217,7 +238,7 @@ const JobListing = () => {
               </Stack>
 
               {/* CV Upload */}
-              <AspectRatio height={'100px'} width="100%">
+              <AspectRatio height={'200px'} width="100%">
                 <Box
                   borderStyle="dashed"
                   borderWidth="3px"
