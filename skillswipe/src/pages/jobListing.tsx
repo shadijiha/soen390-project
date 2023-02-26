@@ -142,7 +142,6 @@ const JobListing = () => {
                 fontSize: '2rem',
                 textShadow: '0px 0px 10px #00000010',
                 paddingBottom: '0.5em',
-                fontFamily: 'Roboto',
               }}
             >
               Description
@@ -150,35 +149,15 @@ const JobListing = () => {
             <Text
               fontSize="18px"
               textAlign="justify"
+              fontFamily="roboto"
               mx={{ base: 25, sm: 3, md: 150 }}
             >
-              The Google Cloud Platform team helps customers transform and build
-              what's next for their business — all with technology built in the
-              cloud. Our products are engineered for security, reliability and
-              scalability, running the full stack from infrastructure to applications
-              to devices and hardware. Our teams are dedicated to helping our
-              customers — developers, small and large businesses, educational
-              institutions and government agencies — see the benefits of our
-              technology come to life. As part of an entrepreneurial team in this
-              rapidly growing business, you will play a key role in understanding the
-              needs of our customers and help shape the future of businesses of all
-              sizes use technology to connect with customers, employees and partners.
-              As a Technical Account Management Lead, you will help customers
-              successfully adopt Google Cloud products and manage the delivery of
-              Customer Experience engagements to drive customer adoption of Google
-              Cloud services. You'll deliver product and implementation expertise to
-              our customers to help them get the most out of their Google Cloud
-              investments. You will regularly engage with stakeholder groups,
-              including executives of large enterprises, and a cross-functional and
-              geographically dispersed team.In this role, you will travel
-              domestically and internationally approximately 25% of the time. Google
-              Cloud accelerates organizations’ ability to digitally transform their
-              business with the best infrastructure, platform, industry solutions and
-              expertise. We deliver enterprise-grade solutions that leverage Googles
-              cutting-edge technology – all on the cleanest cloud in the industry.
-              Customers in more than 200 countries and territories turn to Google
-              Cloud as their trusted partner to enable growth and solve their most
-              critical business problems.
+              As a Google Software Engineer Intern, you'll work on our core products
+              and services, gaining real-world experience and working on projects
+              that impact millions of users. You'll have the opportunity to
+              collaborate with experienced engineers and designers, contribute to
+              open-source projects, and develop new features that will be used by
+              people all around the world.
             </Text>
           </Flex>
 
@@ -187,23 +166,32 @@ const JobListing = () => {
             maxW="5xl"
             spacing={8}
             bg="transparent"
-            rounded="30px"
+            rounded="50px"
             width="100%"
             p={{ base: 5, sm: 10 }}
             alignSelf="center"
             borderWidth={2}
             borderColor={useColorModeValue('gray.200', 'gray.700')}
           >
+            <Text
+              style={{
+                fontSize: '2rem',
+                marginBottom: '-0.75em',
+                marginTop: '-0.5em',
+              }}
+            >
+              🚀
+            </Text>
             <VStack spacing={8} w="100%">
               <Text
                 style={{
-                  fontWeight: 800,
+                  fontWeight: 700,
                   fontSize: '1.5rem',
                   textShadow: '0px 0px 10px #00000010',
                   paddingBottom: '0.2em',
                 }}
               >
-                Submit Application 🚀
+                Submit Application
               </Text>
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 {/* frontend!!! name, email, phone is read only,
