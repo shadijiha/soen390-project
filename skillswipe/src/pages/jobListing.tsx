@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 import {
+  AspectRatio,
   Box,
   Button,
   Container,
@@ -21,11 +22,7 @@ import {
 import { Fragment } from 'react'
 // Here we have used react-icons package for the icons
 import NavBar from '@/components/NavBar'
-import { wrap } from 'module'
-import Head from 'next/head'
-import { BsPhone } from 'react-icons/bs'
-import { GoLocation } from 'react-icons/go'
-import { HiOutlineMail } from 'react-icons/hi'
+
 interface ListingData {
   id: number
   label: string
@@ -130,7 +127,11 @@ const JobListing = () => {
             >
               Description
             </Text>
-            <Text fontSize="18px" textAlign="justify" mx={{ base: 5, md: 8 }}>
+            <Text
+              fontSize="18px"
+              textAlign="justify"
+              mx={{ base: 25, sm: 3, md: 150 }}
+            >
               The Google Cloud Platform team helps customers transform and build
               what's next for their business — all with technology built in the
               cloud. Our products are engineered for security, reliability and
@@ -181,32 +182,98 @@ const JobListing = () => {
             boxShadow="0px 6px 30px #00000045"
             p={{ base: 5, sm: 10 }}
           >
-            <VStack spacing={4} w="100%">
+            <VStack spacing={6} w="100%">
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
+                {/* frontend!!! name, email, phone is read only,
+                 we will pull it from the user's logged in account 
+                 and show it as the placeholder */}
                 <FormControl id="name">
                   <FormLabel>Name</FormLabel>
-                  <Input type="text" placeholder="Name" rounded="md" />
+                  <Input
+                    readOnly
+                    type="text"
+                    placeholder="loggedInName"
+                    rounded="100px"
+                  />
                 </FormControl>
                 <FormControl id="email">
                   <FormLabel>Email</FormLabel>
-                  <Input type="email" placeholder="test@test.com" rounded="md" />
+                  <Input
+                    readOnly
+                    type="email"
+                    placeholder="loggedInEmail@test.com"
+                    rounded="100px"
+                  />
+                </FormControl>
+                <FormControl id="resume">
+                  <FormLabel>Phone</FormLabel>
+                  <Input
+                    readOnly
+                    type="text"
+                    rounded="100px"
+                    placeholder="loggedInPhone"
+                  />
                 </FormControl>
               </Stack>
-              <FormControl id="subject">
-                <FormLabel>Subject</FormLabel>
-                <Input
-                  type="text"
-                  placeholder="Are you available for freelance work?"
-                  rounded="md"
-                />
-              </FormControl>
-              <FormControl id="message">
-                <FormLabel>Message</FormLabel>
-                <Textarea size="lg" placeholder="Enter your message" rounded="md" />
+
+              {/* CV Upload */}
+              <AspectRatio height={'100px'} width="100%">
+                <Box
+                  borderStyle="dashed"
+                  borderWidth="3px"
+                  rounded="20px"
+                  shadow="sm"
+                  role="group"
+                >
+                  <Box position="relative" height="100%" width="100%">
+                    <Box
+                      position="absolute"
+                      top="0"
+                      left="0"
+                      height="100%"
+                      width="100%"
+                      display="flex"
+                      flexDirection="column"
+                    >
+                      <Stack
+                        height="100%"
+                        width="100%"
+                        display="flex"
+                        alignItems="center"
+                        justify="center"
+                        spacing="4"
+                      >
+                        <Stack p="8" textAlign="center" spacing="1">
+                          <Heading fontSize="lg" fontWeight="bold">
+                            Drop CV here [.pdf]
+                          </Heading>
+                          <Text fontWeight="light">or click to upload</Text>
+                        </Stack>
+                      </Stack>
+                    </Box>
+                    <Input
+                      type="file"
+                      height="100%"
+                      width="100%"
+                      position="absolute"
+                      top="0"
+                      left="0"
+                      opacity="0"
+                      aria-hidden="true"
+                      accept=".pdf"
+                    />
+                  </Box>
+                </Box>
+              </AspectRatio>
+
+              <FormControl id="cover">
+                <FormLabel>Cover Letter (optional)</FormLabel>
+                <Textarea size="lg" placeholder="Paste here" rounded="15px" />
               </FormControl>
             </VStack>
             <VStack w="100%">
               <Button
+                size={'lg'}
                 bg="green.300"
                 color="white"
                 _hover={{
@@ -214,6 +281,8 @@ const JobListing = () => {
                 }}
                 borderRadius="100px"
                 w={{ base: '100%', md: 'max-content' }}
+                textShadow="0px 0px 20px #0000003E"
+                shadow={'0px 4px 30px #0000001F'}
               >
                 Apply
               </Button>
