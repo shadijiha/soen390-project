@@ -185,3 +185,6 @@ const EmptyCard = () => {
 }
 
 export default WorkExperience
+function setImgSrc(arg0: string) {
+  throw new Error('Function not implemented.')
+}
