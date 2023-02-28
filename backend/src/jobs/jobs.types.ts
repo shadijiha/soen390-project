@@ -1,30 +1,33 @@
-import { ApiProperty } from '@nestjs/swagger'
-import { BaseRequest } from '../util/util'
+import { ApiProperty } from "@nestjs/swagger";
+import { BaseRequest } from "../util/util";
 
 export namespace Jobs {
   export class AddJobRequest extends BaseRequest {
     @ApiProperty()
-      jobTitle: string
+    jobTitle: string;
 
     @ApiProperty()
-      companyName: string
+    companyName: string;
 
     @ApiProperty()
-      location: string
+    location: string;
 
     @ApiProperty()
-      jobDescription: string
+    jobDescription: string;
 
     @ApiProperty()
-      salary: number
+    salary: number;
 
     @ApiProperty()
-      jobType: 'full-time' | 'part-time' | 'internship' | 'contract' | 'temporary' | 'volunteer' | 'other'
+    jobType: "full-time" | "part-time" | "internship" | "contract" | "temporary" | "volunteer" | "other";
 
     @ApiProperty()
-      startDate: Date
+    startDate: Date;
 
     @ApiProperty()
-      skills: string
+    skills: string;
+  }
+
+  export class UpdateJobRequest extends AddJobRequest {
   }
 }
