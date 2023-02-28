@@ -1,5 +1,6 @@
 import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
+  Avatar,
   Box,
   Button,
   Collapse,
@@ -7,16 +8,22 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
+  Link,
+  Menu,
+  MenuButton,
+  MenuDivider,
+  MenuItem,
+  MenuList,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import router from 'next/router'
-import React, { useState } from 'react'
-
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import MobileSearchBar from './Search/MobileSearchBar'
@@ -43,6 +50,7 @@ export default function NavBar() {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
   }
+
 
   const searchIcon = SearchIcon
 
@@ -75,6 +83,31 @@ export default function NavBar() {
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
 
+  const [profile, setProfile] = useState({
+    name: 'John Smith',
+    title: 'Software Engineer',
+    location: 'Montreal, QC, CA',
+    school: 'Concordia University',
+    experience: 'Five years of experience in full stack development',
+    experience2: 'Three years of experience in mobile development',
+    experience3: 'Two years of experience in data analysis',
+    image:
+      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
+    cover:
+      'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
+  })
+  const [Pic, setPic] = useState({
+    profilePic: '',
+    coverPic: '',
+  })
+  const currentUser = useSelector((state) => state as any)
+  useEffect(() => {
+    setPic({
+      coverPic: currentUser.auth.coverPic,
+      profilePic: currentUser.auth.profilePic,
+    })
+  }, [currentUser])
+
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -102,6 +135,20 @@ export default function NavBar() {
           >
             🚀 SkillSwipe
           </Text>
+          <NextLink href={''}>
+            <Button
+              onClick={toggleColorMode}
+              variant="ghost"
+              aria-label="Toggle Theme"
+              my={5}
+              w="100%"
+              _hover={{
+                transform: 'scale(1.25)',
+              }}
+            >
+              {toggleTheme}
+            </Button>
+          </NextLink>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
@@ -135,9 +182,29 @@ export default function NavBar() {
             </NextLink>
 
             <NextLink href="/profile" passHref>
-              <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                My Account
-              </Button>
+              <Menu isLazy>
+                <MenuButton
+                  as={Button}
+                  size="sm"
+                  px={0}
+                  py={0}
+                  my={6}
+                  marginRight={6}
+                  marginLeft={3}
+                  variant="ghost"
+                  rounded="full"
+                >
+                  <Avatar
+                    outline="2px solid #FFFFFF35"
+                    size="sm"
+                    src={
+                      Pic.profilePic
+                        ? `data:image/jpeg;base64,${Pic.profilePic}`
+                        : profile.image
+                    }
+                  />
+                </MenuButton>
+              </Menu>
             </NextLink>
 
             <NextLink href="/" passHref>
@@ -155,20 +222,6 @@ export default function NavBar() {
                 }}
               >
                 Logout
-              </Button>
-            </NextLink>
-            <NextLink href={''}>
-              <Button
-                onClick={toggleColorMode}
-                variant="ghost"
-                aria-label="Toggle Theme"
-                my={5}
-                w="100%"
-                _hover={{
-                  transform: 'scale(1.25)',
-                }}
-              >
-                {toggleTheme}
               </Button>
             </NextLink>
           </Flex>
@@ -254,7 +307,9 @@ export default function NavBar() {
               aria-label="Search"
               backgroundColor="transparent"
             >
+
               🔎
+
             </Button>
             <Collapse in={isOpen} animateOpacity>
               <InputGroup>
@@ -269,10 +324,11 @@ export default function NavBar() {
                       height: '40px',
                       paddingLeft: '10px',
                       borderRadius: '100px',
-                      borderWidth: '2px',
-                      outline: formBackground,
-                      padding: '10px 10px 10px 10px',
-                      backgroundColor: 'transparent',
+
+                      border: 'none',
+                      outline: '1px  black',
+                      backgroundColor: formBackground,
+
                     }}
                   />
 
@@ -313,17 +369,6 @@ export default function NavBar() {
                 Sign In/Logout
               </Button>
             </NextLink>
-            <Button
-              size="lg"
-              marginLeft={3}
-              onClick={toggleColorMode}
-              variant="ghost"
-              _hover={{
-                transform: 'scale(1.25)',
-              }}
-            >
-              {toggleTheme}
-            </Button>
           </Flex>
         </Flex>
       </Flex>
