@@ -1,5 +1,6 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { type } from "os";
 import { Job } from "src/models/job.entity";
 import { Skill } from "src/models/skill.entity";
 import { Recruiter } from "src/models/user_types/recruiter.entity";
@@ -44,7 +45,9 @@ export class JobsService {
   }
 
   async updateJob(jobId: number, data: Jobs.UpdateJobRequest, recruiter: Recruiter): Promise<void> {
-    const found = recruiter.jobs.find((job) => job.id == jobId);
+    const found = recruiter.jobs.find((job) => job.id === jobId);
+
+    
 
     if (found == null) {
       throw new NotFoundException();
