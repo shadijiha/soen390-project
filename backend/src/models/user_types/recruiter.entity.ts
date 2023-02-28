@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { ChildEntity, OneToMany } from 'typeorm'
-import { Education } from '../education.entity'
 import { Job } from '../job.entity'
 import { User } from '../user.entity'
 

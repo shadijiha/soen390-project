@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Skill } from 'src/models/skill.entity'
 import { BaseRequest } from '../util/util'
 
 export namespace Jobs {

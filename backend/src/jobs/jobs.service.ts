@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Job } from 'src/models/job.entity'
 import { Skill } from 'src/models/skill.entity'
-import { User } from 'src/models/user.entity'
 import { Recruiter } from 'src/models/user_types/recruiter.entity'
 import { Repository } from 'typeorm'
 import { type Jobs } from './jobs.types'
@@ -16,7 +15,7 @@ export class JobsService {
     private readonly jobsRepository: Repository<Job>
   ) {}
 
-  async createJob (data: Jobs.AddJobRequest, recruiter: Recruiter) {
+  async createJob (data: Jobs.AddJobRequest, recruiter: Recruiter): Promise<void> {
     const job = new Job()
     job.jobTitle = data.jobTitle
     job.companyName = data.companyName
