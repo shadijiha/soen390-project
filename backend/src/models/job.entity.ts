@@ -23,7 +23,7 @@ export class Job extends BaseEntity {
 
   @Column()
   @ApiProperty()
-  jobDescription: Date;
+  jobDescription: string;
 
 
   @Column()
