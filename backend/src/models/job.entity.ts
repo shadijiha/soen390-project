@@ -55,12 +55,11 @@ export class Job extends BaseEntity {
 
 
   // skills
-  // @ManyToMany((type) => Skill, (skill) => skill.job, {
-  //   cascade: true,
-  //   orphanedRowAction: "delete",
-  // })
-  // @JoinTable()
-  // @ApiProperty({ type: [Skill] })
-  // skills: Skill[];
-
+  @ManyToMany(() => Skill, (skill) => skill.job, {
+    cascade: true,
+    orphanedRowAction: 'delete'
+  })
+  @JoinTable()
+  @ApiProperty({ type: [Skill] })
+    skills: Skill[]
 }

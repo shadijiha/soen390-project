@@ -22,11 +22,12 @@ export class Skill extends BaseEntity {
   updated_at: Date;
 
   // RELATIONS
-  @ManyToMany(() => User, (u) => u.skills)
-  @ApiProperty({ type: [User] })
+  // @ManyToMany(() => User, (u) => u.skills)
+  // @ApiProperty({ type: [User] })
   user: User[];
 
   // @ManyToMany(() => Job, (j) => j.skills)
   // @ApiProperty({ type: [Job] })
-  // job: Job[];
+  job: Job[]; 
 }
+ 
