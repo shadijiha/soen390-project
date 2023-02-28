@@ -16,11 +16,16 @@ export class JobsService {
     private readonly jobsRepository: Repository<Job>
   ) {}
 
-  
   async createJob(data: Jobs.AddJobRequest, recruiter: Recruiter) {
     const job = new Job();
-    Object.assign(job, data);
-   
+    job.jobTitle = data.jobTitle;
+    job.companyName = data.companyName;
+    job.location = data.location;
+    job.jobDescription = data.jobDescription;
+    job.salary = data.salary;
+    job.jobType = data.jobType;
+    job.startDate = data.startDate;
+
     const skills: Skill[] = [];
     data.skills
       .split(",")
@@ -37,6 +42,5 @@ export class JobsService {
     recruiter.jobs = [...recruiter.jobs, job];
 
     await this.recruiterRepository.save(recruiter);
-  
   }
 }

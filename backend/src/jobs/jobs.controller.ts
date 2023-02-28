@@ -18,7 +18,7 @@ export class JobsController {
   //create a job post only allowed if user is a recruiter
   @Post()
   async createJob(@AuthUser() authedUser: BearerPayload, @Body() job: Jobs.AddJobRequest) {
-    const recruiter: Recruiter = await authedUser.getUser(['jobs']) as Recruiter;
+    const recruiter: Recruiter = (await authedUser.getUser(["jobs"])) as Recruiter;
     if (recruiter == null) {
       return;
     }
@@ -26,6 +26,5 @@ export class JobsController {
     if (recruiter.type !== "recruiter") throw new HttpException("Only recruiters can create job posts", 400);
 
     await this.usersService.createJob(job, recruiter);
-
   }
 }
