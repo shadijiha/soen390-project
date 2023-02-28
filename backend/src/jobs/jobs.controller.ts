@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { type Job } from 'src/models/job.entity'
@@ -51,4 +51,17 @@ export class JobsController {
     if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can update job posts', 400)
     await this.usersService.updateJob(parseInt(id), job, recruiter)
   }
+
+  @Delete(':id')
+  async deleteJob (@AuthUser() authedUser: BearerPayload, @Param('id') id: string): Promise<void> {
+    const recruiter: Recruiter = (await authedUser.getUser(['jobs'])) as Recruiter
+    if (recruiter == null) {
+      return
+    }
+
+    if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can delete job posts', 400)
+    await this.usersService.deleteJob(parseInt(id), recruiter)
+  }
+
+
 }
