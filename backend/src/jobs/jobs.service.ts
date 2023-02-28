@@ -1,8 +1,8 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Job } from "src/models/job.entity";
-import { Skill } from "src/models/skill.entity";
-import { Recruiter } from "src/models/user_types/recruiter.entity";
+import { Job } from "../models/job.entity";
+import { Skill } from "../models/skill.entity";
+import { Recruiter } from "../models/user_types/recruiter.entity";
 import { Repository } from "typeorm";
 import { type Jobs } from "./jobs.types";
 

@@ -1,9 +1,9 @@
 import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { type Job } from 'src/models/job.entity'
-import { type Recruiter } from 'src/models/user_types/recruiter.entity'
-import { AuthUser, BearerPayload } from 'src/util/util'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { type Job } from '../models/job.entity'
+import { type Recruiter } from '../models/user_types/recruiter.entity'
+import { AuthUser, BearerPayload } from '../util/util'
 import { JobsService } from './jobs.service'
 import { Jobs } from './jobs.types'
 
