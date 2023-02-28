@@ -62,6 +62,4 @@ export class JobsController {
     if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can delete job posts', 400)
     await this.usersService.deleteJob(parseInt(id), recruiter)
   }
-
-
 }
