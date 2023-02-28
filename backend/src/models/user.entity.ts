@@ -72,7 +72,7 @@ export class User extends BaseEntity {
 
   @Column({ default: 'jobseeker' })
   @ApiProperty()
-  type: 'jobseeker' | 'recruiter' | 'admin'
+    type: 'jobseeker' | 'recruiter' | 'admin'
 
   @CreateDateColumn()
   @ApiProperty()
