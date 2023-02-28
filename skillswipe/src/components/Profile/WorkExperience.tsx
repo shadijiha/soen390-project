@@ -114,9 +114,7 @@ const Card = (props: any) => {
             }}
           >
             <img
-              src={
-                'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/2560px-Google_2015_logo.svg.png'
-              }
+              src={'https://www.' + props.company.toLowerCase() + '.com/favicon.ico'}
               width="20px"
               height="20px"
               alt="logo"
