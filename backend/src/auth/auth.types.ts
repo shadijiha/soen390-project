@@ -2,35 +2,43 @@
  * Types for Request and Respose
  */
 
-import { ApiProperty } from '@nestjs/swagger'
-import { App } from '../app.types'
-import { User } from '../models/user.entity'
+import { ApiProperty } from "@nestjs/swagger";
+import { IsEmail, IsEnum, Matches } from "class-validator";
+import { IsAlphanumeric, IsNotEmpty, Length, MinLength } from "class-validator";
+import { App } from "../app.types";
+import { User } from "../models/user.entity";
 
 export namespace Auth {
-  export class LoginRequest {
-    @ApiProperty()
-      email: string
+	export class LoginRequest {
+		@ApiProperty()
+		@IsEmail()
+		email: string;
 
-    @ApiProperty()
-      password: string
-  }
+		@ApiProperty()
+		@IsNotEmpty()
+		@MinLength(8)
+		@IsAlphanumeric()
+		password: string;
+	}
 
-  export class LoginResponse extends App.WithStatus {
-    @ApiProperty({ type: User })
-      user: User | Partial<User> | null
+	export class LoginResponse extends App.WithStatus {
+		@ApiProperty({ type: User })
+		user: User | Partial<User> | null;
 
-    @ApiProperty()
-      access_token: string
-  }
+		@ApiProperty()
+		access_token: string;
+	}
 
-  export class RegisterRequest extends LoginRequest {
-    @ApiProperty()
-      firstName: string
+	export class RegisterRequest extends LoginRequest {
+		@Length(2, 50)
+		@ApiProperty()
+		firstName: string;
 
-    @ApiProperty()
-      lastName: string
+		@Length(2, 50)
+		@ApiProperty()
+		lastName: string;
 
-    @ApiProperty({ examples: ['male', 'female'] })
-      gender: 'male' | 'female'
-  }
+		@ApiProperty({ examples: ["male", "female"] })
+		gender: "male" | "female";
+	}
 }
