@@ -32,7 +32,7 @@ export class JobsController {
   @Get()
   async getJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
     const recruiter: Recruiter = (await authedUser.getUser(['jobs'])) as Recruiter
-    
+
     if (recruiter == null) {
       throw new HttpException('Recruiters does not exist', 400)
     }
