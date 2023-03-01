@@ -18,7 +18,7 @@ export class JobsController {
   @Post()
   async createJob (@AuthUser() authedUser: BearerPayload, @Body() job: Jobs.AddJobRequest): Promise<void> {
     const recruiter: Recruiter = (await authedUser.getUser(['jobs'])) as Recruiter
-    console.log(recruiter)
+
     if (recruiter == null) {
       return
     }
