@@ -2,19 +2,14 @@
 /* eslint-disable react/jsx-no-undef */
 import NavBar from '@/components/NavBar'
 import {
-  AspectRatio,
-  Box,
   Container,
   FormControl,
-  FormHelperText,
   FormLabel,
-  Heading,
   HStack,
   Image,
   Input,
   Radio,
   RadioGroup,
-  Select,
   Stack,
   Text,
   Textarea,
