@@ -3,27 +3,8 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/jsx-key */
 
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  SimpleGrid,
-  Stack,
-  Text,
-  Textarea,
-  useColorModeValue,
-  VStack,
-} from '@chakra-ui/react'
-import { Fragment, useState } from 'react'
+import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
 // Here we have used react-icons package for the icons
-import Skills from '@/components/Forms/Skills'
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
