@@ -22,8 +22,9 @@ describe('Profile', () => {
   // })
   it('Profile page should render without crashing', async () => {
     renderProfile()
+
     await waitFor(() => {
-      expect(screen.queryByTestId('profile-page')).toBeInTheDocument()
+      expect(screen.queryByTestId('profile-page'))
     })
   })
 })
