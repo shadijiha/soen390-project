@@ -9,7 +9,7 @@ import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
-import TopHeader from '@/components/jobListing/topHeader'
+import TopHeader from '@/components/jobListing/TopHeader'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 
