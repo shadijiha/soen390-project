@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import Profile from "@/pages/profile";
+import { render, screen, waitFor } from '@testing-library/react'
+import Profile from "../src/pages/profile/index";
 import "@testing-library/jest-dom";
 import React from "react";
 import Layout from "@/components/Layout";
@@ -17,11 +17,11 @@ describe("Profile", () => {
         </Layout>
       </Provider>
     );
-  //   beforeAll(()=>{
-  //     <Layout></Layout>
-  // })
-  it("Profile page should render without crashing", () => {
+  
+  it("Profile page should render without crashing",async () => {
     renderProfile();
-    expect(screen.queryByTestId("profile-page"));
-  });
-});
+    await waitFor(() => {
+      expect(screen.getByTestId('profile-page')).toBeInTheDocument()
+    })
+  })
+})
