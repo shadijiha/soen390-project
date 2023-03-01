@@ -12,7 +12,6 @@ import {
   FormControl,
   FormLabel,
   Heading,
-  Icon,
   Input,
   SimpleGrid,
   Stack,
