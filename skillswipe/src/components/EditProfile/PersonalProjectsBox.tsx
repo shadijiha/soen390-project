@@ -11,10 +11,11 @@ type PersonalProjects = {
   url?: string
   start_year?: string
   end_year?: string
-  id: number
+  id?: number
 }
 
 const PersonalProjectsBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
   const [personalProjectsList, setPersonalProjectsList] = useState(
     profile.auth.personal_projects as PersonalProjects[]
@@ -27,7 +28,7 @@ const PersonalProjectsBox = () => {
     )
   }
   const addPersonalProjects = () => {
-    let pp: PersonalProjects = { id: 10 }
+    let pp: PersonalProjects = { }
     setPersonalProjectsList((oldArray) => [...(oldArray || []), pp])
   }
   const isNew = (personalProjects: PersonalProjects) => {
@@ -35,7 +36,8 @@ const PersonalProjectsBox = () => {
       personalProjects.name &&
       personalProjects.start_year &&
       personalProjects.end_year &&
-      personalProjects.description
+      personalProjects.description &&
+      personalProjects.url
     )
   }
   return (

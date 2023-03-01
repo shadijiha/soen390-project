@@ -1,7 +1,7 @@
 import {
-  addSkillRequest,
-  editSkillRequest,
-  deleteSkillRequest,
+  addSkillsRequest,
+  editSkillsRequest,
+  deleteSkillsRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -40,7 +40,7 @@ const Skills = (props: any) => {
       toast('Please fill all the fields')
       return
     } else {
-      editSkillRequest(token, skill).then((res) => {
+      editSkillsRequest(token, skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Skill updated successfully')
         } else {
@@ -59,7 +59,7 @@ const Skills = (props: any) => {
       toast('Please fill all the fields')
       return
     } else {
-      addSkillRequest(token, skill).then((res) => {
+      addSkillsRequest(token, skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Skill added successfully')
         } else {
@@ -72,7 +72,7 @@ const Skills = (props: any) => {
   const deleteSkill = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    deleteSkillRequest(token, skill.id).then((res) => {
+    deleteSkillsRequest(token, skill.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Skill deleted successfully')
         props.deleteSkill(props.skill.id)
@@ -152,7 +152,7 @@ const Skills = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="skill">
-        <FormLabel htmlFor="">Skill</FormLabel>
+        <FormLabel htmlFor="">Skills</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

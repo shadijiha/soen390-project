@@ -24,7 +24,6 @@ const Awards = (props: any) => {
     issuer: '',
     url: '',
     id: 0,
-
   })
 
 

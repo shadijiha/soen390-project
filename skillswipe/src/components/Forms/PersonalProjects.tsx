@@ -1,3 +1,8 @@
+import {
+  editPersonalProjectsRequest,
+  addPersonalProjectsRequest,
+  deletePersonalProjectsRequest,
+} from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -18,12 +23,10 @@ const PersonalProjects = (props: any) => {
     url: '',
     start_year: '',
     end_year: '',
-    id: null,
+    id: 0,
   })
 
-  if (personalProject && personalProject.name == '')
-    setPersonalProject(props.personalProjects)
-
+  if (personalProject.name == '') setPersonalProject(props.personalProject)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setPersonalProject((prevState) => ({
@@ -31,27 +34,77 @@ const PersonalProjects = (props: any) => {
       [name]: value,
     }))
   }
-  const handleSubmit = (event: any) => {
+
+  const updatePersonalProjects = (event: any) => {
     const token = localStorage.getItem('jwt')
-    // call API to update personalProject
+    event.preventDefault()
+    if (
+      !personalProject.start_year ||
+      !personalProject.end_year ||
+      !personalProject.name ||
+      !personalProject.description ||
+      !personalProject.url
+    ) {
+      toast('Please fill all the fields')
+      return
+    }
     if (personalProject.start_year > personalProject.end_year) {
       toast('Please add Valid start and end year')
+      return
     } else {
-      // editPersonalProject(token, personalProject).then((response) => {
-      //     console.log(response);
-      //     toast("Updated Successfully");
-      //   })
-      //   .catch((error) => {
-      //     toast(error.message);
-      //   });
+      editPersonalProjectsRequest(token, personalProject).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Personal Project updated successfully')
+        } else {
+          toast.error('Error updating Personal Project')
+        }
+      })
     }
+  }
+
+  const addPersonalProjects = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
-    console.log(personalProject) // this will print out the form values
-    // You can now use the form values to update the user's personalProject
+    if (
+      !personalProject.start_year ||
+      !personalProject.end_year ||
+      !personalProject.name ||
+      !personalProject.description ||
+      !personalProject.url
+    ) {
+      toast('Please fill all the fields')
+      return
+    }
+    if (personalProject.start_year > personalProject.end_year) {
+      toast('Please add Valid start and end year')
+      return
+    } else {
+      addPersonalProjectsRequest(token, personalProject).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Personal Project added successfully')
+        } else {
+          toast.error('Error adding Personal Project')
+        }
+      })
+    }
   }
-  const deleteItem = () => {
-    props.deletePersonalProjects(props.personalProjects.id)
+
+  const deletePersonalProjects = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    deletePersonalProjectsRequest(token, personalProject.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Personal Project deleted successfully')
+      } else {
+        toast.error('Error deleting Personal Project')
+      }
+    })
   }
+  const deletePersonalProject = () => {
+    props.deleteProject(props.personalProjects.id)
+    
+  }
+
   return (
     <Box
       minWidth={'60vw'}
@@ -82,7 +135,7 @@ const PersonalProjects = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updatePersonalProjects}
           >
             Update
           </Button>
@@ -96,7 +149,7 @@ const PersonalProjects = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addPersonalProjects}
           >
             Add
           </Button>
@@ -109,7 +162,7 @@ const PersonalProjects = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deletePersonalProjects}
         >
           <DeleteIcon />
         </Button>
@@ -159,6 +212,7 @@ const PersonalProjects = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
+      
       <FormControl id="start_year">
         <FormLabel htmlFor="start_year">Start Year</FormLabel>
         <Input
@@ -189,6 +243,7 @@ const PersonalProjects = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
+      
     </Box>
   )
 }

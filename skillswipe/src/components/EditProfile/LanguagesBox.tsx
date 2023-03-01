@@ -6,26 +6,30 @@ import 'react-toastify/dist/ReactToastify.css'
 import Languages from '../Forms/Languages'
 
 type Language = {
-  language?: string
+  languageName?: string
   proficiency?: string
-  id: number
+  id?: number
 }
 
 const LanguagesBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
   const [languageList, setLanguageList] = useState(
     profile.auth.languages as Language[]
   )
   const deleteLanguage = (id: number) => {
-    setLanguageList(languageList.filter((language: any) => language.id !== id))
+    setLanguageList(
+      languageList.filter((language: any) => language.id !== id)
+      )
   }
   const addLanguage = () => {
-    let lang: Language = { id: 10 }
+    let lang: Language = { }
     setLanguageList((oldArray) => [...(oldArray || []), lang])
   }
   const isNew = (language: Language) => {
-    return !(language.language && language.proficiency)
+    return !(language.languageName && language.proficiency)
   }
+  
   return (
     <Stack
       as="form"

@@ -2,13 +2,14 @@ import { Button, Stack } from '@chakra-ui/react'
 import React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
-import ProfileStyle from '../../../styles/profilestyle'
+import ProfileStyle from '../../styles/profilestyle'
 
 const Skills = ({ skillsArray }: any) => {
   // call API to get education history
 
   return (
     skillsArray && (
+    <div>
       <>
         <style jsx>{ProfileStyle}</style>
         <div>
@@ -18,6 +19,7 @@ const Skills = ({ skillsArray }: any) => {
               fontSize: '1.5rem',
               paddingTop: '2rem',
               paddingBottom: '2rem',
+              textAlign: 'center',
             }}
           >
             <span>🚀 My Skills</span>
@@ -51,11 +53,13 @@ const Skills = ({ skillsArray }: any) => {
                 marginBottom: '1em',
               }}
             >
-              {skill}
+              {'${skill.title}'}
             </Button>
           ))}
         </Stack>
+
       </>
+    </div>
     )
   )
 }
