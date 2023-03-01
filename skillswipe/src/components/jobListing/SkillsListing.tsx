@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-key */
-import Skills from '@/components/Forms/Skills'
 import { Button, Flex } from '@chakra-ui/react'
 
 const skillsArray = [
@@ -23,8 +22,9 @@ const SkillsListing = () => {
         flexWrap={'wrap'}
         mx={'80px'}
       >
-        {skillsArray.map((skill: any) => (
+        {skillsArray.map((skill: string, index: number) => (
           <Button
+            key={index}
             className="skill"
             style={{
               backgroundColor: 'transparent',
