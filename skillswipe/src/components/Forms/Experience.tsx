@@ -24,6 +24,8 @@ const Experience = (props: any) => {
     end_year: '',
     id: 0,
   })
+
+
   if (experience.company == '') setExperience(props.experience)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -53,7 +55,7 @@ const Experience = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Experience updated successfully')
         } else {
-          toast.error('Error updaing experience')
+          toast.error('Error updating experience')
         }
       })
     }

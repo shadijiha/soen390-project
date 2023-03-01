@@ -11,6 +11,7 @@ type Skill = {
 }
 
 const SkillsBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
   const [skillsList, setSkillsList] = useState(
     profile.auth.skills as Skill[]

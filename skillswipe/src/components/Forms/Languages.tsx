@@ -1,3 +1,8 @@
+import {
+  addLanguagesRequest,
+  editLanguagesRequest,
+  deleteLanguagesRequest,
+} from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -10,15 +15,16 @@ import {
   Stack,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Languages = (props: any) => {
   const [language, setLanguage] = useState({
-    language: '',
+    languageName: '',
     proficiency: '',
-    id: null,
+    id: 0,
   })
 
-  if (language.language == '') setLanguage(props.language)
+  if (language.languageName == '') setLanguage(props.language)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setLanguage((prevState) => ({
@@ -26,24 +32,59 @@ const Languages = (props: any) => {
       [name]: value,
     }))
   }
-  const handleSubmit = (event: any) => {
+
+  const updateLanguage = (event: any) => {
     const token = localStorage.getItem('jwt')
-    // call API to update education history
-    // editCourses(token, language).then((response) => {
-    //    console.log(response);
-    //    toast("Updated Successfully");
-    // })
-    //    .catch((error) => {
-    //       toast(error.message);
-    //    });
     event.preventDefault()
-    console.log(language) // this will print out the form values
-    // You can now use the form values to update the user's education history
+    if (!language.languageName || !language.proficiency) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      editLanguagesRequest(token, language).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Language updated successfully')
+        } else {
+          toast.error('Error updaing language')
+        }
+      })
+    }
   }
 
-  const deleteItem = () => {
-    props.deleteLanguage(props.language.id)
+  const addLanguage = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (!language.languageName || !language.proficiency) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      addLanguagesRequest(token, language).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Language added successfully')
+        } else {
+          toast.error('Error adding language')
+        }
+      })
+    }
   }
+
+  const deleteLanguage = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    deleteLanguagesRequest(token, language.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Language deleted successfully')
+        props.deleteLanguages(props.language.id)
+      } else {
+        toast.error('Error deleting language')
+      }
+    })
+  }
+  const deleteItem = () => {
+    props.deleteLanguages(props.language.id)
+  }
+
+
+
   return (
     <Box
       minWidth={'60vw'}
@@ -74,7 +115,7 @@ const Languages = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateLanguage}
           >
             Update
           </Button>
@@ -88,7 +129,7 @@ const Languages = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addLanguage}
           >
             Add
           </Button>
@@ -101,19 +142,19 @@ const Languages = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteLanguage}
         >
           <DeleteIcon />
         </Button>
       </Stack>
-      <FormControl id="language">
-        <FormLabel htmlFor="language">Language</FormLabel>
+      <FormControl id="languageName">
+        <FormLabel htmlFor="languageName">languageName</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
-          name="language"
-          id="language"
-          defaultValue={props.language.language}
+          name="languageName"
+          id="languageName"
+          defaultValue={props.language.languageName}
           borderRadius="10"
           size={'lg'}
           mb={5}

@@ -6,19 +6,21 @@ import 'react-toastify/dist/ReactToastify.css'
 import Courses from '../Forms/Courses'
 
 type Course = {
-  institution?: string
-  start_year?: string
-  end_year?: string
-  description?: string
+  courseName?: string
+  courseNumber?: string
   id?: number
 }
 
+
 const CoursesBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
-  if (!profile.auth.courses) profile.auth.courses = []
-  const [coursesList, setCoursesList] = useState(profile.auth.courses as Course[])
+  const [coursesList, setCoursesList] = useState(
+    profile.auth.course as Course[]
+    )
   const deleteCourse = (id: number) => {
-    setCoursesList(coursesList.filter((course: any) => course.id !== id))
+    setCoursesList(
+      coursesList.filter((course: any) => course.id !== id))
   }
   const addCourse = () => {
     let course: Course = {}
@@ -30,10 +32,8 @@ const CoursesBox = () => {
   }
   const isNew = (course: Course) => {
     return !(
-      course.institution &&
-      course.start_year &&
-      course.end_year &&
-      course.description
+      course.courseName &&
+      course.courseNumber
     )
   }
   return (
