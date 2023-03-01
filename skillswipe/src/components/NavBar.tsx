@@ -8,25 +8,19 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
-  Link,
   Menu,
   MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
-  VStack,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import MobileSearchBar from './Search/MobileSearchBar'
 import Search from './Search/Search'
 
 export default function NavBar() {
