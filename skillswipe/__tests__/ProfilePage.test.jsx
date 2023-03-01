@@ -20,11 +20,8 @@ describe('Profile', () => {
   //   beforeAll(()=>{
   //     <Layout></Layout>
   // })
-  it('Profile page should render without crashing', async () => {
+  it('Profile page should render without crashing', () => {
     renderProfile()
-
-    await waitFor(() => {
-      expect(screen.queryByTestId('profile-page'))
-    })
+    expect(screen.queryByTestId('profile-page'))
   })
 })
