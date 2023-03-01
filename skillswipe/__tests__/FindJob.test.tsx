@@ -20,11 +20,10 @@ describe('JobListing', () => {
   //   beforeAll(()=>{
   //     <Layout></Layout>
   // })
-  it('should render find job page without crashing', async() => {
-    renderJobs()
+  it('should render JobListing page without crashing', async () => {
+    renderJobListing()
     await waitFor(() => {
-      expect(screen.getByTestId('find-jobs')).toBeInTheDocument()
-
+      expect(screen.getByTestId('job-listing')).toBeInTheDocument()
     })
   })
 })
