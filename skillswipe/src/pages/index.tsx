@@ -59,6 +59,7 @@ const login = () => {
 
   return (
     <>
+    <div data-testid="login-page">
       <Layout>
         <Flex height="100vh" alignItems="center" justifyContent="center">
           <Flex direction="column" background={formBackground} p={12} rounded={25}>
@@ -70,6 +71,7 @@ const login = () => {
               mb={3}
               type="email"
               background={placeholderBackground}
+              data-testid="email"
             />
             <Input
               placeholder="*******"
@@ -78,6 +80,7 @@ const login = () => {
               mb={6}
               type="password"
               background={placeholderBackground}
+              data-testid="password"
             />
             <Button colorScheme="blue" mb={3} onClick={submitForm}>
               Sign in
@@ -107,6 +110,7 @@ const login = () => {
           </Flex>
         </Flex>
       </Layout>
+      </div>
     </>
   )
 }

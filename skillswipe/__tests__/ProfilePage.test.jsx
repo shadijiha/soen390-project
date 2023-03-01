@@ -1,10 +1,11 @@
-import Layout from '@/components/Layout'
-import Profile from '@/pages/profile'
-import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
-import React from 'react'
-import { Provider } from 'react-redux'
-import store from '../src/Redux/store'
+import Profile from "../src/pages/profile/index";
+import "@testing-library/jest-dom";
+import React from "react";
+import Layout from "@/components/Layout";
+import { Provider } from "react-redux";
+import store from "../src/Redux/store";
+
 
 jest.mock('next/router', () => require('next-router-mock'))
 describe('Profile', () => {
@@ -16,15 +17,13 @@ describe('Profile', () => {
           <Profile />
         </Layout>
       </Provider>
-    )
-  //   beforeAll(()=>{
-  //     <Layout></Layout>
-  // })
-  it('Profile page should render without crashing', async () => {
-    renderProfile()
-    // expect(screen.queryByTestId('profile-page'))
+    );
+  
+  it("Profile page should render without crashing",async () => {
+    renderProfile();
     await waitFor(() => {
-      expect(screen.queryByTestId('profile-page')).toBeInTheDocument()
+      expect(screen.getByTestId('profile-page')).toBeInTheDocument()
+
     })
   })
 })
