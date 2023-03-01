@@ -24,6 +24,8 @@ export class JobsService {
     job.salary = data.salary
     job.jobType = data.jobType
     job.startDate = data.startDate
+    job.coverLetter = data.coverLetter
+    job.transcript = data.transcript
 
     const skills: Skill[] = []
     data.skills
