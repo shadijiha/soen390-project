@@ -51,7 +51,6 @@ export default function NavBar() {
     router.push(`/searchResultpage?q=${searchTerm}`)
   }
 
-
   const searchIcon = SearchIcon
 
   try {
@@ -307,9 +306,7 @@ export default function NavBar() {
               aria-label="Search"
               backgroundColor="transparent"
             >
-
               🔎
-
             </Button>
             <Collapse in={isOpen} animateOpacity>
               <InputGroup>
@@ -328,7 +325,6 @@ export default function NavBar() {
                       border: 'none',
                       outline: '1px  black',
                       backgroundColor: formBackground,
-
                     }}
                   />
 
