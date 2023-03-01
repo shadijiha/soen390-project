@@ -4,7 +4,7 @@ import { Heading } from '@chakra-ui/react'
 const TopHeader = () => {
   return (
     <>
-      <image
+      <div
         style={{
           marginBottom: '8px',
         }}
@@ -15,7 +15,7 @@ const TopHeader = () => {
           width="50px"
           alt="logo"
         />
-      </image>
+      </div>
       {/* recruiters company name here that they made from the job listing creation page*/}
       <Heading fontSize="4xl" mb={5} fontWeight={200} letterSpacing={2}>
         Google
