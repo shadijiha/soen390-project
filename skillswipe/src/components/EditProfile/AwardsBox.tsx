@@ -14,31 +14,27 @@ type Awards = {
   id?: number
 }
 
-
 const AwardsBox = () => {
   const profile = useSelector((state) => state as any)
-  const [awardsList, setAwardsList] = useState(
-    [] as Awards[]
-    )
+  const [awardsList, setAwardsList] = useState([] as Awards[])
   const deleteAward = (id: number) => {
     console.log('delete award', id)
     console.log('awardsList', awardsList)
-    setAwardsList([] ||
-      awardsList.filter((award: any) => award.id !== id))
+    setAwardsList([] || awardsList.filter((award: any) => award.id !== id))
     console.log('awardsList', awardsList)
   }
   const addAward = () => {
-    let award: Awards = {}
+    const award: Awards = {}
     setAwardsList((oldArray) => [...oldArray, award])
   }
   const isNew = (award: Awards) => {
     return !(
-      award.title && 
-      award.description && 
+      award.title &&
+      award.description &&
       award.issue_date &&
       award.issuer &&
       award.url
-      )
+    )
   }
   return (
     <Stack
