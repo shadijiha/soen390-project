@@ -22,8 +22,6 @@ describe('PostJob', () => {
   // })
   it('should render PostJob page without crashing', async () => {
     renderPostJob()
-    await waitFor(() => {
-      expect(screen.getByTestId('post-job')).toBeInTheDocument()
-    })
+    expect(screen.getByTestId('post-job'))
   })
 })
