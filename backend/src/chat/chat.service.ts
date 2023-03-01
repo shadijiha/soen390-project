@@ -31,4 +31,25 @@ export class ChatService {
 
     return res
   }
+
+  public async allConversations (userId: number): Promise<number[]> {
+    const messages = await this.messageRepository.find({
+      where: [{ senderId: userId }, { receiverId: userId }],
+      select: ['senderId', 'receiverId']
+    })
+
+    const conversations = new Set<number>()
+    messages.forEach((message) => {
+      conversations.add(message.senderId)
+      conversations.add(message.receiverId)
+    })
+
+    return Array.from(conversations)
+  }
+
+  public async conversation (id: number, withUserId: number): Promise<Message[]> {
+    return await this.messageRepository.find({
+      where: [{ senderId: id, receiverId: withUserId }, { senderId: withUserId, receiverId: id }]
+    })
+  }
 }
