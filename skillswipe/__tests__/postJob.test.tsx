@@ -22,6 +22,7 @@ describe('PostJob', () => {
   // })
   it('should render PostJob page without crashing', async () => {
     renderPostJob()
+
     expect(screen.getByTestId('post-job'))
   })
 })
