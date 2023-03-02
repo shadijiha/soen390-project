@@ -17,16 +17,14 @@ import {
 import { Fragment } from 'react'
 // Here we have used react-icons package for the icons
 import { IconType } from 'react-icons'
-import { FaRegComment, FaRegEye, FaRegHeart } from 'react-icons/fa'
+import { FaRegEye } from 'react-icons/fa'
 
 interface JobAttributes {
   title: string
   link: string
   created_at: string
   meta: {
-    reactions: number
-    comments: number
-    views: number
+    applications: number
   }
 }
 
@@ -36,9 +34,7 @@ const jobs: JobAttributes[] = [
     link: 'https://google.com',
     created_at: '21 Jan 2022',
     meta: {
-      reactions: 225,
-      comments: 20,
-      views: 500,
+      applications: 500,
     },
   },
   {
@@ -46,9 +42,7 @@ const jobs: JobAttributes[] = [
     link: 'https://facebook.com',
     created_at: '20 Jun 2021',
     meta: {
-      reactions: 400,
-      comments: 25,
-      views: 300,
+      applications: 300,
     },
   },
   {
@@ -56,9 +50,7 @@ const jobs: JobAttributes[] = [
     link: 'https://microsoft.com',
     created_at: '31 Sept 2022',
     meta: {
-      reactions: 5,
-      comments: 15,
-      views: 150,
+      applications: 150,
     },
   },
 ]
@@ -116,9 +108,7 @@ const findJob = () => {
                   fontSize={{ base: 'xs', sm: 'sm' }}
                   color={useColorModeValue('gray.600', 'gray.300')}
                 >
-                  <JobStat icon={FaRegComment} value={job.meta.comments} />
-                  <JobStat icon={FaRegHeart} value={job.meta.reactions} />
-                  <JobStat icon={FaRegEye} value={job.meta.views} />
+                  <JobStat icon={FaRegEye} value={job.meta.applications} />
                 </HStack>
                 <Stack
                   spacing={2}

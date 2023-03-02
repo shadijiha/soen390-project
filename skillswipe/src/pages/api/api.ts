@@ -190,8 +190,8 @@ export const search = async (token: any, query: string) => {
     },
   })
 }
-export const createJob = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/jobs`, UpdatedUser, {
+export const createJob = async (token: any, jobCreate: any) => {
+  return axios.post(`${URL}/jobs`, jobCreate, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

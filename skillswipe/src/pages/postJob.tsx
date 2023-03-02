@@ -21,10 +21,6 @@ import { toast } from 'react-toastify'
 import { createJob } from './api/api'
 
 const postJob = () => {
-  // const [selectedJobType, setSelectedJobType] = useState({
-  //   jobType: '',
-  // })
-
   const [postListing, setJobListing] = useState({
     jobTitle: '',
     companyName: '',
@@ -40,7 +36,7 @@ const postJob = () => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
 
-    // debug: show all the values grabbed as toast
+    // debug: show all the values grabbed as toast messages (to delete in production)
     toast(
       `jobTitle: ${postListing.jobTitle}
       companyName: ${postListing.companyName} 
@@ -66,13 +62,9 @@ const postJob = () => {
     ) {
       toast('Please fill all the fields')
       return
-    }
-
-    // if postJob.salary is not an integer
-    if (postListing.salary != postListing.salary) {
-      toast('Please add valid salary (integer)')
-      return
     } else {
+      // forcing salary to be int
+      postListing.salary = postListing.salary.toString()
       createJob(token, postJob).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Sucessfully created job listing. Happy hiring!')
