@@ -204,27 +204,32 @@ export class ProfileService {
   }
 
   public async addSkill (user: User, data: Profile.AddSkillRequest): Promise<void> {
+    if (data.title === '' || data.title === ' ') {
+      return
+    }
     const skills: Skill[] = []
     data.title
       .split(',')
       .filter((s) => s !== '')
       .forEach((s: string, i: number): void => {
         skills[i] = new Skill()
-        skills[i].title = s
+        skills[i].title = s.trim()
       })
 
-    if (skills.length === 0) return
+    const existingSkills = await this.skillRepository.find({
+      where: skills.map((s) => ({ title: s.title }))
+    })
 
-    user.skills = [...user.skills, ...skills]
+    const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
+
+    user.skills = [...user.skills, ...existingSkills, ...newSkills]
     await user.save()
   }
 
   public async removeSkill (user: User, id: number): Promise<void> {
-    await this.skillRepository
-      .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }]
-      })
-      .then(async (s: Skill) => await this.skillRepository.delete({ id: s.id }))
+    user.skills = user.skills.filter((s) => s.id !== id)
+
+    await user.save()
   }
 
   public async addWork (user: User, data: Profile.AddWorkRequest): Promise<void> {
