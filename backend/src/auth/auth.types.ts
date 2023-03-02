@@ -47,4 +47,12 @@ export namespace Auth {
     @ApiProperty({ examples: ['male', 'female'] })
       gender: 'male' | 'female'
   }
+
+  export class GetMeResponse extends App.WithStatus {
+    @ApiProperty({ type: User })
+      user: User | null
+
+    @ApiProperty({ type: User, isArray: true })
+      connections: User[]
+  }
 }

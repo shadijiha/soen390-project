@@ -1,7 +1,8 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
 import { ConflictException } from '@nestjs/common/exceptions'
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { User } from '../models/user.entity'
+import { ConnectionsService } from '../users/connections/connections.service'
+import { type User } from '../models/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthUser, BearerPayload } from '../util/util'
 import { AuthService } from './auth.service'
@@ -13,7 +14,8 @@ import { JwtAuthGuard } from './jwt-auth.guard'
 export class AuthController {
   constructor (
     private readonly userService: UsersService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly connectionsService: ConnectionsService
   ) {}
 
   @Post('login')
@@ -47,17 +49,30 @@ export class AuthController {
   }
 
   @Get('me')
-  @ApiResponse({ type: User })
+  @ApiResponse({ type: Auth.GetMeResponse })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
-    const user = await authedUser.getUser([
+  public async me (@AuthUser() authedUser: BearerPayload): Promise<Auth.GetMeResponse> {
+    const res: Auth.GetMeResponse = new Auth.GetMeResponse()
+
+    const user: User = await authedUser.getUser([
       'educations',
       'workExperiences',
+      'volunteeringExperience',
       'skills',
+      'recommendationsReceived',
+      'recommendationsGiven',
+      'courses',
       'projects',
-      'awards'
-    ])
-    return user as User
+      'awards',
+      'languages'
+    ]) as User
+
+    const connections = await this.connectionsService.getAcceptedConnections(authedUser.id)
+
+    res.user = user
+    res.connections = connections
+
+    return res
   }
 }
