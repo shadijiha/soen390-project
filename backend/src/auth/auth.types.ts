@@ -3,13 +3,7 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  IsEmail,
-  IsAlphanumeric,
-  IsNotEmpty,
-  Length,
-  MinLength
-} from 'class-validator'
+import { IsEmail, IsAlphanumeric, IsNotEmpty, Length, MinLength } from 'class-validator'
 
 import { App } from '../app.types'
 import { User } from '../models/user.entity'
@@ -46,13 +40,5 @@ export namespace Auth {
 
     @ApiProperty({ examples: ['male', 'female'] })
       gender: 'male' | 'female'
-  }
-
-  export class GetMeResponse extends App.WithStatus {
-    @ApiProperty({ type: User })
-      user: User | null
-
-    @ApiProperty({ type: User, isArray: true })
-      connections: User[]
   }
 }
