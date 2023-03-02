@@ -19,7 +19,7 @@ export namespace Jobs {
       salary: number
 
     @ApiProperty()
-      jobType: 'full-time' | 'part-time' | 'internship' | 'contract' | 'temporary' | 'volunteer' | 'other'
+      jobType: 'full-time' | 'part-time' | 'contract' | 'other'
 
     @ApiProperty()
       startDate: Date

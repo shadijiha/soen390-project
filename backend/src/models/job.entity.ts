@@ -31,7 +31,7 @@ export class Job extends BaseEntity {
 
   @Column()
   @ApiProperty()
-    jobType: 'full-time' | 'part-time' | 'internship' | 'contract' | 'temporary' | 'volunteer' | 'other'
+    jobType: 'full-time' | 'part-time' | 'contract' | 'other'
 
   @Column()
   @ApiProperty()
