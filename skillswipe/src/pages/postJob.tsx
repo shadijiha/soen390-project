@@ -33,11 +33,27 @@ const postJob = () => {
     salary: '',
     skills: '',
     startDate: '',
+    jobType: '',
     id: 0,
   })
   const addListing = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+
+    // debug: show all the values grabbed as toast
+    toast(
+      `jobTitle: ${postListing.jobTitle}
+      companyName: ${postListing.companyName} 
+      location: ${postListing.location}
+      jobDescription: ${postListing.jobDescription}
+      salary: ${postListing.salary}
+      skills: ${postListing.skills}
+      startDate: ${postListing.startDate}
+      jobType: ${postListing.jobType}
+      id: ${postListing.id}
+      `
+    )
+
     if (
       !postListing.jobTitle ||
       !postListing.companyName ||
@@ -45,7 +61,8 @@ const postJob = () => {
       !postListing.jobDescription ||
       !postListing.salary ||
       !postListing.skills ||
-      !postListing.startDate
+      !postListing.startDate ||
+      !postListing.jobType
     ) {
       toast('Please fill all the fields')
       return
@@ -151,19 +168,23 @@ const postJob = () => {
                   rounded="100px"
                 />
               </FormControl>
-              {/* <FormControl as="fieldset">
+              <FormControl as="fieldset">
                 <FormLabel as="legend" paddingBottom={1.5}>
                   Job Type
                 </FormLabel>
-                <RadioGroup>
+                <RadioGroup
+                  onChange={(value) =>
+                    setJobListing({ ...postListing, jobType: value })
+                  }
+                >
                   <HStack spacing="auto">
-                    <Radio value="fulltime">Full-time</Radio>
-                    <Radio value="parttime">Part-time</Radio>
-                    <Radio value="freelance">Contract</Radio>
-                    <Radio value="contract">Other</Radio>
+                    <Radio value="full-time">Full-time</Radio>
+                    <Radio value="part-time">Part-time</Radio>
+                    <Radio value="contract">Contract</Radio>
+                    <Radio value="other">Other</Radio>
                   </HStack>
                 </RadioGroup>
-              </FormControl> */}
+              </FormControl>
             </Stack>
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
@@ -207,6 +228,12 @@ const postJob = () => {
                 size="lg"
                 placeholder="Paste here"
                 rounded="15px"
+                onChange={(event) =>
+                  setJobListing({
+                    ...postListing,
+                    jobDescription: event.target.value,
+                  })
+                }
               />
             </FormControl>
             <Button
