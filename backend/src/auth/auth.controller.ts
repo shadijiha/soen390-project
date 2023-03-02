@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
 import { ConflictException } from '@nestjs/common/exceptions'
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { ConnectionsService } from '../users/connections/connections.service'
-import { type User } from '../models/user.entity'
+import { User } from '../models/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthUser, BearerPayload } from '../util/util'
 import { AuthService } from './auth.service'
@@ -20,9 +20,7 @@ export class AuthController {
 
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async login (
-    @Body() body: Auth.LoginRequest
-  ): Promise<Auth.LoginResponse> {
+  public async login (@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
     // try {
     return await this.authService.login(body)
     // } catch (e) {
@@ -32,9 +30,7 @@ export class AuthController {
 
   @Post('register')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async register (
-    @Body() body: Auth.RegisterRequest
-  ): Promise<Auth.LoginResponse> {
+  public async register (@Body() body: Auth.RegisterRequest): Promise<Auth.LoginResponse> {
     try {
       // Will fail if email is NOT taken
       await this.userService.findOneByEmail(body.email)
@@ -49,13 +45,11 @@ export class AuthController {
   }
 
   @Get('me')
-  @ApiResponse({ type: Auth.GetMeResponse })
+  @ApiResponse({ type: User })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me (@AuthUser() authedUser: BearerPayload): Promise<Auth.GetMeResponse> {
-    const res: Auth.GetMeResponse = new Auth.GetMeResponse()
-
-    const user: User = await authedUser.getUser([
+  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
+    const user: User = (await authedUser.getUser([
       'educations',
       'workExperiences',
       'volunteeringExperience',
@@ -66,13 +60,8 @@ export class AuthController {
       'projects',
       'awards',
       'languages'
-    ]) as User
+    ])) as User
 
-    const connections = await this.connectionsService.getAcceptedConnections(authedUser.id)
-
-    res.user = user
-    res.connections = connections
-
-    return res
+    return user
   }
 }
