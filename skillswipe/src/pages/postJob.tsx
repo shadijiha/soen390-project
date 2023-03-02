@@ -173,7 +173,7 @@ const postJob = () => {
               <Textarea size="lg" placeholder="Paste here" rounded="15px" />
             </FormControl>
             <Button
-              onClick={postJob}
+              onClick={addListing}
               size={'lg'}
               bg="green.300"
               color="white"
