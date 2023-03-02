@@ -13,7 +13,6 @@ type Awards = {
   description?: string
 }
 
-
 const AwardsBox = () => {
   const profile = useSelector((state) => state as any)
   const [awardsList, setAwardsList] = useState(
@@ -32,12 +31,12 @@ const AwardsBox = () => {
   }
   const isNew = (award: Awards) => {
     return !(
-      award.title && 
-      award.description && 
+      award.title &&
+      award.description &&
       award.issue_date &&
       award.issuer &&
       award.url
-      )
+    )
   }
   return (
     <Stack

@@ -1,14 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn
-} from 'typeorm'
-import { User } from './user.entity'
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { type Job } from './job.entity'
+import { type User } from './user.entity'
 
 @Entity()
 export class Skill extends BaseEntity {
@@ -16,7 +9,7 @@ export class Skill extends BaseEntity {
   @ApiProperty()
     id: number
 
-  @Column()
+  @Column({ unique: true })
   @ApiProperty()
     title: string
 
@@ -29,7 +22,11 @@ export class Skill extends BaseEntity {
     updated_at: Date
 
   // RELATIONS
-  @ManyToMany(() => User, (u) => u.skills)
-  @ApiProperty({ type: [User] })
-    user: User[]
+  // @ManyToMany(() => User, (u) => u.skills)
+  // @ApiProperty({ type: [User] })
+  user: User[]
+
+  // @ManyToMany(() => Job, (j) => j.skills)
+  // @ApiProperty({ type: [Job] })
+  job: Job[]
 }

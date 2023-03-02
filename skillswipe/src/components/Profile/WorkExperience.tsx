@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import {
   Box,
   chakra,
@@ -71,10 +72,6 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
-  const [imgSrc, setImgSrc] = useState(
-    `https://www.${props.company}.com/favicon.ico`
-  )
-
   const handleImageError = () => {
     setImgSrc('https://img.icons8.com/emoji/512/carp-streamer.png')
     console.log('Error loading logo image')
@@ -118,7 +115,7 @@ const Card = (props: any) => {
             }}
           >
             <img
-              src={imgSrc}
+              src={'https://www.' + props.company.toLowerCase() + '.com/favicon.ico'}
               width="20px"
               height="20px"
               alt="logo"
@@ -187,3 +184,6 @@ const EmptyCard = () => {
 }
 
 export default WorkExperience
+function setImgSrc(arg0: string) {
+  throw new Error('Function not implemented.')
+}
