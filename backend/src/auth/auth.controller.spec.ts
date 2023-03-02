@@ -3,15 +3,12 @@ import { JwtService } from "@nestjs/jwt";
 import { Test, type TestingModule } from "@nestjs/testing";
 import { DataSource, type Repository } from "typeorm";
 import { User } from "../models/user.entity";
-import { setupTestDB } from "../util/testUtil";
 import { AuthController } from "./auth.controller";
-import { UsersModule } from "../users/users.module";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { UsersService } from "../users/users.service";
 import { dataSourceMockFactory } from "../util/mockDataSource";
 import { AuthService } from "./auth.service";
 import { createTestBearerPayload } from "../util/util";
-import { Users } from "src/users/users.types";
 import { Auth } from "./auth.types";
 
 describe("AuthController", () => {
