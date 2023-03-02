@@ -26,7 +26,7 @@ const postJob = () => {
     companyName: '',
     location: '',
     jobDescription: '',
-    salary: '',
+    salary: 0,
     skills: '',
     startDate: '',
     jobType: '',
@@ -64,12 +64,15 @@ const postJob = () => {
       return
     } else {
       // forcing salary to be int
-      postListing.salary = postListing.salary.toString()
+      const salary = parseInt(postListing.salary.toString(), 10)
+      postListing.salary = salary
       createJob(token, postJob).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Sucessfully created job listing. Happy hiring!')
         } else {
-          toast.error('Error creating job listing')
+          toast.error(
+            'Error creating job listing. Maybe your usertype is not recruiter?'
+          )
         }
       })
     }
