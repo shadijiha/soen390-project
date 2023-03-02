@@ -94,20 +94,30 @@ const postJob = () => {
               {/* frontend!!! company is read only, we will pull it from the user's logged in account 
                  and show it as the placeholder */}
               <FormControl id="jobTitle">
-                <FormLabel>Position Title</FormLabel>
+                <FormLabel htmlFor="jobTitle">Position Title</FormLabel>
                 <Input
+                  name="jobTitle"
+                  id="jobTitle"
                   type="text"
                   placeholder="ex: FullStack Software Engineer"
                   rounded="100px"
                 />
               </FormControl>
               <FormControl id="companyName">
-                <FormLabel>Company</FormLabel>
-                <Input type="text" placeholder="loggedInCompany" rounded="100px" />
+                <FormLabel htmlFor="companyName">Company</FormLabel>
+                <Input
+                  name="companyName"
+                  id="companyName"
+                  type="text"
+                  placeholder="loggedInCompany"
+                  rounded="100px"
+                />
               </FormControl>
               <FormControl id="location">
-                <FormLabel>Location</FormLabel>
+                <FormLabel htmlFor="location">Location</FormLabel>
                 <Input
+                  name="location"
+                  id="location"
                   type="text"
                   rounded="100px"
                   placeholder="ex: Montreal, QC or Remote"
@@ -117,8 +127,10 @@ const postJob = () => {
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl paddingRight={{ sm: 0, md: 10 }} id="salary">
-                <FormLabel>Salary</FormLabel>
+                <FormLabel htmlFor="salary">Salary</FormLabel>
                 <Input
+                  name="salary"
+                  id="salary"
                   type="text"
                   placeholder="ex: $50/hr or $100,000/year"
                   rounded="100px"
@@ -141,12 +153,14 @@ const postJob = () => {
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl id="startDate">
-                <FormLabel>Starting Date</FormLabel>
-                <Input type="date" rounded="100px" />
+                <FormLabel htmlFor="startDate">Starting Date</FormLabel>
+                <Input type="date" rounded="100px" id="startDate" name="startDate" />
               </FormControl>
               <FormControl id="skills">
-                <FormLabel>Skills Needed</FormLabel>
+                <FormLabel htmlFor="skills">Skills Needed</FormLabel>
                 <Input
+                  name="skills"
+                  id="skills"
                   type="text"
                   rounded="100px"
                   placeholder="Separate with comma (e.g React, NextJS, ChakraUI)"
@@ -160,8 +174,14 @@ const postJob = () => {
                 paddingBottom: '1.5em',
               }}
             >
-              <FormLabel>Job Description</FormLabel>
-              <Textarea size="lg" placeholder="Paste here" rounded="15px" />
+              <FormLabel htmlFor="jobDescription">Job Description</FormLabel>
+              <Textarea
+                name="jobDescription"
+                id="jobDescription"
+                size="lg"
+                placeholder="Paste here"
+                rounded="15px"
+              />
             </FormControl>
             <Button
               onClick={addListing}
