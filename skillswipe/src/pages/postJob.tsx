@@ -154,7 +154,10 @@ const postJob = () => {
                 <FormLabel htmlFor="salary">Salary</FormLabel>
                 <Input
                   onChange={(event) =>
-                    setJobListing({ ...postListing, salary: event.target.value })
+                    setJobListing({
+                      ...postListing,
+                      salary: parseInt(event.target.value),
+                    })
                   }
                   name="salary"
                   id="salary"
