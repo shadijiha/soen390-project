@@ -1,4 +1,9 @@
-import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
   Box,
@@ -10,6 +15,7 @@ import {
   InputRightElement,
   Menu,
   MenuButton,
+  Select,
   Text,
   useColorMode,
   useColorModeValue,
@@ -154,6 +160,12 @@ export default function NavBar() {
             <NextLink href="/findJob" passHref>
               <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
                 Open Jobs
+              </Button>
+            </NextLink>
+
+            <NextLink href="/jobListing" passHref>
+              <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
+                Job example
               </Button>
             </NextLink>
 
