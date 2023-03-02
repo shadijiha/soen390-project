@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm'
 import { type Job } from './job.entity'
 import { type User } from './user.entity'
 
@@ -9,7 +9,7 @@ export class Skill extends BaseEntity {
   @ApiProperty()
     id: number
 
-  @Column()
+  @Column({ unique: true })
   @ApiProperty()
     title: string
 
