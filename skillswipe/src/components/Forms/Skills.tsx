@@ -44,7 +44,7 @@ const Skills = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Skill updated successfully')
         } else {
-          toast.error('Error updaing skill')
+          toast.error('Error updating skill')
         }
       })
     }

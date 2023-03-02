@@ -16,20 +16,28 @@ const CoursesBox = () => {
   // Api calls
   const profile = useSelector((state) => state as any)
   const [coursesList, setCoursesList] = useState(
-    profile.auth.course as Course[]
+    profile.auth.courses as Course[]
     )
   const deleteCourse = (id: number) => {
     setCoursesList(
       coursesList.filter((course: any) => course.id !== id))
   }
+  // const addCourse = () => {
+  //   let course: Course = {}
+  //     setCoursesList((oldArray) => [...oldArray, course])
+  // }
+
   const addCourse = () => {
     let course: Course = {}
-    if (coursesList.length === 0) {
-      setCoursesList([course])
-    } else {
-      setCoursesList((oldArray) => [...oldArray, course])
-    }
+    setCoursesList((oldArray) => {
+      if (Array.isArray(oldArray)) {
+        return [...oldArray, course]
+      } else {
+        return [course]
+      }
+    })
   }
+  
   const isNew = (course: Course) => {
     return !(
       course.courseName &&

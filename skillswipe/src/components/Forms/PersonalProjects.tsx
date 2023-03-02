@@ -89,16 +89,15 @@ const PersonalProjects = (props: any) => {
     }
   }
 
- console.log('PersonalProject')
+
   const deletePersonalProjects = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (props.personalProject && props.personalProject.id === 0) {
+    if (props.isNew) {
       props.deleteProject(props.personalProject.id)
-      return
     }
-    const projectId = personalProject?.id || 0; // add null check here
-    deletePersonalProjectsRequest(token, projectId).then((res) => {
+    
+    deletePersonalProjectsRequest(token, personalProject.id).then((res) => {
       if (res.status === 201 || res.status === 200) {
         toast.success('Personal Project deleted successfully')
         props.deleteProject(props.personalProject.id)
@@ -107,7 +106,7 @@ const PersonalProjects = (props: any) => {
       }
     })
   }
-  console.log('PersonalProject')
+ 
   
   
 
