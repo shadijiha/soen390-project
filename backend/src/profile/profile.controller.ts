@@ -218,12 +218,12 @@ export class ProfileController {
   }
 
   @Delete('skill/:id')
-  public async deleteSkill (@AuthUser() userInfo: BearerPayload, @Param('id') id: number): Promise<void> {
+  public async deleteSkill (@AuthUser() userInfo: BearerPayload, @Param('id') id: string): Promise<void> {
     const user = await userInfo.getUser(['skills'])
     if (user == null) return
 
     try {
-      await this.profileService.removeSkill(user, id)
+      await this.profileService.removeSkill(user, parseInt(id))
     } catch (e) {
       throw new HttpException((e as Error).message, 400)
     }

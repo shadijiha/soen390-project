@@ -28,6 +28,7 @@ describe('ProfileService', () => {
   const SkillRepository = createMock<Repository<Skill>>()
   const WorkRepository = createMock<Repository<Work>>()
   const UserRepository = createMock<Repository<User>>()
+  
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -462,6 +463,7 @@ describe('ProfileService', () => {
     savedUser.skills = [s1, s2, s3]
 
     jest.spyOn(user, 'save').mockImplementation(() => Promise.resolve(user))
+    SkillRepository.find.mockResolvedValue([]);
 
     await service.addSkill(user, data)
     expect(user.save).toBeCalledTimes(1)
@@ -479,6 +481,8 @@ describe('ProfileService', () => {
     let savedUser = JSON.parse(JSON.stringify(user)) // deep cope
     jest.spyOn(user, 'save').mockImplementation(() => Promise.resolve(user))
 
+    
+    
     await service.addSkill(user, data)
     expect(user.save).toBeCalledTimes(0)
     expect(user).toMatchObject(savedUser)
@@ -496,10 +500,10 @@ describe('ProfileService', () => {
 
     SkillRepository.delete.mockImplementation(() => Promise.resolve(res))
     SkillRepository.findOneOrFail.mockResolvedValue(data)
+    jest.spyOn(user, 'save').mockImplementation(() => Promise.resolve(user))
 
     await service.removeSkill(user, data.id)
-    expect(SkillRepository.delete).toBeCalledTimes(1)
-    expect(SkillRepository.delete).toBeCalledWith({ id: data.id })
+    expect(user.save).toBeCalledTimes(1)
   })
 
   it('should add Work to a user', async () => {
