@@ -1,13 +1,12 @@
-import { createMock } from "@golevelup/ts-jest";
+
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Job } from "../models/job.entity";
-import { RemoveOptions, Repository, SaveOptions } from "typeorm";
 import { Recruiter } from "../models/user_types/recruiter.entity";
 import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
-import { Message } from "src/models/message.entity";
-import { User } from "src/models/user.entity";
+
+import { Skill } from "../models/skill.entity";
 
 describe("JobsService", () => {
   let service: JobsService;
@@ -22,6 +21,13 @@ describe("JobsService", () => {
     delete: jest.fn(),
   };
 
+  let mockSkillRepository = {
+    save: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
+    find: jest.fn(() => ['Java', 'C++', 'Python']),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -33,6 +39,10 @@ describe("JobsService", () => {
         {
           provide: getRepositoryToken(Job),
           useValue: mockjobsRepository,
+        },
+        {
+          provide: getRepositoryToken(Skill),
+          useValue: mockSkillRepository,
         },
       ],
     }).compile();
