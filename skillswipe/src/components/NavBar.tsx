@@ -1,6 +1,7 @@
-import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Collapse,
@@ -31,7 +32,6 @@ export default function NavBar() {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
-
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -172,6 +172,30 @@ export default function NavBar() {
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
+            </NextLink>
+
+            <NextLink href="/inbox" passHref>
+              <div style={{position: 'relative'}}>
+              <IconButton
+                aria-label="Notifications"
+                icon={<BellIcon />}
+                variant="ghost"
+                size="lg"
+                w="100%"
+                my={5}
+              ></IconButton>
+              <Badge
+                colorScheme="red"
+                borderRadius="full"
+                px="2"
+                position="absolute"
+                top="20px"
+                right="0"
+              >
+                10
+              </Badge>
+              </div>
+
             </NextLink>
 
             <NextLink href="/profile" passHref>
