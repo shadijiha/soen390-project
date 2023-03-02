@@ -90,6 +90,9 @@ const Experience = (props: any) => {
   const deleteWorkExperience = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    if(props.isNew){
+      props.deleteExperience(props.experience.id)
+    }else{
     deleteWorkExperienceRequest(token, experience.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Experience deleted successfully')
@@ -99,9 +102,8 @@ const Experience = (props: any) => {
       }
     })
   }
-  const deleteItem = () => {
-    props.deleteExperience(props.experience.id)
   }
+  
   return (
     <Box
       minWidth={'60vw'}

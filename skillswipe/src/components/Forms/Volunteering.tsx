@@ -32,46 +32,6 @@ const Volunteering = (props: any) => {
       [name]: value,
     }))
   }
-  const addVolunteering = (event: any) => {
-    const token = localStorage.getItem('jwt')
-    event.preventDefault()
-    if (
-      !volunteering.company ||
-      !volunteering.title ||
-      !volunteering.start_year ||
-      !volunteering.end_year
-    ) {
-      toast('Please fill all the fields')
-      return
-    }
-    if (volunteering.start_year > volunteering.end_year) {
-      toast('Please add Valid start and end year')
-      return
-    } else {
-      addVolunteeringRequest(token, volunteering).then((res) => {
-        if (res.status == 201 || res.status == 200) {
-          toast.success('Volunteering added successfully')
-        } else {
-          toast.error('Error updaing volunteering')
-        }
-      })
-    }
-  }
-
-  const deleteVolunteering = (event: any) => {
-    const token = localStorage.getItem('jwt')
-    event.preventDefault()
-
-    deleteVolunteeringRequest(token, volunteering.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Volunteering deleted successfully')
-        console.log('Child' + props.volunteering.id)
-        props.deleteVolunteering(props.volunteering.id)
-      } else {
-        toast.error('Error deleting volunteering')
-      }
-    })
-  }
   const updateVolunteering = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -92,7 +52,50 @@ const Volunteering = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Volunteering updated successfully')
         } else {
-          toast.error('Error updaing volunteering')
+          toast.error('Error updating volunteering')
+        }
+      })
+    }
+  }
+
+  const deleteVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (props.isNew) {
+      props.deleteVolunteering(props.volunteering.id)
+    }else{
+    deleteVolunteeringRequest(token, volunteering.id).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Volunteering deleted successfully')
+        console.log('Child' + props.volunteering.id)
+        props.deleteVolunteering(props.volunteering.id)
+      } else {
+        toast.error('Error deleting volunteering')
+      }
+    })
+  }
+  }
+  const addVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (
+      !volunteering.company ||
+      !volunteering.title ||
+      !volunteering.start_year ||
+      !volunteering.end_year
+    ) {
+      toast('Please fill all the fields')
+      return
+    }
+    if (volunteering.start_year > volunteering.end_year) {
+      toast('Please add Valid start and end year')
+      return
+    } else {
+      addVolunteeringRequest(token, volunteering).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Volunteering added successfully')
+        } else {
+          toast.error('Error adding volunteering')
         }
       })
     }

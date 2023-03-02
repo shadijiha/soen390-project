@@ -1,5 +1,4 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import axios from 'axios'
 const URL = 'http://localhost:8080'
 
@@ -159,7 +158,7 @@ export const deleteVolunteeringRequest = async (
 
 export const editPersonalProjectsRequest = async (token: any, project: any) => {
   return axios
-    .put(`${URL}/profile/add/Project`, project, {
+    .put(`${URL}/profile/project/${project.id}`, project, {
       headers: {
        authorization: `Bearer ${token}`,
       },
@@ -171,7 +170,7 @@ export const editPersonalProjectsRequest = async (token: any, project: any) => {
 
 export const addPersonalProjectsRequest = async (token: any, project: any) => {
   return axios
-    .post(`${URL}/profile/Project`, project, {
+    .post(`${URL}/profile/project`, project, {
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -186,7 +185,7 @@ export const deletePersonalProjectsRequest = async (
   projectId: number
 ) => {
   return axios
-    .delete(`${URL}/profile/add/Project/${projectId}`, {
+    .delete(`${URL}/profile/project/${projectId}`, {
       headers: {
         authorization: `Bearer ${token}`,
       },

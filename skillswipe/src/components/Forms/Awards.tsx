@@ -53,7 +53,7 @@ const Awards = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Award updated successfully')
         } else {
-          toast.error('Error updaing award')
+          toast.error('Error updating award')
         }
       })
     }
@@ -85,18 +85,20 @@ const Awards = (props: any) => {
   const deleteAward = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    if(props.isNew){
+      props.deleteAward(props.award.id)
+    }else{
     deleteAwardsRequest(token, award.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Award deleted successfully')
-        props.deleteAward(props.Award.id)
+        props.deleteAward(props.Award?.id)
       } else {
         toast.error('Error deleting award')
       }
     })
   }
-  const deleteItem = () => {
-    props.deleteAward(props.Award.id)
   }
+
 
   
 

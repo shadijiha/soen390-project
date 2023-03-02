@@ -72,6 +72,9 @@ const Skills = (props: any) => {
   const deleteSkill = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    if(props.isNew){
+      props.deleteSkill(props.skill.id)
+    }else{
     deleteSkillsRequest(token, skill.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Skill deleted successfully')
@@ -81,8 +84,6 @@ const Skills = (props: any) => {
       }
     })
   }
-  const deleteItem = (event: any) => {
-    props.deleteSkill(props.skill.id)
   }
 
 

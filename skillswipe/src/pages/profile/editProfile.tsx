@@ -14,7 +14,7 @@ import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
-// import SkillsBox from '@/components/EditProfile/SkillsBox'
+import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 
 const EditProfile = () => {
@@ -252,7 +252,7 @@ const EditProfile = () => {
         <AwardsBox />
 
         {/* skills */}
-        {/* <SkillsBox /> */}
+        <SkillsBox />
 
         {/* Volunteering */}
         <VolunteeringBox />

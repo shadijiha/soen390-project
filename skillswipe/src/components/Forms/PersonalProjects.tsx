@@ -26,7 +26,7 @@ const PersonalProjects = (props: any) => {
     id: 0,
   })
 
-  if (personalProject.name == '') setPersonalProject(props.personalProject)
+  if (personalProject?.name == '') setPersonalProject(props.personalProject)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setPersonalProject((prevState) => ({
@@ -39,11 +39,11 @@ const PersonalProjects = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
-      !personalProject.start_year ||
-      !personalProject.end_year ||
-      !personalProject.name ||
-      !personalProject.description ||
-      !personalProject.url
+      !personalProject?.start_year ||
+      !personalProject?.end_year ||
+      !personalProject?.name ||
+      !personalProject?.description ||
+      !personalProject?.url
     ) {
       toast('Please fill all the fields')
       return
@@ -66,11 +66,11 @@ const PersonalProjects = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
-      !personalProject.start_year ||
-      !personalProject.end_year ||
-      !personalProject.name ||
-      !personalProject.description ||
-      !personalProject.url
+      !personalProject?.start_year ||
+      !personalProject?.end_year ||
+      !personalProject?.name ||
+      !personalProject?.description ||
+      !personalProject?.url
     ) {
       toast('Please fill all the fields')
       return
@@ -89,21 +89,27 @@ const PersonalProjects = (props: any) => {
     }
   }
 
+ console.log('PersonalProject')
   const deletePersonalProjects = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    deletePersonalProjectsRequest(token, personalProject.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
+    if (props.personalProject && props.personalProject.id === 0) {
+      props.deleteProject(props.personalProject.id)
+      return
+    }
+    const projectId = personalProject?.id || 0; // add null check here
+    deletePersonalProjectsRequest(token, projectId).then((res) => {
+      if (res.status === 201 || res.status === 200) {
         toast.success('Personal Project deleted successfully')
+        props.deleteProject(props.personalProject.id)
       } else {
         toast.error('Error deleting Personal Project')
       }
     })
   }
-  const deletePersonalProject = () => {
-    props.deleteProject(props.personalProjects.id)
-    
-  }
+  console.log('PersonalProject')
+  
+  
 
   return (
     <Box

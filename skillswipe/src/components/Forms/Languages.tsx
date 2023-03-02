@@ -36,7 +36,10 @@ const Languages = (props: any) => {
   const updateLanguage = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (!language.languageName || !language.proficiency) {
+    if (!
+      language.languageName || 
+      !language.proficiency
+      ) {
       toast('Please fill all the fields')
       return
     } else {
@@ -44,7 +47,7 @@ const Languages = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Language updated successfully')
         } else {
-          toast.error('Error updaing language')
+          toast.error('Error updating language')
         }
       })
     }
@@ -70,6 +73,9 @@ const Languages = (props: any) => {
   const deleteLanguage = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    if (props.isNew) {
+      props.deleteLanguages(props.language.id)
+    }else{
     deleteLanguagesRequest(token, language.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Language deleted successfully')
@@ -79,8 +85,6 @@ const Languages = (props: any) => {
       }
     })
   }
-  const deleteItem = () => {
-    props.deleteLanguages(props.language.id)
   }
 
 
