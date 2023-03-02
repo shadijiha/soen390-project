@@ -63,7 +63,7 @@ describe("AuthController", () => {
         UsersService,
         AuthService,
         JwtService,
-		ConnectionsService,
+        ConnectionsService,
         {
           provide: getRepositoryToken(User),
           useValue: mockUsersRepository,
@@ -161,8 +161,8 @@ describe("AuthController", () => {
   it("should return a user", async () => {
     const bearer: BearerPayload = await createTestBearerPayload(userToTest.email, userRepository);
     const res = await controller.me(bearer);
-    console.log(res);
-    expect(mockConnectionsService.getAcceptedConnections).toHaveBeenCalled();
+
+    expect(res).toEqual(userToTest);
   });
 
   // it("should throw an error", async () => {
