@@ -8,25 +8,19 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
-  Link,
   Menu,
   MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
-  VStack,
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import MobileSearchBar from './Search/MobileSearchBar'
 import Search from './Search/Search'
 
 export default function NavBar() {
@@ -51,7 +45,7 @@ export default function NavBar() {
     router.push(`/searchResultpage?q=${searchTerm}`)
   }
 
-  const searchIcon = document.getElementsByClassName('mobile-search-icon')
+  const searchIcon = SearchIcon
 
   try {
     searchIcon[0].addEventListener('click', function () {
@@ -158,8 +152,19 @@ export default function NavBar() {
             </NextLink>
 
             <NextLink href="/findJob" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
-                Find Jobs
+              <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
+                Open Jobs
+              </Button>
+            </NextLink>
+
+            <NextLink href="/postJob" passHref>
+              <Button
+                variant="ghost"
+                aria-label="Create Job Listing"
+                my={5}
+                w="100%"
+              >
+                Create Job Listing
               </Button>
             </NextLink>
 
@@ -265,6 +270,17 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
+            <NextLink href="/postJob" passHref>
+              <Button
+                variant="ghost"
+                aria-label="Create Job Listing"
+                my={5}
+                w="100%"
+              >
+                Create Job Listing
+              </Button>
+            </NextLink>
+
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
@@ -284,7 +300,7 @@ export default function NavBar() {
               aria-label="Search"
               backgroundColor="transparent"
             >
-              Search
+              🔎
             </Button>
             <Collapse in={isOpen} animateOpacity>
               <InputGroup>
@@ -299,6 +315,7 @@ export default function NavBar() {
                       height: '40px',
                       paddingLeft: '10px',
                       borderRadius: '100px',
+
                       border: 'none',
                       outline: '1px  black',
                       backgroundColor: formBackground,
