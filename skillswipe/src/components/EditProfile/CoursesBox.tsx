@@ -70,7 +70,7 @@ const CoursesBox = () => {
           alignSelf: 'flex-start',
         }}
       >
-        Course
+        Courses
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

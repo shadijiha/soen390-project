@@ -36,7 +36,10 @@ const Courses = (props: any) => {
   const updateCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (!course.courseName || !course.courseNumber) {
+    if (
+      !course.courseName || 
+      !course.courseNumber
+      ) {
       toast('Please fill all the fields')
       return
     } else {
@@ -53,7 +56,10 @@ const Courses = (props: any) => {
   const addCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (!course.courseName || !course.courseNumber) {
+    if (
+      !course.courseName || 
+      !course.courseNumber
+      ) {
       toast('Please fill all the fields')
       return
     } else {
@@ -70,6 +76,9 @@ const Courses = (props: any) => {
   const deleteCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    if (props.isNew) {
+      props.deleteCourse(props.course.id)
+    }else{
     deleteCoursesRequest(token, course.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Course deleted successfully')
@@ -78,6 +87,7 @@ const Courses = (props: any) => {
         toast.error('Error deleting course')
       }
     })
+  }
   }
   const deleteItem = () => {
     props.deleteCourse(props.course.id)

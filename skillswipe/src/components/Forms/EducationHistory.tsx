@@ -23,7 +23,6 @@ const EducationHistory = (props: any) => {
     start_year: '',
     end_year: '',
     id: 0,
- 
   })
 
 

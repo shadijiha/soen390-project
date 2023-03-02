@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import PersonalProjects from '../Forms/PersonalProjects'
 
-type PersonalProjects = {
+type PersonalProject = {
   name?: string
   description?: string
   url?: string
@@ -18,26 +18,26 @@ const PersonalProjectsBox = () => {
   // Api calls
   const profile = useSelector((state) => state as any)
   const [personalProjectsList, setPersonalProjectsList] = useState(
-    profile.auth.projects as PersonalProjects[]
+    profile.auth.projects as PersonalProject[]
   )
-  const deletePersonalProjects = (id: number) => {
+  const deletePersonalProject = (id: number) => {
     setPersonalProjectsList(
       personalProjectsList.filter(
-        (personalProjects: any) => personalProjects.id !== id
+        (personalProject: any) => personalProject.id !== id
       )
     )
   }
-  const addPersonalProjects = () => {
-    let pp: PersonalProjects = { }
-    setPersonalProjectsList((oldArray) => [...(oldArray || []), pp])
+  const addPersonalProject = () => {
+    let personalProject: PersonalProject = { }
+    setPersonalProjectsList((oldArray) => [...(oldArray || []), personalProject])
   }
-  const isNew = (personalProjects: PersonalProjects) => {
+  const isNew = (personalProject: PersonalProject) => {
     return !(
-      personalProjects.name &&
-      personalProjects.start_year &&
-      personalProjects.end_year &&
-      personalProjects.description &&
-      personalProjects.url
+      personalProject.name &&
+      personalProject.start_year &&
+      personalProject.end_year &&
+      personalProject.description &&
+      personalProject.url
     )
   }
   return (
@@ -77,7 +77,7 @@ const PersonalProjectsBox = () => {
           type="button"
           colorScheme={'teal'}
           borderRadius="100px"
-          onClick={addPersonalProjects}
+          onClick={addPersonalProject}
         >
           <AddIcon />
         </Button>
@@ -85,13 +85,13 @@ const PersonalProjectsBox = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {personalProjectsList &&
-          personalProjectsList.map((personalProjects: any, index: number) => (
+          personalProjectsList.map((personalProject: any, index: number) => (
             <div key={index}>
               <PersonalProjects
                 index={index + 1}
-                personalProjects={personalProjects}
-                deletePersonalProjects={deletePersonalProjects}
-                isNew={isNew(personalProjects)}
+                personalProjects={personalProject}
+                deletePersonalProjects={deletePersonalProject}
+                isNew={isNew(personalProject)}
               />
             </div>
           ))}

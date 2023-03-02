@@ -24,16 +24,19 @@ const Languages = (props: any) => {
     id: 0,
   })
 
+
   if (language.languageName == '') setLanguage(props.language)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setLanguage((prevState) => ({
       ...prevState,
       [name]: value,
-    }))
-  }
+      }))
+    }
 
-  const updateLanguage = (event: any) => {
+  
+
+  const updateLanguages = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
@@ -53,7 +56,7 @@ const Languages = (props: any) => {
     }
   }
 
-  const addLanguage = (event: any) => {
+  const addLanguages = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
@@ -73,7 +76,7 @@ const Languages = (props: any) => {
     }
   }
 
-  const deleteLanguage = (event: any) => {
+  const deleteLanguages = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
@@ -82,15 +85,17 @@ const Languages = (props: any) => {
     deleteLanguagesRequest(token, language.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Language deleted successfully')
-        props.deleteLanguages(props.language.id)
+        props.deleteLanguage(props.language.id)
       } else {
         toast.error('Error deleting language')
       }
     })
   }
+  const deleteItem = () => {
+    props.deleteLanguage(props.language.id)
   }
 
-
+  }
 
   return (
     <Box
@@ -122,7 +127,7 @@ const Languages = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={updateLanguage}
+            onClick={updateLanguages}
           >
             Update
           </Button>
@@ -136,7 +141,7 @@ const Languages = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={addLanguage}
+            onClick={addLanguages}
           >
             Add
           </Button>
@@ -149,7 +154,7 @@ const Languages = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteLanguage}
+          onClick={deleteLanguages}
         >
           <DeleteIcon />
         </Button>
@@ -190,5 +195,7 @@ const Languages = (props: any) => {
       </FormControl>
     </Box>
   )
+
 }
+
 export default Languages
