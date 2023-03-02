@@ -1,44 +1,45 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable @next/next/no-img-element */
-import NavBar from "@/components/NavBar";
-import { Text } from "@chakra-ui/react";
-import Layout from "@/components/Layout";
-import React, { useState, useEffect } from "react";
-import { isBrowser } from "framer-motion";
-import { BrowserRouter } from "react-router-dom";
-import { Router, useRouter } from "next/router";
+import Layout from '@/components/Layout'
+import NavBar from '@/components/NavBar'
+import { Text } from '@chakra-ui/react'
+import { isBrowser } from 'framer-motion'
+import { Router, useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 
 const Inbox = () => {
-  const router = useRouter();
+  const router = useRouter()
   const [messages, setMessages] = useState([
     {
       id: 1,
-      title: "Sample message 1",
-      text: "This is a sample message 1",
-      avatar: "https://via.placeholder.com/100x100",
+      title: 'Sample message 1',
+      text: 'This is a sample message 1',
+      avatar: 'https://via.placeholder.com/100x100',
     },
     {
       id: 2,
-      title: "Sample message 2",
-      text: "This is a sample message 2",
-      avatar: "https://via.placeholder.com/100x100",
+      title: 'Sample message 2',
+      text: 'This is a sample message 2',
+      avatar: 'https://via.placeholder.com/100x100',
     },
     {
       id: 3,
-      title: "Sample message 3",
-      text: "This is a sample message 3",
-      avatar: "https://via.placeholder.com/100x100",
+      title: 'Sample message 3',
+      text: 'This is a sample message 3',
+      avatar: 'https://via.placeholder.com/100x100',
     },
-  ]);
-  const [loading, setLoading] = useState(true);
+  ])
+  const [loading, setLoading] = useState(true)
   const handleMessageClick = (message: {
-    id: any;
-    title?: string;
-    text?: string;
+    id: any
+    title?: string
+    text?: string
   }) => {
-    router.push("/inbox/1")
-    
+    router.push('/inbox/1')
+
     //Navigate to the message details page
-  };
+  }
 
   return (
     <Layout>
@@ -48,7 +49,7 @@ const Inbox = () => {
           <h1
             className="inbox-header-text"
             style={{
-              fontSize: "3rem",
+              fontSize: '3rem',
               fontWeight: 600,
             }}
           >
@@ -62,6 +63,7 @@ const Inbox = () => {
                 key={message.id}
                 className="inbox-list-item"
                 onClick={() => handleMessageClick(message)}
+                onKeyPress={() => handleMessageClick(message)} //to resolve eslint
               >
                 <img
                   src={message.avatar}
@@ -69,9 +71,7 @@ const Inbox = () => {
                   className="inbox-list-item-avatar"
                 />
                 <div className="inbox-list-item-body">
-                  <h2 className="inbox-list-item-body-title">
-                    {message.title}
-                  </h2>
+                  <h2 className="inbox-list-item-body-title">{message.title}</h2>
                   <p className="inbox-list-item-body-text">{message.text}</p>
                 </div>
               </li>
@@ -117,7 +117,7 @@ const Inbox = () => {
             }
 
             .inbox-list-item:hover {
-              background-color: #f2f2f2;
+              background-color: black;
               cursor: pointer;
             }
 
@@ -154,7 +154,7 @@ const Inbox = () => {
         </style>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Inbox;
+export default Inbox
