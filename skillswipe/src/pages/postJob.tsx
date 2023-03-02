@@ -21,7 +21,9 @@ import { toast } from 'react-toastify'
 import { createJob } from './api/api'
 
 const postJob = () => {
-  const [selectedJobType, setSelectedJobType] = useState('')
+  // const [selectedJobType, setSelectedJobType] = useState({
+  //   jobType: '',
+  // })
 
   const [postListing, setJobListing] = useState({
     jobTitle: '',
@@ -29,11 +31,8 @@ const postJob = () => {
     location: '',
     jobDescription: '',
     salary: null,
-    jobType: '',
     skills: '',
     startDate: '',
-    coverLetter: '',
-    transcript: '',
     id: 0,
   })
   const addListing = (event: any) => {
@@ -45,11 +44,8 @@ const postJob = () => {
       !postListing.location ||
       !postListing.jobDescription ||
       !postListing.salary ||
-      !postListing.jobType ||
       !postListing.skills ||
-      !postListing.startDate ||
-      !postListing.coverLetter ||
-      !postListing.transcript
+      !postListing.startDate
     ) {
       toast('Please fill all the fields')
       return
@@ -105,14 +101,9 @@ const postJob = () => {
                   rounded="100px"
                 />
               </FormControl>
-              <FormControl id="company">
+              <FormControl id="companyName">
                 <FormLabel>Company</FormLabel>
-                <Input
-                  readOnly
-                  type="text"
-                  placeholder="loggedInCompany"
-                  rounded="100px"
-                />
+                <Input type="text" placeholder="loggedInCompany" rounded="100px" />
               </FormControl>
               <FormControl id="location">
                 <FormLabel>Location</FormLabel>
@@ -133,11 +124,11 @@ const postJob = () => {
                   rounded="100px"
                 />
               </FormControl>
-              <FormControl as="fieldset">
+              {/* <FormControl as="fieldset">
                 <FormLabel as="legend" paddingBottom={1.5}>
                   Job Type
                 </FormLabel>
-                <RadioGroup value={selectedJobType}>
+                <RadioGroup>
                   <HStack spacing="auto">
                     <Radio value="fulltime">Full-time</Radio>
                     <Radio value="parttime">Part-time</Radio>
@@ -145,11 +136,11 @@ const postJob = () => {
                     <Radio value="contract">Other</Radio>
                   </HStack>
                 </RadioGroup>
-              </FormControl>
+              </FormControl> */}
             </Stack>
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
-              <FormControl id="date">
+              <FormControl id="startDate">
                 <FormLabel>Starting Date</FormLabel>
                 <Input type="date" rounded="100px" />
               </FormControl>
@@ -164,7 +155,7 @@ const postJob = () => {
             </Stack>
 
             <FormControl
-              id="description"
+              id="jobDescription"
               style={{
                 paddingBottom: '1.5em',
               }}
