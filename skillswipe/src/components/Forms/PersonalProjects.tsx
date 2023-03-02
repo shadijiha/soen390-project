@@ -17,7 +17,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 const PersonalProjects = (props: any) => {
-  const [personalProject, setPersonalProject] = useState({
+  const [personalProjects, setPersonalProject] = useState({
     name: '',
     description: '',
     url: '',
@@ -26,7 +26,7 @@ const PersonalProjects = (props: any) => {
     id: 0,
   })
 
-  if (personalProject?.name == '') setPersonalProject(props.personalProject)
+  if (personalProjects.name == '') setPersonalProject(props.personalProjects)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setPersonalProject((prevState) => ({
@@ -39,20 +39,20 @@ const PersonalProjects = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
-      !personalProject?.start_year ||
-      !personalProject?.end_year ||
-      !personalProject?.name ||
-      !personalProject?.description ||
-      !personalProject?.url
+      !personalProjects.start_year ||
+      !personalProjects.end_year ||
+      !personalProjects.name ||
+      !personalProjects.description ||
+      !personalProjects.url
     ) {
       toast('Please fill all the fields')
       return
     }
-    if (personalProject.start_year > personalProject.end_year) {
+    if (personalProjects.start_year > personalProjects.end_year) {
       toast('Please add Valid start and end year')
       return
     } else {
-      editPersonalProjectsRequest(token, personalProject).then((res) => {
+      editPersonalProjectsRequest(token, personalProjects).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Personal Project updated successfully')
         } else {
@@ -66,20 +66,20 @@ const PersonalProjects = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
-      !personalProject?.start_year ||
-      !personalProject?.end_year ||
-      !personalProject?.name ||
-      !personalProject?.description ||
-      !personalProject?.url
+      !personalProjects.start_year ||
+      !personalProjects.end_year ||
+      !personalProjects.name ||
+      !personalProjects.description ||
+      !personalProjects.url
     ) {
       toast('Please fill all the fields')
       return
     }
-    if (personalProject.start_year > personalProject.end_year) {
+    if (personalProjects.start_year > personalProjects.end_year) {
       toast('Please add Valid start and end year')
       return
     } else {
-      addPersonalProjectsRequest(token, personalProject).then((res) => {
+      addPersonalProjectsRequest(token, personalProjects).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Personal Project added successfully')
         } else {
@@ -94,19 +94,18 @@ const PersonalProjects = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
-      props.deleteProject(props.personalProject.id)
-    }
-    
-    deletePersonalProjectsRequest(token, personalProject.id).then((res) => {
+      props.deleteProject(props.personalProjects.id)
+    }else{
+    deletePersonalProjectsRequest(token, personalProjects.id).then((res) => {
       if (res.status === 201 || res.status === 200) {
         toast.success('Personal Project deleted successfully')
-        props.deleteProject(props.personalProject.id)
+        props.deleteProject(props.personalProjects.id)
       } else {
         toast.error('Error deleting Personal Project')
       }
     })
+   }
   }
- 
   
   
 
@@ -177,7 +176,7 @@ const PersonalProjects = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.personalProject?.name || ''}
+          defaultValue={props.personalProjects.name}
           name="name"
           id="name"
           borderRadius="10"
@@ -194,7 +193,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="description"
           id="description"
-          defaultValue={props.personalProject?.description || ''}
+          defaultValue={props.personalProjects.description}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -209,7 +208,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="url"
           id="url"
-          defaultValue={props.personalProject?.url || ''}
+          defaultValue={props.personalProjects.url}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -225,7 +224,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="start_year"
           id="start_year"
-          defaultValue={props.personalProject?.start_year || ''}
+          defaultValue={props.personalProjects.start_year }
           borderRadius="10"
           size="lg"
           mb={5}
@@ -240,7 +239,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="end_year"
           id="end_year"
-          defaultValue={props.personalProject?.end_year || ''}
+          defaultValue={props.personalProjects.end_year}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -252,4 +251,7 @@ const PersonalProjects = (props: any) => {
     </Box>
   )
 }
+
+
+
 export default PersonalProjects

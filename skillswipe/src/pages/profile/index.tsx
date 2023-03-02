@@ -19,6 +19,7 @@ import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
+import Languages from '../../components/Profile/Languages'
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode()
@@ -192,6 +193,12 @@ const Profile = () => {
 
             <br></br>
             <Divider />
+
+          
+
+            <br></br>
+            <Divider />
+
             {/* CAREER JOURNEY WORK EXPERIENCE */}
             {User.auth.workExperiences && User.auth.workExperiences.length > 0 ? (
               <WorkExperience experience={User.auth.workExperiences} />
@@ -217,14 +224,14 @@ const Profile = () => {
               <></>
             )}
             <Divider />
-            {/* RECOMMENDATIONS SECTION */}
+            {/* LANGUAGES SECTION */}
 
-            {User.auth.recommendationsReceived &&
-            User.auth.recommendationsReceived.length > 0 ? (
-              <Recommendations rocommendations={User.auth.recommendationsReceived} />
+            {User.auth.languages && User.auth.languages.length > 0 ? (  
+              <Languages languages={User.auth.languages} />
             ) : (
               <></>
             )}
+
 
             <Divider />
             {/* PERSONAL PROJECTS */}

@@ -24,6 +24,8 @@ const Volunteering = (props: any) => {
     end_year: '',
     id: 0,
   })
+
+
   if (volunteering.company == '') setVolunteering(props.volunteering)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -32,6 +34,7 @@ const Volunteering = (props: any) => {
       [name]: value,
     }))
   }
+
   const updateVolunteering = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -67,7 +70,6 @@ const Volunteering = (props: any) => {
     deleteVolunteeringRequest(token, volunteering.id).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Volunteering deleted successfully')
-        console.log('Child' + props.volunteering.id)
         props.deleteVolunteering(props.volunteering.id)
       } else {
         toast.error('Error deleting volunteering')
@@ -75,6 +77,7 @@ const Volunteering = (props: any) => {
     })
   }
   }
+  
   const addVolunteering = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()

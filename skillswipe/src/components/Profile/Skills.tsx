@@ -53,7 +53,8 @@ const Skills = ({ skillsArray }: any) => {
                 marginBottom: '1em',
               }}
             >
-              {'${skill.title}'}
+              {`${skill.title}`}
+            
             </Button>
           ))}
         </Stack>

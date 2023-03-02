@@ -18,7 +18,7 @@ const PersonalProjectsBox = () => {
   // Api calls
   const profile = useSelector((state) => state as any)
   const [personalProjectsList, setPersonalProjectsList] = useState(
-    profile.auth.personal_projects as PersonalProjects[]
+    profile.auth.projects as PersonalProjects[]
   )
   const deletePersonalProjects = (id: number) => {
     setPersonalProjectsList(

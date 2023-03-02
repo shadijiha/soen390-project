@@ -12,6 +12,7 @@ import {
   useBreakpointValue,
   useColorModeValue,
   VStack,
+  Text,
 } from '@chakra-ui/react'
 import React, {useState} from 'react'
 import { FaPencilRuler } from 'react-icons/fa'
@@ -142,7 +143,7 @@ const [imgSrc, setImgSrc] = useState(
               onLoad={handleImageLoad}
             />
           </image>
-          <Text fontSize="lg" color={isEvenId ? 'teal.400' : 'blue.300'}>
+          <Text fontSize="lg" color={isEven ? 'teal.400' : 'blue.300'}>
             {props.courseName}
           </Text>
         </HStack>
