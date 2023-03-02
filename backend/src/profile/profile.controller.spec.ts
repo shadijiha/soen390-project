@@ -685,7 +685,7 @@ describe("ProfileController", () => {
 
   it("should delete language", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const languageId = 1;
+    const languageId = '1';
 
     controller.deleteLanguage(bearer, languageId);
     expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
