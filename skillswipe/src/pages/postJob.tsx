@@ -30,7 +30,6 @@ const postJob = () => {
     companyName: '',
     location: '',
     jobDescription: '',
-
     salary: '',
     skills: '',
     startDate: '',
