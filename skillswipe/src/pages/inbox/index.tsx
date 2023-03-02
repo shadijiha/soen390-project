@@ -35,10 +35,14 @@ const Inbox = () => {
     title?: string;
     text?: string;
   }) => {
-    router.push("/inbox/1")
-    
-    //Navigate to the message details page
+    router.push(`/inbox/2`)
+  
   };
+  useEffect(() => {
+    // Will get all the coversations when apis are ready
+  },[])
+
+
 
   return (
     <Layout>

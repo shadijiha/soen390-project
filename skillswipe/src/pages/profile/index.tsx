@@ -23,9 +23,6 @@ const Profile = () => {
   const buttonColors = useColorModeValue('black', 'white')
   const User = useSelector((state) => state as any)
   const router = useRouter()
-  useEffect(() => {
-    console.log(User)
-  }, [User])
 
   const [profile, setProfile] = useState({
     name: '',

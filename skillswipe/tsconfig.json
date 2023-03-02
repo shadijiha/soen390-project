@@ -40,7 +40,7 @@
     "**/*.tsx",
     "src/components/header.tsxx",
     "src/components/EditProfile"
-  ],
+, "src/components/Chat/Footer"  ],
   "exclude": [
     "node_modules"
   ]
