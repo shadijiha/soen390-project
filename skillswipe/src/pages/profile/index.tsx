@@ -19,6 +19,7 @@ import Skills from '@/components/Profile/Skills/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
+import Pusher from "pusher-js"
 
 const Profile = () => {
   const { toggleColorMode } = useColorMode()
@@ -26,7 +27,6 @@ const Profile = () => {
   const User = useSelector((state) => state as any)
   const router = useRouter()
   useEffect(() => {
-    console.log(User)
   }, [User])
 
   const [profile, setProfile] = useState({
@@ -42,6 +42,18 @@ const Profile = () => {
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
+
+  var pusher = new Pusher("5611330c8d67150acf7f", {
+    cluster: "us2",
+  });
+  pusher.connection.bind('connected', function() {
+    console.log("Connected")
+    const channel = pusher.subscribe('user-5');
+    channel.bind('friend-request', function(data) {
+      console.log(data)
+    });
+  });
+
 
   return (
     <>

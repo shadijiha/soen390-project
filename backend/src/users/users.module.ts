@@ -6,10 +6,13 @@ import { UsersService } from './users.service'
 import { Connection } from '../models/connection.entity'
 import { ConnectionsController } from './connections/connections.controller'
 import { ConnectionsService } from './connections/connections.service'
+import { NotificationsController } from './notifications/notifications.controller'
+import { NotificationsService } from './notifications/notifications.service'
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Module({
-  controllers: [UsersController, ConnectionsController],
-  providers: [UsersService, ConnectionsService],
+  controllers: [UsersController, ConnectionsController, NotificationsController],
+  providers: [UsersService, ConnectionsService, NotificationsService, PusherService],
   imports: [TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([Connection])],
   exports: [TypeOrmModule]
 })

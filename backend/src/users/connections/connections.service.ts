@@ -2,12 +2,13 @@ import { Injectable } from '@nestjs/common/decorators/core/injectable.decorator'
 import { InjectRepository } from '@nestjs/typeorm/dist/common/typeorm.decorators'
 import { Connection } from '../../models/connection.entity'
 import { Repository } from 'typeorm/repository/Repository'
+import { PusherService } from '../../util/pusher/pusher.service'
 
 @Injectable()
 export class ConnectionsService {
   constructor (
     @InjectRepository(Connection)
-    private readonly connectionRepository: Repository<Connection>
+    private readonly connectionRepository: Repository<Connection>, private pusherService: PusherService
   ) {}
 
   public async addConnection (user1Id, user2Id): Promise<void> {
@@ -15,7 +16,8 @@ export class ConnectionsService {
     const connection = new Connection()
     connection.user_1 = user1Id
     connection.user_2 = user2Id
-    await connection.save()
+    await this.pusherService.triggerNotification(`user-${user2Id}`, 'friend-request', "request sent!");
+    await connection.save();
   }
 
   public async deleteConnection (user1Id: number, user2Id: number): Promise<{ success: boolean, message: string }> {
