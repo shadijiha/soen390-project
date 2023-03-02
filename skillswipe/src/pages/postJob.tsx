@@ -30,7 +30,8 @@ const postJob = () => {
     companyName: '',
     location: '',
     jobDescription: '',
-    salary: null,
+
+    salary: '',
     skills: '',
     startDate: '',
     id: 0,
@@ -52,7 +53,7 @@ const postJob = () => {
     }
 
     // if postJob.salary is not an integer
-    if (postListing.salary != parseInt(postListing.salary)) {
+    if (postListing.salary != postListing.salary) {
       toast('Please add valid salary (integer)')
       return
     } else {
@@ -96,6 +97,9 @@ const postJob = () => {
               <FormControl id="jobTitle">
                 <FormLabel htmlFor="jobTitle">Position Title</FormLabel>
                 <Input
+                  onChange={(event) =>
+                    setJobListing({ ...postListing, jobTitle: event.target.value })
+                  }
                   name="jobTitle"
                   id="jobTitle"
                   type="text"
@@ -106,6 +110,12 @@ const postJob = () => {
               <FormControl id="companyName">
                 <FormLabel htmlFor="companyName">Company</FormLabel>
                 <Input
+                  onChange={(event) =>
+                    setJobListing({
+                      ...postListing,
+                      companyName: event.target.value,
+                    })
+                  }
                   name="companyName"
                   id="companyName"
                   type="text"
@@ -116,6 +126,9 @@ const postJob = () => {
               <FormControl id="location">
                 <FormLabel htmlFor="location">Location</FormLabel>
                 <Input
+                  onChange={(event) =>
+                    setJobListing({ ...postListing, location: event.target.value })
+                  }
                   name="location"
                   id="location"
                   type="text"
@@ -129,6 +142,9 @@ const postJob = () => {
               <FormControl paddingRight={{ sm: 0, md: 10 }} id="salary">
                 <FormLabel htmlFor="salary">Salary</FormLabel>
                 <Input
+                  onChange={(event) =>
+                    setJobListing({ ...postListing, salary: event.target.value })
+                  }
                   name="salary"
                   id="salary"
                   type="text"
@@ -154,11 +170,22 @@ const postJob = () => {
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl id="startDate">
                 <FormLabel htmlFor="startDate">Starting Date</FormLabel>
-                <Input type="date" rounded="100px" id="startDate" name="startDate" />
+                <Input
+                  type="date"
+                  rounded="100px"
+                  id="startDate"
+                  name="startDate"
+                  onChange={(event) =>
+                    setJobListing({ ...postListing, startDate: event.target.value })
+                  }
+                />
               </FormControl>
               <FormControl id="skills">
                 <FormLabel htmlFor="skills">Skills Needed</FormLabel>
                 <Input
+                  onChange={(event) =>
+                    setJobListing({ ...postListing, skills: event.target.value })
+                  }
                   name="skills"
                   id="skills"
                   type="text"
