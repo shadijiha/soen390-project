@@ -30,8 +30,11 @@ const postJob = () => {
     skills: '',
     startDate: '',
     jobType: '',
+    coverLetter: true,
+    transcript: true,
     id: 0,
   })
+
   const addListing = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -49,6 +52,7 @@ const postJob = () => {
       id: ${postListing.id}
       `
     )
+    console.log(postListing)
 
     if (
       !postListing.jobTitle ||
@@ -58,7 +62,9 @@ const postJob = () => {
       !postListing.salary ||
       !postListing.skills ||
       !postListing.startDate ||
-      !postListing.jobType
+      !postListing.jobType ||
+      !postListing.coverLetter ||
+      !postListing.transcript
     ) {
       toast('Please fill all the fields')
       return
@@ -66,7 +72,8 @@ const postJob = () => {
       // forcing salary to be int
       const salary = parseInt(postListing.salary.toString(), 10)
       postListing.salary = salary
-      createJob(token, postJob).then((res) => {
+
+      createJob(token, postListing).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Sucessfully created job listing. Happy hiring!')
         } else {
@@ -83,9 +90,7 @@ const postJob = () => {
       <NavBar />
       <div data-testid="post-job">
         <Container maxW="5xl" paddingBottom={8}>
-          <VStack spacing={6} w="100%">
-            {/* add an image here */}
-
+          <VStack spacing={3} w="100%" paddingBottom={'3em'}>
             <Image
               src="https://img.icons8.com/3d-fluency/256/user-group-man-woman.png"
               alt="Job Listing Image"
@@ -102,6 +107,8 @@ const postJob = () => {
             >
               Create Job Listing
             </Text>
+          </VStack>
+          <VStack spacing={'2.5em'} w="100%">
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               {/* frontend!!! company is read only, we will pull it from the user's logged in account 
                  and show it as the placeholder */}
@@ -186,6 +193,37 @@ const postJob = () => {
             </Stack>
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
+              <FormControl as="fieldset">
+                <FormLabel as="legend" paddingBottom={1.5}>
+                  Cover Letter Required?
+                </FormLabel>
+                <RadioGroup
+                  onChange={(value) =>
+                    setJobListing({ ...postListing, coverLetter: Boolean(value) })
+                  }
+                >
+                  <HStack spacing="10%">
+                    <Radio value="true">Yes</Radio>
+                    <Radio value="false">No</Radio>
+                  </HStack>
+                </RadioGroup>
+              </FormControl>
+              <FormControl as="fieldset">
+                <FormLabel as="legend" paddingBottom={1.5}>
+                  Transcript Required?
+                </FormLabel>
+                <RadioGroup
+                  onChange={(value) =>
+                    setJobListing({ ...postListing, transcript: Boolean(value) })
+                  }
+                >
+                  <HStack spacing="10%">
+                    <Radio value="true">Yes</Radio>
+                    <Radio value="false">No</Radio>
+                  </HStack>
+                </RadioGroup>
+              </FormControl>
+
               <FormControl id="startDate">
                 <FormLabel htmlFor="startDate">Starting Date</FormLabel>
                 <Input
