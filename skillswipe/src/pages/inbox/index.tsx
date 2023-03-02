@@ -2,8 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Text } from '@chakra-ui/react'
-import { isBrowser } from 'framer-motion'
+import { Avatar, Badge, Box, Button, Flex, Heading, HStack, Spacer, Text } from '@chakra-ui/react'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter } from 'react-router-dom'
@@ -13,19 +12,19 @@ const Inbox = () => {
   const [messages, setMessages] = useState([
     {
       id: 1,
-      title: 'Sample message 1',
+      title: 'John',
       text: 'This is a sample message 1',
       avatar: 'https://via.placeholder.com/100x100',
     },
     {
       id: 2,
-      title: 'Sample message 2',
+      title: 'Alex',
       text: 'This is a sample message 2',
       avatar: 'https://via.placeholder.com/100x100',
     },
     {
       id: 3,
-      title: 'Sample message 3',
+      title: 'Parker',
       text: 'This is a sample message 3',
       avatar: 'https://via.placeholder.com/100x100',
     },
@@ -37,128 +36,62 @@ const Inbox = () => {
     text?: string
   }) => {
     router.push(`/inbox/2`)
-  
+
   };
+
+
   // useEffect(() => {
-  //   // Will get all the coversations when apis are ready
+  // Will get all the coversations when apis are ready
   // },[])
 
-
-
   return (
-    <Layout>
-      <NavBar />
-      <div className="inbox-container">
-        <div className="inbox-header">
-          <h1
-            className="inbox-header-text"
-            style={{
-              fontSize: '3rem',
-              fontWeight: 600,
-            }}
-          >
-            Inbox
-          </h1>
-        </div>
-        <div className="inbox-body">
-          <ul className="inbox-list">
-            {messages.map((message) => (
-              <li
-                key={message.id}
-                className="inbox-list-item"
-                onClick={() => handleMessageClick(message)}
-                onKeyPress={() => handleMessageClick(message)} //to resolve eslint
+    <>
+      <Layout>
+        <NavBar></NavBar>
+        <Box p={50}>
+        <Heading as="h1" size="lg" mb={4}>
+            Messages
+          </Heading>
+          {messages.length > 0 ? messages.map((element) => (
+            <Flex
+              key={element.id}
+              borderWidth="1px"
+              borderRadius="lg"
+              p={4}
+              mb={4}
+              display="flex"
+              alignItems="center"
+              cursor={'pointer'}
+           
+              onClick={() => handleMessageClick(element)}
               >
-                <img
-                  src={message.avatar}
-                  alt={`Avatar for ${message.title}`}
-                  className="inbox-list-item-avatar"
-                />
-                <div className="inbox-list-item-body">
-                  <h2 className="inbox-list-item-body-title">{message.title}</h2>
-                  <p className="inbox-list-item-body-text">{message.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <style jsx>
-          {`
-            .inbox-container {
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-            }
-            .inbox-header {
-              width: 100%;
-              display: flex;
-              align-items: center;
-              padding: 1.5rem;
-            }
-            .inbox-header-text {
-              font-size: 3rem;
-              margin: 0;
-            }
-            .inbox-body {
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              padding: 1.5rem;
-            }
-            .inbox-list {
-              width: 100%;
-              display: flex;
-              flex-direction: column;
-              align-items: flex-start;
-            }
-            .inbox-list-item {
-              width: 100%;
-              display: flex;
-              align-items: center;
-              padding: 1.5rem;
-              border-bottom: 1px solid #e2e2e2;
-            }
+              <Flex>
+                <Avatar size="lg" mr={4} src={element.avatar} />
+                <Box>
+                  <Heading  as="h2" size="md" mb={2}>
+                    {element.title}{' '}
+                    <Badge ml="1" colorScheme="green">
+                      New
+                    </Badge>
+                  
+                  </Heading>
+                  <Text mb={2}>{element.text}</Text>
 
-            .inbox-list-item:hover {
-              background-color: black;
-              cursor: pointer;
-            }
+                </Box>
+              </Flex>
+              <Spacer />
 
-            .inbox-list-item > img {
-              width: 4rem;
-              height: 4rem;
-              border-radius: 50%;
-              margin-right: 1.5rem;
-            }
-
-            .inbox-list-item > h3 {
-              font-size: 1.5rem;
-              font-weight: 600;
-            }
-
-            .inbox-list-item > p {
-              font-size: 1.2rem;
-              color: #9b9b9b;
-            }
-            .inbox-list-item-avatar {
-              width: 4rem;
-              height: 4rem;
-              border-radius: 50%;
-              margin-right: 1.5rem;
-              overflow: hidden;
-            }
-
-            .inbox-list-item-avatar > img {
-              width: 100%;
-              height: 100%;
-              object-fit: cover;
-            }
-          `}
-        </style>
-      </div>
-    </Layout>
-  )
+            </Flex>
+          )
+          )
+          :
+          <h1>No new message</h1>
+        }
+       
+        </Box>
+      </Layout>
+    </>
+      )
 }
 
 export default Inbox
