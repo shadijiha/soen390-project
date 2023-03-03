@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Divider, Flex } from '@chakra-ui/react'
+import { ColorModeContext, Divider, Flex, useColorMode } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
@@ -71,11 +71,25 @@ const Chat = () => {
     <>
       <Layout>
         <NavBar />
-        <Flex mt={0} w="100%" h="150vh" justify="center">
-          <Flex w="65%" h="75%" flexDir="column">
-            <h1>{User.auth.firstName}</h1>
+        <Flex mt={0} w="100%" h="100vh" justify="center">
+          <Flex
+            w="65%"
+            h="75%"
+            flexDir="column"
+            style={{
+              backgroundColor:
+                useColorMode().colorMode === 'light' ? '#FFFFFF9F' : '#FFFFFF1F',
+              borderRadius: '35px',
+              padding: '25px',
+              boxShadow: '0px 0px 10px 0px #0000001f',
+              borderColor:
+                useColorMode().colorMode === 'light' ? '#CECECEA0' : '#FFFFFF1F',
+              borderWidth: '7px',
+            }}
+          >
             <Header />
             <Divider />
+            <br />
             <Messages messages={messages} />
             <Divider />
             <Footer

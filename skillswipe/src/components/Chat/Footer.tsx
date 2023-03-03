@@ -6,6 +6,7 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
   return (
     <Flex w="100%" mt="5">
       <Input
+        borderRadius="10px"
         color={'white'}
         placeholder="Type Something..."
         onKeyPress={(e) => {
