@@ -35,7 +35,7 @@ const ExperienceBox = () => {
       experience.end_year &&
       experience.title
     )
-  }
+}
   return (
     <Stack
       as="form"

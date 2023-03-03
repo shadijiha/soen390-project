@@ -1,3 +1,8 @@
+import {
+  addCoursesRequest,
+  deleteCoursesRequest,
+  editCoursesRequest,
+} from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Box,
@@ -13,13 +18,12 @@ import { toast } from 'react-toastify'
 
 const Courses = (props: any) => {
   const [course, setCourse] = useState({
-    institution: '',
-    start_year: '',
-    end_year: '',
-    description: '',
-    id: null,
+    courseName: '',
+    courseNumber: '',
+    id: 0,
   })
-  if (course.institution == '') setCourse(props.course)
+
+  if (course.courseName == '') setCourse(props.course)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setCourse((prevState) => ({
@@ -27,30 +31,70 @@ const Courses = (props: any) => {
       [name]: value,
     }))
   }
-  const handleSubmit = (event: any) => {
+
+  const updateCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
-    // call API to update education history
-    if (course.start_year > course.end_year) {
-      toast('Please add Valid start and end year')
-    } else {
-      // editCourses(token, course).then((response) => {
-      //     console.log(response);
-      //     toast("Updated Successfully");
-      //   })
-      //   .catch((error) => {
-      //     toast(error.message);
-      //   });
-    }
     event.preventDefault()
-    console.log(course) // this will print out the form values
-    // You can now use the form values to update the user's education history
+    if (!course.courseName || !course.courseNumber) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      editCoursesRequest(token, course).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Course updated successfully')
+        } else {
+          toast.error('Error updaing course')
+        }
+      })
+    }
   }
 
+  const addCourses = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (!course.courseName || !course.courseNumber) {
+      toast('Please fill all the fields')
+      return
+    } else {
+      addCoursesRequest(token, course).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Course added successfully')
+        } else {
+          toast.error('Error adding course')
+        }
+      })
+    }
+  }
+
+  const deleteCourses = (event: any) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    if (props.isNew) {
+      props.deleteCourse(props.course.id)
+    } else {
+      deleteCoursesRequest(token, course.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Course deleted successfully')
+          props.deleteCourse(props.course.id)
+        } else {
+          toast.error('Error deleting course')
+        }
+      })
+    }
+  }
   const deleteItem = () => {
     props.deleteCourse(props.course.id)
   }
+
   return (
-    <Box minWidth={'60vw'} borderWidth="1px" borderRadius={25} p={8} width="auto">
+    <Box
+      minWidth={'60vw'}
+      borderWidth="1px"
+      borderRadius={25}
+      p={8}
+      width="auto"
+      mt={30}
+    >
       <Stack direction={'row'}>
         <p
           style={{
@@ -72,7 +116,7 @@ const Courses = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={updateCourses}
           >
             Update
           </Button>
@@ -86,7 +130,7 @@ const Courses = (props: any) => {
             type="button"
             colorScheme={'blue'}
             borderRadius="100px"
-            onClick={handleSubmit}
+            onClick={addCourses}
           >
             Add
           </Button>
@@ -99,19 +143,19 @@ const Courses = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick={deleteItem}
+          onClick={deleteCourses}
         >
           <DeleteIcon />
         </Button>
       </Stack>
-      <FormControl id="institution">
-        <FormLabel htmlFor="institution">Institution</FormLabel>
+      <FormControl id="courseName">
+        <FormLabel htmlFor="courseName">courseName</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.course.institution}
-          name="institution"
-          id="institution"
+          defaultValue={props.course.courseName}
+          name="courseName"
+          id="courseName"
           borderRadius="10"
           size="lg"
           mb={5}
@@ -119,44 +163,15 @@ const Courses = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      <FormControl id="start_year">
-        <FormLabel htmlFor="start_year">Start Year</FormLabel>
-        <Input
-          minWidth={'100%'}
-          type="number"
-          defaultValue={props.course.start_year}
-          name="start_year"
-          id="start_year"
-          borderRadius="10"
-          size="lg"
-          mb={5}
-          width="auto"
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">End Year</FormLabel>
-        <Input
-          minWidth={'100%'}
-          type="number"
-          defaultValue={props.course.end_year}
-          name="end_year"
-          id="end_year"
-          borderRadius="10"
-          size="lg"
-          mb={5}
-          width="auto"
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl id="description">
-        <FormLabel htmlFor="description">Description</FormLabel>
+
+      <FormControl id="courseNumber">
+        <FormLabel htmlFor="courseNumber">courseNumber</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.course.description}
-          name="description"
-          id="description"
+          defaultValue={props.course.courseNumber}
+          name="courseNumber"
+          id="courseNumber"
           borderRadius="10"
           size="lg"
           mb={5}
