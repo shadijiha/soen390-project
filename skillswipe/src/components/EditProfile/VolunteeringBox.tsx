@@ -1,7 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Volunteering from '../Forms/Volunteering'
@@ -81,17 +80,21 @@ const VolunteeringBox = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {volunteeringList &&
-          volunteeringList.map((volunteering: any, index: number) => (
-            console.log('volunteering', volunteering),
-            <div key={index}>
-              <Volunteering
-                volunteering={volunteering}
-                index={index + 1}
-                deleteVolunteering={deleteVolunteering}
-                isNew={isNew(volunteering)}
-              />
-            </div>
-          ))}
+          volunteeringList.map(
+            (volunteering: any, index: number) => (
+              console.log('volunteering', volunteering),
+              (
+                <div key={index}>
+                  <Volunteering
+                    volunteering={volunteering}
+                    index={index + 1}
+                    deleteVolunteering={deleteVolunteering}
+                    isNew={isNew(volunteering)}
+                  />
+                </div>
+              )
+            )
+          )}
       </div>
     </Stack>
   )

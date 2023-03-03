@@ -18,18 +18,16 @@ const LanguagesBox = () => {
     profile.auth.languages as Language[]
   )
   const deleteLanguage = (id: number) => {
-    setLanguageList(
-      languageList.filter((language: any) => language.id !== id)
-      )
+    setLanguageList(languageList.filter((language: any) => language.id !== id))
   }
   const addLanguage = () => {
-    let lang: Language = { }
+    let lang: Language = {}
     setLanguageList((oldArray) => [...(oldArray || []), lang])
   }
   const isNew = (language: Language) => {
     return !(language.languageName && language.proficiency)
   }
-  
+
   return (
     <Stack
       as="form"

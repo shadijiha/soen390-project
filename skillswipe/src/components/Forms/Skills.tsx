@@ -1,7 +1,7 @@
 import {
   addSkillsRequest,
-  editSkillsRequest,
   deleteSkillsRequest,
+  editSkillsRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -34,9 +34,7 @@ const Skills = (props: any) => {
   const updateSkills = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !skill.title
-      ) {
+    if (!skill.title) {
       toast('Please fill all the fields')
       return
     } else {
@@ -53,9 +51,7 @@ const Skills = (props: any) => {
   const addSkill = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !skill.title
-      ) {
+    if (!skill.title) {
       toast('Please fill all the fields')
       return
     } else {
@@ -72,23 +68,19 @@ const Skills = (props: any) => {
   const deleteSkill = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if(props.isNew){
+    if (props.isNew) {
       props.deleteSkill(props.skill.id)
-    }else{
-    deleteSkillsRequest(token, skill.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Skill deleted successfully')
-        props.deleteSkill(props.skill.id)
-      } else {
-        toast.error('Error deleting skill')
-      }
-    })
+    } else {
+      deleteSkillsRequest(token, skill.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Skill deleted successfully')
+          props.deleteSkill(props.skill.id)
+        } else {
+          toast.error('Error deleting skill')
+        }
+      })
+    }
   }
-  }
-
-
-    
-
 
   return (
     <Box
@@ -166,7 +158,6 @@ const Skills = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      
     </Box>
   )
 }

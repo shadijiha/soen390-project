@@ -9,58 +9,56 @@ const Skills = ({ skillsArray }: any) => {
 
   return (
     skillsArray && (
-    <div>
-      <>
-        <style jsx>{ProfileStyle}</style>
-        <div>
-          <h1
-            style={{
-              fontWeight: 600,
-              fontSize: '1.5rem',
-              paddingTop: '2rem',
-              paddingBottom: '2rem',
-              textAlign: 'center',
-            }}
-          >
-            <span>🚀 My Skills</span>
-          </h1>
-        </div>
-        <Stack
-          spacing={0}
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            alignContent: 'center',
-            paddingRight: '3rem',
-            paddingLeft: '3rem',
-            justifyContent: 'center',
-            alignItems: 'center',
-            alignSelf: 'center',
-          }}
-        >
-          {/* map through the skillsArray and create a button for each */}
-
-          {skillsArray.map((skill: any) => (
-            <Button
-              className="skill"
+      <div>
+        <>
+          <style jsx>{ProfileStyle}</style>
+          <div>
+            <h1
               style={{
-                backgroundColor: 'transparent',
-                borderWidth: '2px',
-                textShadow: '0px 0px 40px #000000CA',
                 fontWeight: 600,
-                marginRight: '1em',
-                borderRadius: '100px',
-                marginBottom: '1em',
+                fontSize: '1.5rem',
+                paddingTop: '2rem',
+                paddingBottom: '2rem',
+                textAlign: 'center',
               }}
             >
-              {`${skill.title}`}
-            
-            </Button>
-          ))}
-        </Stack>
+              <span>🚀 My Skills</span>
+            </h1>
+          </div>
+          <Stack
+            spacing={0}
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              alignContent: 'center',
+              paddingRight: '3rem',
+              paddingLeft: '3rem',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+            }}
+          >
+            {/* map through the skillsArray and create a button for each */}
 
-      </>
-    </div>
+            {skillsArray.map((skill: any) => (
+              <Button
+                className="skill"
+                style={{
+                  backgroundColor: 'transparent',
+                  borderWidth: '2px',
+                  textShadow: '0px 0px 40px #000000CA',
+                  fontWeight: 600,
+                  marginRight: '1em',
+                  borderRadius: '100px',
+                  marginBottom: '1em',
+                }}
+              >
+                {`${skill.title}`}
+              </Button>
+            ))}
+          </Stack>
+        </>
+      </div>
     )
   )
 }

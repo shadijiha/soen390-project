@@ -25,8 +25,6 @@ const EducationHistory = (props: any) => {
     id: 0,
   })
 
-
-
   if (educationHistory.institution == '') setEducationHistory(props.education)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -35,7 +33,7 @@ const EducationHistory = (props: any) => {
       [name]: value,
     }))
   }
-  
+
   const addEducation = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -65,9 +63,9 @@ const EducationHistory = (props: any) => {
   const deleteEducation = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if(props.isNew){
+    if (props.isNew) {
       props.deleteEducation(props.education.id)
-    }else{
+    } else {
       deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Education updated successfully')

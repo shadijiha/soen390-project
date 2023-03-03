@@ -1,7 +1,7 @@
 import {
   addVolunteeringRequest,
-  editVolunteeringRequest,
   deleteVolunteeringRequest,
+  editVolunteeringRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -24,7 +24,6 @@ const Volunteering = (props: any) => {
     end_year: '',
     id: 0,
   })
-
 
   if (volunteering.company == '') setVolunteering(props.volunteering)
   const handleChange = (event: any) => {
@@ -66,18 +65,18 @@ const Volunteering = (props: any) => {
     event.preventDefault()
     if (props.isNew) {
       props.deleteVolunteering(props.volunteering.id)
-    }else{
-    deleteVolunteeringRequest(token, volunteering.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Volunteering deleted successfully')
-        props.deleteVolunteering(props.volunteering.id)
-      } else {
-        toast.error('Error deleting volunteering')
-      }
-    })
+    } else {
+      deleteVolunteeringRequest(token, volunteering.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Volunteering deleted successfully')
+          props.deleteVolunteering(props.volunteering.id)
+        } else {
+          toast.error('Error deleting volunteering')
+        }
+      })
+    }
   }
-  }
-  
+
   const addVolunteering = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
@@ -104,7 +103,6 @@ const Volunteering = (props: any) => {
     }
   }
 
-  
   return (
     <Box
       minWidth={'60vw'}

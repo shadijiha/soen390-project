@@ -1,7 +1,7 @@
 import {
   addCoursesRequest,
-  editCoursesRequest,
   deleteCoursesRequest,
+  editCoursesRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -23,7 +23,6 @@ const Courses = (props: any) => {
     id: 0,
   })
 
-
   if (course.courseName == '') setCourse(props.course)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -36,10 +35,7 @@ const Courses = (props: any) => {
   const updateCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !course.courseName || 
-      !course.courseNumber
-      ) {
+    if (!course.courseName || !course.courseNumber) {
       toast('Please fill all the fields')
       return
     } else {
@@ -56,10 +52,7 @@ const Courses = (props: any) => {
   const addCourses = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !course.courseName || 
-      !course.courseNumber
-      ) {
+    if (!course.courseName || !course.courseNumber) {
       toast('Please fill all the fields')
       return
     } else {
@@ -78,23 +71,30 @@ const Courses = (props: any) => {
     event.preventDefault()
     if (props.isNew) {
       props.deleteCourse(props.course.id)
-    }else{
-    deleteCoursesRequest(token, course.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Course deleted successfully')
-        props.deleteCourse(props.course.id)
-      } else {
-        toast.error('Error deleting course')
-      }
-    })
-  }
+    } else {
+      deleteCoursesRequest(token, course.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Course deleted successfully')
+          props.deleteCourse(props.course.id)
+        } else {
+          toast.error('Error deleting course')
+        }
+      })
+    }
   }
   const deleteItem = () => {
     props.deleteCourse(props.course.id)
   }
 
   return (
-    <Box minWidth={'60vw'} borderWidth="1px" borderRadius={25} p={8} width="auto" mt={30}>
+    <Box
+      minWidth={'60vw'}
+      borderWidth="1px"
+      borderRadius={25}
+      p={8}
+      width="auto"
+      mt={30}
+    >
       <Stack direction={'row'}>
         <p
           style={{
@@ -143,7 +143,7 @@ const Courses = (props: any) => {
           type="button"
           colorScheme={'red'}
           borderRadius="100px"
-          onClick= {deleteCourses}
+          onClick={deleteCourses}
         >
           <DeleteIcon />
         </Button>
@@ -163,7 +163,7 @@ const Courses = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      
+
       <FormControl id="courseNumber">
         <FormLabel htmlFor="courseNumber">courseNumber</FormLabel>
         <Input

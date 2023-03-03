@@ -11,16 +11,12 @@ type Course = {
   id?: number
 }
 
-
 const CoursesBox = () => {
   // Api calls
   const profile = useSelector((state) => state as any)
-  const [coursesList, setCoursesList] = useState(
-    profile.auth.courses as Course[]
-    )
+  const [coursesList, setCoursesList] = useState(profile.auth.courses as Course[])
   const deleteCourse = (id: number) => {
-    setCoursesList(
-      coursesList.filter((course: any) => course.id !== id))
+    setCoursesList(coursesList.filter((course: any) => course.id !== id))
   }
   // const addCourse = () => {
   //   let course: Course = {}
@@ -37,12 +33,9 @@ const CoursesBox = () => {
       }
     })
   }
-  
+
   const isNew = (course: Course) => {
-    return !(
-      course.courseName &&
-      course.courseNumber
-    )
+    return !(course.courseName && course.courseNumber)
   }
   return (
     <Stack

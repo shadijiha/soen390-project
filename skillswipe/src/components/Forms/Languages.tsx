@@ -1,7 +1,7 @@
 import {
   addLanguagesRequest,
-  editLanguagesRequest,
   deleteLanguagesRequest,
+  editLanguagesRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -24,25 +24,19 @@ const Languages = (props: any) => {
     id: 0,
   })
 
-
   if (language.languageName == '') setLanguage(props.language)
   const handleChange = (event: any) => {
     const { name, value } = event.target
     setLanguage((prevState) => ({
       ...prevState,
       [name]: value,
-      }))
-    }
-
-  
+    }))
+  }
 
   const updateLanguages = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !language.languageName || 
-      !language.proficiency
-      ) {
+    if (!language.languageName || !language.proficiency) {
       toast('Please fill all the fields')
       return
     } else {
@@ -59,10 +53,7 @@ const Languages = (props: any) => {
   const addLanguages = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    if (
-      !language.languageName || 
-      !language.proficiency
-      ) {
+    if (!language.languageName || !language.proficiency) {
       toast('Please fill all the fields')
       return
     } else {
@@ -81,20 +72,19 @@ const Languages = (props: any) => {
     event.preventDefault()
     if (props.isNew) {
       props.deleteLanguage(props.language.id)
-    }else{
-    deleteLanguagesRequest(token, language.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Language deleted successfully')
-        props.deleteLanguage(props.language.id)
-      } else {
-        toast.error('Error deleting language')
-      }
-    })
-  }
-  const deleteItem = () => {
-    props.deleteLanguage(props.language.id)
-  }
-
+    } else {
+      deleteLanguagesRequest(token, language.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Language deleted successfully')
+          props.deleteLanguage(props.language.id)
+        } else {
+          toast.error('Error deleting language')
+        }
+      })
+    }
+    const deleteItem = () => {
+      props.deleteLanguage(props.language.id)
+    }
   }
 
   return (
@@ -195,7 +185,6 @@ const Languages = (props: any) => {
       </FormControl>
     </Box>
   )
-
 }
 
 export default Languages

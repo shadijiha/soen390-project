@@ -1,7 +1,7 @@
 import {
-  editPersonalProjectsRequest,
   addPersonalProjectsRequest,
   deletePersonalProjectsRequest,
+  editPersonalProjectsRequest,
 } from '@/pages/api/profile_api'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
@@ -89,28 +89,25 @@ const PersonalProjects = (props: any) => {
     }
   }
 
-
   const deletePersonalProjects = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteProject(props.personalProject?.id)
-    }else{
-    deletePersonalProjectsRequest(token, personalProject?.id).then((res) => {
-      if (res.status === 201 || res.status === 200) {
-        toast.success('Personal Project deleted successfully')
-        props.deleteProject(props.personalProject.id)
-      } else {
-        toast.error('Error deleting Personal Project')
-      }
-    })
-   }
+    } else {
+      deletePersonalProjectsRequest(token, personalProject?.id).then((res) => {
+        if (res.status === 201 || res.status === 200) {
+          toast.success('Personal Project deleted successfully')
+          props.deleteProject(props.personalProject.id)
+        } else {
+          toast.error('Error deleting Personal Project')
+        }
+      })
+    }
   }
   const deleteItem = () => {
     props.deleteProject(props.personalProject?.id)
   }
-
-  
 
   return (
     <Box
@@ -219,7 +216,7 @@ const PersonalProjects = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      
+
       <FormControl id="start_year">
         <FormLabel htmlFor="start_year">Start Year</FormLabel>
         <Input
@@ -227,7 +224,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="start_year"
           id="start_year"
-          defaultValue={props.personalProject?.start_year }
+          defaultValue={props.personalProject?.start_year}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -250,11 +247,8 @@ const PersonalProjects = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      
     </Box>
   )
 }
-
-
 
 export default PersonalProjects

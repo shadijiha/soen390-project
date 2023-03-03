@@ -9,12 +9,12 @@ import {
   HStack,
   Icon,
   Stack,
+  Text,
   useBreakpointValue,
   useColorModeValue,
   VStack,
-  Text,
 } from '@chakra-ui/react'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { FaPencilRuler } from 'react-icons/fa'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
@@ -87,13 +87,14 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
-
-const [imgSrc, setImgSrc] = useState(
+  const [imgSrc, setImgSrc] = useState(
     'https://img.icons8.com/external-becris-flat-becris/512/external-math-literary-genres-becris-flat-becris.png'
   )
 
   const handleImageError = () => {
-    setImgSrc('https://img.icons8.com/external-becris-flat-becris/512/external-math-literary-genres-becris-flat-becris.png')
+    setImgSrc(
+      'https://img.icons8.com/external-becris-flat-becris/512/external-math-literary-genres-becris-flat-becris.png'
+    )
     console.log('Error loading logo image')
   }
 
@@ -103,30 +104,30 @@ const [imgSrc, setImgSrc] = useState(
 
   return (
     <HStack
-        flex={1}
-        p={{ base: 3, sm: 6 }}
-        bg={useColorModeValue('gray.100', 'gray.900')}
-        spacing={5}
-        rounded="lg"
-        alignItems="center"
-        pos="relative"
-        _before={{
-          content: `""`,
-          w: '0',
-          h: '0',
-          borderColor: `transparent ${useColorModeValue(
-            '#edf2f6',
-            '#2D394E'
-          )} transparent`,
-          borderStyle: 'solid',
-          borderWidth: borderWidthValue,
-          position: 'absolute',
-          left: leftValue,
-          right: rightValue,
-          display: 'block',
-        }}
-      >
-        <Box>
+      flex={1}
+      p={{ base: 3, sm: 6 }}
+      bg={useColorModeValue('gray.100', 'gray.900')}
+      spacing={5}
+      rounded="lg"
+      alignItems="center"
+      pos="relative"
+      _before={{
+        content: `""`,
+        w: '0',
+        h: '0',
+        borderColor: `transparent ${useColorModeValue(
+          '#edf2f6',
+          '#2D394E'
+        )} transparent`,
+        borderStyle: 'solid',
+        borderWidth: borderWidthValue,
+        position: 'absolute',
+        left: leftValue,
+        right: rightValue,
+        display: 'block',
+      }}
+    >
+      <Box>
         {/* stack items side by side */}
         <HStack spacing={0} textAlign="left">
           <image
@@ -151,7 +152,6 @@ const [imgSrc, setImgSrc] = useState(
         <VStack spacing={2} mb={3} textAlign="left">
           <chakra.h1 fontSize="2xl" lineHeight={1.2} fontWeight="bold" w="100%">
             {props.courseNumber}
-            
           </chakra.h1>
         </VStack>
       </Box>
@@ -159,49 +159,49 @@ const [imgSrc, setImgSrc] = useState(
   )
 }
 
-  const LineWithDot = () => {
-    return (
-      <Flex
-        pos="relative"
-        alignItems="center"
-        mr={{ base: '40px', md: '40px' }}
-        ml={{ base: '0', md: '40px' }}
-      >
-        <chakra.span
-          position="absolute"
-          left="50%"
-          height="calc(100% + 10px)"
-          border="1px solid"
-          borderColor={useColorModeValue('gray.200', 'gray.700')}
-          top="0px"
-        ></chakra.span>
-        <Box pos="relative" p="10px">
-          <Box
-            pos="absolute"
-            top="0"
-            left="0"
-            bottom="0"
-            right="0"
-            width="100%"
-            height="100%"
-            backgroundSize="cover"
-            backgroundRepeat="no-repeat"
-            backgroundPosition="center center"
-            bg={useColorModeValue('gray.600', 'gray.200')}
-            borderRadius="100px"
-            backgroundImage="none"
-            opacity={1}
-          ></Box>
-        </Box>
-      </Flex>
-    )
-  }
-  
-  const EmptyCard = () => {
-    return (
-      <Box flex={{ base: 0, md: 1 }} p={{ base: 0, md: 6 }} bg="transparent"></Box>
-    )
-  }
+const LineWithDot = () => {
+  return (
+    <Flex
+      pos="relative"
+      alignItems="center"
+      mr={{ base: '40px', md: '40px' }}
+      ml={{ base: '0', md: '40px' }}
+    >
+      <chakra.span
+        position="absolute"
+        left="50%"
+        height="calc(100% + 10px)"
+        border="1px solid"
+        borderColor={useColorModeValue('gray.200', 'gray.700')}
+        top="0px"
+      ></chakra.span>
+      <Box pos="relative" p="10px">
+        <Box
+          pos="absolute"
+          top="0"
+          left="0"
+          bottom="0"
+          right="0"
+          width="100%"
+          height="100%"
+          backgroundSize="cover"
+          backgroundRepeat="no-repeat"
+          backgroundPosition="center center"
+          bg={useColorModeValue('gray.600', 'gray.200')}
+          borderRadius="100px"
+          backgroundImage="none"
+          opacity={1}
+        ></Box>
+      </Box>
+    </Flex>
+  )
+}
+
+const EmptyCard = () => {
+  return (
+    <Box flex={{ base: 0, md: 1 }} p={{ base: 0, md: 6 }} bg="transparent"></Box>
+  )
+}
 
 //     courses && (
 //       <div data-testid="courses">

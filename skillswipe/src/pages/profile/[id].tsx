@@ -23,13 +23,13 @@ import {
 
 import Awards from '@/components/Profile/Awards'
 import Courses from '@/components/Profile/Courses'
+import Languages from '@/components/Profile/Languages'
 import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
 import Recommendations from '@/components/Profile/Recommendations'
 import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
-import Languages from '@/components/Profile/Languages'
 
 const profile = () => {
   const router = useRouter()
@@ -53,7 +53,7 @@ const profile = () => {
     recommendationsReceived: [],
     projects: [],
     courses: [],
-    Languages: []
+    Languages: [],
   })
   const [Status, setStatus] = useState({
     connected: false,
