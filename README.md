@@ -1,28 +1,14 @@
 # SkillSwipe
-
+🚀
 This project is a part of SOEN 390 - Software Engineering Team Design Project - at Concordia University. The project aims to build a LinkedIn esque app.
-
 <br />
 
-# Sprint 1
-
-1. content
-
-# Sprint 2
-
-1. content
-
-# Sprint 3
-
-1. content
-
-# Sprint 4
-
-1. content
-
-# Sprint 5
-
-1. content
+## To run:
+1. Clone repo
+2. Run an SQL server and enter the details in .env-example file, and save as ".env" 
+3. CD into backend, and run npm "run start:dev"
+4. CD into skillswipe, and run "npm run dev"
+5. View project in localhost:3000 or whatever specified port shown in terminal 
 
 ## Team 1 - members:
 
@@ -42,10 +28,9 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 
 ## Libaries / Technologies we planned to use:
 
-1. [Material UI](https://mui.com/) - React component library
+1. [ChakraUI](https://chakra-ui.com/) - ChakraUI component library
 2. [Semantic UI](https://semantic-ui.com/) - CSS library
 3. [Redux](https://redux.js.org/) - State management library
-4. [Firebase](https://firebase.google.com/) - Our backend
 
 <br />
 
