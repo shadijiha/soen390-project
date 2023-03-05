@@ -6,8 +6,8 @@ This project is a part of SOEN 390 - Software Engineering Team Design Project - 
 ## To run:
 1. Clone repo
 2. Run an SQL server and enter the details in .env-example file, and save as ".env" 
-3. CD into backend, and run npm "run start:dev"
-4. CD into skillswipe, and run "npm run dev"
+3. CD into backend, run "npm install" and then run npm "run start:dev"
+4. CD into skillswipe, run "npm install", and then run "npm run dev"
 5. View project in localhost:3000 or whatever specified port shown in terminal 
 
 ## Team 1 - members:
