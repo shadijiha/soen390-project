@@ -9,7 +9,6 @@ import { ProfileModule } from './profile/profile.module'
 import { ChatModule } from './chat/chat.module'
 import { JobsModule } from './jobs/jobs.module'
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
