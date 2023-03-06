@@ -144,14 +144,18 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
   })
 }
 
-
-
-
-export const search = async (token : any, query: string) => {
-  return axios.get(`${URL}/search?query=${query}`,{
-    headers : {
-      "Authorization" : `Bearer ${token}`
-    }
+export const search = async (token: any, query: string) => {
+  return axios.get(`${URL}/search?query=${query}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
 }
 
+export const createJob = async (token: any, jobCreate: any) => {
+  return axios.post(`${URL}/jobs`, jobCreate, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
