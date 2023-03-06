@@ -27,7 +27,7 @@ import { JobsModule } from './jobs/jobs.module'
     UsersModule,
     AuthModule,
     ProfileModule,
-    ChatModule
+    ChatModule,
     JobsModule
   ],
   controllers: [AppController],
