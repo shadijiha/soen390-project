@@ -7,25 +7,24 @@ import Awards from '../Forms/Awards'
 
 type Awards = {
   title?: string
-  description?: string
-  issue_date?: string
   issuer?: string
   url?: string
-  id?: number
+  issue_date?: string
+  description?: string
 }
 
 const AwardsBox = () => {
   const profile = useSelector((state) => state as any)
-  const [awardsList, setAwardsList] = useState([] as Awards[])
+  const [awardsList, setAwardsList] = useState(profile.auth.awards as Awards[])
   const deleteAward = (id: number) => {
     console.log('delete award', id)
     console.log('awardsList', awardsList)
-    setAwardsList([] || awardsList.filter((award: any) => award.id !== id))
+    setAwardsList(awardsList.filter((award: any) => award.id !== id))
     console.log('awardsList', awardsList)
   }
   const addAward = () => {
-    const award: Awards = {}
-    setAwardsList((oldArray) => [...oldArray, award])
+    let award: Awards = {}
+    setAwardsList((oldArray) => [...(oldArray || []), award])
   }
   const isNew = (award: Awards) => {
     return !(

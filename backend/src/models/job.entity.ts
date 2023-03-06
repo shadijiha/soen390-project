@@ -27,7 +27,7 @@ export class Job extends BaseEntity {
 
   @Column()
   @ApiProperty()
-    salary: number
+    salary: string
 
   @Column()
   @ApiProperty()

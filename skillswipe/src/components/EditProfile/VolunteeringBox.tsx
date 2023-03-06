@@ -1,7 +1,6 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Volunteering from '../Forms/Volunteering'
@@ -17,14 +16,9 @@ type Volunteering = {
 const VolunteeringBox = () => {
   const profile = useSelector((state) => state as any)
   const [volunteeringList, setVolunteeringList] = useState(
-    profile.auth.volunteerings as Volunteering[]
+    profile.auth.volunteeringExperience as Volunteering[]
   )
-  useEffect(() =>{
-    console.log(profile)
-  },[])
   const deleteVolunteering = (id: number) => {
-    console.log('delete volunteering', id)
-    console.log('volunteeringList', volunteeringList)
     setVolunteeringList(
       volunteeringList.filter((volunteering: any) => volunteering.id !== id)
     )
@@ -86,17 +80,21 @@ const VolunteeringBox = () => {
 
       <div style={{ display: 'flex', flexDirection: 'column-reverse' }}>
         {volunteeringList &&
-          volunteeringList.map((volunteering: any, index: number) => (
-            console.log('volunteering', volunteering),
-            <div key={index}>
-              <Volunteering
-                volunteering={volunteering}
-                index={index + 1}
-                deleteVolunteering={deleteVolunteering}
-                isNew={isNew(volunteering)}
-              />
-            </div>
-          ))}
+          volunteeringList.map(
+            (volunteering: any, index: number) => (
+              console.log('volunteering', volunteering),
+              (
+                <div key={index}>
+                  <Volunteering
+                    volunteering={volunteering}
+                    index={index + 1}
+                    deleteVolunteering={deleteVolunteering}
+                    isNew={isNew(volunteering)}
+                  />
+                </div>
+              )
+            )
+          )}
       </div>
     </Stack>
   )

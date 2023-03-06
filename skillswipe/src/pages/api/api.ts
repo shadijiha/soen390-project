@@ -144,56 +144,14 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
   })
 }
 
-export const editEducationHistoryRequest = async (token: any, education: any) => {
-  return axios
-    .put(`${URL}/profile/education/${education.id}`, education, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((err) => {
-      return { status: 500, data: err }
-    })
-}
 
-export const addEducationHistoryRequest = async (token: any, education: any) => {
-  return axios
-    .post(`${URL}/profile/education`, education, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((err) => {
-      return { status: 500, data: err }
-    })
-}
 
-export const deleteEducationHistoryRequest = async (
-  token: any,
-  educationId: number
-) => {
-  return axios
-    .delete(`${URL}/profile/education/${educationId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((err) => {
-      return { status: 500, data: err }
-    })
-}
 
-export const search = async (token: any, query: string) => {
-  return axios.get(`${URL}/search?query=${query}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+export const search = async (token : any, query: string) => {
+  return axios.get(`${URL}/search?query=${query}`,{
+    headers : {
+      "Authorization" : `Bearer ${token}`
+    }
   })
 }
-export const createJob = async (token: any, jobCreate: any) => {
-  return axios.post(`${URL}/jobs`, jobCreate, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
+

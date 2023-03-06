@@ -246,12 +246,6 @@ const EditProfile = () => {
         {/* Education History */}
         <EducationHistoryBox />
 
-        {/* Volunteering */}
-        <VolunteeringBox />
-
-        {/* Personal Projects */}
-        <PersonalProjectsBox />
-
         {/* awards */}
         <AwardsBox />
 

@@ -16,7 +16,7 @@ export namespace Jobs {
       jobDescription: string
 
     @ApiProperty()
-      salary: number
+      salary: string
 
     @ApiProperty()
       jobType: 'full-time' | 'part-time' | 'contract' | 'other'
