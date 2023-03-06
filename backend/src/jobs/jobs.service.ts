@@ -104,4 +104,10 @@ export class JobsService {
 
     await this.jobsRepository.delete(found.id)
   }
+
+  async getAllJobs (): Promise<Job[]> {
+    return await this.jobsRepository.find({
+      relations: ['recruiter', 'skills']
+    })
+  }
 }

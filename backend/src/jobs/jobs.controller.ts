@@ -28,8 +28,13 @@ export class JobsController {
     await this.jobsService.createJob(job, recruiter)
   }
 
+  @Get('/all')
+  async getAllJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
+    return await this.jobsService.getAllJobs()
+  }
+
   // get all jobs listings for a recruiter
-  @Get()
+  @Get('/my')
   async getJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
     const recruiter: Recruiter = (await authedUser.getUser(['jobs'])) as Recruiter
 
