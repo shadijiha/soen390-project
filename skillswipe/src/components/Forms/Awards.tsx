@@ -24,9 +24,7 @@ const Awards = (props: any) => {
     issuer: '',
     url: '',
     id: 0,
-
   })
-
 
   if (award.title == '') setAward(props.award)
   const handleChange = (event: any) => {
@@ -54,7 +52,7 @@ const Awards = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Award updated successfully')
         } else {
-          toast.error('Error updaing award')
+          toast.error('Error updating award')
         }
       })
     }
@@ -86,29 +84,22 @@ const Awards = (props: any) => {
   const deleteAward = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    deleteAwardsRequest(token, award.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Award deleted successfully')
-        props.deleteAward(props.Award.id)
-      } else {
-        toast.error('Error deleting award')
-      }
-    })
+    if (props.isNew) {
+      props.deleteAward(props.award.id)
+    } else {
+      deleteAwardsRequest(token, award.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Award deleted successfully')
+          props.deleteAward(props.Award?.id)
+        } else {
+          toast.error('Error deleting award')
+        }
+      })
+    }
   }
-  const deleteItem = () => {
-    props.deleteAward(props.Award.id)
-  }
-
-  
 
   return (
-    <Box 
-     minWidth={'60vw'} 
-     borderWidth="1px"
-     borderRadius={25} 
-     p={8}
-     width="auto"
-    >
+    <Box minWidth={'60vw'} borderWidth="1px" borderRadius={25} p={8} width="auto">
       <Stack direction={'row'}>
         <p
           style={{
@@ -177,7 +168,6 @@ const Awards = (props: any) => {
           width="auto"
           onChange={handleChange}
         />
-        
       </FormControl>
       <FormControl id="description">
         <FormLabel htmlFor="description">Description</FormLabel>
@@ -239,7 +229,6 @@ const Awards = (props: any) => {
           onChange={handleChange}
         />
       </FormControl>
-      
     </Box>
   )
 }

@@ -39,6 +39,7 @@ const Awards = ({ awards }: any) => {
                 alignSelf: 'center',
               }}
             >
+              {/* map through the skillsArray and create a button for each */}
               {awards.map((awards: any) => (
                 <Button
                   className="skill"
