@@ -24,9 +24,9 @@ export class Skill extends BaseEntity {
   // RELATIONS
   @ManyToMany(() => User, (u) => u.skills)
   @ApiProperty({ type: [User] })
-  user: User[]
+    user: User[]
 
   @ManyToMany(() => Job, (j) => j.skills)
   @ApiProperty({ type: [Job] })
-  job: Job[]
+    job: Job[]
 }

@@ -6,7 +6,7 @@ import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
 
 @Injectable()
-export class ChatService { 
+export class ChatService {
   private readonly pusher: Pusher
   constructor (
     @InjectRepository(Message)
@@ -16,10 +16,10 @@ export class ChatService {
       appId: process.env.PUSHER_APP_ID ?? 'unset',
       key: process.env.PUSHER_APP_KEY ?? 'unset',
       secret: process.env.PUSHER_APP_SECRET ?? 'unset',
-      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset', 
-      useTLS: true,
-      // encrypted: true 
-    }) 
+      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset',
+      useTLS: true
+      // encrypted: true
+    })
   }
 
   public async message (sender: User, receiver: User, message: string): Promise<Pusher.Response> {

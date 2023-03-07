@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
-import { ValidationPipe } from '@nestjs/common'
+// import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(AppModule)
