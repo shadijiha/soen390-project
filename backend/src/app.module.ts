@@ -6,6 +6,7 @@ import { AppService } from './app.service'
 import { AuthModule } from './auth/auth.module'
 import { UsersModule } from './users/users.module'
 import { ProfileModule } from './profile/profile.module'
+import { ChatModule } from './chat/chat.module'
 import { JobsModule } from './jobs/jobs.module'
 
 @Module({
@@ -25,6 +26,7 @@ import { JobsModule } from './jobs/jobs.module'
     UsersModule,
     AuthModule,
     ProfileModule,
+    ChatModule,
     JobsModule
   ],
   controllers: [AppController],
