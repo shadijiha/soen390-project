@@ -10,10 +10,10 @@ export class ChatService {
   constructor (private readonly messageRepository: Repository<Message>) {
     // TODO: These should be in a .env file
     this.pusher = new Pusher({
-      appId: 'APP_ID',
-      key: 'APP_KEY',
-      secret: 'APP_SECRET',
-      cluster: 'APP_CLUSTER',
+      appId: process.env.PUSHER_APP_ID,
+      key: process.env.PUSHER_APP_KEY,
+      secret: process.env.PUSHER_APP_SECRET,
+      cluster: process.env.PUSHER_APP_CLUSTER,
       useTLS: true,
       encrypted: true
     })
