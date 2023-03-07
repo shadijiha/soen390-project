@@ -1,22 +1,25 @@
 import { Injectable } from '@nestjs/common'
-import Pusher from 'pusher'
-import { Message } from 'src/models/message.entity'
-import { type User } from 'src/models/user.entity'
+import { InjectRepository } from '@nestjs/typeorm'
+import * as Pusher from 'pusher'
+import { Message } from '../models/message.entity'
+import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
 
 @Injectable()
-export class ChatService {
+export class ChatService { 
   private readonly pusher: Pusher
-  constructor (private readonly messageRepository: Repository<Message>) {
+  constructor (
+    @InjectRepository(Message)
+    private readonly messageRepository: Repository<Message>) {
     // TODO: These should be in a .env file
     this.pusher = new Pusher({
       appId: process.env.PUSHER_APP_ID ?? 'unset',
       key: process.env.PUSHER_APP_KEY ?? 'unset',
       secret: process.env.PUSHER_APP_SECRET ?? 'unset',
-      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset',
+      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset', 
       useTLS: true,
-      encrypted: true
-    })
+      // encrypted: true 
+    }) 
   }
 
   public async message (sender: User, receiver: User, message: string): Promise<Pusher.Response> {

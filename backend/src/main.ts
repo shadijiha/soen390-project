@@ -29,7 +29,7 @@ async function bootstrap (): Promise<void> {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
 
-  app.useGlobalPipes(new ValidationPipe())
+  // app.useGlobalPipes(new ValidationPipe())
   await app.listen(process.env.APP_PORT ?? 8080)
 }
 void bootstrap()
