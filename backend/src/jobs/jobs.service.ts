@@ -4,7 +4,7 @@ import { Job } from '../models/job.entity'
 import { Skill } from '../models/skill.entity'
 import { Repository } from 'typeorm'
 import { type Jobs } from './jobs.types'
-import { User } from 'src/models/user.entity'
+import { User } from '../models/user.entity'
 
 @Injectable()
 export class JobsService {
