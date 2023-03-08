@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import NavBar from '@/components/NavBar'
 import {
@@ -10,6 +11,7 @@ import {
   Grid,
   HStack,
   Icon,
+  Image,
   Link,
   Stack,
   useColorModeValue,
@@ -59,13 +61,13 @@ const findJob = () => {
       toast.error('Error getting jobs')
     }
   }
-
   return (
     <>
       <NavBar />
-      {/* call viewOpenJobs function on page load */}
-      <Button onClick={viewOpenJobs}>View Open Jobs</Button>
+
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        {/* call viewOpenJobs function on page load */}
+        <Button onClick={viewOpenJobs}>View Open Jobs</Button>
         <Flex justify="left" mb={3}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
             Open Jobs
@@ -90,6 +92,17 @@ const findJob = () => {
                 _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
               >
                 <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                  <img
+                    src={
+                      'https://www.' +
+                      job.companyName.toLowerCase() +
+                      '.com/favicon.ico'
+                    }
+                    width="20px"
+                    height="20px"
+                    alt="logo"
+                  />
+
                   <chakra.h3
                     as={Link}
                     href={job.jobTitle}
@@ -99,12 +112,24 @@ const findJob = () => {
                   >
                     {job.jobTitle}
                   </chakra.h3>
+                  <br />
+                  <chakra.h2
+                    as={Link}
+                    href={job.jobTitle}
+                    isExternal
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    {job.companyName}
+                  </chakra.h2>
+
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Published: {job.startDate}
+                    {/* format the starting date to be only year month and date */}
+                    Starting Date: {job.startDate.split('T')[0]}
                   </chakra.p>
                 </Box>
                 <HStack
