@@ -92,16 +92,28 @@ const findJob = () => {
                 _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
               >
                 <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                  <img
-                    src={
-                      'https://www.' +
-                      job.companyName.toLowerCase() +
-                      '.com/favicon.ico'
-                    }
-                    width="25px"
-                    height="25px"
-                    alt="logo"
-                  />
+                  <HStack spacing={3}>
+                    <img
+                      src={
+                        'https://www.' +
+                        job.companyName.toLowerCase() +
+                        '.com/favicon.ico'
+                      }
+                      width="20px"
+                      height="20px"
+                      alt="logo"
+                    />
+
+                    <chakra.h2
+                      as={Link}
+                      href={job.jobTitle}
+                      isExternal
+                      fontWeight="bold"
+                      fontSize="lg"
+                    >
+                      {job.companyName}
+                    </chakra.h2>
+                  </HStack>
 
                   <chakra.h3
                     as={Link}
@@ -113,16 +125,23 @@ const findJob = () => {
                     {job.jobTitle}
                   </chakra.h3>
                   <br />
-                  <chakra.h2
-                    as={Link}
-                    href={job.jobTitle}
-                    isExternal
-                    fontWeight="bold"
-                    fontSize="lg"
-                  >
-                    {job.companyName}
-                  </chakra.h2>
 
+                  <chakra.p
+                    fontWeight="bold"
+                    fontSize="sm"
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    {/* format the starting date to be only year month and date */}
+                    {job.location}
+                  </chakra.p>
+                </Box>
+                <VStack
+                  spacing={{ base: 0, sm: 3 }}
+                  alignItems="start"
+                  fontWeight="medium"
+                  fontSize={{ base: 'xs', sm: 'sm' }}
+                  color={useColorModeValue('gray.600', 'gray.300')}
+                >
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
@@ -140,16 +159,7 @@ const findJob = () => {
                     {/* format the starting date to be only year month and date */}
                     Salary: ${job.salary}/hr
                   </chakra.p>
-                </Box>
-                <HStack
-                  spacing={{ base: 0, sm: 3 }}
-                  alignItems="center"
-                  fontWeight="medium"
-                  fontSize={{ base: 'xs', sm: 'sm' }}
-                  color={useColorModeValue('gray.600', 'gray.300')}
-                >
-                  {/* <JobStat icon={FaRegEye} value={job.meta.applications} /> */}
-                </HStack>
+                </VStack>
                 <Stack
                   spacing={2}
                   direction="row"
