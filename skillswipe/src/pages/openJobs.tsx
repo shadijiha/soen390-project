@@ -76,6 +76,7 @@ const findJob = () => {
           </chakra.h3>
         </Flex>
         <VStack
+          shadow={{ base: 'none', md: 'md' }}
           border="1px solid"
           borderColor="gray.400"
           rounded="15px"
@@ -99,7 +100,7 @@ const findJob = () => {
               <Grid
                 templateRows={{ base: 'auto auto', md: 'auto' }}
                 w="100%"
-                templateColumns={{ base: 'unset', md: '4fr 2fr 2fr' }}
+                templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
                 p={{ base: 2, sm: 4 }}
                 gap={3}
                 alignItems="center"
