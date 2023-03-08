@@ -157,7 +157,7 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
-            <NextLink href="/findJob" passHref>
+            <NextLink href="/openJobs" passHref>
               <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
                 Open Jobs
               </Button>
@@ -276,7 +276,7 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
-            <NextLink href="/findJob" passHref>
+            <NextLink href="/openJobs" passHref>
               <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
               </Button>

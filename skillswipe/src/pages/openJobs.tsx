@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import NavBar from '@/components/NavBar'
 import {
   Box,
@@ -14,10 +15,12 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { IconType } from 'react-icons'
 import { FaRegEye } from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import { getOpenJobs } from './api/api'
 
 interface JobAttributes {
   title: string
@@ -56,8 +59,64 @@ const jobs: JobAttributes[] = [
 ]
 
 const findJob = () => {
+  const [jobListing, setOpenJobs] = useState({
+    jobTitle: '',
+    companyName: '',
+    location: '',
+    jobDescription: '',
+    salary: 0,
+    skills: '',
+    startDate: '',
+    jobType: '',
+    coverLetter: true,
+    transcript: true,
+    id: 0,
+  })
+
+  const viewOpenJobs = async (event: any) => {
+    event.preventDefault()
+
+    // Get token from local storage
+    const token = localStorage.getItem('jwt')
+
+    try {
+      // Call API function to get open jobs
+      const response = await getOpenJobs(token)
+
+      // Update state with fetched data
+      setOpenJobs(response.data)
+
+      // Show toast notification
+      toast.success('Success on getting jobs!')
+
+      // map through the jobs and display them
+    } catch (error) {
+      console.error(error)
+      toast.error('Error getting jobs')
+    }
+  }
+
   return (
     <>
+      <button onClick={viewOpenJobs}>View Open Jobs</button>
+      {jobListing.length > 0 && (
+        <ul>
+          {jobListing.map((job) => (
+            <li key={job.id}>
+              <h3>{job.jobTitle}</h3>
+              <p>{job.companyName}</p>
+              <p>{job.location}</p>
+              <p>{job.jobDescription}</p>
+              <p>{job.salary}</p>
+              <p>{job.skills}</p>
+              <p>{job.startDate}</p>
+              <p>{job.jobType}</p>
+              <p>{job.coverLetter}</p>
+              <p>{job.transcript}</p>
+            </li>
+          ))}
+        </ul>
+      )}
       <NavBar />
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
         <Flex justify="left" mb={3}>
