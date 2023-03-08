@@ -57,7 +57,7 @@ const findJob = () => {
         setJobListing(response.data)
 
         // Show toast notification
-        toast.success('Success on getting jobs!')
+        toast.success('API Request success')
       } catch (error) {
         console.error(error)
         toast.error('Error getting jobs')
@@ -108,14 +108,15 @@ const findJob = () => {
                 <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                   <HStack spacing={3}>
                     <img
-                      src={
-                        'https://www.' +
-                        job.companyName.toLowerCase() +
-                        '.com/favicon.ico'
-                      }
+                      src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
                       width="20px"
                       height="20px"
                       alt="logo"
+                      onError={(e) => {
+                        // show a default image if the company logo is not found
+                        e.currentTarget.src =
+                          'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                      }}
                     />
 
                     <chakra.h2
