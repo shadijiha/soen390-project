@@ -7,10 +7,11 @@ import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
 
 import { Skill } from "../models/skill.entity";
+import { User } from "../models/user.entity";
 
 describe("JobsService", () => {
   let service: JobsService;
-  let mockRecruiterRepository = {
+  let mockUserRepository = {
     save: jest.fn(),
     update: jest.fn(),
   };
@@ -33,8 +34,8 @@ describe("JobsService", () => {
       providers: [
         JobsService,
         {
-          provide: getRepositoryToken(Recruiter),
-          useValue: mockRecruiterRepository,
+          provide: getRepositoryToken(User),
+          useValue: mockUserRepository,
         },
         {
           provide: getRepositoryToken(Job),
@@ -67,7 +68,7 @@ describe("JobsService", () => {
 
     await service.createJob(data, recruiter);
 
-    expect(mockRecruiterRepository.save).toHaveBeenCalled();
+    expect(mockUserRepository.save).toHaveBeenCalled();
 
     data = {
       jobTitle: "Software Engineer",
@@ -75,7 +76,7 @@ describe("JobsService", () => {
     } as unknown as Jobs.AddJobRequest;
     
     await service.createJob(data, recruiter);
-    expect(mockRecruiterRepository.save).toHaveBeenCalled();
+    expect(mockUserRepository.save).toHaveBeenCalled();
 
   });
 

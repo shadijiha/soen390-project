@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { JobsController } from "./jobs.controller";
 import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
-import { Recruiter } from "src/models/user_types/recruiter.entity";
+
 
 describe("JobsController", () => {
   let controller: JobsController;
