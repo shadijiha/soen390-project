@@ -2,22 +2,22 @@ import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Job } from '../models/job.entity'
 import { Skill } from '../models/skill.entity'
-import { Recruiter } from '../models/user_types/recruiter.entity'
 import { Repository } from 'typeorm'
 import { type Jobs } from './jobs.types'
+import { User } from '../models/user.entity'
 
 @Injectable()
 export class JobsService {
   constructor (
-    @InjectRepository(Recruiter)
-    private readonly recruiterRepository: Repository<Recruiter>,
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>,
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     @InjectRepository(Skill)
     private readonly skillRepository: Repository<Skill>
   ) {}
 
-  async createJob (data: Jobs.AddJobRequest, recruiter: Recruiter): Promise<void> {
+  async createJob (data: Jobs.AddJobRequest, recruiter: User): Promise<void> {
     const job = new Job()
     job.jobTitle = data.jobTitle
     job.companyName = data.companyName
@@ -54,10 +54,10 @@ export class JobsService {
 
     recruiter.jobs = [...recruiter.jobs, job]
 
-    await this.recruiterRepository.save(recruiter)
+    await this.usersRepository.save(recruiter)
   }
 
-  async updateJob (jobId: number, data: Jobs.UpdateJobRequest, recruiter: Recruiter): Promise<void> {
+  async updateJob (jobId: number, data: Jobs.UpdateJobRequest, recruiter: User): Promise<void> {
     const found = recruiter.jobs.find((job) => job.id === jobId)
 
     if (found == null) {
@@ -95,7 +95,7 @@ export class JobsService {
     await this.jobsRepository.update(jobId, dataNoSkills)
   }
 
-  async deleteJob (jobId: number, recruiter: Recruiter): Promise<void> {
+  async deleteJob (jobId: number, recruiter: User): Promise<void> {
     const found = recruiter.jobs.find((job) => job.id === jobId)
 
     if (found == null) {
