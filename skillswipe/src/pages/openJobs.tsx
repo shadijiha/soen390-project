@@ -23,55 +23,21 @@ import { toast } from 'react-toastify'
 import { getOpenJobs } from './api/api'
 
 interface JobAttributes {
-  title: string
-  link: string
-  created_at: string
-  meta: {
-    applications: number
-  }
+  id: number
+  jobTitle: ''
+  companyName: ''
+  location: ''
+  jobDescription: ''
+  salary: ''
+  skills: ''
+  startDate: ''
+  jobType: ''
+  coverLetter: ''
+  transcript: ''
 }
 
-const jobs: JobAttributes[] = [
-  {
-    title: 'Software Engineer at Google',
-    link: 'https://google.com',
-    created_at: '21 Jan 2022',
-    meta: {
-      applications: 500,
-    },
-  },
-  {
-    title: 'Software Engineer at Facebook',
-    link: 'https://facebook.com',
-    created_at: '20 Jun 2021',
-    meta: {
-      applications: 300,
-    },
-  },
-  {
-    title: ' Software Engineer at Microsoft',
-    link: 'https://microsoft.com',
-    created_at: '31 Sept 2022',
-    meta: {
-      applications: 150,
-    },
-  },
-]
-
 const findJob = () => {
-  const [jobListing, setOpenJobs] = useState({
-    jobTitle: '',
-    companyName: '',
-    location: '',
-    jobDescription: '',
-    salary: 0,
-    skills: '',
-    startDate: '',
-    jobType: '',
-    coverLetter: true,
-    transcript: true,
-    id: 0,
-  })
+  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
 
   const viewOpenJobs = async (event: any) => {
     event.preventDefault()
@@ -84,12 +50,10 @@ const findJob = () => {
       const response = await getOpenJobs(token)
 
       // Update state with fetched data
-      setOpenJobs(response.data)
+      setJobListing(response.data)
 
       // Show toast notification
       toast.success('Success on getting jobs!')
-
-      // map through the jobs and display them
     } catch (error) {
       console.error(error)
       toast.error('Error getting jobs')
@@ -98,26 +62,9 @@ const findJob = () => {
 
   return (
     <>
-      <button onClick={viewOpenJobs}>View Open Jobs</button>
-      {jobListing.length > 0 && (
-        <ul>
-          {jobListing.map((job) => (
-            <li key={job.id}>
-              <h3>{job.jobTitle}</h3>
-              <p>{job.companyName}</p>
-              <p>{job.location}</p>
-              <p>{job.jobDescription}</p>
-              <p>{job.salary}</p>
-              <p>{job.skills}</p>
-              <p>{job.startDate}</p>
-              <p>{job.jobType}</p>
-              <p>{job.coverLetter}</p>
-              <p>{job.transcript}</p>
-            </li>
-          ))}
-        </ul>
-      )}
       <NavBar />
+      {/* call viewOpenJobs function on page load */}
+      <Button onClick={viewOpenJobs}>View Open Jobs</Button>
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
         <Flex justify="left" mb={3}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
@@ -131,7 +78,7 @@ const findJob = () => {
           overflow="hidden"
           spacing={0}
         >
-          {jobs.map((job, index) => (
+          {jobListing.map((job, index) => (
             <Fragment key={index}>
               <Grid
                 templateRows={{ base: 'auto auto', md: 'auto' }}
@@ -145,19 +92,19 @@ const findJob = () => {
                 <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                   <chakra.h3
                     as={Link}
-                    href={job.link}
+                    href={job.jobTitle}
                     isExternal
                     fontWeight="bold"
                     fontSize="lg"
                   >
-                    {job.title}
+                    {job.jobTitle}
                   </chakra.h3>
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Published: {job.created_at}
+                    Published: {job.startDate}
                   </chakra.p>
                 </Box>
                 <HStack
@@ -167,7 +114,7 @@ const findJob = () => {
                   fontSize={{ base: 'xs', sm: 'sm' }}
                   color={useColorModeValue('gray.600', 'gray.300')}
                 >
-                  <JobStat icon={FaRegEye} value={job.meta.applications} />
+                  {/* <JobStat icon={FaRegEye} value={job.meta.applications} /> */}
                 </HStack>
                 <Stack
                   spacing={2}
@@ -181,7 +128,7 @@ const findJob = () => {
                   ))}
                 </Stack>
               </Grid>
-              {jobs.length - 1 !== index && <Divider m={0} />}
+              {jobListing.length - 1 !== index && <Divider m={0} />}
             </Fragment>
           ))}
         </VStack>
@@ -190,14 +137,14 @@ const findJob = () => {
   )
 }
 
-const JobStat = ({ icon, value }: { icon: IconType; value: number }) => {
-  return (
-    <Flex p={1} alignItems="center">
-      <Icon as={icon} w={5} h={5} mr={2} />
-      <chakra.span> {value} </chakra.span>
-    </Flex>
-  )
-}
+// const JobStat = ({ icon, value }: { icon: IconType; value: number }) => {
+//   return (
+//     <Flex p={1} alignItems="center">
+//       <Icon as={icon} w={5} h={5} mr={2} />
+//       <chakra.span> {value} </chakra.span>
+//     </Flex>
+//   )
+// }
 
 const JobSettingLink = ({ label }: { label: string }) => {
   return (
