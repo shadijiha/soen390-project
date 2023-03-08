@@ -169,14 +169,14 @@ const findJob = () => {
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
                     {/* format the starting date to be only year month and date */}
-                    Starting Date: {job.startDate.split('T')[0]}
+                    📅 Starting Date: {job.startDate.split('T')[0]}
                   </chakra.p>
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Salary: ${job.salary}/hr
+                    🤑 Salary: ${job.salary}/hr
                   </chakra.p>
 
                   <chakra.p
@@ -184,14 +184,14 @@ const findJob = () => {
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Transcript Needed? {transcript}
+                    🏫 Transcript Needed? {transcript}
                   </chakra.p>
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    Cover Letter Needed? {coverLetter}
+                    💌 Cover Letter Needed? {coverLetter}
                   </chakra.p>
                 </VStack>
                 <Stack
