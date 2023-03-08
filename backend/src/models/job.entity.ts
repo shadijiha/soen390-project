@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
 import { Skill } from './skill.entity'
-import { Recruiter } from './user_types/recruiter.entity'
+import { User } from './user.entity'
 
 @Entity()
 export class Job extends BaseEntity {
@@ -56,9 +56,10 @@ export class Job extends BaseEntity {
   // RELATIONS
 
   // recruiter
-  @ManyToOne(() => Recruiter, (r) => r.jobs)
-  @ApiProperty({ type: Recruiter })
-    recruiter: Recruiter
+  @ManyToOne(() => User, (r) => r.jobs)
+  // @ApiProperty({ type: User })
+  @ApiProperty({ type: () => User })
+    user: User
 
   // skills
   @ManyToMany(() => Skill, (skill) => skill.job, {
