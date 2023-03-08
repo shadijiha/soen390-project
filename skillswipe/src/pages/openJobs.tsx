@@ -76,7 +76,7 @@ const findJob = () => {
         <VStack
           border="1px solid"
           borderColor="gray.400"
-          rounded="md"
+          rounded="15px"
           overflow="hidden"
           spacing={0}
         >
@@ -98,8 +98,8 @@ const findJob = () => {
                       job.companyName.toLowerCase() +
                       '.com/favicon.ico'
                     }
-                    width="20px"
-                    height="20px"
+                    width="25px"
+                    height="25px"
                     alt="logo"
                   />
 
