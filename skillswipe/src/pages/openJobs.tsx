@@ -17,7 +17,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { IconType } from 'react-icons'
 import { FaRegEye } from 'react-icons/fa'
@@ -44,33 +44,32 @@ const findJob = () => {
 
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
 
-  const viewOpenJobs = async (event: any) => {
-    event.preventDefault()
+  useEffect(() => {
+    const viewOpenJobs = async () => {
+      // Get token from local storage
+      const token = localStorage.getItem('jwt')
 
-    // Get token from local storage
-    const token = localStorage.getItem('jwt')
+      try {
+        // Call API function to get open jobs
+        const response = await getOpenJobs(token)
 
-    try {
-      // Call API function to get open jobs
-      const response = await getOpenJobs(token)
+        // Update state with fetched data
+        setJobListing(response.data)
 
-      // Update state with fetched data
-      setJobListing(response.data)
-
-      // Show toast notification
-      toast.success('Success on getting jobs!')
-    } catch (error) {
-      console.error(error)
-      toast.error('Error getting jobs')
+        // Show toast notification
+        toast.success('Success on getting jobs!')
+      } catch (error) {
+        console.error(error)
+        toast.error('Error getting jobs')
+      }
     }
-  }
+    viewOpenJobs()
+  }, [])
   return (
     <>
       <NavBar />
 
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
-        {/* call viewOpenJobs function on page load */}
-        <Button onClick={viewOpenJobs}>View Open Jobs</Button>
         <Flex justify="left" mb={3}>
           <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
             Open Jobs
