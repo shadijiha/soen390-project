@@ -39,6 +39,9 @@ interface JobAttributes {
 }
 
 const findJob = () => {
+  let transcript = ''
+  let coverLetter = ''
+
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
 
   const viewOpenJobs = async (event: any) => {
@@ -82,6 +85,18 @@ const findJob = () => {
         >
           {jobListing.map((job, index) => (
             <Fragment key={index}>
+              <div
+                style={{
+                  display: 'none',
+                }}
+              >
+                if (jobListing.transcript === true) {(transcript = 'Yes')}
+                {(transcript = 'No')}
+                if (jobListing.coverLetter === true) {
+                  (coverLetter = 'Yes')
+                } else {(coverLetter = 'No')}
+              </div>
+
               <Grid
                 templateRows={{ base: 'auto auto', md: 'auto' }}
                 w="100%"
@@ -131,8 +146,14 @@ const findJob = () => {
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    {/* format the starting date to be only year month and date */}
                     {job.location}
+                  </chakra.p>
+                  <chakra.p
+                    fontWeight="bold"
+                    fontSize="sm"
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    Position: {job.jobType}
                   </chakra.p>
                 </Box>
                 <VStack
@@ -150,14 +171,27 @@ const findJob = () => {
                     {/* format the starting date to be only year month and date */}
                     Starting Date: {job.startDate.split('T')[0]}
                   </chakra.p>
+                  <chakra.p
+                    fontWeight="medium"
+                    fontSize="sm"
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    Salary: ${job.salary}/hr
+                  </chakra.p>
 
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    {/* format the starting date to be only year month and date */}
-                    Salary: ${job.salary}/hr
+                    Transcript Needed? {transcript}
+                  </chakra.p>
+                  <chakra.p
+                    fontWeight="medium"
+                    fontSize="sm"
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    Cover Letter Needed? {coverLetter}
                   </chakra.p>
                 </VStack>
                 <Stack
