@@ -27,7 +27,7 @@ export class ChatController {
     return result
   }
 
-  @Get('conversation/{withUserId}')
+  @Get('conversation/:withUserId')
   @ApiParam({ name: 'withUserId', type: Number })
   public async conversation (@AuthUser() breaserPayload: BearerPayload, @Param('withUserId') withUserId: number): Promise<Message[]> {
     return await this.chatService.conversation(breaserPayload.id, withUserId)
