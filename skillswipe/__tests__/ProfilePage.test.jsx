@@ -6,12 +6,13 @@ import Layout from "@/components/Layout";
 import { Provider } from "react-redux";
 import store from "../src/Redux/store";
 
-jest.mock("next/router", () => require("next-router-mock"));
-describe("Profile", () => {
+
+jest.mock('next/router', () => require('next-router-mock'))
+describe('Profile', () => {
   const renderProfile = () =>
     render(
       <Provider store={store}>
-        {" "}
+        {' '}
         <Layout>
           <Profile />
         </Layout>
@@ -22,6 +23,7 @@ describe("Profile", () => {
     renderProfile();
     await waitFor(() => {
       expect(screen.getByTestId('profile-page')).toBeInTheDocument()
+
     })
   })
 })

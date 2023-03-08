@@ -11,28 +11,24 @@ type Skill = {
 }
 
 const SkillsBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
-  const [skillsList, setSkillsList] = useState(
-    profile.auth.skills as Skill[]
-    )
-    const deleteSkill = (id: number) => {
-      console.log('delete skill', id)
-      console.log('skillsList', skillsList)
-      setSkillsList(skillsList.filter((skill: any) => skill.id !== id))
-      console.log('skillsList', skillsList)
-    }
+  const [skillsList, setSkillsList] = useState(profile.auth.skills as Skill[])
+  const deleteSkill = (id: number) => {
+    console.log('delete skill', id)
+    console.log('skillsList', skillsList)
+    setSkillsList(skillsList.filter((skill: any) => skill.id !== id))
+    console.log('skillsList', skillsList)
+  }
 
-    const addSkill = () => {
-      let skill: Skill = {
-      }
-      setSkillsList((oldArray) => [...oldArray, skill])
-    }
-    const isNew = (skill: Skill) => {
-      return !(
-        skill.title
-      )
-    }
-    
+  const addSkill = () => {
+    let skill: Skill = {}
+    setSkillsList((oldArray) => [...oldArray, skill])
+  }
+  const isNew = (skill: Skill) => {
+    return !skill.title
+  }
+
   return (
     <Stack
       as="form"

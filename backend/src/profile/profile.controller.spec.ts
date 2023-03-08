@@ -599,7 +599,7 @@ describe("ProfileController", () => {
 
   it("should delete skill", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const skillId = 1;
+    const skillId = '1';
 
     controller.deleteSkill(bearer, skillId);
     expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();
@@ -685,7 +685,7 @@ describe("ProfileController", () => {
 
   it("should delete language", async () => {
     const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
-    const languageId = 1;
+    const languageId = '1';
 
     controller.deleteLanguage(bearer, languageId);
     expect(mockProfileService.removeLanguage).not.toHaveBeenCalled();

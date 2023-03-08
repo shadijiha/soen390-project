@@ -182,49 +182,66 @@ export class ProfileService {
     language.languageName = data.languageName
     language.proficiency = data.proficiency
 
-    user.languages = [...user.languages, language]
+    const existingLanguage = await this.languageRepository.findOne({
+      where: {
+        languageName: data.languageName,
+        proficiency: data.proficiency
+      }
+    })
+
+    if (existingLanguage != null) {
+      user.languages = [...user.languages, existingLanguage]
+    } else {
+      user.languages = [...user.languages, language]
+    }
+
     await user.save()
   }
 
   public async removeLanguage (user: User, id: number): Promise<void> {
-    await this.languageRepository
-      .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }]
-      })
-      .then(async (l: Language) => await this.languageRepository.delete({ id: l.id }))
+    user.languages = user.languages.filter((s) => s.id !== id)
+
+    await user.save()
   }
 
   public async editLanguage (user: User, request: Profile.EditLanguageRequest): Promise<void> {
-    const found = user.languages.find((l) => l.id === request.id)
-    if (found == null) {
-      throw new NotFoundException()
-    }
-    const language: Language = found
-    await this.languageRepository.update(language.id, request)
+    // const found = user.languages.find((l) => l.id === request.id);
+    // if (found == null) {
+    //   throw new NotFoundException();
+    // }
+    // const language: Language = found;
+    // await this.languageRepository.update(language.id, request);
+    await this.removeLanguage(user, request.id)
+    await this.addLanguage(user, request)
   }
 
   public async addSkill (user: User, data: Profile.AddSkillRequest): Promise<void> {
+    if (data.title === '' || data.title === ' ') {
+      return
+    }
     const skills: Skill[] = []
     data.title
       .split(',')
       .filter((s) => s !== '')
       .forEach((s: string, i: number): void => {
         skills[i] = new Skill()
-        skills[i].title = s
+        skills[i].title = s.trim()
       })
 
-    if (skills.length === 0) return
+    const existingSkills = await this.skillRepository.find({
+      where: skills.map((s) => ({ title: s.title }))
+    })
 
-    user.skills = [...user.skills, ...skills]
+    const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
+
+    user.skills = [...user.skills, ...existingSkills, ...newSkills]
     await user.save()
   }
 
   public async removeSkill (user: User, id: number): Promise<void> {
-    await this.skillRepository
-      .findOneOrFail({
-        where: [{ id }, { user: { id: user.id } }]
-      })
-      .then(async (s: Skill) => await this.skillRepository.delete({ id: s.id }))
+    user.skills = user.skills.filter((s) => s.id !== id)
+
+    await user.save()
   }
 
   public async addWork (user: User, data: Profile.AddWorkRequest): Promise<void> {

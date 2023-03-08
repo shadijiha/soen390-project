@@ -4,29 +4,32 @@ import { IoSendSharp } from 'react-icons/io5'
 
 const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
   return (
-    <Flex w="100%" mt="5">
-      <Input
+
+	<Flex w="100%" mt="5">
+  	<Input
         borderRadius="10px"
         color={'white'}
-        placeholder="Type Something..."
-        onKeyPress={(e) => {
+    	placeholder="Type Something..."
+		
+    	
+    	onKeyPress={(e) => {
           if (e.key === 'Enter') {
             handleSendMessage()
-          }
-        }}
-        value={inputMessage}
-        onChange={(e) => setInputMessage(e.target.value)}
-      />
-
-      <Button
+			}
+    	}}
+    	value={inputMessage}
+    	onChange={(e) => setInputMessage(e.target.value)}
+		/>
+	
+  	<Button
         borderRadius="10px"
-        disabled={inputMessage.trim().length <= 0}
-        onClick={handleSendMessage}
+    	disabled={inputMessage.trim().length <= 0}
+    	onClick={handleSendMessage}
         ml={'2rem'}
-      >
-        Send
-      </Button>
-    </Flex>
+  	>
+    	Send
+  	</Button>
+	</Flex>
   )
 }
 

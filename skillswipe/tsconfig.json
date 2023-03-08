@@ -39,8 +39,10 @@
     "**/*.ts",
     "**/*.tsx",
     "src/components/header.tsxx",
-    "src/components/EditProfile"
-, "src/components/Chat/Footer"  ],
+    "src/components/EditProfile",
+    "src/components/Profile",
+    "src/components/*",
+  ],
   "exclude": [
     "node_modules"
   ]

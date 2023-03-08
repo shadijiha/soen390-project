@@ -3,162 +3,181 @@ import { JwtService } from "@nestjs/jwt";
 import { Test, type TestingModule } from "@nestjs/testing";
 import { DataSource, type Repository } from "typeorm";
 import { User } from "../models/user.entity";
-import { setupTestDB } from "../util/testUtil";
 import { AuthController } from "./auth.controller";
-import { UsersModule } from "../users/users.module";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { UsersService } from "../users/users.service";
 import { dataSourceMockFactory } from "../util/mockDataSource";
 import { AuthService } from "./auth.service";
-import { createTestBearerPayload } from "../util/util";
-import { Users } from "src/users/users.types";
+import { BearerPayload, createTestBearerPayload } from "../util/util";
 import { Auth } from "./auth.types";
+import { ConnectionsService } from "../users/connections/connections.service";
+import { Connection } from "../models/connection.entity";
 
 describe("AuthController", () => {
-	let controller: AuthController;
-	let userRepository: Repository<User>;
-	const mockUserService = {
-		findOneByEmail: jest.fn(() => {throw new Error()} ),
-		create: jest.fn((dto) => {
-			return {
-				id: 1,
-				...dto
-			}
-		}),
-	
-	}
-	const mockAuthService = {
-		login: jest.fn((dto) => {
-			return {
-				access_token: 'blabla',
-			    id: 1,
-				email: dto.email,
-				firstName: dto.firstName,
-				lastName: dto.lastName,
-				gender: dto.gender
-			}})
-}
+  let controller: AuthController;
+  let userRepository: Repository<User>;
+  const mockUserService = {
+    findOneByEmail: jest.fn(() => {
+      throw new Error();
+    }),
+    create: jest.fn((dto) => {
+      return {
+        id: 1,
+        ...dto,
+      };
+    }),
+  };
+  const mockAuthService = {
+    login: jest.fn((dto) => {
+      return {
+        access_token: "blabla",
+        id: 1,
+        email: dto.email,
+        firstName: dto.firstName,
+        lastName: dto.lastName,
+        gender: dto.gender,
+      };
+    }),
+  };
 
+  const mockUsersRepository = {
+    findOne: jest.fn((emai) => userToTest),
+  };
 
-	const mockUsersRepository = {
-		findOne: jest.fn((emai) => userToTest),
-	}
+  const mockConnectionsRepository = {
+    createQueryBuilder: jest.fn(() => ({
+      leftJoinAndSelect: jest.fn().mockReturnThis(),
+      where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      getMany: jest.fn().mockResolvedValue([{ since: undefined, user_1: { id: 1 } }]),
+    })),
+  };
 
-	beforeEach(async () => {
-		const module: TestingModule = await Test.createTestingModule({
-			providers: [
-				UsersService,
-				AuthService,
-				JwtService,
-				{
-					provide: getRepositoryToken(User),
-					useValue: mockUsersRepository,
-				},
-				{ provide: DataSource, useFactory: dataSourceMockFactory },
-			],
-			controllers: [AuthController],
-		}).overrideProvider(UsersService).useValue(mockUserService)
-		.overrideProvider(AuthService).useValue(mockAuthService)
-		.compile();
+  let mockConnectionsService = {
+    getAcceptedConnections: jest.fn(),
+  };
 
-		controller = module.get<AuthController>(AuthController);
-		userRepository = module.get(getRepositoryToken(User));
-	});
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        UsersService,
+        AuthService,
+        JwtService,
+        ConnectionsService,
+        {
+          provide: getRepositoryToken(User),
+          useValue: mockUsersRepository,
+        },
+        {
+          provide: getRepositoryToken(Connection),
+          useValue: mockConnectionsRepository,
+        },
+        { provide: DataSource, useFactory: dataSourceMockFactory },
+      ],
+      controllers: [AuthController],
+    })
+      .overrideProvider(UsersService)
+      .useValue(mockUserService)
+      .overrideProvider(AuthService)
+      .useValue(mockAuthService)
+      .overrideProvider(ConnectionsService)
+      .useValue(mockConnectionsService)
+      .compile();
 
-	it("should be defined", () => {
-		expect(controller).toBeDefined();
-	});
+    controller = module.get<AuthController>(AuthController);
+    userRepository = module.get(getRepositoryToken(User));
+  });
 
-	// Test the register
-	const emailToTest = `test${Math.floor(Math.random() * 10e9)}@test.com`;
+  it("should be defined", () => {
+    expect(controller).toBeDefined();
+  });
 
-	const userToTest: Auth.RegisterRequest = {firstName: 'test', lastName: 'test', email: 'test@gmail.com', password: '123', gender: 'male' }
-	
-	it("should register and return the user", async () => {
-		
-		expect(await controller.register(userToTest)).toEqual({
-			access_token: expect.any(String),
-			id: expect.any(Number),
-			email: userToTest.email,
-			firstName: userToTest.firstName,
-			lastName: userToTest.lastName,
-			gender: userToTest.gender
-		});
-		
-		
-		expect(mockAuthService.login).toBeCalledWith(userToTest)
-		expect(mockUserService.findOneByEmail).toBeCalledWith(userToTest.email)
-	});
+  // Test the register
+  const emailToTest = `test${Math.floor(Math.random() * 10e9)}@test.com`;
 
-	// Test the register with the same email
-	// it("should raise an email already exists error", async () => {
-	// 	expect(
-	// 		await controller.register({
-	// 			email: userToTest.email,
-	// 			firstName: "First name sample",
-	// 			lastName: "Last name sample",
-	// 			gender: "female",
-	// 			password: "hehexd",
-	// 		})
-	// 	).toThrow(ConflictException);
-	// });
+  const userToTest: Auth.RegisterRequest = { firstName: "test", lastName: "test", email: "test@gmail.com", password: "123", gender: "male" };
 
+  it("should register and return the user", async () => {
+    expect(await controller.register(userToTest)).toEqual({
+      access_token: expect.any(String),
+      id: expect.any(Number),
+      email: userToTest.email,
+      firstName: userToTest.firstName,
+      lastName: userToTest.lastName,
+      gender: userToTest.gender,
+    });
 
-	// Test logging in with wong password
-	// it("should throw UnauthorizedException error", async () => {
-	// 	expect(
-	// 		await controller.login({
-	// 			email: emailToTest,
-	// 			password: "wrong_password",
-	// 		})
-	// 	).toThrow(UnauthorizedException);
-	// });
+    expect(mockAuthService.login).toBeCalledWith(userToTest);
+    expect(mockUserService.findOneByEmail).toBeCalledWith(userToTest.email);
+  });
 
-	// Test logging in with non existing email
-	// it("should throw UnauthorizedException error", async () => {
-	// 	const notExistingEmail = `test${Math.floor(
-	// 		Math.random() * 10e12
-	// 	)}@test.com`;
-	// 	expect(
-	// 		await controller.login({
-	// 			email: notExistingEmail,
-	// 			password: "hehexd",
-	// 		})
-	// 	).toThrow(UnauthorizedException);
-	// });
+  // Test the register with the same email
+  // it("should raise an email already exists error", async () => {
+  // 	expect(
+  // 		await controller.register({
+  // 			email: userToTest.email,
+  // 			firstName: "First name sample",
+  // 			lastName: "Last name sample",
+  // 			gender: "female",
+  // 			password: "hehexd",
+  // 		})
+  // 	).toThrow(ConflictException);
+  // });
 
-	// Login with correct email, password
-	it("should login and return user and access token", async () => {
-		expect(
-			await controller.login({
-				email: emailToTest,
-				password: "hehexd",
-			})
-		).toHaveProperty("email", emailToTest);
-	});
+  // Test logging in with wong password
+  // it("should throw UnauthorizedException error", async () => {
+  // 	expect(
+  // 		await controller.login({
+  // 			email: emailToTest,
+  // 			password: "wrong_password",
+  // 		})
+  // 	).toThrow(UnauthorizedException);
+  // });
 
-	// Check /me
-	it("should return a user", async () => {
-		expect(
-			await controller.me(
-				await createTestBearerPayload(userToTest.email, userRepository)
-			)
-		).toEqual(userToTest);
-	});
+  // Test logging in with non existing email
+  // it("should throw UnauthorizedException error", async () => {
+  // 	const notExistingEmail = `test${Math.floor(
+  // 		Math.random() * 10e12
+  // 	)}@test.com`;
+  // 	expect(
+  // 		await controller.login({
+  // 			email: notExistingEmail,
+  // 			password: "hehexd",
+  // 		})
+  // 	).toThrow(UnauthorizedException);
+  // });
 
-	// it("should throw an error", async () => {
-	// 	expect(
-	// 		await controller.me(
-	// 			await createTestBearerPayload(emailToTest, userRepository)
-	// 		)
-	// 	).toThrowError();
-	// });
+  // Login with correct email, password
+  it("should login and return user and access token", async () => {
+    expect(
+      await controller.login({
+        email: emailToTest,
+        password: "hehexd",
+      })
+    ).toHaveProperty("email", emailToTest);
+  });
 
-	// afterAll(async () => {
-	// 	(
-	// 		await userRepository.findOne({
-	// 			where: { email: emailToTest },
-	// 		})
-	// 	)?.remove();
-	// });
+  // Check /me
+  it("should return a user", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload(userToTest.email, userRepository);
+    const res = await controller.me(bearer);
+
+    expect(res).toEqual(userToTest);
+  });
+
+  // it("should throw an error", async () => {
+  // 	expect(
+  // 		await controller.me(
+  // 			await createTestBearerPayload(emailToTest, userRepository)
+  // 		)
+  // 	).toThrowError();
+  // });
+
+  // afterAll(async () => {
+  // 	(
+  // 		await userRepository.findOne({
+  // 			where: { email: emailToTest },
+  // 		})
+  // 	)?.remove();
+  // });
 });

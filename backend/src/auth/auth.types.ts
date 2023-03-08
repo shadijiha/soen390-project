@@ -3,15 +3,21 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger'
+import { IsEmail, IsAlphanumeric, IsNotEmpty, Length, MinLength } from 'class-validator'
+
 import { App } from '../app.types'
 import { User } from '../models/user.entity'
 
 export namespace Auth {
   export class LoginRequest {
     @ApiProperty()
+    @IsEmail()
       email: string
 
     @ApiProperty()
+    @IsNotEmpty()
+    @MinLength(8)
+    @IsAlphanumeric()
       password: string
   }
 
@@ -24,9 +30,11 @@ export namespace Auth {
   }
 
   export class RegisterRequest extends LoginRequest {
+    @Length(2, 50)
     @ApiProperty()
       firstName: string
 
+    @Length(2, 50)
     @ApiProperty()
       lastName: string
 
