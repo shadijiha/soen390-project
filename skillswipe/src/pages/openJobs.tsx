@@ -107,8 +107,8 @@ const findJob = () => {
                     as={Link}
                     href={job.jobTitle}
                     isExternal
-                    fontWeight="bold"
-                    fontSize="lg"
+                    fontWeight="extrabold"
+                    fontSize="2xl"
                   >
                     {job.jobTitle}
                   </chakra.h3>
@@ -130,6 +130,15 @@ const findJob = () => {
                   >
                     {/* format the starting date to be only year month and date */}
                     Starting Date: {job.startDate.split('T')[0]}
+                  </chakra.p>
+
+                  <chakra.p
+                    fontWeight="medium"
+                    fontSize="sm"
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    {/* format the starting date to be only year month and date */}
+                    Salary: ${job.salary}/hr
                   </chakra.p>
                 </Box>
                 <HStack
