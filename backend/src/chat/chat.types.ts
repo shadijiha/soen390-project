@@ -4,9 +4,6 @@ export namespace Chat {
 
   export class MessageRequest {
     @ApiProperty()
-      senderId: number
-
-    @ApiProperty()
       receiverId: number
 
     @ApiProperty()

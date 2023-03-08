@@ -33,9 +33,9 @@ export class ChatController {
     return await this.chatService.conversation(breaserPayload.id, withUserId)
   }
 
-  @Post('startConversation')
-  public async message (@Body() body: Chat.MessageRequest): Promise<Pusher.Response> {
-    const sender = await this.userService.findOneByIdNoRelations(body.senderId)
+  @Post('message')
+  public async message (@Body() body: Chat.MessageRequest, @AuthUser() breaer: BearerPayload): Promise<Pusher.Response> {
+    const sender = await this.userService.findOneByIdNoRelations(breaer.id)
     const receiver = await this.userService.findOneByIdNoRelations(body.receiverId)
 
     return await this.chatService.message(sender, receiver, body.message)
