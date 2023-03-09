@@ -13,13 +13,17 @@ import {
   Icon,
   Image,
   Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
 import { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
-import { IconType } from 'react-icons'
+import { BsFilter } from 'react-icons/bs'
 import { FaRegEye } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { getOpenJobs } from './api/api'
@@ -62,20 +66,49 @@ const findJob = () => {
     }
     viewOpenJobs()
   }, [])
+
+  const handleFilter = (value) => {
+    // your logic to filter the list goes here
+    console.log(value)
+  }
+
   return (
     <>
       <NavBar />
 
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
         <Flex justify="left" mb={3}>
-          <chakra.h3
-            fontSize="4xl"
-            fontWeight="bold"
-            textAlign="center"
-            paddingBottom={'0.2em'}
+          <HStack
+            style={{
+              width: '100%',
+              justifyContent: 'space-between',
+            }}
           >
-            💼 ‎ Open Jobs
-          </chakra.h3>
+            <chakra.h3
+              fontSize="4xl"
+              fontWeight="bold"
+              textAlign="center"
+              paddingBottom={'0.2em'}
+            >
+              💼 ‎ Open Jobs
+            </chakra.h3>
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<Icon as={BsFilter} w={8} h={8} />}
+                variant="outline"
+                padding={'1.5em'}
+                rounded={'full'}
+              >
+                Filter Jobs
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleFilter('option1')}>Option 1</MenuItem>
+                <MenuItem onClick={() => handleFilter('option2')}>Option 2</MenuItem>
+                <MenuItem onClick={() => handleFilter('option3')}>Option 3</MenuItem>
+              </MenuList>
+            </Menu>
+          </HStack>
         </Flex>
         <VStack
           shadow={{ base: 'none', md: 'md' }}
