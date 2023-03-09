@@ -219,15 +219,6 @@ const findJob = () => {
   )
 }
 
-// const JobStat = ({ icon, value }: { icon: IconType; value: number }) => {
-//   return (
-//     <Flex p={1} alignItems="center">
-//       <Icon as={icon} w={5} h={5} mr={2} />
-//       <chakra.span> {value} </chakra.span>
-//     </Flex>
-//   )
-// }
-
 const JobSettingLink = ({ label }: { label: string }) => {
   return (
     <Button
@@ -235,6 +226,8 @@ const JobSettingLink = ({ label }: { label: string }) => {
       _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
       p={5}
       rounded="100px"
+      outline={'solid 1px'}
+      outlineColor={useColorModeValue('gray.400', 'gray.600')}
     >
       {label}
     </Button>
