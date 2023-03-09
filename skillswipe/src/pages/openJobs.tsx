@@ -11,7 +11,6 @@ import {
   Grid,
   HStack,
   Icon,
-  Image,
   Link,
   Menu,
   MenuButton,
@@ -24,7 +23,6 @@ import {
 import { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { BsFilter } from 'react-icons/bs'
-import { FaRegEye } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { getOpenJobs } from './api/api'
 
@@ -56,9 +54,6 @@ const findJob = () => {
 
         // Update state with fetched data
         setJobListing(response.data)
-
-        // Show toast notification
-        toast.success('API Request success')
       } catch (error) {
         console.error(error)
         toast.error('Error getting jobs')
@@ -174,7 +169,7 @@ const findJob = () => {
                     {job.location}
                   </chakra.p>
                   <chakra.p
-                    fontWeight="bold"
+                    fontWeight="normal"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
@@ -184,40 +179,22 @@ const findJob = () => {
                 <VStack
                   spacing={{ base: 0, sm: 3 }}
                   alignItems="start"
-                  fontWeight="medium"
+                  fontWeight="light"
                   fontSize={{ base: 'xs', sm: 'sm' }}
                   color={useColorModeValue('gray.600', 'gray.300')}
                 >
-                  <chakra.p
-                    fontWeight="medium"
-                    fontSize="sm"
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
+                  {/* By the way, the ‎ is an invisible space character */}
+                  <chakra.p>
                     {/* format the starting date to be only year month and date */}
                     📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
                   </chakra.p>
-                  <chakra.p
-                    fontWeight="medium"
-                    fontSize="sm"
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
-                    🤑 ‎ ‎ Salary: ${job.salary}/hr
-                  </chakra.p>
-
-                  <chakra.p
-                    fontWeight="medium"
-                    fontSize="sm"
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
-                    🏫 ‎ ‎ Transcript Needed?{' '}
+                  <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
+                  <chakra.p>
+                    🏫 ‎ ‎ Transcript Needed? ‎ ‎
                     {job.transcript.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
-                  <chakra.p
-                    fontWeight="medium"
-                    fontSize="sm"
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
-                    💌 ‎ ‎ Cover Letter Needed?{' '}
+                  <chakra.p>
+                    💌 ‎ ‎ Cover Letter Needed? ‎ ‎
                     {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
                 </VStack>
