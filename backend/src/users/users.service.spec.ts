@@ -5,6 +5,7 @@ import { dataSourceMockFactory } from '../util/mockDataSource'
 import { DataSource, DeleteResult, type Repository } from 'typeorm'
 import { UsersService } from './users.service'
 import { Users } from './users.types'
+import { Job } from '../models/job.entity'
 
 describe('UsersService', () => {
   let service: UsersService
@@ -32,6 +33,11 @@ describe('UsersService', () => {
     softRemove: jest.fn( () => null)
 
   }
+  let mockJobsRepository = {
+    find: jest.fn(() => [])
+  }
+
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -40,6 +46,10 @@ describe('UsersService', () => {
           provide: getRepositoryToken(User),
           // define a fake repository that returns the fake users
           useValue: mockUsersRepository
+        },
+        {
+          provide: getRepositoryToken(Job),
+          useValue: mockJobsRepository
         },
         { provide: DataSource, useFactory: dataSourceMockFactory }
       ]
