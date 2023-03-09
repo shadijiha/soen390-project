@@ -4,7 +4,7 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
@@ -12,35 +12,44 @@ import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
 import axios from 'axios'
+import router from 'next/router'
+import { toast } from 'react-toastify'
+import { viewJob } from '../api/api'
 
-const jobListing = ({ token, jobId }) => {
-  const [job, getJob] = useState({
-    id: Number,
-    jobTitle: '',
-    companyName: '',
-    location: '',
-    jobDescription: '',
-    salary: '',
-    jobType: '',
-    startDate: '',
-    coverLetter: false,
-    transcript: false,
-    skills: [],
-  })
+interface JobAttributes {
+  id: number
+  jobTitle: ''
+  companyName: ''
+  location: ''
+  jobDescription: ''
+  salary: ''
+  jobType: ''
+  startDate: ''
+  coverLetter: false
+  transcript: false
+  skills: []
+}
 
-  const viewJob = async (token, id) => {
-    try {
-      const response = await axios.get(`${URL}/jobs/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      return response.data
-    } catch (error) {
-      console.error(error)
-      throw new Error('Error viewing job')
+const jobListing = () => {
+  const [job, setJobPage] = useState<JobAttributes[]>([])
+  useEffect(() => {
+    const viewListing = async () => {
+      // Get token from local storage
+      const token = localStorage.getItem('jwt')
+
+      try {
+        // Call API function to get open jobs
+        const response = await viewJob(token, 5)
+
+        // Update state with fetched data
+        setJobPage(response.data)
+      } catch (error) {
+        console.error(error)
+        toast.error('Error getting jobs')
+      }
     }
-  }
+    viewListing()
+  }, [])
 
   return (
     <>
@@ -52,6 +61,7 @@ const jobListing = ({ token, jobId }) => {
               <Flex align="center" justify="center" direction="column">
                 {/* Company logo, Company Name, Job Name in TopHeader */}
                 <TopHeader />
+                <p>NAME:</p>
 
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />

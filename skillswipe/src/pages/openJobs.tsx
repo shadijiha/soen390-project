@@ -52,6 +52,7 @@ const findJob = () => {
 
       try {
         // Call API function to get open jobs
+
         const response = await getOpenJobs(token)
 
         // Update state with fetched data
