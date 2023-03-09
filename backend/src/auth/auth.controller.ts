@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common'
 import { ConflictException } from '@nestjs/common/exceptions'
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { ConnectionsService } from '../users/connections/connections.service'
 import { User } from '../models/user.entity'
 import { UsersService } from '../users/users.service'
 import { AuthUser, BearerPayload } from '../util/util'
@@ -13,14 +14,13 @@ import { JwtAuthGuard } from './jwt-auth.guard'
 export class AuthController {
   constructor (
     private readonly userService: UsersService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly connectionsService: ConnectionsService
   ) {}
 
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async login (
-    @Body() body: Auth.LoginRequest
-  ): Promise<Auth.LoginResponse> {
+  public async login (@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
     // try {
     return await this.authService.login(body)
     // } catch (e) {
@@ -30,9 +30,7 @@ export class AuthController {
 
   @Post('register')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async register (
-    @Body() body: Auth.RegisterRequest
-  ): Promise<Auth.LoginResponse> {
+  public async register (@Body() body: Auth.RegisterRequest): Promise<Auth.LoginResponse> {
     try {
       // Will fail if email is NOT taken
       await this.userService.findOneByEmail(body.email)
@@ -51,13 +49,19 @@ export class AuthController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
-    const user = await authedUser.getUser([
+    const user: User = (await authedUser.getUser([
       'educations',
       'workExperiences',
+      'volunteeringExperience',
       'skills',
+      'recommendationsReceived',
+      'recommendationsGiven',
+      'courses',
       'projects',
-      'awards'
-    ])
-    return user as User
+      'awards',
+      'languages'
+    ])) as User
+
+    return user
   }
 }

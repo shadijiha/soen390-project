@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 import { JobsController } from "./jobs.controller";
 import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
-import { Recruiter } from "src/models/user_types/recruiter.entity";
+import { NotFoundException } from "@nestjs/common";
 
 describe("JobsController", () => {
   let controller: JobsController;
@@ -16,6 +16,8 @@ describe("JobsController", () => {
     createJob: jest.fn(() => {}),
     updateJob: jest.fn(() => {}),
     deleteJob: jest.fn(() => {}),
+    getJobById: jest.fn(() => {}),
+    getAllJobs: jest.fn(() => {}),
   };
 
   let mockUsersRepository = {
@@ -56,7 +58,7 @@ describe("JobsController", () => {
       companyName: "test",
       location: "test",
       jobDescription: "test",
-      salary: 100,
+      salary: "100",
       jobType: "full-time",
       startDate: new Date(),
       coverLetter: true,
@@ -101,6 +103,30 @@ describe("JobsController", () => {
     }
   });
 
+  it("should get all jobs listings.", async () => {
+    let bearer: BearerPayload = await createTestBearerPayload("", userRepository);
+    try {
+      await controller.getAllJobs(bearer);
+    } catch (e) {
+      expect(mockJobsService.getAllJobs).toHaveBeenCalled();
+    }
+  });
+
+  it("should get a job listing by id", async () => {
+    await controller.getJobById("1");
+    expect(mockJobsService.getJobById).toHaveBeenCalled();
+
+    jest.spyOn(mockJobsService, "getJobById").mockImplementation(() => {
+      throw new NotFoundException();
+    });
+
+    try {
+      await controller.getJobById("1");
+    } catch (e) {
+      expect(e.message).toBe("Job does not exist");
+    }
+  });
+
   it("should update job post", async () => {
     let bearer: BearerPayload = await createTestBearerPayload("", userRepository);
     const job: Jobs.UpdateJobRequest = {
@@ -108,7 +134,7 @@ describe("JobsController", () => {
       companyName: "test",
       location: "test",
       jobDescription: "test",
-      salary: 100,
+      salary: "100",
       jobType: "full-time",
       startDate: new Date(),
       coverLetter: true,

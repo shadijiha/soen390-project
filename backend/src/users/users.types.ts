@@ -3,6 +3,7 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger'
+import { Job } from '../models/job.entity'
 import { App } from '../app.types'
 import { User } from '../models/user.entity'
 
@@ -72,8 +73,8 @@ export namespace Users {
     @ApiProperty({ type: [User] })
       users: User[]
 
-    @ApiProperty({ type: [] })
-      companies: any[] // TODO: Add Company type
+    @ApiProperty({ type: [Job] })
+      jobs: Job[]
   }
 
   export class GetUserByIdResponse extends App.WithStatus {

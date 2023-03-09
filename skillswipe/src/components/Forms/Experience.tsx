@@ -24,6 +24,7 @@ const Experience = (props: any) => {
     end_year: '',
     id: 0,
   })
+
   if (experience.company == '') setExperience(props.experience)
   const handleChange = (event: any) => {
     const { name, value } = event.target
@@ -53,7 +54,7 @@ const Experience = (props: any) => {
         if (res.status == 201 || res.status == 200) {
           toast.success('Experience updated successfully')
         } else {
-          toast.error('Error updaing experience')
+          toast.error('Error updating experience')
         }
       })
     }
@@ -88,18 +89,20 @@ const Experience = (props: any) => {
   const deleteWorkExperience = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    deleteWorkExperienceRequest(token, experience.id).then((res) => {
-      if (res.status == 201 || res.status == 200) {
-        toast.success('Experience deleted successfully')
-        props.deleteExperience(props.experience.id)
-      } else {
-        toast.error('Error deleting experience')
-      }
-    })
+    if (props.isNew) {
+      props.deleteExperience(props.experience.id)
+    } else {
+      deleteWorkExperienceRequest(token, experience.id).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Experience deleted successfully')
+          props.deleteExperience(props.experience.id)
+        } else {
+          toast.error('Error deleting experience')
+        }
+      })
+    }
   }
-  const deleteItem = () => {
-    props.deleteExperience(props.experience.id)
-  }
+
   return (
     <Box
       minWidth={'60vw'}

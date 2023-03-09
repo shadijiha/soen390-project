@@ -91,7 +91,7 @@ const EditProfile = () => {
     <>
       <Layout>
         <NavBar />
-        <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
+        <Box display="flex" justifyContent="center" alignItems="center" pb={4} data-testid="edit-profile">
           <Box>
             <Heading
               style={{
@@ -237,7 +237,7 @@ const EditProfile = () => {
         </Stack>
 
         {/* my profile */}
-        <InformationBox />
+        <InformationBox test-id="infoBox" />
 
         {/* work experience */}
         <ExperienceBox />

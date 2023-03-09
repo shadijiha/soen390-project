@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @next/next/no-img-element */
 import { useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
@@ -6,8 +8,8 @@ import ProfileStyle from '../../styles/profilestyle'
 const Education = ({ education }: any) => {
   return (
     education && (
-      <div data-testid="education">
-        <>
+      <>
+        <div data-testid="education">
           <style jsx>{ProfileStyle}</style>
           <div className="edu-container">
             <div className="edu-features">
@@ -50,8 +52,8 @@ const Education = ({ education }: any) => {
               </div>
             </div>
           </div>
-        </>
-      </div>
+        </div>
+      </>
     )
   )
 }

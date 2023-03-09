@@ -1,4 +1,3 @@
-
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Job } from "../models/job.entity";
@@ -7,10 +6,11 @@ import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
 
 import { Skill } from "../models/skill.entity";
+import { User } from "../models/user.entity";
 
 describe("JobsService", () => {
   let service: JobsService;
-  let mockRecruiterRepository = {
+  let mockUserRepository = {
     save: jest.fn(),
     update: jest.fn(),
   };
@@ -19,13 +19,21 @@ describe("JobsService", () => {
     save: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    find: jest.fn(),
+    findOneOrFail: jest.fn(() => {
+      return {
+        id: 1,
+        jobTitle: "Software Engineer",
+        skills: ["Java", "C++", "Python"],
+      } as unknown as Job;
+    }),
   };
 
   let mockSkillRepository = {
     save: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    find: jest.fn(() => ['Java', 'C++', 'Python']),
+    find: jest.fn(() => ["Java", "C++", "Python"]),
   };
 
   beforeEach(async () => {
@@ -33,8 +41,8 @@ describe("JobsService", () => {
       providers: [
         JobsService,
         {
-          provide: getRepositoryToken(Recruiter),
-          useValue: mockRecruiterRepository,
+          provide: getRepositoryToken(User),
+          useValue: mockUserRepository,
         },
         {
           provide: getRepositoryToken(Job),
@@ -67,16 +75,15 @@ describe("JobsService", () => {
 
     await service.createJob(data, recruiter);
 
-    expect(mockRecruiterRepository.save).toHaveBeenCalled();
+    expect(mockUserRepository.save).toHaveBeenCalled();
 
     data = {
       jobTitle: "Software Engineer",
-      skills: '',
+      skills: "",
     } as unknown as Jobs.AddJobRequest;
-    
-    await service.createJob(data, recruiter);
-    expect(mockRecruiterRepository.save).toHaveBeenCalled();
 
+    await service.createJob(data, recruiter);
+    expect(mockUserRepository.save).toHaveBeenCalled();
   });
 
   it("should update a job", async () => {
@@ -117,8 +124,6 @@ describe("JobsService", () => {
 
     await service.updateJob(jobId, data, recruiter);
     expect(mockjobsRepository.save).toHaveBeenCalled();
-
-
   });
 
   it("should delete a job", async () => {
@@ -128,11 +133,9 @@ describe("JobsService", () => {
       jobs: [],
     } as unknown as Recruiter;
 
-
     try {
       await service.deleteJob(jobId, recruiter);
-    }
-    catch (e) {
+    } catch (e) {
       expect(e.message).toBe("Not Found");
     }
 
@@ -147,9 +150,25 @@ describe("JobsService", () => {
 
     await service.deleteJob(jobId, recruiter);
     expect(mockjobsRepository.delete).toHaveBeenCalled();
-
-  
   });
 
+  it("should get all jobs", async () => {
+    await service.getAllJobs();
+    expect(mockjobsRepository.find).toHaveBeenCalled();
+  });
 
+  it("should get job by id", async () => {
+    await service.getJobById(1);
+
+    expect(mockjobsRepository.findOneOrFail).toHaveBeenCalled();
+
+    jest.spyOn(mockjobsRepository, "findOneOrFail").mockImplementation(() => null as any);
+
+    try {
+      await service.getJobById(1);
+    } catch (e) {
+      expect(e.message).toBe("Not Found");
+    }
+
+  });
 });

@@ -6,35 +6,36 @@ import 'react-toastify/dist/ReactToastify.css'
 import Courses from '../Forms/Courses'
 
 type Course = {
-  institution?: string
-  start_year?: string
-  end_year?: string
-  description?: string
+  courseName?: string
+  courseNumber?: string
   id?: number
 }
 
 const CoursesBox = () => {
+  // Api calls
   const profile = useSelector((state) => state as any)
-  if (!profile.auth.courses) profile.auth.courses = []
   const [coursesList, setCoursesList] = useState(profile.auth.courses as Course[])
   const deleteCourse = (id: number) => {
     setCoursesList(coursesList.filter((course: any) => course.id !== id))
   }
+  // const addCourse = () => {
+  //   let course: Course = {}
+  //     setCoursesList((oldArray) => [...oldArray, course])
+  // }
+
   const addCourse = () => {
     let course: Course = {}
-    if (coursesList.length === 0) {
-      setCoursesList([course])
-    } else {
-      setCoursesList((oldArray) => [...oldArray, course])
-    }
+    setCoursesList((oldArray) => {
+      if (Array.isArray(oldArray)) {
+        return [...oldArray, course]
+      } else {
+        return [course]
+      }
+    })
   }
+
   const isNew = (course: Course) => {
-    return !(
-      course.institution &&
-      course.start_year &&
-      course.end_year &&
-      course.description
-    )
+    return !(course.courseName && course.courseNumber)
   }
   return (
     <Stack
@@ -62,7 +63,7 @@ const CoursesBox = () => {
           alignSelf: 'flex-start',
         }}
       >
-        Course
+        Courses
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

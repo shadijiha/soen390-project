@@ -3,13 +3,7 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger'
-import {
-  IsEmail,
-  IsAlphanumeric,
-  IsNotEmpty,
-  Length,
-  MinLength
-} from 'class-validator'
+import { IsEmail, IsAlphanumeric, IsNotEmpty, Length, MinLength } from 'class-validator'
 
 import { App } from '../app.types'
 import { User } from '../models/user.entity'

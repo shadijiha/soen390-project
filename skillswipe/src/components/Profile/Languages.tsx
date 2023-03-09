@@ -4,12 +4,10 @@ import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 
-const Awards = ({ awards }: any) => {
-  // call API to get education history
-
+const Languages = ({ languages }: any) => {
   return (
-    awards && (
-      <div data-testid="awards">
+    languages && (
+      <div data-testid="languages">
         <>
           <style jsx>{ProfileStyle}</style>
           <div>
@@ -23,7 +21,7 @@ const Awards = ({ awards }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🏅 Awards</text>
+                <text>🌐 Languages</text>
               </h1>
             </div>
             <Stack
@@ -40,7 +38,7 @@ const Awards = ({ awards }: any) => {
               }}
             >
               {/* map through the skillsArray and create a button for each */}
-              {awards.map((awards: any) => (
+              {languages.map((languages: any) => (
                 <Button
                   className="skill"
                   style={{
@@ -53,7 +51,7 @@ const Awards = ({ awards }: any) => {
                     marginBottom: '1em',
                   }}
                 >
-                  {`${awards.title} - ${awards.description}`}
+                  {`${languages.languageName} - ${languages.proficiency}`}
                 </Button>
               ))}
             </Stack>
@@ -63,4 +61,5 @@ const Awards = ({ awards }: any) => {
     )
   )
 }
-export default Awards
+
+export default Languages

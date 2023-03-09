@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -23,9 +26,10 @@ import {
 
 import Awards from '@/components/Profile/Awards'
 import Courses from '@/components/Profile/Courses'
+import Languages from '@/components/Profile/Languages'
 import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
 import Recommendations from '@/components/Profile/Recommendations'
-import Skills from '@/components/Profile/Skills/Skills'
+import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
@@ -52,6 +56,7 @@ const profile = () => {
     recommendationsReceived: [],
     projects: [],
     courses: [],
+    Languages: [],
   })
   const [Status, setStatus] = useState({
     connected: false,
@@ -111,7 +116,7 @@ const profile = () => {
                 getPendingRequest(token).then((response) => {
                   console.log(response)
                   if (response.data.length > 0) {
-                    var found = false
+                    let found = false
                     console.log(response.data)
                     response.data.map((element: any) => {
                       if (element.user.id == router.query.id) {
@@ -265,6 +270,7 @@ const profile = () => {
                             fontWeight: 600,
                             marginRight: '1em',
                           }}
+                          onClick={() => {router.push(`/inbox/${router.query.id}`)}}
                         >
                           <span>
                             <span>Message</span>
