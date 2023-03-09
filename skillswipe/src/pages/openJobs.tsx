@@ -68,8 +68,13 @@ const findJob = () => {
 
       <Container maxW="5xl" p={{ base: 10, md: 0 }}>
         <Flex justify="left" mb={3}>
-          <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
-            Open Jobs
+          <chakra.h3
+            fontSize="4xl"
+            fontWeight="bold"
+            textAlign="center"
+            paddingBottom={'0.2em'}
+          >
+            💼 ‎ Open Jobs
           </chakra.h3>
         </Flex>
         <VStack
@@ -79,6 +84,7 @@ const findJob = () => {
           rounded="15px"
           overflow="hidden"
           spacing={0}
+          marginBottom={'5em'}
         >
           {jobListing.map((job, index) => (
             <Fragment key={index}>
@@ -155,14 +161,14 @@ const findJob = () => {
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
                     {/* format the starting date to be only year month and date */}
-                    📅 Starting Date: {job.startDate.split('T')[0]}
+                    📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
                   </chakra.p>
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    🤑 Salary: ${job.salary}/hr
+                    🤑 ‎ ‎ Salary: ${job.salary}/hr
                   </chakra.p>
 
                   <chakra.p
@@ -170,7 +176,7 @@ const findJob = () => {
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    🏫 Transcript Needed?{' '}
+                    🏫 ‎ ‎ Transcript Needed?{' '}
                     {job.transcript.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
                   <chakra.p
@@ -178,7 +184,7 @@ const findJob = () => {
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    💌 Cover Letter Needed?{' '}
+                    💌 ‎ ‎ Cover Letter Needed?{' '}
                     {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
                 </VStack>
