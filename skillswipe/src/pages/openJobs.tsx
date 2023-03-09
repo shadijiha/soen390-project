@@ -34,14 +34,11 @@ interface JobAttributes {
   skills: ''
   startDate: ''
   jobType: ''
-  coverLetter: ''
-  transcript: ''
+  coverLetter: false | true
+  transcript: false | true
 }
 
 const findJob = () => {
-  let transcript = ''
-  let coverLetter = ''
-
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
 
   useEffect(() => {
@@ -85,18 +82,6 @@ const findJob = () => {
         >
           {jobListing.map((job, index) => (
             <Fragment key={index}>
-              <div
-                style={{
-                  display: 'none',
-                }}
-              >
-                if (jobListing.transcript === true) {(transcript = 'Yes')}
-                {(transcript = 'No')}
-                if (jobListing.coverLetter === true) {
-                  (coverLetter = 'Yes')
-                } else {(coverLetter = 'No')}
-              </div>
-
               <Grid
                 templateRows={{ base: 'auto auto', md: 'auto' }}
                 w="100%"
@@ -185,14 +170,16 @@ const findJob = () => {
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    🏫 Transcript Needed? {transcript}
+                    🏫 Transcript Needed?{' '}
+                    {job.transcript.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
                   <chakra.p
                     fontWeight="medium"
                     fontSize="sm"
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    💌 Cover Letter Needed? {coverLetter}
+                    💌 Cover Letter Needed?{' '}
+                    {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                   </chakra.p>
                 </VStack>
                 <Stack
