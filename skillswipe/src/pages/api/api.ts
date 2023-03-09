@@ -167,3 +167,11 @@ export const getOpenJobs = async (token: any) => {
     },
   })
 }
+
+export const viewJob = async (token: any, id: any) => {
+  return axios.get(`${URL}/jobs/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

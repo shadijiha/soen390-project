@@ -135,7 +135,7 @@ export default function NavBar() {
           >
             🚀 SkillSwipe
           </Text>
-          <NextLink href='#'>
+          <NextLink href="#">
             <Button
               onClick={toggleColorMode}
               variant="ghost"
