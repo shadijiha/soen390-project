@@ -23,8 +23,7 @@ export class ChatService {
   }
 
   public async message (sender: User, receiver: User, message: string): Promise<Pusher.Response> {
-    const res = await this.pusher.trigger(`message-${receiver.id}`, 'message', { message, sender })
-
+    const res = await this.pusher.trigger(`message-${receiver.id}`, 'message', { message, sender: sender.id })
     // Push to db (we don't need to await --> save time)
     const msg = new Message()
     msg.message = message

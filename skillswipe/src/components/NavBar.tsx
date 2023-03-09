@@ -45,22 +45,6 @@ export default function NavBar() {
     router.push(`/searchResultpage?q=${searchTerm}`)
   }
 
-  const searchIcon = SearchIcon
-
-  try {
-    searchIcon[0].addEventListener('click', function () {
-      setTimeout(function () {
-        if (display === 'none') {
-          changeDisplay('block')
-        } else {
-          changeDisplay('none')
-        }
-      }, 100)
-    })
-  } catch (e) {
-    console.log(e)
-  }
-
   const navColor = useColorModeValue(
     'rgba(255, 255, 255, 0.25)',
     'rgba(0, 0, 0, 0.25)'
@@ -128,7 +112,7 @@ export default function NavBar() {
           >
             🚀 SkillSwipe
           </Text>
-          <NextLink href={''}>
+          <NextLink href='#'>
             <Button
               onClick={toggleColorMode}
               variant="ghost"

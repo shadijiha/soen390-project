@@ -72,8 +72,8 @@ const Card = (props: any) => {
     borderWidthValue = '15px 15px 15px 0'
   }
 
-  const handleImageError = () => {
-    setImgSrc('https://img.icons8.com/emoji/512/carp-streamer.png')
+  const handleImageError = (self) => {
+    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png';
     console.log('Error loading logo image')
   }
 
@@ -184,6 +184,3 @@ const EmptyCard = () => {
 }
 
 export default WorkExperience
-function setImgSrc(arg0: string) {
-  throw new Error('Function not implemented.')
-}
