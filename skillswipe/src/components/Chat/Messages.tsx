@@ -1,17 +1,19 @@
 import { Avatar, Flex, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 
-const Messages = ({ messages }) => {
+const Messages = ({ messages,user}) => {
+  const User = useSelector((state) => state as any)
   const AlwaysScrollToBottom = () => {
-    const elementRef = useRef()
-    useEffect(() => elementRef.current.scrollIntoView())
-    return <div ref={elementRef} />
+    const elementRef = useRef(document.createElement("div"))
+    useEffect(() => elementRef.current.scrollIntoView(),[])
+      return <div ref={elementRef} />
   }
 
   return (
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => {
-        if (item.from === 'me') {
+        if (item.senderId === User.auth.id) {
           return (
             <Flex key={index} w="100%" justify="flex-end">
               <Flex
@@ -28,7 +30,7 @@ const Messages = ({ messages }) => {
                   textShadow="1px 1px 5px #0000001B"
                   padding={'0.2rem'}
                 >
-                  {item.text}
+                  {item.message}
                 </Text>
               </Flex>
             </Flex>
@@ -38,7 +40,7 @@ const Messages = ({ messages }) => {
             <Flex key={index} w="100%">
               <Avatar
                 name="Computer"
-                src="https://avataaars.io/?avatarStyle=Transparent&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light"
+                src={user.profilePic?`data:image/jpeg;base64,${user.profilePic}` : process.env.NEXT_PUBLIC_DEFAULT_PICTURE}
                 bg="blue.300"
                 mr={'1.5rem'}
                 boxShadow="lg"
@@ -52,7 +54,7 @@ const Messages = ({ messages }) => {
                 p="3"
                 borderRadius={'20px'}
               >
-                <Text padding={'0.2rem'}>{item.text}</Text>
+                <Text padding={'0.2rem'}>{item.message}</Text>
               </Flex>
             </Flex>
           )

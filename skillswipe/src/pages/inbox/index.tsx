@@ -11,57 +11,52 @@ import {
   Heading,
   HStack,
   Spacer,
+  Spinner,
   Text,
 } from '@chakra-ui/react'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { getAllConversation } from '../api/chat'
 
 const Inbox = () => {
   const router = useRouter()
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      title: 'John',
-      text: 'This is a sample message 1',
-      avatar: 'https://via.placeholder.com/100x100',
-    },
-    {
-      id: 2,
-      title: 'Alex',
-      text: 'This is a sample message 2',
-      avatar: 'https://via.placeholder.com/100x100',
-    },
-    {
-      id: 3,
-      title: 'Parker',
-      text: 'This is a sample message 3',
-      avatar: 'https://via.placeholder.com/100x100',
-    },
-  ])
+  const [messages, setMessages] = useState([{}])
   const [loading, setLoading] = useState(true)
-  const handleMessageClick = (message: {
-    id: any
-    title?: string
-    text?: string
-  }) => {
-    router.push(`/inbox/2`)
+  const User = useSelector((state) => state as any)
+  useEffect(() => {
+    if(User.auth){
+      const token = localStorage.getItem("jwt")
+      getAllConversation(token).then((response) => {
+        var allConvo = response.data;
+        allConvo = allConvo.filter(filterConvo)
+        setMessages(allConvo);    
+        setLoading(false);
+      }).catch((error) => {
+        toast(error.message)
+      })
+    }
+  },[User.auth])
+  const filterConvo = (element : any) =>{
+    return element.id != User.auth.id
+
   }
-
-  // useEffect(() => {
-  // Will get all the coversations when apis are ready
-  // },[])
-
   return (
     <>
       <Layout>
         <NavBar></NavBar>
-        <Box p={50}>
+          {
+            loading == true ? 
+            <Spinner/>
+            :
+            <Box p={50}>
           <Heading as="h1" size="lg" mb={4}>
-            Messages
+            Inbox
           </Heading>
           {messages.length > 0 ? (
-            messages.map((element) => (
+            messages.map((element : any) => (
               <Flex
                 key={element.id}
                 borderWidth="1px"
@@ -71,16 +66,14 @@ const Inbox = () => {
                 display="flex"
                 alignItems="center"
                 cursor={'pointer'}
-                onClick={() => handleMessageClick(element)}
+                onClick={() => router.push(`/inbox/${element.id}`)}
               >
                 <Flex>
-                  <Avatar size="lg" mr={4} src={element.avatar} />
+                  <Avatar size="lg" mr={4} src={element.profilePic?`data:image/jpeg;base64,${element.profilePic}` : process.env.NEXT_PUBLIC_DEFAULT_PICTURE} />
                   <Box>
                     <Heading as="h2" size="md" mb={2}>
-                      {element.title}{' '}
-                      <Badge ml="1" colorScheme="green">
-                        New
-                      </Badge>
+                      {`${element.firstName} ${element.lastName}`}
+                      
                     </Heading>
                     <Text mb={2}>{element.text}</Text>
                   </Box>
@@ -92,6 +85,8 @@ const Inbox = () => {
             <h1>No new message</h1>
           )}
         </Box>
+          }
+        
       </Layout>
     </>
   )

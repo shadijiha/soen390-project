@@ -1,14 +1,15 @@
-import { Button, Flex, Input } from '@chakra-ui/react'
+import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
 import React from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 
 const Footer = ({ inputMessage, setInputMessage, handleSendMessage }) => {
+	const { colorMode, toggleColorMode } = useColorMode()
   return (
 
 	<Flex w="100%" mt="5">
   	<Input
         borderRadius="10px"
-        color={'white'}
+        color={colorMode === 'light' ? "black" : "white"}
     	placeholder="Type Something..."
 		
     	

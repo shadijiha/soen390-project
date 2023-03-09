@@ -1,22 +1,24 @@
 import { Avatar, AvatarBadge, Flex, Text } from '@chakra-ui/react'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
-const Header = () => {
+const Header = ({user}) => {
+  const router = useRouter();
   return (
     <Flex w="100%" padding={5}>
       <Avatar
         size="lg"
         name="Dan Abrahmov"
-        src="https://bit.ly/dan-abramov"
+        src={user.profilePic?`data:image/jpeg;base64,${user.profilePic}` : process.env.NEXT_PUBLIC_DEFAULT_PICTURE}
         boxShadow={'lg'}
       >
         <AvatarBadge boxSize="1.25em" bg="green.500" />
       </Avatar>
       <Flex flexDirection="column" mx="5" justify="center">
-        <Text fontSize="lg" fontWeight="bold">
-          Ferin Patel
+        <Text fontSize="lg" fontWeight="bold" cursor="pointer" onClick={()=>{router.push(`/profile/${user.id}`)}}>
+          {`${user.firstName} ${user.lastName}`}
         </Text>
-        <Text color="green.500">Online</Text>
+   
       </Flex>
     </Flex>
   )
