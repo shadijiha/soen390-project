@@ -110,4 +110,16 @@ export class JobsService {
       relations: ['user', 'skills']
     })
   }
+
+  async getJobById (jobId: number): Promise<Job> {
+    const job = await this.jobsRepository.findOneOrFail({
+      where: { id: jobId },
+      relations: ['user', 'skills']
+    })
+
+    if (job == null) {
+      throw new NotFoundException()
+    }
+    return job
+  }
 }
