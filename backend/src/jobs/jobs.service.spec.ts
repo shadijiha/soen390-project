@@ -1,4 +1,3 @@
-
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Job } from "../models/job.entity";
@@ -20,13 +19,21 @@ describe("JobsService", () => {
     save: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+    find: jest.fn(),
+    findOneOrFail: jest.fn(() => {
+      return {
+        id: 1,
+        jobTitle: "Software Engineer",
+        skills: ["Java", "C++", "Python"],
+      } as unknown as Job;
+    }),
   };
 
   let mockSkillRepository = {
     save: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    find: jest.fn(() => ['Java', 'C++', 'Python']),
+    find: jest.fn(() => ["Java", "C++", "Python"]),
   };
 
   beforeEach(async () => {
@@ -72,12 +79,11 @@ describe("JobsService", () => {
 
     data = {
       jobTitle: "Software Engineer",
-      skills: '',
+      skills: "",
     } as unknown as Jobs.AddJobRequest;
-    
+
     await service.createJob(data, recruiter);
     expect(mockUserRepository.save).toHaveBeenCalled();
-
   });
 
   it("should update a job", async () => {
@@ -118,8 +124,6 @@ describe("JobsService", () => {
 
     await service.updateJob(jobId, data, recruiter);
     expect(mockjobsRepository.save).toHaveBeenCalled();
-
-
   });
 
   it("should delete a job", async () => {
@@ -129,11 +133,9 @@ describe("JobsService", () => {
       jobs: [],
     } as unknown as Recruiter;
 
-
     try {
       await service.deleteJob(jobId, recruiter);
-    }
-    catch (e) {
+    } catch (e) {
       expect(e.message).toBe("Not Found");
     }
 
@@ -148,9 +150,25 @@ describe("JobsService", () => {
 
     await service.deleteJob(jobId, recruiter);
     expect(mockjobsRepository.delete).toHaveBeenCalled();
-
-  
   });
 
+  it("should get all jobs", async () => {
+    await service.getAllJobs();
+    expect(mockjobsRepository.find).toHaveBeenCalled();
+  });
 
+  it("should get job by id", async () => {
+    await service.getJobById(1);
+
+    expect(mockjobsRepository.findOneOrFail).toHaveBeenCalled();
+
+    jest.spyOn(mockjobsRepository, "findOneOrFail").mockImplementation(() => null as any);
+
+    try {
+      await service.getJobById(1);
+    } catch (e) {
+      expect(e.message).toBe("Not Found");
+    }
+
+  });
 });

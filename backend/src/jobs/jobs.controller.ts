@@ -33,6 +33,15 @@ export class JobsController {
     return await this.jobsService.getAllJobs()
   }
 
+  @Get(':id')
+  async getJobById (@Param('id') id: string): Promise<Job> {
+    try {
+      return await this.jobsService.getJobById(parseInt(id))
+    } catch (e) {
+      throw new HttpException('Job does not exist', 400)
+    }
+  }
+
   // get all jobs listings for a recruiter
   @Get('/my')
   async getJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
