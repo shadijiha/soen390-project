@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, HttpException, HttpStatus } from '@nestjs/common'
+import { BadRequestException, Controller, Delete, Get, HttpException, HttpStatus } from '@nestjs/common'
 import { Body, Param, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
 import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
@@ -70,5 +70,18 @@ export class UsersController {
       @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
   ): Promise<User> {
     return await this.usersService.update(authedUser.id, user, files)
+  }
+
+  @Put('user/status')
+  async updateStatus (@AuthUser() authedUser: BearerPayload, @Body() status: Users.UpdateStatusRequest): Promise<void> {
+    if (status.userStatus !== 'online' && status.userStatus !== 'offline') {
+      throw new BadRequestException('Invalid user status')
+    }
+    await this.usersService.updateStatus(authedUser.id, status.userStatus)
+  }
+
+  @Get('user/status/:id')
+  async getStatus (@AuthUser() authedUser: BearerPayload, @Param('id') id: string): Promise<'online' | 'offline'> {
+    return await this.usersService.getStatus(parseInt(id))
   }
 }

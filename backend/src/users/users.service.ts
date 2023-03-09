@@ -103,6 +103,17 @@ export class UsersService {
     return await this.findOneById(id)
   }
 
+  async updateStatus (id: number, status: 'online' | 'offline'): Promise<void> {
+    const oldUser = await this.findOneByIdNoRelations(id)
+    oldUser.userStatus = status
+    await this.usersRepository.update(id, oldUser)
+  }
+
+  async getStatus (id: number): Promise<'online' | 'offline'> {
+    const user = await this.findOneByIdNoRelations(id)
+    return user.userStatus
+  }
+
   async removeSoft (id: number): Promise<void> {
     const user = await this.findOneById(id)
     await this.usersRepository.softRemove(user)
