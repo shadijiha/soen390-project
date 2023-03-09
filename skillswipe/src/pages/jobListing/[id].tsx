@@ -3,81 +3,44 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import {
-  Container,
-  Divider,
-  Flex,
-  Spinner,
-  Stack,
-  useColorMode,
-  useColorModeValue,
-} from '@chakra-ui/react'
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-import ProfileStyle from '../../styles/profilestyle'
-import {
-  acceptRequest,
-  getPendingRequest,
-  getUserById,
-  removeConnection,
-  sendRequest,
-} from '../api/api'
+import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
+import React, { useState } from 'react'
 
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
-import Awards from '@/components/Profile/Awards'
-import Courses from '@/components/Profile/Courses'
-import Languages from '@/components/Profile/Languages'
-import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
-import Recommendations from '@/components/Profile/Recommendations'
-import Skills from '@/components/Profile/Skills'
-import Volunteering from '@/components/Profile/Volunteering'
-import WorkExperience from '@/components/Profile/WorkExperience'
-import Education from '../../components/Profile/education'
+import axios from 'axios'
 
-const jobListing = () => {
-  const router = useRouter()
-  const { toggleColorMode } = useColorMode()
-  const buttonColors = useColorModeValue('black', 'white')
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobileNo: '',
-    gender: '',
-    profilePic: '',
-    coverPic: '',
-    biography: '',
+const jobListing = ({ token, jobId }) => {
+  const [job, getJob] = useState({
+    id: Number,
+    jobTitle: '',
+    companyName: '',
+    location: '',
+    jobDescription: '',
+    salary: '',
+    jobType: '',
+    startDate: '',
+    coverLetter: false,
+    transcript: false,
     skills: [],
-    awards: [],
-    workExperiences: [],
-    educations: [],
-    volunteeringExperience: [],
-    recommendationsReceived: [],
-    projects: [],
-    courses: [],
-    Languages: [],
   })
-  const [Status, setStatus] = useState({
-    connected: false,
-    Requested: false,
-    Pending: false,
-  })
-  const currentUser = useSelector((state) => state as any)
 
-  const [profile, setProfile] = useState({
-    image:
-      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
-    cover:
-      'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
-  })
+  const viewJob = async (token, id) => {
+    try {
+      const response = await axios.get(`${URL}/jobs/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      return response.data
+    } catch (error) {
+      console.error(error)
+      throw new Error('Error viewing job')
+    }
+  }
 
   return (
     <>

@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
+import { viewJob } from '@/pages/api/api'
 import { Heading } from '@chakra-ui/react'
 
 const TopHeader = () => {
+  // get viewJob and store the response
+
   return (
     <>
       <div
