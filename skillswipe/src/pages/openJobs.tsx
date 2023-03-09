@@ -44,7 +44,6 @@ interface JobAttributes {
 
 const findJob = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [setJobView, setJob] = useState<JobAttributes[]>([])
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -63,27 +62,6 @@ const findJob = () => {
       }
     }
     viewOpenJobs()
-  }, [])
-
-  useEffect(() => {
-    // perform a get request getJobListing and store the data in a response variable
-    const handleView = async (id: number) => {
-      // Get token from local storage
-      const token = localStorage.getItem('jwt')
-
-      try {
-        // Call API function to get open jobs
-        const response = await viewJob(token, id)
-
-        // Update state with fetched data
-        setJob(response.data)
-        router.push(`/viewJob/${id}`)
-      } catch (error) {
-        console.error(error)
-        toast.error('Error getting job')
-      }
-    }
-    handleView(5)
   }, [])
 
   const handleFilter = (value) => {
@@ -182,7 +160,7 @@ const findJob = () => {
 
                     <chakra.h3
                       as={Link}
-                      href={`/jobs/${job.id}`}
+                      href={`/jobListing/${job.id}`}
                       isExternal
                       fontWeight="extrabold"
                       fontSize="2xl"

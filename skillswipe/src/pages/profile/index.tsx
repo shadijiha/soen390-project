@@ -191,8 +191,6 @@ const Profile = () => {
             <br></br>
             <Divider />
 
-          
-
             <br></br>
             <Divider />
 
@@ -223,12 +221,11 @@ const Profile = () => {
             <Divider />
             {/* LANGUAGES SECTION */}
 
-            {User.auth.languages && User.auth.languages.length > 0 ? (  
+            {User.auth.languages && User.auth.languages.length > 0 ? (
               <Languages languages={User.auth.languages} />
             ) : (
               <></>
             )}
-
 
             <Divider />
             {/* PERSONAL PROJECTS */}
