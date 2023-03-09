@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -113,7 +116,7 @@ const profile = () => {
                 getPendingRequest(token).then((response) => {
                   console.log(response)
                   if (response.data.length > 0) {
-                    var found = false
+                    let found = false
                     console.log(response.data)
                     response.data.map((element: any) => {
                       if (element.user.id == router.query.id) {

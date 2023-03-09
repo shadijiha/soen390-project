@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, Heading, Stack } from '@chakra-ui/react'

@@ -26,7 +26,7 @@ const EducationHistoryBox = () => {
   }
 
   const addEducation = () => {
-    let educ: Education = {}
+    const educ: Education = {}
     setEducationList((oldArray) => [...oldArray, educ])
   }
   const isNew = (education: Education) => {
