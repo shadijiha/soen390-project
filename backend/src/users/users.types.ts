@@ -3,7 +3,7 @@
  */
 
 import { ApiProperty } from '@nestjs/swagger'
-import { Job } from 'src/models/job.entity'
+import { Job } from '../models/job.entity'
 import { App } from '../app.types'
 import { User } from '../models/user.entity'
 

@@ -5,7 +5,7 @@ import { DataSource, Like, Repository } from 'typeorm'
 import { type Users } from './users.types'
 import * as argon2 from 'argon2'
 import { type Auth } from '../auth/auth.types'
-import { Job } from 'src/models/job.entity'
+import { Job } from '../models/job.entity'
 
 @Injectable()
 export class UsersService {
