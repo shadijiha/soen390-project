@@ -176,7 +176,7 @@ const PersonalProjects = (props: any) => {
         <Input
           minWidth={'100%'}
           type="text"
-          defaultValue={props.personalProject?.name}
+          defaultValue={props.personalProjects.name}
           name="name"
           id="name"
           borderRadius="10"
@@ -193,7 +193,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="description"
           id="description"
-          defaultValue={props.personalProject?.description}
+          defaultValue={props.personalProjects.description}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -208,7 +208,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="url"
           id="url"
-          defaultValue={props.personalProject?.url}
+          defaultValue={props.personalProjects.url}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -224,7 +224,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="start_year"
           id="start_year"
-          defaultValue={props.personalProject?.start_year}
+          defaultValue={props.personalProjects.start_year}
           borderRadius="10"
           size="lg"
           mb={5}
@@ -239,7 +239,7 @@ const PersonalProjects = (props: any) => {
           type="text"
           name="end_year"
           id="end_year"
-          defaultValue={props.personalProject?.end_year}
+          defaultValue={props.personalProjects.end_year}
           borderRadius="10"
           size="lg"
           mb={5}
