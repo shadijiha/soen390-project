@@ -10,11 +10,14 @@ import {
   Button,
   Collapse,
   Flex,
+  Icon,
   IconButton,
   InputGroup,
   InputRightElement,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuList,
   Select,
   Text,
   useColorMode,
@@ -24,6 +27,7 @@ import {
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -106,7 +110,20 @@ export default function NavBar() {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
-
+  const handleFilter = (value) => {
+    // open the openJobs page
+    if (value === 'option1') {
+      router.push('/openJobs')
+    }
+    // open the myJobListings page
+    if (value === 'option2') {
+      router.push('/myJobListings')
+    }
+    // open the myJobApplications page
+    if (value === 'option3') {
+      router.push('/myJobApplications')
+    }
+  }
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -157,35 +174,36 @@ export default function NavBar() {
               </Button>
             </NextLink>
 
-            <NextLink href="/openJobs" passHref>
-              <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
-                Open Jobs
-              </Button>
-            </NextLink>
-
-            <NextLink href="/jobListing" passHref>
-              <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
-                Job example
-              </Button>
-            </NextLink>
-
-            <NextLink href="/postJob" passHref>
-              <Button
-                variant="ghost"
-                aria-label="Create Job Listing"
-                my={5}
-                w="100%"
-              >
-                Create Job Listing
-              </Button>
-            </NextLink>
-
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
                 Messages
               </Button>
             </NextLink>
-
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<Icon as={RiArrowDropDownFill} w={8} h={8} />}
+                variant="outline"
+                padding={'1.0em'}
+                rounded={'full'}
+                marginTop={'1.3em'}
+                marginLeft={'1em'}
+                marginRight={'1em'}
+              >
+                Careers
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleFilter('option1')}>
+                  Open Jobs
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option2')}>
+                  My Job Listings
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option3')}>
+                  Create a Job Listing
+                </MenuItem>
+              </MenuList>
+            </Menu>
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
@@ -269,27 +287,10 @@ export default function NavBar() {
             />
           </Flex>
 
-          <Flex flexDir="column" align="center">
+          <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
-              </Button>
-            </NextLink>
-
-            <NextLink href="/openJobs" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
-                Find Jobs
-              </Button>
-            </NextLink>
-
-            <NextLink href="/postJob" passHref>
-              <Button
-                variant="ghost"
-                aria-label="Create Job Listing"
-                my={5}
-                w="100%"
-              >
-                Create Job Listing
               </Button>
             </NextLink>
 
@@ -304,6 +305,33 @@ export default function NavBar() {
                 My Account
               </Button>
             </NextLink>
+
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<Icon as={RiArrowDropDownFill} w={8} h={8} />}
+                variant="outline"
+                padding={'1.0em'}
+                rounded={'full'}
+                marginTop={'1.3em'}
+                marginLeft={'1em'}
+                marginRight={'1em'}
+                marginBottom={'1.5em'}
+              >
+                Careers
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleFilter('option1')}>
+                  Open Jobs
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option2')}>
+                  My Job Listings
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option3')}>
+                  Create a Job Listing
+                </MenuItem>
+              </MenuList>
+            </Menu>
 
             {/* <MobileSearchBar/> */}
             <Button

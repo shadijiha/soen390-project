@@ -161,7 +161,7 @@ export const createJob = async (token: any, jobCreate: any) => {
 }
 
 export const getOpenJobs = async (token: any) => {
-  return axios.get(`${URL}/jobs/my`, {
+  return axios.get(`${URL}/jobs/all`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
