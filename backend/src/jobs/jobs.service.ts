@@ -107,7 +107,7 @@ export class JobsService {
 
   async getAllJobs (): Promise<Job[]> {
     return await this.jobsRepository.find({
-      relations: ['recruiter', 'skills']
+      relations: ['user', 'skills']
     })
   }
 }
