@@ -5,12 +5,15 @@ import { DataSource, Like, Repository } from 'typeorm'
 import { type Users } from './users.types'
 import * as argon2 from 'argon2'
 import { type Auth } from '../auth/auth.types'
+import { Job } from 'src/models/job.entity'
 
 @Injectable()
 export class UsersService {
   constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
+    @InjectRepository(Job)
+    private readonly jobsRepository: Repository<Job>,
     private readonly dataSource: DataSource
   ) {}
 
@@ -23,12 +26,22 @@ export class UsersService {
   }
 
   async findOneById (userId: number, relations?: string[]): Promise<User> {
-    const user: User = (await this.usersRepository.findOneOrFail({
+    const user: User = await this.usersRepository.findOneOrFail({
       where: {
         id: userId
       },
-      relations: ['educations', 'workExperiences', 'volunteeringExperience', 'skills', 'courses', 'projects', 'awards', 'languages', 'recommendationsReceived']
-    }))
+      relations: [
+        'educations',
+        'workExperiences',
+        'volunteeringExperience',
+        'skills',
+        'courses',
+        'projects',
+        'awards',
+        'languages',
+        'recommendationsReceived'
+      ]
+    })
 
     return user
   }
@@ -46,9 +59,7 @@ export class UsersService {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
-  public async create (
-    body: Auth.RegisterRequest
-  ): Promise<Record<string, any>> {
+  public async create (body: Auth.RegisterRequest): Promise<Record<string, any>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -56,12 +67,15 @@ export class UsersService {
     user.lastName = body.lastName
     user.gender = body.gender
 
-    const { password, ...userNoPass }: Record<string, any> =
-      await this.usersRepository.save(user)
+    const { password, ...userNoPass }: Record<string, any> = await this.usersRepository.save(user)
     return userNoPass
   }
 
-  async update (id: number, user: Users.UpdateUserRequest, files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }): Promise<User> {
+  async update (
+    id: number,
+    user: Users.UpdateUserRequest,
+    files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
+  ): Promise<User> {
     const oldUser = await this.findOneByIdNoRelations(id)
 
     oldUser.firstName = user.firstName !== '' ? user.firstName : oldUser.firstName
@@ -100,11 +114,17 @@ export class UsersService {
         where: [
           { firstName: Like(`%${query}%`) },
           { lastName: Like(`%${query}%`) },
-          { email: Like(`%${query}%`) }
-        ],
+          { email: Like(`%${query}%`) }],
         take: 10
       }),
-      companies: []
+      jobs: await this.jobsRepository.find({
+        where: [
+          { jobTitle: Like(`%${query}%`) },
+          { companyName: Like(`%${query}%`) },
+          { location: Like(`%${query}%`) }
+        ],
+        take: 10
+      })
     }
   }
 }

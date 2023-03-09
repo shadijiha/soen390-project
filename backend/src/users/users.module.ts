@@ -6,11 +6,12 @@ import { UsersService } from './users.service'
 import { Connection } from '../models/connection.entity'
 import { ConnectionsController } from './connections/connections.controller'
 import { ConnectionsService } from './connections/connections.service'
+import { Job } from '../models/job.entity'
 
 @Module({
   controllers: [UsersController, ConnectionsController],
   providers: [UsersService, ConnectionsService],
-  imports: [TypeOrmModule.forFeature([User]), TypeOrmModule.forFeature([Connection])],
+  imports: [TypeOrmModule.forFeature([User, Job]), TypeOrmModule.forFeature([Connection])],
   exports: [TypeOrmModule]
 })
 export class UsersModule {}

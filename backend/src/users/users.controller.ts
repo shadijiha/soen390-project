@@ -51,7 +51,7 @@ export class UsersController {
   @Get('search')
   @ApiQuery({ name: 'query', required: true })
   public async search (@AuthUser() authedUser: BearerPayload, @Query('query') query: string): Promise<Users.SearchResponse> {
-    if (query.length <= 0) return { users: [], companies: [] }
+    if (query.length <= 0) return { users: [], jobs: [] }
     return await this.usersService.search(await authedUser.getUser(), query)
   }
 
