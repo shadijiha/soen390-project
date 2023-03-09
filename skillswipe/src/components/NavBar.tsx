@@ -204,14 +204,47 @@ export default function NavBar() {
               >
                 Careers
               </MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => handleFilter('option1')}>
+              <MenuList
+                style={{
+                  borderRadius: '20px',
+                }}
+              >
+                <MenuItem
+                  onClick={() => handleFilter('option1')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    transform: 'scale(1.03)',
+                  }}
+                >
                   Open Jobs
                 </MenuItem>
-                <MenuItem onClick={() => handleFilter('option2')}>
+                <MenuItem
+                  onClick={() => handleFilter('option2')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
                   My Job Listings
                 </MenuItem>
-                <MenuItem onClick={() => handleFilter('option3')}>
+                <MenuItem
+                  onClick={() => handleFilter('option3')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
                   Create a Job Listing
                 </MenuItem>
               </MenuList>
