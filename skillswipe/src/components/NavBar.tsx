@@ -169,13 +169,25 @@ export default function NavBar() {
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
             <NextLink href="/home" passHref>
-              <Button aria-label="Home" my={5} w="100%" variant="ghost">
+              <Button
+                aria-label="Home"
+                my={5}
+                w="100%"
+                variant="ghost"
+                rounded={'full'}
+              >
                 Home
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
-              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
+              <Button
+                variant="ghost"
+                aria-label="Messages"
+                my={5}
+                w="100%"
+                rounded={'full'}
+              >
                 Messages
               </Button>
             </NextLink>
