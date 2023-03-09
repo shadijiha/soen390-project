@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable react-hooks/rules-of-hooks */
@@ -50,7 +51,7 @@ const jobListing = () => {
     }
     viewListing()
   }, [])
-
+  console.log(job[0].companyName)
   return (
     <>
       <Layout>
@@ -61,14 +62,11 @@ const jobListing = () => {
               <Flex align="center" justify="center" direction="column">
                 {/* Company logo, Company Name, Job Name in TopHeader */}
                 <TopHeader />
-                <p>NAME:</p>
 
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
-
                 {/* Top 3 boxes */}
                 <JobInfoBoxes />
-
                 <Divider />
               </Flex>
 

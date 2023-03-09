@@ -169,15 +169,9 @@ export const getOpenJobs = async (token: any) => {
 }
 
 export const viewJob = async (token, id) => {
-  try {
-    const response = await axios.get(`${URL}/jobs/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    return response.data
-  } catch (error) {
-    console.error(error)
-    throw new Error('Error viewing job')
-  }
+  return axios.get(`${URL}/jobs/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
