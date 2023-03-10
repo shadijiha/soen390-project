@@ -6,16 +6,28 @@ import { type Users } from './users.types'
 import * as argon2 from 'argon2'
 import { type Auth } from '../auth/auth.types'
 import { Job } from '../models/job.entity'
+import * as Pusher from 'pusher'
 
 @Injectable()
 export class UsersService {
+  private readonly pusher: Pusher
   constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     private readonly dataSource: DataSource
-  ) {}
+  ) {
+    this.pusher = new Pusher({
+      appId: process.env.PUSHER_APP_ID ?? 'unset',
+      key: process.env.PUSHER_APP_KEY ?? 'unset',
+      secret: process.env.PUSHER_APP_SECRET ?? 'unset',
+      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset',
+      useTLS: true
+      // encrypted: true
+    })
+
+  }
 
   public async getByEmail (email: string): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ email })
@@ -103,10 +115,14 @@ export class UsersService {
     return await this.findOneById(id)
   }
 
-  async updateStatus (id: number, status: 'online' | 'offline'): Promise<void> {
+  async updateStatus (id: number, status: 'online' | 'offline'): Promise<Pusher.Response> {
+    
     const oldUser = await this.findOneByIdNoRelations(id)
     oldUser.userStatus = status
     await this.usersRepository.update(id, oldUser)
+    
+    
+    return await this.pusher.trigger(`userStatus`, 'statusUpdate', { id, status })
   }
 
   async getStatus (id: number): Promise<'online' | 'offline'> {

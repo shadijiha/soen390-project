@@ -9,6 +9,7 @@ import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { FileValidationPipe } from '../util/fileValidationPipe'
 import { ConnectionsService } from './connections/connections.service'
+import Pusher from 'pusher'
 
 @Controller()
 @Controller()
@@ -73,11 +74,11 @@ export class UsersController {
   }
 
   @Put('user/status')
-  async updateStatus (@AuthUser() authedUser: BearerPayload, @Body() status: Users.UpdateStatusRequest): Promise<void> {
+  async updateStatus (@AuthUser() authedUser: BearerPayload, @Body() status: Users.UpdateStatusRequest): Promise<Pusher.Response> {
     if (status.userStatus !== 'online' && status.userStatus !== 'offline') {
       throw new BadRequestException('Invalid user status')
     }
-    await this.usersService.updateStatus(authedUser.id, status.userStatus)
+    return await this.usersService.updateStatus(authedUser.id, status.userStatus)
   }
 
   @Get('user/status/:id')
