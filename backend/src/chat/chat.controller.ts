@@ -24,9 +24,7 @@ export class ChatController {
     const result: User[] = []
     const ids = await this.chatService.allConversations(breaserPayload.id)
     for (const id of ids) {
-      const user = await this.userService.findOneByIdNoRelations(id)
-      user.profilePic = ''
-      result.push(user)
+      result.push(await this.userService.findOneByIdNoRelations(id))
     }
     return result
   }
