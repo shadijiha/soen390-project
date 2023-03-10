@@ -25,17 +25,20 @@ const ListingData: ListingData[] = [
   },
 ]
 
-const JobInfoBoxes = () => {
+const JobInfoBoxes = ({data}) => {
+
+
+
   return (
     <>
       <Container maxW="5xl" paddingBottom={8}>
         <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} spacing={5} mt={5} mb={2}>
-          {ListingData.map((data) => (
-            <Box key={data.id} p={5} boxShadow="md" rounded="36px" borderWidth={2}>
+          {data.map((element) => (
+            <Box key={element.id} p={5} boxShadow="md" rounded="36px" borderWidth={2}>
               <Text fontWeight="bold" fontSize="x-large" textAlign={'center'}>
-                {data.text}
+                {element.text}
               </Text>
-              <Text textAlign={'center'}>{data.label}</Text>
+              <Text textAlign={'center'}>{element.label}</Text>
             </Box>
           ))}
         </SimpleGrid>

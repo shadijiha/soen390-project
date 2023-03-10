@@ -239,7 +239,7 @@ const findJob = () => {
 
                       <chakra.h2
                         as={Link}
-                        href={job.jobTitle}
+                        href={`/jobListing/${job.id}`}
                         isExternal
                         fontWeight="bold"
                         fontSize="lg"

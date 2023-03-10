@@ -58,8 +58,10 @@ const jobListing = () => {
     return <div>Loading...</div>
   }
 
+ 
   return (
     <>
+
       <Layout>
         <NavBar />
         <div data-testid="job-listing">
@@ -71,8 +73,7 @@ const jobListing = () => {
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
-                salary: {job.salary}
-                <JobInfoBoxes
+                <JobInfoBoxes 
                   salary={job.salary}
                   jobType={job.jobType}
                   startDate={job.startDate}
@@ -84,12 +85,16 @@ const jobListing = () => {
               <JobDescription jobDescription={job.jobDescription} />
 
               {/* Submit Application Form */}
-              <SubmitAppForm coverLetter={job.coverLetter} />
+              <SubmitAppForm 
+                coverLetter={job.coverLetter}
+                
+              />
             </Stack>
           </Container>
         </div>
       </Layout>
     </>
   )
+
 }
 export default jobListing
