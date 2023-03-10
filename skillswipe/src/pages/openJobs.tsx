@@ -122,7 +122,7 @@ const findJob = () => {
                 >
                   Filter Jobs
                 </MenuButton>
-                <MenuList>
+                <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
                     Sort by Starting Date
                   </MenuItem>
@@ -131,7 +131,9 @@ const findJob = () => {
                   </MenuItem>
 
                   <Checkbox
+                    paddingTop={1}
                     pl={3}
+                    paddingBottom={1}
                     isChecked={allChecked}
                     isIndeterminate={isIndeterminate}
                     onChange={(e) =>
@@ -143,7 +145,7 @@ const findJob = () => {
                       ])
                     }
                   >
-                    Select All Job Types
+                    View All
                   </Checkbox>
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
