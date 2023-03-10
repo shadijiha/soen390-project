@@ -153,11 +153,15 @@ export const search = async (token: any, query: string) => {
 }
 
 export const createJob = async (token: any, jobCreate: any) => {
-  return axios.post(`${URL}/jobs`, jobCreate, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  return axios
+      .post(`${URL}/jobs`, jobCreate, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => {
+        return { status: 400, data: err.response.data }
+      })
 }
 
 export const getOpenJobs = async (token: any) => {
@@ -166,6 +170,9 @@ export const getOpenJobs = async (token: any) => {
       Authorization: `Bearer ${token}`,
     },
   })
+  .catch((err) => {
+    return { status: 400, data: err.response.data }
+  })
 }
 
 export const viewJob = async (token, id) => {
@@ -173,5 +180,8 @@ export const viewJob = async (token, id) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  })
+  .catch((err) => {
+    return { status: 400, data: err.response.data }
   })
 }

@@ -6,6 +6,7 @@ import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
 
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
@@ -15,43 +16,52 @@ import TopHeader from '@/components/jobListing/TopHeader'
 import axios from 'axios'
 import router from 'next/router'
 import { toast } from 'react-toastify'
-import { viewJob } from '../api/api'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
-interface JobAttributes {
-  id: number
-  jobTitle: ''
-  companyName: ''
-  location: ''
-  jobDescription: ''
-  salary: ''
-  jobType: ''
-  startDate: ''
-  coverLetter: false
-  transcript: false
-  skills: []
+import { viewJob, getOpenJobs, createJob } from '../api/api'
+
+
+type JobAttributes = {
+  id?: number
+  jobTitle?: string
+  companyName?: string
+  location?: string
+  jobDescription?: string
+  salary: string
+  jobType?: string
+  startDate?: string
+  coverLetter?: boolean
+  transcript?: boolean
+  skills?: Array < string >
 }
 
 const jobListing = () => {
+  const router = useRouter()
   const [job, setJobPage] = useState<JobAttributes[]>([])
+
+
   useEffect(() => {
-    const viewListing = async () => {
-      // Get token from local storage
+    if (router.query.id) {
+      const jobId = parseInt(router.query.id as string)
       const token = localStorage.getItem('jwt')
 
-      try {
-        // Call API function to get open jobs
-        const response = await viewJob(token, 5)
-
-        // Update state with fetched data
-        setJobPage(response.data)
-      } catch (error) {
-        console.error(error)
-        toast.error('Error getting jobs')
-      }
+      viewJob(token, jobId)
+        .then((response) => {
+          setJob(response.data)
+        })
+        .catch((error) => {
+          console.error(error)
+          toast.error('Error getting job')
+        })
     }
-    viewListing()
-  }, [])
-  console.log(job[0].companyName)
+  }, [router.query.id])
+
+  if (!job) {
+    return <div>Loading...</div>
+  }
+
+ 
   return (
     <>
       <Layout>
@@ -66,15 +76,24 @@ const jobListing = () => {
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
-                <JobInfoBoxes />
+                <JobInfoBoxes 
+                  salary={job.salary}
+                  jobType={job.jobType}
+                  startDate={job.startDate}
+                />
                 <Divider />
               </Flex>
 
               {/* Job Description */}
-              <JobDescription />
+              <JobDescription
+                jobDescription={job.jobDescription}
+              />
 
               {/* Submit Application Form */}
-              <SubmitAppForm />
+              <SubmitAppForm 
+                coverLetter={job.coverLetter}
+                
+              />
             </Stack>
           </Container>
         </div>
