@@ -36,6 +36,7 @@ describe('Register', () => {
       const email = screen.getByTestId('email')
       const pass = screen.getByTestId('password')
       const confirmPass = screen.getByTestId('confirm-password')
+      const gender = screen.getByTestId('gender')
       fireEvent.change(fname, {
         target: { value: 'test' },
       })
@@ -51,12 +52,16 @@ describe('Register', () => {
       fireEvent.change(confirmPass, {
         target: { value: '1234567' },
       })
+      fireEvent.change(gender, {
+        target: { value: 'MALE' },
+      })
 
       expect(screen.getByTestId('first-name')).toHaveValue('test')
       expect(screen.getByTestId('last-name')).toHaveValue('testing')
       expect(screen.getByTestId('email')).toHaveValue('testing@gmail.com')
       expect(screen.getByTestId('password')).toHaveValue('1234567')
       expect(screen.getByTestId('confirm-password')).toHaveValue('1234567')
+      expect(screen.getByTestId('gender')).toHaveValue('MALE')
     })
   })
 })

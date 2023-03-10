@@ -167,6 +167,7 @@ const Register = () => {
               mb={6}
               variant="filled"
               background={placeholderBackground}
+              data-testid="gender"
             >
               <option value="MALE">MALE</option>
               <option value="FEMALE">FEMALE</option>
