@@ -9,6 +9,8 @@ import { AuthUser, BearerPayload } from 'src/util/util'
 import { ChatService } from './chat.service'
 import { Chat } from './chat.types'
 
+// TODO: This filter should be moved to the bootstrap functio in main.ts to apply to all controllers
+//  app.useGlobalFilters(new GlobalErrorFilter());
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
@@ -22,7 +24,9 @@ export class ChatController {
     const result: User[] = []
     const ids = await this.chatService.allConversations(breaserPayload.id)
     for (const id of ids) {
-      result.push(await this.userService.findOneByIdNoRelations(id))
+      const user = await this.userService.findOneByIdNoRelations(id)
+      user.profilePic = ''
+      result.push(user)
     }
     return result
   }
