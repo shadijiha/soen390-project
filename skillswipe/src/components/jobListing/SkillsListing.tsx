@@ -1,36 +1,12 @@
-/* eslint-disable react/jsx-key */
 import { Button, Flex } from '@chakra-ui/react'
 
 interface SkillsListingProps {
-  skills?: Array<string>
+  skills?: Array<{ title: string }>
 }
 
-const SkillsListing = ({ skills, }: SkillsListingProps) => {
-  const data = [{ 
-    id: 1,
-    text: `${skills}`, 
-    title: 'skill' 
-  },]
-  
-  // const testSkillsArray = [
-  //   'React',
-  //   'Redux',
-  //   'TypeScript',
-  //   'Next.js',
-  //   'Chakra',
-  //   'UI/UX',
-  //   'Node.js',
-  //   'Express',
-  //   'PostgreSQL',
-  //   'MongoDB',
-  //   'AWS',
-  //   'Docker',
-  //   'Git',
-  //   'Agile',
-  //   'Scrum',
-  //   'Kanban',
-  // ]
-  // const counter = 0
+const SkillsListing = ({ skills }: SkillsListingProps) => {
+  const skillTitles = skills?.map((skill) => skill.title) ?? []
+
   return (
     <>
       <Flex
@@ -40,9 +16,9 @@ const SkillsListing = ({ skills, }: SkillsListingProps) => {
         flexWrap={'wrap'}
         mx={'180px'}
       >
-        {data.map((job) => (
+        {skillTitles.map((skillTitle, index) => (
           <Button
-            key={job.id} 
+            key={index}
             className="skill"
             style={{
               backgroundColor: 'transparent',
@@ -54,7 +30,7 @@ const SkillsListing = ({ skills, }: SkillsListingProps) => {
               marginBottom: '1em',
             }}
           >
-             {job.text}
+            {skillTitle}
           </Button>
         ))}
       </Flex>
