@@ -2,30 +2,35 @@
 import { Button, Flex } from '@chakra-ui/react'
 
 interface SkillsListingProps {
-  skills: Array<string>
+  skills?: Array<string>
 }
 
-const SkillsListing = ({ skills }: SkillsListingProps) => {
-  const data = [{ id: 1, text: `${skills}`, title: 'skill' }]
-  const testSkillsArray = [
-    'React',
-    'Redux',
-    'TypeScript',
-    'Next.js',
-    'Chakra',
-    'UI/UX',
-    'Node.js',
-    'Express',
-    'PostgreSQL',
-    'MongoDB',
-    'AWS',
-    'Docker',
-    'Git',
-    'Agile',
-    'Scrum',
-    'Kanban',
-  ]
-  const counter = 0
+const SkillsListing = ({ skills, }: SkillsListingProps) => {
+  const data = [{ 
+    id: 1,
+    text: `${skills}`, 
+    title: 'skill' 
+  },]
+  
+  // const testSkillsArray = [
+  //   'React',
+  //   'Redux',
+  //   'TypeScript',
+  //   'Next.js',
+  //   'Chakra',
+  //   'UI/UX',
+  //   'Node.js',
+  //   'Express',
+  //   'PostgreSQL',
+  //   'MongoDB',
+  //   'AWS',
+  //   'Docker',
+  //   'Git',
+  //   'Agile',
+  //   'Scrum',
+  //   'Kanban',
+  // ]
+  // const counter = 0
   return (
     <>
       <Flex
@@ -35,9 +40,9 @@ const SkillsListing = ({ skills }: SkillsListingProps) => {
         flexWrap={'wrap'}
         mx={'180px'}
       >
-        {testSkillsArray.map((skill) => (
+        {data.map((job) => (
           <Button
-            key={skill}
+            key={job.id} 
             className="skill"
             style={{
               backgroundColor: 'transparent',
@@ -49,7 +54,7 @@ const SkillsListing = ({ skills }: SkillsListingProps) => {
               marginBottom: '1em',
             }}
           >
-            {skill}
+             {job.text}
           </Button>
         ))}
       </Flex>
