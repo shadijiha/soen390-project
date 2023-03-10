@@ -9,8 +9,6 @@ import { AuthUser, BearerPayload } from 'src/util/util'
 import { ChatService } from './chat.service'
 import { Chat } from './chat.types'
 
-// TODO: This filter should be moved to the bootstrap functio in main.ts to apply to all controllers
-//  app.useGlobalFilters(new GlobalErrorFilter());
 @Controller('chat')
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
