@@ -23,12 +23,12 @@ const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
         <>
           <div
             style={{
-              marginBottom: '8px',
+              marginBottom: '10px',
             }}
           >
             <img
               //recruiters profile picture
-              src={`http://www.${job.companyName?.toLowerCase()}.com/favicon.ico`}
+              src={`https://www.google.com/s2/favicons?domain=${job.companyName?.toLowerCase()}.com&sz=64`}
               width="50px"
               alt="logo"
             />

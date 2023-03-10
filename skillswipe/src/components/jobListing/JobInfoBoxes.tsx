@@ -15,8 +15,12 @@ const JobInfoBoxes = ({
   location,
 }: JobInfoBoxesProps) => {
   const data = [
-    { id: 1, text: `${salary}`, title: 'Salary' },
-    { id: 2, text: `${jobType}`, title: 'Job Type' },
+    { id: 1, text: '$' + `${salary}` + '/hr', title: 'Salary' },
+    {
+      id: 2,
+      text: `${jobType}`.charAt(0).toUpperCase() + `${jobType}`.slice(1),
+      title: 'Job Type',
+    },
     { id: 3, text: `${startDate}`.split('T')[0], title: 'Start Date' },
     { id: 4, text: `${location}`, title: 'Location' },
   ]
