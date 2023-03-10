@@ -22,6 +22,7 @@ const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
       {data.map((job) => (
         <>
           <div
+            key={job.id}
             style={{
               marginBottom: '10px',
             }}

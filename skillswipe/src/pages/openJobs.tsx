@@ -252,10 +252,12 @@ const findJob = () => {
 
                     <chakra.h3
                       as={Link}
-                      href={`/jobListing/${job.id}`}
                       isExternal
                       fontWeight="extrabold"
                       fontSize="2xl"
+                      onClick={() => {
+                        router.push(`/jobListing/${job.id}`)
+                      }}
                     >
                       {job.jobTitle}
                     </chakra.h3>

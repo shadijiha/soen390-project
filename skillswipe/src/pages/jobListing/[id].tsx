@@ -70,7 +70,7 @@ const jobListing = () => {
                 <TopHeader jobTitle={job.jobTitle} companyName={job.companyName} />
 
                 {/* Skills Needed in the Job Listed */}
-                <SkillsListing skills={job.skills} />
+                {/* <SkillsListing skills={job.skills} /> */}
                 {/* Top 3 boxes */}
                 <JobInfoBoxes
                   salary={job.salary}
