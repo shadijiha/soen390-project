@@ -67,7 +67,8 @@ const jobListing = () => {
             <Stack spacing={10}>
               <Flex align="center" justify="center" direction="column">
                 {/* Company logo, Company Name, Job Name in TopHeader */}
-                <TopHeader />
+                <TopHeader jobTitle={job.jobTitle} companyName={job.companyName} />
+
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
