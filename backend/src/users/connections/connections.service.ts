@@ -3,21 +3,26 @@ import { InjectRepository } from '@nestjs/typeorm/dist/common/typeorm.decorators
 import { Connection } from '../../models/connection.entity'
 import { Repository } from 'typeorm/repository/Repository'
 import { PusherService } from '../../util/pusher/pusher.service'
-
+import { User } from '../../models/user.entity'
+import { UsersService } from '../users.service'
 @Injectable()
 export class ConnectionsService {
   constructor (
     @InjectRepository(Connection)
-    private readonly connectionRepository: Repository<Connection>, private pusherService: PusherService
+    private readonly connectionRepository: Repository<Connection>, private pusherService: PusherService, private usersService: UsersService
   ) {}
 
   public async addConnection (user1Id, user2Id): Promise<void> {
     if (user1Id === user2Id) throw new Error('Illegal request!')
     const connection = new Connection()
-    connection.user_1 = user1Id
-    connection.user_2 = user2Id
-    await this.pusherService.triggerNotification(`user-${user2Id}`, 'friend-request', "request sent!");
-    await connection.save();
+    connection.user_1 = user1Id;
+    connection.user_2 = user2Id;
+    let user1 = await this.usersService.findOneByIdNoRelations(user1Id);
+    await connection.save().then(async () => {
+      await this.pusherService.triggerNotification(`user-${user2Id}`, 'friend-request', {user: {id: user1Id, firstName: user1.firstName, lastName: user1.lastName, profilePic: user1.profilePic, timestamp: 'Just now'}});
+    }).catch((err) => {
+      throw new Error("Cannot connect to this user");
+    })
   }
 
   public async deleteConnection (user1Id: number, user2Id: number): Promise<{ success: boolean, message: string }> {

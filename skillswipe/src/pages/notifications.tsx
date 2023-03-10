@@ -1,8 +1,30 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Avatar, Badge, Box, Button, Heading, HStack, Text, Spacer, Flex } from '@chakra-ui/react'
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
+  Spacer,
+  Text,
+} from '@chakra-ui/react'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
+import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
 
 const Notifications = () => {
+  const [pendingConnections, setPendingConnections] = useState([
+    { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
+  ])
+
+  useEffect(() => {
+    getPendingConnections()
+  }, [])
+
   const notifications = [
     {
       id: 1,
@@ -19,50 +41,117 @@ const Notifications = () => {
       avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
     },
   ]
+
+  const getPendingConnections = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
+        .then((res) => {
+          setPendingConnections(res.data)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const ignore = (id) => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      removeConnection(token, id)
+        .then((res) => {
+          setPendingConnections(
+            pendingConnections.filter((connection: any) => connection.user.id !== id)
+          )
+          toast.success('Connection removed')
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const accept = (id) => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      acceptRequest(token, id)
+        .then((res) => {
+          setPendingConnections(
+            pendingConnections.filter((connection: any) => connection.user.id !== id)
+          )
+          toast.success('Request Accepted')
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const addRequest = (request) => {
+    getPendingConnections()
+  }
+
   return (
     <>
       <Layout>
-        <NavBar></NavBar>
+        <NavBar
+          nbNotifications={pendingConnections.length}
+          addRequest={addRequest}
+        ></NavBar>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
             Pending Requests
           </Heading>
-          {notifications.length > 0 ? (
-            notifications.map((notification) => (
-              <Flex
-                key={notification.id}
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                mb={4}
-                display="flex"
-                alignItems="center"
-              >
-                <Flex>
-                  <Avatar size="lg" mr={4} src={notification.avatar} />
+          <Flex flexDirection={'column-reverse'}>
+            {pendingConnections.length > 0 ? (
+              pendingConnections.map((connection: any) => (
+                <Flex
+                  key={connection.user.id}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={4}
+                  mb={4}
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Link href={`/profile/${connection.user.id}`}>
+                    <Flex>
+                      <Avatar size="lg" mr={4} src={connection.user.profilePic} />
+                      <Box>
+                        <Heading as="h2" size="md" mb={2}>
+                          {connection.user.firstName} {connection.user.lastName}
+                          <Badge ml="1" colorScheme="green">
+                            New
+                          </Badge>
+                        </Heading>
+                        <Text mb={2}>Please add me to your network</Text>
+                        <Text fontSize="sm">{connection.user.timestamp}</Text>
+                      </Box>
+                    </Flex>
+                  </Link>
+                  <Spacer />
                   <Box>
-                    <Heading as="h2" size="md" mb={2}>
-                      {notification.title}{' '}
-                      <Badge ml="1" colorScheme="green">
-                        New
-                      </Badge>
-                    </Heading>
-                    <Text mb={2}>{notification.description}</Text>
-                    <Text fontSize="sm">{notification.timestamp}</Text>
+                    <HStack>
+                      <Button
+                        colorScheme="gray"
+                        onClick={() => ignore(connection.user.id)}
+                      >
+                        Ignore
+                      </Button>
+                      <Button
+                        colorScheme="twitter"
+                        onClick={() => accept(connection.user.id)}
+                      >
+                        Accept
+                      </Button>
+                    </HStack>
                   </Box>
                 </Flex>
-                <Spacer />
-                <Box>
-                  <HStack>
-                    <Button colorScheme="gray">Ignore</Button>
-                    <Button colorScheme="twitter">Accept</Button>
-                  </HStack>
-                </Box>
-              </Flex>
-            ))
-          ) : (
-            <Text>No notifications to display</Text>
-          )}
+              ))
+            ) : (
+              <Text>No pending requests to display</Text>
+            )}
+          </Flex>
         </Box>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
