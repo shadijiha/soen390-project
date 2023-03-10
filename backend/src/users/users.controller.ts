@@ -9,7 +9,7 @@ import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { FileValidationPipe } from '../util/fileValidationPipe'
 import { ConnectionsService } from './connections/connections.service'
-import Pusher from 'pusher'
+import type Pusher from 'pusher'
 
 @Controller()
 @Controller()

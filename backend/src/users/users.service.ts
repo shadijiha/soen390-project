@@ -26,7 +26,6 @@ export class UsersService {
       useTLS: true
       // encrypted: true
     })
-
   }
 
   public async getByEmail (email: string): Promise<User> {
@@ -116,13 +115,11 @@ export class UsersService {
   }
 
   async updateStatus (id: number, status: 'online' | 'offline'): Promise<Pusher.Response> {
-    
     const oldUser = await this.findOneByIdNoRelations(id)
     oldUser.userStatus = status
     await this.usersRepository.update(id, oldUser)
-    
-    
-    return await this.pusher.trigger(`userStatus`, 'statusUpdate', { id, status })
+
+    return await this.pusher.trigger('userStatus', 'statusUpdate', { id, status })
   }
 
   async getStatus (id: number): Promise<'online' | 'offline'> {
