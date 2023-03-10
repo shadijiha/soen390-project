@@ -87,4 +87,9 @@ export namespace Users {
     @ApiProperty({ type: User, isArray: true })
       connections: User[]
   }
+
+  export class UpdateStatusRequest {
+    @ApiProperty({ enum: ['online', 'offline'] })
+      userStatus: 'online' | 'offline'
+  }
 }

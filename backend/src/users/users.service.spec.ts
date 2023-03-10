@@ -6,6 +6,7 @@ import { DataSource, DeleteResult, type Repository } from 'typeorm'
 import { UsersService } from './users.service'
 import { Users } from './users.types'
 import { Job } from '../models/job.entity'
+import Pusher from 'pusher'
 
 describe('UsersService', () => {
   let service: UsersService
@@ -38,10 +39,12 @@ describe('UsersService', () => {
   }
 
 
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
+      
         {
           provide: getRepositoryToken(User),
           // define a fake repository that returns the fake users
@@ -51,6 +54,7 @@ describe('UsersService', () => {
           provide: getRepositoryToken(Job),
           useValue: mockJobsRepository
         },
+
         { provide: DataSource, useFactory: dataSourceMockFactory }
       ]
     }).compile()
@@ -105,4 +109,12 @@ describe('UsersService', () => {
     const result = await service.search(null , 'test');
     expect(mockUsersRepository.find).toHaveBeenCalled()
   })
+
+ 
+  it('should get user status', async () => {
+    const result = await service.getStatus(1)
+    expect(mockUsersRepository.findOneOrFail).toHaveBeenCalled()
+  });
+
+
 })
