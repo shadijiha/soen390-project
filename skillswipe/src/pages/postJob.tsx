@@ -169,7 +169,7 @@ const postJob = () => {
                   name="salary"
                   id="salary"
                   type="text"
-                  placeholder="ex: $50/hr or $100,000/year"
+                  placeholder="as hourly salary (ex: 20)"
                   rounded="100px"
                 />
               </FormControl>

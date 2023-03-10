@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   chakra,
+  Checkbox,
   Container,
   Divider,
   Flex,
@@ -21,11 +22,12 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { Fragment, useEffect, useState } from 'react'
+import router from 'next/router'
+import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import { getOpenJobs } from './api/api'
+import { getOpenJobs, viewJob } from './api/api'
 
 interface JobAttributes {
   id: number
@@ -51,6 +53,7 @@ const findJob = () => {
 
       try {
         // Call API function to get open jobs
+
         const response = await getOpenJobs(token)
 
         // Update state with fetched data
@@ -67,6 +70,27 @@ const findJob = () => {
     // your logic to filter the list goes here
     console.log(value)
   }
+  function handleCheckboxChange(event) {
+    const isChecked = event.target.checked
+    // Perform the necessary actions based on the isChecked value
+    if (isChecked) {
+      console.log('Filtering ...')
+      // code to filter jobs
+    } else {
+      console.log('Not filtering.')
+      // code to remove
+    }
+  }
+
+  const [checkedItems, setCheckedItems] = React.useState([
+    false,
+    false,
+    false,
+    false,
+  ])
+
+  const allChecked = checkedItems.every(Boolean)
+  const isIndeterminate = checkedItems.some(Boolean) && !allChecked
 
   return (
     <>
@@ -98,16 +122,85 @@ const findJob = () => {
                 >
                   Filter Jobs
                 </MenuButton>
-                <MenuList>
+                <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                    Option 1
+                    Sort by Starting Date
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
-                    Option 2
+                    Sort by Highest Salary
                   </MenuItem>
-                  <MenuItem onClick={() => handleFilter('option3')}>
-                    Option 3
-                  </MenuItem>
+
+                  <Checkbox
+                    paddingTop={1}
+                    pl={3}
+                    paddingBottom={1}
+                    isChecked={allChecked}
+                    isIndeterminate={isIndeterminate}
+                    onChange={(e) =>
+                      setCheckedItems([
+                        e.target.checked,
+                        e.target.checked,
+                        e.target.checked,
+                        e.target.checked,
+                      ])
+                    }
+                  >
+                    View All
+                  </Checkbox>
+                  <Stack pl={7} mt={1} spacing={1}>
+                    <Checkbox
+                      isChecked={checkedItems[0]}
+                      onChange={(e) =>
+                        setCheckedItems([
+                          e.target.checked,
+                          checkedItems[1],
+                          checkedItems[2],
+                          checkedItems[3],
+                        ])
+                      }
+                    >
+                      Full Time
+                    </Checkbox>
+                    <Checkbox
+                      isChecked={checkedItems[1]}
+                      onChange={(e) =>
+                        setCheckedItems([
+                          checkedItems[0],
+                          e.target.checked,
+                          checkedItems[2],
+                          checkedItems[3],
+                        ])
+                      }
+                    >
+                      Part Time
+                    </Checkbox>
+                    <Checkbox
+                      isChecked={checkedItems[2]}
+                      onChange={(e) =>
+                        setCheckedItems([
+                          checkedItems[0],
+                          checkedItems[1],
+                          e.target.checked,
+                          checkedItems[3],
+                        ])
+                      }
+                    >
+                      Internship
+                    </Checkbox>
+                    <Checkbox
+                      isChecked={checkedItems[3]}
+                      onChange={(e) =>
+                        setCheckedItems([
+                          checkedItems[0],
+                          checkedItems[1],
+                          checkedItems[2],
+                          e.target.checked,
+                        ])
+                      }
+                    >
+                      Other
+                    </Checkbox>
+                  </Stack>
                 </MenuList>
               </Menu>
             </HStack>
@@ -148,7 +241,7 @@ const findJob = () => {
 
                       <chakra.h2
                         as={Link}
-                        href={job.jobTitle}
+                        href={`/jobListing/${job.id}`}
                         isExternal
                         fontWeight="bold"
                         fontSize="lg"
@@ -159,28 +252,33 @@ const findJob = () => {
 
                     <chakra.h3
                       as={Link}
-                      href={job.jobTitle}
+                      href={`/jobListing/${job.id}`}
                       isExternal
                       fontWeight="extrabold"
                       fontSize="2xl"
                     >
                       {job.jobTitle}
                     </chakra.h3>
-                    <br />
+                    <div
+                      style={{
+                        paddingTop: '0.5em',
+                      }}
+                    ></div>
 
                     <chakra.p
                       fontWeight="bold"
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      {job.location}
+                      📍 {job.location}
                     </chakra.p>
                     <chakra.p
                       fontWeight="normal"
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      Position: {job.jobType}
+                      💼 ‎
+                      {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
                     </chakra.p>
                   </Box>
                   <VStack
