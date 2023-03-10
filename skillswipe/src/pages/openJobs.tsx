@@ -312,9 +312,19 @@ const findJob = () => {
                     justifySelf="flex-end"
                     alignItems="center"
                   >
-                    {['Apply'].map((label, index) => (
-                      <JobSettingLink key={index} label={label} />
-                    ))}
+                    <Button
+                      as={Link}
+                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                      p={5}
+                      rounded="100px"
+                      outline={'solid 1px'}
+                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                      onClick={() => {
+                        router.push(`/jobListing/${job.id}`)
+                      }}
+                    >
+                      Apply
+                    </Button>
                   </Stack>
                 </Grid>
                 {jobListing.length - 1 !== index && <Divider m={0} />}
@@ -324,21 +334,6 @@ const findJob = () => {
         </Container>
       </Layout>
     </>
-  )
-}
-
-const JobSettingLink = ({ label }: { label: string }) => {
-  return (
-    <Button
-      as={Link}
-      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-      p={5}
-      rounded="100px"
-      outline={'solid 1px'}
-      outlineColor={useColorModeValue('gray.400', 'gray.600')}
-    >
-      {label}
-    </Button>
   )
 }
 
