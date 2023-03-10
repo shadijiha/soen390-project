@@ -75,6 +75,7 @@ const jobListing = () => {
                   salary={job.salary}
                   jobType={job.jobType}
                   startDate={job.startDate}
+                  location={job.location}
                 />
 
                 <Divider />
