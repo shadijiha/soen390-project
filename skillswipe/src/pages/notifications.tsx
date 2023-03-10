@@ -12,7 +12,9 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
 
@@ -20,10 +22,20 @@ const Notifications = () => {
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
-
+  const currentUser = useSelector((state) => state as any)
+  
   useEffect(() => {
     getPendingConnections()
-  }, [])
+
+    const pusher = new Pusher("5611330c8d67150acf7f", {
+      cluster: "us2",
+    });
+
+    var channel = pusher.subscribe(`user-${currentUser.auth.id}`);
+    channel.bind('friend-request', function(data) {
+        addRequest()
+    });
+  }, [currentUser])
 
   const notifications = [
     {
@@ -87,7 +99,7 @@ const Notifications = () => {
     }
   }
 
-  const addRequest = (request) => {
+  const addRequest = () => {
     getPendingConnections()
   }
 

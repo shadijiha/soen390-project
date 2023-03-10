@@ -35,7 +35,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 
-export default function NavBar(props) {
+export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -94,15 +94,6 @@ export default function NavBar(props) {
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
     })
-
-    const pusher = new Pusher("5611330c8d67150acf7f", {
-      cluster: "us2",
-    });
-
-    var channel = pusher.subscribe(`user-${currentUser.auth.id}`);
-    channel.bind('friend-request', function(data) {
-      props.addRequest(data.message)
-    });
     
   }, [currentUser])
   const handleFilter = (value) => {
