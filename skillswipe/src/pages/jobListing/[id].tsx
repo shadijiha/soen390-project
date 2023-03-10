@@ -5,8 +5,8 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
@@ -14,13 +14,11 @@ import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
 import axios from 'axios'
-import router from 'next/router'
-import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 
-import { viewJob, getOpenJobs, createJob } from '../api/api'
-
+import { createJob, getOpenJobs, viewJob } from '../api/api'
 
 type JobAttributes = {
   id?: number
@@ -33,13 +31,12 @@ type JobAttributes = {
   startDate?: string
   coverLetter?: boolean
   transcript?: boolean
-  skills?: Array < string >
+  skills?: Array<string>
 }
 
 const jobListing = () => {
   const router = useRouter()
   const [job, setJobPage] = useState<JobAttributes[]>([])
-
 
   useEffect(() => {
     if (router.query.id) {
@@ -61,7 +58,6 @@ const jobListing = () => {
     return <div>Loading...</div>
   }
 
- 
   return (
     <>
       <Layout>
@@ -76,7 +72,7 @@ const jobListing = () => {
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
-                <JobInfoBoxes 
+                <JobInfoBoxes
                   salary={job.salary}
                   jobType={job.jobType}
                   startDate={job.startDate}
@@ -85,15 +81,10 @@ const jobListing = () => {
               </Flex>
 
               {/* Job Description */}
-              <JobDescription
-                jobDescription={job.jobDescription}
-              />
+              <JobDescription jobDescription={job.jobDescription} />
 
               {/* Submit Application Form */}
-              <SubmitAppForm 
-                coverLetter={job.coverLetter}
-                
-              />
+              <SubmitAppForm coverLetter={job.coverLetter} />
             </Stack>
           </Container>
         </div>

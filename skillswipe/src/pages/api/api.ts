@@ -154,34 +154,36 @@ export const search = async (token: any, query: string) => {
 
 export const createJob = async (token: any, jobCreate: any) => {
   return axios
-      .post(`${URL}/jobs`, jobCreate, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .catch((err) => {
-        return { status: 400, data: err.response.data }
-      })
+    .post(`${URL}/jobs`, jobCreate, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
 }
 
 export const getOpenJobs = async (token: any) => {
-  return axios.get(`${URL}/jobs/all`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  .catch((err) => {
-    return { status: 400, data: err.response.data }
-  })
+  return axios
+    .get(`${URL}/jobs/all`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
 }
 
 export const viewJob = async (token, id) => {
-  return axios.get(`${URL}/jobs/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  .catch((err) => {
-    return { status: 400, data: err.response.data }
-  })
+  return axios
+    .get(`${URL}/jobs/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
 }
