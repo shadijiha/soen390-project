@@ -239,13 +239,7 @@ const findJob = () => {
                         }}
                       />
 
-                      <chakra.h2
-                        as={Link}
-                        href={`/jobListing/${job.id}`}
-                        isExternal
-                        fontWeight="bold"
-                        fontSize="lg"
-                      >
+                      <chakra.h2 isExternal fontWeight="bold" fontSize="lg">
                         {job.companyName}
                       </chakra.h2>
                     </HStack>
