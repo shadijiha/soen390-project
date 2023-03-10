@@ -119,7 +119,7 @@ export class UsersService {
     oldUser.userStatus = status
     await this.usersRepository.update(id, oldUser)
 
-    return await this.pusher.trigger('userStatus', 'statusUpdate', { id, status })
+    return await this.pusher.trigger(`userStatus-${id}`, 'statusUpdate', { id, status })
   }
 
   async getStatus (id: number): Promise<'online' | 'offline'> {
