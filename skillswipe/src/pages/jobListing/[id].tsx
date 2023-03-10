@@ -70,7 +70,7 @@ const jobListing = () => {
                 <TopHeader jobTitle={job.jobTitle} companyName={job.companyName} />
 
                 {/* Skills Needed in the Job Listed */}
-                <SkillsListing />
+                <SkillsListing skills={job.skills} />
                 {/* Top 3 boxes */}
                 <JobInfoBoxes
                   salary={job.salary}
@@ -86,7 +86,7 @@ const jobListing = () => {
               <JobDescription jobDescription={job.jobDescription} />
 
               {/* Submit Application Form */}
-              <SubmitAppForm coverLetter={job.coverLetter} />
+              <SubmitAppForm />
             </Stack>
           </Container>
         </div>
