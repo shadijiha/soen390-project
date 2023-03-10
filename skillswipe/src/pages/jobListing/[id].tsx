@@ -61,9 +61,11 @@ const jobListing = () => {
     return <div>Loading...</div>
   }
 
+  
  
   return (
     <>
+
       <Layout>
         <NavBar />
         <div data-testid="job-listing">
@@ -77,9 +79,25 @@ const jobListing = () => {
                 <SkillsListing />
                 {/* Top 3 boxes */}
                 <JobInfoBoxes 
-                  salary={job.salary}
-                  jobType={job.jobType}
-                  startDate={job.startDate}
+                  data = { 
+                     [
+                      {
+                        id: 1,
+                        label: 'Job Type',
+                        text: {job.jobType},
+                      },
+                      {
+                        id: 2,
+                        label: 'Location',
+                        text: {job.location},
+                      },
+                      {
+                        id: 3,
+                        label: 'Salary',
+                        text: {job.salary},
+                      },
+                    ] 
+                  } 
                 />
                 <Divider />
               </Flex>
@@ -92,7 +110,6 @@ const jobListing = () => {
               {/* Submit Application Form */}
               <SubmitAppForm 
                 coverLetter={job.coverLetter}
-                
               />
             </Stack>
           </Container>
@@ -100,5 +117,6 @@ const jobListing = () => {
       </Layout>
     </>
   )
+
 }
 export default jobListing
