@@ -43,7 +43,7 @@ interface JobAttributes {
   transcript: false | true
 }
 
-const findJob = () => {
+const myListings = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
 
   useEffect(() => {
@@ -110,7 +110,7 @@ const findJob = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                💼 ‎ Open Jobs
+                💼 ‎ My Listings
               </chakra.h3>
               <Menu>
                 <MenuButton
@@ -120,7 +120,7 @@ const findJob = () => {
                   padding={'1.5em'}
                   rounded={'full'}
                 >
-                  Filter Jobs
+                  Filter List
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
@@ -300,7 +300,7 @@ const findJob = () => {
                     </chakra.p>
                   </VStack>
                   <Stack
-                    spacing={2}
+                    spacing={6}
                     direction="row"
                     fontSize={{ base: 'sm', sm: 'md' }}
                     justifySelf="flex-end"
@@ -311,13 +311,28 @@ const findJob = () => {
                       _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
                       p={5}
                       rounded="100px"
+                      colorScheme={'blue'}
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
                       onClick={() => {
                         router.push(`/jobListing/${job.id}`)
                       }}
                     >
-                      Apply
+                      Edit Listing
+                    </Button>
+                    <Button
+                      as={Link}
+                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                      p={5}
+                      colorScheme="red"
+                      rounded="100px"
+                      outline={'solid 1px'}
+                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                      onClick={() => {
+                        router.push(`/jobListing/${job.id}`)
+                      }}
+                    >
+                      Delete
                     </Button>
                   </Stack>
                 </Grid>
@@ -331,4 +346,4 @@ const findJob = () => {
   )
 }
 
-export default findJob
+export default myListings

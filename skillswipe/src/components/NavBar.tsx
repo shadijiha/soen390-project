@@ -101,7 +101,7 @@ export default function NavBar() {
     }
     // open the jobListing page
     if (value === 'option2') {
-      router.push('/jobListing/1')
+      router.push('/myListings')
     }
     // open the myJobApplications page
     if (value === 'option3') {
