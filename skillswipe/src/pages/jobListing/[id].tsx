@@ -36,7 +36,7 @@ type JobAttributes = {
 
 const jobListing = () => {
   const router = useRouter()
-  const [job, setJobPage] = useState<JobAttributes[]>([])
+  const [job, setJob] = useState<JobAttributes[]>([])
 
   useEffect(() => {
     if (router.query.id) {
@@ -68,10 +68,10 @@ const jobListing = () => {
               <Flex align="center" justify="center" direction="column">
                 {/* Company logo, Company Name, Job Name in TopHeader */}
                 <TopHeader />
-
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
+                salary: {job.salary}
                 <JobInfoBoxes
                   salary={job.salary}
                   jobType={job.jobType}
