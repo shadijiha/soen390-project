@@ -71,6 +71,10 @@ export class User extends BaseEntity {
   @ApiProperty()
     biography: string
 
+  @Column({ default: 'offline' })
+  @ApiProperty()
+    userStatus: 'online' | 'offline'
+
   @Column({ default: 'jobseeker' })
   @ApiProperty()
     type: 'jobseeker' | 'recruiter' | 'admin'
