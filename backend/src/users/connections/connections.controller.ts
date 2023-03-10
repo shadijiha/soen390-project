@@ -15,7 +15,6 @@ import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { ConnectionsService } from '../../users/connections/connections.service'
 import { Connections } from '../../users/connections/connections.types'
-import { PusherService } from '../../util/pusher/pusher.service'
 
 @Controller('connections')
 @ApiTags('Connections')
