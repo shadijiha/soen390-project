@@ -26,7 +26,7 @@ type JobAttributes = {
   companyName?: string
   location?: string
   jobDescription?: string
-  salary: string
+  salary?: string
   jobType?: string
   startDate?: string
   coverLetter?: boolean
@@ -36,7 +36,7 @@ type JobAttributes = {
 
 const jobListing = () => {
   const router = useRouter()
-  const [job, setJob] = useState<JobAttributes[]>([])
+  const [job, setJob] = useState<JobAttributes>({})
 
   useEffect(() => {
     if (router.query.id) {
@@ -58,10 +58,8 @@ const jobListing = () => {
     return <div>Loading...</div>
   }
 
- 
   return (
     <>
-
       <Layout>
         <NavBar />
         <div data-testid="job-listing">
@@ -73,11 +71,12 @@ const jobListing = () => {
                 {/* Skills Needed in the Job Listed */}
                 <SkillsListing />
                 {/* Top 3 boxes */}
-                <JobInfoBoxes 
+                <JobInfoBoxes
                   salary={job.salary}
                   jobType={job.jobType}
                   startDate={job.startDate}
                 />
+
                 <Divider />
               </Flex>
 
@@ -85,16 +84,12 @@ const jobListing = () => {
               <JobDescription jobDescription={job.jobDescription} />
 
               {/* Submit Application Form */}
-              <SubmitAppForm 
-                coverLetter={job.coverLetter}
-                
-              />
+              <SubmitAppForm coverLetter={job.coverLetter} />
             </Stack>
           </Container>
         </div>
       </Layout>
     </>
   )
-
 }
 export default jobListing
