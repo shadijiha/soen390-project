@@ -1,10 +1,13 @@
 import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
+  Badge,
   Box,
   Button,
+  Center,
   Collapse,
   Flex,
+  Icon,
   IconButton,
   InputGroup,
   InputRightElement,
@@ -22,6 +25,8 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { AiOutlineBell } from "react-icons/ai"
+import { getPendingRequest } from '@/pages/api/api'
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -46,6 +51,29 @@ export default function NavBar() {
   }
 
   const searchIcon = SearchIcon
+  const [numberOfNotifications, setNumberOfNotifications] = useState(0)
+  
+
+  const token = localStorage.getItem('jwt')
+ useEffect(() =>  {getPendingRequest(token)
+    .then((response) => {
+      if (!response.data || !response.data.users) {
+        
+        setNumberOfNotifications(response.data.length);
+      console.log(response.data.length);
+          
+      } else {
+        
+            setNumberOfNotifications(0);
+        
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  , [token]); 
 
   try {
     searchIcon[0].addEventListener('click', function () {
@@ -120,8 +148,8 @@ export default function NavBar() {
           zIndex="99999"
         >
           <Text
-            style={{ fontWeight: 'bold', fontSize: 25 }}
-            ml={'15px'}
+            style={{ fontWeight: 'bold', fontSize: 22 }}
+            ml={'1px'}
             onClick={() => {
               router.push('/')
             }}
@@ -143,8 +171,29 @@ export default function NavBar() {
             </Button>
           </NextLink>
 
+
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
+            <Flex alignItems="center">
+              {/* add notication badge on BellIcon */}
+              <NextLink href="/NotificationPage">
+              <Box position="relative">
+      <IconButton  aria-label='Home' variant="ghost" as={AiOutlineBell} boxSize={6} />
+      {numberOfNotifications > 0 && (
+        <Badge
+          position="relative"
+          top="-2"
+          right="3.5"
+          borderRadius="full"
+          colorScheme="red"
+        >
+          {numberOfNotifications}
+        </Badge>
+      )}
+    </Box>
+              </NextLink>
+
+
             <NextLink href="/home" passHref>
               <Button aria-label="Home" my={5} w="100%" variant="ghost">
                 Home
@@ -217,7 +266,35 @@ export default function NavBar() {
                 Logout
               </Button>
             </NextLink>
+            </Flex>
           </Flex>
+          <Flex alignItems="center">
+  <IconButton
+    aria-label='Home'
+    variant="ghost"
+    as={AiOutlineBell}
+    boxSize={{ base: 5, md: 5 }}
+    ml={{ base: '12px', md: '20px' }}
+    //onClick go to Notification page
+    onClick={() => router.push('/NotificationPage')}
+  />
+  
+  {numberOfNotifications > 0 && (
+    <Badge
+      position="relative"
+      top={{ base: '-2', md: '-3' }}
+      right={{ base: '2.5', md: '3.5' }}
+      borderRadius="full"
+      colorScheme="red"
+      fontSize={{ base: 'xs', md: 'sm' }}
+      px={{ base: '2', md: '4' }}
+      py={{ base: '1', md: '2' }}
+    >
+      {numberOfNotifications}
+    </Badge>
+  )}
+
+</Flex>
 
           {/* Mobile */}
           <IconButton
@@ -229,7 +306,7 @@ export default function NavBar() {
             display={['flex', 'flex', 'none', 'none']}
             ml={'auto'}
             variant={'ghost'}
-          />
+            />
         </Flex>
 
         {/* Mobile Content */}
@@ -244,7 +321,7 @@ export default function NavBar() {
           left="0"
           overflowY="auto"
           flexDir="column"
-        >
+          >
           <Flex justify="flex-end">
             <IconButton
               mt={2}
@@ -254,7 +331,7 @@ export default function NavBar() {
               icon={<CloseIcon />}
               onClick={() => changeDisplay('none')}
               backgroundColor="transparent"
-            />
+              />
           </Flex>
 
           <Flex flexDir="column" align="center">
@@ -263,7 +340,7 @@ export default function NavBar() {
                 Home
               </Button>
             </NextLink>
-
+          
             <NextLink href="/findJob" passHref>
               <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
                 Find Jobs
