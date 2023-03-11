@@ -99,12 +99,13 @@ const findJob = () => {
         case 'part-time':
             filteredJobs = filteredJobs.filter((job) => job.jobType === 'part-time');
             break;
-        case 'internship':
+        case 'contract':
             filteredJobs = filteredJobs.filter((job) => job.jobType === 'contract');
             break;
         case 'other':
             filteredJobs = filteredJobs.filter((job) => job.jobType === 'other');
             break;
+
         default:
             break;
         }
@@ -172,7 +173,6 @@ const findJob = () => {
                     paddingBottom={1}
                     isChecked={allChecked}
                     isIndeterminate={isIndeterminate}
-                   
                     onChange={(e) =>{
                       setCheckedItems([
                         e.target.checked,
