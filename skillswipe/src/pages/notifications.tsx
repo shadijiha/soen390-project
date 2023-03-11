@@ -23,18 +23,18 @@ const Notifications = () => {
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
   const currentUser = useSelector((state) => state as any)
-
+  
   useEffect(() => {
     getPendingConnections()
 
-    const pusher = new Pusher('5611330c8d67150acf7f', {
-      cluster: 'us2',
-    })
+    const pusher = new Pusher("5611330c8d67150acf7f", {
+      cluster: "us2",
+    });
 
-    let channel = pusher.subscribe(`user-${currentUser.auth.id}`)
-    channel.bind('friend-request', function (data) {
-      addRequest()
-    })
+    var channel = pusher.subscribe(`user-${currentUser.auth.id}`);
+    channel.bind('friend-request', function(data) {
+        addRequest()
+    });
   }, [currentUser])
 
   const notifications = [
@@ -110,70 +110,15 @@ const Notifications = () => {
           nbNotifications={pendingConnections.length}
           addRequest={addRequest}
         ></NavBar>
-        <div data-testid="notification-page">
-          <Box p={4}>
-            <Heading as="h1" size="lg" mb={4}>
-              Pending Requests
-            </Heading>
-            <Flex flexDirection={'column-reverse'}>
-              {pendingConnections.length > 0 ? (
-                pendingConnections.map((connection: any) => (
-                  <Flex
-                    key={connection.user.id}
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    p={4}
-                    mb={4}
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <Link href={`/profile/${connection.user.id}`}>
-                      <Flex>
-                        <Avatar size="lg" mr={4} src={connection.user.profilePic} />
-                        <Box>
-                          <Heading as="h2" size="md" mb={2}>
-                            {connection.user.firstName} {connection.user.lastName}
-                            <Badge ml="1" colorScheme="green">
-                              New
-                            </Badge>
-                          </Heading>
-                          <Text mb={2}>Please add me to your network</Text>
-                          <Text fontSize="sm">{connection.user.timestamp}</Text>
-                        </Box>
-                      </Flex>
-                    </Link>
-                    <Spacer />
-                    <Box>
-                      <HStack>
-                        <Button
-                          colorScheme="gray"
-                          onClick={() => ignore(connection.user.id)}
-                        >
-                          Ignore
-                        </Button>
-                        <Button
-                          colorScheme="twitter"
-                          onClick={() => accept(connection.user.id)}
-                        >
-                          Accept
-                        </Button>
-                      </HStack>
-                    </Box>
-                  </Flex>
-                ))
-              ) : (
-                <Text>No pending requests to display</Text>
-              )}
-            </Flex>
-          </Box>
-          <Box p={4}>
-            <Heading as="h1" size="lg" mb={4}>
-              Notifications
-            </Heading>
-            {notifications.length > 0 ? (
-              notifications.map((notification) => (
+        <Box p={4}>
+          <Heading as="h1" size="lg" mb={4}>
+            Pending Requests
+          </Heading>
+          <Flex flexDirection={'column-reverse'}>
+            {pendingConnections.length > 0 ? (
+              pendingConnections.map((connection: any) => (
                 <Flex
-                  key={notification.id}
+                  key={connection.user.id}
                   borderWidth="1px"
                   borderRadius="lg"
                   p={4}
@@ -181,26 +126,79 @@ const Notifications = () => {
                   display="flex"
                   alignItems="center"
                 >
-                  <Flex>
-                    <Avatar size="lg" mr={4} src={notification.avatar} />
-                    <Box>
-                      <Heading as="h2" size="md" mb={2}>
-                        {notification.title}{' '}
-                        <Badge ml="1" colorScheme="green">
-                          New
-                        </Badge>
-                      </Heading>
-                      <Text mb={2}>{notification.description}</Text>
-                      <Text fontSize="sm">{notification.timestamp}</Text>
-                    </Box>
-                  </Flex>
+                  <Link href={`/profile/${connection.user.id}`}>
+                    <Flex>
+                      <Avatar size="lg" mr={4} src={connection.user.profilePic} />
+                      <Box>
+                        <Heading as="h2" size="md" mb={2}>
+                          {connection.user.firstName} {connection.user.lastName}
+                          <Badge ml="1" colorScheme="green">
+                            New
+                          </Badge>
+                        </Heading>
+                        <Text mb={2}>Please add me to your network</Text>
+                        <Text fontSize="sm">{connection.user.timestamp}</Text>
+                      </Box>
+                    </Flex>
+                  </Link>
+                  <Spacer />
+                  <Box>
+                    <HStack>
+                      <Button
+                        colorScheme="gray"
+                        onClick={() => ignore(connection.user.id)}
+                      >
+                        Ignore
+                      </Button>
+                      <Button
+                        colorScheme="twitter"
+                        onClick={() => accept(connection.user.id)}
+                      >
+                        Accept
+                      </Button>
+                    </HStack>
+                  </Box>
                 </Flex>
               ))
             ) : (
-              <Text>No notifications to display</Text>
+              <Text>No pending requests to display</Text>
             )}
-          </Box>
-        </div>
+          </Flex>
+        </Box>
+        <Box p={4}>
+          <Heading as="h1" size="lg" mb={4}>
+            Notifications
+          </Heading>
+          {notifications.length > 0 ? (
+            notifications.map((notification) => (
+              <Flex
+                key={notification.id}
+                borderWidth="1px"
+                borderRadius="lg"
+                p={4}
+                mb={4}
+                display="flex"
+                alignItems="center"
+              >
+                <Flex>
+                  <Avatar size="lg" mr={4} src={notification.avatar} />
+                  <Box>
+                    <Heading as="h2" size="md" mb={2}>
+                      {notification.title}{' '}
+                      <Badge ml="1" colorScheme="green">
+                        New
+                      </Badge>
+                    </Heading>
+                    <Text mb={2}>{notification.description}</Text>
+                    <Text fontSize="sm">{notification.timestamp}</Text>
+                  </Box>
+                </Flex>
+              </Flex>
+            ))
+          ) : (
+            <Text>No notifications to display</Text>
+          )}
+        </Box>
       </Layout>
     </>
   )
