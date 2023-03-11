@@ -4,7 +4,8 @@ build/
 .env
 .vscode
 images
-
+coverage
+.idea
 .DS_Store
 coverage/lcov.info
 coverage/lcov-report/Util/Validator.js.html
