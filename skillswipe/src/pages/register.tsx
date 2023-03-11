@@ -17,7 +17,7 @@ import React, { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { emailValidator } from '../Util/Validator'
+import { emailValidator, passwordValidator } from '../Util/Validator'
 import { register } from './api/api'
 
 const Register = () => {
@@ -82,7 +82,10 @@ const Register = () => {
     ) {
       toast('Please fill all the fields')
     } else {
-      if (emailValidator(User.email) == true) {
+      if (
+        emailValidator(User.email) == true &&
+        passwordValidator(User.password) == true
+      ) {
         register(User)
           .then((Response) => {
             toast('Successfully Registered the Account')
@@ -93,7 +96,7 @@ const Register = () => {
             toast(error.message)
           })
       } else {
-        toast('Invalid Inputs')
+        toast('Email or Password Invalid')
       }
     }
   }
@@ -146,6 +149,11 @@ const Register = () => {
               background={placeholderBackground}
               onChange={passwordChange}
             />
+            <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
+              {User.password.length < 8
+                ? 'Password \n should be at least 8 digits'
+                : ''}
+            </Text>
             <Input
               data-testid="confirm-password"
               placeholder="Confirm Password"
