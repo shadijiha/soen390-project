@@ -74,9 +74,9 @@ function Notifications() {
     <>
     <Layout>
     <NavBar></NavBar>
-    <Container maxW="2xl" p={{ base: 10, md: 0 }}>
-<Flex justify="left" mb={3}>
-  <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center">
+    <Container maxW="2xl" p={{ base: 5, md: 0 }}>
+<Flex justify="center" mb={3}>
+  <chakra.h3 fontSize="2xl" fontWeight="bold" textAlign="center" mb={3}>
     Pending Connection Requests
   </chakra.h3>
 </Flex>
@@ -96,76 +96,91 @@ function Notifications() {
   </Box>
 ):(
 <VStack
-  border="1px solid"
+ 
   borderColor="gray.400"
   rounded="md"
   overflow="hidden"
   spacing={0}
 >
   {notifications.map((notification: Array) => (
-    <Fragment key={notification.user.id } >
-      <Grid
-        templateRows={{ base: 'auto auto', md: 'auto' }}
-        w="100%"
-        templateColumns={{ base: 'unset', md: '4fr 2fr 2fr' }}
-        p={{ base: 3, sm: 4 }}
-        gap={3}
-        alignItems="center"
-        _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-        border="1px solid"
-      >
-        <Box gridColumnEnd={{ base: 'span 5', md: 'unset' }} >
-            <Text fontWeight="bold" fontSize="xl" mb={5}>Add me to your Network</Text>
-          {/* // display the Date object within the text tag but remove the GMT-0500 (Easterb Standard time) */}
+  <Fragment key={notification.user.id}>
+  <Box
+    display="grid"
+    gridTemplateRows={{ base: 'auto auto', md: 'auto' }}
+    gridTemplateColumns={{ base: '1fr', md: '4fr 2fr 2fr' }}
+    gridGap={{ base: 1, md: 3 }}
+    alignItems="center"
+    _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+    border="1px solid"
+    p={{ base: 3, sm: 4 }}
+    mb={{ base: 2, md: 4 }}
+  >
+    <Box gridColumnEnd={{ base: 'span 5', md: 'unset' }}>
+      <Text fontWeight="bold" fontSize={{ base: 'md', md: 'lg' }} mb={2}>
+        Add me to your Network
+      </Text>
 
-          <Text fontSize="sm" color="gray.500" mb={5}>
-  {Date(notification.user.since).toString().split('GMT')[0]}
-</Text>
+      <Text fontSize={{ base: 'sm', md: 'sm' }} color="gray.500" mb={2}>
+        {Date(notification.user.since).toString().split('GMT')[0]}
+      </Text>
 
-          
-
-
-
-
-          <Flex alignItems="center">
-          <img  src={
-                            notification.user.profilePic
-                              ? `data:image/jpeg;base64,${notification.user.profilePic}`
-                              : profile.image
-                          } alt="user" width = "60px" height = "60px" style={{ borderRadius: "50%", marginRight:"20px" }}/>
+      <Flex alignItems="center" flexDirection={{ base: 'column', md: 'row' }}>
+        <img
+          src={
+            notification.user.profilePic
+              ? `data:image/jpeg;base64,${notification.user.profilePic}`
+              : profile.image
+          }
+          alt="user"
+          width="70px"
+          height="60px"
+          style={{ borderRadius: '50%', marginRight: { base: '0', md: '20px' } }}
+          mb={{ base: '20px', md: '0' }}
+        />
+        <Box flex="1"  mr={{ base: '8px', md: 0 }} >
           <chakra.h3
             as={Link}
             href={`/profile/${notification.user.id}`}
             fontWeight="bold"
-            fontSize="2xl"
+            fontSize={{ base: 'md', md: '2xl' }}
             whiteSpace="nowrap"
-            
+            isTruncated
           >
             {notification.user.firstName} {notification.user.lastName}
           </chakra.h3>
-          
-          
-        <Button         ml="20px"
-                        color="gray.600"
-                        onClick={() => acceptConnection(notification.user.id)}
-                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-      p={7} 
-      mr="20px"
-                      >
-                        Accept
-                      </Button>
-      
-                      <Button         
-                        colorScheme="red"
-                        onClick={() => rejectConnection(notification.user.id)}
-                       p={7}
-                      >
-                        Reject
-                      </Button>
-          </Flex>
+        
         </Box>
-      </Grid>
-    </Fragment> 
+
+        <Flex direction={{ base: 'column', md: 'row' }}
+                    alignItems={{ base: '3px', md: 'center' }}
+                    justifyContent="space-between"
+                    w={{ base: '30%', md: 'auto' }}>
+          <Button
+            color="gray.600"
+            onClick={() => acceptConnection(notification.user.id)}
+            _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+            mr={{ base: 2, md: 3 }}
+            mb={{ base: 2, md: 0 }}
+            w={{ base: '100%', md: 'auto' }}
+            
+          >
+            Accept
+          </Button>
+
+          <Button
+            colorScheme="red"
+            onClick={() => rejectConnection(notification.user.id)}
+            w={{ base: '100%', md: 'auto' }}
+            
+          >
+            Reject
+          </Button>
+        </Flex>
+      </Flex>
+    </Box>
+  </Box>
+</Fragment>
+
     ))}
 </VStack>)}
 </Container>

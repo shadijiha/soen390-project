@@ -1,10 +1,13 @@
-import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
-  Badge,
   Box,
   Button,
-  Center,
   Collapse,
   Flex,
   Icon,
@@ -13,20 +16,27 @@ import {
   InputRightElement,
   Menu,
   MenuButton,
+  MenuItem,
+  MenuList,
+  Select,
   Text,
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  Center,
+  Badge
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import { AiOutlineBell } from "react-icons/ai"
 import { getPendingRequest } from '@/pages/api/api'
+
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -48,45 +58,6 @@ export default function NavBar() {
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
-  }
-
-  const searchIcon = SearchIcon
-  const [numberOfNotifications, setNumberOfNotifications] = useState(0)
-  
-
-  const token = localStorage.getItem('jwt')
- useEffect(() =>  {getPendingRequest(token)
-    .then((response) => {
-      if (!response.data || !response.data.users) {
-        
-        setNumberOfNotifications(response.data.length);
-      console.log(response.data.length);
-          
-      } else {
-        
-            setNumberOfNotifications(0);
-        
-      }
-    })
-    .catch((error) => {
-      console.log(error)
-    })
-  }
-
-  , [token]); 
-
-  try {
-    searchIcon[0].addEventListener('click', function () {
-      setTimeout(function () {
-        if (display === 'none') {
-          changeDisplay('block')
-        } else {
-          changeDisplay('none')
-        }
-      }, 100)
-    })
-  } catch (e) {
-    console.log(e)
   }
 
   const navColor = useColorModeValue(
@@ -128,6 +99,46 @@ export default function NavBar() {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
+  const handleFilter = (value) => {
+    // open the openJobs page
+    if (value === 'option1') {
+      router.push('/openJobs')
+    }
+    // open the jobListing page
+    if (value === 'option2') {
+      router.push('/jobListing/1')
+    }
+    // open the myJobApplications page
+    if (value === 'option3') {
+      router.push('/postJob')
+    }
+  }
+
+  const [numberOfNotifications, setNumberOfNotifications] = useState(0)
+  
+
+  const token = localStorage.getItem('jwt')
+ useEffect(() =>  {getPendingRequest(token)
+    .then((response) => {
+      if (!response.data || !response.data.users) {
+        
+        setNumberOfNotifications(response.data.length);
+      console.log(response.data.length);
+          
+      } else {
+        
+            setNumberOfNotifications(0);
+        
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  , [token]); 
+
+
 
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
@@ -148,15 +159,15 @@ export default function NavBar() {
           zIndex="99999"
         >
           <Text
-            style={{ fontWeight: 'bold', fontSize: 22 }}
-            ml={'1px'}
+            style={{ fontWeight: 'bold', fontSize: 25 }}
+            ml={'15px'}
             onClick={() => {
               router.push('/')
             }}
           >
             🚀 SkillSwipe
           </Text>
-          <NextLink href={''}>
+          <NextLink href="#">
             <Button
               onClick={toggleColorMode}
               variant="ghost"
@@ -171,58 +182,122 @@ export default function NavBar() {
             </Button>
           </NextLink>
 
-
           <Search />
-          <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
-            <Flex alignItems="center">
-              {/* add notication badge on BellIcon */}
-              <NextLink href="/NotificationPage">
-              <Box position="relative">
-      <IconButton  aria-label='Home' variant="ghost" as={AiOutlineBell} boxSize={6} />
-      {numberOfNotifications > 0 && (
-        <Badge
-          position="relative"
-          top="-2"
-          right="3.5"
-          borderRadius="full"
-          colorScheme="red"
-        >
-          {numberOfNotifications}
-        </Badge>
-      )}
-    </Box>
-              </NextLink>
 
+          
 
+          <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'} >
+            
+<Flex alignItems="center" ml="auto">
+          <IconButton
+    aria-label='Home'
+    variant="ghost"
+    as={AiOutlineBell}
+    boxSize={{ base: 6, md: 5 }}
+    ml={{ base: '10px', md: '20px' }}
+   
+    //onClick go to Notification page
+    onClick={() => router.push('/NotificationPage')}
+    top={{ base:'3px' }}
+  />
+  
+  {numberOfNotifications > 0 && (
+    <Badge
+      position="relative"
+      top={{ base: '-3', md: '-3' }}
+      right={{ base: '2.5', md: '3.5' }}
+      borderRadius="full"
+      colorScheme="red"
+      fontSize={{ base: 'xs', md: 'sm' }}
+      px={{ base: '2', md: '4' }}
+      py={{ base: '1', md: '2' }}
+      ml={0.5}
+    >
+      {numberOfNotifications}
+    </Badge>
+  )}
             <NextLink href="/home" passHref>
-              <Button aria-label="Home" my={5} w="100%" variant="ghost">
+              <Button
+                aria-label="Home"
+                my={5}
+                w="100%"
+                variant="ghost"
+                rounded={'full'}
+                >
                 Home
               </Button>
             </NextLink>
-
-            <NextLink href="/findJob" passHref>
-              <Button variant="ghost" aria-label="Open Jobs" my={5} w="100%">
-                Open Jobs
-              </Button>
-            </NextLink>
-
-            <NextLink href="/postJob" passHref>
-              <Button
-                variant="ghost"
-                aria-label="Create Job Listing"
-                my={5}
-                w="100%"
-              >
-                Create Job Listing
-              </Button>
-            </NextLink>
+                </Flex>
 
             <NextLink href="/inbox" passHref>
-              <Button variant="ghost" aria-label="Messages" my={5} w="100%">
+              <Button
+                variant="ghost"
+                aria-label="Messages"
+                my={5}
+                w="100%"
+                rounded={'full'}
+              >
                 Messages
               </Button>
             </NextLink>
-
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<Icon as={RiArrowDropDownFill} w={8} h={8} />}
+                variant="outline"
+                padding={'1.0em'}
+                rounded={'full'}
+                marginTop={'1.3em'}
+                marginLeft={'1em'}
+                marginRight={'1em'}
+              >
+                Careers
+              </MenuButton>
+              <MenuList
+                style={{
+                  borderRadius: '20px',
+                }}
+              >
+                <MenuItem
+                  onClick={() => handleFilter('option1')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    transform: 'scale(1.03)',
+                  }}
+                >
+                  Open Jobs
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleFilter('option2')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
+                  My Job Listings
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleFilter('option3')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
+                  Create a Job Listing
+                </MenuItem>
+              </MenuList>
+            </Menu>
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
@@ -266,7 +341,6 @@ export default function NavBar() {
                 Logout
               </Button>
             </NextLink>
-            </Flex>
           </Flex>
 
           {/* Mobile */}
@@ -279,7 +353,7 @@ export default function NavBar() {
             display={['flex', 'flex', 'none', 'none']}
             ml={'auto'}
             variant={'ghost'}
-            />
+          />
         </Flex>
 
         {/* Mobile Content */}
@@ -294,7 +368,7 @@ export default function NavBar() {
           left="0"
           overflowY="auto"
           flexDir="column"
-          >
+        >
           <Flex justify="flex-end">
             <IconButton
               mt={2}
@@ -304,57 +378,37 @@ export default function NavBar() {
               icon={<CloseIcon />}
               onClick={() => changeDisplay('none')}
               backgroundColor="transparent"
-              />
+            />
           </Flex>
+        
 
-          <Flex alignItems="center">
-  <IconButton
-    aria-label='Home'
-    variant="ghost"
-    as={AiOutlineBell}
-    boxSize={{ base: 5, md: 5 }}
-    ml={{ base: '12px', md: '20px' }}
-    //onClick go to Notification page
-    onClick={() => router.push('/NotificationPage')}
-  />
-  
+          <Flex flexDir="column" align="center" paddingTop={'5em'}>
+          <NextLink href="/NotificationPage" passHref>
+              <Button variant="ghost" aria-label="Home" my={5} w="100%">
+                Notifications
+              </Button>
   {numberOfNotifications > 0 && (
     <Badge
       position="relative"
-      top={{ base: '-2', md: '-3' }}
-      right={{ base: '2.5', md: '3.5' }}
+      top={{ base: '-4', md: '-3' }}
+      right={{ base: '-2.5', md: '3.5' }}
       borderRadius="full"
       colorScheme="red"
       fontSize={{ base: 'xs', md: 'sm' }}
       px={{ base: '2', md: '4' }}
       py={{ base: '1', md: '2' }}
+      ml={2}
+     mr="-120px"
     >
       {numberOfNotifications}
-    </Badge>
-  )}
+    </Badge>)}
 
-</Flex>
-          <Flex flexDir="column" align="center">
+            </NextLink>
+
+  
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
-              </Button>
-            </NextLink>
-          
-            <NextLink href="/findJob" passHref>
-              <Button variant="ghost" aria-label="Find Jobs" my={5} w="100%">
-                Find Jobs
-              </Button>
-            </NextLink>
-
-            <NextLink href="/postJob" passHref>
-              <Button
-                variant="ghost"
-                aria-label="Create Job Listing"
-                my={5}
-                w="100%"
-              >
-                Create Job Listing
               </Button>
             </NextLink>
 
@@ -369,6 +423,33 @@ export default function NavBar() {
                 My Account
               </Button>
             </NextLink>
+
+            <Menu>
+              <MenuButton
+                as={Button}
+                rightIcon={<Icon as={RiArrowDropDownFill} w={8} h={8} />}
+                variant="outline"
+                padding={'1.0em'}
+                rounded={'full'}
+                marginTop={'1.3em'}
+                marginLeft={'1em'}
+                marginRight={'1em'}
+                marginBottom={'1.5em'}
+              >
+                Careers
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleFilter('option1')}>
+                  Open Jobs
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option2')}>
+                  My Job Listings
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option3')}>
+                  Create a Job Listing
+                </MenuItem>
+              </MenuList>
+            </Menu>
 
             {/* <MobileSearchBar/> */}
             <Button
