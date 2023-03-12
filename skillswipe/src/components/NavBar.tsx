@@ -268,33 +268,6 @@ export default function NavBar() {
             </NextLink>
             </Flex>
           </Flex>
-          <Flex alignItems="center">
-  <IconButton
-    aria-label='Home'
-    variant="ghost"
-    as={AiOutlineBell}
-    boxSize={{ base: 5, md: 5 }}
-    ml={{ base: '12px', md: '20px' }}
-    //onClick go to Notification page
-    onClick={() => router.push('/NotificationPage')}
-  />
-  
-  {numberOfNotifications > 0 && (
-    <Badge
-      position="relative"
-      top={{ base: '-2', md: '-3' }}
-      right={{ base: '2.5', md: '3.5' }}
-      borderRadius="full"
-      colorScheme="red"
-      fontSize={{ base: 'xs', md: 'sm' }}
-      px={{ base: '2', md: '4' }}
-      py={{ base: '1', md: '2' }}
-    >
-      {numberOfNotifications}
-    </Badge>
-  )}
-
-</Flex>
 
           {/* Mobile */}
           <IconButton
@@ -334,6 +307,33 @@ export default function NavBar() {
               />
           </Flex>
 
+          <Flex alignItems="center">
+  <IconButton
+    aria-label='Home'
+    variant="ghost"
+    as={AiOutlineBell}
+    boxSize={{ base: 5, md: 5 }}
+    ml={{ base: '12px', md: '20px' }}
+    //onClick go to Notification page
+    onClick={() => router.push('/NotificationPage')}
+  />
+  
+  {numberOfNotifications > 0 && (
+    <Badge
+      position="relative"
+      top={{ base: '-2', md: '-3' }}
+      right={{ base: '2.5', md: '3.5' }}
+      borderRadius="full"
+      colorScheme="red"
+      fontSize={{ base: 'xs', md: 'sm' }}
+      px={{ base: '2', md: '4' }}
+      py={{ base: '1', md: '2' }}
+    >
+      {numberOfNotifications}
+    </Badge>
+  )}
+
+</Flex>
           <Flex flexDir="column" align="center">
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">

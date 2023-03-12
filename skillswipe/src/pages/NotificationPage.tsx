@@ -1,12 +1,14 @@
-import { useState, useEffect, Fragment } from 'react';
+import { useState, useEffect, Fragment, } from 'react';
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Button, chakra, Container, Flex, Grid, Heading, HStack, List, ListItem, Stack, VStack } from '@chakra-ui/react'
+import { Box, Button, chakra, Container, Flex, Grid, Heading, HStack, List, ListItem, Stack, VStack, Text } from '@chakra-ui/react'
 import { default as Link, default as NextLink } from 'next/link'
 import { getPendingRequest,  acceptRequest, removeConnection} from '@/pages/api/api'
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import { format } from 'path';
+import { formToJSON } from 'axios';
 
 
 
@@ -35,7 +37,39 @@ function Notifications() {
       });
   }, []);
 
-  
+  const acceptConnection = (id) => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      acceptRequest(token, id)
+        .then((res) => {
+          setNotifications(
+            notifications.filter((connection: any) => connection.user.id !== id)
+          )
+          toast.success('Request Accepted')
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const rejectConnection = (id) => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      removeConnection(token, id)
+        .then((res) => {
+          setNotifications(
+            notifications.filter((connection: any) => connection.user.id !== id)
+          )
+          toast.success('Connection removed')
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+
   return (
     <>
     <Layout>
@@ -49,7 +83,7 @@ function Notifications() {
 {notifications.length === 0 ? (
   <Box  
   border="1px solid"
-  borderColor="gray.400"
+  borderColor="gray.100"
   borderRadius="lg"
   overflow="hidden">
     <chakra.p
@@ -69,17 +103,30 @@ function Notifications() {
   spacing={0}
 >
   {notifications.map((notification: Array) => (
-    <Fragment key={notification.user.id }>
+    <Fragment key={notification.user.id } >
       <Grid
         templateRows={{ base: 'auto auto', md: 'auto' }}
         w="100%"
-        templateColumns={{ base: 'unset', md: '4fr 1fr' }}
-        p={{ base: 3, sm: 6 }}
+        templateColumns={{ base: 'unset', md: '4fr 2fr 2fr' }}
+        p={{ base: 3, sm: 4 }}
         gap={3}
         alignItems="center"
         _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+        border="1px solid"
       >
-        <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+        <Box gridColumnEnd={{ base: 'span 5', md: 'unset' }} >
+            <Text fontWeight="bold" fontSize="xl" mb={5}>Add me to your Network</Text>
+          {/* // display the Date object within the text tag but remove the GMT-0500 (Easterb Standard time) */}
+
+          <Text fontSize="sm" color="gray.500" mb={5}>
+  {Date(notification.user.since).toString().split('GMT')[0]}
+</Text>
+
+          
+
+
+
+
           <Flex alignItems="center">
           <img  src={
                             notification.user.profilePic
@@ -90,28 +137,33 @@ function Notifications() {
             as={Link}
             href={`/profile/${notification.user.id}`}
             fontWeight="bold"
-            fontSize="lg"
+            fontSize="2xl"
+            whiteSpace="nowrap"
+            
           >
             {notification.user.firstName} {notification.user.lastName}
           </chakra.h3>
           
+          
+        <Button         ml="20px"
+                        color="gray.600"
+                        onClick={() => acceptConnection(notification.user.id)}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+      p={7} 
+      mr="20px"
+                      >
+                        Accept
+                      </Button>
+      
+                      <Button         
+                        colorScheme="red"
+                        onClick={() => rejectConnection(notification.user.id)}
+                       p={7}
+                      >
+                        Reject
+                      </Button>
           </Flex>
         </Box>
-          <Button
-          as={Link}
-          href={`/profile/${notification.user.id}`}
-      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-      p={5}
-      rounded="100px"
-      w = "80%"
-               
-      mr="50"
-    
-    >
-      Visit
-    </Button>
-      
-       
       </Grid>
     </Fragment> 
     ))}
