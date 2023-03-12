@@ -4,6 +4,9 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
+  Alert,
+  Alert,
+  AlertIcon,
   Divider,
   Spinner,
   Stack,
@@ -63,6 +66,11 @@ const profile = () => {
     Requested: false,
     Pending: false,
   })
+
+  
+  const [acceptClicked, setAcceptClicked] = useState(false)
+  const [rejectClicked, setRejectClicked] = useState(false)
+
   const currentUser = useSelector((state) => state as any)
 
   const Request = () => {
@@ -70,6 +78,7 @@ const profile = () => {
     sendRequest(token, router.query.id)
       .then((reponse) => {
         setStatus({ ...Status, Requested: true })
+        toast.success('Connection request sent!')
       })
       .catch((error) => {
         toast(error.message)
@@ -79,6 +88,7 @@ const profile = () => {
     const token = localStorage.getItem('jwt')
     acceptRequest(token, router.query.id)
       .then((reponse) => {
+        setAcceptClicked(true)
         setStatus({ ...Status, connected: true })
       })
       .catch((error) => {
@@ -89,6 +99,7 @@ const profile = () => {
     const token = localStorage.getItem('jwt')
     removeConnection(token, router.query.id)
       .then((reponse) => {
+        setRejectClicked(true)
         setStatus({ connected: false, Requested: false, Pending: false })
       })
       .catch((error) => {
@@ -170,6 +181,19 @@ const profile = () => {
                   marginTop: '-3em',
                 }}
               >
+                 {acceptClicked ?(
+                          <Alert status='success' variant='subtle'>
+                         <AlertIcon />
+                          Connection is Accepted
+                        </Alert>
+                            
+                          ):null}
+                          {rejectClicked ?(
+                          <Alert status='error' variant='subtle'>
+                          <AlertIcon />
+                          Connection is Rejected
+                        </Alert>
+                          ):  null}
                 <Head>
                   <title>SkillSwipe</title>
                   <meta property="og:title" content="SkillSwipe" />
