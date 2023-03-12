@@ -23,6 +23,8 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
+  Badge,
+
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
@@ -32,6 +34,8 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { AiOutlineBell } from "react-icons/ai"
+import { getPendingRequest } from '@/pages/api/api'
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -108,6 +112,31 @@ export default function NavBar() {
       router.push('/postJob')
     }
   }
+
+
+  const [numberOfNotifications, setNumberOfNotifications] = useState(0)
+  
+
+  const token = localStorage.getItem('jwt')
+ useEffect(() =>  {getPendingRequest(token)
+    .then((response) => {
+      if (!response.data || !response.data.users) {
+        
+        setNumberOfNotifications(response.data.length);
+      console.log(response.data.length);
+          
+      } else {
+        
+            setNumberOfNotifications(0);
+        
+      }
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }
+
+  , [token]); 
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -135,6 +164,7 @@ export default function NavBar() {
           >
             🚀 SkillSwipe
           </Text>
+
           <NextLink href="#">
             <Button
               onClick={toggleColorMode}
@@ -152,6 +182,34 @@ export default function NavBar() {
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
+          <Flex alignItems="center" ml="auto">
+          <IconButton
+    aria-label='Home'
+    variant="ghost"
+    as={AiOutlineBell}
+    boxSize={{ base: 6, md: 5 }}
+    ml={{ base: '10px', md: '20px' }}
+   
+    //onClick go to Notification page
+    onClick={() => router.push('/NotificationPage')}
+    top={{ base:'3px' }}
+  />
+  
+  {numberOfNotifications > 0 && (
+    <Badge
+      position="relative"
+      top={{ base: '-3', md: '-3' }}
+      right={{ base: '2.5', md: '3.5' }}
+      borderRadius="full"
+      colorScheme="red"
+      fontSize={{ base: 'xs', md: 'sm' }}
+      px={{ base: '2', md: '4' }}
+      py={{ base: '1', md: '2' }}
+      ml={0.5}
+    >
+      {numberOfNotifications}
+    </Badge>
+  )}
             <NextLink href="/home" passHref>
               <Button
                 aria-label="Home"
@@ -163,6 +221,7 @@ export default function NavBar() {
                 Home
               </Button>
             </NextLink>
+            </Flex>
 
             <NextLink href="/inbox" passHref>
               <Button
@@ -317,6 +376,28 @@ export default function NavBar() {
           </Flex>
 
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
+
+          <NextLink href="/NotificationPage" passHref>
+              <Button variant="ghost" aria-label="Home" my={5} w="100%">
+                Notifications
+              </Button>
+              {numberOfNotifications > 0 && (
+                <Badge
+                  position="relative"
+                  top={{ base: '-4', md: '-3' }}
+                  right={{ base: '-2.5', md: '3.5' }}
+                  borderRadius="full"
+                  colorScheme="red"
+                  fontSize={{ base: 'xs', md: 'sm' }}
+                  px={{ base: '2', md: '4' }}
+                  py={{ base: '1', md: '2' }}
+                  ml={2}
+                  mr="-120px"
+                >
+                  {numberOfNotifications}
+                </Badge>)}
+
+            </NextLink>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 Home
