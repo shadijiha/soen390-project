@@ -5,7 +5,6 @@ import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
   Alert,
-  Alert,
   AlertIcon,
   Divider,
   Spinner,
