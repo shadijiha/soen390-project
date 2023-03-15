@@ -1,11 +1,12 @@
 import {
   ChevronDownIcon,
-  CloseIcon,
+  BellIcon, CloseIcon,
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons'
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Collapse,
@@ -26,6 +27,7 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
+import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
 import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
@@ -33,7 +35,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 
-export default function NavBar() {
+export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -41,7 +43,6 @@ export default function NavBar() {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
-
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -93,6 +94,7 @@ export default function NavBar() {
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
     })
+    
   }, [currentUser])
   const handleFilter = (value) => {
     // open the openJobs page
@@ -108,6 +110,9 @@ export default function NavBar() {
       router.push('/postJob')
     }
   }
+
+ 
+  
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -174,6 +179,30 @@ export default function NavBar() {
               >
                 Messages
               </Button>
+            </NextLink>
+
+            <NextLink href="/notifications" passHref>
+              <div style={{position: 'relative'}}>
+              <IconButton
+                aria-label="Notifications"
+                icon={<BellIcon />}
+                variant="ghost"
+                size="lg"
+                w="100%"
+                my={5}
+              ></IconButton>
+              <Badge
+                colorScheme="red"
+                borderRadius="full"
+                px="2"
+                position="absolute"
+                top="20px"
+                right="0"
+              >
+                {props.nbNotifications}
+              </Badge>
+              </div>
+
             </NextLink>
             <Menu>
               <MenuButton
