@@ -94,16 +94,16 @@ const findJob = () => {
       console.log('Filtering ...');
       switch (filterValue) {
         case 'full-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'full-time');
+            filteredJobs = filteredJobs.filter((job) => job.jobType === 'full-time' as string);
             break;
         case 'part-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'part-time');
+            filteredJobs = filteredJobs.filter((job) => job.jobType === 'part-time' as string);
             break;
         case 'contract':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'contract');
+            filteredJobs = filteredJobs.filter((job) => job.jobType === 'contract' as string);
             break;
         case 'other':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'other');
+            filteredJobs = filteredJobs.filter((job) => job.jobType === 'other' as string );
             break;
 
         default:
