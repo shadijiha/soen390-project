@@ -24,7 +24,7 @@ import {
   useColorMode,
   useColorModeValue,
   useDisclosure,
-  Badge,
+
 
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
