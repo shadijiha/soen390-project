@@ -1,7 +1,13 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
+import { PusherService } from "../../util/pusher/pusher.service";
 import { Connection } from "../../models/connection.entity";
 import { ConnectionsService } from "./connections.service";
+import { UsersService } from "../users.service";
+import { User } from "../../models/user.entity";
+import { Job } from "../../models/job.entity";
+import { DataSource } from "typeorm";
+import { dataSourceMockFactory } from "../../util/mockDataSource";
 
 describe("ConnectionsService", () => {
   let service: ConnectionsService;
@@ -23,14 +29,31 @@ describe("ConnectionsService", () => {
     })),
   };
 
+  let mockUsersRepository = {
+  }
+
+  let mockJobsRepository = {}
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ConnectionsService,
+        PusherService,
+        UsersService,
         {
           provide: getRepositoryToken(Connection),
           useValue: mockConnectionsRepository,
         },
+        {
+          provide: getRepositoryToken(User),
+          // define a fake repository that returns the fake users
+          useValue: mockUsersRepository
+        },
+        {
+          provide: getRepositoryToken(Job),
+          useValue: mockJobsRepository
+        },
+        { provide: DataSource, useFactory: dataSourceMockFactory }
       ],
     })
       .overrideProvider(Connection)
