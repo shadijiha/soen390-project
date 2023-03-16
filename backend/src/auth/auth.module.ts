@@ -3,7 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { PassportModule } from '@nestjs/passport'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { User } from 'src/models/user.entity'
+import { User } from '../models/user.entity'
+import { PusherService } from '../util/pusher/pusher.service'
 import { ConnectionsService } from '../users/connections/connections.service'
 import { UsersModule } from '../users/users.module'
 import { UsersService } from '../users/users.service'
@@ -28,6 +29,6 @@ import { JwtStrategy } from './jwt.strategy'
     TypeOrmModule.forFeature([User])
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, JwtStrategy, ConnectionsService]
+  providers: [AuthService, UsersService, JwtStrategy, ConnectionsService, PusherService]
 })
 export class AuthModule {}
