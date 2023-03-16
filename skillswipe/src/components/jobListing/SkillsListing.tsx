@@ -1,10 +1,12 @@
 import { Button, Flex } from '@chakra-ui/react'
 
-interface SkillsListingProps {
-  skills?: Array<{ title: string }>
-}
+// interface SkillsListingProps {
+//   skills?: Array<{ title: string }>
+// }
+//Removed interface to pass type any
+//TODO: shall fix this later to specific type
 
-const SkillsListing = ({ skills }: SkillsListingProps) => {
+const SkillsListing = ({ skills }) => {
   const skillTitles = skills?.map((skill) => skill.title) ?? []
 
   return (
