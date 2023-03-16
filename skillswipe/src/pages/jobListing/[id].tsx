@@ -37,6 +37,7 @@ type JobAttributes = {
 const jobListing = () => {
   const router = useRouter()
   const [job, setJob] = useState<JobAttributes>({})
+  const [jobSkills, setSkills] = useState<Array<string>>([])
 
   useEffect(() => {
     if (router.query.id) {
@@ -58,6 +59,12 @@ const jobListing = () => {
     return <div>Loading...</div>
   }
 
+  useEffect(() => {
+    if (job.skills) {
+      setSkills(job.skills)
+    }
+  }, [job.skills])
+
   return (
     <>
       <Layout>
@@ -70,7 +77,7 @@ const jobListing = () => {
                 <TopHeader jobTitle={job.jobTitle} companyName={job.companyName} />
 
                 {/* Skills Needed in the Job Listed */}
-                {/* <SkillsListing skills={job.skills} /> */}
+                <SkillsListing skills={jobSkills} />
                 {/* Top 3 boxes */}
                 <JobInfoBoxes
                   salary={job.salary}

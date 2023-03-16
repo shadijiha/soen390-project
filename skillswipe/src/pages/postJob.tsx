@@ -40,18 +40,18 @@ const postJob = () => {
     event.preventDefault()
 
     // debug: show all the values grabbed as toast messages (to delete in production)
-    toast(
-      `jobTitle: ${postListing.jobTitle}
-      companyName: ${postListing.companyName} 
-      location: ${postListing.location}
-      jobDescription: ${postListing.jobDescription}
-      salary: ${postListing.salary}
-      skills: ${postListing.skills}
-      startDate: ${postListing.startDate}
-      jobType: ${postListing.jobType}
-      id: ${postListing.id}
-      `
-    )
+    // toast(
+    //   `jobTitle: ${postListing.jobTitle}
+    //   companyName: ${postListing.companyName} 
+    //   location: ${postListing.location}
+    //   jobDescription: ${postListing.jobDescription}
+    //   salary: ${postListing.salary}
+    //   skills: ${postListing.skills}
+    //   startDate: ${postListing.startDate}
+    //   jobType: ${postListing.jobType}
+    //   id: ${postListing.id}
+    //   `
+    // )
     console.log(postListing)
 
     if (
