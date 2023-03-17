@@ -110,7 +110,7 @@ const myListings = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                user profile pic here ‎ My Listings
+                 ‎ My Listings
               </chakra.h3>
               <Menu>
                 <MenuButton
