@@ -7,7 +7,7 @@ import { UsersService } from './users.service'
 import { Users } from './users.types'
 import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
-import { FileValidationPipe } from '../util/fileValidationPipe'
+import { ProfileImagesFileValidationPipe } from '../util/fileValidationPipe'
 import { ConnectionsService } from './connections/connections.service'
 import type Pusher from 'pusher'
 
@@ -68,7 +68,7 @@ export class UsersController {
   async update (
     @AuthUser() authedUser: BearerPayload,
       @Body() user: Users.UpdateUserRequest,
-      @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
+      @UploadedFiles(ProfileImagesFileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
   ): Promise<User> {
     return await this.usersService.update(authedUser.id, user, files)
   }
