@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Application } from 'src/models/application.entity'
-import { Job } from 'src/models/job.entity'
-import { type User } from 'src/models/user.entity'
+import { Application } from '../models/application.entity'
+import { Job } from '../models/job.entity'
+import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
 import { type Applications } from './application.types'
 
