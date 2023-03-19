@@ -34,6 +34,9 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { useTranslation } from 'next-i18next';
+import 'i18n' // pass the i18n instance here.
+
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -70,6 +73,14 @@ export default function NavBar(props: any) {
 
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
+
+  
+  const { t, i18n } = useTranslation();
+
+  const handleLanguageChange = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -138,7 +149,7 @@ export default function NavBar(props: any) {
               router.push('/')
             }}
           >
-            🚀 SkillSwipe
+            {t('🚀 SkillSwipe')}
           </Text>
           <NextLink href="#">
             <Button
@@ -154,6 +165,21 @@ export default function NavBar(props: any) {
               {toggleTheme}
             </Button>
           </NextLink>
+          <Select
+            onChange={handleLanguageChange}
+            value={i18n.language}
+            variant="filled"
+            my={5}
+            w="58"
+            py={2}
+            _hover={{
+              cursor: "pointer",
+            }}
+            icon={<Text>🌐</Text>}
+          >
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+          </Select>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
@@ -165,10 +191,9 @@ export default function NavBar(props: any) {
                 variant="ghost"
                 rounded={'full'}
               >
-                Home
+                {t('Home')}
               </Button>
             </NextLink>
-
             <NextLink href="/inbox" passHref>
               <Button
                 variant="ghost"
@@ -177,7 +202,7 @@ export default function NavBar(props: any) {
                 w="100%"
                 rounded={'full'}
               >
-                Messages
+                {t('Messages')}
               </Button>
             </NextLink>
 
@@ -215,7 +240,7 @@ export default function NavBar(props: any) {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                Careers
+                {t('Careers')}
               </MenuButton>
               <MenuList
                 style={{
@@ -232,7 +257,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Open Jobs
+                  {t('openJobs')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -245,7 +270,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  My Job Listings
+                  {t('myJobListings')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -258,7 +283,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Create a Job Listing
+                   {t('Create Job Listing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -380,13 +405,13 @@ export default function NavBar(props: any) {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                  Open Jobs
+                {t('openJobs')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                  My Job Listings
+                {t('myJobListings')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                  Create a Job Listing
+                {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -454,7 +479,7 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Sign In/Logout
+                {t('Sign In/Logout')}
               </Button>
             </NextLink>
           </Flex>
@@ -462,4 +487,5 @@ export default function NavBar(props: any) {
       </Flex>
     </Box>
   )
+
 }

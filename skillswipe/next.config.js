@@ -10,6 +10,13 @@ const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
   },
+
+
+  i18n: {
+    locales: ['en', 'fr'], // Replace 'fr' with the language code of your second language
+    defaultLocale: 'en',
+  },
+
 };
 
 module.exports = nextConfig;
