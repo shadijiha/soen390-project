@@ -34,11 +34,17 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { useTranslation } from 'next-i18next';
-import 'i18n' // pass the i18n instance here.
+import { useTranslation } from 'react-i18next';
+import { i18n } from '../i18n';
 
 
-export default function NavBar(props: any) {
+
+
+
+
+
+
+ export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -75,7 +81,7 @@ export default function NavBar(props: any) {
   const [showDropdown2, setShowDropdown2] = useState(false)
 
   
-  const { t, i18n } = useTranslation();
+  const { t, i18n} = useTranslation();
 
   const handleLanguageChange = (e) => {
     i18n.changeLanguage(e.target.value);
@@ -486,6 +492,10 @@ export default function NavBar(props: any) {
         </Flex>
       </Flex>
     </Box>
-  )
-
+  );
 }
+
+
+
+
+

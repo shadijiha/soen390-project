@@ -4,6 +4,10 @@ import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import store from '../Redux/store'
+import { AppProps } from 'next/app'
+import { AppWithTranslation } from 'next-i18next'
+import React, { useMemo } from 'react';
+
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -26,3 +30,5 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     </Provider>
   )
 }
+
+
