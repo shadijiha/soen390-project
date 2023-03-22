@@ -34,13 +34,8 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { useTranslation } from 'react-i18next';
-import { i18n } from '../i18n';
-
-
-
-
-
+import { i18n } from 'next-i18next'
+import { useTranslation } from 'next-i18next';
 
 
 
@@ -58,7 +53,6 @@ import { i18n } from '../i18n';
     setSearchTerm(e.target.value)
   }
 
-  const router = useRouter()
 
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
@@ -80,12 +74,13 @@ import { i18n } from '../i18n';
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
 
-  
   const { t, i18n} = useTranslation();
 
-  const handleLanguageChange = (e) => {
-    i18n.changeLanguage(e.target.value);
-  };
+  const router = useRouter()
+  const changeLanguage = (language) => {
+    router.push(router.pathname, router.pathname, { locale: language })
+    i18n.changeLanguage(language)
+  }
 
 
   const [profile, setProfile] = useState({
@@ -172,7 +167,7 @@ import { i18n } from '../i18n';
             </Button>
           </NextLink>
           <Select
-            onChange={handleLanguageChange}
+            onChange={(e) => changeLanguage(e.target.value)}
             value={i18n.language}
             variant="filled"
             my={5}
@@ -494,8 +489,6 @@ import { i18n } from '../i18n';
     </Box>
   );
 }
-
-
 
 
 

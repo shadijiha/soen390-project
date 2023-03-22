@@ -1,19 +1,48 @@
 {
    "skillSwipe": "🚀 SkillSwipe",
-   "home": "Home",
-   "openJobs": "Open Jobs",
-   "myJobListings": "My Job Listings",
-   "createJobListing": "Create a Job Listing",
-   "myProfile": "My Profile",
-   "mySkills": "My Skills",
-   "myWallet": "My Wallet",
+   "welcome": "Welcome",
+   "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
 
-   "jobListing": "Job Listing",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "about": "About",
+    "contact": "Contact",
+    "help": "Help",
+    "feedback": "Feedback",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "language": "Language",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode",
+    "systemMode": "System Mode",
+    "english": "English",
+    "french": "French",
 
-   "jobTitle": "Job Title",
-   "jobDescription": "Job Description",
-   "jobLocation": "Job Location",
-   "jobSkills": "Job Skills"
+    "search": "Search",
+    "recent posts": "Recent Posts",
+
+    "noResults": "No results found",
+
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "inbox": "Inbox",
+    "sent": "Sent",
+
+    "noMessages": "No new message",
+
+    "pending requests": "Pending Requests",
+    "noPendingRequests": "No pending requests to display",
+    "newMessage": "New Message",
+    "newMessage2": "you have a new message",
+
+
+
    
 
  }

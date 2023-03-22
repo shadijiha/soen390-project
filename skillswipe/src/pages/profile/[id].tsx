@@ -33,8 +33,12 @@ import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
+import { useTranslation } from 'next-i18next'
+
+
 
 const profile = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
@@ -292,7 +296,7 @@ const profile = () => {
                           onClick={Reject}
                         >
                           <span>
-                            <span>Delete Request</span>
+                            <span>{ t('Delete Request') }</span>
                           </span>
                         </button>
                       ) : Status.Pending == true ? (
@@ -310,7 +314,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Accept</span>
+                              <span> { t('Accept') }</span>
                             </span>
                           </button>
                           <button
@@ -326,7 +330,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Decline</span>
+                              <span> { t('Decline') }</span>
                             </span>
                           </button>
                         </>
@@ -345,7 +349,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Connect</span>
+                              <span> { t('Connect') }</span>
                             </span>
                           </button>
                         </>

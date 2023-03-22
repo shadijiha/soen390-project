@@ -21,7 +21,11 @@ import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
 import Languages from '../../components/Profile/Languages'
 
+import { useTranslation } from 'next-i18next' 
+
 const Profile = () => {
+
+  const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
   const User = useSelector((state) => state as any)
@@ -159,7 +163,7 @@ const Profile = () => {
                       router.push('/profile/editProfile')
                     }}
                   >
-                    Edit
+                    {t('Edit')}
                   </button>
                 </div>
               </div>

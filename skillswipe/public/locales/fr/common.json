@@ -1,24 +1,50 @@
-
-
 {
    "skillSwipe": "🚀 SkillSwipe",
-   "home": "Accueil",
-   "openJobs": "Offres d'emploi",
-   "myJobListings": "Mes offres d'emploi",
-   "createJobListing": "Créer une offre d'emploi",
-   "myProfile": "Mon profil",
-   "myAccount": "Mon compte",
-   "mySettings": "Mes paramètres",
-   "myNotifications": "Mes notifications",
-   "myMessages": "Mes messages",
+   "welcome": "Bienvenue",
+   "signUp": "S'inscrire",
+   "signIn": "Se connecter",
+    "signOut": "Se déconnecter",
+    "email": "Email",
+    "password": "Mot de passe",
+    "username": "Nom d'utilisateur",
 
-   "jobListing": "Offre d'emploi",
-   "jobListings": "Offres d'emploi",
+    "home": "Accueil",
+    "profile": "Profil",
+    "settings": "Paramètres",
+    "about": "À propos",
+    "contact": "Contact",
+    "help": "Aide",
+    "feedback": "Retour d'information",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Politique de confidentialité",
+    "language": "Langue",
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode clair",
+    "systemMode": "Mode système",
+    "english": "Anglais",
+    "french": "Français",
 
-   "jobListingTitle": "Titre de l'offre d'emploi",
-   "jobListingDescription": "Description de l'offre d'emploi",
-   "jobListingLocation": "Lieu de l'offre d'emploi"
+    "search": "Rechercher",
+    "recent posts": "Publications récentes",
+
+    "noResults": "Aucun résultat",
+
+    "messages": "Messages",
+    "notifications": "Notifications",
+    "inbox": "Boîte de réception",
+    "sent": "Envoyé",
+
+    "noMessages": "Aucun message",
+
+    "pending requests": "Demandes en attente",
+    "noPendingRequests": "Aucune demande en attente",
+    "newMessage": "Nouveau message",
+    "newMesssage2": "Vous avez un nouveau message",
+
+    
+
 
    
- }
+ 
+  }
  
