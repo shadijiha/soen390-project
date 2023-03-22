@@ -2,109 +2,109 @@
  * Types for Request and Respose
  */
 
-import { ApiProperty } from "@nestjs/swagger";
-import { Job } from "../models/job.entity";
-import { App } from "../app.types";
-import { User } from "../models/user.entity";
+import { ApiProperty } from '@nestjs/swagger'
+import { Job } from '../models/job.entity'
+import { App } from '../app.types'
+import { User } from '../models/user.entity'
 
 export namespace Users {
   export class GetAllUsersResponse extends App.WithStatus {
     @ApiProperty({ isArray: true, type: User })
-    user: User[] | null;
+      user: User[] | null
   }
 
   export class GetUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+      user: User | null
   }
 
   export class UpdateUserRequest {
     @ApiProperty({ required: false })
-    firstName: string;
+      firstName: string
 
     @ApiProperty({ required: false })
-    lastName: string;
+      lastName: string
 
     @ApiProperty({ required: false })
-    email: string;
+      email: string
 
     @ApiProperty({ required: false })
-    mobileNo: string;
+      mobileNo: string
 
-    @ApiProperty({ examples: ["male", "female"], required: false })
-    gender: "male" | "female" | "";
+    @ApiProperty({ examples: ['male', 'female'], required: false })
+      gender: 'male' | 'female' | ''
 
     @ApiProperty({ required: false })
-    biography: string;
+      biography: string
 
     @ApiProperty({
-      type: "file",
+      type: 'file',
       properties: {
         file: {
-          type: "string",
-          format: "binary",
-        },
+          type: 'string',
+          format: 'binary'
+        }
       },
-      required: false,
+      required: false
     })
-    profilePic: Express.Multer.File;
+      profilePic: Express.Multer.File
 
     @ApiProperty({
-      type: "file",
+      type: 'file',
       properties: {
         file: {
-          type: "string",
-          format: "binary",
-        },
+          type: 'string',
+          format: 'binary'
+        }
       },
-      required: false,
+      required: false
     })
-    coverPic: Express.Multer.File;
+      coverPic: Express.Multer.File
   }
 
   export class UpdateUserResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+      user: User | null
   }
 
   export class SearchResponse {
     @ApiProperty({ type: [User] })
-    users: User[];
+      users: User[]
 
     @ApiProperty({ type: [Job] })
-    jobs: Job[];
+      jobs: Job[]
   }
 
   export class GetUserByIdResponse extends App.WithStatus {
     @ApiProperty({ type: User })
-    user: User | null;
+      user: User | null
 
-    @ApiProperty({ enum: ["Connected", "Pending", "NotConnected"] })
-    connectionStatus: "Connected" | "Pending" | "NotConnected";
+    @ApiProperty({ enum: ['Connected', 'Pending', 'NotConnected'] })
+      connectionStatus: 'Connected' | 'Pending' | 'NotConnected'
 
     @ApiProperty({ type: User, isArray: true })
-    connections: User[];
+      connections: User[]
   }
 
   export class UpdateStatusRequest {
-    @ApiProperty({ enum: ["online", "offline"] })
-    userStatus: "online" | "offline";
+    @ApiProperty({ enum: ['online', 'offline'] })
+      userStatus: 'online' | 'offline'
   }
 
   export class AddDocumentsRequest {
-    @ApiProperty({ type: "file", required: false })
-    cv: Express.Multer.File;
+    @ApiProperty({ type: 'file', required: false })
+      cv: Express.Multer.File
 
-    @ApiProperty({ type: "file", required: false })
-    coverLetter: Express.Multer.File;
+    @ApiProperty({ type: 'file', required: false })
+      coverLetter: Express.Multer.File
   }
 
   export class DeleteDocumentsRequest {
     @ApiProperty({ required: false })
-    cv: boolean;
+      cv: boolean
 
     @ApiProperty({ required: false })
-    coverLetter: boolean;
+      coverLetter: boolean
   }
 
 }
