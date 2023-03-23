@@ -7,10 +7,10 @@ export class PusherService {
 
   constructor () {
     this.pusher = new Pusher({
-      appId: process.env.P_APP_ID as string,
-      key: process.env.P_KEY as string,
-      secret: process.env.P_SECRET as string,
-      cluster: process.env.P_CLUSTER as string // if `host` is present, it will override the `cluster` option.
+      appId: process.env.PUSHER_APP_ID as string,
+      key: process.env.PUSHER_APP_KEY as string,
+      secret: process.env.PUSHER_APP_SECRET as string,
+      cluster: process.env.PUSHER_APP_CLUSTER as string // if `host` is present, it will override the `cluster` option.
     })
   }
 

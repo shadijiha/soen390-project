@@ -270,7 +270,9 @@ const profile = () => {
                             fontWeight: 600,
                             marginRight: '1em',
                           }}
-                          onClick={() => {router.push(`/inbox/${router.query.id}`)}}
+                          onClick={() => {
+                            router.push(`/inbox/${router.query.id}`)
+                          }}
                         >
                           <span>
                             <span>Message</span>

@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout'
-import JobListing from '@/pages/jobListing'
+import JobListing from '@/pages/jobListing/[id]'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'

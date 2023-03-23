@@ -103,7 +103,7 @@ export default function NavBar(props: any) {
     }
     // open the jobListing page
     if (value === 'option2') {
-      router.push('/jobListing')
+      router.push('/myListings')
     }
     // open the myJobApplications page
     if (value === 'option3') {
@@ -140,7 +140,7 @@ export default function NavBar(props: any) {
           >
             🚀 SkillSwipe
           </Text>
-          <NextLink href='#'>
+          <NextLink href="#">
             <Button
               onClick={toggleColorMode}
               variant="ghost"

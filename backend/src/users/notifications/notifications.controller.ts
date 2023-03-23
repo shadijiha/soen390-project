@@ -3,7 +3,7 @@ import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator'
 import { Post } from '@nestjs/common/decorators/http/request-mapping.decorator'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
-import { PusherService } from 'src/util/pusher/pusher.service'
+import { PusherService } from '../../util/pusher/pusher.service'
 import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 

@@ -1,28 +1,47 @@
 /* eslint-disable @next/next/no-img-element */
+import { viewJob } from '@/pages/api/api'
 import { Heading } from '@chakra-ui/react'
 
-const TopHeader = () => {
+interface TopHeaderProps {
+  companyName?: string
+  jobTitle?: string
+}
+const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
+  const data = [
+    {
+      id: 1,
+      companyName: `${companyName}`,
+      title: 'companyName',
+      jobTitle: `${jobTitle}`,
+      title2: 'jobTitle',
+    },
+  ]
+
   return (
     <>
-      <div
-        style={{
-          marginBottom: '8px',
-        }}
-      >
-        <img
-          //recruiters profile picture
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
-          width="50px"
-          alt="logo"
-        />
-      </div>
-      {/* recruiters company name here that they made from the job listing creation page*/}
-      <Heading fontSize="4xl" mb={5} fontWeight={200} letterSpacing={2}>
-        Google
-      </Heading>
-      <Heading fontSize="4xl" mb={10} fontWeight={700}>
-        Software Engineer Intern - Summer 2022
-      </Heading>
+      {data.map((job) => (
+        <>
+          <div
+            key={job.id}
+            style={{
+              marginBottom: '10px',
+            }}
+          >
+            <img
+              //recruiters profile picture
+              src={`https://www.google.com/s2/favicons?domain=${job.companyName?.toLowerCase()}.com&sz=64`}
+              width="50px"
+              alt="logo"
+            />
+          </div>
+          <Heading fontSize="4xl" mb={5} fontWeight={200} letterSpacing={2}>
+            {job.companyName}
+          </Heading>
+          <Heading fontSize="4xl" mb={10} fontWeight={700}>
+            {job.jobTitle}
+          </Heading>
+        </>
+      ))}
     </>
   )
 }

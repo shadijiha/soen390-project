@@ -2,6 +2,8 @@ import 'reflect-metadata'
 import { NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import { GlobalErrorFilter } from './chat/exception.filter'
+import { ValidationPipe } from '@nestjs/common'
 // import { ValidationPipe } from '@nestjs/common'
 
 async function bootstrap (): Promise<void> {
@@ -29,7 +31,9 @@ async function bootstrap (): Promise<void> {
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup('api', app, document)
 
-  // app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalFilters(new GlobalErrorFilter())
+
+  app.useGlobalPipes(new ValidationPipe())
   await app.listen(process.env.APP_PORT ?? 8080)
 }
 void bootstrap()

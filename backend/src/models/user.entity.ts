@@ -25,6 +25,7 @@ import { Volunteering } from './volunteering.entity'
 import { Work } from './work.entity'
 import { Connection } from './connection.entity'
 import { Job } from './job.entity'
+import { Application } from './application.entity'
 import { Post } from './post.entity'
 
 @Entity('users')
@@ -68,9 +69,21 @@ export class User extends BaseEntity {
   @ApiProperty()
     coverPic: string
 
+  @Column({ default: null, type: 'longtext' })
+  @ApiProperty()
+    cv: string | null
+
+  @Column({ default: null, type: 'longtext' })
+  @ApiProperty()
+    coverLetter: string | null
+
   @Column({ default: null })
   @ApiProperty()
     biography: string
+
+  @Column({ default: 'offline' })
+  @ApiProperty()
+    userStatus: 'online' | 'offline'
 
   @Column({ default: 'jobseeker' })
   @ApiProperty()
@@ -195,6 +208,14 @@ export class User extends BaseEntity {
   @OneToMany(() => Job, (j) => j.user, { cascade: true, orphanedRowAction: 'delete' })
   @ApiProperty({ type: [Job] })
     jobs: Job[]
+
+  // applications
+  @OneToMany(() => Application, (a) => a.user, {
+    cascade: true,
+    orphanedRowAction: 'delete'
+  })
+  @ApiProperty({ type: [Education] })
+    applications: Application[]
 
   // posts
   @OneToMany(() => Post, (p) => p.user)

@@ -1,18 +1,14 @@
-/* eslint-disable react/jsx-key */
 import { Button, Flex } from '@chakra-ui/react'
 
-const skillsArray = [
-  'React',
-  'Node',
-  'Express',
-  'MongoDB',
-  'Python',
-  'Java',
-  'C++',
-  'NextJS',
-  'ChakraUI',
-]
-const SkillsListing = () => {
+// interface SkillsListingProps {
+//   skills?: Array<{ title: string }>
+// }
+//Removed interface to pass type any
+//TODO: shall fix this later to specific type
+
+const SkillsListing = ({ skills }) => {
+  const skillTitles = skills?.map((skill) => skill.title) ?? []
+
   return (
     <>
       <Flex
@@ -20,9 +16,9 @@ const SkillsListing = () => {
         justify="center"
         direction="row"
         flexWrap={'wrap'}
-        mx={'80px'}
+        mx={'180px'}
       >
-        {skillsArray.map((skill: string, index: number) => (
+        {skillTitles.map((skillTitle, index) => (
           <Button
             key={index}
             className="skill"
@@ -36,7 +32,7 @@ const SkillsListing = () => {
               marginBottom: '1em',
             }}
           >
-            {skill}
+            {skillTitle}
           </Button>
         ))}
       </Flex>
