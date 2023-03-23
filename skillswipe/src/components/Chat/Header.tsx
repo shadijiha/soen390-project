@@ -16,7 +16,7 @@ const Header = ({user,status}) => {
         {status == "online" ? 
         <AvatarBadge boxSize="1.25em" bg="green.500" />
         :
-        <></>
+        <AvatarBadge boxSize="1.25em" bg="red.500" />
         }
       </Avatar>
       <Flex flexDirection="column" mx="5" justify="center">
