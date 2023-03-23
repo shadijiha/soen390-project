@@ -5,8 +5,8 @@ import { Message } from '../models/message.entity'
 import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
 import { ShadoCloudClient } from 'shado-cloud-sdk'
-import { createReadStream } from 'fs'
 import { UploadedFileDB } from '../models/file.entity'
+import * as path from 'path'
 
 @Injectable()
 export class ChatService {
@@ -29,7 +29,16 @@ export class ChatService {
       // encrypted: true
     })
 
-    this.cloud = new ShadoCloudClient('shadi@shado.com', 'shadi1234')
+    this.cloud = new ShadoCloudClient(
+      process.env.SHADO_CLOUD_EMAIL ?? 'unset',
+      process.env.SHADO_CLOUD_PASSWORD ?? 'unset'
+    )
+    this.cloud.auth.login().catch((err) => {
+      throw new Error(
+        "Unable to login to Shado Cloud. Won't be able to upload files. Error: " +
+					JSON.stringify(err)
+      )
+    })
   }
 
   public async message (
@@ -86,21 +95,36 @@ export class ChatService {
   public async upload (
     file: Express.Multer.File,
     userId: number
-  ): Promise<void> {
+  ): Promise<string> {
     const storedName = this.randomAlphaNumeric(30)
-    const res = await this.cloud.file.upload({
-      file: createReadStream(file.buffer),
-      dest: '',
-      name: storedName
+    await this.cloud.file.upload({
+      file: file.buffer,
+      destFolder: 'soen390',
+      name: storedName + path.extname(file.originalname)
     })
-    console.log(res)
+
     const dbFileData = new UploadedFileDB()
     dbFileData.originalName = file.originalname
     dbFileData.storedName = storedName
     dbFileData.mime = file.mimetype
     dbFileData.userId = userId
     dbFileData.size = file.size
+
+    // Create a temporary url
+    const date = new Date()
+    const url = (
+      await this.cloud.tempUrls.generate({
+        filepath: storedName,
+        expires_at: new Date(date.setMonth(date.getMonth() + 1)), // Now + 1 month
+        is_readonly: true,
+        max_requests: 1000
+      })
+    ).url
+    dbFileData.url = url
+
     await this.fileRepository.save(dbFileData)
+
+    return url
   }
 
   private randomAlphaNumeric (length: number): string {

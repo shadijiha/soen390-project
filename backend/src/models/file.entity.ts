@@ -17,6 +17,9 @@ export class UploadedFileDB {
     storedName: string
 
   @Column()
+    url: string
+
+  @Column()
     mime: string
 
   @Column()
