@@ -33,6 +33,8 @@ describe("UsersController", () => {
     }),
 
     search: jest.fn(() => ({})),
+    addDocuments: jest.fn(() => {}),
+    removeDocuments: jest.fn(() => {}),
   };
 
   let mockConnectionService = {
@@ -161,5 +163,21 @@ describe("UsersController", () => {
     } catch (e) {}
 
     expect(mockUserService.removeSoft).toHaveBeenCalled();
+  });
+
+  it("should add documents", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const files = {};
+    const data: Users.AddDocumentsRequest = {} as Users.AddDocumentsRequest;
+    await controller.postDocuments(bearer, data, files);
+    expect(mockUserService.addDocuments).toHaveBeenCalled();
+  });
+
+  it("should delete documents", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const files = {};
+    const data: Users.DeleteDocumentsRequest = {} as Users.DeleteDocumentsRequest;
+    await controller.removeDocuments(bearer, data);
+    expect(mockUserService.removeDocuments).toHaveBeenCalled();
   });
 });

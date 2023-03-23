@@ -135,20 +135,41 @@ export class UsersService {
   public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
     return {
       users: await this.usersRepository.find({
-        where: [
-          { firstName: Like(`%${query}%`) },
-          { lastName: Like(`%${query}%`) },
-          { email: Like(`%${query}%`) }],
+        where: [{ firstName: Like(`%${query}%`) }, { lastName: Like(`%${query}%`) }, { email: Like(`%${query}%`) }],
         take: 10
       }),
       jobs: await this.jobsRepository.find({
-        where: [
-          { jobTitle: Like(`%${query}%`) },
-          { companyName: Like(`%${query}%`) },
-          { location: Like(`%${query}%`) }
-        ],
+        where: [{ jobTitle: Like(`%${query}%`) }, { companyName: Like(`%${query}%`) }, { location: Like(`%${query}%`) }],
         take: 10
       })
     }
+  }
+
+  async addDocuments (user: User, files: { cv?: Express.Multer.File, coverLetter?: Express.Multer.File }): Promise<void> {
+    if (files?.cv != null) {
+      const buff = files.cv[0].buffer
+      const base64data = buff.toString('base64')
+      user.cv = base64data
+    }
+
+    if (files?.coverLetter != null) {
+      const buff = files.coverLetter[0].buffer
+      const base64data = buff.toString('base64')
+      user.coverLetter = base64data
+    }
+
+    await this.usersRepository.save(user)
+  }
+
+  async removeDocuments (user: User, data: Users.DeleteDocumentsRequest): Promise<void> {
+    if (data.cv) {
+      user.cv = null
+    }
+
+    if (data.coverLetter) {
+      user.coverLetter = null
+    }
+
+    await this.usersRepository.save(user)
   }
 }

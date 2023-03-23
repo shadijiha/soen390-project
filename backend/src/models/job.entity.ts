@@ -1,5 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm'
+import { Application } from './application.entity'
 import { Skill } from './skill.entity'
 import { User } from './user.entity'
 
@@ -57,7 +69,6 @@ export class Job extends BaseEntity {
 
   // recruiter
   @ManyToOne(() => User, (r) => r.jobs)
-  // @ApiProperty({ type: User })
   @ApiProperty({ type: () => User })
     user: User
 
@@ -69,4 +80,12 @@ export class Job extends BaseEntity {
   @JoinTable()
   @ApiProperty({ type: [Skill] })
     skills: Skill[]
+
+  // applications
+  @OneToMany(() => Application, (a) => a.job, {
+    cascade: true,
+    orphanedRowAction: 'delete'
+  })
+  @ApiProperty({ type: () => [Application] })
+    applications: Application[]
 }
