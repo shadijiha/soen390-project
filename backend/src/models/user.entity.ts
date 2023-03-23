@@ -25,6 +25,7 @@ import { Volunteering } from './volunteering.entity'
 import { Work } from './work.entity'
 import { Connection } from './connection.entity'
 import { Job } from './job.entity'
+import { Post } from './post.entity'
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -194,4 +195,9 @@ export class User extends BaseEntity {
   @OneToMany(() => Job, (j) => j.user, { cascade: true, orphanedRowAction: 'delete' })
   @ApiProperty({ type: [Job] })
     jobs: Job[]
+
+  // posts
+  @OneToMany(() => Post, (p) => p.user)
+  @ApiProperty({ type: [Post] })
+    posts: Post[]
 }
