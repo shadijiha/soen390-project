@@ -17,6 +17,7 @@ export class ChatController {
   constructor (private readonly chatService: ChatService,
     private readonly userService: UsersService) { }
 
+  // get all conversations for a user
   @Get('allconversations')
   public async allConversations (@AuthUser() breaserPayload: BearerPayload): Promise<User[]> {
     const result: User[] = []
@@ -27,12 +28,14 @@ export class ChatController {
     return result
   }
 
+  // get all messages between two users
   @Get('conversation/:withUserId')
   @ApiParam({ name: 'withUserId', type: Number })
   public async conversation (@AuthUser() breaserPayload: BearerPayload, @Param('withUserId') withUserId: number): Promise<Message[]> {
     return await this.chatService.conversation(breaserPayload.id, withUserId)
   }
 
+  // send a message to another user
   @Post('message')
   public async message (@Body() body: Chat.MessageRequest, @AuthUser() breaer: BearerPayload): Promise<Pusher.Response> {
     const sender = await this.userService.findOneByIdNoRelations(breaer.id)

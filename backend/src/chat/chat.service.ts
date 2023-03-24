@@ -22,6 +22,8 @@ export class ChatService {
     })
   }
 
+  // message is sent to the receiver, and then triggers a Pusher event to update the user's
+  // status in the frontend
   public async message (sender: User, receiver: User, message: string): Promise<Pusher.Response> {
     const res = await this.pusher.trigger(`message-${receiver.id}`, 'message', { message, sender: sender.id })
     // Push to db (we don't need to await --> save time)
@@ -34,6 +36,7 @@ export class ChatService {
     return res
   }
 
+  // get all conversations for a user
   public async allConversations (userId: number): Promise<number[]> {
     const messages = await this.messageRepository.find({
       where: [{ senderId: userId }, { receiverId: userId }],
@@ -49,6 +52,7 @@ export class ChatService {
     return Array.from(conversations)
   }
 
+  // get all messages between two users
   public async conversation (id: number, withUserId: number): Promise<Message[]> {
     return await this.messageRepository.find({
       where: [{ senderId: id, receiverId: withUserId }, { senderId: withUserId, receiverId: id }]
