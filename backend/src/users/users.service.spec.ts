@@ -112,27 +112,29 @@ describe("UsersService", () => {
     expect(mockUsersRepository.findOneOrFail).toHaveBeenCalled();
   });
 
-  
   it("should add documents", async () => {
-  //   const user: User = new User();
-  //   const cvFile = { buffer: Buffer.from('test cv data'), mimetype: 'application/pdf' } as Express.Multer.File;
-  //   const coverLetterFile = { buffer: Buffer.from('test cover letter data'), mimetype: 'text/plain' } as Express.Multer.File;
-
-  //   const files = { cv: cvFile, coverLetter: coverLetterFile };
-
-  //   const result = await service.addDocuments(user, {cv: [cvFile], coverLetter: coverLetterFile});
-
-  //   expect(mockUsersRepository.save).toHaveBeenCalled();
+    //   const user: User = new User();
+    //   const cvFile = { buffer: Buffer.from('test cv data'), mimetype: 'application/pdf' } as Express.Multer.File;
+    //   const coverLetterFile = { buffer: Buffer.from('test cover letter data'), mimetype: 'text/plain' } as Express.Multer.File;
+    //   const files = { cv: cvFile, coverLetter: coverLetterFile };
+    //   const result = await service.addDocuments(user, {cv: [cvFile], coverLetter: coverLetterFile});
+    //   expect(mockUsersRepository.save).toHaveBeenCalled();
   });
 
- 
   it("should remove documents", async () => {
     const user: User = new User();
     const result = await service.removeDocuments(user, { cv: true, coverLetter: true });
     expect(mockUsersRepository.save).toHaveBeenCalled();
-  
   });
 
+  it("should delete profile picture", async () => {
+    await service.removeProfilePic(1);
+    expect(mockUsersRepository.findOneOrFail).toHaveBeenCalled();
+  });
 
-  
+  it("should delete cover picture", async () => {
+    await service.removeCoverPic(1);
+    expect(mockUsersRepository.findOneOrFail).toHaveBeenCalled();
+  });
+
 });

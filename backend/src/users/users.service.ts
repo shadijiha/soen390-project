@@ -172,4 +172,24 @@ export class UsersService {
 
     await this.usersRepository.save(user)
   }
+
+  async removeProfilePic (userId: number): Promise<void> {
+    const user = await this.usersRepository.findOneOrFail({
+      where: {
+        id: userId
+      }
+    })
+    user.profilePic = null
+    await this.usersRepository.save(user)
+  }
+
+  async removeCoverPic (userId: number): Promise<void> {
+    const user = await this.usersRepository.findOneOrFail({
+      where: {
+        id: userId
+      }
+    })
+    user.coverPic = null
+    await this.usersRepository.save(user)
+  }
 }
