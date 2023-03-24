@@ -199,3 +199,15 @@ export const viewJob = async (token, id) => {
       return { status: 400, data: err.response.data }
     })
 }
+
+export const applyToJob = async (token, id) => {
+  return axios
+    .post(`${URL}/application/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}

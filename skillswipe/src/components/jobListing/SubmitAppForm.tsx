@@ -1,3 +1,6 @@
+import { applyToJob } from '@/pages/api/api'
+import { useEffect, useState } from 'react'
+
 import {
   AspectRatio,
   Box,
@@ -14,6 +17,30 @@ import {
 } from '@chakra-ui/react'
 
 const SubmitAppForm = () => {
+  const [file, setFile] = useState('')
+  const [coverLetter, setCoverLetter] = useState('')
+  const [apiResponse, setApiResponse] = useState(null)
+  const [errorMessage, setErrorMessage] = useState('')
+
+  const handleSubmit = async () => {
+    const token = '' // get user's authentication token
+    const jobId = '' // get job ID
+
+    const formData = new FormData()
+    if (file) {
+      formData.append('file', file)
+    }
+    formData.append('coverLetter', coverLetter)
+
+    const response = await applyToJob(token, jobId)
+    if (response.status === 200) {
+      setApiResponse(response.data)
+      setErrorMessage('')
+    } else {
+      setApiResponse(null)
+      setErrorMessage(response.data.error)
+    }
+  }
   return (
     <>
       <VStack
@@ -49,22 +76,13 @@ const SubmitAppForm = () => {
             Submit Application
           </Text>
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
-            {/* frontend!!! name, email, phone is read only,
-                 we will pull it from the user's logged in account 
-                 and show it as the placeholder */}
             <FormControl id="name">
               <FormLabel>Name</FormLabel>
-              <Input
-                readOnly
-                type="text"
-                placeholder="loggedInName"
-                rounded="100px"
-              />
+              <Input type="text" placeholder="loggedInName" rounded="100px" />
             </FormControl>
             <FormControl id="email">
               <FormLabel>Email</FormLabel>
               <Input
-                readOnly
                 type="email"
                 placeholder="loggedInEmail@test.com"
                 rounded="100px"
@@ -72,12 +90,7 @@ const SubmitAppForm = () => {
             </FormControl>
             <FormControl id="resume">
               <FormLabel>Phone</FormLabel>
-              <Input
-                readOnly
-                type="text"
-                rounded="100px"
-                placeholder="loggedInPhone"
-              />
+              <Input type="text" rounded="100px" placeholder="loggedInPhone" />
             </FormControl>
           </Stack>
 
@@ -148,9 +161,14 @@ const SubmitAppForm = () => {
             w={{ base: '100%', md: '150px' }}
             textShadow="0px 0px 20px #00000076"
             shadow={'0px 4px 30px #0000001F'}
+            onClick={handleSubmit}
           >
             Apply
           </Button>
+          {apiResponse && (
+            <Text color="green.500">Application submitted successfully!</Text>
+          )}
+          {errorMessage && <Text color="red.500">{errorMessage}</Text>}
         </VStack>
       </VStack>
     </>
