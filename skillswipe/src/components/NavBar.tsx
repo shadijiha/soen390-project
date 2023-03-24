@@ -34,10 +34,17 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { i18n } from 'next-i18next'
-import { useTranslation } from 'next-i18next';
+import { i18n }  from 'next-i18next'
+import { useTranslation } from 'next-i18next'
 
 
+
+
+
+
+const selectLanguage = (lng) => {
+  if(i18n) i18n.changeLanguage(lng);
+};
 
  export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -74,12 +81,12 @@ import { useTranslation } from 'next-i18next';
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
 
-  const { t, i18n} = useTranslation();
+  const { t} = useTranslation('common');
 
   const router = useRouter()
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
-    i18n.changeLanguage(language)
+    selectLanguage(language)
   }
 
 
@@ -168,7 +175,6 @@ import { useTranslation } from 'next-i18next';
           </NextLink>
           <Select
             onChange={(e) => changeLanguage(e.target.value)}
-            value={i18n.language}
             variant="filled"
             my={5}
             w="58"
@@ -192,7 +198,7 @@ import { useTranslation } from 'next-i18next';
                 variant="ghost"
                 rounded={'full'}
               >
-                {t('Home')}
+                {t('home')}
               </Button>
             </NextLink>
             <NextLink href="/inbox" passHref>
@@ -489,6 +495,5 @@ import { useTranslation } from 'next-i18next';
     </Box>
   );
 }
-
 
 
