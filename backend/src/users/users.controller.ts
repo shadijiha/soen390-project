@@ -1,5 +1,5 @@
 import { BadRequestException, Controller, Delete, Get, HttpException, HttpStatus } from '@nestjs/common'
-import { Body, Param, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
+import { Body, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
 import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { type User } from '../models/user.entity'
@@ -7,11 +7,10 @@ import { UsersService } from './users.service'
 import { Users } from './users.types'
 import { AuthUser, BearerPayload } from '../util/util'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
-import { FileValidationPipe } from '../util/fileValidationPipe'
+import { ApplicationFileValidationPipe, ProfileImagesFileValidationPipe } from '../util/fileValidationPipe'
 import { ConnectionsService } from './connections/connections.service'
 import type Pusher from 'pusher'
 
-@Controller()
 @Controller()
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -68,9 +67,19 @@ export class UsersController {
   async update (
     @AuthUser() authedUser: BearerPayload,
       @Body() user: Users.UpdateUserRequest,
-      @UploadedFiles(FileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
+      @UploadedFiles(ProfileImagesFileValidationPipe) files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
   ): Promise<User> {
     return await this.usersService.update(authedUser.id, user, files)
+  }
+
+  @Delete('user/profilePic')
+  async removeProfilePic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeProfilePic(authedUser.id)
+  }
+
+  @Delete('user/coverPic')
+  async removeCoverPic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeCoverPic(authedUser.id)
   }
 
   @Put('user/status')
@@ -84,5 +93,28 @@ export class UsersController {
   @Get('user/status/:id')
   async getStatus (@AuthUser() authedUser: BearerPayload, @Param('id') id: string): Promise<'online' | 'offline'> {
     return await this.usersService.getStatus(parseInt(id))
+  }
+
+  @Post('user/documents')
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'cv', maxCount: 1 },
+      { name: 'coverLetter', maxCount: 1 }
+    ])
+  )
+  async postDocuments (
+    @AuthUser() authedUser: BearerPayload,
+      @Body() data: Users.AddDocumentsRequest,
+      @UploadedFiles(ApplicationFileValidationPipe) files: { cv?: Express.Multer.File, coverLetter?: Express.Multer.File }
+  ): Promise<void> {
+    const user = (await authedUser.getUser()) as User
+    await this.usersService.addDocuments(user, files)
+  }
+
+  @Delete('user/documents')
+  async removeDocuments (@AuthUser() authedUser: BearerPayload, @Body() data: Users.DeleteDocumentsRequest): Promise<void> {
+    const user = (await authedUser.getUser()) as User
+    await this.usersService.removeDocuments(user, data)
   }
 }

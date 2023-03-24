@@ -33,6 +33,10 @@ describe("UsersController", () => {
     }),
 
     search: jest.fn(() => ({})),
+    addDocuments: jest.fn(() => {}),
+    removeDocuments: jest.fn(() => {}),
+    removeProfilePic: jest.fn(() => {}),
+    removeCoverPic: jest.fn(() => {}),
   };
 
   let mockConnectionService = {
@@ -161,5 +165,33 @@ describe("UsersController", () => {
     } catch (e) {}
 
     expect(mockUserService.removeSoft).toHaveBeenCalled();
+  });
+
+  it("should add documents", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const files = {};
+    const data: Users.AddDocumentsRequest = {} as Users.AddDocumentsRequest;
+    await controller.postDocuments(bearer, data, files);
+    expect(mockUserService.addDocuments).toHaveBeenCalled();
+  });
+
+  it("should delete documents", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    const files = {};
+    const data: Users.DeleteDocumentsRequest = {} as Users.DeleteDocumentsRequest;
+    await controller.removeDocuments(bearer, data);
+    expect(mockUserService.removeDocuments).toHaveBeenCalled();
+  });
+
+  it("should delete profile picture", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    await controller.removeProfilePic(bearer);
+    expect(mockUserService.removeProfilePic).toHaveBeenCalled();
+  });
+
+  it("should delete cover picture", async () => {
+    const bearer: BearerPayload = await createTestBearerPayload("test@gmail.com", userRepository);
+    await controller.removeCoverPic(bearer);
+    expect(mockUserService.removeCoverPic).toHaveBeenCalled();
   });
 });
