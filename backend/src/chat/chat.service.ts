@@ -97,10 +97,15 @@ export class ChatService {
     userId: number
   ): Promise<string> {
     const storedName = this.randomAlphaNumeric(30)
+    const nameExt = storedName + path.extname(file.originalname)
     await this.cloud.file.upload({
       file: file.buffer,
-      destFolder: 'soen390',
-      name: storedName + path.extname(file.originalname)
+      destFolder: '',
+      name: nameExt,
+      options: {
+        contentType: file.mimetype,
+        filename: nameExt
+      }
     })
 
     const dbFileData = new UploadedFileDB()
@@ -114,7 +119,7 @@ export class ChatService {
     const date = new Date()
     const url = (
       await this.cloud.tempUrls.generate({
-        filepath: storedName,
+        filepath: nameExt,
         expires_at: new Date(date.setMonth(date.getMonth() + 1)), // Now + 1 month
         is_readonly: true,
         max_requests: 1000
