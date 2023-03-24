@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common/decorators/core/controller.decorator'
 import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator'
-import { Delete, Post } from '@nestjs/common/decorators/http/request-mapping.decorator'
+import { Delete, Get, Post } from '@nestjs/common/decorators/http/request-mapping.decorator'
 import { Body, Param, UploadedFiles } from '@nestjs/common/decorators/http/route-params.decorator'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
@@ -48,6 +48,17 @@ export class PostsController {
     ) {
         try{
             await this.postsService.deletePost(userInfo, id)
+        }catch(e){
+            throw new HttpException((e as Error).message, 400)
+        }
+    }
+
+    @Get('/feed')
+    async getFeed(
+        @AuthUser() userInfo: BearerPayload,
+    ) {
+        try{
+           return  await this.postsService.getFeed(userInfo)
         }catch(e){
             throw new HttpException((e as Error).message, 400)
         }

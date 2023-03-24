@@ -2,7 +2,8 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Post } from "src/models/post.entity";
 import { BearerPayload } from "src/util/util";
-import { Repository } from "typeorm";
+import { In, Repository } from "typeorm";
+import { ConnectionsService } from "../connections/connections.service";
 import { Posts } from "./posts.types";
 
 // Service that handles all the logic for posts
@@ -10,7 +11,8 @@ import { Posts } from "./posts.types";
 export class PostsService {
   constructor(
     @InjectRepository(Post)
-    private readonly postRepository: Repository<Post>
+    private readonly postRepository: Repository<Post>,
+    private connectionService: ConnectionsService
   ) {}
 
   createPost(authedUser: BearerPayload, post: Posts.CreatePostDto, files) {
@@ -45,5 +47,13 @@ export class PostsService {
 
   async getFeed(userInfo: BearerPayload) {
     // function that returns all the posts of the user that they are connected to
-  }
+    const connections = await this.connectionService.getAcceptedConnections(userInfo.id);
+    const ids: number[] = connections.map((connection) => connection.user.id);
+    console.log("IDS ARE: ", ids);
+    
+    const posts = await this.postRepository.find(
+        {where: {user: {id: In(ids)}}, order: {created_at: "DESC"}}
+    );
+    return posts;
+    }
 }
