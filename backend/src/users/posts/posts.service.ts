@@ -1,10 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { BearerPayload } from 'src/util/util';
-import { CreatePostDto } from './posts.controller';
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Post } from "src/models/post.entity";
+import { BearerPayload } from "src/util/util";
+import { Repository } from "typeorm";
+import { Posts } from "./posts.types";
 
+// Service that handles all the logic for posts
 @Injectable()
 export class PostsService {
-    createPost(user: BearerPayload, createPostDto: CreatePostDto) {
-        throw new Error('Method not implemented.');
+  constructor(
+    @InjectRepository(Post)
+    private readonly postRepository: Repository<Post>
+  ) {}
+
+  createPost(authedUser: BearerPayload, post: Posts.CreatePostDto, files) {
+    console.log("CONTENT IS: " + post.content);
+    //add post to user
+    const _post = new Post();
+    _post.content = post.content;
+    _post.user = authedUser.id as any; //this is the user that is logged in
+
+    console.log("ID IS::" + authedUser.id);
+    if (files?.image != null) {
+      const buff = files.image[0].buffer;
+      const base64data = buff.toString("base64");
+      _post.image = base64data;
     }
+
+    _post.save().then((post) => {
+      return "Post saved";
+    });
+  }
+
+  async deletePost(userInfo: BearerPayload, id: number) {
+    const post = await this.postRepository.findOne({
+      where: { id: id, user: { id: userInfo.id } },
+    });
+    if (post == null) throw new Error("Post does not exist"); // if post does not exist, throw error
+
+    await this.postRepository.delete({ id: id }).then((post) => {
+      return "Post deleted";
+    });
+  }
+
+  async getFeed(userInfo: BearerPayload) {
+    // function that returns all the posts of the user that they are connected to
+  }
 }

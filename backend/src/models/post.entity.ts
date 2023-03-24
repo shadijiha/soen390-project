@@ -16,11 +16,11 @@ export class Post extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 1028 }) // Post cannot be greater than 1028 characters
+  @Column({ default: null,length: 1028 }) // Post cannot be greater than 1028 characters
   content: string;
 
-  @Column()
-  image?: string;
+  @Column({ default: null, type: 'longtext' })
+  image?: string | null;
 
   @CreateDateColumn()
   created_at: Date;
