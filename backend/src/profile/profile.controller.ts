@@ -15,7 +15,7 @@ import { Profile } from './profile.types'
 export class ProfileController {
   constructor (private readonly profileService: ProfileService) { }
 
- /* The above code is a controller for a profile. It is used to add, edit, and delete information from
+  /* The above code is a controller for a profile. It is used to add, edit, and delete information from
  a user's profile. */
   @Post('education')
   public async addEducation (@AuthUser() userInfo: BearerPayload, @Body() body: Profile.AddEducationRequest): Promise<void> {

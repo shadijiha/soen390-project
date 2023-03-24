@@ -23,7 +23,7 @@ import { Connections } from '../../users/connections/connections.types'
 export class ConnectionsController {
   constructor (private readonly connectionService: ConnectionsService) {}
 
-/* A POST request to the endpoint /connections/add. It is sending a connection request to another user. */
+  /* A POST request to the endpoint /connections/add. It is sending a connection request to another user. */
   @Post('add')
   public async sendConnectionRequest (
     @AuthUser() userInfo: BearerPayload,
@@ -36,7 +36,7 @@ export class ConnectionsController {
     }
   }
 
-/* Deleting a connection. */
+  /* Deleting a connection. */
   @Delete('delete/:id')
   public async removeConnection (
     @AuthUser() userInfo: BearerPayload,
@@ -49,7 +49,7 @@ export class ConnectionsController {
     }
   }
 
-/* A GET request to the endpoint /connections/status/:id. It is used to get the connection status
+  /* A GET request to the endpoint /connections/status/:id. It is used to get the connection status
 between two users. */
   @Get('status/:id')
   public async getConnectionStatus (
@@ -66,7 +66,7 @@ between two users. */
     }
   }
 
-/* Getting the pending connection requests. */
+  /* Getting the pending connection requests. */
   @Get('pending')
   public async getPendingRequest (
     @AuthUser() userInfo: BearerPayload
@@ -78,7 +78,7 @@ between two users. */
     }
   }
 
-/* Getting the accepted connection requests. */
+  /* Getting the accepted connection requests. */
   @Get('accepted')
   public async getAcceptedRequests (
     @AuthUser() userInfo: BearerPayload
@@ -90,7 +90,7 @@ between two users. */
     }
   }
 
-/* Accepting a connection request. */
+  /* Accepting a connection request. */
   @Put('accept')
   public async acceptConnectionRequest (
     @AuthUser() userInfo: BearerPayload,
