@@ -17,7 +17,6 @@ import {
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
 
@@ -48,9 +47,7 @@ const Inbox = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-        {loading == true ? (
-          <Spinner />
-        ) : (
+   
           <Box p={50} data-testid="inbox">
             <Heading as="h1" size="lg" mb={4}>
               Inbox
@@ -92,7 +89,7 @@ const Inbox = () => {
               <h1>No new message</h1>
             )}
           </Box>
-        )}
+
       </Layout>
     </>
   )
