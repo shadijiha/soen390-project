@@ -72,6 +72,16 @@ export class UsersController {
     return await this.usersService.update(authedUser.id, user, files)
   }
 
+  @Delete('user/profilePic')
+  async removeProfilePic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeProfilePic(authedUser.id)
+  }
+
+  @Delete('user/coverPic')
+  async removeCoverPic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeCoverPic(authedUser.id)
+  }
+
   @Put('user/status')
   async updateStatus (@AuthUser() authedUser: BearerPayload, @Body() status: Users.UpdateStatusRequest): Promise<Pusher.Response> {
     if (status.userStatus !== 'online' && status.userStatus !== 'offline') {
