@@ -8,7 +8,7 @@ import { JobsService } from './jobs.service'
 import { Jobs } from './jobs.types'
 
 @Controller('jobs')
-@ApiTags('jobs')
+@ApiTags('Jobs')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class JobsController {

@@ -46,8 +46,7 @@ export namespace Users {
         }
       },
       required: false
-    }
-    )
+    })
       profilePic: Express.Multer.File
 
     @ApiProperty({
@@ -59,8 +58,7 @@ export namespace Users {
         }
       },
       required: false
-    }
-    )
+    })
       coverPic: Express.Multer.File
   }
 
@@ -92,4 +90,21 @@ export namespace Users {
     @ApiProperty({ enum: ['online', 'offline'] })
       userStatus: 'online' | 'offline'
   }
+
+  export class AddDocumentsRequest {
+    @ApiProperty({ type: 'file', required: false })
+      cv: Express.Multer.File
+
+    @ApiProperty({ type: 'file', required: false })
+      coverLetter: Express.Multer.File
+  }
+
+  export class DeleteDocumentsRequest {
+    @ApiProperty({ required: false })
+      cv: boolean
+
+    @ApiProperty({ required: false })
+      coverLetter: boolean
+  }
+
 }
