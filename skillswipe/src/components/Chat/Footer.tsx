@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 
 const Footer = ({ inputMessage, setInputMessage, handleSendMessage,sendMessagefile,append}) => {
   const { colorMode, toggleColorMode } = useColorMode()
-  const input = useRef(document.createElement('div'))
+  const input = useRef(document.createElement('input'))
   const handleClick = () => {
     input.current.click()
   }
