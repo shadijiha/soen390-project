@@ -29,6 +29,7 @@ export class ChatController {
     private readonly userService: UsersService
   ) {}
 
+  // get all conversations for a user
   @Get('allconversations')
   public async allConversations (
     @AuthUser() breaserPayload: BearerPayload
@@ -41,6 +42,7 @@ export class ChatController {
     return result
   }
 
+  // get all messages between two users
   @Get('conversation/:withUserId')
   @ApiParam({ name: 'withUserId', type: Number })
   public async conversation (
@@ -50,6 +52,7 @@ export class ChatController {
     return await this.chatService.conversation(breaserPayload.id, withUserId)
   }
 
+  // send a message to another user
   @Post('message')
   public async message (
     @Body() body: Chat.MessageRequest,

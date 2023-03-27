@@ -60,6 +60,7 @@ export class ChatService {
     return res
   }
 
+  // get all conversations for a user
   public async allConversations (userId: number): Promise<number[]> {
     const messages = await this.messageRepository.find({
       where: [{ senderId: userId }, { receiverId: userId }],
