@@ -20,6 +20,8 @@ const Chat = () => {
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [chatUser,setchatUser] = useState({});
+  const [Render,setRender] = useState(false);
+ 
   const handleSendMessage = () => {
     if (!inputMessage.trim().length) {
       return
@@ -39,6 +41,29 @@ const Chat = () => {
         toast(error.message)
       })
   }
+  const append = (file : any) =>{
+    const data = JSON.stringify(file)
+    setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
+  }
+
+
+
+  const sendMessagefile = (file : any) =>{
+    const token = localStorage.getItem("jwt");
+    
+    message(token, {
+      message: JSON.stringify(file),
+      receiverId: router.query.id
+    })
+      .then((Response) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
+
   const loadMessage = (id : any) => {
     if(localStorage.getItem("jwt")){
  
@@ -133,6 +158,9 @@ const Chat = () => {
               inputMessage={inputMessage}
               setInputMessage={setInputMessage}
               handleSendMessage={handleSendMessage}
+              sendMessagefile = {sendMessagefile}
+              append = {append}
+        
             />
           </Flex>
         </Flex>
