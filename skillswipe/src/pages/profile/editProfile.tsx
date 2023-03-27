@@ -4,9 +4,9 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, Heading, Stack } from '@chakra-ui/react'
+import { Box, Heading, Input, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { editPersonalInformation } from '../api/api'
+import { editPersonalInformation, uploadUserDocuments } from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
@@ -56,7 +56,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           console.log(response)
-          setPic({ ...Pic, coverPic: response.data.coverPic })
+          // setPic({ ...Pic, coverPic: response.data.coverPic })
           toast('Successfully Update Cover Picture')
         })
         .catch((error) => {
@@ -74,6 +74,33 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
+          toast('Successfully Updated Profile picture')
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const [File, setFile] = useState({
+    Cv: '',
+    coverLetter: '',
+  })
+  useEffect(() => {
+    setFile({
+      Cv: currentUser.cv,
+      coverLetter: currentUser.coverLetter,
+    })
+  }, [currentUser])
+  const DocumentsHandler = (e: any) => {
+    console.log(e.target)
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
+    if (e.target.files[0]) {
+      fd.append('documents', e.target.files[0], e.target.files[0].name)
+      uploadUserDocuments(token, fd)
+        .then((response) => {
+          // setFile({Cv:response.data})
+          // setPic({ ...Pic, profilePic: response.data.profilePic })
           toast('Successfully Updated Profile picture')
         })
         .catch((error) => {
@@ -232,10 +259,11 @@ const EditProfile = () => {
               type="file"
               id="file-input-coverPic"
               style={{ display: 'none' }}
-              onChange={coverImageHandler}
+              onChange={DocumentsHandler}
             />
           </div>
         </Stack>
+        <input type="file" id="upload-user-docs" onChange={coverImageHandler} />
 
         {/* my profile */}
         <InformationBox />

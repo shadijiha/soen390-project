@@ -29,6 +29,13 @@ export const editPersonalInformation = async (token: any, UpdatedUser: any) => {
     },
   })
 }
+export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
+  return axios.post(`${URL}/user/documents`, UpdatedUser, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
 export const getUserById = async (token: any, id: any) => {
   return axios.get(`${URL}/user/${id}`, {
     headers: {
