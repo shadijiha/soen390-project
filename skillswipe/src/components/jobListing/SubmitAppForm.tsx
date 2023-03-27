@@ -1,5 +1,5 @@
 import { applyToJob } from '@/pages/api/api'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import {
   AspectRatio,
@@ -8,6 +8,8 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
+  Icon,
   Input,
   Stack,
   Text,
@@ -15,32 +17,56 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-
+import { AiOutlineFilePdf } from 'react-icons/ai'
+import { toast } from 'react-toastify'
 const SubmitAppForm = () => {
-  const [file, setFile] = useState('')
-  const [coverLetter, setCoverLetter] = useState('')
-  const [apiResponse, setApiResponse] = useState(null)
-  const [errorMessage, setErrorMessage] = useState('')
+  const [cvUploaded, setCvUploaded] = useState(false)
 
-  const handleSubmit = async () => {
-    const token = '' // get user's authentication token
-    const jobId = '' // get job ID
+  const handleSubmit = (event) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
 
-    const formData = new FormData()
-    if (file) {
-      formData.append('file', file)
+    const submitApp = {
+      name: '',
+      email: '',
+      phone: '',
+      cv: File,
+      coverLetter: '',
+      id: 0,
     }
-    formData.append('coverLetter', coverLetter)
 
-    const response = await applyToJob(token, jobId)
-    if (response.status === 200) {
-      setApiResponse(response.data)
-      setErrorMessage('')
+    if (
+      !submitApp.name ||
+      !submitApp.email ||
+      !submitApp.phone ||
+      !submitApp.cv ||
+      !submitApp.coverLetter
+    ) {
+      toast(
+        'name: ' +
+          submitApp.name +
+          ' email: ' +
+          submitApp.email +
+          ' phone: ' +
+          submitApp.phone +
+          ' cv: ' +
+          submitApp.cv +
+          ' coverLetter: ' +
+          submitApp.coverLetter
+      )
+      toast('Please fill all the fields')
+      return
     } else {
-      setApiResponse(null)
-      setErrorMessage(response.data.error)
+      applyToJob(token, submitApp).then((res) => {
+        if (res.status == 201 || res.status == 200) {
+          toast.success('Successfully applied to job. Good luck!')
+        } else {
+          toast.error('Error applying to job!')
+        }
+      })
     }
   }
+
   return (
     <>
       <VStack
@@ -105,30 +131,54 @@ const SubmitAppForm = () => {
             >
               <Box position="relative" height="100%" width="100%">
                 <Box
-                  position="absolute"
-                  top="0"
-                  left="0"
+                  position="relative"
                   height="100%"
                   width="100%"
                   display="flex"
                   flexDirection="column"
                 >
-                  <Stack
-                    height="100%"
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                    justify="center"
-                    spacing="4"
-                  >
-                    <Stack p="8" textAlign="center" spacing="1">
-                      <Heading fontSize="lg" fontWeight="bold">
-                        Drop CV here [.pdf]
-                      </Heading>
-                      <Text fontWeight="light">or click to upload</Text>
+                  {cvUploaded ? (
+                    <HStack
+                      style={{
+                        padding: '1em',
+                      }}
+                    >
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        transform="translate(-50%, -50%)"
+                      >
+                        <Icon as={AiOutlineFilePdf} boxSize={12}></Icon>
+                      </Box>
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        transform="translate(-50%, -50%)"
+                      >
+                        <Text>CV Successfully Uploaded</Text>
+                      </Box>
+                    </HStack>
+                  ) : (
+                    <Stack
+                      height="100%"
+                      width="100%"
+                      display="flex"
+                      alignItems="center"
+                      justify="center"
+                      spacing="4"
+                    >
+                      <Stack p="8" textAlign="center" spacing="1">
+                        <Heading fontSize="lg" fontWeight="bold">
+                          Drop CV here [.pdf]
+                        </Heading>
+                        <Text fontWeight="light">or click to upload</Text>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  )}
                 </Box>
+
                 <Input
                   type="file"
                   height="100%"
@@ -139,6 +189,12 @@ const SubmitAppForm = () => {
                   opacity="0"
                   aria-hidden="true"
                   accept=".pdf"
+                  onChange={(event) => {
+                    if (event.target.files && event.target.files.length > 0) {
+                      setCvUploaded(true)
+                      toast.success('CV Uploaded')
+                    }
+                  }}
                 />
               </Box>
             </Box>
@@ -165,10 +221,6 @@ const SubmitAppForm = () => {
           >
             Apply
           </Button>
-          {apiResponse && (
-            <Text color="green.500">Application submitted successfully!</Text>
-          )}
-          {errorMessage && <Text color="red.500">{errorMessage}</Text>}
         </VStack>
       </VStack>
     </>
