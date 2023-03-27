@@ -92,17 +92,31 @@ const EditProfile = () => {
         })
     }
   }
- 
 
-  const DocumentsHandler = (e: any) => {
+  const uploadCVHandler = (e: any) => {
     const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('cv', e.target.files[0], e.target.files[0].name)
       uploadUserDocuments(token, fd)
         .then((response) => {
-          setFile({...File,cv : response.data})
+          setFile({ ...File, cv: response.data })
           toast('Successfully Updated CV')
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const uploadCoverLetterHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
+    if (e.target.files[0]) {
+      fd.append('coverLetter', e.target.files[0], e.target.files[0].name)
+      uploadUserDocuments(token, fd)
+        .then((response) => {
+          setFile({ ...File, coverLetter: response.data })
+          toast('Successfully Updated coverLetter')
         })
         .catch((error) => {
           toast(error.message)
@@ -256,16 +270,10 @@ const EditProfile = () => {
                 }}
               />
             </a>
-            <input
-              type="file"
-              id="file-input-coverPic"
-              style={{ display: 'none' }}
-              onChange={DocumentsHandler}
-            />
           </div>
-
         </Stack>
-        <input type="file" id="upload-user-docs" onChange={DocumentsHandler} />
+        <input type="file" id="upload-cv" onChange={uploadCVHandler} />
+        <input type="file" id="upload-cover" onChange={uploadCoverLetterHandler} />
 
         {/* my profile */}
         <InformationBox />
