@@ -38,6 +38,7 @@
         "pusher": "^5.1.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.2.0",
+        "shado-cloud-sdk": "^0.1.12",
         "sqlite3": "^5.1.4",
         "typeorm": "^0.3.11"
     },
