@@ -1,13 +1,14 @@
 import { upload } from '@/pages/api/chat'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
 
-const Footer = ({ inputMessage, setInputMessage, handleSendMessage,sendMessagefile,append}) => {
+const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
   const { colorMode, toggleColorMode } = useColorMode()
   const input = useRef(document.createElement('input'))
+  const [inputMessage, setInputMessage] = useState('')
   const handleClick = () => {
     input.current.click()
   }
@@ -37,7 +38,8 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage,sendMessagefi
           placeholder="Type Something..."
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
-              handleSendMessage()
+              setInputMessage("");
+              handleSendMessage(inputMessage);
             }
           }}
           value={inputMessage}
@@ -45,7 +47,6 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage,sendMessagefi
         />
         <Button
           borderRadius="10px"
-          disabled={inputMessage.trim().length <= 0}
           ml={'1rem'}
           onClick={handleClick}
         >
@@ -55,7 +56,10 @@ const Footer = ({ inputMessage, setInputMessage, handleSendMessage,sendMessagefi
         <Button
           borderRadius="10px"
           disabled={inputMessage.trim().length <= 0}
-          onClick={handleSendMessage}
+          onClick={() => {
+            setInputMessage('')
+            handleSendMessage(inputMessage)
+          }}
           ml={'1rem'}
         >
           Send

@@ -15,22 +15,23 @@ import { getConversationById, message } from '../api/chat'
 
 const Chat = () => {
   const User = useSelector((state) => state as any)
-  const [inputMessage, setInputMessage] = useState('')
+  // const [inputMessage, setInputMessage] = useState('')
   const [Load,setLoad] = useState(false);
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [chatUser,setchatUser] = useState({});
+
   const [Status,setStatus] = useState("offline");
-  const [Render,setRender] = useState(false);
-  
-  const handleSendMessage = () => {
+
+ 
+  const handleSendMessage = (inputMessage :any ) => {
     if (!inputMessage.trim().length) {
       return
     }
     const data = inputMessage
     const token = localStorage.getItem('jwt')
     setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
-        setInputMessage('')
+     
     message(token, {
       message: data,
       receiverId: router.query.id
@@ -168,8 +169,6 @@ const Chat = () => {
             <Messages messages={messages} user={chatUser}/>
             <Divider />
             <Footer
-              inputMessage={inputMessage}
-              setInputMessage={setInputMessage}
               handleSendMessage={handleSendMessage}
               sendMessagefile = {sendMessagefile}
               append = {append}
