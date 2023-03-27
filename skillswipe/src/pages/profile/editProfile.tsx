@@ -27,10 +27,21 @@ const EditProfile = () => {
     profilePic: '',
     coverPic: '',
   })
+  const [File, setFile] = useState({
+    cv: '',
+    coverLetter: '',
+  })
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
+    })
+  }, [currentUser])
+
+  useEffect(() => {
+    setFile({
+      cv: currentUser.cv,
+      coverLetter: currentUser.coverLetter,
     })
   }, [currentUser])
 
@@ -81,27 +92,17 @@ const EditProfile = () => {
         })
     }
   }
-  const [File, setFile] = useState({
-    Cv: '',
-    coverLetter: '',
-  })
-  useEffect(() => {
-    setFile({
-      Cv: currentUser.cv,
-      coverLetter: currentUser.coverLetter,
-    })
-  }, [currentUser])
+ 
+
   const DocumentsHandler = (e: any) => {
-    console.log(e.target)
     const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
-      fd.append('documents', e.target.files[0], e.target.files[0].name)
+      fd.append('cv', e.target.files[0], e.target.files[0].name)
       uploadUserDocuments(token, fd)
         .then((response) => {
-          // setFile({Cv:response.data})
-          // setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast('Successfully Updated Profile picture')
+          setFile({...File,cv : response.data})
+          toast('Successfully Updated CV')
         })
         .catch((error) => {
           toast(error.message)
@@ -262,8 +263,9 @@ const EditProfile = () => {
               onChange={DocumentsHandler}
             />
           </div>
+
         </Stack>
-        <input type="file" id="upload-user-docs" onChange={coverImageHandler} />
+        <input type="file" id="upload-user-docs" onChange={DocumentsHandler} />
 
         {/* my profile */}
         <InformationBox />
