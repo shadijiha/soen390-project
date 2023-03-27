@@ -38,7 +38,8 @@ const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
           placeholder="Type Something..."
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
-              handleSendMessage()
+              setInputMessage("");
+              handleSendMessage(inputMessage);
             }
           }}
           value={inputMessage}
