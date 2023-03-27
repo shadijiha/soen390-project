@@ -22,7 +22,7 @@ const Messages = ({ messages, user }) => {
         } catch (error) {
           var data = false
         }
-        console.log(file)
+
         if (item.senderId == User.auth.id) {
           if (data == true) {
             return (
