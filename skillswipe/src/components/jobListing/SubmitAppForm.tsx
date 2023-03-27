@@ -17,53 +17,68 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import router from 'next/router'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 const SubmitAppForm = () => {
   const [cvUploaded, setCvUploaded] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [cover, setCover] = useState('')
 
   const handleSubmit = (event) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
+    const jobId = parseInt(router.query.id as string)
 
     const submitApp = {
-      name: '',
-      email: '',
-      phone: '',
-      cv: File,
-      coverLetter: '',
+      name: name,
+      email: email,
+      phone: phone,
+      ...(cvUploaded && { cv: cvUploaded }),
+      coverLetter: cover,
       id: 0,
     }
 
-    if (
-      !submitApp.name ||
-      !submitApp.email ||
-      !submitApp.phone ||
-      !submitApp.cv ||
-      !submitApp.coverLetter
-    ) {
-      toast(
-        'name: ' +
-          submitApp.name +
-          ' email: ' +
-          submitApp.email +
-          ' phone: ' +
-          submitApp.phone +
-          ' cv: ' +
-          submitApp.cv +
-          ' coverLetter: ' +
-          submitApp.coverLetter
-      )
-      toast('Please fill all the fields')
+    const missingFields = []
+
+    if (!submitApp.name) {
+      missingFields.push('name')
+    }
+    if (!submitApp.email) {
+      missingFields.push('email')
+    }
+    if (!submitApp.phone) {
+      missingFields.push('phone')
+    }
+    if (!submitApp.cv) {
+      missingFields.push('cv')
+    }
+    if (!submitApp.coverLetter) {
+      missingFields.push('cover letter')
+    }
+
+    if (missingFields.length > 0) {
+      const message = `Please fill in the following fields: ${missingFields.join(
+        ', '
+      )}`
+      toast.error(message)
       return
     } else {
-      applyToJob(token, submitApp).then((res) => {
-        if (res.status == 201 || res.status == 200) {
-          toast.success('Successfully applied to job. Good luck!')
-        } else {
-          toast.error('Error applying to job!')
-        }
-      })
+      applyToJob(token, jobId, submitApp)
+        .then((res) => {
+          if (res.status == 201 || res.status == 200) {
+            toast.success('Successfully applied to job. Good luck!')
+          } else {
+            console.error('Error applying to job!', res.data)
+            toast.error('Error 1 API error occurred. Please try again later.')
+          }
+        })
+        .catch((error) => {
+          console.error('Error applying to job!', error)
+          toast.error('Error 2 occurred. Please try again later.')
+        })
     }
   }
 
@@ -104,7 +119,13 @@ const SubmitAppForm = () => {
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
             <FormControl id="name">
               <FormLabel>Name</FormLabel>
-              <Input type="text" placeholder="loggedInName" rounded="100px" />
+              <Input
+                type="text"
+                placeholder="loggedInName"
+                rounded="100px"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </FormControl>
             <FormControl id="email">
               <FormLabel>Email</FormLabel>
@@ -112,11 +133,19 @@ const SubmitAppForm = () => {
                 type="email"
                 placeholder="loggedInEmail@test.com"
                 rounded="100px"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl id="resume">
               <FormLabel>Phone</FormLabel>
-              <Input type="text" rounded="100px" placeholder="loggedInPhone" />
+              <Input
+                type="text"
+                rounded="100px"
+                placeholder="loggedInPhone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </FormControl>
           </Stack>
 
@@ -202,7 +231,13 @@ const SubmitAppForm = () => {
 
           <FormControl id="cover">
             <FormLabel>Cover Letter (optional)</FormLabel>
-            <Textarea size="lg" placeholder="Paste here" rounded="15px" />
+            <Textarea
+              size="lg"
+              placeholder="Paste here"
+              rounded="15px"
+              value={cover}
+              onChange={(e) => setCover(e.target.value)}
+            />
           </FormControl>
         </VStack>
         <VStack w="100%">

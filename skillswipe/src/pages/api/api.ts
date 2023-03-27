@@ -200,9 +200,9 @@ export const viewJob = async (token, id) => {
     })
 }
 
-export const applyToJob = async (token, id) => {
+export const applyToJob = async (token, id, jobApply: any) => {
   return axios
-    .post(`${URL}/application/${id}`, {
+    .post(`${URL}/application/${id}`, jobApply, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
