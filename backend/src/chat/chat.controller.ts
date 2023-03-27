@@ -1,11 +1,21 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common'
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger'
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors
+} from '@nestjs/common'
+import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiBearerAuth, ApiConsumes, ApiParam, ApiTags } from '@nestjs/swagger'
 import type Pusher from 'pusher'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
-import { type Message } from '../models/message.entity'
-import { type User } from '../models/user.entity'
-import { UsersService } from '../users/users.service'
-import { AuthUser, BearerPayload } from '../util/util'
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { type Message } from 'src/models/message.entity'
+import { type User } from 'src/models/user.entity'
+import { UsersService } from 'src/users/users.service'
+import { ApiFile, AuthUser, BearerPayload } from 'src/util/util'
 import { ChatService } from './chat.service'
 import { Chat } from './chat.types'
 
@@ -14,12 +24,16 @@ import { Chat } from './chat.types'
 @ApiBearerAuth()
 @ApiTags('Chat')
 export class ChatController {
-  constructor (private readonly chatService: ChatService,
-    private readonly userService: UsersService) { }
+  constructor (
+    private readonly chatService: ChatService,
+    private readonly userService: UsersService
+  ) {}
 
   // get all conversations for a user
   @Get('allconversations')
-  public async allConversations (@AuthUser() breaserPayload: BearerPayload): Promise<User[]> {
+  public async allConversations (
+    @AuthUser() breaserPayload: BearerPayload
+  ): Promise<User[]> {
     const result: User[] = []
     const ids = await this.chatService.allConversations(breaserPayload.id)
     for (const id of ids) {
@@ -31,16 +45,35 @@ export class ChatController {
   // get all messages between two users
   @Get('conversation/:withUserId')
   @ApiParam({ name: 'withUserId', type: Number })
-  public async conversation (@AuthUser() breaserPayload: BearerPayload, @Param('withUserId') withUserId: number): Promise<Message[]> {
+  public async conversation (
+    @AuthUser() breaserPayload: BearerPayload,
+      @Param('withUserId') withUserId: number
+  ): Promise<Message[]> {
     return await this.chatService.conversation(breaserPayload.id, withUserId)
   }
 
   // send a message to another user
   @Post('message')
-  public async message (@Body() body: Chat.MessageRequest, @AuthUser() breaer: BearerPayload): Promise<Pusher.Response> {
+  public async message (
+    @Body() body: Chat.MessageRequest,
+      @AuthUser() breaer: BearerPayload
+  ): Promise<Pusher.Response> {
     const sender = await this.userService.findOneByIdNoRelations(breaer.id)
-    const receiver = await this.userService.findOneByIdNoRelations(body.receiverId)
+    const receiver = await this.userService.findOneByIdNoRelations(
+      body.receiverId
+    )
 
     return await this.chatService.message(sender, receiver, body.message)
+  }
+
+  @Post('upload')
+  @ApiConsumes('multipart/form-data')
+  @ApiFile()
+  @UseInterceptors(FileInterceptor('file'))
+  public async upload (
+    @UploadedFile('file') file: Express.Multer.File,
+      @AuthUser() bearer: BearerPayload
+  ): Promise<string> {
+    return await this.chatService.upload(file, bearer.id)
   }
 }
