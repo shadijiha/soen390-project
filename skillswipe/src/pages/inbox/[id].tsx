@@ -15,19 +15,20 @@ import { getConversationById, message } from '../api/chat'
 
 const Chat = () => {
   const User = useSelector((state) => state as any)
-  const [inputMessage, setInputMessage] = useState('')
+  // const [inputMessage, setInputMessage] = useState('')
   const [Load,setLoad] = useState(false);
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [chatUser,setchatUser] = useState({});
-  const handleSendMessage = () => {
+ 
+  const handleSendMessage = (inputMessage :any ) => {
     if (!inputMessage.trim().length) {
       return
     }
     const data = inputMessage
     const token = localStorage.getItem('jwt')
     setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
-        setInputMessage('')
+     
     message(token, {
       message: data,
       receiverId: router.query.id
@@ -39,6 +40,29 @@ const Chat = () => {
         toast(error.message)
       })
   }
+  const append = (file : any) =>{
+    const data = JSON.stringify(file)
+    setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
+  }
+
+
+
+  const sendMessagefile = (file : any) =>{
+    const token = localStorage.getItem("jwt");
+    
+    message(token, {
+      message: JSON.stringify(file),
+      receiverId: router.query.id
+    })
+      .then((Response) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
+
   const loadMessage = (id : any) => {
     if(localStorage.getItem("jwt")){
  
@@ -130,9 +154,10 @@ const Chat = () => {
             <Messages messages={messages} user={chatUser}/>
             <Divider />
             <Footer
-              inputMessage={inputMessage}
-              setInputMessage={setInputMessage}
               handleSendMessage={handleSendMessage}
+              sendMessagefile = {sendMessagefile}
+              append = {append}
+        
             />
           </Flex>
         </Flex>

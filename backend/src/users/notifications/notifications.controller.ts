@@ -14,10 +14,11 @@ import { AuthUser, BearerPayload } from '../../util/util'
 export class NotificationsController {
   constructor (private readonly pusherService: PusherService) {}
 
+  /**
+   * It sends a notification to the client
+   */
   @Post('/notifications')
-  async sendNotification (
-    @AuthUser() userInfo: BearerPayload
-  ): Promise<void> {
+  async sendNotification (@AuthUser() userInfo: BearerPayload): Promise<void> {
     await this.pusherService.triggerNotification('my-channel', 'my-event', {
       message: 'Hello, world!'
     })

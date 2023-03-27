@@ -18,6 +18,7 @@ export class AuthController {
     private readonly connectionsService: ConnectionsService
   ) {}
 
+  // login endpoint for user
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
   public async login (@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
@@ -28,6 +29,7 @@ export class AuthController {
     // }
   }
 
+  // register and then login endpoint for user
   @Post('register')
   @ApiResponse({ type: Auth.LoginResponse })
   public async register (@Body() body: Auth.RegisterRequest): Promise<Auth.LoginResponse> {
@@ -44,6 +46,7 @@ export class AuthController {
     throw new ConflictException(`Email ${body.email} already taken`)
   }
 
+  // get user info endpoint
   @Get('me')
   @ApiResponse({ type: User })
   @ApiBearerAuth()
