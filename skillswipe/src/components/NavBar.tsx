@@ -1,9 +1,4 @@
-import {
-  ChevronDownIcon,
-  BellIcon, CloseIcon,
-  HamburgerIcon,
-  SearchIcon,
-} from '@chakra-ui/icons'
+import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -19,7 +14,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Select,
   Text,
   useColorMode,
   useColorModeValue,
@@ -36,7 +30,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 
 export default function NavBar(props: any) {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
@@ -68,10 +62,7 @@ export default function NavBar(props: any) {
     }
   }
 
-  const [showDropdown1, setShowDropdown1] = useState(false)
-  const [showDropdown2, setShowDropdown2] = useState(false)
-
-  const [profile, setProfile] = useState({
+  const [profile] = useState({
     name: 'John Smith',
     title: 'Software Engineer',
     location: 'Montreal, QC, CA',
@@ -94,7 +85,6 @@ export default function NavBar(props: any) {
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
     })
-    
   }, [currentUser])
   const handleFilter = (value) => {
     // open the openJobs page
@@ -111,8 +101,6 @@ export default function NavBar(props: any) {
     }
   }
 
- 
-  
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -182,27 +170,26 @@ export default function NavBar(props: any) {
             </NextLink>
 
             <NextLink href="/notifications" passHref>
-              <div style={{position: 'relative'}}>
-              <IconButton
-                aria-label="Notifications"
-                icon={<BellIcon />}
-                variant="ghost"
-                size="lg"
-                w="100%"
-                my={5}
-              ></IconButton>
-              <Badge
-                colorScheme="red"
-                borderRadius="full"
-                px="2"
-                position="absolute"
-                top="20px"
-                right="0"
-              >
-                {props.nbNotifications}
-              </Badge>
+              <div style={{ position: 'relative' }}>
+                <IconButton
+                  aria-label="Notifications"
+                  icon={<BellIcon />}
+                  variant="ghost"
+                  size="lg"
+                  w="100%"
+                  my={5}
+                ></IconButton>
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  px="2"
+                  position="absolute"
+                  top="20px"
+                  right="0"
+                >
+                  {props.nbNotifications}
+                </Badge>
               </div>
-
             </NextLink>
             <Menu>
               <MenuButton
