@@ -1,4 +1,10 @@
-import { Heading, useColorModeValue } from '@chakra-ui/react'
+import {
+  Button,
+  Heading,
+  Input,
+  Textarea,
+  useColorModeValue,
+} from '@chakra-ui/react'
 
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
@@ -38,6 +44,9 @@ const Home = () => {
         })
     }
   }, [User.auth])
+  //will remove this eslint once i write this func
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  function handleClick() {}
   return (
     <>
       <Layout>
@@ -59,6 +68,13 @@ const Home = () => {
             >
               Recent Posts
             </Heading>
+            <div style={{ marginBottom: '3rem' }}>
+              <Textarea placeholder={'Type anything ...'}></Textarea>
+              <Button mt={'1rem'} onClick={handleClick}>
+                Create Post
+              </Button>
+            </div>
+
             <List>
               {posts.map((post) => (
                 <ListItem key={post.id}>
