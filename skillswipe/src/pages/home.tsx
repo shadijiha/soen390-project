@@ -3,8 +3,10 @@ import { Heading, useColorModeValue } from '@chakra-ui/react'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, List, ListItem, Text } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { getPosts } from './api/api'
 
 const Home = () => {
   const formBorder = useColorModeValue('gray.100', 'gray.600')
@@ -12,20 +14,40 @@ const Home = () => {
   const toggleTheme = useColorModeValue('🌙', '💡')
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
-    { id: 1, title: 'First Post', body: 'This is a description' },
     {
-      id: 2,
-      title: 'Second Post',
-      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      id: 4,
+      content: 'hi this is uzair',
+      image: null,
+      created_at: '2023-03-28T08:11:07.572Z',
+      updated_at: '2023-03-28T08:11:07.572Z',
+      deleted_at: null,
     },
-    { id: 3, title: 'Third Post', body: 'This is a description' },
   ])
-
+  useEffect(() => {
+    if (User.auth) {
+      const token = localStorage.getItem('jwt')
+      getPosts(token)
+        .then((response) => {
+          const allPosts = response.data
+          // allConvo = allConvo.filter(filterConvo)
+          setPosts(allPosts)
+          // setLoading(false)
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }, [User.auth])
   return (
     <>
       <Layout>
         <NavBar></NavBar>
-        <Box display="flex" justifyContent="center" alignItems="center" data-testid="Home-page">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          data-testid="Home-page"
+        >
           <Box>
             <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
             <Heading
@@ -53,9 +75,9 @@ const Home = () => {
                     maxW="90vw"
                   >
                     <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                      {post.title}
+                      {post.id}
                     </Text>
-                    <Text>{post.body}</Text>
+                    <Text>{post.content}</Text>
                   </Box>
                 </ListItem>
               ))}

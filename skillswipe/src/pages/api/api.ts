@@ -199,3 +199,11 @@ export const viewJob = async (token, id) => {
       return { status: 400, data: err.response.data }
     })
 }
+
+export const getPosts = async (token: any) => {
+  return axios.get(`${URL}/posts/feed`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
