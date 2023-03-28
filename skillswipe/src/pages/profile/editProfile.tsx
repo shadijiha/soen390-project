@@ -4,9 +4,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, Heading, Input, Stack } from '@chakra-ui/react'
+import { Box, Button, Heading, Input, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { editPersonalInformation, uploadUserDocuments } from '../api/api'
+import {
+  deleteCover,
+  deleteUserCv,
+  editPersonalInformation,
+  uploadUserDocuments,
+} from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
@@ -101,12 +106,24 @@ const EditProfile = () => {
       uploadUserDocuments(token, fd)
         .then((response) => {
           setFile({ ...File, cv: response.data })
-          toast('Successfully Updated CV')
+          toast('Successfully Updated CV ' + e.target.files[0].name)
         })
         .catch((error) => {
           toast(error.message)
         })
     }
+  }
+  const deleteCVHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+
+    deleteUserCv(token)
+      .then((response) => {
+        setFile({ ...File, cv: response.data })
+        toast('Successfully deleted CV')
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
   }
   const uploadCoverLetterHandler = (e: any) => {
     const token = localStorage.getItem('jwt')
@@ -123,11 +140,30 @@ const EditProfile = () => {
         })
     }
   }
+  const deleteCoverHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+
+    deleteCover(token)
+      .then((response) => {
+        setFile({ ...File, coverLetter: response.data })
+        toast('Successfully deleted Cover Letter')
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
   const clickCover = () => {
     document.getElementById('file-input-coverPic')?.click()
   }
   const clickProfile = () => {
     document.getElementById('file-input-profilePic')?.click()
+  }
+  const uploadCV = () => {
+    document.getElementById('upload-cv')?.click()
+  }
+  const uploadCover = () => {
+    document.getElementById('upload-cover')?.click()
   }
 
   return (
@@ -272,8 +308,54 @@ const EditProfile = () => {
             </a>
           </div>
         </Stack>
-        <input type="file" id="upload-cv" onChange={uploadCVHandler} />
-        <input type="file" id="upload-cover" onChange={uploadCoverLetterHandler} />
+        <div
+          style={{
+            marginLeft: '25%',
+          }}
+        >
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCV}>
+              <Button>Upload CV</Button>
+            </a>
+            <input
+              type="file"
+              id="upload-cv"
+              onChange={uploadCVHandler}
+              style={{ display: 'none' }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCover}>
+              <Button>Upload Cover</Button>
+            </a>
+            <input
+              type="file"
+              id="upload-cover"
+              onChange={uploadCoverLetterHandler}
+              style={{ display: 'none' }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'inline',
+            }}
+          >
+            <Button onClick={deleteCVHandler} mr={'5rem'}>
+              Delete CV
+            </Button>
+            <Button onClick={deleteCoverHandler}>Delete Cover</Button>
+          </div>
+        </div>
 
         {/* my profile */}
         <InformationBox />
