@@ -241,3 +241,11 @@ export const getMyApplications = async (token: any) => {
       return { status: 400, data: err.response.data }
     })
 }
+
+export const withdrawJobApplication = async (token: any, id: any) => {
+  return axios.delete(`${URL}/application/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

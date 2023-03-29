@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
@@ -19,7 +20,7 @@ import {
 import router from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { getMyApplications } from './api/api'
+import { getMyApplications, withdrawJobApplication } from './api/api'
 import jobListing from './jobListing/[id]'
 interface Application {
   id: number
@@ -46,6 +47,7 @@ interface Application {
 }
 const MyApplications = () => {
   const [applications, setApplications] = useState<Application[]>([])
+  const token = localStorage.getItem('jwt')
 
   useEffect(() => {
     const fetchApplications = async () => {
@@ -68,28 +70,6 @@ const MyApplications = () => {
   }, [])
 
   return (
-    // <>
-    //   <NavBar />
-    //   <Container maxW="xl" centerContent>
-    //     <Text fontSize="2xl" fontWeight="bold" my={6}>
-    //       My Job Applications
-    //     </Text>
-
-    //     <List spacing={3}>
-    //       {applications.map((application) => (
-    //         <ListItem key={application.id}>
-    //           <Text fontWeight="bold">
-    //             {application.application.jobTitle} @ {application.application.companyName}
-    //           </Text>
-    //           <Text>{application.application.jobDescription}</Text>
-    //           <Text>Name: {application.name}</Text>
-    //           <Text>Email: {application.email}</Text>
-    //           <Text>Phone: {application.phone}</Text>
-    //         </ListItem>
-    //       ))}
-    //     </List>
-    //   </Container>
-    // </>
     <>
       <Layout>
         <NavBar />
@@ -264,7 +244,7 @@ const MyApplications = () => {
                       fontWeight="extrabold"
                       fontSize="2xl"
                       onClick={() => {
-                        router.push(`/jobListing/${application.id}`)
+                        router.push(`/jobListing/${application.job.id}`)
                       }}
                     >
                       {application.job.jobTitle}
@@ -328,11 +308,12 @@ const MyApplications = () => {
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
                       onClick={() => {
-                        router.push(`/jobListing/${application.id}`)
+                        router.push(`/jobListing/${application.job.id}`)
                       }}
                     >
                       Edit Listing
                     </Button> */}
+
                     <Button
                       as={Link}
                       _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
@@ -342,7 +323,8 @@ const MyApplications = () => {
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
                       onClick={() => {
-                        router.push(`/application/${application.id}`)
+                        // call the delete API function withdrawApplication
+                        withdrawJobApplication(token, application.job.id)
                       }}
                     >
                       Withdraw Application
