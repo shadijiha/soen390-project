@@ -130,7 +130,7 @@ export default function NavBar(props: any) {
               router.push('/')
             }}
           >
-            🚀 SkillSwipe
+            SkillSwipe
           </Text>
           <NextLink href="#">
             <Button
@@ -157,7 +157,7 @@ export default function NavBar(props: any) {
                 variant="ghost"
                 rounded={'full'}
               >
-                Home
+                🏠 ‎ Home
               </Button>
             </NextLink>
 
@@ -169,7 +169,7 @@ export default function NavBar(props: any) {
                 w="100%"
                 rounded={'full'}
               >
-                Messages
+                💬 ‎ Messages
               </Button>
             </NextLink>
 
@@ -184,7 +184,7 @@ export default function NavBar(props: any) {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                Careers
+                🚀 ‎ Careers
               </MenuButton>
               <MenuList
                 style={{
@@ -201,7 +201,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Open Jobs
+                  💼 ‎ Open Jobs
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -214,7 +214,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  My Job Listings
+                  📂 ‎ My Job Listings
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -227,7 +227,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Create a Job Listing
+                  📝 ‎ Create a Job Listing
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option4')}
@@ -240,7 +240,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  My Job Applications
+                  📈 ‎ My Job Applications
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -252,7 +252,9 @@ export default function NavBar(props: any) {
                   variant="ghost"
                   size="lg"
                   w="100%"
-                  my={5}
+                  my={4}
+                  rounded={'full'}
+                  marginRight={'10px'}
                 ></IconButton>
                 <Badge
                   colorScheme="red"
