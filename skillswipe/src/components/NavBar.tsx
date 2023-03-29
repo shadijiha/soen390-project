@@ -34,6 +34,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { changeStatus } from '@/pages/api/api'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -62,8 +63,15 @@ export default function NavBar(props: any) {
   )
 
   const logout = () => {
-    if (localStorage.getItem('jwt')) {
+    
+    const token = localStorage.getItem("jwt");
+    if (token) {
       localStorage.removeItem('jwt')
+      changeStatus("offline",token).then((response) => {
+   
+      }).catch((error) => {
+        toast(error.message)
+      })
       toast('Successfully Logged Out')
     }
   }
