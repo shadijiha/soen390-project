@@ -19,8 +19,10 @@ import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
 
 const EditProfile = () => {
+  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
     profilePic: '',
@@ -56,7 +58,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
-          toast('Successfully Update Cover Picture')
+          toast(t("updateCoverPicture"))
         })
         .catch((error) => {
           toast(error.message)
@@ -73,7 +75,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast('Successfully Updated Profile picture')
+          toast(t("updateProfilePicture"))
         })
         .catch((error) => {
           toast(error.message)
@@ -99,7 +101,7 @@ const EditProfile = () => {
                 fontWeight: '200',
               }}
             >
-              Hey, {currentUser.auth.firstName}!
+              {t('hey')}, {currentUser.auth.firstName}!
             </Heading>
           </Box>
         </Box>

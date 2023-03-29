@@ -143,7 +143,7 @@ const profile = () => {
             setLoading(false)
           })
           .catch((error) => {
-            toast('User not found')
+            toast(t('userNotFound'))
             router.push('/')
           })
       }
@@ -279,7 +279,7 @@ const profile = () => {
                           }}
                         >
                           <span>
-                            <span>Message</span>
+                            <span>{t('message')}</span>
                           </span>
                         </button>
                       ) : Status.Requested == true ? (
@@ -296,7 +296,7 @@ const profile = () => {
                           onClick={Reject}
                         >
                           <span>
-                            <span>{ t('Delete Request') }</span>
+                            <span>{ t('deleteRequest') }</span>
                           </span>
                         </button>
                       ) : Status.Pending == true ? (
@@ -314,7 +314,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('Accept') }</span>
+                              <span> { t('accept') }</span>
                             </span>
                           </button>
                           <button
@@ -330,7 +330,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('Decline') }</span>
+                              <span> { t('decline') }</span>
                             </span>
                           </button>
                         </>
@@ -349,7 +349,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('Connect') }</span>
+                              <span> { t('connect') }</span>
                             </span>
                           </button>
                         </>

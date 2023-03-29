@@ -17,11 +17,13 @@ import {
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'next-i18next'
 
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
 
 const Inbox = () => {
+  const {t} = useTranslation ('common')
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [loading, setLoading] = useState(true)
@@ -53,7 +55,7 @@ const Inbox = () => {
             :
             <Box p={50}>
           <Heading as="h1" size="lg" mb={4}>
-            Inbox
+            {t('inbox')}
           </Heading>
           {messages.length > 0 ? (
             messages.map((element : any) => (
@@ -82,7 +84,7 @@ const Inbox = () => {
               </Flex>
             ))
           ) : (
-            <h1>No new message</h1>
+            <h1>{t ('noMessages')}</h1>
           )}
         </Box>
           }

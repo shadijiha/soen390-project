@@ -7,6 +7,7 @@
     "email": "Email",
     "password": "Mot de passe",
     "username": "Nom d'utilisateur",
+    "googleSignIn": "Se connecter avec Google",
 
     "home": "Accueil",
     "profile": "Profil",
@@ -30,20 +31,102 @@
     "noResults": "Aucun résultat",
 
     "messages": "Messages",
-    "notifications": "Notifications",
     "inbox": "Boîte de réception",
     "sent": "Envoyé",
+    "message": "Message",
 
     "noMessages": "Aucun message",
 
-    "pending requests": "Demandes en attente",
+    "pendingRequests": "Demandes en attente",
+    "new": "Nouveau",  
+    "notifications": "Notifications", 
+    "pleaseAddMeToYourNetwork": "Veuillez m'ajouter à votre réseau",
+    "ignore": "Ignorer",
+    "accept": "Accepter",
     "noPendingRequests": "Aucune demande en attente",
-    "newMessage": "Nouveau message",
-    "newMesssage2": "Vous avez un nouveau message",
-    "noNotifications": "Vous n'avez aucune notification"
+    "noNotifications": "Aucune notification",
+
+    "chatPageHeader": "Discuter avec {{user}}",
+    "sendMessageButton": "Envoyer",
+    "attachFileButton": "Joindre un fichier",
+    "connectedStatusMessage": "{{user}} est connecté(e)",
+    "notConnectedStatusMessage": "{{user}} n'est pas connecté(e)",
+    "userNotFoundMessage": "Utilisateur non trouvé",
+
     
+    "openJobs": "Offres d'emploi ouvertes",
+    "filterJobs": "Filtrer les offres d'emploi",
+    "sortStartingDate": "Trier par date de début",
+    "viewAll": "Voir tout",
+    "fullTime": "Temps plein",
+    "partTime": "Temps partiel",
+    "internship": "Stage",
+    "contract": "Contrat",
+    "other": "Autre",
+    "apply": "Postuler",
+    "startingDate": "Date de début",
+    "salary": "Salaire",
+    "transcript": "Transcription requise?",
+    "coverLetter": "Lettre de motivation requise?",
+    "yes": "Oui",
+    "no": "Non",
 
 
+
+    "createJobListing": "Créer une offre d'emploi",
+    "jobType": "Type d'emploi",
+    "coverLetterRequired": "Lettre de motivation requise ?",
+    "transcriptRequired": "Transcription requise ?",
+    "skillsNeeded": "Compétences requises",
+    "create": "Créer",
+
+    "register": "S'inscrire",
+    "male": "Masculin",
+    "female": "Féminin",
+    "signupWithGoogle": "S'inscrire avec Google",
+    "alreadyUser": "Déjà un utilisateur ?",
+
+
+    "myListings": "Mes offres d'emploi",
+    "filterList": "Filtrer la liste",
+    "sortNewest": "Trier par date de création",
+    "sortHighestSalary": "Trier par salaire le plus élevé",
+    "errorJobs": "Erreur lors de la récupération des offres d'emploi",
+    "editListing": "Modifier l'offre d'emploi",
+    "delete": "Supprimer",
+    "decline": "Refuser",
+    "connect": "Connecter",
+    "createListing": "Créer une offre d'emploi",
+    "errorCreateListing": "Erreur lors de la création de l'offre d'emploi",
+
+    "notConnected": "Non connecté",
+    "userNotFound": "Utilisateur non trouvé",
+    "loading": "Chargement",
+    "deleteRequest": "Supprimer la demande",
+
+    "hey": "Salut",
+    "edit": "Modifier",
+    "updateCoverPicture": "Mettre à jour la photo de couverture",
+    "updateProfilePicture": "Mettre à jour la photo de profil",
+
+    
+    "recentPosts": "Publications récentes",
+
+    "fillAllFields": "Veuillez remplir tous les champs",
+    "loggedIn": "Connecté",
+    "fillCorrectly": "Veuillez remplir correctement les champs",
+
+    "connectionRemoved": "Connexion supprimée",
+    "requestAccepted": "Demande acceptée",
+    "requestDeclined": "Demande refusée",
+    "positionTitle": "Titre du poste",
+    "company": "Entreprise",
+    "location": "Lieu",
+    "jobDescription": "Description du poste",
+    "successfullyRegistered": "Inscription réussie",
+    "invalidInput": "Entrée invalide",
+    "password-mismatch": "Les mots de passe ne correspondent pas"
+      
    
  
   }

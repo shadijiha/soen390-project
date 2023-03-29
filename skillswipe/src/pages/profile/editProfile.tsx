@@ -13,6 +13,8 @@ import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useTranslation, withTranslation } from 'next-i18next'
+
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
@@ -21,12 +23,16 @@ import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 
+
+
 const EditProfile = () => {
+  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
     profilePic: '',
     coverPic: '',
   })
+  
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
@@ -100,7 +106,7 @@ const EditProfile = () => {
                 fontWeight: '200',
               }}
             >
-              Hey, {currentUser.auth.firstName}!
+              {t('hey')}, {currentUser.auth.firstName}!
             </Heading>
           </Box>
         </Box>
@@ -268,4 +274,5 @@ const EditProfile = () => {
   )
 }
 
-export default EditProfile
+export default withTranslation('common')(EditProfile)
+

@@ -81,7 +81,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
           )
-          toast.success('Connection removed')
+          toast.success(t('connectionRemoved'))
         })
         .catch((err) => {
           toast.error(err)
@@ -97,7 +97,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
           )
-          toast.success('Request Accepted')
+          toast.success(t('requestAccepted'))
         })
         .catch((err) => {
           toast.error(err)
@@ -120,7 +120,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         ></NavBar>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
-            Pending Requests
+            {t('pendingRequests')}
           </Heading>
           <Flex flexDirection={'column-reverse'}>
             {pendingConnections.length > 0 ? (
@@ -161,8 +161,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                       <Button
                         colorScheme="twitter"
                         onClick={() => accept(connection.user.id)}
-                      >
-                        {t('accept')}
+                      > <text>{t('accept')}</text>
+                       
                       </Button>
                     </HStack>
                   </Box>
@@ -180,7 +180,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
            
-            Notifications
+            {t('notifications')}
           </Heading>
           {notifications.length > 0 ? (
             notifications.map((notification) => (
@@ -199,7 +199,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                     <Heading as="h2" size="md" mb={2}>
                       {notification.title}{' '}
                       <Badge ml="1" colorScheme="green">
-                        New
+                        {t("new")}
                       </Badge>
                     </Heading>
                     <Text mb={2}>{notification.description}</Text>

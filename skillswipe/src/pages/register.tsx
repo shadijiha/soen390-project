@@ -19,6 +19,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'
+import { useTranslation} from 'next-i18next'
 
 const Register = () => {
   const { toggleColorMode } = useColorMode()
@@ -69,6 +70,8 @@ const Register = () => {
       gender: event.target.value,
     })
   }
+
+  const { t } = useTranslation('common')
   const submitForm = () => {
     if (
       !(
@@ -80,12 +83,12 @@ const Register = () => {
         User.password == ConfirmPass
       )
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillAllFields'))
     } else {
       if (emailValidator(User.email) == true) {
         register(User)
           .then((Response) => {
-            toast('Successfully Registered the Account')
+            toast(t('successfullyRegistered'))
             localStorage.setItem('jwt', Response.data.access_token)
             router.push('/home')
           })
@@ -93,7 +96,7 @@ const Register = () => {
             toast(error.message)
           })
       } else {
-        toast('Invalid Inputs')
+        toast(t('invalidInput'))
       }
     }
   }
@@ -107,7 +110,7 @@ const Register = () => {
           data-testid="register-page"
         >
           <Flex direction="column" background={formBackground} p={12} rounded={25}>
-            <Heading mb={6}>Register 🧖🏼</Heading>
+            <Heading mb={6}>{t('register')} 🧖🏼</Heading>
             <Input
               data-testid="first-name"
               placeholder="First Name"
@@ -155,9 +158,7 @@ const Register = () => {
               onChange={confirmpassChange}
             />
             <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
-              {ConfirmPass != User.password
-                ? 'Password \n in both fields should be Same'
-                : ''}
+            {ConfirmPass !== User.password ? t('password-mismatch') : ''}
             </Text>
 
             <Select
@@ -168,11 +169,11 @@ const Register = () => {
               variant="filled"
               background={placeholderBackground}
             >
-              <option value="MALE">MALE</option>
-              <option value="FEMALE">FEMALE</option>
+              <option value="MALE">{t('male')}</option>
+              <option value="FEMALE">{t('female')}</option>
             </Select>
             <Button colorScheme="green" mb={4} onClick={submitForm}>
-              Register
+              {t('register')}
             </Button>
             {/* Google */}
             <Button
@@ -183,7 +184,7 @@ const Register = () => {
               leftIcon={<FcGoogle />}
             >
               <Center>
-                <Text>Sign Up with Google</Text>
+                <Text>{t('signupWithGoogle')}</Text>
               </Center>
             </Button>
 
@@ -197,7 +198,7 @@ const Register = () => {
             </Button>
             <Button mb={-5}>
               <Link href="/">
-                <Text fontSize={13}>Already a user?</Text>
+                <Text fontSize={13}>{t('alreadyUser')}</Text>
               </Link>
             </Button>
           </Flex>

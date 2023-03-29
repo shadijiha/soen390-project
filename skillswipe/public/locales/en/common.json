@@ -1,4 +1,4 @@
-{
+{  
    "skillSwipe": "🚀 SkillSwipe",
    "welcome": "Welcome",
    "signUp": "Sign Up",
@@ -7,6 +7,7 @@
     "email": "Email",
     "password": "Password",
     "username": "Username",
+    "googleSignIn": "Sign In with Google",
 
     "home": "Home",
     "profile": "Profile",
@@ -30,22 +31,105 @@
     "noResults": "No results found",
 
     "messages": "Messages",
-    "notifications": "Notifications",
     "inbox": "Inbox",
     "sent": "Sent",
+    "message": "Message",
 
     "noMessages": "No new message",
 
-    "pending requests": "Pending Requests",
-    "noPendingRequests": "No pending requests to display",
-    "newMessage": "New Message",
-    "newMessage2": "you have a new message",
-    "noNotifications": "No notifications to display"
-    
+     "pendingRequests": "Pending Requests",
+         "new": "New",
+         "notifications": "Notifications",
+         "pleaseAddMeToYourNetwork": "Please add me to your network",
+         "ignore": "Ignore",
+         "accept": "Accept",
+         "noPendingRequests": "No pending requests",
+         "noNotifications": "No notifications",
+
+         "chatPageHeader": "Chat with {{user}}",
+         "sendMessageButton": "Send",
+         "attachFileButton": "Attach File",
+         "connectedStatusMessage": "{{user}} is connected",
+         "notConnectedStatusMessage": "{{user}} is not connected",
+         "userNotFoundMessage": "User not found",
+  
+   
+      "openJobs": "Open Jobs",
+      "filterJobs": "Filter Jobs",
+      "sortStartingDate": "Sort by Starting Date",
+      "viewAll": "View All",
+      "fullTime": "Full Time",
+      "partTime": "Part Time",
+      "intrernship": "Internship",
+      "contract": "Contract",
+      "other": "Other",
+      "apply": "Apply",
+      "startingDate": "Starting Date",
+      "salary": "Salary",
+      "transcript": "Transcript Needed?",
+      "coverLetter": "Cover Letter Needed?",
+      "yes": "Yes",
+      "no": "No",
 
 
 
+      "createJobListing": "Create Job Listing",
+      "jobType": "Job Type",
+      "coverLetterRequired": "Cover Letter Required ?",
+      "transcriptRequired": "Transcript Required ?",
+      "skillsNeeded": "Skills Needed",
+      "create": "Create",
+
+      "register": "Register",
+      "male": "Male",
+      "female": "Female",
+      "signupWithGoogle": "Sign Up with Google",
+      "alreadyUser": "Already a user ?",
+
+
+      "myListings": "My Listings",
+      "filterList": "Filter List",
+      "sortNewest": "Sort by Starting Date",
+      "sortHighestSalary": "Sort by Highest Salary",
+      "errorJobs": "Error loading jobs",
+      "editListing": "Edit Listing",
+      "delete": "Delete",
+      "decline": "Decline",
+      "connect": "Connect",
+      "createListing": "Sucessfully created job listing. Happy hiring!",
+      "errorCreateListing": "Error creating job listing. Maybe your usertype is not recruiter?",
+
+      "notConnected": "Not Connected",
+      "userNotFound": "User not found",
+      "loading": "Loading...",
+      "deleteRequest": "Delete Request",
+
+      "hey": "Hey",
+      "edit": "Edit",
+      "updateCoverPicture": "Successfully Updated Cover Picture",
+      "updateProfilePicture": "Successfully Updated Profile Picture",
+
+      
+      "recentPosts": "Recent Posts",
+
+      "fillAllFields": "Please fill all fields",
+      "loggedIn": "You are Successfully logged in",
+      "fillCorrectly": "Please fill the details correctly",
+
+      "connectionRemoved": "Connection Removed",
+      "requestAccepted": "Request Accepted",
+      "requestDeclined": "Request Declined",
+      "positionTitle": "Position Title",
+      "company": "Company",
+      "location": "Location",
+      "jobDescription": "Job Description",
+      "successfullyRegistered": "Successfully Registered the Account",
+      "invalidInput": "Invalid Inputs",
+      "password-mismatch": "Password in both fields should be the same"
+      
    
 
- }
+      
+
+}
  

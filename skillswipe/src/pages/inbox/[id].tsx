@@ -12,8 +12,10 @@ import Header from '../../components/Chat/Header'
 import Messages from '../../components/Chat/Messages'
 import { getUserById } from '../api/api'
 import { getConversationById, message } from '../api/chat'
+import { useTranslation} from 'next-i18next'
 
 const Chat = () => {
+  const {t} = useTranslation('common')
   const User = useSelector((state) => state as any)
   // const [inputMessage, setInputMessage] = useState('')
   const [Load,setLoad] = useState(false);
@@ -88,12 +90,12 @@ const Chat = () => {
        
             setchatUser(response.data.user)
           }else{
-            toast("Not Connected")
+            toast(t("notConnected"))
             router.push('/home')
           }
         }).catch((error) => {
           router.push("/home")
-          toast("User not found")
+          toast(t("userNotFound"))
         })
 
       }

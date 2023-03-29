@@ -163,7 +163,7 @@ const Profile = () => {
                       router.push('/profile/editProfile')
                     }}
                   >
-                    {t('Edit')}
+                    {t("edit")}
                   </button>
                 </div>
               </div>
