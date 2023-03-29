@@ -103,7 +103,7 @@ const MyApplications = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                My Job Applications
+                📈 ‎ My Job Applications
               </chakra.h3>
               <Spacer />
               {/* <Menu>
