@@ -232,7 +232,7 @@ export const applyToJob = async (token, id, jobApply: any) => {
 
 export const getMyApplications = async (token: any) => {
   return axios
-    .get(`${URL}/application/my`, {
+    .get(`${URL}/jobs/all`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
