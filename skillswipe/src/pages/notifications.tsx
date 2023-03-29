@@ -26,11 +26,11 @@ const Notifications = () => {
   
   useEffect(() => {
     getPendingConnections()
-
-    const pusher = new Pusher("5611330c8d67150acf7f", {
-      cluster: "us2",
+    const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null';
+    const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
+    const pusher = new Pusher(PUSHER_APP_KEY, {
+      cluster: PUSHER_APP_CLUSTER,
     });
-
     var channel = pusher.subscribe(`user-${currentUser.auth.id}`);
     channel.bind('friend-request', function(data) {
         addRequest()
