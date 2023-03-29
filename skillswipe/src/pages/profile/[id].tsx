@@ -90,6 +90,7 @@ const profile = () => {
     removeConnection(token, router.query.id)
       .then((reponse) => {
         setStatus({ connected: false, Requested: false, Pending: false })
+        toast.success("Connection has been removed", { type: "success" });
       })
       .catch((error) => {
         toast(error.message)
@@ -260,6 +261,7 @@ const profile = () => {
 
                     <div className="profile-container05">
                       {Status.connected == true ? (
+                        <>
                         <button
                           className="profile-button button"
                           style={{
@@ -278,6 +280,25 @@ const profile = () => {
                             <span>Message</span>
                           </span>
                         </button>
+                        <button
+                          className="profile-button button"
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: '2px',
+                            textShadow: '0px 0px 40px #000000CA',
+                            fontWeight: 600,
+                            marginRight: 'auto',
+                            width: '100%', // added this line to make the button fill the available space
+                          }}
+                          onClick={Reject}
+                        >
+                          <span>
+                            <span>Remove Connection</span>
+                          </span>
+
+                        </button>
+                        </>
                       ) : Status.Requested == true ? (
                         <button
                           className="profile-button button"
