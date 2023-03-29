@@ -263,6 +263,7 @@ export default function NavBar(props: any) {
                   position="absolute"
                   top="20px"
                   right="0"
+                  marginRight={'5px'}
                 >
                   {props.nbNotifications}
                 </Badge>
