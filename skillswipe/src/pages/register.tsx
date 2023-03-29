@@ -20,6 +20,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'
 import { useTranslation} from 'next-i18next'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Register = () => {
   const { toggleColorMode } = useColorMode()
@@ -207,5 +209,11 @@ const Register = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Register

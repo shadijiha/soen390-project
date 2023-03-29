@@ -17,6 +17,8 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { loginApi } from './api/api'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const login = () => {
   const { t } = useTranslation('common')
@@ -51,7 +53,7 @@ const login = () => {
         })
         .catch((error: any) => {
           if (error.response.status == 401) {
-            toast(t("fillCorrectly")
+            toast(t("fillCorrectly"))
           } else {
             toast(error.message)
           }
@@ -116,4 +118,10 @@ const login = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 export default login

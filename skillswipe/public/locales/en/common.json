@@ -125,9 +125,16 @@
       "jobDescription": "Job Description",
       "successfullyRegistered": "Successfully Registered the Account",
       "invalidInput": "Invalid Inputs",
-      "password-mismatch": "Password in both fields should be the same"
+      "password-mismatch": "Password in both fields should be the same",
       
-   
+      "newMessage": "New Message",
+      "newMessage2": "You have a new message from John Doe",
+      "newRequest": "New Friend Request",
+      "newRequest2": "Please add me to your network",
+
+
+      
+
 
       
 

@@ -20,6 +20,8 @@ import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'next-i18next'
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -268,5 +270,11 @@ const EditProfile = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default EditProfile
