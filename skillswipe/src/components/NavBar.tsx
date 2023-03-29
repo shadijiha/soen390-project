@@ -99,6 +99,10 @@ export default function NavBar(props: any) {
     if (value === 'option3') {
       router.push('/postJob')
     }
+
+    if (value === 'option4') {
+      router.push('/myApplications')
+    }
   }
 
   return (
@@ -224,6 +228,19 @@ export default function NavBar(props: any) {
                   }}
                 >
                   Create a Job Listing
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleFilter('option4')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
+                  My Job Applications
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -374,6 +391,9 @@ export default function NavBar(props: any) {
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
                   Create a Job Listing
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option4')}>
+                  My Job Applications
                 </MenuItem>
               </MenuList>
             </Menu>

@@ -14,18 +14,22 @@ export const editProfile = async (editProfile: any) => {
   return axios.put(`${URL}/auth/login`, editProfile)
 }
 
-export const changeStatus = async (status : any, token: any) => {
-  return axios.put(`${URL}/user/status`, {"userStatus" : status}, {
+export const changeStatus = async (status: any, token: any) => {
+  return axios.put(
+    `${URL}/user/status`,
+    { userStatus: status },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  )
+}
+export const getUserStatus = async (id: any, token: any) => {
+  return axios.get(`${URL}/user/status/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
-    }
-  })
-}
-export const getUserStatus = async(id : any,token :any) =>{
-  return axios.get(`${URL}/user/status/${id}`,{
-    headers : {
-      Authorization  : `Bearer ${token}`
-    }
+    },
   })
 }
 
@@ -217,6 +221,18 @@ export const viewJob = async (token, id) => {
 export const applyToJob = async (token, id, jobApply: any) => {
   return axios
     .post(`${URL}/application/${id}`, jobApply, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
+export const getMyApplications = async (token: any) => {
+  return axios
+    .get(`${URL}/application/my`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
