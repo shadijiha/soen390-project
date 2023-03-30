@@ -57,6 +57,15 @@ export class ChatService {
     msg.receiverId = receiver.id
     await this.messageRepository.save(msg)
 
+    await this.pusher.trigger(`user-${receiver.id}`, 'message-notification', {
+      user: {
+        id: sender.id,
+        firstName: sender.firstName,
+        lastName: sender.lastName
+      },
+      message: msg
+    })
+
     return res
   }
 
