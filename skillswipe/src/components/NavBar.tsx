@@ -1,6 +1,9 @@
+import { changeStatus, getPendingRequest } from '@/pages/api/api'
+import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import {
+  BellIcon,
   ChevronDownIcon,
-  BellIcon, CloseIcon,
+  CloseIcon,
   HamburgerIcon,
   SearchIcon,
 } from '@chakra-ui/icons'
@@ -34,9 +37,8 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { changeStatus } from '@/pages/api/api'
 
-export default function NavBar(props: any) {
+export default function NavBar(props :any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -44,6 +46,11 @@ export default function NavBar(props: any) {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
+  const [pendingConnections, setPendingConnections] = useState([
+    { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
+  ])
+  const [messageNotification, setmessageNotification] = useState([])
+  
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -51,7 +58,6 @@ export default function NavBar(props: any) {
   }
 
   const router = useRouter()
-
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
@@ -63,15 +69,14 @@ export default function NavBar(props: any) {
   )
 
   const logout = () => {
-    
-    const token = localStorage.getItem("jwt");
+    const token = localStorage.getItem('jwt')
     if (token) {
       localStorage.removeItem('jwt')
-      changeStatus("offline",token).then((response) => {
-   
-      }).catch((error) => {
-        toast(error.message)
-      })
+      changeStatus('offline', token)
+        .then((response) => {})
+        .catch((error) => {
+          toast(error.message)
+        })
       toast('Successfully Logged Out')
     }
   }
@@ -102,8 +107,78 @@ export default function NavBar(props: any) {
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
     })
-    
   }, [currentUser])
+
+  const getPendingConnections = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
+        .then((res) => {
+          setPendingConnections(res.data)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
+    var notification: any = []
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
+
+          convo.data.map(async (el) => {
+            // console.log(el)
+            const created_at: Date = new Date(el.created_at)
+            const currentDate: Date = new Date()
+            const diffInMs: any = currentDate.getTime() - created_at.getTime()
+            const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+            if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+              var notif: any = {
+                id: element.id,
+                firstName: element.firstName,
+                lastName: element.lastName,
+                created_at: el.created_at,
+                profilePic: element.profilePic,
+              }
+              notification.push(notif)
+              notification.sort((a, b) => {
+                const cr1: any = new Date(a.created_at)
+                const cr2: any = new Date(b.created_at)
+                return cr2.getTime() - cr1.getTime()
+              })
+              setmessageNotification(notification)
+            }
+          })
+        })
+      } catch (error) {
+        toast(error.message)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (currentUser.auth) {
+      getPendingConnections()
+      getMessage()
+
+      const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
+      const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
+      const pusher = new Pusher(PUSHER_APP_KEY, {
+        cluster: PUSHER_APP_CLUSTER,
+      })
+      var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
+      channel.bind('friend-request', function (data) {
+        getPendingConnections();
+      })
+
+    }
+  }, [currentUser])
+
   const handleFilter = (value) => {
     // open the openJobs page
     if (value === 'option1') {
@@ -119,8 +194,6 @@ export default function NavBar(props: any) {
     }
   }
 
- 
-  
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -190,27 +263,26 @@ export default function NavBar(props: any) {
             </NextLink>
 
             <NextLink href="/notifications" passHref>
-              <div style={{position: 'relative'}}>
-              <IconButton
-                aria-label="Notifications"
-                icon={<BellIcon />}
-                variant="ghost"
-                size="lg"
-                w="100%"
-                my={5}
-              ></IconButton>
-              <Badge
-                colorScheme="red"
-                borderRadius="full"
-                px="2"
-                position="absolute"
-                top="20px"
-                right="0"
-              >
-                {props.nbNotifications}
-              </Badge>
+              <div style={{ position: 'relative' }}>
+                <IconButton
+                  aria-label="Notifications"
+                  icon={<BellIcon />}
+                  variant="ghost"
+                  size="lg"
+                  w="100%"
+                  my={5}
+                ></IconButton>
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  px="2"
+                  position="absolute"
+                  top="20px"
+                  right="0"
+                >
+                  {(props.nbNotifications != null)? props.nbNotifications : pendingConnections.length + messageNotification.length}
+                </Badge>
               </div>
-
             </NextLink>
             <Menu>
               <MenuButton
