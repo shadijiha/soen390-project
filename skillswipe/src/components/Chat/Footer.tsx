@@ -5,6 +5,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 
 const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
   const { t } = useTranslation('common')
@@ -71,5 +74,9 @@ const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
     </>
   )
 }
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default Footer

@@ -62,7 +62,7 @@ const SubmitAppForm = () => {
               <Input
                 readOnly
                 type="text"
-                placeholder="loggedInName"
+                placeholder= {t('loggedInName')}
                 rounded="100px"
               />
             </FormControl>
@@ -138,7 +138,7 @@ const SubmitAppForm = () => {
 
           <FormControl id="cover">
             <FormLabel>{t('coverLetter2')}</FormLabel>
-            <Textarea size="lg" placeholder="Paste here" rounded="15px" />
+            <Textarea size="lg" placeholder={t("pasteHere")} rounded="15px" />
           </FormControl>
         </VStack>
         <VStack w="100%">

@@ -15,8 +15,13 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 
 const EducationHistory = (props: any) => {
+  const { t } = useTranslation('common')
   const [educationHistory, setEducationHistory] = useState({
     institution: '',
     degree: '',
@@ -43,18 +48,18 @@ const EducationHistory = (props: any) => {
       !educationHistory.start_year ||
       !educationHistory.end_year
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (educationHistory.start_year > educationHistory.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       addEducationHistoryRequest(token, educationHistory).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Education updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updaing education')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -68,11 +73,11 @@ const EducationHistory = (props: any) => {
     } else {
       deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Education updated successfully')
+          toast.success(t('deletedSuccessfully'))
           console.log('Chilld:' + props.education.id)
           props.deleteEducation(props.education.id)
         } else {
-          toast.error('Error deleting education')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -87,18 +92,18 @@ const EducationHistory = (props: any) => {
       !educationHistory.start_year ||
       !educationHistory.end_year
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (educationHistory.start_year > educationHistory.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       editEducationHistoryRequest(token, educationHistory).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Education updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updaing education')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -115,7 +120,7 @@ const EducationHistory = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Education {props.index} {props.isNew}
+          {t('education')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -129,7 +134,7 @@ const EducationHistory = (props: any) => {
             borderRadius="100px"
             onClick={updateEducation}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -143,7 +148,7 @@ const EducationHistory = (props: any) => {
             borderRadius="100px"
             onClick={addEducation}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -160,7 +165,7 @@ const EducationHistory = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="institution">
-        <FormLabel htmlFor="institution">Institution</FormLabel>
+        <FormLabel htmlFor="institution">{t("institution")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -175,7 +180,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year-when">Start date</FormLabel>
+        <FormLabel htmlFor="start_year-when">{t("startDate")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -190,7 +195,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">End date</FormLabel>
+        <FormLabel htmlFor="end_year">{t("endDate")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -205,7 +210,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="degree">
-        <FormLabel htmlFor="degree">Degree</FormLabel>
+        <FormLabel htmlFor="degree">{t("degree")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -222,4 +227,10 @@ const EducationHistory = (props: any) => {
     </Box>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default EducationHistory

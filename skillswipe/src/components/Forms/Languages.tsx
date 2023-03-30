@@ -16,8 +16,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Languages = (props: any) => {
+  const { t } = useTranslation('common')
   const [language, setLanguage] = useState({
     languageName: '',
     proficiency: '',
@@ -37,14 +41,14 @@ const Languages = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!language.languageName || !language.proficiency) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       editLanguagesRequest(token, language).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Language updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updating language')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -54,14 +58,14 @@ const Languages = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!language.languageName || !language.proficiency) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       addLanguagesRequest(token, language).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Language added successfully')
+          toast.success(t('addedSuccessfully'))
         } else {
-          toast.error('Error adding language')
+          toast.error(t('errorAdding'))
         }
       })
     }
@@ -75,10 +79,10 @@ const Languages = (props: any) => {
     } else {
       deleteLanguagesRequest(token, language.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Language deleted successfully')
+          toast.success(t('deletedSuccessfully'))
           props.deleteLanguage(props.language.id)
         } else {
-          toast.error('Error deleting language')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -119,7 +123,7 @@ const Languages = (props: any) => {
             borderRadius="100px"
             onClick={updateLanguages}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -133,7 +137,7 @@ const Languages = (props: any) => {
             borderRadius="100px"
             onClick={addLanguages}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -177,14 +181,19 @@ const Languages = (props: any) => {
           width="auto"
           onChange={handleChange}
         >
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
-          <option value="native_speaker">Native Speaker</option>
+          <option value="beginner">{t("beginner")}</option>
+          <option value="intermediate">{t("intermediate")}</option>
+          <option value="advanced">{t("advanced")}</option>
+          <option value="native_speaker">{t("native")}</option>
         </Select>
       </FormControl>
     </Box>
   )
 }
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default Languages

@@ -2,8 +2,12 @@ import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Collapse, IconButton, InputGroup, InputRightElement, useColorModeValue, useDisclosure } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { SetStateAction, useState } from "react";
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 const MobileSearchBar = () =>{
-   
+    const { t } = useTranslation('common')
     const [searchTerm, setSearchTerm] = useState("");
     const formBackground = useColorModeValue("gray.100", "gray.700");
     const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
@@ -29,7 +33,7 @@ const MobileSearchBar = () =>{
                     <form onSubmit={handleSubmit}>
                     <input
                       type="text"
-                      placeholder="Search"
+                      placeholder= {t('search')}
                       value={searchTerm}
                       onChange={handleChange}
                       style={{
@@ -72,6 +76,12 @@ const MobileSearchBar = () =>{
         </>
     )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default MobileSearchBar
 
 function setSearchTerm(event: { target: { value: SetStateAction<string>; }; }) {

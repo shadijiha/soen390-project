@@ -164,9 +164,38 @@
     "myJobListings": "Mes offres d'emploi",
     "logout": "Déconnexion",
     "myAccount": "Mon compte",
-    "SignIn/Logout": "Se connecter / Se déconnecter"
+    "SignIn/Logout": "Se connecter / Se déconnecter",
 
-    
+    "loggedInName": "Bienvenue {{name}}",
+      "pasteHere": "Coller ici",
+
+      "addedSuccessfully": "Ajouté avec succès",
+      "deletedSuccessfully": "Supprimé avec succès",
+      "updatedSuccessfully": "Mis à jour avec succès",
+      "error": "Erreur",
+      "errorAdding": "Erreur lors de l'ajout",
+      "errorDeleting": "Erreur lors de la suppression",
+      "errorUpdating": "Erreur lors de la mise à jour",
+      "update": "Mettre à jour",
+      "add": "Ajouter",
+      "addValidYear": "Veuillez ajouter une année de début et de fin valide",
+      "education": "Éducation",
+      "experience": "Expérience",
+      "title": "Titre",
+      "year": "Année",
+      "description": "Description",
+      "startDate": "Date de début",
+      "endDate": "Date de fin",
+      "issuer": "Émetteur",
+      "courseName": "Nom du cours",
+      "courseNumber": "Numéro du cours",
+      "degree": "Diplôme",
+      "institution": "Institution",
+
+      "beginner": "Débutant",
+      "intermediate": "Intermédiaire",
+      "advanced": "Avancé",
+      "native": "Natif"
       
    
  

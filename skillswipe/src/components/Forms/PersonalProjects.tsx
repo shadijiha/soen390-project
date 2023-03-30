@@ -15,8 +15,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const PersonalProjects = (props: any) => {
+  const { t } = useTranslation('common')
   const [personalProject, setPersonalProject] = useState({
     name: '',
     description: '',
@@ -45,18 +49,18 @@ const PersonalProjects = (props: any) => {
       !personalProject.description ||
       !personalProject.url
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (personalProject.start_year > personalProject.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       editPersonalProjectsRequest(token, personalProject).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Personal Project updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updating Personal Project')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -72,18 +76,18 @@ const PersonalProjects = (props: any) => {
       !personalProject.description ||
       !personalProject.url
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (personalProject.start_year > personalProject.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       addPersonalProjectsRequest(token, personalProject).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Personal Project added successfully')
+          toast.success(t('addedSuccessfully'))
         } else {
-          toast.error('Error adding Personal Project')
+          toast.error(t('errorAdding'))
         }
       })
     }
@@ -97,10 +101,10 @@ const PersonalProjects = (props: any) => {
     } else {
       deletePersonalProjectsRequest(token, personalProject?.id).then((res) => {
         if (res.status === 201 || res.status === 200) {
-          toast.success('Personal Project deleted successfully')
+          toast.success(t('deletedSuccessfully'))
           props.deleteProject(props.personalProject.id)
         } else {
-          toast.error('Error deleting Personal Project')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -127,7 +131,7 @@ const PersonalProjects = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Personal Projects {props.index} {props.isNew}
+          {t('personalProjects')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -141,7 +145,7 @@ const PersonalProjects = (props: any) => {
             borderRadius="100px"
             onClick={updatePersonalProjects}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -155,7 +159,7 @@ const PersonalProjects = (props: any) => {
             borderRadius="100px"
             onClick={addPersonalProjects}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -218,7 +222,7 @@ const PersonalProjects = (props: any) => {
       </FormControl>
 
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year">Start Year</FormLabel>
+        <FormLabel htmlFor="start_year">{t('startDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -233,7 +237,7 @@ const PersonalProjects = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">End Year</FormLabel>
+        <FormLabel htmlFor="end_year">{t('endDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -250,5 +254,10 @@ const PersonalProjects = (props: any) => {
     </Box>
   )
 }
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 
 export default PersonalProjects

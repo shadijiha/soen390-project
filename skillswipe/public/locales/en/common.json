@@ -164,7 +164,47 @@
       "myJobListings": "My Job Listings",
       "logout": "Logout",
       "myAccount": "My Account",
-      "SignIn/Logout": "Sign In/Logout"
+      "SignIn/Logout": "Sign In/Logout",
+
+      "loggedInName": "Welcome {{name}}",
+      "pasteHere": "Paste here",
+
+      "addedSuccessfully": "Added Successfully",
+      "deletedSuccessfully": "Deleted Successfully",
+      "updatedSuccessfully": "Updated Successfully",
+      "error": "Error",
+      "errorAdding": "Error adding",
+      "errorDeleting": "Error deleting",
+      "errorUpdating": "Error updating",
+      "update": "Update",
+      "add": "Add",
+      "addValidYear": "Please add a valid start and end year",
+      "education": "Education",
+      "experience": "Experience",
+      "title": "Title",
+      "year": "Year",
+      "description": "Description",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "issuer": "Issuer",
+      "courseName": "Course Name",
+      "courseNumber": "Course Number",
+      "degree": "Degree",
+      "institution": "Institution",
+
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "native": "Native"
+      
+
+
+     
+
+
+
+
+
 
       
 

@@ -15,8 +15,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Courses = (props: any) => {
+  const { t } = useTranslation('common')
   const [course, setCourse] = useState({
     courseName: '',
     courseNumber: '',
@@ -36,14 +40,14 @@ const Courses = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       editCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Course updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updaing course')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -53,14 +57,14 @@ const Courses = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       addCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Course added successfully')
+          toast.success(t('addedSuccessfully'))
         } else {
-          toast.error('Error adding course')
+          toast.error(t('errorAdding'))
         }
       })
     }
@@ -74,10 +78,10 @@ const Courses = (props: any) => {
     } else {
       deleteCoursesRequest(token, course.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Course deleted successfully')
+          toast.success(t('deletedSuccessfully'))
           props.deleteCourse(props.course.id)
         } else {
-          toast.error('Error deleting course')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -104,7 +108,7 @@ const Courses = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Courses and Certifications {props.index} {props.isNew}
+           {t('courses')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -118,7 +122,7 @@ const Courses = (props: any) => {
             borderRadius="100px"
             onClick={updateCourses}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -132,7 +136,7 @@ const Courses = (props: any) => {
             borderRadius="100px"
             onClick={addCourses}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -149,7 +153,7 @@ const Courses = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="courseName">
-        <FormLabel htmlFor="courseName">courseName</FormLabel>
+        <FormLabel htmlFor="courseName">{t("courseName")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -165,7 +169,7 @@ const Courses = (props: any) => {
       </FormControl>
 
       <FormControl id="courseNumber">
-        <FormLabel htmlFor="courseNumber">courseNumber</FormLabel>
+        <FormLabel htmlFor="courseNumber">{t("courseNumber")}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -182,4 +186,9 @@ const Courses = (props: any) => {
     </Box>
   )
 }
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default Courses

@@ -96,7 +96,7 @@ const LanguagesBox = () => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common'])),
+    ...(await serverSideTranslations(locale!, ['common'])),
   },
 })
 
