@@ -6,7 +6,7 @@ import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, color, Heading, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { editPersonalInformation, removeProfilepic } from '../api/api'
+import { editPersonalInformation, removeCoverpic } from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
@@ -82,13 +82,15 @@ const EditProfile = () => {
     }
   }
 
-  const removeUserProfilepic = () => {
+  
+
+  const removeUserCoverpic = () => {
     const token = localStorage.getItem('jwt')
-    removeProfilepic(token)
+    removeCoverpic(token)
       .then((response) => {
         console.log(response)
-        setPic({ ...Pic, profilePic: response.data.profilePic })
-        toast('Successfully Removed Profile Picture')
+        setPic({ ...Pic, coverPic: response.data.coverPic })
+        toast('Successfully Removed Cover Picture')
       })
       .catch((error) => {
         toast(error.message)
@@ -162,24 +164,6 @@ const EditProfile = () => {
                 />
               </label>
             </button>
-            <button style={{ position: 'absolute', top: '0', right: '0' }}>
-    <img
-      src="https://img.icons8.com/material-sharp/512/trash.png"
-      alt="Delete Icon"
-      style={{
-        height: '35px',
-        width: '35px',
-        borderRadius: '100%',
-        backgroundColor: 'white',
-        padding: "1px",
-        margin: "2px",
-        border: "3px solid black"
-        
-      }}
-      // add an onClick handler to delete the profile pic
-      onClick={removeUserProfilepic}
-    />
-  </button>
             <a onClick={clickProfile}>
               <img
                 alt="image"
@@ -265,6 +249,35 @@ const EditProfile = () => {
               style={{ display: 'none' }}
               onChange={coverImageHandler}
             />
+
+{ Pic.coverPic ?  (
+              
+              
+              <button style={{ position: 'absolute', bottom: '-10px', left: '-5px' }}>
+         
+                <img
+           src="https://img.icons8.com/material-sharp/512/trash.png"
+           alt="Delete Icon"
+           style={{
+             height: '35px',
+             width: '35px',
+             borderRadius: '100%',
+             backgroundColor: 'white',
+             padding: "1px",
+             margin: "2px",
+             border: "3px solid black"
+             
+            }}
+            // add an onClick handler to delete the profile pic
+            onClick={removeUserCoverpic}
+            />
+            
+       </button>
+        
+       
+            ) : null
+     
+       }
           </div>
         </Stack>
 
