@@ -71,7 +71,7 @@ const Awards = ({ awards }: any) => {
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
-    ...(await serverSideTranslations(locale, ['common'])),
+    ...(await serverSideTranslations(locale!, ['common'])),
   },
 })
 

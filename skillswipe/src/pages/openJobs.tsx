@@ -190,7 +190,7 @@ const findJob = () => {
                       handleCheckboxChange(e)
                     }}
                   >
-                    {t('ViewAll')}
+                    {t('viewAll')}
                   </Checkbox>
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
