@@ -94,6 +94,8 @@ const EditProfile = () => {
         toast(error.message)
       })
   }
+
+
   const clickCover = () => {
     document.getElementById('file-input-coverPic')?.click()
   }
@@ -162,24 +164,6 @@ const EditProfile = () => {
                 />
               </label>
             </button>
-            <button style={{ position: 'absolute', top: '0', right: '0' }}>
-    <img
-      src="https://img.icons8.com/material-sharp/512/trash.png"
-      alt="Delete Icon"
-      style={{
-        height: '35px',
-        width: '35px',
-        borderRadius: '100%',
-        backgroundColor: 'white',
-        padding: "1px",
-        margin: "2px",
-        border: "3px solid black"
-        
-      }}
-      // add an onClick handler to delete the profile pic
-      onClick={removeUserProfilepic}
-    />
-  </button>
             <a onClick={clickProfile}>
               <img
                 alt="image"
@@ -203,7 +187,35 @@ const EditProfile = () => {
               id="file-input-profilePic"
               style={{ display: 'none' }}
               onChange={ProfileImageHandler}
-            />
+              />
+            { Pic.profilePic ?  (
+              
+              
+            <button style={{ position: 'absolute', top: '0', right: '0' }}>
+       
+              <img
+         src="https://img.icons8.com/material-sharp/512/trash.png"
+         alt="Delete Icon"
+         style={{
+           height: '35px',
+           width: '35px',
+           borderRadius: '100%',
+           backgroundColor: 'white',
+           padding: "1px",
+           margin: "2px",
+           border: "3px solid black"
+           
+          }}
+          // add an onClick handler to delete the profile pic
+          onClick={removeUserProfilepic}
+          />
+          
+     </button>
+      
+     
+          ) : null
+   
+     }
           </div>
 
           {/* cover photo */}
@@ -265,6 +277,8 @@ const EditProfile = () => {
               style={{ display: 'none' }}
               onChange={coverImageHandler}
             />
+
+
           </div>
         </Stack>
 
