@@ -11,15 +11,19 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
   const isDesktop = useBreakpointValue({ base: false, md: true })
+  const { t } = useTranslation('common')
 
   return (
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
-        Career Journey 👨🏼‍💻
+        {t('careerJourney')} 👨🏼‍💻
         <br></br>
       </chakra.h3>
       {experience.map((milestone: any, index: any) => (
@@ -183,4 +187,9 @@ const EmptyCard = () => {
   )
 }
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 export default WorkExperience

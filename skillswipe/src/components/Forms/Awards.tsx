@@ -15,8 +15,13 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 
 const Awards = (props: any) => {
+  const { t } = useTranslation('common')
   const [award, setAward] = useState({
     title: '',
     description: '',
@@ -45,14 +50,14 @@ const Awards = (props: any) => {
       !award.issuer ||
       !award.url
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       editAwardsRequest(token, award).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Award updated successfully')
+          toast.success(t('awardUpdated'))
         } else {
-          toast.error('Error updating award')
+          toast.error(t('awardError'))
         }
       })
     }
@@ -68,7 +73,7 @@ const Awards = (props: any) => {
       !award.issuer ||
       !award.url
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       addAwardsRequest(token, award).then((res) => {

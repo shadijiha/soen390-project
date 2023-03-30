@@ -3,9 +3,14 @@ import React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Awards = ({ awards }: any) => {
   // call API to get education history
+
+  const { t } = useTranslation('common')
 
   return (
     awards && (
@@ -23,7 +28,7 @@ const Awards = ({ awards }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🏅 Awards</text>
+                <text>🏅 {t('awards')}</text>
               </h1>
             </div>
             <Stack
@@ -63,4 +68,11 @@ const Awards = ({ awards }: any) => {
     )
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default Awards

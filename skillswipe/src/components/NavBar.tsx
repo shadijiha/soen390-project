@@ -36,6 +36,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import { i18n }  from 'next-i18next'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 
 
@@ -43,6 +45,7 @@ import { useTranslation } from 'next-i18next'
 
 
 const selectLanguage = (lng) => {
+
   if(i18n) i18n.changeLanguage(lng);
 };
 
@@ -184,8 +187,8 @@ const selectLanguage = (lng) => {
             }}
             icon={<Text>🌐</Text>}
           >
-            <option value="en">English</option>
-            <option value="fr">Français</option>
+            <option value="en"> {t('english')} </option>
+            <option value="fr"> {t('french')} </option>
           </Select>
 
           <Search />
@@ -209,7 +212,7 @@ const selectLanguage = (lng) => {
                 w="100%"
                 rounded={'full'}
               >
-                {t('Messages')}
+                {t('messages')}
               </Button>
             </NextLink>
 
@@ -247,7 +250,7 @@ const selectLanguage = (lng) => {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                {t('Careers')}
+                {t('careers')}
               </MenuButton>
               <MenuList
                 style={{
@@ -290,7 +293,7 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-                   {t('Create Job Listing')}
+                   {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -334,7 +337,7 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                Logout
+                {t('logout')}
               </Button>
             </NextLink>
           </Flex>
@@ -380,19 +383,19 @@ const selectLanguage = (lng) => {
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
-                Home
+                {t('home')}
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
-                Messages
+                {t('messages')}
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                My Account
+                {t('myAccount')}
               </Button>
             </NextLink>
 
@@ -408,7 +411,7 @@ const selectLanguage = (lng) => {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                Careers
+                {t('careers')}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
@@ -437,7 +440,7 @@ const selectLanguage = (lng) => {
                 <form onSubmit={MobilehandleSubmit}>
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder= {t('search')}
                     value={searchTerm}
                     onChange={MobilehandleChange}
                     style={{
@@ -486,7 +489,7 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                {t('Sign In/Logout')}
+                {t('SignIn/Logout')}
               </Button>
             </NextLink>
           </Flex>
@@ -495,5 +498,7 @@ const selectLanguage = (lng) => {
     </Box>
   );
 }
+
+
 
 

@@ -12,8 +12,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const SubmitAppForm = () => {
+
+  const { t } = useTranslation('common')
   return (
     <>
       <VStack
@@ -46,14 +51,14 @@ const SubmitAppForm = () => {
               paddingBottom: '0.2em',
             }}
           >
-            Submit Application
+            {t('submitApplication')}
           </Text>
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
             {/* frontend!!! name, email, phone is read only,
                  we will pull it from the user's logged in account 
                  and show it as the placeholder */}
             <FormControl id="name">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <Input
                 readOnly
                 type="text"
@@ -62,7 +67,7 @@ const SubmitAppForm = () => {
               />
             </FormControl>
             <FormControl id="email">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <Input
                 readOnly
                 type="email"
@@ -71,7 +76,7 @@ const SubmitAppForm = () => {
               />
             </FormControl>
             <FormControl id="resume">
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>{t('phone')}</FormLabel>
               <Input
                 readOnly
                 type="text"
@@ -110,9 +115,9 @@ const SubmitAppForm = () => {
                   >
                     <Stack p="8" textAlign="center" spacing="1">
                       <Heading fontSize="lg" fontWeight="bold">
-                        Drop CV here [.pdf]
+                        {t('dropCV')} [.pdf]
                       </Heading>
-                      <Text fontWeight="light">or click to upload</Text>
+                      <Text fontWeight="light">{t('orApplyHere')}</Text>
                     </Stack>
                   </Stack>
                 </Box>
@@ -132,7 +137,7 @@ const SubmitAppForm = () => {
           </AspectRatio>
 
           <FormControl id="cover">
-            <FormLabel>Cover Letter (optional)</FormLabel>
+            <FormLabel>{t('coverLetter2')}</FormLabel>
             <Textarea size="lg" placeholder="Paste here" rounded="15px" />
           </FormControl>
         </VStack>
@@ -149,7 +154,7 @@ const SubmitAppForm = () => {
             textShadow="0px 0px 20px #00000076"
             shadow={'0px 4px 30px #0000001F'}
           >
-            Apply
+            {t('submit')}
           </Button>
         </VStack>
       </VStack>
@@ -157,4 +162,9 @@ const SubmitAppForm = () => {
   )
 }
 
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
 export default SubmitAppForm

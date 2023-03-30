@@ -6,6 +6,10 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Information from '../Forms/Information'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 
 const InformationBox = () => {
   const user = useSelector((state) => state as any)
@@ -33,12 +37,12 @@ const InformationBox = () => {
       UpdateUser.biography
     ) {
       if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
-        toast('Please add Valid email')
+        toast(t('invalidEmail'))
       } else {
         editPersonalInformation(token, UpdateUser)
           .then((response) => {
             console.log(response)
-            toast('Updated Successfully')
+            toast(t('updateSuccess'))
           })
           .catch((error) => {
             toast(error.message)
@@ -46,6 +50,8 @@ const InformationBox = () => {
       }
     }
   }
+
+  const { t } = useTranslation('common')
 
   return (
     <Stack
@@ -72,10 +78,17 @@ const InformationBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Personal Information
+        {t('personalInformation')}
       </Text>
       <Information update={update} handleSubmit={handleSubmit} />
     </Stack>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale!, ['common'])),
+  },
+})
+
 export default InformationBox

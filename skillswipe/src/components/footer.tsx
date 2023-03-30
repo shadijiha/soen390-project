@@ -10,7 +10,13 @@ import {
 import { ReactNode } from 'react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 const Logo = (props: any) => {
+
+  const { t } = useTranslation('common')
   return (
     <svg
       height={32}
@@ -57,6 +63,7 @@ const SocialButton = ({
 }
 
 export default function SmallWithLogoLeft() {
+  const { t } = useTranslation('common')
   return (
     <Box
       bg={useColorModeValue('gray.50', 'gray.900')}
@@ -73,7 +80,7 @@ export default function SmallWithLogoLeft() {
         align={{ base: 'center', md: 'center' }}
       >
         <Logo />
-        <Text>© 2023 390 SkillSwipe Team. All rights are not reserved.</Text>
+        <Text>© {t('skillSwipeTeam')} </Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'Twitter'} href={'#'}>
             <FaTwitter />
@@ -89,3 +96,9 @@ export default function SmallWithLogoLeft() {
     </Box>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})

@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Volunteering from '../Forms/Volunteering'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 
 type Volunteering = {
   company?: string
@@ -35,6 +39,8 @@ const VolunteeringBox = () => {
       volunteering.title
     )
   }
+
+  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -61,7 +67,7 @@ const VolunteeringBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Volunteering
+        {t('volunteering')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
@@ -99,5 +105,11 @@ const VolunteeringBox = () => {
     </Stack>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default VolunteeringBox

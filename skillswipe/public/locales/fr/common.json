@@ -1,8 +1,8 @@
 {
-   "skillSwipe": "🚀 SkillSwipe",
-   "welcome": "Bienvenue",
-   "signUp": "S'inscrire",
-   "signIn": "Se connecter",
+    "skillSwipe": "🚀 SkillSwipe",
+    "welcome": "Bienvenue",
+    "signUp": "S'inscrire",
+    "signIn": "Se connecter",
     "signOut": "Se déconnecter",
     "email": "Email",
     "password": "Mot de passe",
@@ -27,14 +27,12 @@
 
     "search": "Rechercher",
     "recent posts": "Publications récentes",
-
     "noResults": "Aucun résultat",
 
     "messages": "Messages",
     "inbox": "Boîte de réception",
     "sent": "Envoyé",
     "message": "Message",
-
     "noMessages": "Aucun message",
 
     "pendingRequests": "Demandes en attente",
@@ -107,9 +105,7 @@
     "hey": "Salut",
     "edit": "Modifier",
     "updateCoverPicture": "Mettre à jour la photo de couverture",
-    "updateProfilePicture": "Mettre à jour la photo de profil",
-
-    
+    "updateProfilePicture": "Mettre à jour la photo de profil",    
     "recentPosts": "Publications récentes",
 
     "fillAllFields": "Veuillez remplir tous les champs",
@@ -125,7 +121,50 @@
     "jobDescription": "Description du poste",
     "successfullyRegistered": "Inscription réussie",
     "invalidInput": "Entrée invalide",
-    "password-mismatch": "Les mots de passe ne correspondent pas"
+    "password-mismatch": "Les mots de passe ne correspondent pas",
+
+    "newMessage": "Nouveau message",
+    "newMessage2": "Vous avez reçu un nouveau message",
+    "newRequest": "Nouvelle demande",
+    "newRequest2": "Vous avez reçu une nouvelle demande",
+
+    "charInput": "Essayez quelque chose ...",
+
+    "awards": "Récompenses",
+    "courses": "Cours",
+    "accomplishedCourses": "Cours accomplis",
+    "educationHistory": "Historique d'éducation",
+    "workExperience": "Expérience professionnelle",
+    "invalidEmail": "Email invalide",
+    "updateSuccess": "Mise à jour réussie",
+    "personalInformation": "Informations personnelles",
+    "languages": "Langues",
+    "personalProjects": "Projets personnels",
+    "skills": "Compétences",
+    "volunteering": "Bénévolat",
+    "recommendations": "Recommandations",
+    "volunteeringHistory": "Historique de bénévolat",
+    "careerJourney": "Parcours professionnel",
+
+
+    "fillFields": "Veuillez remplir tous les champs",
+    "awardUpdated": "Récompense mise à jour",
+    "awardDeleted": "Récompense supprimée",
+    "awardError": "Erreur lors de la mise à jour de la récompense",
+
+    "submitApplication": "Envoyer la candidature",
+    "name": "Nom",
+    "phone": "Téléphone",
+    "dropCV": "Déposer votre CV",
+    "orApplyHere" : "Ou postulez ici",
+    "coverLetter2": "Lettre de motivation",
+    "submit": "Envoyer",
+    "skillSwipeTeam": "2023 390 Équipe SkillSwipe. Tous les droits ne sont pas réservés",
+    "careers": "Carrières",
+    "myJobListings": "Mes offres d'emploi",
+    "logout": "Déconnexion",
+    "myAccount": "Mon compte",
+    "SignIn/Logout": "Se connecter / Se déconnecter"
       
    
  

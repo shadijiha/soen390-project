@@ -4,8 +4,10 @@ import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
 
 const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
+  const { t } = useTranslation('common')
   const { colorMode, toggleColorMode } = useColorMode()
   const input = useRef(document.createElement('input'))
   const [inputMessage, setInputMessage] = useState('')
@@ -35,7 +37,7 @@ const Footer = ({  handleSendMessage,sendMessagefile,append}) => {
         <Input
           borderRadius="10px"
           color={colorMode === 'light' ? 'black' : 'white'}
-          placeholder="Type Something..."
+          placeholder={t('chatInput')}
           onKeyPress={(e) => {
             if (e.key === 'Enter') {
               setInputMessage("");

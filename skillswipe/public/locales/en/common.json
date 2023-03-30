@@ -1,7 +1,7 @@
-{  
-   "skillSwipe": "🚀 SkillSwipe",
-   "welcome": "Welcome",
-   "signUp": "Sign Up",
+   {  
+    "skillSwipe": "🚀 SkillSwipe",
+    "welcome": "Welcome",
+    "signUp": "Sign Up",
     "signIn": "Sign In",
     "signOut": "Sign Out",
     "email": "Email",
@@ -27,32 +27,30 @@
 
     "search": "Search",
     "recent posts": "Recent Posts",
-
     "noResults": "No results found",
 
     "messages": "Messages",
     "inbox": "Inbox",
     "sent": "Sent",
     "message": "Message",
-
     "noMessages": "No new message",
 
-     "pendingRequests": "Pending Requests",
-         "new": "New",
-         "notifications": "Notifications",
-         "pleaseAddMeToYourNetwork": "Please add me to your network",
-         "ignore": "Ignore",
-         "accept": "Accept",
-         "noPendingRequests": "No pending requests",
-         "noNotifications": "No notifications",
+    "pendingRequests": "Pending Requests",
+    "new": "New",
+    "notifications": "Notifications",
+    "pleaseAddMeToYourNetwork": "Please add me to your network",
+    "ignore": "Ignore",
+    "accept": "Accept",
+    "noPendingRequests": "No pending requests",
+    "noNotifications": "No notifications",
 
-         "chatPageHeader": "Chat with {{user}}",
-         "sendMessageButton": "Send",
-         "attachFileButton": "Attach File",
-         "connectedStatusMessage": "{{user}} is connected",
-         "notConnectedStatusMessage": "{{user}} is not connected",
-         "userNotFoundMessage": "User not found",
-  
+    "chatPageHeader": "Chat with {{user}}",
+    "sendMessageButton": "Send",
+    "attachFileButton": "Attach File",
+    "connectedStatusMessage": "{{user}} is connected",
+    "notConnectedStatusMessage": "{{user}} is not connected",
+    "userNotFoundMessage": "User not found",
+
    
       "openJobs": "Open Jobs",
       "filterJobs": "Filter Jobs",
@@ -108,8 +106,6 @@
       "edit": "Edit",
       "updateCoverPicture": "Successfully Updated Cover Picture",
       "updateProfilePicture": "Successfully Updated Profile Picture",
-
-      
       "recentPosts": "Recent Posts",
 
       "fillAllFields": "Please fill all fields",
@@ -131,6 +127,58 @@
       "newMessage2": "You have a new message from John Doe",
       "newRequest": "New Friend Request",
       "newRequest2": "Please add me to your network",
+
+      "charInput": "Type something...",
+
+      "awards": "Awards",
+      "courses": "Courses",
+      "accomplishedCourses": "Accomplished Courses",
+      "educationHistory": "Education History",
+      "workExperience": "Work Experience",
+      "invalidEmail": "Invalid Email",
+      "updateSuccess": "Successfully Updated",
+      "personalInformation": "Personal Information",
+      "languages": "Languages",
+      "personalProjects": "Personal Projects",
+      "skills": "Skills",
+      "volunteering": "Volunteering",
+      "recommendations": "Recommendations",
+      "volunteeringHistory": "Volunteering History",
+      "careerJourney": "Career Journey",
+
+
+      "fillFields": "Please fill all fields",
+      "awardUpdated": "Award Updated Successfully",
+      "awardDeleted": "Award Deleted",
+      "awardError": "Error updating award",
+
+      "submitApplication": "Submit Application",
+      "name": "Name",
+      "phone": "Phone",
+      "dropCV": "Drop your CV here",
+      "orApplyHere" : "Or Apply Here",
+      "coverLetter2": "Cover Letter (Optional)",
+      "submit": "Submit",
+      "skillSwipeTeam": "2023 390 SkillSwipe Team. All rights are not reserved.",
+      "careers": "Careers",
+      "myJobListings": "My Job Listings",
+      "logout": "Logout",
+      "myAccount": "My Account",
+      "SignIn/Logout": "Sign In/Logout"
+
+      
+
+      
+
+      
+
+
+
+
+
+
+
+
 
 
       
