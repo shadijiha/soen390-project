@@ -162,6 +162,16 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
   })
 }
 
+
+
+export const removeCoverpic = async (token: any) => {
+  return axios.delete(`${URL}/user/coverPic`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+}
+
 export const search = async (token: any, query: string) => {
   return axios.get(`${URL}/search?query=${query}`, {
     headers: {

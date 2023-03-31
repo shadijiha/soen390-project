@@ -18,6 +18,7 @@ describe("JobsController", () => {
     deleteJob: jest.fn(() => {}),
     getJobById: jest.fn(() => {}),
     getAllJobs: jest.fn(() => {}),
+    getApplicationsForMyJobs: jest.fn(() => {}),
   };
 
   let mockUsersRepository = {
@@ -174,5 +175,11 @@ describe("JobsController", () => {
     } catch (e) {
       expect(e.message).toBe("Only recruiters can delete job posts");
     }
+  });
+
+  it("should get all applications for a job listing for a recruiter", async () => {
+    const bearer = await createTestBearerPayload("test@gmail.com", userRepository);
+    await controller.getApplicationsForMyJobs(bearer);
+    expect(mockJobsService.getApplicationsForMyJobs).toHaveBeenCalled();
   });
 });

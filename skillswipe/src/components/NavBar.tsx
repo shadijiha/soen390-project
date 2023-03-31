@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { changeStatus, getPendingRequest } from '@/pages/api/api'
+import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
@@ -28,6 +33,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
   const { toggleColorMode } = useColorMode()
@@ -37,6 +43,15 @@ export default function NavBar(props: any) {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
+  const [pendingConnections, setPendingConnections] = useState([
+    { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
+  ])
+  const [messageNotification, setmessageNotification]: any[] = useState([])
+  const [loading1, setloading1] = useState(null)
+  const [loading2, setloading2] = useState(null)
+  // const [load1,setload1] = useState(true);
+  // const [load2,setload2] = useState(true);
+
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -44,7 +59,6 @@ export default function NavBar(props: any) {
   }
 
   const router = useRouter()
-
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
@@ -56,8 +70,14 @@ export default function NavBar(props: any) {
   )
 
   const logout = () => {
-    if (localStorage.getItem('jwt')) {
+    const token = localStorage.getItem('jwt')
+    if (token) {
       localStorage.removeItem('jwt')
+      changeStatus('offline', token)
+        .then((response) => {})
+        .catch((error) => {
+          toast(error.message)
+        })
       toast('Successfully Logged Out')
     }
   }
@@ -86,6 +106,69 @@ export default function NavBar(props: any) {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
+
+  const getPendingConnections = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
+        .then((res) => {
+          setPendingConnections(res.data)
+          setloading2(res.data.length)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+  useEffect(() => {
+    if (currentUser.auth) {
+      getMessage()
+      getPendingConnections()
+    }
+  }, [currentUser])
+
+  const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
+    const notification: any = []
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
+
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                const notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
+              }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
+          })
+          setmessageNotification(notification)
+          setloading1(notification.length)
+        })
+      } catch (error) {
+        toast(error.message)
+      }
+    }
+  }
+
   const handleFilter = (value) => {
     // open the openJobs page
     if (value === 'option1') {
@@ -172,6 +255,13 @@ export default function NavBar(props: any) {
                 💬 ‎ Messages
               </Button>
             </NextLink>
+            {props.nbNotifications != null ? (
+              <NotificationCounter nbNotifications={props.nbNotifications} />
+            ) : loading1 != null && loading2 != null ? (
+              <NotificationCounter Notifications={loading1 + loading2} />
+            ) : (
+              <NotificationCounter Notifications={0} />
+            )}
 
             <Menu>
               <MenuButton

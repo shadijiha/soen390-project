@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger'
 import {
   BaseEntity,
   Column,
@@ -12,18 +13,23 @@ import { User } from './user.entity'
 @Entity('messages')
 export class Message extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
     id: number
 
   @Column({ length: 1028 }) // Message cannot be greater than 1028 characters
+  @ApiProperty()
     message: string
 
   @Column()
+  @ApiProperty()
     senderId: number
 
   @Column()
+  @ApiProperty()
     receiverId: number
 
   @CreateDateColumn()
+  @ApiProperty()
     created_at: Date
 
   @UpdateDateColumn()
