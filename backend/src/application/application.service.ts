@@ -4,7 +4,7 @@ import { Application } from '../models/application.entity'
 import { Job } from '../models/job.entity'
 import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
-import { type Applications } from './application.types'
+import { type Applications } from './applications.types'
 
 @Injectable()
 export class ApplicationService {

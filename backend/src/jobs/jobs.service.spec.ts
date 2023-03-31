@@ -169,6 +169,10 @@ describe("JobsService", () => {
     } catch (e) {
       expect(e.message).toBe("Not Found");
     }
+  });
 
+  it("should get all jobs with their applications", async () => {
+    await service.getApplicationsForMyJobs(1);
+    expect(mockjobsRepository.find).toHaveBeenCalled();
   });
 });

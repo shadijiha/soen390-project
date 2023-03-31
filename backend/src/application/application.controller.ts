@@ -7,7 +7,7 @@ import { type User } from '../models/user.entity'
 import { ApplicationFileValidationPipe } from '../util/fileValidationPipe'
 import { AuthUser, BearerPayload } from '../util/util'
 import { ApplicationService } from './application.service'
-import { Applications } from './application.types'
+import { Applications } from './applications.types'
 
 @Controller('application')
 @ApiTags('Application')
