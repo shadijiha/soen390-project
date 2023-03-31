@@ -91,6 +91,7 @@ const Home = () => {
                   width: '60%',
                   display: 'block',
                   margin: 'auto',
+                  minWidth: '50vw',
                   backgroundColor: 'transparent',
                 }}
               />
