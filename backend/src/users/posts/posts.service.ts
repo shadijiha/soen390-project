@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Post } from "src/models/post.entity";
-import { BearerPayload } from "src/util/util";
+import { Post } from "../../models/post.entity";
+import { BearerPayload } from "../../util/util";
 import { In, Repository } from "typeorm";
 import { ConnectionsService } from "../connections/connections.service";
 import { Posts } from "./posts.types";
@@ -29,7 +29,7 @@ export class PostsService {
       _post.image = base64data;
     }
 
-    _post.save().then((post) => {
+    this.postRepository.save(_post).then((post) => {
       return "Post saved";
     });
   }
