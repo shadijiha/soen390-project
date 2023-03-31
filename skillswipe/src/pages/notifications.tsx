@@ -12,6 +12,7 @@ import {
   Text,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -25,22 +26,34 @@ import { useRouter } from 'next/router'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
 
+import { getAllConversation, getConversationById } from './api/chat'
+
+
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
+  const [messageNotification, setmessageNotification] = useState([])
   const currentUser = useSelector((state) => state as any)
-  
+  const router = useRouter()
+  const [loading1, setloading1] = useState(0)
+  const [loading2, setloading2] = useState(0)
+
   useEffect(() => {
     getPendingConnections()
-    const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null';
+    getMessage()
+    const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
       cluster: PUSHER_APP_CLUSTER,
-    });
-    var channel = pusher.subscribe(`user-${currentUser.auth.id}`);
-    channel.bind('friend-request', function(data) {
-        addRequest()
-    });
+    })
+    var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
+    channel.bind('friend-request', function (data) {
+
+      addRequest()
+    })
+    channel.bind('message-notification', function (data) {
+      getMessage()
+    })
   }, [currentUser])
 
   const notifications = [
@@ -66,6 +79,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       getPendingRequest(token)
         .then((res) => {
           setPendingConnections(res.data)
+          setloading2(res.data.length);
         })
         .catch((err) => {
           toast.error(err)
@@ -96,8 +110,14 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         .then((res) => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
+
           )
           toast.success(t('requestAccepted'))
+
+            )
+            
+          toast.success('Request Accepted')
+
         })
         .catch((err) => {
           toast.error(err)
@@ -111,11 +131,53 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const { t } = useTranslation('common')
 
 
+  const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
+    var notification: any = []
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
+
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                var notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
+              }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
+          })
+          setloading1(notification.length);
+          setmessageNotification(notification)
+        })
+      } catch (error) {
+        toast(error.message)
+      }
+    }
+  }
+
   return (
     <>
       <Layout>
         <NavBar
-          nbNotifications={pendingConnections.length}
+          nbNotifications={pendingConnections.length + messageNotification.length}
           addRequest={addRequest}
         ></NavBar>
         <Box p={4}>
@@ -182,10 +244,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
            
             {t('notifications')}
           </Heading>
-          {notifications.length > 0 ? (
-            notifications.map((notification) => (
+          {messageNotification.length > 0 ? (
+            messageNotification.map((notification: any, index) => (
               <Flex
-                key={notification.id}
+                key={index}
                 borderWidth="1px"
                 borderRadius="lg"
                 p={4}
@@ -194,16 +256,34 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 alignItems="center"
               >
                 <Flex>
-                  <Avatar size="lg" mr={4} src={notification.avatar} />
+                  <Avatar
+                    size="lg"
+                    mr={4}
+                    src={
+                      notification.profilePic
+                        ? `data:image/jpeg;base64,${notification.profilePic}`
+                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                    }
+                  />
                   <Box>
-                    <Heading as="h2" size="md" mb={2}>
-                      {notification.title}{' '}
+                    <Heading
+                      as="h2"
+                      size="md"
+                      mb={2}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        router.push(`/inbox/${notification.id}`)
+                      }}
+                    >
+                      {`${notification.firstName} ${notification.lastName}`}{' '}
                       <Badge ml="1" colorScheme="green">
                         {t("new")}
                       </Badge>
                     </Heading>
-                    <Text mb={2}>{notification.description}</Text>
-                    <Text fontSize="sm">{notification.timestamp}</Text>
+                    <Text
+                      mb={2}
+                    >{`You have a new message from ${notification.firstName} ${notification.lastName}`}</Text>
+                    <Text fontSize="sm">{notification.created_at}</Text>
                   </Box>
                 </Flex>
               </Flex>
