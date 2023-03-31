@@ -199,7 +199,13 @@ const Home = () => {
                       <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                         {post.id}
                       </Text>
-                      <Text>{formatDate(post.created_at)}</Text>{' '}
+                      <Text
+                        style={{
+                          opacity: '0.5',
+                        }}
+                      >
+                        {formatDate(post.created_at)}
+                      </Text>{' '}
                     </HStack>
                     <Text>{post.content}</Text>
                     <Text>{}</Text>
