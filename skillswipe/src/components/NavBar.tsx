@@ -334,31 +334,7 @@ export default function NavBar(props: any) {
                 </MenuItem>
               </MenuList>
             </Menu>
-            <NextLink href="/notifications" passHref>
-              <div style={{ position: 'relative' }}>
-                <IconButton
-                  aria-label="Notifications"
-                  icon={<BellIcon />}
-                  variant="ghost"
-                  size="lg"
-                  w="100%"
-                  my={4}
-                  rounded={'full'}
-                  marginRight={'10px'}
-                ></IconButton>
-                <Badge
-                  colorScheme="red"
-                  borderRadius="full"
-                  px="2"
-                  position="absolute"
-                  top="20px"
-                  right="0"
-                  marginRight={'5px'}
-                >
-                  {props.nbNotifications}
-                </Badge>
-              </div>
-            </NextLink>
+
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
