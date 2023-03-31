@@ -153,10 +153,10 @@ const Home = () => {
               </Button>
             </HStack>
             <Heading
-              paddingBottom={5}
+              paddingBottom={0}
               style={{
                 fontSize: '1.5rem',
-                fontWeight: '300',
+                fontWeight: '500',
               }}
             >
               Recent Posts
