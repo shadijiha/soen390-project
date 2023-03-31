@@ -2,6 +2,7 @@ import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
 import {
+  Avatar,
   background,
   Box,
   Button,
@@ -19,6 +20,7 @@ import {
   Text,
   Textarea,
   useColorModeValue,
+  VStack,
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -195,20 +197,49 @@ const Home = () => {
                     minW="80vw"
                     maxW="90vw"
                   >
-                    <HStack display={'flex'} justifyContent={'space-between'}>
-                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                        {post.id}
-                      </Text>
+                    <HStack
+                      spacing={6}
+                      flexDirection={'row'}
+                      alignItems={'center'}
+                      width={'100%'}
+                    >
+                      <Avatar
+                        size="sm"
+                        name="Dan Abrahmov"
+                        src="https://bit.ly/broken-link"
+                        marginTop={'-20px'}
+                      />
                       <Text
+                        flex={1}
                         style={{
-                          opacity: '0.5',
+                          fontWeight: 'bold',
+                          marginTop: '-20px',
+                          marginLeft: '10px',
                         }}
                       >
-                        {formatDate(post.created_at)}
-                      </Text>{' '}
+                        {User.auth.firstName} {User.auth.lastName}
+                      </Text>
+                      <VStack alignItems={'flex-end'}>
+                        <Text
+                          style={{
+                            opacity: '0.5',
+                          }}
+                        >
+                          {formatDate(post.created_at)}
+                        </Text>
+                        <Button
+                          colorScheme="red"
+                          size="sm"
+                          borderRadius="50px"
+                          style={{
+                            marginTop: '0.5rem',
+                          }}
+                        >
+                          Report
+                        </Button>
+                      </VStack>
                     </HStack>
                     <Text>{post.content}</Text>
-                    <Text>{}</Text>
                   </Box>
                 </ListItem>
               ))}
