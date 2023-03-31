@@ -205,7 +205,7 @@ const Home = () => {
                     >
                       <Avatar
                         size="sm"
-                        name="Dan Abrahmov"
+                        name={User.auth.firstName + User.auth.lastName}
                         src="https://bit.ly/broken-link"
                         marginTop={'-20px'}
                       />
