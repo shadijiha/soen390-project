@@ -30,7 +30,8 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import router from 'next/router'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useDropzone } from 'react-dropzone'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
@@ -48,7 +49,53 @@ interface JobAttributes {
   coverLetter: false | true
   transcript: false | true
 }
+
 const Home = () => {
+  const FileDropzone = () => {
+    const onDrop = useCallback((acceptedFiles) => {
+      // Handle files here
+      console.log(acceptedFiles)
+    }, [])
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+    return (
+      <div
+        {...getRootProps()}
+        style={{
+          backgroundColor: 'transparent',
+          border: useColorModeValue('1px dashed #26262673', '1px dashed #FFFFFF78'),
+          borderWidth: '1px',
+          borderRadius: '20px',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+        }}
+      >
+        <input {...getInputProps()} />
+        <VStack
+          direction={'column'}
+          flex={1}
+          alignContent={'center'}
+          padding={'10px'}
+        >
+          <p
+            style={{
+              color: useColorModeValue('gray.500', 'gray.400'),
+              textAlign: 'center',
+            }}
+          >
+            Drag and drop image here or click to browse
+          </p>
+          <img
+            src="https://img.icons8.com/cute-clipart/512/image-file.png"
+            alt="upload"
+            width="50px"
+            height="50px"
+          />
+        </VStack>
+      </div>
+    )
+  }
   const formatDate = (dateString) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -159,7 +206,7 @@ const Home = () => {
                 fontWeight: '500',
               }}
             >
-              Recent Posts
+              🏠 Recent Posts
             </Heading>
 
             <div
@@ -208,6 +255,9 @@ const Home = () => {
                         resize: 'none',
                       }}
                     />
+                    <Box style={{ marginTop: '1rem' }} height="100px">
+                      <FileDropzone />
+                    </Box>
                   </ModalBody>
                   <ModalFooter>
                     <Button
@@ -290,7 +340,6 @@ const Home = () => {
                 </List>
               </Box>
               <Box width={'30%'} display={{ base: 'none', md: 'block' }}>
-                {' '}
                 <Text
                   style={{
                     fontSize: '1.2rem',
