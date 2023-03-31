@@ -1,9 +1,9 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { ApiProperty } from '@nestjs/swagger'
 
 export namespace Posts {
   export class CreatePostDto {
     @ApiProperty({ required: true })
-    content: string;
+      content: string
 
     @ApiProperty({
       type: 'file',

@@ -10,8 +10,8 @@ import { NotificationsController } from './notifications/notifications.controlle
 import { NotificationsService } from './notifications/notifications.service'
 import { PusherService } from '../util/pusher/pusher.service'
 import { Job } from '../models/job.entity'
-import { PostsController } from './posts/posts.controller';
-import { PostsService } from './posts/posts.service';
+import { PostsController } from './posts/posts.controller'
+import { PostsService } from './posts/posts.service'
 import { Post } from '../models/post.entity'
 
 @Module({

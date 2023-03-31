@@ -74,7 +74,7 @@ export class ApplicationFileValidationPipe implements PipeTransform {
 export class PostImageValidationPipe implements PipeTransform {
   async transform (files: {
     image?: Express.Multer.File
-  }): Promise<{ image?: Express.Multer.File | undefined}> {
+  }): Promise<{ image?: Express.Multer.File | undefined }> {
     const maxSize = 5 * 1024 * 1024 // 5 MB
     const profilePic: Express.Multer.File = files?.image != null ? files.image[0] : null
     const images: Express.Multer.File[] = []
@@ -82,7 +82,7 @@ export class PostImageValidationPipe implements PipeTransform {
     if (profilePic != null) images.push(profilePic)
 
     for (const image of images) {
-      if (!image.mimetype.startsWith('image/'))  throw new BadRequestException(`Invalid file type: ${image.mimetype}`)
+      if (!image.mimetype.startsWith('image/')) throw new BadRequestException(`Invalid file type: ${image.mimetype}`)
       if (image.size > maxSize) throw new BadRequestException(`File size too large: ${image.size}`)
     }
 

@@ -28,7 +28,7 @@ describe("PostsService", () => {
   let mockUsersRepository = {
     findOne: jest.fn((x) => {
       if (x.where.email == "") return null;
-      if (x.where.email == "test@gmail.com") return { id: 1, type: "user", jobs: [] };
+      if (x.where.email == "roger@gmail.com") return { id: 1, type: "user", jobs: [] };
     }),
   };
 
@@ -70,7 +70,7 @@ describe("PostsService", () => {
   });
 
   it("should create a post", async () => {
-    const bearer = await createTestBearerPayload("test@gmail.com", userRepository);
+    const bearer = await createTestBearerPayload("roger@gmail.com", userRepository);
     const post: Posts.CreatePostDto = {
       content: "test",
     } as Posts.CreatePostDto;
