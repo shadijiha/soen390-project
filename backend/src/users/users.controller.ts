@@ -1,3 +1,5 @@
+/* It's a controller that handles all the user related endpoints */
+/* It's a controller that handles all the user related endpoints */
 import { BadRequestException, Controller, Delete, Get, HttpException, HttpStatus } from '@nestjs/common'
 import { Body, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
 import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
@@ -18,12 +20,14 @@ import type Pusher from 'pusher'
 export class UsersController {
   constructor (private readonly usersService: UsersService, private readonly connectionsService: ConnectionsService) {}
 
+  /* It's a controller that returns all users */
   @Get('users')
   @ApiResponse({ type: Users.GetAllUsersResponse })
   async findAll (): Promise<User[]> {
     return await this.usersService.findAll()
   }
 
+  /* It's a controller that returns a user by id. */
   @Get('user/:id')
   @ApiResponse({ type: Users.GetUserByIdResponse })
   async findOne (@Param('id') id: number, @AuthUser() authedUser: BearerPayload): Promise<Users.GetUserByIdResponse> {
@@ -39,6 +43,7 @@ export class UsersController {
     }
   }
 
+  /* It's a controller that deletes a user. */
   @Delete('user')
   async remove (@AuthUser() authedUser: BearerPayload): Promise<void> {
     try {
@@ -48,6 +53,7 @@ export class UsersController {
     }
   }
 
+  /* It's a controller that returns a user or a job listing according to search query. */
   @Get('search')
   @ApiQuery({ name: 'query', required: true })
   public async search (@AuthUser() authedUser: BearerPayload, @Query('query') query: string): Promise<Users.SearchResponse> {
@@ -55,6 +61,7 @@ export class UsersController {
     return await this.usersService.search(await authedUser.getUser(), query)
   }
 
+  /* It's a controller that updates a user. */
   @Put('user')
   @ApiConsumes('multipart/form-data')
   @ApiResponse({ type: Users.UpdateUserResponse })
@@ -72,6 +79,19 @@ export class UsersController {
     return await this.usersService.update(authedUser.id, user, files)
   }
 
+  /* It's a controller that deletes a user's profile picture. */
+  @Delete('user/profilePic')
+  async removeProfilePic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeProfilePic(authedUser.id)
+  }
+
+  /* It's a controller that deletes a user's cover picture. */
+  @Delete('user/coverPic')
+  async removeCoverPic (@AuthUser() authedUser: BearerPayload): Promise<void> {
+    await this.usersService.removeCoverPic(authedUser.id)
+  }
+
+  /* It's a controller that updates a user's status. Online/Offline */
   @Put('user/status')
   async updateStatus (@AuthUser() authedUser: BearerPayload, @Body() status: Users.UpdateStatusRequest): Promise<Pusher.Response> {
     if (status.userStatus !== 'online' && status.userStatus !== 'offline') {
@@ -80,11 +100,13 @@ export class UsersController {
     return await this.usersService.updateStatus(authedUser.id, status.userStatus)
   }
 
+  /* It's a controller that returns a user's status. Online/Offline */
   @Get('user/status/:id')
   async getStatus (@AuthUser() authedUser: BearerPayload, @Param('id') id: string): Promise<'online' | 'offline'> {
     return await this.usersService.getStatus(parseInt(id))
   }
 
+  /* It's a controller that adds a cv and/or cover letter documents. */
   @Post('user/documents')
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -102,6 +124,7 @@ export class UsersController {
     await this.usersService.addDocuments(user, files)
   }
 
+  /* It's a controller that deletes a user's cv and/or cover letter documents. */
   @Delete('user/documents')
   async removeDocuments (@AuthUser() authedUser: BearerPayload, @Body() data: Users.DeleteDocumentsRequest): Promise<void> {
     const user = (await authedUser.getUser()) as User

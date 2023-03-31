@@ -18,6 +18,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Stack,
   useColorModeValue,
   VStack,
@@ -26,6 +27,7 @@ import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { BsFilter } from 'react-icons/bs'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
 
@@ -91,12 +93,35 @@ const myListings = () => {
 
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
-
+  const [profile] = useState({
+    name: 'John Smith',
+    title: 'Software Engineer',
+    location: 'Montreal, QC, CA',
+    school: 'Concordia University',
+    experience: 'Five years of experience in full stack development',
+    experience2: 'Three years of experience in mobile development',
+    experience3: 'Two years of experience in data analysis',
+    image:
+      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
+    cover:
+      'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
+  })
+  const [Pic, setPic] = useState({
+    profilePic: '',
+    coverPic: '',
+  })
+  const currentUser = useSelector((state) => state as any)
+  useEffect(() => {
+    setPic({
+      coverPic: currentUser.auth.coverPic,
+      profilePic: currentUser.auth.profilePic,
+    })
+  }, [currentUser])
   return (
     <>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        <Container maxW="5xl" p={{ base: 10, md: 0 }} data-testid="myListings">
           <Flex justify="left" mb={3}>
             <HStack
               style={{
@@ -104,14 +129,31 @@ const myListings = () => {
                 justifyContent: 'space-between',
               }}
             >
+              {/* a profile picture image here */}
+              <img
+                src={
+                  Pic.profilePic
+                    ? `data:image/jpeg;base64,${Pic.profilePic}`
+                    : profile.image
+                }
+                alt="Segun Adebayo"
+                style={{
+                  width: '60px',
+                  height: '60px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  marginRight: '1em',
+                }}
+              />
               <chakra.h3
                 fontSize="4xl"
                 fontWeight="bold"
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                user profile pic here ‎ My Listings
+                My Listings
               </chakra.h3>
+              <Spacer />
               <Menu>
                 <MenuButton
                   as={Button}

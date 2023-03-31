@@ -45,8 +45,7 @@ interface JobAttributes {
 
 const findJob = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [initialJobListing, setInitalJobListing] =  useState<JobAttributes[]>([])
-  
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -61,7 +60,6 @@ const findJob = () => {
         // Update state with fetched data
         setInitalJobListing(response.data)
         setJobListing(response.data)
-        
       } catch (error) {
         console.error(error)
         toast.error('Error getting jobs')
@@ -73,51 +71,63 @@ const findJob = () => {
   const handleFilter = (value) => {
     switch (value) {
       case 'option1':
-        setJobListing([...jobListing].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()))
+        setJobListing(
+          [...jobListing].sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          )
+        )
         break
       case 'option2':
-        setJobListing([...jobListing].sort((a, b) => parseFloat(b.salary) - parseFloat(a.salary)))
+        setJobListing(
+          [...jobListing].sort((a, b) => parseFloat(b.salary) - parseFloat(a.salary))
+        )
         break
       default:
         break
     }
   }
 
-  
   function handleCheckboxChange(event) {
-    const isChecked = event.target.checked;
-    const filterValue = event.target.value;
-    
-    let filteredJobs = [...jobListing];
-  
+    const isChecked = event.target.checked
+    const filterValue = event.target.value
+
+    let filteredJobs = [...jobListing]
+
     if (isChecked) {
-      console.log('Filtering ...');
+      console.log('Filtering ...')
       switch (filterValue) {
         case 'full-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'full-time' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('full-time' as string)
+          )
+          break
         case 'part-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'part-time' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('part-time' as string)
+          )
+          break
         case 'contract':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'contract' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('contract' as string)
+          )
+          break
         case 'other':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'other' as string );
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('other' as string)
+          )
+          break
 
         default:
-            break;
-        }
-    }else{
-      console.log('Resetting ...');
-      filteredJobs = initialJobListing;
+          break
+      }
+    } else {
+      console.log('Resetting ...')
+      filteredJobs = initialJobListing
     }
-  
-    setJobListing(filteredJobs);
-  }
-  
 
+    setJobListing(filteredJobs)
+  }
 
   const [checkedItems, setCheckedItems] = React.useState([
     false,
@@ -173,7 +183,7 @@ const findJob = () => {
                     paddingBottom={1}
                     isChecked={allChecked}
                     isIndeterminate={isIndeterminate}
-                    onChange={(e) =>{
+                    onChange={(e) => {
                       setCheckedItems([
                         e.target.checked,
                         e.target.checked,
@@ -188,8 +198,8 @@ const findJob = () => {
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
                       isChecked={checkedItems[0]}
-                      value = "full-time"
-                      onChange={(e) =>{
+                      value="full-time"
+                      onChange={(e) => {
                         setCheckedItems([
                           e.target.checked,
                           checkedItems[1],
@@ -203,8 +213,8 @@ const findJob = () => {
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[1]}
-                      value = "part-time"
-                    onChange={(e) =>{
+                      value="part-time"
+                      onChange={(e) => {
                         setCheckedItems([
                           checkedItems[0],
                           e.target.checked,
@@ -213,7 +223,6 @@ const findJob = () => {
                         ])
                         handleCheckboxChange(e)
                       }}
-                    
                     >
                       Part Time
                     </Checkbox>
@@ -225,9 +234,9 @@ const findJob = () => {
                           checkedItems[1],
                           e.target.checked,
                           checkedItems[3],
-                        ]) 
-                        handleCheckboxChange(e)}
-                      }
+                        ])
+                        handleCheckboxChange(e)
+                      }}
                       value="contract"
                     >
                       Contract
@@ -242,8 +251,7 @@ const findJob = () => {
                           e.target.checked,
                         ])
                         handleCheckboxChange(e)
-                      }
-                      }
+                      }}
                       value="other"
                     >
                       Other

@@ -1,9 +1,4 @@
-import {
-  ChevronDownIcon,
-  BellIcon, CloseIcon,
-  HamburgerIcon,
-  SearchIcon,
-} from '@chakra-ui/icons'
+import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -19,7 +14,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Select,
   Text,
   useColorMode,
   useColorModeValue,
@@ -36,7 +30,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 
 export default function NavBar(props: any) {
-  const { colorMode, toggleColorMode } = useColorMode()
+  const { toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
@@ -68,10 +62,7 @@ export default function NavBar(props: any) {
     }
   }
 
-  const [showDropdown1, setShowDropdown1] = useState(false)
-  const [showDropdown2, setShowDropdown2] = useState(false)
-
-  const [profile, setProfile] = useState({
+  const [profile] = useState({
     name: 'John Smith',
     title: 'Software Engineer',
     location: 'Montreal, QC, CA',
@@ -94,7 +85,6 @@ export default function NavBar(props: any) {
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
     })
-    
   }, [currentUser])
   const handleFilter = (value) => {
     // open the openJobs page
@@ -109,10 +99,12 @@ export default function NavBar(props: any) {
     if (value === 'option3') {
       router.push('/postJob')
     }
+
+    if (value === 'option4') {
+      router.push('/myApplications')
+    }
   }
 
- 
-  
   return (
     <Box as="nav" p={15} w="100%" pt={'0px'} data-testid="Nav-Bar">
       <Flex paddingBottom={'7em'}>
@@ -138,7 +130,7 @@ export default function NavBar(props: any) {
               router.push('/')
             }}
           >
-            🚀 SkillSwipe
+            SkillSwipe
           </Text>
           <NextLink href="#">
             <Button
@@ -165,7 +157,7 @@ export default function NavBar(props: any) {
                 variant="ghost"
                 rounded={'full'}
               >
-                Home
+                🏠 ‎ Home
               </Button>
             </NextLink>
 
@@ -177,33 +169,10 @@ export default function NavBar(props: any) {
                 w="100%"
                 rounded={'full'}
               >
-                Messages
+                💬 ‎ Messages
               </Button>
             </NextLink>
 
-            <NextLink href="/notifications" passHref>
-              <div style={{position: 'relative'}}>
-              <IconButton
-                aria-label="Notifications"
-                icon={<BellIcon />}
-                variant="ghost"
-                size="lg"
-                w="100%"
-                my={5}
-              ></IconButton>
-              <Badge
-                colorScheme="red"
-                borderRadius="full"
-                px="2"
-                position="absolute"
-                top="20px"
-                right="0"
-              >
-                {props.nbNotifications}
-              </Badge>
-              </div>
-
-            </NextLink>
             <Menu>
               <MenuButton
                 as={Button}
@@ -215,7 +184,7 @@ export default function NavBar(props: any) {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                Careers
+                🚀 ‎ Careers
               </MenuButton>
               <MenuList
                 style={{
@@ -232,7 +201,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Open Jobs
+                  💼 ‎ Open Jobs
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -245,7 +214,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  My Job Listings
+                  📂 ‎ My Job Listings
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -258,10 +227,48 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Create a Job Listing
+                  📝 ‎ Create a Job Listing
+                </MenuItem>
+                <MenuItem
+                  onClick={() => handleFilter('option4')}
+                  backgroundColor="transparent"
+                  style={{
+                    borderRadius: '10px',
+                  }}
+                  _hover={{
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.03)',
+                  }}
+                >
+                  📈 ‎ My Job Applications
                 </MenuItem>
               </MenuList>
             </Menu>
+            <NextLink href="/notifications" passHref>
+              <div style={{ position: 'relative' }}>
+                <IconButton
+                  aria-label="Notifications"
+                  icon={<BellIcon />}
+                  variant="ghost"
+                  size="lg"
+                  w="100%"
+                  my={4}
+                  rounded={'full'}
+                  marginRight={'10px'}
+                ></IconButton>
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  px="2"
+                  position="absolute"
+                  top="20px"
+                  right="0"
+                  marginRight={'5px'}
+                >
+                  {props.nbNotifications}
+                </Badge>
+              </div>
+            </NextLink>
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
@@ -387,6 +394,9 @@ export default function NavBar(props: any) {
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
                   Create a Job Listing
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option4')}>
+                  My Job Applications
                 </MenuItem>
               </MenuList>
             </Menu>

@@ -6,9 +6,10 @@ import { UsersService } from '../users/users.service'
 import { Message } from '../models/message.entity'
 import { ChatController } from './chat.controller'
 import { ChatService } from './chat.service'
+import { UploadedFileDB } from '../models/file.entity'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Message, User, Job])],
+  imports: [TypeOrmModule.forFeature([Message, User, Job, UploadedFileDB])],
   controllers: [ChatController],
   providers: [ChatService, UsersService]
 })
