@@ -77,11 +77,6 @@ const MobileSearchBar = () =>{
     )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default MobileSearchBar
 
 function setSearchTerm(event: { target: { value: SetStateAction<string>; }; }) {

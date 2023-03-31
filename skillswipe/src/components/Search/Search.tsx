@@ -88,11 +88,6 @@ const Search = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default Search
 
 function setSearchTerm(value: SetStateAction<string>) {

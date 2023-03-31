@@ -27,14 +27,12 @@
 
     "search": "Search",
     "recent posts": "Recent Posts",
-
     "noResults": "No results found",
 
     "messages": "Messages",
     "inbox": "Inbox",
     "sent": "Sent",
     "message": "Message",
-
     "noMessages": "No new message",
 
      "pendingRequests": "Pending Requests",
@@ -108,8 +106,6 @@
       "edit": "Edit",
       "updateCoverPicture": "Successfully Updated Cover Picture",
       "updateProfilePicture": "Successfully Updated Profile Picture",
-
-      
       "recentPosts": "Recent Posts",
 
       "fillAllFields": "Please fill all fields",
@@ -131,7 +127,6 @@
       "newMessage2": "You have a new message from John Doe",
       "newRequest": "New Friend Request",
       "newRequest2": "Please add me to your network",
-
       "charInput": "Type something...",
 
       "awards": "Awards",
@@ -146,6 +141,10 @@
       "personalProjects": "Personal Projects",
       "skills": "Skills",
       "volunteering": "Volunteering",
+      "recommendations": "Recommendations",
+    "volunteeringHistory": "Volunteering History",
+    "careerJourney": "Career Journey",
+
 
       "fillFields": "Please fill all fields",
       "awardUpdated": "Award Updated Successfully",
@@ -196,27 +195,7 @@
       "intermediate": "Intermediate",
       "advanced": "Advanced",
       "native": "Native"
-      
-
-
-     
-
-
-
-
-
-
-      
-
-      
-
-
-
-
-
-
-
-
+   
 
 
       

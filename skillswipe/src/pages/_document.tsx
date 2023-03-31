@@ -14,7 +14,7 @@ type Props = DocumentProps & {
 class MyDocument extends Document<Props> {
   render () {
     const currentLocale = this.props.locale
-    const {} = i18nextConfig.i18n
+    const { i18n } = i18nextConfig
 
     return (
       <Html lang={currentLocale}>
@@ -27,5 +27,7 @@ class MyDocument extends Document<Props> {
     )
   }
 }
+
+  
 
 export default MyDocument

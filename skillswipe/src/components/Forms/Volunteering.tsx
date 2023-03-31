@@ -232,9 +232,4 @@ const Volunteering = (props: any) => {
     </Box>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default Volunteering

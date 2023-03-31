@@ -66,9 +66,4 @@ const Volunteering = ({ volunteer }: any) => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default Volunteering

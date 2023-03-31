@@ -498,7 +498,3 @@ const selectLanguage = (lng) => {
     </Box>
   );
 }
-
-
-
-

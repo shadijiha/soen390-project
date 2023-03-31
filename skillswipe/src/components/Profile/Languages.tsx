@@ -69,10 +69,4 @@ const Languages = ({ languages }: any) => {
     )
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default Languages

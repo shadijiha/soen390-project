@@ -10,10 +10,8 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import React from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
@@ -77,7 +75,7 @@ const Card = (props: any) => {
   }
 
   const handleImageError = (self) => {
-    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png';
+    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png'
     console.log('Error loading logo image')
   }
 
@@ -187,9 +185,4 @@ const EmptyCard = () => {
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 export default WorkExperience

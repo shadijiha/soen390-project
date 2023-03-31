@@ -14,6 +14,10 @@ import InformationBox from '@/components/EditProfile/InformationBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { useTranslation, withTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSideProps } from 'next'
+
+
 
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'
@@ -273,6 +277,11 @@ const EditProfile = () => {
     </>
   )
 }
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default withTranslation('common')(EditProfile)
 

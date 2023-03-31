@@ -17,9 +17,11 @@ import {
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useTranslation } from 'next-i18next'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSideProps } from 'next'
 
 const Inbox = () => {
   const {t} = useTranslation ('common')
@@ -96,5 +98,10 @@ const Inbox = () => {
     </>
   )
 }
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})  
 
 export default Inbox

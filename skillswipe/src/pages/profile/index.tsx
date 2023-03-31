@@ -22,6 +22,9 @@ import Education from '../../components/Profile/education'
 import Languages from '../../components/Profile/Languages'
 
 import { useTranslation } from 'next-i18next' 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSideProps } from 'next'
+
 
 const Profile = () => {
 
@@ -163,7 +166,7 @@ const Profile = () => {
                       router.push('/profile/editProfile')
                     }}
                   >
-                    {t("edit")}
+                    {t('edit')}
                   </button>
                 </div>
               </div>
@@ -261,5 +264,9 @@ const Profile = () => {
     </>
   )
 }
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 export default Profile
