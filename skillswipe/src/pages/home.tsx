@@ -1,15 +1,34 @@
-import { Button, Heading, Textarea, useColorModeValue } from '@chakra-ui/react'
-import TextareaAutosize from 'react-textarea-autosize'
-
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, List, ListItem, Text } from '@chakra-ui/react'
+import styles from '@/styles/modal.module.css'
+import {
+  background,
+  Box,
+  Button,
+  Heading,
+  HStack,
+  List,
+  ListItem,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+  Textarea,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
 import { createPosts, getPosts } from './api/api'
 
 const Home = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const onClose = () => setIsOpen(false)
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
   const toggleTheme = useColorModeValue('🌙', '💡')
@@ -69,44 +88,71 @@ const Home = () => {
         >
           <Box>
             <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
-            <Heading
-              paddingBottom={5}
-              style={{
-                fontSize: '1.5rem',
-                fontWeight: '300',
-              }}
-            >
-              Recent Posts
-            </Heading>
-            <div style={{ marginBottom: '3rem' }}>
-              <TextareaAutosize
-                placeholder={'Type anything ...'}
-                onChange={handlepost}
-                id="creat-box"
-                minRows={2}
+            <HStack>
+              <Heading
+                paddingBottom={5}
                 style={{
-                  border: '1px solid #E2E8F068',
-                  borderRadius: '18px',
-                  padding: '1rem',
-                  width: '60%',
-                  display: 'block',
-                  margin: 'auto',
-                  minWidth: '50vw',
-                  backgroundColor: 'transparent',
-                }}
-              />
-
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginTop: '1rem',
+                  fontSize: '1.5rem',
+                  fontWeight: '300',
                 }}
               >
-                <Button mt={'1rem'} onClick={createPostHandler}>
-                  Create Post
-                </Button>
-              </div>
+                Recent Posts
+              </Heading>
+              <Button onClick={() => setIsOpen(true)}>Create Post</Button>
+            </HStack>
+            <div style={{ marginBottom: '3rem' }}></div>
+
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '1rem',
+              }}
+            >
+              <Modal isOpen={isOpen} onClose={onClose}>
+                <ModalOverlay className={styles.blurred} />
+                <ModalContent
+                  margin={'auto'}
+                  borderRadius="25px"
+                  padding={'1em'}
+                  borderColor={formBorder}
+                  backgroundColor={postBackground}
+                  borderWidth="2px"
+                  display={'flex'}
+                  flexDirection={'column'}
+                  justifyContent={'space-between'}
+                  minWidth={'50%'}
+                >
+                  <ModalHeader>Create a Post</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <TextareaAutosize
+                      placeholder={'Type anything ...'}
+                      onChange={handlepost}
+                      id="creat-box"
+                      minRows={2}
+                      style={{
+                        border: '0px solid #E2E8F00D',
+                        borderRadius: '18px',
+                        padding: '1rem',
+                        width: '100%',
+                        display: 'block',
+                        margin: 'auto',
+                        backgroundColor: 'transparent',
+                        resize: 'none',
+                      }}
+                    />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="blue" mr={3} onClick={createPostHandler}>
+                      Post
+                    </Button>
+                    <Button variant="ghost" onClick={onClose}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </div>
 
             <List>
