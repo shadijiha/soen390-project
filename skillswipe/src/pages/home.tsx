@@ -183,9 +183,12 @@ const Home = () => {
                     minW="80vw"
                     maxW="90vw"
                   >
-                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
-                      {post.id}
-                    </Text>
+                    <HStack display={'flex'} justifyContent={'space-between'}>
+                      <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
+                        {post.id}
+                      </Text>
+                      <Text>{post.created_at}</Text>
+                    </HStack>
                     <Text>{post.content}</Text>
                     <Text>{}</Text>
                   </Box>
