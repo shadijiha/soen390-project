@@ -333,6 +333,17 @@ const Home = () => {
                           <chakra.h2 fontWeight="bold" fontSize="md">
                             {job.companyName}
                           </chakra.h2>
+                          {/* quick apply job button */}
+                          <Button
+                            colorScheme="blue"
+                            size="sm"
+                            borderRadius="50px"
+                            onClick={() => {
+                              router.push(`/jobListing/${job.id}`)
+                            }}
+                          >
+                            Quick Apply
+                          </Button>
                         </HStack>
 
                         <chakra.h3
@@ -346,6 +357,7 @@ const Home = () => {
                         >
                           {job.jobTitle}
                         </chakra.h3>
+
                         <div
                           style={{
                             paddingTop: '0.5em',
