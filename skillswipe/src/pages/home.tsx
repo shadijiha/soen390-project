@@ -27,6 +27,19 @@ import { toast } from 'react-toastify'
 import { createPosts, getPosts } from './api/api'
 
 const Home = () => {
+  const formatDate = (dateString) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZoneName: 'short',
+    }
+
+    const date = new Date(dateString)
+    return new Intl.DateTimeFormat('en-US', options).format(date)
+  }
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
   const formBorder = useColorModeValue('gray.100', 'gray.600')
@@ -187,7 +200,7 @@ const Home = () => {
                       <Text style={{ fontWeight: 'bold', fontSize: 20 }}>
                         {post.id}
                       </Text>
-                      <Text>{post.created_at}</Text>
+                      <Text>{formatDate(post.created_at)}</Text>{' '}
                     </HStack>
                     <Text>{post.content}</Text>
                     <Text>{}</Text>
