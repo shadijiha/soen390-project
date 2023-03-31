@@ -16,12 +16,24 @@ const Messages = ({ messages, user }) => {
       {messages.map((item, index) => {
         var data = false
         var file = {ext: '', link: '', name: '',size : 0,loaded : false }
+        
         try {
           file = JSON.parse(item.message)
-          data = true
+          if(file.ext && file.size){
+            data = true
+            
+          }
+          else{
+            data = false
+          }
         } catch (error) {
           var data = false
         }
+
+        if(!isNaN(parseFloat(item.message)) && isFinite(item.message)){
+          data = false;
+        }
+      
 
         if (item.senderId == User.auth.id) {
           if (data == true) {

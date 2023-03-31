@@ -37,8 +37,9 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import NotificationCounter from './Util/NotificationCounter'
 
-export default function NavBar(props :any) {
+export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -49,8 +50,12 @@ export default function NavBar(props :any) {
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
-  const [messageNotification, setmessageNotification] = useState([])
-  
+  const [messageNotification, setmessageNotification]: any[] = useState([])
+  const [loading1, setloading1] = useState(null)
+  const [loading2, setloading2] = useState(null)
+  // const [load1,setload1] = useState(true);
+  // const [load2,setload2] = useState(true);
+
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -115,12 +120,21 @@ export default function NavBar(props :any) {
       getPendingRequest(token)
         .then((res) => {
           setPendingConnections(res.data)
+          setloading2(res.data.length);
+     
         })
         .catch((err) => {
           toast.error(err)
         })
     }
   }
+  useEffect(() => {
+    if (currentUser.auth) {
+     getMessage();
+     getPendingConnections();
+     
+    }
+  }, [currentUser])
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
@@ -131,53 +145,43 @@ export default function NavBar(props :any) {
         allConvo.data.map(async (element) => {
           const convo = await getConversationById(token, element.id)
 
-          convo.data.map(async (el) => {
-            // console.log(el)
-            const created_at: Date = new Date(el.created_at)
-            const currentDate: Date = new Date()
-            const diffInMs: any = currentDate.getTime() - created_at.getTime()
-            const diffInHrs: number = diffInMs / (1000 * 60 * 60)
-            if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
-              var notif: any = {
-                id: element.id,
-                firstName: element.firstName,
-                lastName: element.lastName,
-                created_at: el.created_at,
-                profilePic: element.profilePic,
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                var notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
               }
-              notification.push(notif)
-              notification.sort((a, b) => {
-                const cr1: any = new Date(a.created_at)
-                const cr2: any = new Date(b.created_at)
-                return cr2.getTime() - cr1.getTime()
-              })
-              setmessageNotification(notification)
-            }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
           })
+          setmessageNotification(notification)
+          setloading1(notification.length);
+          
         })
+  
+       
       } catch (error) {
         toast(error.message)
       }
     }
   }
 
-  useEffect(() => {
-    if (currentUser.auth) {
-      getPendingConnections()
-      getMessage()
-
-      const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
-      const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
-      const pusher = new Pusher(PUSHER_APP_KEY, {
-        cluster: PUSHER_APP_CLUSTER,
-      })
-      var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
-      channel.bind('friend-request', function (data) {
-        getPendingConnections();
-      })
-
-    }
-  }, [currentUser])
+  
 
   const handleFilter = (value) => {
     // open the openJobs page
@@ -261,29 +265,20 @@ export default function NavBar(props :any) {
                 Messages
               </Button>
             </NextLink>
+            {
+           
+              props.nbNotifications  != null?  
+              <NotificationCounter nbNotifications={props.nbNotifications} />
+              :
+              (loading1 != null && loading2 != null) ?
 
-            <NextLink href="/notifications" passHref>
-              <div style={{ position: 'relative' }}>
-                <IconButton
-                  aria-label="Notifications"
-                  icon={<BellIcon />}
-                  variant="ghost"
-                  size="lg"
-                  w="100%"
-                  my={5}
-                ></IconButton>
-                <Badge
-                  colorScheme="red"
-                  borderRadius="full"
-                  px="2"
-                  position="absolute"
-                  top="20px"
-                  right="0"
-                >
-                  {(props.nbNotifications != null)? props.nbNotifications : pendingConnections.length + messageNotification.length}
-                </Badge>
-              </div>
-            </NextLink>
+              <NotificationCounter Notifications={loading1 + loading2}/>
+              :
+              <NotificationCounter Notifications={0}/>
+
+
+            }
+
             <Menu>
               <MenuButton
                 as={Button}
