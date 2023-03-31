@@ -78,24 +78,6 @@ const postJob = () => {
       <NavBar />
       <div data-testid="post-job">
         <Container maxW="5xl" paddingBottom={8}>
-          <VStack spacing={3} w="100%" paddingBottom={'3em'}>
-            <Image
-              src="https://img.icons8.com/3d-fluency/256/user-group-man-woman.png"
-              alt="Job Listing Image"
-              width={'80px'}
-            ></Image>
-
-            <Text
-              style={{
-                fontWeight: 700,
-                fontSize: '1.5rem',
-                textShadow: '0px 0px 10px #00000010',
-                paddingBottom: '0.2em',
-              }}
-            >
-              Create Job Listing
-            </Text>
-          </VStack>
           <Box
             border={'1px'}
             borderColor={'#E5EAF061'}
@@ -105,6 +87,24 @@ const postJob = () => {
             boxShadow={'0px 0px 10px #00000010'}
             marginBottom={'3em'}
           >
+            <VStack spacing={3} w="100%" paddingBottom={'3em'}>
+              <Image
+                src="https://img.icons8.com/3d-fluency/256/user-group-man-woman.png"
+                alt="Job Listing Image"
+                width={'80px'}
+              ></Image>
+
+              <Text
+                style={{
+                  fontWeight: 700,
+                  fontSize: '1.5rem',
+                  textShadow: '0px 0px 10px #00000010',
+                  paddingBottom: '0.2em',
+                }}
+              >
+                Create Job Listing
+              </Text>
+            </VStack>
             <VStack spacing={'2.5em'} w="100%">
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl id="jobTitle">
