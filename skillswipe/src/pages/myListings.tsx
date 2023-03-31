@@ -121,7 +121,7 @@ const myListings = () => {
     <>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        <Container maxW="5xl" p={{ base: 10, md: 0 }} data-testid="myListings">
           <Flex justify="left" mb={3}>
             <HStack
               style={{
