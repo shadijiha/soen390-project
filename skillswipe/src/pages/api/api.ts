@@ -242,10 +242,17 @@ export const getMyApplications = async (token: any) => {
     })
 }
 
-export const withdrawJobApplication = async (token: any, id: any) => {
-  return axios.delete(`${URL}/application/${id}`, {
+export const withdrawJobApplication = async (token, id) => {
+  const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
+  }
+
+  try {
+    const response = await axios.delete(`${URL}/application/${id}`, config)
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
 }

@@ -13,6 +13,7 @@ import {
   Flex,
   Grid,
   HStack,
+  Img,
   Link,
   Spacer,
   Stack,
@@ -104,14 +105,20 @@ const MyApplications = () => {
                   marginRight: '1em',
                 }}
               /> */}
-              <chakra.h3
-                fontSize="4xl"
-                fontWeight="bold"
-                textAlign="center"
-                paddingBottom={'0.2em'}
-              >
-                📈 ‎ My Job Applications
-              </chakra.h3>
+              <Flex alignItems="center" justifyContent="center">
+                <Img
+                  src="https://img.icons8.com/3d-fluency/512/employee-card.png"
+                  alt="My Image"
+                  mr={3}
+                  mt={1}
+                  w={10}
+                  h={10}
+                />
+                <chakra.h3 fontSize="4xl" fontWeight="bold">
+                  My Job Applications
+                </chakra.h3>
+              </Flex>
+
               <Spacer />
               {/* <Menu>
                 <MenuButton
