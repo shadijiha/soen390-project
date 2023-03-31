@@ -336,6 +336,8 @@ const Home = () => {
                           {/* quick apply job button */}
                           <Button
                             colorScheme="blue"
+                            border={useColorModeValue('gray.200', 'gray.600')}
+                            borderWidth="4px"
                             size="sm"
                             borderRadius="50px"
                             onClick={() => {
