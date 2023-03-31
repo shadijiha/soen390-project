@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
@@ -6,8 +8,12 @@ import {
   background,
   Box,
   Button,
+  chakra,
+  Divider,
+  Grid,
   Heading,
   HStack,
+  Link,
   List,
   ListItem,
   Modal,
@@ -17,17 +23,31 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Stack,
   Text,
   Textarea,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import router from 'next/router'
+import { Fragment, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
-import { createPosts, getPosts } from './api/api'
-
+import { createPosts, getOpenJobs, getPosts } from './api/api'
+interface JobAttributes {
+  id: number
+  jobTitle: ''
+  companyName: ''
+  location: ''
+  jobDescription: ''
+  salary: ''
+  skills: ''
+  startDate: ''
+  jobType: ''
+  coverLetter: false | true
+  transcript: false | true
+}
 const Home = () => {
   const formatDate = (dateString) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -41,6 +61,31 @@ const Home = () => {
     const date = new Date(dateString)
     return new Intl.DateTimeFormat('en-US', options).format(date)
   }
+
+  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+
+  useEffect(() => {
+    const viewOpenJobs = async () => {
+      // Get token from local storage
+      const token = localStorage.getItem('jwt')
+
+      try {
+        // Call API function to get open jobs
+
+        const response = await getOpenJobs(token)
+
+        // Update state with fetched data
+        setInitalJobListing(response.data)
+        setJobListing(response.data)
+      } catch (error) {
+        console.error(error)
+        toast.error('Error getting jobs')
+      }
+    }
+    viewOpenJobs()
+  }, [])
+
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
   const formBorder = useColorModeValue('gray.100', 'gray.600')
@@ -181,67 +226,176 @@ const Home = () => {
               </Modal>
             </div>
 
-            <List>
-              {posts.map((post) => (
-                <ListItem key={post.id}>
-                  <Box
-                    borderWidth="1px"
-                    borderColor={formBorder}
-                    backgroundColor={postBackground}
-                    padding="1rem"
-                    marginBottom="1rem"
-                    rounded="20"
-                    overflow="hidden"
-                    width="100%"
-                    minW="80vw"
-                    maxW="90vw"
-                  >
-                    <HStack
-                      spacing={6}
-                      flexDirection={'row'}
-                      alignItems={'center'}
-                      width={'100%'}
-                    >
-                      <Avatar
-                        size="sm"
-                        name={User.auth.firstName + User.auth.lastName}
-                        src="https://bit.ly/broken-link"
-                      />
-                      <Text
-                        flex={1}
-                        style={{
-                          fontWeight: 'bold',
-                          marginLeft: '0.5rem',
-                        }}
+            <HStack spacing={8} align="start">
+              <Box width={{ base: '100%', md: '70%' }}>
+                <List>
+                  {posts.map((post) => (
+                    <ListItem key={post.id}>
+                      <Box
+                        borderWidth="1px"
+                        borderColor={formBorder}
+                        backgroundColor={postBackground}
+                        padding="1rem"
+                        marginBottom="1rem"
+                        rounded="20"
+                        overflow="hidden"
+                        minWidth={'100%'}
+                        // maxW={'700px'}
                       >
-                        {User.auth.firstName} {User.auth.lastName}
-                      </Text>
+                        <HStack
+                          spacing={6}
+                          flexDirection={'row'}
+                          alignItems={'center'}
+                          width={'100%'}
+                        >
+                          <Avatar
+                            size="sm"
+                            name={User.auth.firstName + User.auth.lastName}
+                            src="https://bit.ly/broken-link"
+                          />
+                          <Text
+                            flex={1}
+                            style={{
+                              fontWeight: 'bold',
+                              marginLeft: '0.5rem',
+                            }}
+                          >
+                            {User.auth.firstName} {User.auth.lastName}
+                          </Text>
 
-                      <Text
-                        style={{
-                          opacity: '0.5',
-                        }}
-                      >
-                        {formatDate(post.created_at)}
-                      </Text>
-                    </HStack>
-                    <HStack justifyContent={'space-between'}>
-                      <Text>{post.content}</Text>
-                      <Button
-                        colorScheme="red"
-                        size="sm"
-                        borderRadius="50px"
-                        style={{
-                          marginTop: '0.5rem',
-                        }}
-                      >
-                        Report
-                      </Button>
-                    </HStack>
-                  </Box>
-                </ListItem>
-              ))}
-            </List>
+                          <Text
+                            style={{
+                              opacity: '0.5',
+                            }}
+                          >
+                            {formatDate(post.created_at)}
+                          </Text>
+                        </HStack>
+                        <HStack justifyContent={'space-between'}>
+                          <Text>{post.content}</Text>
+                          <Button
+                            colorScheme="red"
+                            size="sm"
+                            borderRadius="50px"
+                            style={{
+                              marginTop: '0.5rem',
+                            }}
+                          >
+                            Report
+                          </Button>
+                        </HStack>
+                      </Box>
+                    </ListItem>
+                  ))}
+                </List>
+              </Box>
+              <Box width={'30%'} display={{ base: 'none', md: 'block' }}>
+                {' '}
+                <Text
+                  style={{
+                    fontSize: '1.2rem',
+                    fontWeight: '300',
+                    textAlign: 'center',
+                    backgroundColor: useColorModeValue('gray.100', 'gray.700'),
+                    padding: '1rem',
+                    marginBottom: '1rem',
+                    borderRadius: '50px',
+                    borderColor: useColorModeValue('gray.200', 'gray.600'),
+                    borderWidth: '2px',
+                  }}
+                >
+                  <b>Open Jobs for You</b>
+                </Text>
+                {jobListing.map((job, index) => (
+                  <Fragment key={index}>
+                    <Grid
+                      w="100%"
+                      minW={{ base: 'unset', sm: '100vh' }}
+                      templateColumns={{ base: 'unset' }}
+                      p={{ base: 2, sm: 4 }}
+                      gap={3}
+                      _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+                    >
+                      <Box>
+                        <HStack spacing={3}>
+                          <img
+                            src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                            width="15px"
+                            height="15px"
+                            alt="logo"
+                            onError={(e) => {
+                              // show a default image if the company logo is not found
+                              e.currentTarget.src =
+                                'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                            }}
+                          />
+
+                          <chakra.h2 fontWeight="bold" fontSize="md">
+                            {job.companyName}
+                          </chakra.h2>
+                        </HStack>
+
+                        <chakra.h3
+                          as={Link}
+                          isExternal
+                          fontWeight="extrabold"
+                          fontSize="15px"
+                          onClick={() => {
+                            router.push(`/jobListing/${job.id}`)
+                          }}
+                        >
+                          {job.jobTitle}
+                        </chakra.h3>
+                        <div
+                          style={{
+                            paddingTop: '0.5em',
+                          }}
+                        ></div>
+
+                        <chakra.p
+                          fontWeight="bold"
+                          fontSize="sm"
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          📍 {job.location}
+                        </chakra.p>
+                        <chakra.p
+                          fontWeight="normal"
+                          fontSize="sm"
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          💼 ‎
+                          {job.jobType.charAt(0).toUpperCase() +
+                            job.jobType.slice(1)}
+                        </chakra.p>
+                        <Grid
+                          alignItems="start"
+                          fontWeight="light"
+                          fontSize={{ base: 'xs', sm: 'sm' }}
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          {/* By the way, the ‎ is an invisible space character */}
+                          <chakra.p>
+                            {/* format the starting date to be only year month and date */}
+                            📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
+                          </chakra.p>
+                          <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
+                          <chakra.p>
+                            🏫 ‎ ‎ Transcript Needed? ‎ ‎
+                            {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                          </chakra.p>
+                          <chakra.p>
+                            💌 ‎ ‎ Cover Letter Needed? ‎ ‎
+                            {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
+                          </chakra.p>
+                        </Grid>
+                      </Box>
+                    </Grid>
+                    {jobListing.length - 1 !== index && <Divider m={0} />}
+                  </Fragment>
+                ))}
+              </Box>
+            </HStack>
           </Box>
         </Box>
         <div style={{ marginBottom: '3rem' }}></div>
