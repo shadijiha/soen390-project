@@ -11,8 +11,22 @@ export const loginApi = async (LoginUser: any) => {
 }
 
 export const editProfile = async (editProfile: any) => {
-  //do put
   return axios.put(`${URL}/auth/login`, editProfile)
+}
+
+export const changeStatus = async (status : any, token: any) => {
+  return axios.put(`${URL}/user/status`, {"userStatus" : status}, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    }
+  })
+}
+export const getUserStatus = async(id : any,token :any) =>{
+  return axios.get(`${URL}/user/status/${id}`,{
+    headers : {
+      Authorization  : `Bearer ${token}`
+    }
+  })
 }
 
 export const checkLogin = async (token: any) => {
@@ -144,8 +158,10 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
   })
 }
 
-export const removeProfilepic = async (token: any) => {
-  return axios.delete(`${URL}/user/profilePic`, {
+
+
+export const removeCoverpic = async (token: any) => {
+  return axios.delete(`${URL}/user/coverPic`, {
     headers: {
       authorization: `Bearer ${token}`,
     },

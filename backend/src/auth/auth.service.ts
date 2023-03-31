@@ -15,6 +15,7 @@ export class AuthService {
     private readonly usersRepository: Repository<User>
   ) {}
 
+  // validates user email vs password
   public async validateUser (email: string, pass: string): Promise<Partial<User> | null> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
@@ -33,6 +34,7 @@ export class AuthService {
     return null
   }
 
+  // logins user
   public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
     let user: User

@@ -23,16 +23,16 @@ export class JobsController {
       return
     }
 
-    // if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can create job posts', 400)
-
     await this.jobsService.createJob(job, recruiter)
   }
 
+  // get all job listings
   @Get('/all')
   async getAllJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
     return await this.jobsService.getAllJobs()
   }
 
+  // get a job listing by id
   @Get(':id')
   async getJobById (@Param('id') id: string): Promise<Job> {
     try {
@@ -51,9 +51,14 @@ export class JobsController {
       throw new HttpException('Recruiters does not exist', 400)
     }
 
-    // if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can have job posts', 400)
-
     return recruiter.jobs
+  }
+
+  // get applications for my job listing
+  @Get('/my/applications')
+  async getApplicationsForMyJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
+    const recruiter: User = (await authedUser.getUser()) as User
+    return await this.jobsService.getApplicationsForMyJobs(recruiter.id)
   }
 
   // update job post
@@ -64,10 +69,10 @@ export class JobsController {
       return
     }
 
-    // if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can update job posts', 400)
     await this.jobsService.updateJob(parseInt(id), job, recruiter)
   }
 
+  // delete job post
   @Delete(':id')
   async deleteJob (@AuthUser() authedUser: BearerPayload, @Param('id') id: string): Promise<void> {
     const recruiter: User = (await authedUser.getUser(['jobs'])) as User
@@ -75,7 +80,6 @@ export class JobsController {
       return
     }
 
-    // if (recruiter.type !== 'recruiter') throw new HttpException('Only recruiters can delete job posts', 400)
     await this.jobsService.deleteJob(parseInt(id), recruiter)
   }
 }

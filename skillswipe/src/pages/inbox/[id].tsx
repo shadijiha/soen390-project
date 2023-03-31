@@ -10,24 +10,28 @@ import { toast } from 'react-toastify'
 import Footer from '../../components/Chat/Footer'
 import Header from '../../components/Chat/Header'
 import Messages from '../../components/Chat/Messages'
-import { getUserById } from '../api/api'
+import { getUserById, getUserStatus } from '../api/api'
 import { getConversationById, message } from '../api/chat'
 
 const Chat = () => {
   const User = useSelector((state) => state as any)
-  const [inputMessage, setInputMessage] = useState('')
+  // const [inputMessage, setInputMessage] = useState('')
   const [Load,setLoad] = useState(false);
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [chatUser,setchatUser] = useState({});
-  const handleSendMessage = () => {
+
+  const [Status,setStatus] = useState("offline");
+
+ 
+  const handleSendMessage = (inputMessage :any ) => {
     if (!inputMessage.trim().length) {
       return
     }
     const data = inputMessage
     const token = localStorage.getItem('jwt')
     setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
-        setInputMessage('')
+     
     message(token, {
       message: data,
       receiverId: router.query.id
@@ -39,6 +43,31 @@ const Chat = () => {
         toast(error.message)
       })
   }
+
+  const append = (file : any) =>{
+    const data = JSON.stringify(file)
+    setMessages((old) => [...old, { senderId: User.auth.id, message: data }]);
+  }
+
+
+
+  const sendMessagefile = (file : any) =>{
+    const token = localStorage.getItem("jwt");
+    
+    message(token, {
+      message: JSON.stringify(file),
+      receiverId: router.query.id
+    })
+      .then((Response) => {
+        window.location.reload();
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
+
+
   const loadMessage = (id : any) => {
     if(localStorage.getItem("jwt")){
  
@@ -61,7 +90,13 @@ const Chat = () => {
       else{
         getUserById(token,router.query.id).then((response) => {
           if(response.data.connectionStatus == "Connected"){
-       
+
+            getUserStatus(router.query.id,token).then((reponse) => {
+              console.log(reponse.data)
+              setStatus(reponse.data);
+            }).catch((error) => {
+              toast(error.message)
+            })
             setchatUser(response.data.user)
           }else{
             toast("Not Connected")
@@ -88,11 +123,15 @@ const Chat = () => {
           cluster: PUSHER_APP_CLUSTER,
         })
         const channel = pusher.subscribe(`message-${User.auth.id}`)
+        const channel2 = pusher.subscribe(`userStatus-${id}`)
         channel.bind('message', function (data: any) {
             console.log("Message recived")
             if (data.sender == id) {
               setMessages((old) => [...old, { senderId: id, message: data.message }])
             }
+        })
+        channel2.bind('statusUpdate',(data  :any) =>{
+          setStatus(data.status)
         })
         return () =>{
           pusher.unsubscribe(`message-${User.auth.id}`)
@@ -124,15 +163,16 @@ const Chat = () => {
               borderWidth: '7px',
             }}
           >
-            <Header user={chatUser}/>
+            <Header user={chatUser} status = {Status}/>
             <Divider />
             <br />
             <Messages messages={messages} user={chatUser}/>
             <Divider />
             <Footer
-              inputMessage={inputMessage}
-              setInputMessage={setInputMessage}
               handleSendMessage={handleSendMessage}
+              sendMessagefile = {sendMessagefile}
+              append = {append}
+        
             />
           </Flex>
         </Flex>

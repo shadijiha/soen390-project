@@ -17,6 +17,7 @@ export class JobsService {
     private readonly skillRepository: Repository<Skill>
   ) {}
 
+  // create job and link it with all the skills and the recruiter
   async createJob (data: Jobs.AddJobRequest, recruiter: User): Promise<void> {
     const job = new Job()
     job.jobTitle = data.jobTitle
@@ -57,6 +58,7 @@ export class JobsService {
     await this.usersRepository.save(recruiter)
   }
 
+  // update job post
   async updateJob (jobId: number, data: Jobs.UpdateJobRequest, recruiter: User): Promise<void> {
     const found = recruiter.jobs.find((job) => job.id === jobId)
 
@@ -95,6 +97,7 @@ export class JobsService {
     await this.jobsRepository.update(jobId, dataNoSkills)
   }
 
+  // delete job post
   async deleteJob (jobId: number, recruiter: User): Promise<void> {
     const found = recruiter.jobs.find((job) => job.id === jobId)
 
@@ -105,12 +108,14 @@ export class JobsService {
     await this.jobsRepository.delete(found.id)
   }
 
+  // get all jobs
   async getAllJobs (): Promise<Job[]> {
     return await this.jobsRepository.find({
       relations: ['user', 'skills']
     })
   }
 
+  // get job by id
   async getJobById (jobId: number): Promise<Job> {
     const job = await this.jobsRepository.findOneOrFail({
       where: { id: jobId },
@@ -121,5 +126,12 @@ export class JobsService {
       throw new NotFoundException()
     }
     return job
+  }
+
+  async getApplicationsForMyJobs (recruiterId: number): Promise<Job[]> {
+    return await this.jobsRepository.find({
+      where: { user: { id: recruiterId } },
+      relations: ['applications']
+    })
   }
 }

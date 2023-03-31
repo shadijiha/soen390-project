@@ -4,7 +4,7 @@ import { Application } from '../models/application.entity'
 import { Job } from '../models/job.entity'
 import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
-import { type Applications } from './application.types'
+import { type Applications } from './applications.types'
 
 @Injectable()
 export class ApplicationService {
@@ -15,6 +15,7 @@ export class ApplicationService {
     private readonly applicationRepository: Repository<Application>
   ) {}
 
+  // post an application and link it with the job and the user
   async postApplication (
     jobId: number,
     user: User,
@@ -60,6 +61,7 @@ export class ApplicationService {
     await this.jobsRepository.save(job)
   }
 
+  // delete an application
   async deleteApplication (applicationId: number, user: User): Promise<void> {
     const found = user.applications.find((application) => application.id === applicationId)
 
@@ -70,6 +72,7 @@ export class ApplicationService {
     await this.applicationRepository.delete(found.id)
   }
 
+  // get all my applications
   async getMyApplications (user: User): Promise<Application[]> {
     const applications = await this.applicationRepository.find({
       where: {
