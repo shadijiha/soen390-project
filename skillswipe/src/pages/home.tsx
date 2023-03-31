@@ -31,7 +31,7 @@ import {
 } from '@chakra-ui/react'
 import router from 'next/router'
 import { Fragment, useCallback, useEffect, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
@@ -56,7 +56,13 @@ const Home = () => {
       // Handle files here
       console.log(acceptedFiles)
     }, [])
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+    const options: DropzoneOptions = {
+      onDrop,
+      accept: 'image/*' as any,
+    }
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone(options)
 
     return (
       <div
@@ -71,7 +77,7 @@ const Home = () => {
           display: 'flex',
         }}
       >
-        <input {...getInputProps()} />
+        <input {...getInputProps()} accept="image/*" />
         <VStack
           direction={'column'}
           flex={1}
