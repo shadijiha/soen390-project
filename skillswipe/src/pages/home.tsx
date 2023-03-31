@@ -116,7 +116,6 @@ const Home = () => {
             >
               Recent Posts
             </Heading>
-            <div style={{ marginBottom: '3rem' }}></div>
 
             <div
               style={{
@@ -246,6 +245,7 @@ const Home = () => {
             </List>
           </Box>
         </Box>
+        <div style={{ marginBottom: '3rem' }}></div>
       </Layout>
     </>
   )
