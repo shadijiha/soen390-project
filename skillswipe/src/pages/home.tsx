@@ -1,4 +1,5 @@
 import { Button, Heading, Textarea, useColorModeValue } from '@chakra-ui/react'
+import TextareaAutosize from 'react-textarea-autosize'
 
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
@@ -78,17 +79,19 @@ const Home = () => {
               Recent Posts
             </Heading>
             <div style={{ marginBottom: '3rem' }}>
-              <Textarea
+              <TextareaAutosize
                 placeholder={'Type anything ...'}
                 onChange={handlepost}
                 id="creat-box"
+                minRows={2}
                 style={{
                   border: '1px solid #E2E8F068',
-                  borderRadius: '16px',
+                  borderRadius: '18px',
                   padding: '1rem',
-                  width: '70%',
+                  width: '60%',
                   display: 'block',
                   margin: 'auto',
+                  backgroundColor: 'transparent',
                 }}
               />
 
