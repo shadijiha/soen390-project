@@ -49,10 +49,11 @@ export class PostsService {
     // function that returns all the posts of the user that they are connected to
     const connections = await this.connectionService.getAcceptedConnections(userInfo.id);
     const ids: number[] = connections.map((connection) => connection.user.id);
+    ids.push(userInfo.id);
     console.log("IDS ARE: ", ids);
     
     const posts = await this.postRepository.find(
-        {where: {user: {id: In(ids)}}, order: {created_at: "DESC"}}
+        {where: {user: {id: In(ids)}}, order: {created_at: "DESC"}, relations: ["user"]}
     );
     return posts;
     }
