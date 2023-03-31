@@ -39,13 +39,12 @@ const Home = () => {
     }
   }, [User.auth])
 
-  const [createpost, setCreatePost] = useState({
-    content: '',
-  })
+  const [createpost, setCreatePost] = useState({content: '' })
   //will remove this eslint once i write this func
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const createPostHandler = () => {
     const token = localStorage.getItem('jwt')
+    console.log(createpost);
     createPosts(token, createpost).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post listing.')
@@ -54,10 +53,9 @@ const Home = () => {
       }
     })
   }
-  //This is causing errors
-  // const handlepost = () => {
-  //   setCreatePost(document.getElementById('creat-box'))
-  // }
+  const handlepost = (e) => {
+    setCreatePost({content : e.target.value})
+  }
   return (
     <>
       <Layout>
@@ -82,9 +80,9 @@ const Home = () => {
             <div style={{ marginBottom: '3rem' }}>
               <Textarea
                 placeholder={'Type anything ...'}
-                // onChange={handlepost}
+                onChange={handlepost}
                 id="creat-box"
-              ></Textarea>
+              />
               <Button mt={'1rem'} onClick={createPostHandler}>
                 Create Post
               </Button>
@@ -92,6 +90,7 @@ const Home = () => {
 
             <List>
               {posts.map((post) => (
+                
                 <ListItem key={post.id}>
                   <Box
                     borderWidth="1px"

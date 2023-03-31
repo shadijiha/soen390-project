@@ -209,6 +209,7 @@ export const getPosts = async (token: any) => {
 }
 
 export const createPosts = async (token: any, postCreate: any) => {
+
   return axios.post(`${URL}/posts`, postCreate, {
     headers: {
       Authorization: `Bearer ${token}`,
