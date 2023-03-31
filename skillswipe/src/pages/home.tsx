@@ -39,12 +39,12 @@ const Home = () => {
     }
   }, [User.auth])
 
-  const [createpost, setCreatePost] = useState({content: '' })
+  const [createpost, setCreatePost] = useState({ content: '' })
   //will remove this eslint once i write this func
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const createPostHandler = () => {
     const token = localStorage.getItem('jwt')
-    console.log(createpost);
+    console.log(createpost)
     createPosts(token, createpost).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post listing.')
@@ -54,7 +54,7 @@ const Home = () => {
     })
   }
   const handlepost = (e) => {
-    setCreatePost({content : e.target.value})
+    setCreatePost({ content: e.target.value })
   }
   return (
     <>
@@ -82,15 +82,31 @@ const Home = () => {
                 placeholder={'Type anything ...'}
                 onChange={handlepost}
                 id="creat-box"
+                style={{
+                  border: '1px solid #E2E8F068',
+                  borderRadius: '16px',
+                  padding: '1rem',
+                  width: '70%',
+                  display: 'block',
+                  margin: 'auto',
+                }}
               />
-              <Button mt={'1rem'} onClick={createPostHandler}>
-                Create Post
-              </Button>
+
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginTop: '1rem',
+                }}
+              >
+                <Button mt={'1rem'} onClick={createPostHandler}>
+                  Create Post
+                </Button>
+              </div>
             </div>
 
             <List>
               {posts.map((post) => (
-                
                 <ListItem key={post.id}>
                   <Box
                     borderWidth="1px"
