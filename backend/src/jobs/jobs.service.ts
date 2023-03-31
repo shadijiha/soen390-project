@@ -127,4 +127,11 @@ export class JobsService {
     }
     return job
   }
+
+  async getApplicationsForMyJobs (recruiterId: number): Promise<Job[]> {
+    return await this.jobsRepository.find({
+      where: { user: { id: recruiterId } },
+      relations: ['applications']
+    })
+  }
 }
