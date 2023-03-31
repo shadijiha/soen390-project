@@ -87,21 +87,21 @@ const Home = () => {
           data-testid="Home-page"
         >
           <Box>
-            <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
             <HStack>
-              <Heading
-                paddingBottom={5}
-                style={{
-                  fontSize: '1.5rem',
-                  fontWeight: '300',
-                }}
-              >
-                Recent Posts
-              </Heading>
+              <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
               <Button borderRadius="50px" onClick={() => setIsOpen(true)}>
                 Create Post
               </Button>
             </HStack>
+            <Heading
+              paddingBottom={5}
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: '300',
+              }}
+            >
+              Recent Posts
+            </Heading>
             <div style={{ marginBottom: '3rem' }}></div>
 
             <div
