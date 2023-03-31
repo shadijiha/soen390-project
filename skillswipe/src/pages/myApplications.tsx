@@ -46,23 +46,28 @@ interface Application {
   coverLetter: null
 }
 const MyApplications = () => {
+  const [token, setToken] = useState<string | null>(null)
+
   const [applications, setApplications] = useState<Application[]>([])
-  const token = localStorage.getItem('jwt')
 
   useEffect(() => {
     const fetchApplications = async () => {
-      const token = localStorage.getItem('jwt')
+      const jwtToken = localStorage.getItem('jwt')
 
-      try {
-        // Call API function to get open jobs
+      if (jwtToken) {
+        setToken(jwtToken)
 
-        const response = await getMyApplications(token)
+        try {
+          // Call API function to get open jobs
 
-        // Update state with fetched data
-        setApplications(response.data)
-      } catch (error) {
-        console.error(error)
-        toast.error('Error getting jobs')
+          const response = await getMyApplications(jwtToken)
+
+          // Update state with fetched data
+          setApplications(response.data)
+        } catch (error) {
+          console.error(error)
+          toast.error('Error getting jobs')
+        }
       }
     }
 
@@ -322,9 +327,18 @@ const MyApplications = () => {
                       rounded="100px"
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                      onClick={() => {
-                        // call the delete API function withdrawApplication
-                        withdrawJobApplication(token, application.job.id)
+                      onClick={async () => {
+                        const token = localStorage.getItem('jwt')
+                        try {
+                          await withdrawJobApplication(token, application.id)
+                          setApplications(
+                            applications.filter((a) => a.id !== application.id)
+                          )
+                          toast.success('Application withdrawn successfully!')
+                        } catch (error) {
+                          console.error(error)
+                          toast.error('Error withdrawing application')
+                        }
                       }}
                     >
                       Withdraw Application
