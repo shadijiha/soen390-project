@@ -1,10 +1,4 @@
-import {
-  Button,
-  Heading,
-  Input,
-  Textarea,
-  useColorModeValue,
-} from '@chakra-ui/react'
+import { Button, Heading, Textarea, useColorModeValue } from '@chakra-ui/react'
 
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
@@ -12,7 +6,7 @@ import { Box, List, ListItem, Text } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { getPosts } from './api/api'
+import { createPosts, getPosts } from './api/api'
 
 const Home = () => {
   const formBorder = useColorModeValue('gray.100', 'gray.600')
@@ -44,9 +38,26 @@ const Home = () => {
         })
     }
   }, [User.auth])
+
+  const [createpost, setCreatePost] = useState({
+    content: '',
+  })
   //will remove this eslint once i write this func
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  function handleClick() {}
+  const createPostHandler = () => {
+    const token = localStorage.getItem('jwt')
+    createPosts(token, createpost).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Sucessfully created post listing.')
+      } else {
+        toast.error('Error creating post?')
+      }
+    })
+  }
+  //This is causing errors
+  // const handlepost = () => {
+  //   setCreatePost(document.getElementById('creat-box'))
+  // }
   return (
     <>
       <Layout>
@@ -69,8 +80,12 @@ const Home = () => {
               Recent Posts
             </Heading>
             <div style={{ marginBottom: '3rem' }}>
-              <Textarea placeholder={'Type anything ...'}></Textarea>
-              <Button mt={'1rem'} onClick={handleClick}>
+              <Textarea
+                placeholder={'Type anything ...'}
+                // onChange={handlepost}
+                id="creat-box"
+              ></Textarea>
+              <Button mt={'1rem'} onClick={createPostHandler}>
                 Create Post
               </Button>
             </div>
@@ -94,6 +109,7 @@ const Home = () => {
                       {post.id}
                     </Text>
                     <Text>{post.content}</Text>
+                    <Text>{}</Text>
                   </Box>
                 </ListItem>
               ))}
