@@ -87,8 +87,8 @@ const Home = () => {
           data-testid="Home-page"
         >
           <Box>
-            <HStack>
-              <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
+            <HStack paddingBottom={5}>
+              <Heading>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
               <Button borderRadius="50px" onClick={() => setIsOpen(true)}>
                 Create Post
               </Button>
