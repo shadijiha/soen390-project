@@ -115,7 +115,7 @@ const Home = () => {
                 <ModalOverlay className={styles.blurred} />
                 <ModalContent
                   margin={'auto'}
-                  borderRadius="25px"
+                  borderRadius="30px"
                   padding={'1em'}
                   borderColor={formBorder}
                   backgroundColor={postBackground}
@@ -141,7 +141,7 @@ const Home = () => {
                       minRows={2}
                       style={{
                         border: '0px solid #E2E8F00D',
-                        borderRadius: '18px',
+                        borderRadius: '10px',
                         padding: '1rem',
                         width: '100%',
                         display: 'block',
