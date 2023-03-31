@@ -125,11 +125,17 @@ const Home = () => {
                   justifyContent={'space-between'}
                   minWidth={'50%'}
                 >
-                  <ModalHeader>Create a Post</ModalHeader>
+                  <ModalHeader
+                    style={{
+                      fontWeight: '300',
+                    }}
+                  >
+                    Have something on your 🧠?
+                  </ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <TextareaAutosize
-                      placeholder={'Type anything ...'}
+                      placeholder={'Type anything...'}
                       onChange={handlepost}
                       id="creat-box"
                       minRows={2}
