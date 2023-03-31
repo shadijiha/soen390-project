@@ -206,39 +206,38 @@ const Home = () => {
                         size="sm"
                         name={User.auth.firstName + User.auth.lastName}
                         src="https://bit.ly/broken-link"
-                        marginTop={'-20px'}
                       />
                       <Text
                         flex={1}
                         style={{
                           fontWeight: 'bold',
-                          marginTop: '-20px',
-                          marginLeft: '10px',
+                          marginLeft: '0.5rem',
                         }}
                       >
                         {User.auth.firstName} {User.auth.lastName}
                       </Text>
-                      <VStack alignItems={'flex-end'}>
-                        <Text
-                          style={{
-                            opacity: '0.5',
-                          }}
-                        >
-                          {formatDate(post.created_at)}
-                        </Text>
-                        <Button
-                          colorScheme="red"
-                          size="sm"
-                          borderRadius="50px"
-                          style={{
-                            marginTop: '0.5rem',
-                          }}
-                        >
-                          Report
-                        </Button>
-                      </VStack>
+
+                      <Text
+                        style={{
+                          opacity: '0.5',
+                        }}
+                      >
+                        {formatDate(post.created_at)}
+                      </Text>
                     </HStack>
-                    <Text>{post.content}</Text>
+                    <HStack justifyContent={'space-between'}>
+                      <Text>{post.content}</Text>
+                      <Button
+                        colorScheme="red"
+                        size="sm"
+                        borderRadius="50px"
+                        style={{
+                          marginTop: '0.5rem',
+                        }}
+                      >
+                        Report
+                      </Button>
+                    </HStack>
                   </Box>
                 </ListItem>
               ))}
