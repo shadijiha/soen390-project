@@ -15,8 +15,12 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Skills = (props: any) => {
+  const { t } = useTranslation('common')
   const [skill, setSkill] = useState({
     title: '',
     id: 0,
@@ -35,14 +39,14 @@ const Skills = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!skill.title) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       editSkillsRequest(token, skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Skill updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updating skill')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -52,14 +56,14 @@ const Skills = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!skill.title) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     } else {
       addSkillsRequest(token, skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Skill added successfully')
+          toast.success(t('addedSuccessfully'))
         } else {
-          toast.error('Error adding skill')
+          toast.error(t('errorAdding'))
         }
       })
     }
@@ -73,10 +77,10 @@ const Skills = (props: any) => {
     } else {
       deleteSkillsRequest(token, skill.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Skill deleted successfully')
+          toast.success(t('deletedSuccessfully'))
           props.deleteSkill(props.skill.id)
         } else {
-          toast.error('Error deleting skill')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -100,7 +104,7 @@ const Skills = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Skill {props.index} {props.isNew}
+          {t('skills')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -114,7 +118,7 @@ const Skills = (props: any) => {
             borderRadius="100px"
             onClick={updateSkills}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -128,7 +132,7 @@ const Skills = (props: any) => {
             borderRadius="100px"
             onClick={addSkill}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -145,7 +149,7 @@ const Skills = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="skill">
-        <FormLabel htmlFor="">Skills</FormLabel>
+        <FormLabel htmlFor="">{t('skills')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -161,5 +165,4 @@ const Skills = (props: any) => {
     </Box>
   )
 }
-
 export default Skills

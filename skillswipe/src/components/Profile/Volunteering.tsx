@@ -3,7 +3,13 @@ import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
 const Volunteering = ({ volunteer }: any) => {
+
+  const { t } = useTranslation('common')
   return (
     volunteer && (
       <div data-testid="volunteering">
@@ -18,7 +24,7 @@ const Volunteering = ({ volunteer }: any) => {
                 paddingTop: '1rem',
               }}
             >
-              <span>Volunteering History</span>
+              <span> {t('volunteeringHistory')}</span>
             </h1>
           </div>
           <Stack
@@ -59,4 +65,5 @@ const Volunteering = ({ volunteer }: any) => {
     )
   )
 }
+
 export default Volunteering

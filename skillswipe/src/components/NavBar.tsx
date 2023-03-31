@@ -37,9 +37,24 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { i18n }  from 'next-i18next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next' 
 import NotificationCounter from './Util/NotificationCounter'
 
-export default function NavBar(props: any) {
+
+
+
+
+
+
+const selectLanguage = (lng) => {
+
+  if(i18n) i18n.changeLanguage(lng);
+};
+
+ export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -61,6 +76,7 @@ export default function NavBar(props: any) {
   }) => {
     setSearchTerm(e.target.value)
   }
+
 
   const router = useRouter()
   const MobilehandleSubmit = (e: any) => {
@@ -88,6 +104,15 @@ export default function NavBar(props: any) {
 
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
+
+  const { t} = useTranslation('common');
+
+  const router = useRouter()
+  const changeLanguage = (language) => {
+    router.push(router.pathname, router.pathname, { locale: language })
+    selectLanguage(language)
+  }
+
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -223,7 +248,7 @@ export default function NavBar(props: any) {
               router.push('/')
             }}
           >
-            🚀 SkillSwipe
+            {t('🚀 SkillSwipe')}
           </Text>
           <NextLink href="#">
             <Button
@@ -239,6 +264,20 @@ export default function NavBar(props: any) {
               {toggleTheme}
             </Button>
           </NextLink>
+          <Select
+            onChange={(e) => changeLanguage(e.target.value)}
+            variant="filled"
+            my={5}
+            w="58"
+            py={2}
+            _hover={{
+              cursor: "pointer",
+            }}
+            icon={<Text>🌐</Text>}
+          >
+            <option value="en"> {t('english')} </option>
+            <option value="fr"> {t('french')} </option>
+          </Select>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
@@ -250,10 +289,9 @@ export default function NavBar(props: any) {
                 variant="ghost"
                 rounded={'full'}
               >
-                Home
+                {t('home')}
               </Button>
             </NextLink>
-
             <NextLink href="/inbox" passHref>
               <Button
                 variant="ghost"
@@ -262,7 +300,7 @@ export default function NavBar(props: any) {
                 w="100%"
                 rounded={'full'}
               >
-                Messages
+                {t('messages')}
               </Button>
             </NextLink>
             {
@@ -290,7 +328,7 @@ export default function NavBar(props: any) {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                Careers
+                {t('careers')}
               </MenuButton>
               <MenuList
                 style={{
@@ -307,7 +345,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Open Jobs
+                  {t('openJobs')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -320,7 +358,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  My Job Listings
+                  {t('myJobListings')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -333,7 +371,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  Create a Job Listing
+                   {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -377,7 +415,7 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Logout
+                {t('logout')}
               </Button>
             </NextLink>
           </Flex>
@@ -423,19 +461,19 @@ export default function NavBar(props: any) {
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
-                Home
+                {t('home')}
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
-                Messages
+                {t('messages')}
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                My Account
+                {t('myAccount')}
               </Button>
             </NextLink>
 
@@ -451,17 +489,17 @@ export default function NavBar(props: any) {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                Careers
+                {t('careers')}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                  Open Jobs
+                {t('openJobs')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                  My Job Listings
+                {t('myJobListings')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                  Create a Job Listing
+                {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -480,7 +518,7 @@ export default function NavBar(props: any) {
                 <form onSubmit={MobilehandleSubmit}>
                   <input
                     type="text"
-                    placeholder="Search"
+                    placeholder= {t('search')}
                     value={searchTerm}
                     onChange={MobilehandleChange}
                     style={{
@@ -529,12 +567,12 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Sign In/Logout
+                {t('SignIn/Logout')}
               </Button>
             </NextLink>
           </Flex>
         </Flex>
       </Flex>
     </Box>
-  )
+  );
 }

@@ -18,9 +18,17 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
+import { useTranslation, Trans } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { type } from 'os'
+import { useRouter } from 'next/router'
+
+const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
+
 import { getAllConversation, getConversationById } from './api/chat'
 
-const Notifications = () => {
+
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
@@ -87,7 +95,7 @@ const Notifications = () => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
           )
-          toast.success('Connection removed')
+          toast.success(t('connectionRemoved'))
         })
         .catch((err) => {
           toast.error(err)
@@ -102,9 +110,14 @@ const Notifications = () => {
         .then((res) => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
+
+          )
+          toast.success(t('requestAccepted'))
+
             )
             
           toast.success('Request Accepted')
+
         })
         .catch((err) => {
           toast.error(err)
@@ -115,6 +128,8 @@ const Notifications = () => {
   const addRequest = () => {
     getPendingConnections()
   }
+  const { t } = useTranslation('common')
+
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
@@ -167,7 +182,7 @@ const Notifications = () => {
         ></NavBar>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
-            Pending Requests
+            {t('pendingRequests')}
           </Heading>
           <Flex flexDirection={'column-reverse'}>
             {pendingConnections.length > 0 ? (
@@ -188,7 +203,7 @@ const Notifications = () => {
                         <Heading as="h2" size="md" mb={2}>
                           {connection.user.firstName} {connection.user.lastName}
                           <Badge ml="1" colorScheme="green">
-                            New
+                            {t('new')}
                           </Badge>
                         </Heading>
                         <Text mb={2}>Please add me to your network</Text>
@@ -203,26 +218,31 @@ const Notifications = () => {
                         colorScheme="gray"
                         onClick={() => ignore(connection.user.id)}
                       >
-                        Ignore
+                        {t('ignore')}
                       </Button>
                       <Button
                         colorScheme="twitter"
                         onClick={() => accept(connection.user.id)}
-                      >
-                        Accept
+                      > <text>{t('accept')}</text>
+                       
                       </Button>
                     </HStack>
                   </Box>
                 </Flex>
               ))
             ) : (
-              <Text>No pending requests to display</Text>
+              <footer>
+                <Text>
+                  {t('noPendingRequests')}
+                </Text>
+              </footer>
             )}
           </Flex>
         </Box>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
-            Notifications
+           
+            {t('notifications')}
           </Heading>
           {messageNotification.length > 0 ? (
             messageNotification.map((notification: any, index) => (
@@ -257,7 +277,7 @@ const Notifications = () => {
                     >
                       {`${notification.firstName} ${notification.lastName}`}{' '}
                       <Badge ml="1" colorScheme="green">
-                        New
+                        {t("new")}
                       </Badge>
                     </Heading>
                     <Text
@@ -269,7 +289,7 @@ const Notifications = () => {
               </Flex>
             ))
           ) : (
-            <Text>No notifications to display</Text>
+            <Text>{t('noNotifications')}</Text>
           )}
         </Box>
       </Layout>
@@ -277,4 +297,11 @@ const Notifications = () => {
   )
 }
 
-export default Notifications
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
+export default Notifications;
+

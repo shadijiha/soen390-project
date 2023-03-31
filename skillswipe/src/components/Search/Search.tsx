@@ -13,6 +13,9 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { SetStateAction, useState } from 'react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Search = () => {
   const [search, setSearch] = useState(false)
@@ -33,6 +36,8 @@ const Search = () => {
     setSearchTerm(event.target.value)
   }
 
+  const { t } = useTranslation('common')
+
   return (
     <>
       <Flex display={['none', 'none', 'flex', 'flex']} marginLeft="auto">
@@ -48,7 +53,7 @@ const Search = () => {
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
-                placeholder="Search"
+                placeholder= {t('search')}
                 value={searchTerm}
                 onChange={handleChange}
                 list="browser"
@@ -82,6 +87,7 @@ const Search = () => {
     </>
   )
 }
+
 export default Search
 
 function setSearchTerm(value: SetStateAction<string>) {
