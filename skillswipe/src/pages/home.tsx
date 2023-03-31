@@ -98,7 +98,9 @@ const Home = () => {
               >
                 Recent Posts
               </Heading>
-              <Button onClick={() => setIsOpen(true)}>Create Post</Button>
+              <Button borderRadius="50px" onClick={() => setIsOpen(true)}>
+                Create Post
+              </Button>
             </HStack>
             <div style={{ marginBottom: '3rem' }}></div>
 
@@ -144,7 +146,12 @@ const Home = () => {
                     />
                   </ModalBody>
                   <ModalFooter>
-                    <Button colorScheme="blue" mr={3} onClick={createPostHandler}>
+                    <Button
+                      colorScheme="blue"
+                      mr={3}
+                      onClick={createPostHandler}
+                      borderRadius="50px"
+                    >
                       Post
                     </Button>
                     <Button variant="ghost" onClick={onClose}>
