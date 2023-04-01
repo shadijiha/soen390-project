@@ -42,7 +42,7 @@ const SubmitAppForm = () => {
       id: 0,
     }
 
-    const missingFields = []
+    const missingFields = [] as string[]
 
     if (!submitApp.name) {
       missingFields.push('name')
