@@ -4,13 +4,7 @@ import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 const Languages = ({ languages }: any) => {
-  const { t } = useTranslation('common')
-
   return (
     languages && (
       <div data-testid="languages">
@@ -27,10 +21,8 @@ const Languages = ({ languages }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🌐               
-                  {t('languages')}
-                </text>
-                </h1>
+                <text>🌐 Languages</text>
+              </h1>
             </div>
             <Stack
               spacing={0}
@@ -69,4 +61,5 @@ const Languages = ({ languages }: any) => {
     )
   )
 }
+
 export default Languages

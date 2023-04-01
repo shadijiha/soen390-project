@@ -2,13 +2,7 @@ import { useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import ProfileStyle from '../../styles/profilestyle'
 
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 const Recommendations = ({ rocommendations }: any) => {
-  const { t } = useTranslation('common')
-
   return (
     rocommendations && (
       <>
@@ -22,7 +16,7 @@ const Recommendations = ({ rocommendations }: any) => {
                   fontSize: '2.5rem',
                 }}
               >
-                <span>{t('recommendations')}</span>
+                <span>What People are Saying</span>
                 <br></br>
                 <span></span>
               </h1>

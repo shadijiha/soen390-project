@@ -4,12 +4,8 @@ import { useColorMode, useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const Education = ({ education }: any) => {
-  const { t } = useTranslation('common')
   return (
     education && (
       <>
@@ -24,7 +20,7 @@ const Education = ({ education }: any) => {
                   fontSize: '2.5rem',
                 }}
               >
-                <span>{t('educationHistory')}</span>
+                <span>Education History</span>
               </h1>
               <span className="edu-text03">
                 <span></span>
@@ -61,5 +57,4 @@ const Education = ({ education }: any) => {
     )
   )
 }
-
 export default Education

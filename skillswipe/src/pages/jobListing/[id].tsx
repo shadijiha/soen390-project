@@ -17,7 +17,6 @@ import axios from 'axios'
 import router, { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
 
 import { createJob, getOpenJobs, viewJob } from '../api/api'
 
@@ -36,7 +35,6 @@ type JobAttributes = {
 }
 
 const jobListing = () => {
-  const { t } = useTranslation('common')
   const router = useRouter()
   const [job, setJob] = useState<JobAttributes>({})
   const [jobSkills, setSkills] = useState<Array<string>>([])
@@ -52,13 +50,13 @@ const jobListing = () => {
         })
         .catch((error) => {
           console.error(error)
-          toast.error(t('errorJobs'))
+          toast.error('Error getting job')
         })
     }
   }, [router.query.id])
 
   if (!job) {
-    return <div> {t('loading')} </div>
+    return <div>Loading...</div>
   }
 
   useEffect(() => {

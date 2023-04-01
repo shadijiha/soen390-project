@@ -33,12 +33,8 @@ import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
-import { useTranslation } from 'next-i18next'
-
-
 
 const profile = () => {
-  const { t } = useTranslation('common')
   const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
@@ -144,7 +140,7 @@ const profile = () => {
             setLoading(false)
           })
           .catch((error) => {
-            toast(t('userNotFound'))
+            toast('User not found')
             router.push('/')
           })
       }
@@ -281,7 +277,7 @@ const profile = () => {
                           }}
                         >
                           <span>
-                            <span>{t('message')}</span>
+                            <span>Message</span>
                           </span>
                         </button>
                         <button
@@ -317,7 +313,7 @@ const profile = () => {
                           onClick={Reject}
                         >
                           <span>
-                            <span>{ t('deleteRequest') }</span>
+                            <span>Delete Request</span>
                           </span>
                         </button>
                       ) : Status.Pending == true ? (
@@ -335,7 +331,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('accept') }</span>
+                              <span>Accept</span>
                             </span>
                           </button>
                           <button
@@ -351,7 +347,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('decline') }</span>
+                              <span>Decline</span>
                             </span>
                           </button>
                         </>
@@ -370,7 +366,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('connect') }</span>
+                              <span>Connect</span>
                             </span>
                           </button>
                         </>

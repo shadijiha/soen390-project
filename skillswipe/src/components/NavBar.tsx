@@ -37,24 +37,9 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { i18n }  from 'next-i18next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next' 
 import NotificationCounter from './Util/NotificationCounter'
 
-
-
-
-
-
-
-const selectLanguage = (lng) => {
-
-  if(i18n) i18n.changeLanguage(lng);
-};
-
- export default function NavBar(props: any) {
+export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -76,7 +61,6 @@ const selectLanguage = (lng) => {
   }) => {
     setSearchTerm(e.target.value)
   }
-
 
   const router = useRouter()
   const MobilehandleSubmit = (e: any) => {
@@ -104,15 +88,6 @@ const selectLanguage = (lng) => {
 
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
-
-  const { t} = useTranslation('common');
-
-  const router = useRouter()
-  const changeLanguage = (language) => {
-    router.push(router.pathname, router.pathname, { locale: language })
-    selectLanguage(language)
-  }
-
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -248,7 +223,7 @@ const selectLanguage = (lng) => {
               router.push('/')
             }}
           >
-            {t('🚀 SkillSwipe')}
+            🚀 SkillSwipe
           </Text>
           <NextLink href="#">
             <Button
@@ -264,20 +239,6 @@ const selectLanguage = (lng) => {
               {toggleTheme}
             </Button>
           </NextLink>
-          <Select
-            onChange={(e) => changeLanguage(e.target.value)}
-            variant="filled"
-            my={5}
-            w="58"
-            py={2}
-            _hover={{
-              cursor: "pointer",
-            }}
-            icon={<Text>🌐</Text>}
-          >
-            <option value="en"> {t('english')} </option>
-            <option value="fr"> {t('french')} </option>
-          </Select>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
@@ -289,9 +250,10 @@ const selectLanguage = (lng) => {
                 variant="ghost"
                 rounded={'full'}
               >
-                {t('home')}
+                Home
               </Button>
             </NextLink>
+
             <NextLink href="/inbox" passHref>
               <Button
                 variant="ghost"
@@ -300,7 +262,7 @@ const selectLanguage = (lng) => {
                 w="100%"
                 rounded={'full'}
               >
-                {t('messages')}
+                Messages
               </Button>
             </NextLink>
             {
@@ -328,7 +290,7 @@ const selectLanguage = (lng) => {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                {t('careers')}
+                Careers
               </MenuButton>
               <MenuList
                 style={{
@@ -345,7 +307,7 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  {t('openJobs')}
+                  Open Jobs
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -358,7 +320,7 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  {t('myJobListings')}
+                  My Job Listings
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -371,7 +333,7 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-                   {t('createJobListing')}
+                  Create a Job Listing
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -415,7 +377,7 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                {t('logout')}
+                Logout
               </Button>
             </NextLink>
           </Flex>
@@ -461,19 +423,19 @@ const selectLanguage = (lng) => {
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
-                {t('home')}
+                Home
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
-                {t('messages')}
+                Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                {t('myAccount')}
+                My Account
               </Button>
             </NextLink>
 
@@ -489,17 +451,17 @@ const selectLanguage = (lng) => {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                {t('careers')}
+                Careers
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                {t('openJobs')}
+                  Open Jobs
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                {t('myJobListings')}
+                  My Job Listings
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                {t('createJobListing')}
+                  Create a Job Listing
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -518,7 +480,7 @@ const selectLanguage = (lng) => {
                 <form onSubmit={MobilehandleSubmit}>
                   <input
                     type="text"
-                    placeholder= {t('search')}
+                    placeholder="Search"
                     value={searchTerm}
                     onChange={MobilehandleChange}
                     style={{
@@ -567,12 +529,12 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                {t('SignIn/Logout')}
+                Sign In/Logout
               </Button>
             </NextLink>
           </Flex>
         </Flex>
       </Flex>
     </Box>
-  );
+  )
 }

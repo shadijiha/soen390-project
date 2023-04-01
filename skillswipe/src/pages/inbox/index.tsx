@@ -19,12 +19,8 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetServerSideProps } from 'next'
 
 const Inbox = () => {
-  const {t} = useTranslation ('common')
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [loading, setLoading] = useState(true)
@@ -54,7 +50,7 @@ const Inbox = () => {
    
           <Box p={50} data-testid="inbox">
             <Heading as="h1" size="lg" mb={4}>
-              {t('inbox')}
+              Inbox
             </Heading>
             {messages.length > 0 ? (
               messages.map((element: any) => (
@@ -90,7 +86,7 @@ const Inbox = () => {
                 </Flex>
               ))
             ) : (
-              <h1>{t ('noMessages')}</h1>
+              <h1>No new message</h1>
             )}
           </Box>
 
@@ -98,10 +94,5 @@ const Inbox = () => {
     </>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})  
 
 export default Inbox

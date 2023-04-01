@@ -10,18 +10,16 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
-import React from 'react'
+import React, { useState } from 'react'
 
 const WorkExperience = ({ experience }: any) => {
   const isMobile = useBreakpointValue({ base: true, md: false })
   const isDesktop = useBreakpointValue({ base: false, md: true })
-  const { t } = useTranslation('common')
 
   return (
     <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
-        {t('careerJourney')} 👨🏼‍💻
+        Career Journey 👨🏼‍💻
         <br></br>
       </chakra.h3>
       {experience.map((milestone: any, index: any) => (
@@ -75,7 +73,7 @@ const Card = (props: any) => {
   }
 
   const handleImageError = (self) => {
-    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png'
+    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png';
     console.log('Error loading logo image')
   }
 

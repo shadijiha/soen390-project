@@ -16,12 +16,8 @@ import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { loginApi } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const login = () => {
-  const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
@@ -43,17 +39,17 @@ const login = () => {
   }
   const submitForm = () => {
     if (!(User.email && User.password)) {
-      toast(t('Please fill all the fields'))
+      toast('Please fill all the fields')
     } else {
       loginApi(User)
         .then((Response: any) => {
-          toast(t('loggedIn'))
+          toast('Successfully Logged In')
           router.push('/home')
           localStorage.setItem('jwt', Response.data.access_token)
         })
         .catch((error: any) => {
           if (error.response.status == 401) {
-            toast(t("fillCorrectly"))
+            toast('Please fill correct details')
           } else {
             toast(error.message)
           }
@@ -87,7 +83,7 @@ const login = () => {
               data-testid="password"
             />
             <Button colorScheme="blue" mb={3} onClick={submitForm}>
-              {t('signIn')}
+              Sign in
             </Button>
             {/* Google */}
             <Button
@@ -98,7 +94,7 @@ const login = () => {
               leftIcon={<FcGoogle />}
             >
               <Center>
-                <Text>{t('googleSignIn')}</Text>
+                <Text>Sign in with Google</Text>
               </Center>
             </Button>
             <Button colorScheme="green" mb={6}>
@@ -118,10 +114,4 @@ const login = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale!, ['common'])),
-  },
-})
 export default login

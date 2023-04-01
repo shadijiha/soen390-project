@@ -15,13 +15,8 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 const Awards = (props: any) => {
-  const { t } = useTranslation('common')
   const [award, setAward] = useState({
     title: '',
     description: '',
@@ -50,14 +45,14 @@ const Awards = (props: any) => {
       !award.issuer ||
       !award.url
     ) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     } else {
       editAwardsRequest(token, award).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('awardUpdated'))
+          toast.success('Award updated successfully')
         } else {
-          toast.error(t('awardError'))
+          toast.error('Error updating award')
         }
       })
     }
@@ -73,14 +68,14 @@ const Awards = (props: any) => {
       !award.issuer ||
       !award.url
     ) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     } else {
       addAwardsRequest(token, award).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('addedSuccessfully'))
+          toast.success('Award added successfully')
         } else {
-          toast.error(t('errorAdding'))
+          toast.error('Error adding award')
         }
       })
     }
@@ -94,10 +89,10 @@ const Awards = (props: any) => {
     } else {
       deleteAwardsRequest(token, award.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success (t('deletedSuccessfully'))
+          toast.success('Award deleted successfully')
           props.deleteAward(props.Award?.id)
         } else {
-          toast.error(t('errorDeleting'))
+          toast.error('Error deleting award')
         }
       })
     }
@@ -114,7 +109,7 @@ const Awards = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          {t('awards')} {props.index} {props.isNew}
+          Awards {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -128,7 +123,7 @@ const Awards = (props: any) => {
             borderRadius="100px"
             onClick={updateAward}
           >
-            {t('update')}
+            Update
           </Button>
         )}
 
@@ -143,7 +138,7 @@ const Awards = (props: any) => {
             borderRadius="100px"
             onClick={addAward}
           >
-            {t('add')}
+            Add
           </Button>
         )}
         <Button
@@ -175,7 +170,7 @@ const Awards = (props: any) => {
         />
       </FormControl>
       <FormControl id="description">
-        <FormLabel htmlFor="description">{t('title')}</FormLabel>
+        <FormLabel htmlFor="description">Description</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -190,7 +185,7 @@ const Awards = (props: any) => {
         />
       </FormControl>
       <FormControl id="issue_date">
-        <FormLabel htmlFor="issue_date">{t("year")}</FormLabel>
+        <FormLabel htmlFor="issue_date">Year</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -205,7 +200,7 @@ const Awards = (props: any) => {
         />
       </FormControl>
       <FormControl id="issuer">
-        <FormLabel htmlFor="issuer">{t("issuer")}</FormLabel>
+        <FormLabel htmlFor="issuer">Issuer</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

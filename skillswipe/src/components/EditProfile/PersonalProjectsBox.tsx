@@ -4,10 +4,6 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import PersonalProjects from '../Forms/PersonalProjects'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 type PersonalProject = {
   name?: string
@@ -44,9 +40,6 @@ const PersonalProjectsBox = () => {
       personalProject.url
     )
   }
-
-  const { t } = useTranslation('common')
-
   return (
     <Stack
       as="form"
@@ -73,7 +66,7 @@ const PersonalProjectsBox = () => {
           fontWeight: 'bold',
         }}
       >
-        {t('personalProjects')}
+        Personal Projects
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
@@ -106,4 +99,5 @@ const PersonalProjectsBox = () => {
     </Stack>
   )
 }
+
 export default PersonalProjectsBox

@@ -28,9 +28,6 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 interface JobAttributes {
   id: number
@@ -48,7 +45,6 @@ interface JobAttributes {
 
 const myListings = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const {t} = useTranslation('common');
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -64,7 +60,7 @@ const myListings = () => {
         setJobListing(response.data)
       } catch (error) {
         console.error(error)
-        toast.error(t('errorJobs'))
+        toast.error('Error getting jobs')
       }
     }
     viewOpenJobs()
@@ -96,8 +92,6 @@ const myListings = () => {
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
 
-  
-
   return (
     <>
       <Layout>
@@ -116,7 +110,7 @@ const myListings = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                 ‎ {t('myListings')}
+                 ‎ My Listings
               </chakra.h3>
               <Menu>
                 <MenuButton
@@ -126,14 +120,14 @@ const myListings = () => {
                   padding={'1.5em'}
                   rounded={'full'}
                 >
-                  {t('filterList')}
+                  Filter List
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                    {t('sortNewest')}
+                    Sort by Starting Date
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
-                    {t('sortHighestSalary')}
+                    Sort by Highest Salary
                   </MenuItem>
 
                   <Checkbox
@@ -151,7 +145,7 @@ const myListings = () => {
                       ])
                     }
                   >
-                    {t('viewAll')}
+                    View All
                   </Checkbox>
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
@@ -165,7 +159,7 @@ const myListings = () => {
                         ])
                       }
                     >
-                      {t('fullTime')}
+                      Full Time
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[1]}
@@ -178,7 +172,7 @@ const myListings = () => {
                         ])
                       }
                     >
-                      {t('partTime')}
+                      Part Time
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[2]}
@@ -191,7 +185,7 @@ const myListings = () => {
                         ])
                       }
                     >
-                      {t('internship')}
+                      Internship
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[3]}
@@ -204,7 +198,7 @@ const myListings = () => {
                         ])
                       }
                     >
-                      {t('other')}
+                      Other
                     </Checkbox>
                   </Stack>
                 </MenuList>
@@ -293,15 +287,15 @@ const myListings = () => {
                     {/* By the way, the ‎ is an invisible space character */}
                     <chakra.p>
                       {/* format the starting date to be only year month and date */}
-                      📅 ‎ ‎ {t('startingDate')}: {job.startDate.split('T')[0]}
+                      📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
                     </chakra.p>
-                    <chakra.p>🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr</chakra.p>
+                    <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
                     <chakra.p>
-                      🏫 ‎ ‎ {t('transcript')} ‎ ‎
+                      🏫 ‎ ‎ Transcript Needed? ‎ ‎
                       {job.transcript.toString() == 'true' ? '✅' : '❌'}
                     </chakra.p>
                     <chakra.p>
-                      💌 ‎ ‎ {t('coverLetter')} ‎ ‎
+                      💌 ‎ ‎ Cover Letter Needed? ‎ ‎
                       {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                     </chakra.p>
                   </VStack>
@@ -324,7 +318,7 @@ const myListings = () => {
                         router.push(`/jobListing/${job.id}`)
                       }}
                     >
-                      {t('editListing')}
+                      Edit Listing
                     </Button>
                     <Button
                       as={Link}
@@ -338,7 +332,7 @@ const myListings = () => {
                         router.push(`/jobListing/${job.id}`)
                       }}
                     >
-                      {t('delete')}
+                      Delete
                     </Button>
                   </Stack>
                 </Grid>
@@ -351,9 +345,5 @@ const myListings = () => {
     </>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
+
 export default myListings

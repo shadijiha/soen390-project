@@ -19,9 +19,6 @@ import {
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const postJob = () => {
   const [postListing, setJobListing] = useState({
@@ -37,8 +34,6 @@ const postJob = () => {
     transcript: true,
     id: 0,
   })
-
-  const { t } = useTranslation('common')
 
   const addListing = (event: any) => {
     const token = localStorage.getItem('jwt')
@@ -71,7 +66,7 @@ const postJob = () => {
       !postListing.coverLetter ||
       !postListing.transcript
     ) {
-      toast(t('fillAllFields'))
+      toast('Please fill all the fields')
       return
     } else {
       // forcing salary to be int
@@ -80,10 +75,10 @@ const postJob = () => {
 
       createJob(token, postListing).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('createListing '))
+          toast.success('Sucessfully created job listing. Happy hiring!')
         } else {
           toast.error(
-            t('errorCreateListing')
+            'Error creating job listing. Maybe your usertype is not recruiter?'
           )
         }
       })
@@ -110,7 +105,7 @@ const postJob = () => {
                 paddingBottom: '0.2em',
               }}
             >
-              {t('createJobListing')}
+              Create Job Listing
             </Text>
           </VStack>
           <VStack spacing={'2.5em'} w="100%">
@@ -118,7 +113,7 @@ const postJob = () => {
               {/* frontend!!! company is read only, we will pull it from the user's logged in account 
                  and show it as the placeholder */}
               <FormControl id="jobTitle">
-                <FormLabel htmlFor="jobTitle">{t('positionTitle')}</FormLabel>
+                <FormLabel htmlFor="jobTitle">Position Title</FormLabel>
                 <Input
                   onChange={(event) =>
                     setJobListing({ ...postListing, jobTitle: event.target.value })
@@ -131,7 +126,7 @@ const postJob = () => {
                 />
               </FormControl>
               <FormControl id="companyName">
-                <FormLabel htmlFor="companyName">{t('company')}</FormLabel>
+                <FormLabel htmlFor="companyName">Company</FormLabel>
                 <Input
                   onChange={(event) =>
                     setJobListing({
@@ -147,7 +142,7 @@ const postJob = () => {
                 />
               </FormControl>
               <FormControl id="location">
-                <FormLabel htmlFor="location">{t('location')}</FormLabel>
+                <FormLabel htmlFor="location">Location</FormLabel>
                 <Input
                   onChange={(event) =>
                     setJobListing({ ...postListing, location: event.target.value })
@@ -163,7 +158,7 @@ const postJob = () => {
 
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl paddingRight={{ sm: 0, md: 10 }} id="salary">
-                <FormLabel htmlFor="salary">{t('salary')}</FormLabel>
+                <FormLabel htmlFor="salary">Salary</FormLabel>
                 <Input
                   onChange={(event) =>
                     setJobListing({
@@ -180,7 +175,7 @@ const postJob = () => {
               </FormControl>
               <FormControl as="fieldset">
                 <FormLabel as="legend" paddingBottom={1.5}>
-                  {t('jobType')}
+                  Job Type
                 </FormLabel>
                 <RadioGroup
                   onChange={(value) =>
@@ -188,10 +183,10 @@ const postJob = () => {
                   }
                 >
                   <HStack spacing="auto">
-                    <Radio value="full-time">{t('fullTime')}</Radio>
-                    <Radio value="part-time">{t('partTime')}</Radio>
-                    <Radio value="contract">{t('contract')}</Radio>} 
-                    <Radio value="other">{t('other')}</Radio>
+                    <Radio value="full-time">Full-time</Radio>
+                    <Radio value="part-time">Part-time</Radio>
+                    <Radio value="contract">Contract</Radio>
+                    <Radio value="other">Other</Radio>
                   </HStack>
                 </RadioGroup>
               </FormControl>
@@ -200,7 +195,7 @@ const postJob = () => {
             <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
               <FormControl as="fieldset">
                 <FormLabel as="legend" paddingBottom={1.5}>
-                  {t('coverLetterRequired')}
+                  Cover Letter Required?
                 </FormLabel>
                 <RadioGroup
                   onChange={(value) =>
@@ -208,14 +203,14 @@ const postJob = () => {
                   }
                 >
                   <HStack spacing="10%">
-                    <Radio value="true">{t('yes')}</Radio>
-                    <Radio value="false">{t('no')}</Radio>
+                    <Radio value="true">Yes</Radio>
+                    <Radio value="false">No</Radio>
                   </HStack>
                 </RadioGroup>
               </FormControl>
               <FormControl as="fieldset">
                 <FormLabel as="legend" paddingBottom={1.5}>
-                  {t('transcriptRequired')}
+                  Transcript Required?
                 </FormLabel>
                 <RadioGroup
                   onChange={(value) =>
@@ -223,14 +218,14 @@ const postJob = () => {
                   }
                 >
                   <HStack spacing="10%">
-                    <Radio value="true">{t('yes')}</Radio>
-                    <Radio value="false">{t('no')}</Radio>
+                    <Radio value="true">Yes</Radio>
+                    <Radio value="false">No</Radio>
                   </HStack>
                 </RadioGroup>
               </FormControl>
 
               <FormControl id="startDate">
-                <FormLabel htmlFor="startDate">{t('startingDate')}</FormLabel>
+                <FormLabel htmlFor="startDate">Starting Date</FormLabel>
                 <Input
                   type="date"
                   rounded="100px"
@@ -242,7 +237,7 @@ const postJob = () => {
                 />
               </FormControl>
               <FormControl id="skills">
-                <FormLabel htmlFor="skills">{t('skillsNeeded')}</FormLabel>
+                <FormLabel htmlFor="skills">Skills Needed</FormLabel>
                 <Input
                   onChange={(event) =>
                     setJobListing({ ...postListing, skills: event.target.value })
@@ -262,7 +257,7 @@ const postJob = () => {
                 paddingBottom: '1.5em',
               }}
             >
-              <FormLabel htmlFor="jobDescription">{t('jobDescription')}</FormLabel>
+              <FormLabel htmlFor="jobDescription">Job Description</FormLabel>
               <Textarea
                 name="jobDescription"
                 id="jobDescription"
@@ -290,7 +285,7 @@ const postJob = () => {
               textShadow="0px 0px 20px #00000076"
               shadow={'0px 4px 30px #0000001F'}
             >
-              {t('create')}
+              Create
             </Button>
           </VStack>
         </Container>
@@ -298,11 +293,5 @@ const postJob = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default postJob

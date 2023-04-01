@@ -13,12 +13,6 @@ import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation, withTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetServerSideProps } from 'next'
-
-
-
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
@@ -27,16 +21,12 @@ import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 
-
-
 const EditProfile = () => {
-  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
     profilePic: '',
     coverPic: '',
   })
-  
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
@@ -127,7 +117,7 @@ const EditProfile = () => {
                 fontWeight: '200',
               }}
             >
-              {t('hey')}, {currentUser.auth.firstName}!
+              Hey, {currentUser.auth.firstName}!
             </Heading>
           </Box>
         </Box>
@@ -353,11 +343,5 @@ const EditProfile = () => {
     </>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
-export default withTranslation('common')(EditProfile)
-
+export default EditProfile

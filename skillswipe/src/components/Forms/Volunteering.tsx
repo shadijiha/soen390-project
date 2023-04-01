@@ -15,12 +15,8 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const Volunteering = (props: any) => {
-  const { t } = useTranslation('common')
   const [volunteering, setVolunteering] = useState({
     company: '',
     title: '',
@@ -47,18 +43,18 @@ const Volunteering = (props: any) => {
       !volunteering.start_year ||
       !volunteering.end_year
     ) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     }
     if (volunteering.start_year > volunteering.end_year) {
-      toast(t('addValidYear'))
+      toast('Please add Valid start and end year')
       return
     } else {
       editVolunteeringRequest(token, volunteering).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('updatedSuccessfully'))
+          toast.success('Volunteering updated successfully')
         } else {
-          toast.error(t('errorUpdating'))
+          toast.error('Error updating volunteering')
         }
       })
     }
@@ -72,10 +68,10 @@ const Volunteering = (props: any) => {
     } else {
       deleteVolunteeringRequest(token, volunteering.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('deletedSuccessfully'))
+          toast.success('Volunteering deleted successfully')
           props.deleteVolunteering(props.volunteering.id)
         } else {
-          toast.error(t('errorDeleting'))
+          toast.error('Error deleting volunteering')
         }
       })
     }
@@ -90,18 +86,18 @@ const Volunteering = (props: any) => {
       !volunteering.start_year ||
       !volunteering.end_year
     ) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     }
     if (volunteering.start_year > volunteering.end_year) {
-      toast(t('addValidYear'))
+      toast('Please add Valid start and end year')
       return
     } else {
       addVolunteeringRequest(token, volunteering).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('addedSuccessfully'))
+          toast.success('Volunteering added successfully')
         } else {
-          toast.error(t('errorAdding'))
+          toast.error('Error adding volunteering')
         }
       })
     }
@@ -125,7 +121,7 @@ const Volunteering = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          {t('volunteering')} {props.index} {props.isNew}
+          Volunteering {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -139,7 +135,7 @@ const Volunteering = (props: any) => {
             borderRadius="100px"
             onClick={updateVolunteering}
           >
-            {t('update')}
+            Update
           </Button>
         )}
         {props.isNew && (
@@ -153,7 +149,7 @@ const Volunteering = (props: any) => {
             borderRadius="100px"
             onClick={addVolunteering}
           >
-            {t('add')}
+            Add
           </Button>
         )}
         <Button
@@ -170,7 +166,7 @@ const Volunteering = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="company">
-        <FormLabel htmlFor="company">{t('company')}</FormLabel>
+        <FormLabel htmlFor="company">Company</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -185,7 +181,7 @@ const Volunteering = (props: any) => {
         />
       </FormControl>
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year-when">{t('startDate')}</FormLabel>
+        <FormLabel htmlFor="start_year-when">Start date</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -200,7 +196,7 @@ const Volunteering = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">{t('endDate')}</FormLabel>
+        <FormLabel htmlFor="end_year">End date</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -215,7 +211,7 @@ const Volunteering = (props: any) => {
         />
       </FormControl>
       <FormControl id="title">
-        <FormLabel htmlFor="title">{t('title')}</FormLabel>
+        <FormLabel htmlFor="title">Title</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

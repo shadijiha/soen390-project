@@ -15,12 +15,8 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const Courses = (props: any) => {
-  const { t } = useTranslation('common')
   const [course, setCourse] = useState({
     courseName: '',
     courseNumber: '',
@@ -40,14 +36,14 @@ const Courses = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     } else {
       editCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('updatedSuccessfully'))
+          toast.success('Course updated successfully')
         } else {
-          toast.error(t('errorUpdating'))
+          toast.error('Error updaing course')
         }
       })
     }
@@ -57,14 +53,14 @@ const Courses = (props: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
-      toast(t('fillFields'))
+      toast('Please fill all the fields')
       return
     } else {
       addCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('addedSuccessfully'))
+          toast.success('Course added successfully')
         } else {
-          toast.error(t('errorAdding'))
+          toast.error('Error adding course')
         }
       })
     }
@@ -78,10 +74,10 @@ const Courses = (props: any) => {
     } else {
       deleteCoursesRequest(token, course.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success(t('deletedSuccessfully'))
+          toast.success('Course deleted successfully')
           props.deleteCourse(props.course.id)
         } else {
-          toast.error(t('errorDeleting'))
+          toast.error('Error deleting course')
         }
       })
     }
@@ -108,7 +104,7 @@ const Courses = (props: any) => {
             marginBottom: '20px',
           }}
         >
-           {t('courses')} {props.index} {props.isNew}
+          Courses and Certifications {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -122,7 +118,7 @@ const Courses = (props: any) => {
             borderRadius="100px"
             onClick={updateCourses}
           >
-            {t('update')}
+            Update
           </Button>
         )}
         {props.isNew && (
@@ -136,7 +132,7 @@ const Courses = (props: any) => {
             borderRadius="100px"
             onClick={addCourses}
           >
-            {t('add')}
+            Add
           </Button>
         )}
         <Button
@@ -153,7 +149,7 @@ const Courses = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="courseName">
-        <FormLabel htmlFor="courseName">{t("courseName")}</FormLabel>
+        <FormLabel htmlFor="courseName">courseName</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -169,7 +165,7 @@ const Courses = (props: any) => {
       </FormControl>
 
       <FormControl id="courseNumber">
-        <FormLabel htmlFor="courseNumber">{t("courseNumber")}</FormLabel>
+        <FormLabel htmlFor="courseNumber">courseNumber</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

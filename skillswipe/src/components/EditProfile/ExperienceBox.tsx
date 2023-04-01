@@ -4,9 +4,6 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Experience from '../Forms/Experience'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 type Experience = {
   company?: string
@@ -39,7 +36,6 @@ const ExperienceBox = () => {
       experience.title
     )
 }
-  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -65,7 +61,7 @@ const ExperienceBox = () => {
           fontWeight: 'bold',
         }}
       >
-        {t('workExperience')}
+        Work Experience
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

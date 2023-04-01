@@ -3,13 +3,9 @@ import React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-import { useTranslation } from 'next-i18next'
-
 
 const Awards = ({ awards }: any) => {
   // call API to get education history
-
-  const { t } = useTranslation('common')
 
   return (
     awards && (
@@ -27,7 +23,7 @@ const Awards = ({ awards }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🏅 {t('awards')}</text>
+                <text>🏅 Awards</text>
               </h1>
             </div>
             <Stack

@@ -3,10 +3,7 @@ import { Button, Stack, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-// eslint-disable-next-line prettier/prettier
 import Awards from '../Forms/Awards'
-import { useTranslation } from 'next-i18next'
-
 
 type Awards = {
   title?: string
@@ -38,7 +35,6 @@ const AwardsBox = () => {
       award.url
     )
   }
-  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -65,7 +61,7 @@ const AwardsBox = () => {
           alignSelf: 'flex-start',
         }}
       >
-        {t('awards')}
+        Awards
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
@@ -98,4 +94,5 @@ const AwardsBox = () => {
     </Stack>
   )
 }
+
 export default AwardsBox

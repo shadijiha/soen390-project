@@ -19,12 +19,8 @@ import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EditProfile = () => {
-  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
     profilePic: '',
@@ -60,7 +56,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
-          toast(t("updateCoverPicture"))
+          toast('Successfully Update Cover Picture')
         })
         .catch((error) => {
           toast(error.message)
@@ -77,7 +73,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast(t("updateProfilePicture"))
+          toast('Successfully Updated Profile picture')
         })
         .catch((error) => {
           toast(error.message)
@@ -103,7 +99,7 @@ const EditProfile = () => {
                 fontWeight: '200',
               }}
             >
-              {t('hey')}, {currentUser.auth.firstName}!
+              Hey, {currentUser.auth.firstName}!
             </Heading>
           </Box>
         </Box>
@@ -270,11 +266,5 @@ const EditProfile = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default EditProfile

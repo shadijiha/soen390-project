@@ -4,9 +4,6 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Courses from '../Forms/Courses'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 type Course = {
   courseName?: string
@@ -40,8 +37,6 @@ const CoursesBox = () => {
   const isNew = (course: Course) => {
     return !(course.courseName && course.courseNumber)
   }
-
-  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -68,7 +63,7 @@ const CoursesBox = () => {
           alignSelf: 'flex-start',
         }}
       >
-        {t('courses')}"
+        Courses
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

@@ -9,10 +9,6 @@ import {
 import * as React from 'react'
 import { useEffect } from 'react'
 
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 interface ProjectCardProps {
   id: number
   title: string
@@ -50,8 +46,6 @@ const PersonalProjectsProfile = ({ Project }: any) => {
   const [isOpen, setIsOpen] = React.useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
 
-  const { t } = useTranslation('common')
-
   return (
     Project &&
     Project.length > 0 && (
@@ -64,7 +58,7 @@ const PersonalProjectsProfile = ({ Project }: any) => {
               paddingTop: "2rem",
             }}
           >
-            <span> {t('personalProjects')}</span>
+            <span>Personal Projects</span>
           </h1>
         </div>
         <Container maxW="5xl" p={{ base: 5, md: 10 }}>

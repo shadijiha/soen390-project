@@ -5,11 +5,7 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-// eslint-disable-next-line prettier/prettier
 import Information from '../Forms/Information'
-import { useTranslation } from 'next-i18next'
-
-
 
 const InformationBox = () => {
   const user = useSelector((state) => state as any)
@@ -37,12 +33,12 @@ const InformationBox = () => {
       UpdateUser.biography
     ) {
       if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
-        toast(t('invalidEmail'))
+        toast('Please add Valid email')
       } else {
         editPersonalInformation(token, UpdateUser)
           .then((response) => {
             console.log(response)
-            toast(t('updateSuccess'))
+            toast('Updated Successfully')
           })
           .catch((error) => {
             toast(error.message)
@@ -50,8 +46,6 @@ const InformationBox = () => {
       }
     }
   }
-
-  const { t } = useTranslation('common')
 
   return (
     <Stack
@@ -78,7 +72,7 @@ const InformationBox = () => {
           fontWeight: 'bold',
         }}
       >
-        {t('personalInformation')}
+        Personal Information
       </Text>
       <Information update={update} handleSubmit={handleSubmit} />
     </Stack>

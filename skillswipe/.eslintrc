@@ -21,6 +21,9 @@
     },
     "ecmaVersion": "latest",
     "sourceType": "module",
+    "project": [
+      "tsconfig.json"
+    ]
   },
   "plugins": [
     "react",
@@ -30,12 +33,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "prettier/prettier": [
-      "error",
-      {
-        "endOfLine": "auto"
-      }
-    ]
+    "prettier/prettier": "error"
   },
   "overrides": [
     {

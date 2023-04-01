@@ -19,9 +19,6 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'
-import { useTranslation} from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Register = () => {
   const { toggleColorMode } = useColorMode()
@@ -72,8 +69,6 @@ const Register = () => {
       gender: event.target.value,
     })
   }
-
-  const { t } = useTranslation('common')
   const submitForm = () => {
     if (
       !(
@@ -85,12 +80,12 @@ const Register = () => {
         User.password == ConfirmPass
       )
     ) {
-      toast(t('fillAllFields'))
+      toast('Please fill all the fields')
     } else {
       if (emailValidator(User.email) == true) {
         register(User)
           .then((Response) => {
-            toast(t('successfullyRegistered'))
+            toast('Successfully Registered the Account')
             localStorage.setItem('jwt', Response.data.access_token)
             router.push('/home')
           })
@@ -98,7 +93,7 @@ const Register = () => {
             toast(error.message)
           })
       } else {
-        toast(t('invalidInput'))
+        toast('Invalid Inputs')
       }
     }
   }
@@ -112,7 +107,7 @@ const Register = () => {
           data-testid="register-page"
         >
           <Flex direction="column" background={formBackground} p={12} rounded={25}>
-            <Heading mb={6}>{t('register')} 🧖🏼</Heading>
+            <Heading mb={6}>Register 🧖🏼</Heading>
             <Input
               data-testid="first-name"
               placeholder="First Name"
@@ -160,7 +155,9 @@ const Register = () => {
               onChange={confirmpassChange}
             />
             <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
-            {ConfirmPass !== User.password ? t('password-mismatch') : ''}
+              {ConfirmPass != User.password
+                ? 'Password \n in both fields should be Same'
+                : ''}
             </Text>
 
             <Select
@@ -171,11 +168,11 @@ const Register = () => {
               variant="filled"
               background={placeholderBackground}
             >
-              <option value="MALE">{t('male')}</option>
-              <option value="FEMALE">{t('female')}</option>
+              <option value="MALE">MALE</option>
+              <option value="FEMALE">FEMALE</option>
             </Select>
             <Button colorScheme="green" mb={4} onClick={submitForm}>
-              {t('register')}
+              Register
             </Button>
             {/* Google */}
             <Button
@@ -186,7 +183,7 @@ const Register = () => {
               leftIcon={<FcGoogle />}
             >
               <Center>
-                <Text>{t('signupWithGoogle')}</Text>
+                <Text>Sign Up with Google</Text>
               </Center>
             </Button>
 
@@ -200,7 +197,7 @@ const Register = () => {
             </Button>
             <Button mb={-5}>
               <Link href="/">
-                <Text fontSize={13}>{t('alreadyUser')}</Text>
+                <Text fontSize={13}>Already a user?</Text>
               </Link>
             </Button>
           </Flex>
@@ -209,11 +206,5 @@ const Register = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Register

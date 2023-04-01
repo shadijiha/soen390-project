@@ -4,10 +4,6 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Languages from '../Forms/Languages'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 type Language = {
   languageName?: string
@@ -31,8 +27,6 @@ const LanguagesBox = () => {
   const isNew = (language: Language) => {
     return !(language.languageName && language.proficiency)
   }
-
-  const { t } = useTranslation('common')
 
   return (
     <Stack
@@ -60,7 +54,7 @@ const LanguagesBox = () => {
           fontWeight: 'bold',
         }}
       >
-        {t('languages')}
+        Languages
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
