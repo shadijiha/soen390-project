@@ -26,13 +26,13 @@ import {
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 interface JobAttributes {
   id: number
@@ -50,7 +50,7 @@ interface JobAttributes {
 
 const myListings = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const {t} = useTranslation('common');
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -337,7 +337,9 @@ const myListings = () => {
                       {/* format the starting date to be only year month and date */}
                       📅 ‎ ‎ {t('startingDate')}: {job.startDate.split('T')[0]}
                     </chakra.p>
-                    <chakra.p>🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr</chakra.p>
+                    <chakra.p>
+                      🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr
+                    </chakra.p>
                     <chakra.p>
                       🏫 ‎ ‎ {t('transcript')} ‎ ‎
                       {job.transcript.toString() == 'true' ? '✅' : '❌'}
