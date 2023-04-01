@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { changeStatus, getPendingRequest } from '@/pages/api/api'
-import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
@@ -33,48 +28,23 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { i18n }  from 'next-i18next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next' 
-import NotificationCounter from './Util/NotificationCounter'
-
 
 export default function NavBar(props: any) {
   const { toggleColorMode } = useColorMode()
-
-
-const selectLanguage = (lng) => {
-
-  if(i18n) i18n.changeLanguage(lng);
-};
-
- export default function NavBar(props: any) {
-  const { colorMode, toggleColorMode } = useColorMode()
-
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
-  const [pendingConnections, setPendingConnections] = useState([
-    { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
-  ])
-  const [messageNotification, setmessageNotification]: any[] = useState([])
-  const [loading1, setloading1] = useState(null)
-  const [loading2, setloading2] = useState(null)
-  // const [load1,setload1] = useState(true);
-  // const [load2,setload2] = useState(true);
-
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
     setSearchTerm(e.target.value)
   }
 
-
   const router = useRouter()
+
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
@@ -86,35 +56,13 @@ const selectLanguage = (lng) => {
   )
 
   const logout = () => {
-    const token = localStorage.getItem('jwt')
-    if (token) {
+    if (localStorage.getItem('jwt')) {
       localStorage.removeItem('jwt')
-      changeStatus('offline', token)
-        .then((response) => {})
-        .catch((error) => {
-          toast(error.message)
-        })
       toast('Successfully Logged Out')
     }
   }
 
-
   const [profile] = useState({
-
-  const [showDropdown1, setShowDropdown1] = useState(false)
-  const [showDropdown2, setShowDropdown2] = useState(false)
-
-  const { t} = useTranslation('common');
-
-  const router = useRouter()
-  const changeLanguage = (language) => {
-    router.push(router.pathname, router.pathname, { locale: language })
-    selectLanguage(language)
-  }
-
-
-  const [profile, setProfile] = useState({
-
     name: 'John Smith',
     title: 'Software Engineer',
     location: 'Montreal, QC, CA',
@@ -138,69 +86,6 @@ const selectLanguage = (lng) => {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
-
-  const getPendingConnections = () => {
-    if (typeof localStorage !== 'undefined') {
-      const token = localStorage.getItem('jwt')
-      getPendingRequest(token)
-        .then((res) => {
-          setPendingConnections(res.data)
-          setloading2(res.data.length)
-        })
-        .catch((err) => {
-          toast.error(err)
-        })
-    }
-  }
-  useEffect(() => {
-    if (currentUser.auth) {
-      getMessage()
-      getPendingConnections()
-    }
-  }, [currentUser])
-
-  const getMessage = async () => {
-    const token = localStorage.getItem('jwt')
-    const notification: any = []
-    if (token) {
-      try {
-        const allConvo = await getAllConversation(token)
-        allConvo.data.map(async (element) => {
-          const convo = await getConversationById(token, element.id)
-
-          await Promise.all(
-            convo.data.map(async (el) => {
-              // console.log(el)
-              const created_at: Date = new Date(el.created_at)
-              const currentDate: Date = new Date()
-              const diffInMs: any = currentDate.getTime() - created_at.getTime()
-              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
-              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
-                const notif: any = {
-                  id: element.id,
-                  firstName: element.firstName,
-                  lastName: element.lastName,
-                  created_at: el.created_at,
-                  profilePic: element.profilePic,
-                }
-                notification.push(notif)
-              }
-            })
-          )
-          notification.sort((a, b) => {
-            const cr1: any = new Date(a.created_at)
-            const cr2: any = new Date(b.created_at)
-            return cr2.getTime() - cr1.getTime()
-          })
-          setmessageNotification(notification)
-          setloading1(notification.length)
-        })
-      } catch (error) {
-        toast(error.message)
-      }
-    }
-  }
-
   const handleFilter = (value) => {
     // open the openJobs page
     if (value === 'option1') {
@@ -245,7 +130,6 @@ const selectLanguage = (lng) => {
               router.push('/')
             }}
           >
-
             SkillSwipe
           </Text>
           <NextLink href="#">
@@ -262,20 +146,6 @@ const selectLanguage = (lng) => {
               {toggleTheme}
             </Button>
           </NextLink>
-          <Select
-            onChange={(e) => changeLanguage(e.target.value)}
-            variant="filled"
-            my={5}
-            w="58"
-            py={2}
-            _hover={{
-              cursor: "pointer",
-            }}
-            icon={<Text>🌐</Text>}
-          >
-            <option value="en"> {t('english')} </option>
-            <option value="fr"> {t('french')} </option>
-          </Select>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
@@ -290,6 +160,7 @@ const selectLanguage = (lng) => {
                 🏠 ‎ Home
               </Button>
             </NextLink>
+
             <NextLink href="/inbox" passHref>
               <Button
                 variant="ghost"
@@ -298,18 +169,9 @@ const selectLanguage = (lng) => {
                 w="100%"
                 rounded={'full'}
               >
-
                 💬 ‎ Messages
-
               </Button>
             </NextLink>
-            {props.nbNotifications != null ? (
-              <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) : loading1 != null && loading2 != null ? (
-              <NotificationCounter Notifications={loading1 + loading2} />
-            ) : (
-              <NotificationCounter Notifications={0} />
-            )}
 
             <Menu>
               <MenuButton
@@ -322,7 +184,6 @@ const selectLanguage = (lng) => {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-
                 🚀 ‎ Careers
               </MenuButton>
               <MenuList
@@ -340,7 +201,6 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-
                   💼 ‎ Open Jobs
                 </MenuItem>
                 <MenuItem
@@ -354,7 +214,6 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-
                   📂 ‎ My Job Listings
                 </MenuItem>
                 <MenuItem
@@ -368,7 +227,6 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-
                   📝 ‎ Create a Job Listing
                 </MenuItem>
                 <MenuItem
@@ -386,7 +244,31 @@ const selectLanguage = (lng) => {
                 </MenuItem>
               </MenuList>
             </Menu>
-
+            <NextLink href="/notifications" passHref>
+              <div style={{ position: 'relative' }}>
+                <IconButton
+                  aria-label="Notifications"
+                  icon={<BellIcon />}
+                  variant="ghost"
+                  size="lg"
+                  w="100%"
+                  my={4}
+                  rounded={'full'}
+                  marginRight={'10px'}
+                ></IconButton>
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  px="2"
+                  position="absolute"
+                  top="20px"
+                  right="0"
+                  marginRight={'5px'}
+                >
+                  {props.nbNotifications}
+                </Badge>
+              </div>
+            </NextLink>
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
@@ -427,7 +309,7 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                {t('logout')}
+                Logout
               </Button>
             </NextLink>
           </Flex>
@@ -473,19 +355,19 @@ const selectLanguage = (lng) => {
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
-                {t('home')}
+                Home
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
-                {t('messages')}
+                Messages
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                {t('myAccount')}
+                My Account
               </Button>
             </NextLink>
 
@@ -501,17 +383,17 @@ const selectLanguage = (lng) => {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                {t('careers')}
+                Careers
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                {t('openJobs')}
+                  Open Jobs
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                {t('myJobListings')}
+                  My Job Listings
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                {t('createJobListing')}
+                  Create a Job Listing
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   My Job Applications
@@ -533,7 +415,7 @@ const selectLanguage = (lng) => {
                 <form onSubmit={MobilehandleSubmit}>
                   <input
                     type="text"
-                    placeholder= {t('search')}
+                    placeholder="Search"
                     value={searchTerm}
                     onChange={MobilehandleChange}
                     style={{
@@ -582,12 +464,12 @@ const selectLanguage = (lng) => {
                   transform: 'scale(1.05)',
                 }}
               >
-                {t('SignIn/Logout')}
+                Sign In/Logout
               </Button>
             </NextLink>
           </Flex>
         </Flex>
       </Flex>
     </Box>
-  );
+  )
 }
