@@ -13,11 +13,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Skills = (props: any) => {
   const { t } = useTranslation('common')

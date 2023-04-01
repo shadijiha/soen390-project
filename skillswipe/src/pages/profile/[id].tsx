@@ -32,10 +32,8 @@ import Recommendations from '@/components/Profile/Recommendations'
 import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
-import Education from '../../components/Profile/education'
 import { useTranslation } from 'next-i18next'
-
-
+import Education from '../../components/Profile/education'
 
 const profile = () => {
   const { t } = useTranslation('common')
@@ -94,7 +92,7 @@ const profile = () => {
     removeConnection(token, router.query.id)
       .then((reponse) => {
         setStatus({ connected: false, Requested: false, Pending: false })
-        toast.success("Connection has been removed", { type: "success" });
+        toast.success('Connection has been removed', { type: 'success' })
       })
       .catch((error) => {
         toast(error.message)
@@ -266,42 +264,41 @@ const profile = () => {
                     <div className="profile-container05">
                       {Status.connected == true ? (
                         <>
-                        <button
-                          className="profile-button button"
-                          style={{
-                            color: buttonColors,
-                            borderColor: buttonColors,
-                            borderWidth: '2px',
-                            textShadow: '0px 0px 40px #000000CA',
-                            fontWeight: 600,
-                            marginRight: '1em',
-                          }}
-                          onClick={() => {
-                            router.push(`/inbox/${router.query.id}`)
-                          }}
-                        >
-                          <span>
-                            <span>{t('message')}</span>
-                          </span>
-                        </button>
-                        <button
-                          className="profile-button button"
-                          style={{
-                            color: buttonColors,
-                            borderColor: buttonColors,
-                            borderWidth: '2px',
-                            textShadow: '0px 0px 40px #000000CA',
-                            fontWeight: 600,
-                            marginRight: 'auto',
-                            width: '100%', // added this line to make the button fill the available space
-                          }}
-                          onClick={Reject}
-                        >
-                          <span>
-                            <span>Remove Connection</span>
-                          </span>
-
-                        </button>
+                          <button
+                            className="profile-button button"
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: '2px',
+                              textShadow: '0px 0px 40px #000000CA',
+                              fontWeight: 600,
+                              marginRight: '1em',
+                            }}
+                            onClick={() => {
+                              router.push(`/inbox/${router.query.id}`)
+                            }}
+                          >
+                            <span>
+                              <span>{t('message')}</span>
+                            </span>
+                          </button>
+                          <button
+                            className="profile-button button"
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: '2px',
+                              textShadow: '0px 0px 40px #000000CA',
+                              fontWeight: 600,
+                              marginRight: 'auto',
+                              width: '100%', // added this line to make the button fill the available space
+                            }}
+                            onClick={Reject}
+                          >
+                            <span>
+                              <span>Remove Connection</span>
+                            </span>
+                          </button>
                         </>
                       ) : Status.Requested == true ? (
                         <button
@@ -317,7 +314,7 @@ const profile = () => {
                           onClick={Reject}
                         >
                           <span>
-                            <span>{ t('deleteRequest') }</span>
+                            <span>{t('deleteRequest')}</span>
                           </span>
                         </button>
                       ) : Status.Pending == true ? (
@@ -335,7 +332,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('accept') }</span>
+                              <span> {t('accept')}</span>
                             </span>
                           </button>
                           <button
@@ -351,7 +348,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('decline') }</span>
+                              <span> {t('decline')}</span>
                             </span>
                           </button>
                         </>
@@ -370,7 +367,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span> { t('connect') }</span>
+                              <span> {t('connect')}</span>
                             </span>
                           </button>
                         </>
