@@ -17,12 +17,12 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const postJob = () => {
   const [postListing, setJobListing] = useState({
@@ -70,9 +70,7 @@ const postJob = () => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('createListing '))
         } else {
-          toast.error(
-            t('errorCreateListing')
-          )
+          toast.error(t('errorCreateListing'))
         }
       })
     }
@@ -98,7 +96,6 @@ const postJob = () => {
                 alt="Job Listing Image"
                 width={'80px'}
               ></Image>
-
 
               <Text
                 style={{
