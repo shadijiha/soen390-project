@@ -21,7 +21,14 @@ import WorkExperience from '@/components/Profile/WorkExperience'
 import Education from '../../components/Profile/education'
 import Languages from '../../components/Profile/Languages'
 
+import { useTranslation } from 'next-i18next' 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSideProps } from 'next'
+
+
 const Profile = () => {
+
+  const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
   const User = useSelector((state) => state as any)
@@ -159,7 +166,7 @@ const Profile = () => {
                       router.push('/profile/editProfile')
                     }}
                   >
-                    Edit
+                    {t('edit')}
                   </button>
                 </div>
               </div>
@@ -257,5 +264,9 @@ const Profile = () => {
     </>
   )
 }
-
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 export default Profile

@@ -11,8 +11,12 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const Information = ({ update, handleSubmit }: any) => {
+  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const setState = (updateUserObj: any) => {
     update(updateUserObj)
@@ -55,7 +59,7 @@ const Information = ({ update, handleSubmit }: any) => {
           borderRadius="100px"
           onClick={handleSubmit}
         >
-          Update
+          {t('update')}
         </Button>
       </Stack>
 
@@ -139,11 +143,11 @@ const Information = ({ update, handleSubmit }: any) => {
               <option selected value="MALE">
                 MALE
               </option>
-              <option value="FEMALE">FEMALE</option>
+              <option value="FEMALE">{t("female")}</option>
             </>
           ) : (
             <>
-              <option value="MALE">MALE</option>
+              <option value="MALE">{t("male")}</option>
               <option selected value="FEMALE">
                 FEMALE
               </option>

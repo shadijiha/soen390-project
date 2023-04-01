@@ -9,8 +9,13 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 export default function Search() {
+
+  const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
@@ -31,7 +36,7 @@ export default function Search() {
     search(token, searchQuery)
       .then((response) => {
         if (!response.data || !response.data.users) {
-          toast('No results found')
+          toast(t('noResults'))
         } else {
           if (response.data !== null && response.data.users !== null) {
             const searchedUsers = response.data.users.filter(
@@ -129,6 +134,12 @@ export default function Search() {
     </Layout>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 // const handleSearch = async (e:any) => {
 // const token = localStorage.getItem("jwt");

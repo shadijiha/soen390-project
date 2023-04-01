@@ -82,6 +82,13 @@ const SubmitAppForm = () => {
     }
   }
 
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
+
+const SubmitAppForm = () => {
+
+  const { t } = useTranslation('common')
   return (
     <>
       <VStack
@@ -114,21 +121,21 @@ const SubmitAppForm = () => {
               paddingBottom: '0.2em',
             }}
           >
-            Submit Application
+            {t('submitApplication')}
           </Text>
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
             <FormControl id="name">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <Input
                 type="text"
-                placeholder="loggedInName"
+                placeholder= {t('loggedInName')}
                 rounded="100px"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </FormControl>
             <FormControl id="email">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <Input
                 type="email"
                 placeholder="loggedInEmail@test.com"
@@ -138,7 +145,7 @@ const SubmitAppForm = () => {
               />
             </FormControl>
             <FormControl id="resume">
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>{t('phone')}</FormLabel>
               <Input
                 type="text"
                 rounded="100px"
@@ -166,6 +173,7 @@ const SubmitAppForm = () => {
                   display="flex"
                   flexDirection="column"
                 >
+
                   {cvUploaded ? (
                     <HStack
                       style={{
@@ -230,6 +238,7 @@ const SubmitAppForm = () => {
           </AspectRatio>
 
           <FormControl id="cover">
+
             <FormLabel>Cover Letter (optional)</FormLabel>
             <Textarea
               size="lg"
@@ -254,12 +263,11 @@ const SubmitAppForm = () => {
             shadow={'0px 4px 30px #0000001F'}
             onClick={handleSubmit}
           >
-            Apply
+            {t('submit')}
           </Button>
         </VStack>
       </VStack>
     </>
   )
 }
-
 export default SubmitAppForm

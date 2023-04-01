@@ -20,6 +20,9 @@ import {
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 const postJob = () => {
   const [postListing, setJobListing] = useState({
@@ -35,6 +38,8 @@ const postJob = () => {
     transcript: true,
     id: 0,
   })
+
+  const { t } = useTranslation('common')
 
   const addListing = (event: any) => {
     const token = localStorage.getItem('jwt')
@@ -54,7 +59,7 @@ const postJob = () => {
       !postListing.coverLetter ||
       !postListing.transcript
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillAllFields'))
       return
     } else {
       // forcing salary to be int
@@ -63,10 +68,10 @@ const postJob = () => {
 
       createJob(token, postListing).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Sucessfully created job listing. Happy hiring!')
+          toast.success(t('createListing '))
         } else {
           toast.error(
-            'Error creating job listing. Maybe your usertype is not recruiter?'
+            t('errorCreateListing')
           )
         }
       })
@@ -93,6 +98,7 @@ const postJob = () => {
                 alt="Job Listing Image"
                 width={'80px'}
               ></Image>
+
 
               <Text
                 style={{
@@ -270,6 +276,7 @@ const postJob = () => {
                   }
                 />
               </FormControl>
+
               <Button
                 onClick={addListing}
                 size={'lg'}
@@ -292,5 +299,11 @@ const postJob = () => {
     </>
   )
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default postJob

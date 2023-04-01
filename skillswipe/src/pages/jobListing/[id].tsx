@@ -16,6 +16,7 @@ import TopHeader from '@/components/jobListing/TopHeader'
 
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
 
 import { viewJob } from '../api/api'
 
@@ -34,6 +35,7 @@ type JobAttributes = {
 }
 
 const jobListing = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const [job, setJob] = useState<JobAttributes>({})
   const [jobSkills, setSkills] = useState<Array<string>>([])
@@ -49,13 +51,13 @@ const jobListing = () => {
         })
         .catch((error) => {
           console.error(error)
-          toast.error('Error getting job')
+          toast.error(t('errorJobs'))
         })
     }
   }, [router.query.id])
 
   if (!job) {
-    return <div>Loading...</div>
+    return <div> {t('loading')} </div>
   }
 
   useEffect(() => {

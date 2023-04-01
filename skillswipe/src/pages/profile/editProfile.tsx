@@ -13,6 +13,12 @@ import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useTranslation, withTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetServerSideProps } from 'next'
+
+
+
 
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
@@ -21,12 +27,16 @@ import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 
+
+
 const EditProfile = () => {
+  const { t } = useTranslation('common')
   const currentUser = useSelector((state) => state as any)
   const [Pic, setPic] = useState({
     profilePic: '',
     coverPic: '',
   })
+  
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
@@ -96,6 +106,8 @@ const EditProfile = () => {
         toast(error.message)
       })
   }
+
+
   const clickCover = () => {
     document.getElementById('file-input-coverPic')?.click()
   }
@@ -115,7 +127,7 @@ const EditProfile = () => {
                 fontWeight: '200',
               }}
             >
-              Hey, {currentUser.auth.firstName}!
+              {t('hey')}, {currentUser.auth.firstName}!
             </Heading>
           </Box>
         </Box>
@@ -187,7 +199,35 @@ const EditProfile = () => {
               id="file-input-profilePic"
               style={{ display: 'none' }}
               onChange={ProfileImageHandler}
-            />
+              />
+            { Pic.profilePic ?  (
+              
+              
+            <button style={{ position: 'absolute', top: '0', right: '0' }}>
+       
+              <img
+         src="https://img.icons8.com/material-sharp/512/trash.png"
+         alt="Delete Icon"
+         style={{
+           height: '35px',
+           width: '35px',
+           borderRadius: '100%',
+           backgroundColor: 'white',
+           padding: "1px",
+           margin: "2px",
+           border: "3px solid black"
+           
+          }}
+          // add an onClick handler to delete the profile pic
+          onClick={removeUserProfilepic}
+          />
+          
+     </button>
+      
+     
+          ) : null
+   
+     }
           </div>
 
           {/* cover photo */}
@@ -250,6 +290,7 @@ const EditProfile = () => {
               onChange={coverImageHandler}
             />
 
+
 { Pic.coverPic ?  (
               
               
@@ -278,6 +319,7 @@ const EditProfile = () => {
             ) : null
      
        }
+
           </div>
         </Stack>
 
@@ -311,5 +353,11 @@ const EditProfile = () => {
     </>
   )
 }
+export const getStaticProps: GetStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
-export default EditProfile
+export default withTranslation('common')(EditProfile)
+
