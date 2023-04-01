@@ -3,9 +3,9 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
+import { DeleteIcon } from '@chakra-ui/icons'
 import {
   Avatar,
-  background,
   Box,
   Button,
   chakra,
@@ -23,9 +23,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Stack,
   Text,
-  Textarea,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
@@ -35,7 +33,7 @@ import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
-import { createPosts, getOpenJobs, getPosts } from './api/api'
+import { createPosts, deletePost, getOpenJobs, getPosts } from './api/api'
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -179,9 +177,7 @@ const Home = () => {
       getPosts(token)
         .then((response) => {
           const allPosts = response.data
-          // allConvo = allConvo.filter(filterConvo)
           setPosts(allPosts)
-          // setLoading(false)
         })
         .catch((error) => {
           toast(error.message)
@@ -192,12 +188,11 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '' })
   const createPostHandler = () => {
     const token = localStorage.getItem('jwt')
-    console.log(createpost)
     createPosts(token, createpost).then((res) => {
       if (res.status == 201 || res.status == 200) {
-        toast.success('Sucessfully created post listing.')
+        toast.success('Sucessfully created post')
       } else {
-        toast.error('Error creating post?')
+        toast.error('Error creating post')
       }
     })
   }
@@ -217,7 +212,11 @@ const Home = () => {
           <Box>
             <HStack paddingBottom={5}>
               <Heading marginRight={3}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
-              <Button borderRadius="50px" onClick={() => setIsOpen(true)}>
+              <Button
+                borderRadius="50px"
+                onClick={() => setIsOpen(true)}
+                data-testid="create-button"
+              >
                 Create Post
               </Button>
             </HStack>
@@ -266,6 +265,7 @@ const Home = () => {
                       onChange={handlepost}
                       id="creat-box"
                       minRows={2}
+                      data-testid="create-post"
                       style={{
                         border: '0px solid #E2E8F00D',
                         borderRadius: '10px',
@@ -353,11 +353,21 @@ const Home = () => {
                             colorScheme="red"
                             size="sm"
                             borderRadius="50px"
+                            onClick={() => {
+                              const token = localStorage.getItem('jwt')
+                              deletePost(token, post.id).then((res) => {
+                                if (res.status == 201 || res.status == 200) {
+                                  toast.success('Sucessfully deleted post')
+                                } else {
+                                  toast.error('Can only delete your post')
+                                }
+                              })
+                            }}
                             style={{
                               marginTop: '0.5rem',
                             }}
                           >
-                            Report
+                            <DeleteIcon />
                           </Button>
                         </HStack>
                       </Box>

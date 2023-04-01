@@ -233,6 +233,17 @@ export const createPosts = async (token: any, postCreate: any) => {
     },
   })
 }
+export const deletePost = async (token: any, postId: number) => {
+  return axios
+    .delete(`${URL}/posts/${postId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
 
 export const applyToJob = async (token, id, jobApply: any) => {
   return axios
