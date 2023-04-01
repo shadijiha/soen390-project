@@ -147,12 +147,30 @@ const Home = () => {
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
     {
-      id: 4,
-      content: 'hi this is uzair',
+      id: 13,
+      content: 'hey',
       image: null,
-      created_at: '2023-03-28T08:11:07.572Z',
-      updated_at: '2023-03-28T08:11:07.572Z',
+      created_at: '2023-03-31T17:47:41.043Z',
+      updated_at: '2023-03-31T17:47:41.043Z',
       deleted_at: null,
+      user: {
+        id: 4,
+        firstName: 'usama',
+        lastName: 'saleem',
+        email: 'messi@gmail.com',
+        mobileNo: null,
+        gender: 'MALE',
+        profilePic: null,
+        coverPic: null,
+        cv: null,
+        coverLetter: null,
+        biography: null,
+        userStatus: 'online',
+        type: 'User',
+        created_at: '2023-03-02T22:50:47.902Z',
+        updated_at: '2023-03-28T05:07:19.000Z',
+        deleted_at: null,
+      },
     },
   ])
   useEffect(() => {
@@ -172,8 +190,6 @@ const Home = () => {
   }, [User.auth])
 
   const [createpost, setCreatePost] = useState({ content: '' })
-  //will remove this eslint once i write this func
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   const createPostHandler = () => {
     const token = localStorage.getItem('jwt')
     console.log(createpost)
@@ -305,9 +321,13 @@ const Home = () => {
                           width={'100%'}
                         >
                           <Avatar
-                            size="sm"
-                            name={User.auth.firstName + User.auth.lastName}
-                            src="https://bit.ly/broken-link"
+                            size="lg"
+                            mr={4}
+                            src={
+                              post.user.profilePic
+                                ? `data:image/jpeg;base64,${post.user.profilePic}`
+                                : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                            }
                           />
                           <Text
                             flex={1}
@@ -316,7 +336,7 @@ const Home = () => {
                               marginLeft: '0.5rem',
                             }}
                           >
-                            {User.auth.firstName} {User.auth.lastName}
+                            {post.user.firstName} {post.user.lastName}
                           </Text>
 
                           <Text
