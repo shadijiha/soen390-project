@@ -25,14 +25,11 @@ import {
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
+import { useTranslation, withTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
-import { useTranslation, withTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-
-
 
 interface JobAttributes {
   id: number
@@ -178,7 +175,7 @@ const findJob = () => {
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                   {t('sortStartingDate')}
+                    {t('sortStartingDate')}
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
                     {t('sortHighestSalary')}
@@ -341,23 +338,27 @@ const findJob = () => {
                     </chakra.p>
                   </Box>
                   <VStack
-                  spacing={{ base: 0, sm: 3 }}
-                  alignItems="start"
-                  fontWeight="light"
-                  fontSize={{ base: 'xs', sm: 'sm' }}
-                  color={useColorModeValue('gray.600', 'gray.300')}
-                >
-                  <chakra.p>
-                    📅 {t('startingDate')}: {job.startDate.split('T')[0]}
-                  </chakra.p>
-                  <chakra.p>🤑 {t('salary')}: ${job.salary}/hr</chakra.p>
-                  <chakra.p>
-                    🏫 {t('transcript')}: {job.transcript.toString() == 'true' ? t('yes') : t('no')}
-                  </chakra.p>
-                  <chakra.p>
-                    💌 {t('coverLetter')}: {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
-                  </chakra.p>
-                </VStack>
+                    spacing={{ base: 0, sm: 3 }}
+                    alignItems="start"
+                    fontWeight="light"
+                    fontSize={{ base: 'xs', sm: 'sm' }}
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    <chakra.p>
+                      📅 {t('startingDate')}: {job.startDate.split('T')[0]}
+                    </chakra.p>
+                    <chakra.p>
+                      🤑 {t('salary')}: ${job.salary}/hr
+                    </chakra.p>
+                    <chakra.p>
+                      🏫 {t('transcript')}:{' '}
+                      {job.transcript.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                    <chakra.p>
+                      💌 {t('coverLetter')}:{' '}
+                      {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                  </VStack>
                   <Stack
                     spacing={2}
                     direction="row"
@@ -395,6 +396,5 @@ export const getStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale, ['common'])),
   },
 })
-
 
 export default withTranslation('common')(findJob)
