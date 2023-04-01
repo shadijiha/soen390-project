@@ -18,6 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import router from 'next/router'
+import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 const SubmitAppForm = () => {
