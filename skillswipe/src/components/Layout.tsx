@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, checkLogin } from '@/pages/api/api'
 
 import { Box } from '@chakra-ui/react'

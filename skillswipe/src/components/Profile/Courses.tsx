@@ -14,14 +14,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { FaPencilRuler } from 'react-icons/fa'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 // const courseTitles = ['Shopify Course', 'React Course', 'Node Course']
 // const courseDescriptions = [

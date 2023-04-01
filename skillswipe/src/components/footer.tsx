@@ -10,12 +10,11 @@ import {
 import { ReactNode } from 'react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const Logo = (props: any) => {
-
   const { t } = useTranslation('common')
   return (
     <svg
@@ -96,4 +95,3 @@ export default function SmallWithLogoLeft() {
     </Box>
   )
 }
-

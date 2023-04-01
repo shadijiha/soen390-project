@@ -162,8 +162,6 @@ export const editLanguages = async (token: any, UpdatedUser: any) => {
   })
 }
 
-
-
 export const removeCoverpic = async (token: any) => {
   return axios.delete(`${URL}/user/coverPic`, {
     headers: {
@@ -171,8 +169,6 @@ export const removeCoverpic = async (token: any) => {
     },
   })
 }
-
-
 
 export const search = async (token: any, query: string) => {
   return axios.get(`${URL}/search?query=${query}`, {

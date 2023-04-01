@@ -14,9 +14,9 @@ import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
 
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
 
 import { viewJob } from '../api/api'
 

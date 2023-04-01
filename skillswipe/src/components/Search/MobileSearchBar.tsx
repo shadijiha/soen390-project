@@ -1,84 +1,92 @@
-import { SearchIcon } from "@chakra-ui/icons";
-import { Button, Collapse, IconButton, InputGroup, InputRightElement, useColorModeValue, useDisclosure } from "@chakra-ui/react";
-import { useRouter } from "next/router";
-import React, { SetStateAction, useState } from "react";
+import { SearchIcon } from '@chakra-ui/icons'
+import {
+  Button,
+  Collapse,
+  IconButton,
+  InputGroup,
+  InputRightElement,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import React, { SetStateAction, useState } from 'react'
 
-const MobileSearchBar = () =>{
-    const { t } = useTranslation('common')
-    const [searchTerm, setSearchTerm] = useState("");
-    const formBackground = useColorModeValue("gray.100", "gray.700");
-    const handleSearch = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-        setSearchTerm(e.target.value);
-       };
-       const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure();
-       const router = useRouter();
+const MobileSearchBar = () => {
+  const { t } = useTranslation('common')
+  const [searchTerm, setSearchTerm] = useState('')
+  const formBackground = useColorModeValue('gray.100', 'gray.700')
+  const handleSearch = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchTerm(e.target.value)
+  }
+  const { getButtonProps, onToggle, getDisclosureProps, isOpen } = useDisclosure()
+  const router = useRouter()
 
-       const handleSubmit = (e: any) => {
-         e.preventDefault();
-         router.push(`/searchResultpage?q=${searchTerm}`);
-       };
-     
-       const handleChange = (event: { target: { value: SetStateAction<string>; }; }) => {
-         setSearchTerm(event.target.value);
-     };
-     
-    return(
-        <>
-        <Button  onClick= {onToggle} variant = "ghost" aria-label="Search" backgroundColor="transparent">Search</Button>
-                <Collapse in={isOpen} animateOpacity>
-                  <InputGroup>
-                    <form onSubmit={handleSubmit}>
-                    <input
-                      type="text"
-                      placeholder= {t('search')}
-                      value={searchTerm}
-                      onChange={handleChange}
-                      style={{
-                        
-                        width: "250px",
-                        height: "40px",
-                        paddingLeft: "10px",
-                        borderRadius: "100px",
-                        border: "none",
-                        outline: "1px  black",
-                        backgroundColor: formBackground,
-                    }}
-                    />
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    router.push(`/searchResultpage?q=${searchTerm}`)
+  }
 
-                    <InputRightElement width={9}>
-                    <SearchIcon
-              position="absolute"
-              top="50%"
-              transform="translateY(-50%)"
-              left="10px"
-              color="gray.500"
-              zIndex={1}
-              cursor="pointer"
+  const handleChange = (event: { target: { value: SetStateAction<string> } }) => {
+    setSearchTerm(event.target.value)
+  }
 
-              // change color when hover over
-              _hover={{
-                color: "blue.300",
+  return (
+    <>
+      <Button
+        onClick={onToggle}
+        variant="ghost"
+        aria-label="Search"
+        backgroundColor="transparent"
+      >
+        Search
+      </Button>
+      <Collapse in={isOpen} animateOpacity>
+        <InputGroup>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder={t('search')}
+              value={searchTerm}
+              onChange={handleChange}
+              style={{
+                width: '250px',
+                height: '40px',
+                paddingLeft: '10px',
+                borderRadius: '100px',
+                border: 'none',
+                outline: '1px  black',
+                backgroundColor: formBackground,
               }}
-
-              onClick={handleSubmit}
             />
-                      
 
-                      </InputRightElement>
-                    </form>
-
-                      
-                  </InputGroup>
-            </Collapse>
-        </>
-    )
+            <InputRightElement width={9}>
+              <SearchIcon
+                position="absolute"
+                top="50%"
+                transform="translateY(-50%)"
+                left="10px"
+                color="gray.500"
+                zIndex={1}
+                cursor="pointer"
+                // change color when hover over
+                _hover={{
+                  color: 'blue.300',
+                }}
+                onClick={handleSubmit}
+              />
+            </InputRightElement>
+          </form>
+        </InputGroup>
+      </Collapse>
+    </>
+  )
 }
 
 export default MobileSearchBar
 
-function setSearchTerm(event: { target: { value: SetStateAction<string>; }; }) {
-    throw new Error('Function not implemented.');
+function setSearchTerm(event: { target: { value: SetStateAction<string> } }) {
+  throw new Error('Function not implemented.')
 }

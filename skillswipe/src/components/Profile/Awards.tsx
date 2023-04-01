@@ -1,10 +1,9 @@
 import { Button, Stack } from '@chakra-ui/react'
 import React from 'react'
 
+import { useTranslation } from 'next-i18next'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-import { useTranslation } from 'next-i18next'
-
 
 const Awards = ({ awards }: any) => {
   // call API to get education history
@@ -46,6 +45,7 @@ const Awards = ({ awards }: any) => {
               {/* map through the skillsArray and create a button for each */}
               {awards.map((awards: any) => (
                 <Button
+                  key={awards.id}
                   className="skill"
                   style={{
                     backgroundColor: 'transparent',
