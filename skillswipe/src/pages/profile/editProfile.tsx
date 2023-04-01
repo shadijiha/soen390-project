@@ -6,7 +6,7 @@ import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, color, Heading, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { editPersonalInformation, removeCoverpic } from '../api/api'
+import { editPersonalInformation, removeCoverpic, removeProfilepic } from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
@@ -91,6 +91,20 @@ const EditProfile = () => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
         toast('Successfully Removed Cover Picture')
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
+  
+  const removeUserProfilepic = () => {
+    const token = localStorage.getItem('jwt')
+    removeProfilepic(token)
+      .then((response) => {
+        console.log(response)
+        setPic({ ...Pic, profilePic: response.data.profilePic })
+        toast('Successfully Removed Profile Picture')
       })
       .catch((error) => {
         toast(error.message)

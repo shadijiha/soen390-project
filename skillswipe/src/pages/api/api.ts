@@ -168,6 +168,15 @@ export const removeCoverpic = async (token: any) => {
   })
 }
 
+export const removeProfilepic = async (token: any) => {
+  return axios.delete(`${URL}/user/profilePic`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+
 
 
 export const search = async (token: any, query: string) => {
