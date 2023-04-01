@@ -1,13 +1,12 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Languages from '../Forms/Languages'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 type Language = {
   languageName?: string
@@ -25,7 +24,7 @@ const LanguagesBox = () => {
     setLanguageList(languageList.filter((language: any) => language.id !== id))
   }
   const addLanguage = () => {
-    let lang: Language = {}
+    const lang: Language = {}
     setLanguageList((oldArray) => [...(oldArray || []), lang])
   }
   const isNew = (language: Language) => {

@@ -1,13 +1,12 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import PersonalProjects from '../Forms/PersonalProjects'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 type PersonalProject = {
   name?: string
@@ -32,7 +31,7 @@ const PersonalProjectsBox = () => {
     )
   }
   const addPersonalProject = () => {
-    let personalProject: PersonalProject = {}
+    const personalProject: PersonalProject = {}
     setPersonalProjectsList((oldArray) => [...(oldArray || []), personalProject])
   }
   const isNew = (personalProject: PersonalProject) => {

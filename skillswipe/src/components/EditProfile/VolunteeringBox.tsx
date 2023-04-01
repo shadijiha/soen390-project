@@ -1,13 +1,12 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Volunteering from '../Forms/Volunteering'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
 
 type Volunteering = {
   company?: string
@@ -28,7 +27,7 @@ const VolunteeringBox = () => {
     )
   }
   const addVolunteering = () => {
-    let vol: Volunteering = {}
+    const vol: Volunteering = {}
     setVolunteeringList((oldArray) => [...(oldArray || []), vol])
   }
   const isNew = (volunteering: Volunteering) => {

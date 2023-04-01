@@ -1,3 +1,4 @@
+/* eslint-disable no-var */
 import { Avatar, Box, Flex, Heading, Link, Spinner, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
 import { defaultStyles, FileIcon } from 'react-file-icon'
@@ -15,32 +16,29 @@ const Messages = ({ messages, user }) => {
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => {
         var data = false
-        var file = {ext: '', link: '', name: '',size : 0,loaded : false }
-        
+        let file = { ext: '', link: '', name: '', size: 0, loaded: false }
+
         try {
           file = JSON.parse(item.message)
-          if(file.ext && file.size){
+          if (file.ext && file.size) {
             data = true
-            
-          }
-          else{
+          } else {
             data = false
           }
         } catch (error) {
           var data = false
         }
 
-        if(!isNaN(parseFloat(item.message)) && isFinite(item.message)){
-          data = false;
+        if (!isNaN(parseFloat(item.message)) && isFinite(item.message)) {
+          data = false
         }
-      
 
         if (item.senderId == User.auth.id) {
           if (data == true) {
             return (
               <Flex key={index} w="100%" justify="flex-end">
                 <Flex
-                bg={"blue.400"}
+                  bg={'blue.400'}
                   color="black"
                   minW="100px"
                   maxW="500px"
@@ -50,20 +48,32 @@ const Messages = ({ messages, user }) => {
                   flexDirection={'row'}
                   justifyContent={'center'}
                 >
-                  <Box boxSize={"16"}>
-                    <FileIcon  extension={file.ext}/>
-                  </Box>           
+                  <Box boxSize={'16'}>
+                    <FileIcon extension={file.ext} />
+                  </Box>
                   <Flex ml={2} flexDir={'column'}>
-
-                  <Text opacity={0.75} color={'white'}fontSize="lg" ml={1} mt={4} mr={2}>
-                    <Link href={file.link}>{file.name}</Link>
-                  </Text>
-                  <Text opacity={0.75} color={'white'}fontSize="sm" mt={2} ml={1} mr={2}>
-                    {`${file.size} KB`}
-                  </Text>
-
+                    <Text
+                      opacity={0.75}
+                      color={'white'}
+                      fontSize="lg"
+                      ml={1}
+                      mt={4}
+                      mr={2}
+                    >
+                      <Link href={file.link}>{file.name}</Link>
+                    </Text>
+                    <Text
+                      opacity={0.75}
+                      color={'white'}
+                      fontSize="sm"
+                      mt={2}
+                      ml={1}
+                      mr={2}
+                    >
+                      {`${file.size} KB`}
+                    </Text>
                   </Flex>
-                  {file.loaded == false ? <Spinner/> : <></>}
+                  {file.loaded == false ? <Spinner /> : <></>}
                 </Flex>
               </Flex>
             )
@@ -93,47 +103,55 @@ const Messages = ({ messages, user }) => {
         } else {
           if (data == true) {
             return (
-
               <Flex key={index} w="100%">
-              <Avatar
-                name="Computer"
-                src={
-                  user.profilePic
-                    ? `data:image/jpeg;base64,${user.profilePic}`
-                    : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                }
-                bg="blue.300"
-                mr={'1.5rem'}
-                boxShadow="lg"
-              ></Avatar>
-              <Flex
-                bg="gray.100"
-                color="black"
-                minW="100px"
-                maxW="500px"
-                my="1"
-                p="3"
-                borderRadius={'20px'}
-              >
-                <Box boxSize={"16"}>
-                    <FileIcon color={"black"} extension={file.ext} />
-                  </Box>           
+                <Avatar
+                  name="Computer"
+                  src={
+                    user.profilePic
+                      ? `data:image/jpeg;base64,${user.profilePic}`
+                      : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                  }
+                  bg="blue.300"
+                  mr={'1.5rem'}
+                  boxShadow="lg"
+                ></Avatar>
+                <Flex
+                  bg="gray.100"
+                  color="black"
+                  minW="100px"
+                  maxW="500px"
+                  my="1"
+                  p="3"
+                  borderRadius={'20px'}
+                >
+                  <Box boxSize={'16'}>
+                    <FileIcon color={'black'} extension={file.ext} />
+                  </Box>
                   <Flex ml={2} flexDir={'column'}>
-
-                  <Text opacity={0.75} color={'black'}fontSize="lg" ml={1} mt={4} mr={2}>
-                    <Link href={file.link}>{file.name}</Link>
-                  </Text>
-                  <Text opacity={0.75} color={'black'}fontSize="sm" mt={2} ml={1} mr={2}>
-                    {`${file.size} KB`}
-                  </Text>
-
+                    <Text
+                      opacity={0.75}
+                      color={'black'}
+                      fontSize="lg"
+                      ml={1}
+                      mt={4}
+                      mr={2}
+                    >
+                      <Link href={file.link}>{file.name}</Link>
+                    </Text>
+                    <Text
+                      opacity={0.75}
+                      color={'black'}
+                      fontSize="sm"
+                      mt={2}
+                      ml={1}
+                      mr={2}
+                    >
+                      {`${file.size} KB`}
+                    </Text>
                   </Flex>
-                  {file.loaded == false ? <Spinner/> : <></>}
-               
-                
+                  {file.loaded == false ? <Spinner /> : <></>}
+                </Flex>
               </Flex>
-            </Flex>
-              
             )
           } else {
             return (
@@ -159,8 +177,6 @@ const Messages = ({ messages, user }) => {
                   borderRadius={'20px'}
                 >
                   {item.message}
-                 
-                  
                 </Flex>
               </Flex>
             )

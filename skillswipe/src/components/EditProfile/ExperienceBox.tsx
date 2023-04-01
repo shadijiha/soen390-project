@@ -1,12 +1,12 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 import Experience from '../Forms/Experience'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 type Experience = {
   company?: string
@@ -28,7 +28,7 @@ const ExperienceBox = () => {
     )
   }
   const addExperience = () => {
-    let exp: Experience = {}
+    const exp: Experience = {}
     setExperienceList((oldArray) => [...(oldArray || []), exp])
   }
   const isNew = (experience: Experience) => {
@@ -38,7 +38,7 @@ const ExperienceBox = () => {
       experience.end_year &&
       experience.title
     )
-}
+  }
   const { t } = useTranslation('common')
   return (
     <Stack
