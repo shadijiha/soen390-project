@@ -1,4 +1,3 @@
-
 const { i18n } = require('./next-i18next.config')
 // /** @type {import('./next-i18next.config').i18n} */
 
@@ -11,7 +10,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
-
 
   env: {
     BASE_URL: process.env.BASE_URL,
