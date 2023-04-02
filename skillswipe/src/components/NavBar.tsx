@@ -31,12 +31,7 @@ import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
-
-const selectLanguage = (lng) => {
-  i18n?.changeLanguage(lng)
-}
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -92,7 +87,6 @@ export default function NavBar(props: any) {
 
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
-    selectLanguage(language)
   }
 
   const [profile, setProfile] = useState({
