@@ -11,11 +11,11 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
-import React, { SetStateAction, useState } from 'react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import { useRouter } from 'next/router'
+import React, { SetStateAction, useState } from 'react'
 
 const Search = () => {
   const [search, setSearch] = useState(false)
@@ -53,7 +53,7 @@ const Search = () => {
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
-                placeholder= {t('search')}
+                placeholder={t('search')}
                 value={searchTerm}
                 onChange={handleChange}
                 list="browser"

@@ -12,12 +12,11 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const SubmitAppForm = () => {
-
   const { t } = useTranslation('common')
   return (
     <>
@@ -62,7 +61,7 @@ const SubmitAppForm = () => {
               <Input
                 readOnly
                 type="text"
-                placeholder= {t('loggedInName')}
+                placeholder={t('loggedInName')}
                 rounded="100px"
               />
             </FormControl>
@@ -138,7 +137,7 @@ const SubmitAppForm = () => {
 
           <FormControl id="cover">
             <FormLabel>{t('coverLetter2')}</FormLabel>
-            <Textarea size="lg" placeholder={t("pasteHere")} rounded="15px" />
+            <Textarea size="lg" placeholder={t('pasteHere')} rounded="15px" />
           </FormControl>
         </VStack>
         <VStack w="100%">

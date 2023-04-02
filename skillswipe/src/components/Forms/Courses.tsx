@@ -13,11 +13,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Courses = (props: any) => {
   const { t } = useTranslation('common')
@@ -108,7 +108,7 @@ const Courses = (props: any) => {
             marginBottom: '20px',
           }}
         >
-           {t('courses')} {props.index} {props.isNew}
+          {t('courses')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -153,7 +153,7 @@ const Courses = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="courseName">
-        <FormLabel htmlFor="courseName">{t("courseName")}</FormLabel>
+        <FormLabel htmlFor="courseName">{t('courseName')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -169,7 +169,7 @@ const Courses = (props: any) => {
       </FormControl>
 
       <FormControl id="courseNumber">
-        <FormLabel htmlFor="courseNumber">{t("courseNumber")}</FormLabel>
+        <FormLabel htmlFor="courseNumber">{t('courseNumber')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

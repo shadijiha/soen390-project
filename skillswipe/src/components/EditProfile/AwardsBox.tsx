@@ -4,9 +4,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 // eslint-disable-next-line prettier/prettier
-import Awards from '../Forms/Awards'
 import { useTranslation } from 'next-i18next'
-
+import Awards from '../Forms/Awards'
 
 type Awards = {
   title?: string

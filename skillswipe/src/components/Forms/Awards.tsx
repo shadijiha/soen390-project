@@ -13,12 +13,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Awards = (props: any) => {
   const { t } = useTranslation('common')
@@ -94,7 +93,7 @@ const Awards = (props: any) => {
     } else {
       deleteAwardsRequest(token, award.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success (t('deletedSuccessfully'))
+          toast.success(t('deletedSuccessfully'))
           props.deleteAward(props.Award?.id)
         } else {
           toast.error(t('errorDeleting'))
@@ -190,7 +189,7 @@ const Awards = (props: any) => {
         />
       </FormControl>
       <FormControl id="issue_date">
-        <FormLabel htmlFor="issue_date">{t("year")}</FormLabel>
+        <FormLabel htmlFor="issue_date">{t('year')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -205,7 +204,7 @@ const Awards = (props: any) => {
         />
       </FormControl>
       <FormControl id="issuer">
-        <FormLabel htmlFor="issuer">{t("issuer")}</FormLabel>
+        <FormLabel htmlFor="issuer">{t('issuer')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

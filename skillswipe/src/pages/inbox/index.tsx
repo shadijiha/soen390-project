@@ -14,17 +14,17 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react'
+import { GetServerSideProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetServerSideProps } from 'next'
 
 const Inbox = () => {
-  const {t} = useTranslation ('common')
+  const { t } = useTranslation('common')
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [loading, setLoading] = useState(true)
@@ -51,49 +51,48 @@ const Inbox = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-   
-          <Box p={50} data-testid="inbox">
-            <Heading as="h1" size="lg" mb={4}>
-              {t('inbox')}
-            </Heading>
-            {messages.length > 0 ? (
-              messages.map((element: any) => (
-                <Flex
-                  key={element.id}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  p={4}
-                  mb={4}
-                  display="flex"
-                  alignItems="center"
-                  cursor={'pointer'}
-                  onClick={() => router.push(`/inbox/${element.id}`)}
-                >
-                  <Flex>
-                    <Avatar
-                      size="lg"
-                      mr={4}
-                      src={
-                        element.profilePic
-                          ? `data:image/jpeg;base64,${element.profilePic}`
-                          : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                      }
-                    />
-                    <Box>
-                      <Heading as="h2" size="md" mb={2}>
-                        {`${element.firstName} ${element.lastName}`}
-                      </Heading>
-                      <Text mb={2}>{element.text}</Text>
-                    </Box>
-                  </Flex>
-                  <Spacer />
-                </Flex>
-              ))
-            ) : (
-              <h1>{t ('noMessages')}</h1>
-            )}
-          </Box>
 
+        <Box p={50} data-testid="inbox">
+          <Heading as="h1" size="lg" mb={4}>
+            {t('inbox')}
+          </Heading>
+          {messages.length > 0 ? (
+            messages.map((element: any) => (
+              <Flex
+                key={element.id}
+                borderWidth="1px"
+                borderRadius="lg"
+                p={4}
+                mb={4}
+                display="flex"
+                alignItems="center"
+                cursor={'pointer'}
+                onClick={() => router.push(`/inbox/${element.id}`)}
+              >
+                <Flex>
+                  <Avatar
+                    size="lg"
+                    mr={4}
+                    src={
+                      element.profilePic
+                        ? `data:image/jpeg;base64,${element.profilePic}`
+                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                    }
+                  />
+                  <Box>
+                    <Heading as="h2" size="md" mb={2}>
+                      {`${element.firstName} ${element.lastName}`}
+                    </Heading>
+                    <Text mb={2}>{element.text}</Text>
+                  </Box>
+                </Flex>
+                <Spacer />
+              </Flex>
+            ))
+          ) : (
+            <h1>{t('noMessages')}</h1>
+          )}
+        </Box>
       </Layout>
     </>
   )
@@ -102,6 +101,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
   props: {
     ...(await serverSideTranslations(locale, ['common'])),
   },
-})  
+})
 
 export default Inbox

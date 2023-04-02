@@ -23,8 +23,8 @@ export const getAllConversation = async (token: any) => {
     },
   })
 }
-export const upload = async (token: any,file :any) => {
-  return axios.post(`${URL}/chat/upload`,file, {
+export const upload = async (token: any, file: any) => {
+  return axios.post(`${URL}/chat/upload`, file, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -17,11 +17,11 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -60,7 +60,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
-          toast(t("updateCoverPicture"))
+          toast(t('updateCoverPicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -77,7 +77,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast(t("updateProfilePicture"))
+          toast(t('updateProfilePicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -95,7 +95,13 @@ const EditProfile = () => {
     <>
       <Layout>
         <NavBar />
-        <Box display="flex" justifyContent="center" alignItems="center" pb={4} data-testid="edit-profile">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          pb={4}
+          data-testid="edit-profile"
+        >
           <Box>
             <Heading
               style={{
