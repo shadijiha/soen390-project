@@ -5,7 +5,9 @@ import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 // eslint-disable-next-line prettier/prettier
 import { useTranslation } from 'next-i18next'
-import { default as Awards } from '../Forms/Awards'
+
+import Awards from '../Forms/Awards'
+
 
 type Awards = {
   title?: string

@@ -2,15 +2,13 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Button, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react'
-import axios from 'axios'
-import { GetStaticProps } from 'next'
+
+import { Box, Flex, Heading, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { default as Link, default as NextLink } from 'next/link'
+import { default as NextLink } from 'next/link'
+
 import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
 
@@ -134,12 +132,6 @@ export default function Search() {
     </Layout>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 // const handleSearch = async (e:any) => {
 // const token = localStorage.getItem("jwt");

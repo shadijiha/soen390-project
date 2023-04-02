@@ -21,16 +21,24 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
 
+import NotificationCounter from './Util/NotificationCounter'
+
+const selectLanguage = (lng) => {
+  i18n?.changeLanguage(lng)
+}
+
 export default function NavBar(props: any) {
-  const { toggleColorMode } = useColorMode()
+  const { colorMode, toggleColorMode } = useColorMode()
+
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
@@ -62,7 +70,19 @@ export default function NavBar(props: any) {
     }
   }
 
-  const [profile] = useState({
+
+  const [showDropdown1, setShowDropdown1] = useState(false)
+  const [showDropdown2, setShowDropdown2] = useState(false)
+
+  const { t } = useTranslation('common')
+
+  const changeLanguage = (language) => {
+    router.push(router.pathname, router.pathname, { locale: language })
+    selectLanguage(language)
+  }
+
+  const [profile, setProfile] = useState({
+
     name: 'John Smith',
     title: 'Software Engineer',
     location: 'Montreal, QC, CA',
@@ -86,6 +106,71 @@ export default function NavBar(props: any) {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
+
+
+  const getPendingConnections = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
+        .then((res) => {
+          setPendingConnections(res.data)
+          setloading2(res.data.length)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+  useEffect(() => {
+    if (currentUser.auth) {
+      getMessage()
+      getPendingConnections()
+    }
+  }, [currentUser])
+
+  const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
+    var notification: any = []
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
+
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                var notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
+              }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
+          })
+          setmessageNotification(notification)
+          setloading1(notification.length)
+        })
+      } catch (error) {
+        toast(error.message)
+      }
+    }
+  }
+
+
   const handleFilter = (value) => {
     // open the openJobs page
     if (value === 'option1') {
@@ -147,6 +232,22 @@ export default function NavBar(props: any) {
             </Button>
           </NextLink>
 
+          <Select
+            onChange={(e) => changeLanguage(e.target.value)}
+            variant="filled"
+            my={5}
+            w="58"
+            py={2}
+            _hover={{
+              cursor: 'pointer',
+            }}
+            icon={<Text>🌐</Text>}
+          >
+            <option value="en"> {t('english')} </option>
+            <option value="fr"> {t('french')} </option>
+          </Select>
+
+
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
             <NextLink href="/home" passHref>
@@ -172,6 +273,15 @@ export default function NavBar(props: any) {
                 💬 ‎ Messages
               </Button>
             </NextLink>
+
+            {props.nbNotifications != null ? (
+              <NotificationCounter nbNotifications={props.nbNotifications} />
+            ) : loading1 != null && loading2 != null ? (
+              <NotificationCounter Notifications={loading1 + loading2} />
+            ) : (
+              <NotificationCounter Notifications={0} />
+            )}
+
 
             <Menu>
               <MenuButton
@@ -227,6 +337,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
+
                   📝 ‎ Create a Job Listing
                 </MenuItem>
                 <MenuItem
@@ -241,6 +352,7 @@ export default function NavBar(props: any) {
                   }}
                 >
                   📈 ‎ My Job Applications
+
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -387,6 +499,7 @@ export default function NavBar(props: any) {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
+
                   Open Jobs
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
@@ -397,6 +510,7 @@ export default function NavBar(props: any) {
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   My Job Applications
+
                 </MenuItem>
               </MenuList>
             </Menu>

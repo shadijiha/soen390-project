@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout'
-import NavBar from '@/components/NavBar'
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-no-undef */
 import {
   Avatar,
   Badge,
@@ -8,23 +8,27 @@ import {
   Flex,
   Heading,
   HStack,
+  Link,
   Spacer,
   Text,
 } from '@chakra-ui/react'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import { useRouter, useRouter } from 'next/router'
-import { type } from 'os'
+
+import type { InferGetStaticPropsType } from 'next'
+import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
+
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { getStaticProps } from '.'
+import Layout from '../components/Layout'
+import NavBar from '../components/NavBar'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
 
+import { getAllConversation, getConversationById } from './api/chat'
+
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
-  import { getAllConversation, getConversationById } from './api/chat'
 
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
@@ -108,12 +112,11 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
             pendingConnections.filter((connection: any) => connection.user.id !== id)
           )
           toast.success(t('requestAccepted'))
-
-          toast.success('Request Accepted')
         })
         .catch((err) => {
           toast.error(err)
         })
+      toast.success('Request Accepted')
     }
   }
 
@@ -285,11 +288,4 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
-
 export default Notifications

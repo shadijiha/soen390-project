@@ -17,9 +17,9 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
+
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
@@ -44,7 +44,6 @@ const postJob = () => {
   const addListing = (event: any) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-
     console.log(postListing)
 
     if (
@@ -296,11 +295,5 @@ const postJob = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default postJob

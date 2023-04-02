@@ -1,7 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, Heading, Stack } from '@chakra-ui/react'
@@ -17,9 +13,9 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
-import { GetStaticProps } from 'next'
+
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -276,11 +272,5 @@ const EditProfile = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default EditProfile

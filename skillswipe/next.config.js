@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+
 const { i18n } = require('./next-i18next.config')
-/** @type {import('./next-i18next.config').i18n} */
+// /** @type {import('./next-i18next.config').i18n} */
+
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
@@ -11,6 +12,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
 
+
   env: {
     BASE_URL: process.env.BASE_URL,
   },
@@ -18,7 +20,3 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
-
-module.exports = {
-  i18n,
-}

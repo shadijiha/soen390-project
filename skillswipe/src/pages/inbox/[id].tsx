@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable react-hooks/rules-of-hooks */
+
+import { setUser } from '@/Redux/action-creator'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { setUser } from '@/Redux/action-creator'
+
 import {
   ColorModeContext,
   Divider,
