@@ -11,6 +11,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -19,9 +20,6 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
 import { register } from './api/api'
-import { useTranslation} from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Register = () => {
   const { toggleColorMode } = useColorMode()
@@ -160,7 +158,7 @@ const Register = () => {
               onChange={confirmpassChange}
             />
             <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
-            {ConfirmPass !== User.password ? t('password-mismatch') : ''}
+              {ConfirmPass !== User.password ? t('password-mismatch') : ''}
             </Text>
 
             <Select
@@ -209,11 +207,5 @@ const Register = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Register

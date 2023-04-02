@@ -1,10 +1,5 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-} from 'next/document'
 import type { DocumentProps } from 'next/document'
+import Document, { Head, Html, Main, NextScript } from 'next/document'
 import i18nextConfig from '../../next-i18next.config'
 
 type Props = DocumentProps & {
@@ -12,7 +7,7 @@ type Props = DocumentProps & {
 }
 
 class MyDocument extends Document<Props> {
-  render () {
+  render() {
     const currentLocale = this.props.locale
     const { i18n } = i18nextConfig
 
@@ -27,7 +22,5 @@ class MyDocument extends Document<Props> {
     )
   }
 }
-
-  
 
 export default MyDocument

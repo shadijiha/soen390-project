@@ -30,31 +30,21 @@ import {
 } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
-import { i18n }  from 'next-i18next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next' 
 import NotificationCounter from './Util/NotificationCounter'
 
-
-
-
-
-
-
 const selectLanguage = (lng) => {
+  i18n?.changeLanguage(lng)
+}
 
-  if(i18n) i18n.changeLanguage(lng);
-};
-
- export default function NavBar(props: any) {
+export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -76,7 +66,6 @@ const selectLanguage = (lng) => {
   }) => {
     setSearchTerm(e.target.value)
   }
-
 
   const router = useRouter()
   const MobilehandleSubmit = (e: any) => {
@@ -105,14 +94,12 @@ const selectLanguage = (lng) => {
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
 
-  const { t} = useTranslation('common');
+  const { t } = useTranslation('common')
 
-  const router = useRouter()
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
     selectLanguage(language)
   }
-
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -145,8 +132,7 @@ const selectLanguage = (lng) => {
       getPendingRequest(token)
         .then((res) => {
           setPendingConnections(res.data)
-          setloading2(res.data.length);
-     
+          setloading2(res.data.length)
         })
         .catch((err) => {
           toast.error(err)
@@ -155,9 +141,8 @@ const selectLanguage = (lng) => {
   }
   useEffect(() => {
     if (currentUser.auth) {
-     getMessage();
-     getPendingConnections();
-     
+      getMessage()
+      getPendingConnections()
     }
   }, [currentUser])
 
@@ -195,18 +180,13 @@ const selectLanguage = (lng) => {
             return cr2.getTime() - cr1.getTime()
           })
           setmessageNotification(notification)
-          setloading1(notification.length);
-          
+          setloading1(notification.length)
         })
-  
-       
       } catch (error) {
         toast(error.message)
       }
     }
   }
-
-  
 
   const handleFilter = (value) => {
     // open the openJobs page
@@ -271,7 +251,7 @@ const selectLanguage = (lng) => {
             w="58"
             py={2}
             _hover={{
-              cursor: "pointer",
+              cursor: 'pointer',
             }}
             icon={<Text>🌐</Text>}
           >
@@ -303,19 +283,13 @@ const selectLanguage = (lng) => {
                 {t('messages')}
               </Button>
             </NextLink>
-            {
-           
-              props.nbNotifications  != null?  
+            {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
-              :
-              (loading1 != null && loading2 != null) ?
-
-              <NotificationCounter Notifications={loading1 + loading2}/>
-              :
-              <NotificationCounter Notifications={0}/>
-
-
-            }
+            ) : loading1 != null && loading2 != null ? (
+              <NotificationCounter Notifications={loading1 + loading2} />
+            ) : (
+              <NotificationCounter Notifications={0} />
+            )}
 
             <Menu>
               <MenuButton
@@ -371,7 +345,7 @@ const selectLanguage = (lng) => {
                     transform: 'scale(1.03)',
                   }}
                 >
-                   {t('createJobListing')}
+                  {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -493,13 +467,13 @@ const selectLanguage = (lng) => {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                {t('openJobs')}
+                  {t('openJobs')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                {t('myJobListings')}
+                  {t('myJobListings')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                {t('createJobListing')}
+                  {t('createJobListing')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -518,7 +492,7 @@ const selectLanguage = (lng) => {
                 <form onSubmit={MobilehandleSubmit}>
                   <input
                     type="text"
-                    placeholder= {t('search')}
+                    placeholder={t('search')}
                     value={searchTerm}
                     onChange={MobilehandleChange}
                     style={{
@@ -574,5 +548,5 @@ const selectLanguage = (lng) => {
         </Flex>
       </Flex>
     </Box>
-  );
+  )
 }

@@ -3,11 +3,9 @@ import { Heading, useColorModeValue } from '@chakra-ui/react'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, List, ListItem, Text } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useTranslation } from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Home = () => {
   const { t } = useTranslation('common')
@@ -29,9 +27,16 @@ const Home = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-        <Box display="flex" justifyContent="center" alignItems="center" data-testid="Home-page">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          data-testid="Home-page"
+        >
           <Box>
-            <Heading paddingBottom={5}>{t("welcome")}, {User.auth.firstName} 🧑🏼‍💻</Heading>
+            <Heading paddingBottom={5}>
+              {t('welcome')}, {User.auth.firstName} 🧑🏼‍💻
+            </Heading>
             <Heading
               paddingBottom={5}
               style={{
@@ -39,7 +44,7 @@ const Home = () => {
                 fontWeight: '300',
               }}
             >
-              {t("recentPosts")}
+              {t('recentPosts')}
             </Heading>
             <List>
               {posts.map((post) => (
@@ -70,11 +75,5 @@ const Home = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Home

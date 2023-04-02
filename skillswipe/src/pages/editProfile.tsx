@@ -1,7 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, Heading, Stack } from '@chakra-ui/react'
@@ -17,11 +13,9 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -60,7 +54,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
-          toast(t("updateCoverPicture"))
+          toast(t('updateCoverPicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -77,7 +71,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast(t("updateProfilePicture"))
+          toast(t('updateProfilePicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -95,7 +89,13 @@ const EditProfile = () => {
     <>
       <Layout>
         <NavBar />
-        <Box display="flex" justifyContent="center" alignItems="center" pb={4} data-testid="edit-profile">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          pb={4}
+          data-testid="edit-profile"
+        >
           <Box>
             <Heading
               style={{
@@ -270,11 +270,5 @@ const EditProfile = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default EditProfile

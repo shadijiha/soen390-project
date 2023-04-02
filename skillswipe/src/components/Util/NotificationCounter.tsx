@@ -22,7 +22,6 @@ const NotificationCounter = (props: any) => {
       })
       var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
       channel.bind('friend-request', function (data) {
-   
         setCounter((prevCount) => prevCount + 1)
       })
       channel.bind('message-notification', function (data) {
@@ -49,9 +48,7 @@ const NotificationCounter = (props: any) => {
           top="20px"
           right="0"
         >
-          {props.nbNotifications != null
-            ? props.nbNotifications
-            : counter}
+          {props.nbNotifications != null ? props.nbNotifications : counter}
         </Badge>
       </div>
     </NextLink>

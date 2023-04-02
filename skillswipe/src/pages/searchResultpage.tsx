@@ -1,20 +1,15 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Button, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react'
-import axios from 'axios'
-import { default as Link, default as NextLink } from 'next/link'
+import { Box, Flex, Heading, List, Stack } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 export default function Search() {
-
   const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
@@ -89,7 +84,7 @@ export default function Search() {
                     key={user.id}
                   >
                     <li key={user.id}>
-                      <NextLink href={`profile/${user.id}`} >
+                      <NextLink href={`profile/${user.id}`}>
                         <Heading
                           fontSize={20}
                           style={{
@@ -134,12 +129,6 @@ export default function Search() {
     </Layout>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 // const handleSearch = async (e:any) => {
 // const token = localStorage.getItem("jwt");

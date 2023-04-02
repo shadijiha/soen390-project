@@ -16,12 +16,10 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
 
 const postJob = () => {
   const [postListing, setJobListing] = useState({
@@ -47,7 +45,7 @@ const postJob = () => {
     // debug: show all the values grabbed as toast messages (to delete in production)
     // toast(
     //   `jobTitle: ${postListing.jobTitle}
-    //   companyName: ${postListing.companyName} 
+    //   companyName: ${postListing.companyName}
     //   location: ${postListing.location}
     //   jobDescription: ${postListing.jobDescription}
     //   salary: ${postListing.salary}
@@ -82,9 +80,7 @@ const postJob = () => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('createListing '))
         } else {
-          toast.error(
-            t('errorCreateListing')
-          )
+          toast.error(t('errorCreateListing'))
         }
       })
     }
@@ -190,7 +186,7 @@ const postJob = () => {
                   <HStack spacing="auto">
                     <Radio value="full-time">{t('fullTime')}</Radio>
                     <Radio value="part-time">{t('partTime')}</Radio>
-                    <Radio value="contract">{t('contract')}</Radio>} 
+                    <Radio value="contract">{t('contract')}</Radio>
                     <Radio value="other">{t('other')}</Radio>
                   </HStack>
                 </RadioGroup>
@@ -298,11 +294,5 @@ const postJob = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default postJob

@@ -17,20 +17,18 @@ const Layout = ({ children }: any) => {
   const actions = bindActionCreators(actionCreator, dispatch)
   const user = useSelector((state) => state)
 
-  const handleBeforeUnload  = () =>{
-    const token = localStorage.getItem("jwt");
-    changeStatus("offline",token).then((response) => {
-   
-    }).catch((error) => {
-      toast(error.message)
-    })
-
+  const handleBeforeUnload = () => {
+    const token = localStorage.getItem('jwt')
+    changeStatus('offline', token)
+      .then((response) => {})
+      .catch((error) => {
+        toast(error.message)
+      })
   }
-
 
   useEffect(() => {
     const token = localStorage.getItem('jwt')
-    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('beforeunload', handleBeforeUnload)
     if (token) {
       checkLogin(token)
         .then((response) => {
@@ -40,24 +38,23 @@ const Layout = ({ children }: any) => {
             setTimeout(() => {
               setLoading(false)
             }, 100)
-            
-            changeStatus("online",token).then((response) => {
-            }).catch((error) => {
-              toast(error.message)
 
-            })
+            changeStatus('online', token)
+              .then((response) => {})
+              .catch((error) => {
+                toast(error.message)
+              })
           } else {
             actions.setUser(response.data)
             setTimeout(() => {
               setLoading(false)
             })
-       
-            changeStatus("online",token).then((response) => {
-            }).catch((error) => {
-          
-              toast(error.message)
 
-            })
+            changeStatus('online', token)
+              .then((response) => {})
+              .catch((error) => {
+                toast(error.message)
+              })
           }
         })
         .catch((error) => {
@@ -81,8 +78,7 @@ const Layout = ({ children }: any) => {
     }
 
     return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [])
   return (

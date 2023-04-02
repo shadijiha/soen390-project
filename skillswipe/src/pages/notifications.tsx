@@ -1,5 +1,5 @@
-import Layout from '@/components/Layout'
-import NavBar from '@/components/NavBar'
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-no-undef */
 import {
   Avatar,
   Badge,
@@ -8,27 +8,24 @@ import {
   Flex,
   Heading,
   HStack,
+  Link,
   Spacer,
   Text,
 } from '@chakra-ui/react'
-import Link from 'next/link'
+import type { InferGetStaticPropsType } from 'next'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { getStaticProps } from '.'
+import Layout from '../components/Layout'
+import NavBar from '../components/NavBar'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
-import { useTranslation, Trans } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { type } from 'os'
-import { useRouter } from 'next/router'
-
-const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
-
 import { getAllConversation, getConversationById } from './api/chat'
 
-
+const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
@@ -48,7 +45,6 @@ import { getAllConversation, getConversationById } from './api/chat'
     })
     var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
     channel.bind('friend-request', function (data) {
-
       addRequest()
     })
     channel.bind('message-notification', function (data) {
@@ -79,7 +75,7 @@ import { getAllConversation, getConversationById } from './api/chat'
       getPendingRequest(token)
         .then((res) => {
           setPendingConnections(res.data)
-          setloading2(res.data.length);
+          setloading2(res.data.length)
         })
         .catch((err) => {
           toast.error(err)
@@ -110,18 +106,13 @@ import { getAllConversation, getConversationById } from './api/chat'
         .then((res) => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
-
           )
           toast.success(t('requestAccepted'))
-
-            )
-            
-          toast.success('Request Accepted')
-
         })
         .catch((err) => {
           toast.error(err)
         })
+      toast.success('Request Accepted')
     }
   }
 
@@ -129,7 +120,6 @@ import { getAllConversation, getConversationById } from './api/chat'
     getPendingConnections()
   }
   const { t } = useTranslation('common')
-
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
@@ -164,7 +154,7 @@ import { getAllConversation, getConversationById } from './api/chat'
             const cr2: any = new Date(b.created_at)
             return cr2.getTime() - cr1.getTime()
           })
-          setloading1(notification.length);
+          setloading1(notification.length)
           setmessageNotification(notification)
         })
       } catch (error) {
@@ -223,8 +213,9 @@ import { getAllConversation, getConversationById } from './api/chat'
                       <Button
                         colorScheme="twitter"
                         onClick={() => accept(connection.user.id)}
-                      > <text>{t('accept')}</text>
-                       
+                      >
+                        {' '}
+                        <text>{t('accept')}</text>
                       </Button>
                     </HStack>
                   </Box>
@@ -232,16 +223,13 @@ import { getAllConversation, getConversationById } from './api/chat'
               ))
             ) : (
               <footer>
-                <Text>
-                  {t('noPendingRequests')}
-                </Text>
+                <Text>{t('noPendingRequests')}</Text>
               </footer>
             )}
           </Flex>
         </Box>
         <Box p={4}>
           <Heading as="h1" size="lg" mb={4}>
-           
             {t('notifications')}
           </Heading>
           {messageNotification.length > 0 ? (
@@ -277,7 +265,7 @@ import { getAllConversation, getConversationById } from './api/chat'
                     >
                       {`${notification.firstName} ${notification.lastName}`}{' '}
                       <Badge ml="1" colorScheme="green">
-                        {t("new")}
+                        {t('new')}
                       </Badge>
                     </Heading>
                     <Text
@@ -297,11 +285,4 @@ import { getAllConversation, getConversationById } from './api/chat'
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
-
-export default Notifications;
-
+export default Notifications

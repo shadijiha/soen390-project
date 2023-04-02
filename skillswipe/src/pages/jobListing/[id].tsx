@@ -14,10 +14,10 @@ import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
 import axios from 'axios'
+import { useTranslation } from 'next-i18next'
 import router, { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
 
 import { createJob, getOpenJobs, viewJob } from '../api/api'
 

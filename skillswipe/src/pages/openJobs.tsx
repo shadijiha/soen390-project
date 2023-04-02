@@ -25,14 +25,11 @@ import {
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
+import { useTranslation, withTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
-import { useTranslation, withTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-
-
-
 
 interface JobAttributes {
   id: number
@@ -50,8 +47,7 @@ interface JobAttributes {
 
 const findJob = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [initialJobListing, setInitalJobListing] =  useState<JobAttributes[]>([])
-  
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -66,7 +62,6 @@ const findJob = () => {
         // Update state with fetched data
         setInitalJobListing(response.data)
         setJobListing(response.data)
-        
       } catch (error) {
         console.error(error)
         toast.error(t('errorJobs'))
@@ -78,51 +73,63 @@ const findJob = () => {
   const handleFilter = (value) => {
     switch (value) {
       case 'option1':
-        setJobListing([...jobListing].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()))
+        setJobListing(
+          [...jobListing].sort(
+            (a, b) =>
+              new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
+          )
+        )
         break
       case 'option2':
-        setJobListing([...jobListing].sort((a, b) => parseFloat(b.salary) - parseFloat(a.salary)))
+        setJobListing(
+          [...jobListing].sort((a, b) => parseFloat(b.salary) - parseFloat(a.salary))
+        )
         break
       default:
         break
     }
   }
 
-  
   function handleCheckboxChange(event) {
-    const isChecked = event.target.checked;
-    const filterValue = event.target.value;
-    
-    let filteredJobs = [...jobListing];
-  
+    const isChecked = event.target.checked
+    const filterValue = event.target.value
+
+    let filteredJobs = [...jobListing]
+
     if (isChecked) {
-      console.log('Filtering ...');
+      console.log('Filtering ...')
       switch (filterValue) {
         case 'full-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'full-time' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('full-time' as string)
+          )
+          break
         case 'part-time':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'part-time' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('part-time' as string)
+          )
+          break
         case 'contract':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'contract' as string);
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('contract' as string)
+          )
+          break
         case 'other':
-            filteredJobs = filteredJobs.filter((job) => job.jobType === 'other' as string );
-            break;
+          filteredJobs = filteredJobs.filter(
+            (job) => job.jobType === ('other' as string)
+          )
+          break
 
         default:
-            break;
-        }
-    }else{
-      console.log('Resetting ...');
-      filteredJobs = initialJobListing;
+          break
+      }
+    } else {
+      console.log('Resetting ...')
+      filteredJobs = initialJobListing
     }
-  
-    setJobListing(filteredJobs);
-  }
-  
 
+    setJobListing(filteredJobs)
+  }
 
   const [checkedItems, setCheckedItems] = React.useState([
     false,
@@ -168,7 +175,7 @@ const findJob = () => {
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                   {t('sortStartingDate')}
+                    {t('sortStartingDate')}
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
                     {t('sortHighestSalary')}
@@ -180,7 +187,7 @@ const findJob = () => {
                     paddingBottom={1}
                     isChecked={allChecked}
                     isIndeterminate={isIndeterminate}
-                    onChange={(e) =>{
+                    onChange={(e) => {
                       setCheckedItems([
                         e.target.checked,
                         e.target.checked,
@@ -195,8 +202,8 @@ const findJob = () => {
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
                       isChecked={checkedItems[0]}
-                      value = "full-time"
-                      onChange={(e) =>{
+                      value="full-time"
+                      onChange={(e) => {
                         setCheckedItems([
                           e.target.checked,
                           checkedItems[1],
@@ -210,8 +217,8 @@ const findJob = () => {
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[1]}
-                      value = "part-time"
-                    onChange={(e) =>{
+                      value="part-time"
+                      onChange={(e) => {
                         setCheckedItems([
                           checkedItems[0],
                           e.target.checked,
@@ -220,7 +227,6 @@ const findJob = () => {
                         ])
                         handleCheckboxChange(e)
                       }}
-                    
                     >
                       {t('partTime')}
                     </Checkbox>
@@ -232,9 +238,9 @@ const findJob = () => {
                           checkedItems[1],
                           e.target.checked,
                           checkedItems[3],
-                        ]) 
-                        handleCheckboxChange(e)}
-                      }
+                        ])
+                        handleCheckboxChange(e)
+                      }}
                       value="contract"
                     >
                       {t('contract')}
@@ -249,8 +255,7 @@ const findJob = () => {
                           e.target.checked,
                         ])
                         handleCheckboxChange(e)
-                      }
-                      }
+                      }}
                       value="other"
                     >
                       {t('other')}
@@ -333,23 +338,27 @@ const findJob = () => {
                     </chakra.p>
                   </Box>
                   <VStack
-                  spacing={{ base: 0, sm: 3 }}
-                  alignItems="start"
-                  fontWeight="light"
-                  fontSize={{ base: 'xs', sm: 'sm' }}
-                  color={useColorModeValue('gray.600', 'gray.300')}
-                >
-                  <chakra.p>
-                    📅 {t('startingDate')}: {job.startDate.split('T')[0]}
-                  </chakra.p>
-                  <chakra.p>🤑 {t('salary')}: ${job.salary}/hr</chakra.p>
-                  <chakra.p>
-                    🏫 {t('transcript')}: {job.transcript.toString() == 'true' ? t('yes') : t('no')}
-                  </chakra.p>
-                  <chakra.p>
-                    💌 {t('coverLetter')}: {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
-                  </chakra.p>
-                </VStack>
+                    spacing={{ base: 0, sm: 3 }}
+                    alignItems="start"
+                    fontWeight="light"
+                    fontSize={{ base: 'xs', sm: 'sm' }}
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    <chakra.p>
+                      📅 {t('startingDate')}: {job.startDate.split('T')[0]}
+                    </chakra.p>
+                    <chakra.p>
+                      🤑 {t('salary')}: ${job.salary}/hr
+                    </chakra.p>
+                    <chakra.p>
+                      🏫 {t('transcript')}:{' '}
+                      {job.transcript.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                    <chakra.p>
+                      💌 {t('coverLetter')}:{' '}
+                      {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                  </VStack>
                   <Stack
                     spacing={2}
                     direction="row"
@@ -387,6 +396,5 @@ export const getStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale, ['common'])),
   },
 })
-
 
 export default withTranslation('common')(findJob)

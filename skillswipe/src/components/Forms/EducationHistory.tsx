@@ -13,12 +13,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const EducationHistory = (props: any) => {
   const { t } = useTranslation('common')
@@ -165,7 +164,7 @@ const EducationHistory = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="institution">
-        <FormLabel htmlFor="institution">{t("institution")}</FormLabel>
+        <FormLabel htmlFor="institution">{t('institution')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -180,7 +179,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year-when">{t("startDate")}</FormLabel>
+        <FormLabel htmlFor="start_year-when">{t('startDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -195,7 +194,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">{t("endDate")}</FormLabel>
+        <FormLabel htmlFor="end_year">{t('endDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -210,7 +209,7 @@ const EducationHistory = (props: any) => {
         />
       </FormControl>
       <FormControl id="degree">
-        <FormLabel htmlFor="degree">{t("degree")}</FormLabel>
+        <FormLabel htmlFor="degree">{t('degree')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

@@ -14,11 +14,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Languages = (props: any) => {
   const { t } = useTranslation('common')
@@ -181,10 +181,10 @@ const Languages = (props: any) => {
           width="auto"
           onChange={handleChange}
         >
-          <option value="beginner">{t("beginner")}</option>
-          <option value="intermediate">{t("intermediate")}</option>
-          <option value="advanced">{t("advanced")}</option>
-          <option value="native_speaker">{t("native")}</option>
+          <option value="beginner">{t('beginner')}</option>
+          <option value="intermediate">{t('intermediate')}</option>
+          <option value="advanced">{t('advanced')}</option>
+          <option value="native_speaker">{t('native')}</option>
         </Select>
       </FormControl>
     </Box>

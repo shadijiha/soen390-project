@@ -101,10 +101,7 @@ export const addWorkExperienceRequest = async (token: any, work: any) => {
     })
 }
 
-export const deleteWorkExperienceRequest = async (
-  token: any,
-  workId: number
-) => {
+export const deleteWorkExperienceRequest = async (token: any, workId: number) => {
   return axios
     .delete(`${URL}/profile/work/${workId}`, {
       headers: {
@@ -141,9 +138,9 @@ export const addVolunteeringRequest = async (token: any, volunteering: any) => {
 }
 
 export const deleteVolunteeringRequest = async (
-  token: any, 
+  token: any,
   VolunteeringId: number
-  ) => {
+) => {
   return axios
     .delete(`${URL}/Profile/volunteering/${VolunteeringId}`, {
       headers: {
@@ -155,12 +152,11 @@ export const deleteVolunteeringRequest = async (
     })
 }
 
-
 export const editPersonalProjectsRequest = async (token: any, project: any) => {
   return axios
     .put(`${URL}/profile/project/${project.id}`, project, {
       headers: {
-       authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
     .catch((err) => {
@@ -195,17 +191,16 @@ export const deletePersonalProjectsRequest = async (
     })
 }
 
-
-
 export const editCoursesRequest = async (token: any, course: any) => {
-  return axios.put(`${URL}/profile/course/${course.id}`, course, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  })
-  .catch((err) => {
-    return { status: 500, data: err }
-  })
+  return axios
+    .put(`${URL}/profile/course/${course.id}`, course, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
 export const addCoursesRequest = async (token: any, course: any) => {
@@ -232,7 +227,6 @@ export const deleteCoursesRequest = async (token: any, courseId: number) => {
     })
 }
 
-
 export const editLanguagesRequest = async (token: any, language: any) => {
   return axios
     .put(`${URL}/profile/language/${language.id}`, language, {
@@ -257,10 +251,7 @@ export const addLanguagesRequest = async (token: any, language: any) => {
     })
 }
 
-export const deleteLanguagesRequest = async (
-  token: any,
-  languageId: number
-) => {
+export const deleteLanguagesRequest = async (token: any, languageId: number) => {
   return axios
     .delete(`${URL}/profile/language/${languageId}`, {
       headers: {
@@ -271,7 +262,6 @@ export const deleteLanguagesRequest = async (
       return { status: 500, data: err }
     })
 }
-
 
 export const editSkillsRequest = async (token: any, skill: any) => {
   return axios
@@ -297,10 +287,7 @@ export const addSkillsRequest = async (token: any, skill: any) => {
     })
 }
 
-export const deleteSkillsRequest = async (
-  token: any,
-  skillId: number
-) => {
+export const deleteSkillsRequest = async (token: any, skillId: number) => {
   return axios
     .delete(`${URL}/profile/skill/${skillId}`, {
       headers: {

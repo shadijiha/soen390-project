@@ -13,11 +13,11 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 const Experience = (props: any) => {
   const { t } = useTranslation('common')
@@ -170,7 +170,7 @@ const Experience = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="company">
-        <FormLabel htmlFor="company">{t("company")}</FormLabel>
+        <FormLabel htmlFor="company">{t('company')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -185,7 +185,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="title">
-        <FormLabel htmlFor="title">{t("title")}</FormLabel>
+        <FormLabel htmlFor="title">{t('title')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -200,7 +200,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year-when">{t("startDate")}</FormLabel>
+        <FormLabel htmlFor="start_year-when">{t('startDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -215,7 +215,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">{t("endDate")}</FormLabel>
+        <FormLabel htmlFor="end_year">{t('endDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
