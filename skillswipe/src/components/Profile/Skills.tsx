@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react/jsx-key */
 import { Button, Stack } from '@chakra-ui/react'
 import React from 'react'
 
@@ -6,6 +8,7 @@ import ProfileStyle from '../../styles/profilestyle'
 
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
+
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Skills = ({ skillsArray }: any) => {

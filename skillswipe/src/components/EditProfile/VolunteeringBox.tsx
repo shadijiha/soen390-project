@@ -27,7 +27,7 @@ const VolunteeringBox = () => {
     )
   }
   const addVolunteering = () => {
-    let vol: Volunteering = {}
+    const vol: Volunteering = {}
     setVolunteeringList((oldArray) => [...(oldArray || []), vol])
   }
   const isNew = (volunteering: Volunteering) => {

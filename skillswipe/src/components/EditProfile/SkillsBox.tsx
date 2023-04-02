@@ -25,7 +25,7 @@ const SkillsBox = () => {
   }
 
   const addSkill = () => {
-    let skill: Skill = {}
+    const skill: Skill = {}
     setSkillsList((oldArray) => [...oldArray, skill])
   }
   const isNew = (skill: Skill) => {

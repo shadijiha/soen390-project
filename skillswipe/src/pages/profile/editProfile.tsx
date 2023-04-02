@@ -9,7 +9,9 @@ import { editPersonalInformation, removeCoverpic } from '../api/api'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
+
 import { useTranslation, withTranslation } from 'next-i18next'
+
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -203,7 +205,8 @@ const EditProfile = () => {
                     border: '3px solid black',
                   }}
                   // add an onClick handler to delete the profile pic
-                  onClick={removeUserCoverpic} // TODO: FIX THIS SHIT
+
+                  onClick={removeUserCoverpic} // TODO: FIX THIS SHIT -- should be profile picture not cover
                 />
               </button>
             ) : null}

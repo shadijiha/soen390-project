@@ -27,7 +27,7 @@ const CoursesBox = () => {
   // }
 
   const addCourse = () => {
-    let course: Course = {}
+    const course: Course = {}
     setCoursesList((oldArray) => {
       if (Array.isArray(oldArray)) {
         return [...oldArray, course]
@@ -68,7 +68,7 @@ const CoursesBox = () => {
           alignSelf: 'flex-start',
         }}
       >
-        {t('courses')}"
+        {t('courses')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

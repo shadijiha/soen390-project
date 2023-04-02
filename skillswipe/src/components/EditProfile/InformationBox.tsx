@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 // eslint-disable-next-line prettier/prettier
+
 import { useTranslation } from 'next-i18next'
 import Information from '../Forms/Information'
 
@@ -20,7 +21,7 @@ const InformationBox = () => {
     gender: '',
   })
   const update = (updateUser: any) => {
-    var User = Object.assign(UpdateUser, updateUser)
+    const User = Object.assign(UpdateUser, updateUser)
     setUpdateUser(User)
   }
   const handleSubmit = async () => {

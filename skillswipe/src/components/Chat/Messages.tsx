@@ -1,6 +1,7 @@
+/* eslint-disable no-var */
 import { Avatar, Box, Flex, Heading, Link, Spinner, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
-import { FileIcon, defaultStyles } from 'react-file-icon'
+import { defaultStyles, FileIcon } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 
 const Messages = ({ messages, user }) => {
@@ -15,6 +16,7 @@ const Messages = ({ messages, user }) => {
     <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
       {messages.map((item, index) => {
         var data = false
+
         var file = { ext: '', link: '', name: '', size: 0, loaded: false }
 
         try {

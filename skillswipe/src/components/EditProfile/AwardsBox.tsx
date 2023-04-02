@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
 // eslint-disable-next-line prettier/prettier
 import { useTranslation } from 'next-i18next'
+
 import Awards from '../Forms/Awards'
 
 type Awards = {
@@ -25,7 +26,7 @@ const AwardsBox = () => {
     console.log('awardsList', awardsList)
   }
   const addAward = () => {
-    let award: Awards = {}
+    const award: Awards = {}
     setAwardsList((oldArray) => [...(oldArray || []), award])
   }
   const isNew = (award: Awards) => {

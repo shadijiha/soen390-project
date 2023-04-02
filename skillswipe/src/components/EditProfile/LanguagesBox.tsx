@@ -24,7 +24,7 @@ const LanguagesBox = () => {
     setLanguageList(languageList.filter((language: any) => language.id !== id))
   }
   const addLanguage = () => {
-    let lang: Language = {}
+    const lang: Language = {}
     setLanguageList((oldArray) => [...(oldArray || []), lang])
   }
   const isNew = (language: Language) => {

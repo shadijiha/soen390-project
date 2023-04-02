@@ -28,7 +28,7 @@ const ExperienceBox = () => {
     )
   }
   const addExperience = () => {
-    let exp: Experience = {}
+    const exp: Experience = {}
     setExperienceList((oldArray) => [...(oldArray || []), exp])
   }
   const isNew = (experience: Experience) => {

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-key */
 import { useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import ProfileStyle from '../../styles/profilestyle'

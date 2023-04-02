@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Container,
   HStack,
@@ -71,6 +72,7 @@ const PersonalProjectsProfile = ({ Project }: any) => {
           <VStack spacing={4}>
             {Project.map((element) => (
               <HStack
+                key={element.id}
                 p={8}
                 bg={useColorModeValue('#FFFFFF', '#171923')}
                 rounded="35px"

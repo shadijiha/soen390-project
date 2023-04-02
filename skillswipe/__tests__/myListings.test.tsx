@@ -1,26 +1,29 @@
 import Layout from '@/components/Layout'
+import MyListings from '@/pages/myListings'
 import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import { Provider } from 'react-redux'
 import store from '../src/Redux/store'
-import { default as Inbox, default as Inbox } from '../src/pages/inbox/index'
 
 jest.mock('next/router', () => require('next-router-mock'))
-describe('Inbox', () => {
-  const renderInbox = () =>
+describe('Home', () => {
+  const renderMyListings = () =>
     render(
       <Provider store={store}>
         {' '}
         <Layout>
-          <Inbox />
+          <MyListings />
         </Layout>
       </Provider>
     )
-  it('should display Inbox page without crashing', async () => {
-    renderInbox()
+  //   beforeAll(()=>{
+
+  // })
+  it('should display listings page without crashing', async () => {
+    renderMyListings()
     await waitFor(() => {
-      expect(screen.getByTestId('inbox')).toBeInTheDocument()
+      expect(screen.getByTestId('myListings')).toBeInTheDocument()
     })
   })
 })

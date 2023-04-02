@@ -20,7 +20,7 @@ const NotificationCounter = (props: any) => {
       const pusher = new Pusher(PUSHER_APP_KEY, {
         cluster: PUSHER_APP_CLUSTER,
       })
-      var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
+      const channel = pusher.subscribe(`user-${currentUser.auth.id}`)
       channel.bind('friend-request', function (data) {
         setCounter((prevCount) => prevCount + 1)
       })

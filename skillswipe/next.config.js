@@ -1,5 +1,6 @@
 const { i18n } = require('./next-i18next.config')
 // /** @type {import('./next-i18next.config').i18n} */
+
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {

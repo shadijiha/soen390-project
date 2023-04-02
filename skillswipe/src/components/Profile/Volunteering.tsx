@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/jsx-key */
 import { Stack } from '@chakra-ui/react'
 import React from 'react'
 import 'react-toastify/dist/ReactToastify.css'

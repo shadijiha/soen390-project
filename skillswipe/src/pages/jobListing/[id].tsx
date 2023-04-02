@@ -5,7 +5,7 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
-import Link from 'next/link'
+
 import React, { useEffect, useState } from 'react'
 
 import JobDescription from '@/components/jobListing/JobDescription'
@@ -13,13 +13,13 @@ import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
-import axios from 'axios'
+
 import { useTranslation } from 'next-i18next'
-import router, { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
+
 import { toast } from 'react-toastify'
 
-import { createJob, getOpenJobs, viewJob } from '../api/api'
+import { viewJob } from '../api/api'
 
 type JobAttributes = {
   id?: number

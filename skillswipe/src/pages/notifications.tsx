@@ -12,9 +12,11 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react'
+
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -23,6 +25,7 @@ import { getStaticProps } from '.'
 import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
+
 import { getAllConversation, getConversationById } from './api/chat'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -43,7 +46,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     const pusher = new Pusher(PUSHER_APP_KEY, {
       cluster: PUSHER_APP_CLUSTER,
     })
-    var channel = pusher.subscribe(`user-${currentUser.auth.id}`)
+    const channel = pusher.subscribe(`user-${currentUser.auth.id}`)
     channel.bind('friend-request', function (data) {
       addRequest()
     })
@@ -123,7 +126,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
-    var notification: any = []
+    const notification: any = []
     if (token) {
       try {
         const allConvo = await getAllConversation(token)
@@ -138,7 +141,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               const diffInMs: any = currentDate.getTime() - created_at.getTime()
               const diffInHrs: number = diffInMs / (1000 * 60 * 60)
               if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
-                var notif: any = {
+                const notif: any = {
                   id: element.id,
                   firstName: element.firstName,
                   lastName: element.lastName,
@@ -284,5 +287,4 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     </>
   )
 }
-
 export default Notifications

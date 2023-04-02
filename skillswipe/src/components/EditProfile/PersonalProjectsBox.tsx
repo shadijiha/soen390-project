@@ -31,7 +31,7 @@ const PersonalProjectsBox = () => {
     )
   }
   const addPersonalProject = () => {
-    let personalProject: PersonalProject = {}
+    const personalProject: PersonalProject = {}
     setPersonalProjectsList((oldArray) => [...(oldArray || []), personalProject])
   }
   const isNew = (personalProject: PersonalProject) => {

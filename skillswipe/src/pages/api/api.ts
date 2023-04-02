@@ -225,3 +225,42 @@ export const viewJob = async (token, id) => {
       return { status: 400, data: err.response.data }
     })
 }
+
+export const applyToJob = async (token, id, jobApply: any) => {
+  return axios
+    .post(`${URL}/application/${id}`, jobApply, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
+export const getMyApplications = async (token: any) => {
+  return axios
+    .get(`${URL}/application/my`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
+export const withdrawJobApplication = async (token, id) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  try {
+    const response = await axios.delete(`${URL}/application/${id}`, config)
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
