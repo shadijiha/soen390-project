@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import { BellIcon, ChevronDownIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -32,6 +32,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
+import { i18n } from 'next-i18next'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -88,6 +89,11 @@ export default function NavBar(props: any) {
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
   }
+
+  const languageOptions = [
+    { label: 'English', value: 'en' },
+    { label: 'Français', value: 'fr' },
+  ];
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -233,20 +239,18 @@ export default function NavBar(props: any) {
             </Button>
           </NextLink>
 
-          <Select
-            onChange={(e) => changeLanguage(e.target.value)}
-            variant="filled"
-            my={5}
-            w="58"
-            py={2}
-            _hover={{
-              cursor: 'pointer',
-            }}
-            icon={<Text>🌐</Text>}
-          >
-            <option value="en"> {t('english')} </option>
-            <option value="fr"> {t('french')} </option>
-          </Select>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                 {languageOptions.find((option) => option.value === i18n.language)?.label}
+             </MenuButton>
+                <MenuList>
+                   {languageOptions.map((option) => (
+                  <MenuItem key={option.value} onClick={() => changeLanguage(option.value)}>
+                     {option.label}
+                  </MenuItem>
+                ))}
+                </MenuList>
+          </Menu>
 
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
