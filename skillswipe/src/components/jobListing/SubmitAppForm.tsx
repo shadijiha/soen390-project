@@ -18,12 +18,12 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 const SubmitAppForm = () => {
   const [cvUploaded, setCvUploaded] = useState(false)
   const [name, setName] = useState('')
@@ -85,7 +85,6 @@ const SubmitAppForm = () => {
         })
     }
   }
-
 
   const { t } = useTranslation('common')
   return (
@@ -236,7 +235,6 @@ const SubmitAppForm = () => {
           </AspectRatio>
 
           <FormControl id="cover">
-
             <FormLabel>Cover Letter (optional)</FormLabel>
             <Textarea
               size="lg"
@@ -245,7 +243,6 @@ const SubmitAppForm = () => {
               value={cover}
               onChange={(e) => setCover(e.target.value)}
             />
-
           </FormControl>
         </VStack>
         <VStack w="100%">

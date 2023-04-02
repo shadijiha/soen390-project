@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { useTranslation } from 'next-i18next'
 import Information from '../Forms/Information'
 
-
 const InformationBox = () => {
   const user = useSelector((state) => state as any)
   const [UpdateUser, setUpdateUser] = useState({

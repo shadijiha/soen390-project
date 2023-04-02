@@ -70,7 +70,6 @@ export default function NavBar(props: any) {
     }
   }
 
-
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
 
@@ -82,7 +81,6 @@ export default function NavBar(props: any) {
   }
 
   const [profile, setProfile] = useState({
-
     name: 'John Smith',
     title: 'Software Engineer',
     location: 'Montreal, QC, CA',
@@ -107,7 +105,6 @@ export default function NavBar(props: any) {
     })
   }, [currentUser])
 
-
   const getPendingConnections = () => {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('jwt')
@@ -130,7 +127,7 @@ export default function NavBar(props: any) {
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
-    var notification: any = []
+    const notification: any = []
     if (token) {
       try {
         const allConvo = await getAllConversation(token)
@@ -145,7 +142,7 @@ export default function NavBar(props: any) {
               const diffInMs: any = currentDate.getTime() - created_at.getTime()
               const diffInHrs: number = diffInMs / (1000 * 60 * 60)
               if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
-                var notif: any = {
+                const notif: any = {
                   id: element.id,
                   firstName: element.firstName,
                   lastName: element.lastName,
@@ -169,7 +166,6 @@ export default function NavBar(props: any) {
       }
     }
   }
-
 
   const handleFilter = (value) => {
     // open the openJobs page
@@ -247,7 +243,6 @@ export default function NavBar(props: any) {
             <option value="fr"> {t('french')} </option>
           </Select>
 
-
           <Search />
           <Flex display={['none', 'none', 'flex', 'flex']} ml={'auto'}>
             <NextLink href="/home" passHref>
@@ -281,7 +276,6 @@ export default function NavBar(props: any) {
             ) : (
               <NotificationCounter Notifications={0} />
             )}
-
 
             <Menu>
               <MenuButton
@@ -337,7 +331,6 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-
                   📝 ‎ Create a Job Listing
                 </MenuItem>
                 <MenuItem
@@ -352,7 +345,6 @@ export default function NavBar(props: any) {
                   }}
                 >
                   📈 ‎ My Job Applications
-
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -499,7 +491,6 @@ export default function NavBar(props: any) {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-
                   Open Jobs
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
@@ -510,7 +501,6 @@ export default function NavBar(props: any) {
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   My Job Applications
-
                 </MenuItem>
               </MenuList>
             </Menu>

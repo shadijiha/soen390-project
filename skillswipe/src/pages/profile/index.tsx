@@ -19,7 +19,6 @@ import { useTranslation } from 'next-i18next'
 import Languages from '../../components/Profile/Languages'
 import Education from '../../components/Profile/education'
 
-
 const Profile = () => {
   const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()

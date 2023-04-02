@@ -11,7 +11,6 @@ import { useTranslation } from 'next-i18next'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-
 const Skills = ({ skillsArray }: any) => {
   // call API to get education history
   const { t } = useTranslation('common')

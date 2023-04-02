@@ -19,7 +19,6 @@ const Messages = ({ messages, user }) => {
 
         var file = { ext: '', link: '', name: '', size: 0, loaded: false }
 
-
         try {
           file = JSON.parse(item.message)
           if (file.ext && file.size) {

@@ -3,9 +3,8 @@ import '@testing-library/jest-dom'
 import { render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
 import { Provider } from 'react-redux'
-import Inbox from '../src/pages/inbox/index'
 import store from '../src/Redux/store'
-import Inbox from '../src/pages/inbox/index'
+import { default as Inbox, default as Inbox } from '../src/pages/inbox/index'
 
 jest.mock('next/router', () => require('next-router-mock'))
 describe('Inbox', () => {

@@ -8,7 +8,6 @@ import { useTranslation } from 'next-i18next'
 
 import Awards from '../Forms/Awards'
 
-
 type Awards = {
   title?: string
   issuer?: string

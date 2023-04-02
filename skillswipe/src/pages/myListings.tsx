@@ -33,7 +33,6 @@ import { toast } from 'react-toastify'
 
 import { getOpenJobs } from './api/api'
 
-
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -98,7 +97,6 @@ const myListings = () => {
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
 
-
   const [profile] = useState({
     name: 'John Smith',
     title: 'Software Engineer',
@@ -123,7 +121,6 @@ const myListings = () => {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
-
 
   return (
     <>
@@ -159,9 +156,7 @@ const myListings = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-
                 My Listings
-
               </chakra.h3>
               <Spacer />
               <Menu>
