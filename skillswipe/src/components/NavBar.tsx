@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { changeStatus, getPendingRequest } from '@/pages/api/api'
+import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
@@ -31,23 +34,27 @@ import 'react-toastify/dist/ReactToastify.css'
 import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
 
-import { getPendingRequest } from '@/pages/api/api'
-import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import NotificationCounter from './Util/NotificationCounter'
-
 const selectLanguage = (lng) => {
   i18n?.changeLanguage(lng)
 }
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
-
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
   const toggleTheme = useColorModeValue('🌙', '💡')
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
   const { onToggle, isOpen } = useDisclosure()
+  const [pendingConnections, setPendingConnections] = useState([
+    { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
+  ])
+  const [messageNotification, setmessageNotification]: any[] = useState([])
+  const [loading1, setloading1] = useState(null)
+  const [loading2, setloading2] = useState(null)
+  // const [load1,setload1] = useState(true);
+  // const [load2,setload2] = useState(true);
+
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -55,7 +62,6 @@ export default function NavBar(props: any) {
   }
 
   const router = useRouter()
-
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
@@ -67,8 +73,14 @@ export default function NavBar(props: any) {
   )
 
   const logout = () => {
-    if (localStorage.getItem('jwt')) {
+    const token = localStorage.getItem('jwt')
+    if (token) {
       localStorage.removeItem('jwt')
+      changeStatus('offline', token)
+        .then((response) => {})
+        .catch((error) => {
+          toast(error.message)
+        })
       toast('Successfully Logged Out')
     }
   }
@@ -113,8 +125,8 @@ export default function NavBar(props: any) {
       const token = localStorage.getItem('jwt')
       getPendingRequest(token)
         .then((res) => {
-          // setPendingConnections(res.data)
-          // setloading2(res.data.length)
+          setPendingConnections(res.data)
+          setloading2(res.data.length)
         })
         .catch((err) => {
           toast.error(err)
@@ -161,8 +173,8 @@ export default function NavBar(props: any) {
             const cr2: any = new Date(b.created_at)
             return cr2.getTime() - cr1.getTime()
           })
-          // setmessageNotification(notification)
-          // setloading1(notification.length)
+          setmessageNotification(notification)
+          setloading1(notification.length)
         })
       } catch (error) {
         toast(error.message)
@@ -182,10 +194,6 @@ export default function NavBar(props: any) {
     // open the myJobApplications page
     if (value === 'option3') {
       router.push('/postJob')
-    }
-
-    if (value === 'option4') {
-      router.push('/myApplications')
     }
   }
 
