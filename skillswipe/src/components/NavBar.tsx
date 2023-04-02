@@ -14,6 +14,7 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  Select,
   Text,
   useColorMode,
   useColorModeValue,
@@ -30,6 +31,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
 
+import { getPendingRequest } from '@/pages/api/api'
+import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import NotificationCounter from './Util/NotificationCounter'
 
 const selectLanguage = (lng) => {
@@ -110,8 +113,8 @@ export default function NavBar(props: any) {
       const token = localStorage.getItem('jwt')
       getPendingRequest(token)
         .then((res) => {
-          setPendingConnections(res.data)
-          setloading2(res.data.length)
+          // setPendingConnections(res.data)
+          // setloading2(res.data.length)
         })
         .catch((err) => {
           toast.error(err)
@@ -158,8 +161,8 @@ export default function NavBar(props: any) {
             const cr2: any = new Date(b.created_at)
             return cr2.getTime() - cr1.getTime()
           })
-          setmessageNotification(notification)
-          setloading1(notification.length)
+          // setmessageNotification(notification)
+          // setloading1(notification.length)
         })
       } catch (error) {
         toast(error.message)
@@ -269,13 +272,13 @@ export default function NavBar(props: any) {
               </Button>
             </NextLink>
 
-            {props.nbNotifications != null ? (
+            {/* {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
             ) : loading1 != null && loading2 != null ? (
               <NotificationCounter Notifications={loading1 + loading2} />
             ) : (
               <NotificationCounter Notifications={0} />
-            )}
+            )} */}
 
             <Menu>
               <MenuButton

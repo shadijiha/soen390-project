@@ -45,7 +45,7 @@ const Home = () => {
                 fontWeight: '300',
               }}
             >
-              {t('recentPosts')}
+              Recent Posts
             </Heading>
             <List>
               {posts.map((post) => (
