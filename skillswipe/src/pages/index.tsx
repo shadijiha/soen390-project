@@ -125,4 +125,5 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale!, ['common'])),
   },
 })
+
 export default login

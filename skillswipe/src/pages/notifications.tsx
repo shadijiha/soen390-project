@@ -26,6 +26,7 @@ import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getAllConversation, getConversationById } from './api/chat'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -287,4 +288,11 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default Notifications

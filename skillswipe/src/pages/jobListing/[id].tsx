@@ -19,6 +19,7 @@ import { useRouter } from 'next/router'
 
 import { toast } from 'react-toastify'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { viewJob } from '../api/api'
 
 type JobAttributes = {
@@ -103,4 +104,11 @@ const jobListing = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default jobListing

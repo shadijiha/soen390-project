@@ -21,6 +21,7 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -326,5 +327,11 @@ const EditProfile = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default withTranslation('common')(EditProfile)

@@ -31,6 +31,7 @@ import { BsFilter } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getOpenJobs } from './api/api'
 
 interface JobAttributes {
@@ -272,7 +273,7 @@ const myListings = () => {
                   alignItems="center"
                   _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                 >
-                  <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                     <HStack spacing={3}>
                       <img
                         src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
@@ -394,5 +395,11 @@ const myListings = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default myListings
