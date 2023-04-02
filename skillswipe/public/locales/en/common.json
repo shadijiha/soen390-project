@@ -26,6 +26,7 @@
     "french": "French",
 
     "search": "Search",
+    "total results": "Total Results",
     "recent posts": "Recent Posts",
     "noResults": "No results found",
 
@@ -79,10 +80,12 @@
       "create": "Create",
 
       "register": "Register",
+      "select sex": "Select sex",
       "male": "Male",
       "female": "Female",
       "signupWithGoogle": "Sign Up with Google",
       "alreadyUser": "Already a user ?",
+      "confirm password": "Confirm Password",
 
 
       "myListings": "My Listings",
@@ -106,12 +109,14 @@
       "edit": "Edit",
       "updateCoverPicture": "Successfully Updated Cover Picture",
       "updateProfilePicture": "Successfully Updated Profile Picture",
+      "removeCoverPicture": "Successfully Removed Cover Picture",
       "recentPosts": "Recent Posts",
 
       "fillAllFields": "Please fill all fields",
       "loggedIn": "You are Successfully logged in",
       "fillCorrectly": "Please fill the details correctly",
 
+      "removeConnection":"Remove Connection",
       "connectionRemoved": "Connection Removed",
       "requestAccepted": "Request Accepted",
       "requestDeclined": "Request Declined",

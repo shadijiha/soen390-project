@@ -1,11 +1,14 @@
-import { Heading, useColorModeValue } from '@chakra-ui/react'
-
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, List, ListItem, Text } from '@chakra-ui/react'
-
+import {
+  Box,
+  Heading,
+  List,
+  ListItem,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -46,7 +49,7 @@ const Home = () => {
                 fontWeight: '300',
               }}
             >
-              Recent Posts
+              {t('recent posts')}
             </Heading>
             <List>
               {posts.map((post) => (

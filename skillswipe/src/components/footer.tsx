@@ -7,12 +7,9 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
-
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Logo = (props: any) => {
   const { t } = useTranslation('common')

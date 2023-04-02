@@ -1,8 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import Awards from '@/components/Profile/Awards'
+import Courses from '@/components/Profile/Courses'
+import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
+import Recommendations from '@/components/Profile/Recommendations'
+import Skills from '@/components/Profile/Skills'
+import Volunteering from '@/components/Profile/Volunteering'
+import WorkExperience from '@/components/Profile/WorkExperience'
 import {
   Divider,
   Spinner,
@@ -10,11 +14,14 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Education from '../../components/Profile/education'
 import ProfileStyle from '../../styles/profilestyle'
 import {
   acceptRequest,
@@ -23,18 +30,6 @@ import {
   removeConnection,
   sendRequest,
 } from '../api/api'
-
-import Awards from '@/components/Profile/Awards'
-import Courses from '@/components/Profile/Courses'
-import Languages from '@/components/Profile/Languages'
-import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
-import Recommendations from '@/components/Profile/Recommendations'
-import Skills from '@/components/Profile/Skills'
-import Volunteering from '@/components/Profile/Volunteering'
-import WorkExperience from '@/components/Profile/WorkExperience'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Education from '../../components/Profile/education'
 
 const profile = () => {
   const { t } = useTranslation('common')
@@ -297,7 +292,7 @@ const profile = () => {
                             onClick={Reject}
                           >
                             <span>
-                              <span>Remove Connection</span>
+                              <span>{t('removeConnection')}</span>
                             </span>
                           </button>
                         </>

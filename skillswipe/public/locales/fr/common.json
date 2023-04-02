@@ -26,6 +26,7 @@
     "french": "Français",
 
     "search": "Rechercher",
+    "total results": "Total des résultats",
     "recent posts": "Publications récentes",
     "noResults": "Aucun résultat",
 
@@ -79,10 +80,12 @@
     "create": "Créer",
 
     "register": "S'inscrire",
+    "select sex": "Choisir le sexe",
     "male": "Masculin",
     "female": "Féminin",
     "signupWithGoogle": "S'inscrire avec Google",
     "alreadyUser": "Déjà un utilisateur ?",
+    "confirm password": "Confirmation du mot de passe",
 
 
     "myListings": "Mes offres d'emploi",
@@ -105,13 +108,15 @@
     "hey": "Salut",
     "edit": "Modifier",
     "updateCoverPicture": "Mettre à jour la photo de couverture",
-    "updateProfilePicture": "Mettre à jour la photo de profil",    
+    "updateProfilePicture": "Mettre à jour la photo de profil",
+    "removeCoverPicture": "Suppression réussie de l'image de couverture", 
     "recentPosts": "Publications récentes",
 
     "fillAllFields": "Veuillez remplir tous les champs",
     "loggedIn": "Connecté",
     "fillCorrectly": "Veuillez remplir correctement les champs",
 
+    "removeConnection":"Retirer la connexion",
     "connectionRemoved": "Connexion supprimée",
     "requestAccepted": "Demande acceptée",
     "requestDeclined": "Demande refusée",

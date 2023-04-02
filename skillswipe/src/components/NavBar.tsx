@@ -45,7 +45,8 @@ export default function NavBar(props: any) {
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
   const router = useRouter()
-  const currentLang = router.locale // => locale string eg. "en"  const [messageNotification, setmessageNotification]: any[] = useState([])
+  const currentLang = router.locale // => locale string eg. "en"
+  const [messageNotification, setmessageNotification]: any[] = useState([])
   const [loading1, setloading1] = useState(null)
   const [loading2, setloading2] = useState(null)
   // const [load1,setload1] = useState(true);
@@ -493,17 +494,17 @@ export default function NavBar(props: any) {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                Careers
+                {t('careers')}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                  Open Jobs
+                  {t('openJobs')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                  My Job Listings
+                  {t('myListings')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                  Create a Job Listing
+                  {t('createJobListing')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   My Job Applications
@@ -574,7 +575,7 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Sign In/Logout
+                {t('SignIn/Logout')}
               </Button>
             </NextLink>
           </Flex>

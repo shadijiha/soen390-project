@@ -1,24 +1,21 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import Head from 'next/head'
-import React, { useState } from 'react'
-
-import { Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
-
-import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import ProfileStyle from '../../styles/profilestyle'
-
 import Awards from '@/components/Profile/Awards'
 import Courses from '@/components/Profile/Courses'
 import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
 import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
+import { Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Languages from '../../components/Profile/Languages'
 import Education from '../../components/Profile/education'
+import ProfileStyle from '../../styles/profilestyle'
 
 const Profile = () => {
   const { t } = useTranslation('common')

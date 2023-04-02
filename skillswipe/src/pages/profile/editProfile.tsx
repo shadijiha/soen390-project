@@ -1,27 +1,21 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import Layout from '@/components/Layout'
-import NavBar from '@/components/NavBar'
-import { Box, Heading, Stack } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import { editPersonalInformation, removeCoverpic } from '../api/api'
-
+import AwardsBox from '@/components/EditProfile/AwardsBox'
+import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
-
-import { useTranslation, withTranslation } from 'next-i18next'
-
-import { useSelector } from 'react-redux'
-import { toast } from 'react-toastify'
-
-import AwardsBox from '@/components/EditProfile/AwardsBox'
-import CoursesBox from '@/components/EditProfile/CoursesBox'
 import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import Layout from '@/components/Layout'
+import NavBar from '@/components/NavBar'
+import { Box, Heading, Stack } from '@chakra-ui/react'
+import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
+import { editPersonalInformation, removeCoverpic } from '../api/api'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -61,7 +55,7 @@ const EditProfile = () => {
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
-          toast('Successfully Update Cover Picture')
+          toast(t('updateCoverPicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -78,7 +72,7 @@ const EditProfile = () => {
       editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
-          toast('Successfully Updated Profile picture')
+          toast(t('updateProfilePicture'))
         })
         .catch((error) => {
           toast(error.message)
@@ -92,7 +86,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast('Successfully Removed Cover Picture')
+        toast(t('removeCoverPicture'))
       })
       .catch((error) => {
         toast(error.message)
