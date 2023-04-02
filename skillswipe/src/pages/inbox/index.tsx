@@ -1,23 +1,8 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable @next/next/no-img-element */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import {
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  HStack,
-  Spacer,
-  Spinner,
-  Text,
-} from '@chakra-ui/react'
-import { GetServerSideProps } from 'next'
+import { Avatar, Box, Flex, Heading, Spacer, Text } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { Router, useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -97,10 +82,5 @@ const Inbox = () => {
     </>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Inbox

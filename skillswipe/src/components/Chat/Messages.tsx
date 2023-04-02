@@ -1,6 +1,6 @@
 import { Avatar, Box, Flex, Heading, Link, Spinner, Text } from '@chakra-ui/react'
 import React, { useEffect, useRef } from 'react'
-import { defaultStyles, FileIcon } from 'react-file-icon'
+import { FileIcon, defaultStyles } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 
 const Messages = ({ messages, user }) => {

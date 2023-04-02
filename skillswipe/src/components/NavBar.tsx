@@ -28,22 +28,20 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
-import { i18n, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
 import NotificationCounter from './Util/NotificationCounter'
 
 const selectLanguage = (lng) => {
-  if (i18n) i18n.changeLanguage(lng)
+  i18n?.changeLanguage(lng)
 }
 
 export default function NavBar(props: any) {
@@ -98,7 +96,6 @@ export default function NavBar(props: any) {
 
   const { t } = useTranslation('common')
 
-  const router = useRouter()
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
     selectLanguage(language)

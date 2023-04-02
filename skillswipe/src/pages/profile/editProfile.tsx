@@ -1,19 +1,15 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, color, Heading, Stack } from '@chakra-ui/react'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { editPersonalInformation, removeCoverpic } from '../api/api'
 
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
 import ExperienceBox from '@/components/EditProfile/ExperienceBox'
 import InformationBox from '@/components/EditProfile/InformationBox'
-import { GetServerSideProps } from 'next'
 import { useTranslation, withTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
@@ -207,7 +203,7 @@ const EditProfile = () => {
                     border: '3px solid black',
                   }}
                   // add an onClick handler to delete the profile pic
-                  onClick={removeUserProfilepic}
+                  onClick={removeUserCoverpic} // TODO: FIX THIS SHIT
                 />
               </button>
             ) : null}
@@ -327,10 +323,5 @@ const EditProfile = () => {
     </>
   )
 }
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default withTranslation('common')(EditProfile)

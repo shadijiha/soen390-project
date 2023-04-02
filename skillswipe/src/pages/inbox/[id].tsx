@@ -1,6 +1,6 @@
+import { setUser } from '@/Redux/action-creator'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { setUser } from '@/Redux/action-creator'
 import {
   ColorModeContext,
   Divider,

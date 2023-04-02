@@ -3,9 +3,7 @@ import { Heading, useColorModeValue } from '@chakra-ui/react'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, List, ListItem, Text } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -77,11 +75,5 @@ const Home = () => {
     </>
   )
 }
-
-export const getStaticProps: GetStaticProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Home
