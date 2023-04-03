@@ -20,6 +20,7 @@ import {
 
 import { useTranslation } from 'next-i18next'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { createJob } from './api/api'
@@ -295,5 +296,11 @@ const postJob = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default postJob

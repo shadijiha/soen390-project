@@ -23,5 +23,5 @@ RUN npm i -g nodemon
 EXPOSE 3000
 # Start the app
 # CMD [ "npm", "run", "dev" ]
-CMD [ -d "node_modules" ] && nodemon || npm ci && nodemon
 USER node
+CMD [ -d "node_modules" ] && nodemon || npm ci && nodemon

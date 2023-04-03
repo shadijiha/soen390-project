@@ -285,7 +285,7 @@ const findJob = () => {
                   alignItems="center"
                   _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                 >
-                  <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                     <HStack spacing={3}>
                       <img
                         src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}

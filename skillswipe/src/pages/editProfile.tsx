@@ -1,13 +1,3 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-import Layout from '@/components/Layout'
-import NavBar from '@/components/NavBar'
-import { Box, Heading, Stack } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
-import { editPersonalInformation } from './api/api'
-
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
@@ -17,11 +7,15 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
-
+import Layout from '@/components/Layout'
+import NavBar from '@/components/NavBar'
+import { Box, Heading, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { editPersonalInformation } from './api/api'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -276,5 +270,11 @@ const EditProfile = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default EditProfile

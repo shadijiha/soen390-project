@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import {
   Button,
@@ -125,4 +124,5 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => ({
     ...(await serverSideTranslations(locale!, ['common'])),
   },
 })
+
 export default login

@@ -14,6 +14,7 @@ import {
 
 import { useTranslation } from 'next-i18next'
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
@@ -135,7 +136,7 @@ const Register = () => {
 
             <Input
               data-testid="email"
-              placeholder="Email"
+              placeholder={t('email')}
               variant="filled"
               mb={3}
               type="email"
@@ -144,7 +145,7 @@ const Register = () => {
             />
             <Input
               data-testid="password"
-              placeholder="Password"
+              placeholder={t('password')}
               variant="filled"
               mb={3}
               type="password"
@@ -153,7 +154,7 @@ const Register = () => {
             />
             <Input
               data-testid="confirm-password"
-              placeholder="Confirm Password"
+              placeholder={t('confirm password')}
               variant="filled"
               type="password"
               background={placeholderBackground}
@@ -166,7 +167,7 @@ const Register = () => {
             <Select
               my={3}
               onChange={genderChange}
-              placeholder="Select Sex"
+              placeholder={t('select sex')}
               mb={6}
               variant="filled"
               background={placeholderBackground}
@@ -209,5 +210,11 @@ const Register = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Register

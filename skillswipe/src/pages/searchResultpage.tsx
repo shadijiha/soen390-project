@@ -1,12 +1,9 @@
-/* eslint-disable react/jsx-key */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-
 import { Box, Flex, Heading, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { default as NextLink } from 'next/link'
-
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -65,7 +62,7 @@ export default function Search() {
           paddingBottom: '1.5rem',
         }}
       >
-        Total Results: {searchResults.length}
+        {t('total results')}: {searchResults.length}
       </Heading>
       <Flex flexDir="column" align="center">
         <Stack>

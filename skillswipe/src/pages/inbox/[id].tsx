@@ -1,15 +1,8 @@
-import { setUser } from '@/Redux/action-creator'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-
-import {
-  ColorModeContext,
-  Divider,
-  Flex,
-  Spinner,
-  useColorMode,
-} from '@chakra-ui/react'
+import { Divider, Flex, Spinner, useColorMode } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
@@ -181,4 +174,11 @@ const Chat = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default Chat

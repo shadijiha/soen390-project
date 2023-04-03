@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { BellIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import { BellIcon, ChevronDownIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -31,12 +31,8 @@ import { RiArrowDropDownFill } from 'react-icons/ri'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { i18n } from '../../next-i18next.config'
 import Search from './Search/Search'
-
-const selectLanguage = (lng) => {
-  i18n?.changeLanguage(lng)
-}
+import { i18n } from 'next-i18next'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -49,6 +45,8 @@ export default function NavBar(props: any) {
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
+  const router = useRouter()
+  const currentLang = router.locale // => locale string eg. "en"
   const [messageNotification, setmessageNotification]: any[] = useState([])
   const [loading1, setloading1] = useState(null)
   const [loading2, setloading2] = useState(null)
@@ -61,7 +59,6 @@ export default function NavBar(props: any) {
     setSearchTerm(e.target.value)
   }
 
-  const router = useRouter()
   const MobilehandleSubmit = (e: any) => {
     e.preventDefault()
     router.push(`/searchResultpage?q=${searchTerm}`)
@@ -92,8 +89,12 @@ export default function NavBar(props: any) {
 
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
-    selectLanguage(language)
   }
+
+  const languageOptions = [
+    { label: 'English', value: 'en' },
+    { label: 'Français', value: 'fr' },
+  ];
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -240,6 +241,7 @@ export default function NavBar(props: any) {
           </NextLink>
 
           <Select
+            value={currentLang ?? 'en'}
             onChange={(e) => changeLanguage(e.target.value)}
             variant="filled"
             my={5}
@@ -264,7 +266,7 @@ export default function NavBar(props: any) {
                 variant="ghost"
                 rounded={'full'}
               >
-                🏠 ‎ Home
+                🏠 ‎ {t('home')}
               </Button>
             </NextLink>
 
@@ -276,7 +278,7 @@ export default function NavBar(props: any) {
                 w="100%"
                 rounded={'full'}
               >
-                💬 ‎ Messages
+                💬 ‎ {t('messages')}
               </Button>
             </NextLink>
 
@@ -299,7 +301,7 @@ export default function NavBar(props: any) {
                 marginLeft={'1em'}
                 marginRight={'1em'}
               >
-                🚀 ‎ Careers
+                🚀 ‎ {t('careers')}
               </MenuButton>
               <MenuList
                 style={{
@@ -316,7 +318,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  💼 ‎ Open Jobs
+                  💼 ‎ {t('openJobs')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option2')}
@@ -329,7 +331,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  📂 ‎ My Job Listings
+                  📂 ‎ {t('openJobs')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -342,7 +344,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  📝 ‎ Create a Job Listing
+                  📝 ‎ {t('createJobListing')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option4')}
@@ -470,19 +472,19 @@ export default function NavBar(props: any) {
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
-                Home
+                {t('home')}
               </Button>
             </NextLink>
 
             <NextLink href="/inbox" passHref>
               <Button variant="ghost" aria-label="Messages" my={5} w="100%">
-                Messages
+                {t('messages')}
               </Button>
             </NextLink>
 
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
-                My Account
+                {t('myAccount')}
               </Button>
             </NextLink>
 
@@ -498,17 +500,17 @@ export default function NavBar(props: any) {
                 marginRight={'1em'}
                 marginBottom={'1.5em'}
               >
-                Careers
+                {t('careers')}
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleFilter('option1')}>
-                  Open Jobs
+                  {t('openJobs')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option2')}>
-                  My Job Listings
+                  {t('myListings')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option3')}>
-                  Create a Job Listing
+                  {t('createJobListing')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   My Job Applications
@@ -579,7 +581,7 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Sign In/Logout
+                {t('SignIn/Logout')}
               </Button>
             </NextLink>
           </Flex>

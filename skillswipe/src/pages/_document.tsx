@@ -1,3 +1,4 @@
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import type { DocumentProps } from 'next/document'
 import Document, { Head, Html, Main, NextScript } from 'next/document'
 import i18nextConfig from '../../next-i18next.config'
@@ -22,5 +23,11 @@ class MyDocument extends Document<Props> {
     )
   }
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default MyDocument

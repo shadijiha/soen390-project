@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { appWithTranslation } from 'next-i18next'
-import type { AppProps } from 'next/app'
 import { Provider } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 import store from '../Redux/store'
