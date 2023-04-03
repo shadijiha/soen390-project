@@ -49,8 +49,8 @@ export default function NavBar(props: any) {
   const router = useRouter()
   const currentLang = router.locale // => locale string eg. "en"
   const [messageNotification, setmessageNotification]: any[] = useState([])
-  const [loading1, setloading1] = useState(null)
-  const [loading2, setloading2] = useState(null)
+  const [loading1, setloading1] = useState(0)
+  const [loading2, setloading2] = useState(0)
   // const [load1,setload1] = useState(true);
   // const [load2,setload2] = useState(true);
 
@@ -196,6 +196,9 @@ export default function NavBar(props: any) {
     // open the myJobApplications page
     if (value === 'option3') {
       router.push('/postJob')
+    }
+    if(value === 'option4'){
+      router.push('/myApplications')
     }
   }
 
@@ -359,11 +362,9 @@ export default function NavBar(props: any) {
 
             {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) : loading1 != null && loading2 != null ? (
+            ) :(
               <NotificationCounter Notifications={loading1 + loading2} />
-            ) : (
-              <NotificationCounter Notifications={0} />
-            )}
+            ) }
     
             <NextLink href="/profile" passHref>
               <Menu isLazy>
