@@ -38,7 +38,9 @@ const NotificationCounter = (props: any) => {
           variant="ghost"
           size="lg"
           w="100%"
-          my={5}
+          my={4}
+          rounded={'full'}
+          marginRight={'10px'}
         ></IconButton>
         <Badge
           colorScheme="red"
@@ -47,6 +49,7 @@ const NotificationCounter = (props: any) => {
           position="absolute"
           top="20px"
           right="0"
+          marginRight={'5px'}
         >
           {props.nbNotifications != null ? props.nbNotifications : counter}
         </Badge>

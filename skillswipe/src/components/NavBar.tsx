@@ -33,6 +33,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import { i18n } from 'next-i18next'
+import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -282,13 +283,7 @@ export default function NavBar(props: any) {
               </Button>
             </NextLink>
 
-            {/* {props.nbNotifications != null ? (
-              <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) : loading1 != null && loading2 != null ? (
-              <NotificationCounter Notifications={loading1 + loading2} />
-            ) : (
-              <NotificationCounter Notifications={0} />
-            )} */}
+            
 
             <Menu>
               <MenuButton
@@ -361,31 +356,15 @@ export default function NavBar(props: any) {
                 </MenuItem>
               </MenuList>
             </Menu>
-            <NextLink href="/notifications" passHref>
-              <div style={{ position: 'relative' }}>
-                <IconButton
-                  aria-label="Notifications"
-                  icon={<BellIcon />}
-                  variant="ghost"
-                  size="lg"
-                  w="100%"
-                  my={4}
-                  rounded={'full'}
-                  marginRight={'10px'}
-                ></IconButton>
-                <Badge
-                  colorScheme="red"
-                  borderRadius="full"
-                  px="2"
-                  position="absolute"
-                  top="20px"
-                  right="0"
-                  marginRight={'5px'}
-                >
-                  {props.nbNotifications}
-                </Badge>
-              </div>
-            </NextLink>
+
+            {props.nbNotifications != null ? (
+              <NotificationCounter nbNotifications={props.nbNotifications} />
+            ) : loading1 != null && loading2 != null ? (
+              <NotificationCounter Notifications={loading1 + loading2} />
+            ) : (
+              <NotificationCounter Notifications={0} />
+            )}
+    
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton

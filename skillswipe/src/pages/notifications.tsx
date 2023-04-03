@@ -49,6 +49,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     })
     const channel = pusher.subscribe(`user-${currentUser.auth.id}`)
     channel.bind('friend-request', function (data) {
+     
       addRequest()
     })
     channel.bind('message-notification', function (data) {
@@ -56,22 +57,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     })
   }, [currentUser])
 
-  const notifications = [
-    {
-      id: 1,
-      title: 'New message',
-      description: 'You have a new message from John Doe',
-      timestamp: '2023-03-01T09:00:00Z',
-      avatar: 'https://randomuser.me/api/portraits/men/1.jpg',
-    },
-    {
-      id: 2,
-      title: 'New Friend Request',
-      description: 'Please add me to your network',
-      timestamp: '2023-03-02T10:30:00Z',
-      avatar: 'https://randomuser.me/api/portraits/women/1.jpg',
-    },
-  ]
 
   const getPendingConnections = () => {
     if (typeof localStorage !== 'undefined') {
@@ -192,7 +177,11 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 >
                   <Link href={`/profile/${connection.user.id}`}>
                     <Flex>
-                      <Avatar size="lg" mr={4} src={connection.user.profilePic} />
+                      <Avatar size="lg" mr={4} src={
+                      connection.user.profilePic
+                        ? `data:image/jpeg;base64,${connection.user.profilePic}`
+                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                    } />
                       <Box>
                         <Heading as="h2" size="md" mb={2}>
                           {connection.user.firstName} {connection.user.lastName}
