@@ -1,14 +1,6 @@
-import { setUser } from '@/Redux/action-creator'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-
-import {
-  ColorModeContext,
-  Divider,
-  Flex,
-  Spinner,
-  useColorMode,
-} from '@chakra-ui/react'
+import { Divider, Flex, Spinner, useColorMode } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
