@@ -49,57 +49,57 @@ interface JobAttributes {
 }
 
 const Home = () => {
-  const FileDropzone = () => {
-    const onDrop = useCallback((acceptedFiles) => {
-      // Handle files here
-      console.log(acceptedFiles)
-    }, [])
+  // const FileDropzone = () => {
+  //   const onDrop = useCallback((acceptedFiles) => {
+  //     // Handle files here
+  //     console.log(acceptedFiles)
+  //   }, [])
 
-    const options: DropzoneOptions = {
-      onDrop,
-      accept: 'image/*' as any,
-    }
+  //   const options: DropzoneOptions = {
+  //     onDrop,
+  //     accept: 'image/*' as any,
+  //   }
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone(options)
+  //   const { getRootProps, getInputProps, isDragActive } = useDropzone(options)
 
-    return (
-      <div
-        {...getRootProps()}
-        style={{
-          backgroundColor: 'transparent',
-          border: useColorModeValue('1px dashed #26262673', '1px dashed #FFFFFF78'),
-          borderWidth: '1px',
-          borderRadius: '20px',
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-        }}
-      >
-        <input {...getInputProps()} accept="image/*" />
-        <VStack
-          direction={'column'}
-          flex={1}
-          alignContent={'center'}
-          padding={'10px'}
-        >
-          <p
-            style={{
-              color: useColorModeValue('gray.500', 'gray.400'),
-              textAlign: 'center',
-            }}
-          >
-            Drag and drop image here or click to browse
-          </p>
-          <img
-            src="https://img.icons8.com/cute-clipart/512/image-file.png"
-            alt="upload"
-            width="50px"
-            height="50px"
-          />
-        </VStack>
-      </div>
-    )
-  }
+  //   return (
+  //     <div
+  //       {...getRootProps()}
+  //       style={{
+  //         backgroundColor: 'transparent',
+  //         border: useColorModeValue('1px dashed #26262673', '1px dashed #FFFFFF78'),
+  //         borderWidth: '1px',
+  //         borderRadius: '20px',
+  //         width: '100%',
+  //         height: '100%',
+  //         display: 'flex',
+  //       }}
+  //     >
+  //       <input {...getInputProps()} accept="image/*" />
+  //       <VStack
+  //         direction={'column'}
+  //         flex={1}
+  //         alignContent={'center'}
+  //         padding={'10px'}
+  //       >
+  //         <p
+  //           style={{
+  //             color: useColorModeValue('gray.500', 'gray.400'),
+  //             textAlign: 'center',
+  //           }}
+  //         >
+  //           Drag and drop image here or click to browse
+  //         </p>
+  //         <img
+  //           src="https://img.icons8.com/cute-clipart/512/image-file.png"
+  //           alt="upload"
+  //           width="50px"
+  //           height="50px"
+  //         />
+  //       </VStack>
+  //     </div>
+  //   )
+  // }
   const formatDate = (dateString) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -185,9 +185,12 @@ const Home = () => {
     }
   }, [User.auth])
 
-  const [createpost, setCreatePost] = useState({ content: '' })
+  const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
+    const fd = new FormData()
+    fd.append('image', createpost.image, 'post image')
     const token = localStorage.getItem('jwt')
+    //if we replace createpost with fd then u can post only image  (no content)
     createPosts(token, createpost).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post')
@@ -197,7 +200,11 @@ const Home = () => {
     })
   }
   const handlepost = (e) => {
-    setCreatePost({ content: e.target.value })
+    setCreatePost({ ...createpost, content: e.target.value })
+  }
+  const handleFiles = (e) => {
+    console.log(e.target.files[0])
+    setCreatePost({ ...createpost, image: e.target.files[0] })
   }
   return (
     <>
@@ -209,7 +216,7 @@ const Home = () => {
           alignItems="center"
           data-testid="Home-page"
         >
-          <Box>
+          <Box marginLeft={'2rem'}>
             <HStack paddingBottom={5}>
               <Heading marginRight={3}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
               <Button
@@ -278,7 +285,8 @@ const Home = () => {
                       }}
                     />
                     <Box style={{ marginTop: '1rem' }} height="100px">
-                      <FileDropzone />
+                      {/* <FileDropzone /> */}
+                      <input type={'file'} onChange={handleFiles}></input>
                     </Box>
                   </ModalBody>
                   <ModalFooter>
@@ -321,7 +329,7 @@ const Home = () => {
                           width={'100%'}
                         >
                           <Avatar
-                            size="lg"
+                            size="md"
                             mr={4}
                             src={
                               post.user.profilePic
@@ -349,27 +357,44 @@ const Home = () => {
                         </HStack>
                         <HStack justifyContent={'space-between'}>
                           <Text>{post.content}</Text>
-                          <Button
-                            colorScheme="red"
-                            size="sm"
-                            borderRadius="50px"
-                            onClick={() => {
-                              const token = localStorage.getItem('jwt')
-                              deletePost(token, post.id).then((res) => {
-                                if (res.status == 201 || res.status == 200) {
-                                  toast.success('Sucessfully deleted post')
-                                } else {
-                                  toast.error('Can only delete your post')
-                                }
-                              })
-                            }}
-                            style={{
-                              marginTop: '0.5rem',
-                            }}
-                          >
-                            <DeleteIcon />
-                          </Button>
+
+                          {User.auth.id === post.user.id ? (
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              borderRadius="50px"
+                              onClick={() => {
+                                const token = localStorage.getItem('jwt')
+                                deletePost(token, post.id).then((res) => {
+                                  if (res.status == 201 || res.status == 200) {
+                                    toast.success('Sucessfully deleted post')
+                                  } else {
+                                    toast.error('Can only delete your post')
+                                  }
+                                })
+                              }}
+                              style={{
+                                marginTop: '0.5rem',
+                              }}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          ) : null}
                         </HStack>
+                        {post.image !== null ? (
+                          <HStack>
+                            {' '}
+                            <img
+                              alt="post pic"
+                              width={'80%'}
+                              src={
+                                post.image
+                                  ? `data:image/jpeg;base64,${post.image}`
+                                  : post.image
+                              }
+                            />
+                          </HStack>
+                        ) : null}
                       </Box>
                     </ListItem>
                   ))}
