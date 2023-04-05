@@ -6,6 +6,7 @@ import {
   type FindOptionsRelations
 } from 'typeorm'
 import { App } from '../app.types'
+import { ApiBody } from '@nestjs/swagger'
 
 export interface BearerPayload {
   email: string
@@ -27,10 +28,7 @@ export async function createTestBearerPayload (
 ): Promise<BearerPayload> {
   return {
     email: emailToTest,
-    id:
-(
-  await repo.findOne({ where: { email: emailToTest } })
-)?.id ?? -1,
+    id: (await repo.findOne({ where: { email: emailToTest } }))?.id ?? -1,
     getUser: async (relations) => {
       return await repo.findOne({
         where: { email: emailToTest },
@@ -68,6 +66,21 @@ export const AuthUser = createParamDecorator(
   }
 )
 
+export const ApiFile =
+(fileName: string = 'file'): MethodDecorator =>
+  (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+    ApiBody({
+      schema: {
+        type: 'object',
+        properties: {
+          [fileName]: {
+            type: 'string',
+            format: 'binary'
+          }
+        }
+      }
+    })(target, propertyKey, descriptor)
+  }
 export class BaseRequest {
   tempFunction (): any {
     return null

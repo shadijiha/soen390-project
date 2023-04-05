@@ -1,8 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
+import Awards from '@/components/Profile/Awards'
+import Courses from '@/components/Profile/Courses'
+import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
+import Recommendations from '@/components/Profile/Recommendations'
+import Skills from '@/components/Profile/Skills'
+import Volunteering from '@/components/Profile/Volunteering'
+import WorkExperience from '@/components/Profile/WorkExperience'
 import {
   Divider,
   Spinner,
@@ -10,11 +14,14 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import Education from '../../components/Profile/education'
 import ProfileStyle from '../../styles/profilestyle'
 import {
   acceptRequest,
@@ -24,17 +31,8 @@ import {
   sendRequest,
 } from '../api/api'
 
-import Awards from '@/components/Profile/Awards'
-import Courses from '@/components/Profile/Courses'
-import Languages from '@/components/Profile/Languages'
-import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
-import Recommendations from '@/components/Profile/Recommendations'
-import Skills from '@/components/Profile/Skills'
-import Volunteering from '@/components/Profile/Volunteering'
-import WorkExperience from '@/components/Profile/WorkExperience'
-import Education from '../../components/Profile/education'
-
 const profile = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
@@ -90,6 +88,7 @@ const profile = () => {
     removeConnection(token, router.query.id)
       .then((reponse) => {
         setStatus({ connected: false, Requested: false, Pending: false })
+        toast.success('Connection has been removed', { type: 'success' })
       })
       .catch((error) => {
         toast(error.message)
@@ -139,7 +138,7 @@ const profile = () => {
             setLoading(false)
           })
           .catch((error) => {
-            toast('User not found')
+            toast(t('userNotFound'))
             router.push('/')
           })
       }
@@ -260,24 +259,43 @@ const profile = () => {
 
                     <div className="profile-container05">
                       {Status.connected == true ? (
-                        <button
-                          className="profile-button button"
-                          style={{
-                            color: buttonColors,
-                            borderColor: buttonColors,
-                            borderWidth: '2px',
-                            textShadow: '0px 0px 40px #000000CA',
-                            fontWeight: 600,
-                            marginRight: '1em',
-                          }}
-                          onClick={() => {
-                            router.push(`/inbox/${router.query.id}`)
-                          }}
-                        >
-                          <span>
-                            <span>Message</span>
-                          </span>
-                        </button>
+                        <>
+                          <button
+                            className="profile-button button"
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: '2px',
+                              textShadow: '0px 0px 40px #000000CA',
+                              fontWeight: 600,
+                              marginRight: '1em',
+                            }}
+                            onClick={() => {
+                              router.push(`/inbox/${router.query.id}`)
+                            }}
+                          >
+                            <span>
+                              <span>{t('message')}</span>
+                            </span>
+                          </button>
+                          <button
+                            className="profile-button button"
+                            style={{
+                              color: buttonColors,
+                              borderColor: buttonColors,
+                              borderWidth: '2px',
+                              textShadow: '0px 0px 40px #000000CA',
+                              fontWeight: 600,
+                              marginRight: 'auto',
+                              width: '100%', // added this line to make the button fill the available space
+                            }}
+                            onClick={Reject}
+                          >
+                            <span>
+                              <span>{t('removeConnection')}</span>
+                            </span>
+                          </button>
+                        </>
                       ) : Status.Requested == true ? (
                         <button
                           className="profile-button button"
@@ -292,7 +310,7 @@ const profile = () => {
                           onClick={Reject}
                         >
                           <span>
-                            <span>Delete Request</span>
+                            <span>{t('deleteRequest')}</span>
                           </span>
                         </button>
                       ) : Status.Pending == true ? (
@@ -310,7 +328,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Accept</span>
+                              <span> {t('accept')}</span>
                             </span>
                           </button>
                           <button
@@ -326,7 +344,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Decline</span>
+                              <span> {t('decline')}</span>
                             </span>
                           </button>
                         </>
@@ -345,7 +363,7 @@ const profile = () => {
                             }}
                           >
                             <span>
-                              <span>Connect</span>
+                              <span> {t('connect')}</span>
                             </span>
                           </button>
                         </>
@@ -445,4 +463,11 @@ const profile = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default profile

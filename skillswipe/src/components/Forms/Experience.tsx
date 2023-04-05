@@ -13,10 +13,14 @@ import {
   Spacer,
   Stack,
 } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 
 const Experience = (props: any) => {
+  const { t } = useTranslation('common')
   const [experience, setExperience] = useState({
     company: '',
     title: '',
@@ -43,18 +47,18 @@ const Experience = (props: any) => {
       !experience.company ||
       !experience.title
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (experience.start_year > experience.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       editWorkEperienceRequest(token, experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Experience updated successfully')
+          toast.success(t('updatedSuccessfully'))
         } else {
-          toast.error('Error updating experience')
+          toast.error(t('errorUpdating'))
         }
       })
     }
@@ -69,18 +73,18 @@ const Experience = (props: any) => {
       !experience.company ||
       !experience.title
     ) {
-      toast('Please fill all the fields')
+      toast(t('fillFields'))
       return
     }
     if (experience.start_year > experience.end_year) {
-      toast('Please add Valid start and end year')
+      toast(t('addValidYear'))
       return
     } else {
       addWorkExperienceRequest(token, experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Experience added successfully')
+          toast.success(t('addedSuccessfully'))
         } else {
-          toast.error('Error adding experience')
+          toast.error(t('errorAdding'))
         }
       })
     }
@@ -94,10 +98,10 @@ const Experience = (props: any) => {
     } else {
       deleteWorkExperienceRequest(token, experience.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
-          toast.success('Experience deleted successfully')
+          toast.success(t('deletedSuccessfully'))
           props.deleteExperience(props.experience.id)
         } else {
-          toast.error('Error deleting experience')
+          toast.error(t('errorDeleting'))
         }
       })
     }
@@ -121,7 +125,7 @@ const Experience = (props: any) => {
             marginBottom: '20px',
           }}
         >
-          Experience {props.index} {props.isNew}
+          {t('experience')} {props.index} {props.isNew}
         </p>
         <Spacer />
         {!props.isNew && (
@@ -135,7 +139,7 @@ const Experience = (props: any) => {
             borderRadius="100px"
             onClick={updateWorkExperience}
           >
-            Update
+            {t('update')}
           </Button>
         )}
         {props.isNew && (
@@ -149,7 +153,7 @@ const Experience = (props: any) => {
             borderRadius="100px"
             onClick={addWorkExperience}
           >
-            Add
+            {t('add')}
           </Button>
         )}
         <Button
@@ -166,7 +170,7 @@ const Experience = (props: any) => {
         </Button>
       </Stack>
       <FormControl id="company">
-        <FormLabel htmlFor="company">Company</FormLabel>
+        <FormLabel htmlFor="company">{t('company')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -181,7 +185,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="title">
-        <FormLabel htmlFor="title">Title</FormLabel>
+        <FormLabel htmlFor="title">{t('title')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -196,7 +200,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="start_year">
-        <FormLabel htmlFor="start_year-when">Start date</FormLabel>
+        <FormLabel htmlFor="start_year-when">{t('startDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -211,7 +215,7 @@ const Experience = (props: any) => {
         />
       </FormControl>
       <FormControl id="end_year">
-        <FormLabel htmlFor="end_year">End date</FormLabel>
+        <FormLabel htmlFor="end_year">{t('endDate')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"

@@ -1,5 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
@@ -37,6 +40,8 @@ const EducationHistoryBox = () => {
       education.degree
     )
   }
+
+  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -63,7 +68,7 @@ const EducationHistoryBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Education History
+        {t('educationHistory')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

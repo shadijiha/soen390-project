@@ -1,10 +1,13 @@
-import { checkLogin } from '@/pages/api/api'
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { changeStatus, checkLogin } from '@/pages/api/api'
 
 import { Box } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
+import { error } from 'console'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { toast } from 'react-toastify'
 import { bindActionCreators } from 'redux'
 import { actionCreator } from '../Redux/index'
 
@@ -14,8 +17,19 @@ const Layout = ({ children }: any) => {
   const dispatch = useDispatch()
   const actions = bindActionCreators(actionCreator, dispatch)
   const user = useSelector((state) => state)
+
+  const handleBeforeUnload = () => {
+    const token = localStorage.getItem('jwt')
+    changeStatus('offline', token)
+      .then((response) => {})
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+
   useEffect(() => {
     const token = localStorage.getItem('jwt')
+    window.addEventListener('beforeunload', handleBeforeUnload)
     if (token) {
       checkLogin(token)
         .then((response) => {
@@ -25,11 +39,23 @@ const Layout = ({ children }: any) => {
             setTimeout(() => {
               setLoading(false)
             }, 100)
+
+            changeStatus('online', token)
+              .then((response) => {})
+              .catch((error) => {
+                toast(error.message)
+              })
           } else {
             actions.setUser(response.data)
             setTimeout(() => {
               setLoading(false)
             })
+
+            changeStatus('online', token)
+              .then((response) => {})
+              .catch((error) => {
+                toast(error.message)
+              })
           }
         })
         .catch((error) => {
@@ -50,6 +76,10 @@ const Layout = ({ children }: any) => {
           setLoading(false)
         }, 100)
       }
+    }
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [])
   return (

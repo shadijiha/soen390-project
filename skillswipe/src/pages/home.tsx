@@ -1,15 +1,22 @@
-import { Heading, useColorModeValue } from '@chakra-ui/react'
-
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, List, ListItem, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Heading,
+  List,
+  ListItem,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const Home = () => {
+  const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
-  const toggleTheme = useColorModeValue('🌙', '💡')
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
     { id: 1, title: 'First Post', body: 'This is a description' },
@@ -25,9 +32,16 @@ const Home = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-        <Box display="flex" justifyContent="center" alignItems="center" data-testid="Home-page">
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          data-testid="Home-page"
+        >
           <Box>
-            <Heading paddingBottom={5}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
+            <Heading paddingBottom={5}>
+              {t('welcome')}, {User.auth.firstName} 🧑🏼‍💻
+            </Heading>
             <Heading
               paddingBottom={5}
               style={{
@@ -35,12 +49,13 @@ const Home = () => {
                 fontWeight: '300',
               }}
             >
-              Recent Posts
+              {t('recent posts')}
             </Heading>
             <List>
               {posts.map((post) => (
                 <ListItem key={post.id}>
                   <Box
+                    key={post.id}
                     borderWidth="1px"
                     borderColor={formBorder}
                     backgroundColor={postBackground}
@@ -66,5 +81,11 @@ const Home = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Home

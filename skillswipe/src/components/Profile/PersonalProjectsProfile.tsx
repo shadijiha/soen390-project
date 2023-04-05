@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Container,
   HStack,
@@ -8,6 +9,10 @@ import {
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { useEffect } from 'react'
+
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface ProjectCardProps {
   id: number
@@ -39,12 +44,14 @@ const projectsList: ProjectCardProps[] = [
 ]
 
 const PersonalProjectsProfile = ({ Project }: any) => {
-  useEffect(() =>{
+  useEffect(() => {
     console.log(Project)
-  },[])
+  }, [])
   const textColor = useColorModeValue('gray.700', 'gray.100')
   const [isOpen, setIsOpen] = React.useState(false)
   const toggleOpen = () => setIsOpen(!isOpen)
+
+  const { t } = useTranslation('common')
 
   return (
     Project &&
@@ -54,41 +61,37 @@ const PersonalProjectsProfile = ({ Project }: any) => {
           <h1
             style={{
               fontWeight: 600,
-              fontSize: "1.5rem",
-              paddingTop: "2rem",
+              fontSize: '1.5rem',
+              paddingTop: '2rem',
             }}
           >
-            <span>Personal Projects</span>
+            <span> {t('personalProjects')}</span>
           </h1>
         </div>
         <Container maxW="5xl" p={{ base: 5, md: 10 }}>
           <VStack spacing={4}>
-
             {Project.map((element) => (
-              
-            <HStack
-              p={8}
-              bg={useColorModeValue("#FFFFFF", "#171923")}
-              rounded="35px"
-              borderWidth="2px"
-              borderColor={useColorModeValue(
-                "solid 2px #00000032",
-                "solid 2px #F5F5F588"
-              )}
-              w="100%"
-              h="100%"
-              textAlign="left"
-              align="start"
-              spacing={4}
-              cursor="pointer"
-              _hover={{ shadow: "xl" }}
-            >
+              <HStack
+                key={element.id}
+                p={8}
+                bg={useColorModeValue('#FFFFFF', '#171923')}
+                rounded="35px"
+                borderWidth="2px"
+                borderColor={useColorModeValue(
+                  'solid 2px #00000032',
+                  'solid 2px #F5F5F588'
+                )}
+                w="100%"
+                h="100%"
+                textAlign="left"
+                align="start"
+                spacing={4}
+                cursor="pointer"
+                _hover={{ shadow: 'xl' }}
+              >
                 <VStack align="start" justify="flex-start">
                   <VStack spacing={0} align="start">
-
-                    
                     <HStack>
-
                       <Text
                         as={Link}
                         href={element.url}
@@ -113,13 +116,13 @@ const PersonalProjectsProfile = ({ Project }: any) => {
                     )}
                   </VStack>
                 </VStack>
-            </HStack>
+              </HStack>
             ))}
           </VStack>
         </Container>
       </>
     )
-  );
-};
+  )
+}
 
 export default PersonalProjectsProfile

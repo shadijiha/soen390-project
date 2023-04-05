@@ -22,8 +22,8 @@ RUN npm i -g nodemon
 # Expose port
 EXPOSE 3000
 # Start the app
-CMD [ -d "node_modules" ] && nodemon || npm ci && nodemon
 USER node
+CMD [ -d "node_modules" ] && nodemon || npm ci && nodemon
 
 ###################
 # BUILD FOR PRODUCTION

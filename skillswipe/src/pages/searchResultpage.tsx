@@ -1,16 +1,16 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Button, Flex, Heading, List, ListItem, Stack } from '@chakra-ui/react'
-import axios from 'axios'
-import { default as Link, default as NextLink } from 'next/link'
+import { Box, Flex, Heading, List, Stack } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
-import { SetStateAction, useEffect, useState } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
 
 export default function Search() {
+  const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
   const [searchTerm, setSearchTerm] = useState('')
@@ -31,7 +31,7 @@ export default function Search() {
     search(token, searchQuery)
       .then((response) => {
         if (!response.data || !response.data.users) {
-          toast('No results found')
+          toast(t('noResults'))
         } else {
           if (response.data !== null && response.data.users !== null) {
             const searchedUsers = response.data.users.filter(
@@ -62,7 +62,7 @@ export default function Search() {
           paddingBottom: '1.5rem',
         }}
       >
-        Total Results: {searchResults.length}
+        {t('total results')}: {searchResults.length}
       </Heading>
       <Flex flexDir="column" align="center">
         <Stack>
@@ -84,7 +84,7 @@ export default function Search() {
                     key={user.id}
                   >
                     <li key={user.id}>
-                      <NextLink href={`profile/${user.id}`} >
+                      <NextLink href={`profile/${user.id}`}>
                         <Heading
                           fontSize={20}
                           style={{

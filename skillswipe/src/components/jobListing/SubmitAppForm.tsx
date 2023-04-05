@@ -1,3 +1,6 @@
+import { applyToJob } from '@/pages/api/api'
+import { useState } from 'react'
+
 import {
   AspectRatio,
   Box,
@@ -5,6 +8,8 @@ import {
   FormControl,
   FormLabel,
   Heading,
+  HStack,
+  Icon,
   Input,
   Stack,
   Text,
@@ -13,7 +18,75 @@ import {
   VStack,
 } from '@chakra-ui/react'
 
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import router from 'next/router'
+import { useTranslation } from 'react-i18next'
+import { AiOutlineFilePdf } from 'react-icons/ai'
+import { toast } from 'react-toastify'
 const SubmitAppForm = () => {
+  const [cvUploaded, setCvUploaded] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [cover, setCover] = useState('')
+
+  const handleSubmit = (event) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    const jobId = parseInt(router.query.id as string)
+
+    const submitApp = {
+      name: name,
+      email: email,
+      phone: phone,
+      ...(cvUploaded && { cv: cvUploaded }),
+      coverLetter: cover,
+      id: 0,
+    }
+
+    const missingFields = [] as string[]
+
+    if (!submitApp.name) {
+      missingFields.push('name')
+    }
+    if (!submitApp.email) {
+      missingFields.push('email')
+    }
+    if (!submitApp.phone) {
+      missingFields.push('phone')
+    }
+    if (!submitApp.cv) {
+      missingFields.push('cv')
+    }
+    if (!submitApp.coverLetter) {
+      missingFields.push('cover letter')
+    }
+
+    if (missingFields.length > 0) {
+      const message = `Please fill in the following fields: ${missingFields.join(
+        ', '
+      )}`
+      toast.error(message)
+      return
+    } else {
+      applyToJob(token, jobId, submitApp)
+        .then((res) => {
+          if (res.status == 201 || res.status == 200) {
+            toast.success('Successfully applied to job. Good luck!')
+          } else {
+            console.error('Error applying to job!', res.data)
+            toast.error('Error 1 API error occurred. Please try again later.')
+          }
+        })
+        .catch((error) => {
+          console.error('Error applying to job!', error)
+          toast.error('Error 2 occurred. Please try again later.')
+        })
+    }
+  }
+
+  const { t } = useTranslation('common')
   return (
     <>
       <VStack
@@ -46,37 +119,37 @@ const SubmitAppForm = () => {
               paddingBottom: '0.2em',
             }}
           >
-            Submit Application
+            {t('submitApplication')}
           </Text>
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
-            {/* frontend!!! name, email, phone is read only,
-                 we will pull it from the user's logged in account 
-                 and show it as the placeholder */}
             <FormControl id="name">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <Input
-                readOnly
                 type="text"
-                placeholder="loggedInName"
+                placeholder={t('loggedInName')}
                 rounded="100px"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </FormControl>
             <FormControl id="email">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <Input
-                readOnly
                 type="email"
                 placeholder="loggedInEmail@test.com"
                 rounded="100px"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </FormControl>
             <FormControl id="resume">
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>{t('phone')}</FormLabel>
               <Input
-                readOnly
                 type="text"
                 rounded="100px"
                 placeholder="loggedInPhone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
               />
             </FormControl>
           </Stack>
@@ -92,30 +165,54 @@ const SubmitAppForm = () => {
             >
               <Box position="relative" height="100%" width="100%">
                 <Box
-                  position="absolute"
-                  top="0"
-                  left="0"
+                  position="relative"
                   height="100%"
                   width="100%"
                   display="flex"
                   flexDirection="column"
                 >
-                  <Stack
-                    height="100%"
-                    width="100%"
-                    display="flex"
-                    alignItems="center"
-                    justify="center"
-                    spacing="4"
-                  >
-                    <Stack p="8" textAlign="center" spacing="1">
-                      <Heading fontSize="lg" fontWeight="bold">
-                        Drop CV here [.pdf]
-                      </Heading>
-                      <Text fontWeight="light">or click to upload</Text>
+                  {cvUploaded ? (
+                    <HStack
+                      style={{
+                        padding: '1em',
+                      }}
+                    >
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        transform="translate(-50%, -50%)"
+                      >
+                        <Icon as={AiOutlineFilePdf} boxSize={12}></Icon>
+                      </Box>
+                      <Box
+                        position="absolute"
+                        top="50%"
+                        left="50%"
+                        transform="translate(-50%, -50%)"
+                      >
+                        <Text>CV Successfully Uploaded</Text>
+                      </Box>
+                    </HStack>
+                  ) : (
+                    <Stack
+                      height="100%"
+                      width="100%"
+                      display="flex"
+                      alignItems="center"
+                      justify="center"
+                      spacing="4"
+                    >
+                      <Stack p="8" textAlign="center" spacing="1">
+                        <Heading fontSize="lg" fontWeight="bold">
+                          Drop CV here [.pdf]
+                        </Heading>
+                        <Text fontWeight="light">or click to upload</Text>
+                      </Stack>
                     </Stack>
-                  </Stack>
+                  )}
                 </Box>
+
                 <Input
                   type="file"
                   height="100%"
@@ -126,6 +223,12 @@ const SubmitAppForm = () => {
                   opacity="0"
                   aria-hidden="true"
                   accept=".pdf"
+                  onChange={(event) => {
+                    if (event.target.files && event.target.files.length > 0) {
+                      setCvUploaded(true)
+                      toast.success('CV Uploaded')
+                    }
+                  }}
                 />
               </Box>
             </Box>
@@ -133,7 +236,13 @@ const SubmitAppForm = () => {
 
           <FormControl id="cover">
             <FormLabel>Cover Letter (optional)</FormLabel>
-            <Textarea size="lg" placeholder="Paste here" rounded="15px" />
+            <Textarea
+              size="lg"
+              placeholder="Paste here"
+              rounded="15px"
+              value={cover}
+              onChange={(e) => setCover(e.target.value)}
+            />
           </FormControl>
         </VStack>
         <VStack w="100%">
@@ -148,8 +257,9 @@ const SubmitAppForm = () => {
             w={{ base: '100%', md: '150px' }}
             textShadow="0px 0px 20px #00000076"
             shadow={'0px 4px 30px #0000001F'}
+            onClick={handleSubmit}
           >
-            Apply
+            {t('submit')}
           </Button>
         </VStack>
       </VStack>

@@ -1,8 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-key */
 import { useColorModeValue } from '@chakra-ui/react'
 import React from 'react'
 import ProfileStyle from '../../styles/profilestyle'
 
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 const Recommendations = ({ rocommendations }: any) => {
+  const { t } = useTranslation('common')
+
   return (
     rocommendations && (
       <>
@@ -16,7 +24,7 @@ const Recommendations = ({ rocommendations }: any) => {
                   fontSize: '2.5rem',
                 }}
               >
-                <span>What People are Saying</span>
+                <span>{t('recommendations')}</span>
                 <br></br>
                 <span></span>
               </h1>

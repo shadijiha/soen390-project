@@ -1,11 +1,14 @@
 import { Button, Stack } from '@chakra-ui/react'
 import React from 'react'
 
+import { useTranslation } from 'next-i18next'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 
 const Awards = ({ awards }: any) => {
   // call API to get education history
+
+  const { t } = useTranslation('common')
 
   return (
     awards && (
@@ -23,7 +26,7 @@ const Awards = ({ awards }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🏅 Awards</text>
+                <text>🏅 {t('awards')}</text>
               </h1>
             </div>
             <Stack
@@ -42,6 +45,7 @@ const Awards = ({ awards }: any) => {
               {/* map through the skillsArray and create a button for each */}
               {awards.map((awards: any) => (
                 <Button
+                  key={awards.id}
                   className="skill"
                   style={{
                     backgroundColor: 'transparent',
