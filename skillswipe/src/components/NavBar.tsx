@@ -33,6 +33,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import { i18n } from 'next-i18next'
+import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -48,8 +49,8 @@ export default function NavBar(props: any) {
   const router = useRouter()
   const currentLang = router.locale // => locale string eg. "en"
   const [messageNotification, setmessageNotification]: any[] = useState([])
-  const [loading1, setloading1] = useState(null)
-  const [loading2, setloading2] = useState(null)
+  const [loading1, setloading1] = useState(0)
+  const [loading2, setloading2] = useState(0)
   // const [load1,setload1] = useState(true);
   // const [load2,setload2] = useState(true);
 
@@ -196,6 +197,9 @@ export default function NavBar(props: any) {
     if (value === 'option3') {
       router.push('/postJob')
     }
+    if(value === 'option4'){
+      router.push('/myApplications')
+    }
   }
 
   return (
@@ -282,13 +286,7 @@ export default function NavBar(props: any) {
               </Button>
             </NextLink>
 
-            {/* {props.nbNotifications != null ? (
-              <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) : loading1 != null && loading2 != null ? (
-              <NotificationCounter Notifications={loading1 + loading2} />
-            ) : (
-              <NotificationCounter Notifications={0} />
-            )} */}
+            
 
             <Menu>
               <MenuButton
@@ -361,31 +359,13 @@ export default function NavBar(props: any) {
                 </MenuItem>
               </MenuList>
             </Menu>
-            <NextLink href="/notifications" passHref>
-              <div style={{ position: 'relative' }}>
-                <IconButton
-                  aria-label="Notifications"
-                  icon={<BellIcon />}
-                  variant="ghost"
-                  size="lg"
-                  w="100%"
-                  my={4}
-                  rounded={'full'}
-                  marginRight={'10px'}
-                ></IconButton>
-                <Badge
-                  colorScheme="red"
-                  borderRadius="full"
-                  px="2"
-                  position="absolute"
-                  top="20px"
-                  right="0"
-                  marginRight={'5px'}
-                >
-                  {props.nbNotifications}
-                </Badge>
-              </div>
-            </NextLink>
+
+            {props.nbNotifications != null ? (
+              <NotificationCounter nbNotifications={props.nbNotifications} />
+            ) :(
+              <NotificationCounter Notifications={loading1 + loading2} />
+            ) }
+    
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
