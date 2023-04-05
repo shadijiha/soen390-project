@@ -8,6 +8,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   chakra,
   Divider,
   Grid,
@@ -28,12 +29,13 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import router from 'next/router'
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { DropzoneOptions, useDropzone } from 'react-dropzone'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
 import { createPosts, deletePost, getOpenJobs, getPosts } from './api/api'
+import { create } from 'domain'
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -115,6 +117,22 @@ const Home = () => {
 
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
   const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  const [preview, setPreview] = useState<any>(null)
+  const input = useRef<any>(null)
+
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      console.log(reader)
+      reader.onload = () => {
+        setCreatePost({ ...createpost, image: e.target.files[0] })
+        setPreview(reader.result)
+      }
+
+      reader.readAsDataURL(file)
+    }
+  }
 
   useEffect(() => {
     const viewOpenJobs = async () => {
@@ -187,11 +205,13 @@ const Home = () => {
 
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
+    //if we replace createpost with fd then u can post only image  (no content)
+
     const fd = new FormData()
     fd.append('image', createpost.image, 'post image')
+    fd.append('content' , createpost.content)
     const token = localStorage.getItem('jwt')
-    //if we replace createpost with fd then u can post only image  (no content)
-    createPosts(token, createpost).then((res) => {
+    createPosts(token,fd).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post')
       } else {
@@ -202,10 +222,7 @@ const Home = () => {
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
   }
-  const handleFiles = (e) => {
-    console.log(e.target.files[0])
-    setCreatePost({ ...createpost, image: e.target.files[0] })
-  }
+  
   return (
     <>
       <Layout>
@@ -267,6 +284,31 @@ const Home = () => {
                   </ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
+                    <Box
+                      padding={'5px'}
+                      borderRadius={'30px'}
+                      border={'2px dotted black'}
+                    >
+                      <Center>
+                        {preview ? (
+                          <img
+                            style={{borderRadius: '10px', maxHeight: '200px', maxWidth: 'auto' }}
+                            src={preview}
+                          />
+                        ) : (
+                          <h1
+                            onClick={() => {
+                              input.current.click()
+                            }}
+                            style={{ cursor: 'pointer' }}
+                          >
+                            Click to upload Picture
+                          </h1>
+                        )}
+
+                        {/* </h1> */}
+                      </Center>
+                    </Box>
                     <TextareaAutosize
                       placeholder={'Type anything...'}
                       onChange={handlepost}
@@ -279,14 +321,20 @@ const Home = () => {
                         padding: '1rem',
                         width: '100%',
                         display: 'block',
-                        margin: 'auto',
+                        marginTop: '20px',
+
                         backgroundColor: 'transparent',
                         resize: 'none',
                       }}
                     />
                     <Box style={{ marginTop: '1rem' }} height="100px">
                       {/* <FileDropzone /> */}
-                      <input type={'file'} onChange={handleFiles}></input>
+                      <input
+                        ref={input}
+                        style={{ display: 'none' }}
+                        type={'file'}
+                        onChange={handleImageChange}
+                      ></input>
                     </Box>
                   </ModalBody>
                   <ModalFooter>
@@ -382,18 +430,21 @@ const Home = () => {
                           ) : null}
                         </HStack>
                         {post.image !== null ? (
+                        
                           <HStack>
+                            
                             {' '}
                             <img
                               alt="post pic"
                               width={'80%'}
                               src={
                                 post.image
-                                  ? `data:image/jpeg;base64,${post.image}`
-                                  : post.image
+                                ? `data:image/jpeg;base64,${post.image}`
+                                : post.image
                               }
-                            />
+                              />
                           </HStack>
+                             
                         ) : null}
                       </Box>
                     </ListItem>
