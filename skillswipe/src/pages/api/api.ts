@@ -47,6 +47,33 @@ export const editPersonalInformation = async (token: any, UpdatedUser: any) => {
     },
   })
 }
+export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
+  return axios.post(`${URL}/user/documents`, UpdatedUser, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+export const deleteUserCv = async (token: any) => {
+  return axios.delete(`${URL}/user/documents`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      cv: true,
+    },
+  })
+}
+export const deleteCover = async (token: any) => {
+  return axios.delete(`${URL}/user/documents`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      coverLetter: true,
+    },
+  })
+}
 export const getUserById = async (token: any, id: any) => {
   return axios.get(`${URL}/user/${id}`, {
     headers: {

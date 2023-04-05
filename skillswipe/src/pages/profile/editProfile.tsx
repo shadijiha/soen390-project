@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
@@ -9,13 +14,19 @@ import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Box, Heading, Stack } from '@chakra-ui/react'
+import { Box, Button, Heading, Stack } from '@chakra-ui/react'
 import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { editPersonalInformation, removeCoverpic } from '../api/api'
+import {
+  deleteCover,
+  deleteUserCv,
+  editPersonalInformation,
+  removeCoverpic,
+  uploadUserDocuments,
+} from '../api/api'
 
 const EditProfile = () => {
   const { t } = useTranslation('common')
@@ -24,11 +35,22 @@ const EditProfile = () => {
     profilePic: '',
     coverPic: '',
   })
+  const [File, setFile] = useState({
+    cv: '',
+    coverLetter: '',
+  })
 
   useEffect(() => {
     setPic({
       coverPic: currentUser.auth.coverPic,
       profilePic: currentUser.auth.profilePic,
+    })
+  }, [currentUser])
+
+  useEffect(() => {
+    setFile({
+      cv: currentUser.cv,
+      coverLetter: currentUser.coverLetter,
     })
   }, [currentUser])
 
@@ -80,6 +102,65 @@ const EditProfile = () => {
     }
   }
 
+  const uploadCVHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
+    if (e.target.files[0]) {
+      fd.append('cv', e.target.files[0], e.target.files[0].name)
+      uploadUserDocuments(token, fd)
+        .then((response) => {
+          window.location.reload()
+          setFile({ ...File, cv: response.data })
+          window.location.reload()
+          toast('Successfully Updated CV ' + e.target.files[0].name)
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const deleteCVHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+
+    deleteUserCv(token)
+      .then((response) => {
+        setFile({ ...File, cv: response.data })
+        window.location.reload()
+        toast('Successfully deleted CV')
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+  const uploadCoverLetterHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+    const fd = new FormData()
+    if (e.target.files[0]) {
+      fd.append('coverLetter', e.target.files[0], e.target.files[0].name)
+      uploadUserDocuments(token, fd)
+        .then((response) => {
+          setFile({ ...File, coverLetter: response.data })
+          window.location.reload()
+          toast('Successfully Updated coverLetter')
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const deleteCoverHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
+
+    deleteCover(token)
+      .then((response) => {
+        setFile({ ...File, coverLetter: response.data })
+        window.location.reload()
+        toast('Successfully deleted Cover Letter')
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
   const removeUserCoverpic = () => {
     const token = localStorage.getItem('jwt')
     removeCoverpic(token)
@@ -98,6 +179,12 @@ const EditProfile = () => {
   }
   const clickProfile = () => {
     document.getElementById('file-input-profilePic')?.click()
+  }
+  const uploadCV = () => {
+    document.getElementById('upload-cv')?.click()
+  }
+  const uploadCover = () => {
+    document.getElementById('upload-cover')?.click()
   }
 
   return (
@@ -260,11 +347,27 @@ const EditProfile = () => {
                 }}
               />
             </a>
+          </div>
+        </Stack>
+        <div
+          style={{
+            marginLeft: '25%',
+          }}
+        >
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCV}>
+              <Button>Upload CV</Button>
+            </a>
             <input
               type="file"
-              id="file-input-coverPic"
+              id="upload-cv"
+              onChange={uploadCVHandler}
               style={{ display: 'none' }}
-              onChange={coverImageHandler}
             />
 
             {Pic.coverPic ? (
@@ -289,7 +392,58 @@ const EditProfile = () => {
               </button>
             ) : null}
           </div>
-        </Stack>
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCover}>
+              <Button>Upload Cover</Button>
+            </a>
+            <input
+              type="file"
+              id="upload-cover"
+              onChange={uploadCoverLetterHandler}
+              style={{ display: 'none' }}
+            />
+          </div>
+          <div
+            style={{
+              display: 'inline',
+            }}
+          >
+            <Button onClick={deleteCVHandler} mr={'5rem'}>
+              Delete CV
+            </Button>
+            <Button onClick={deleteCoverHandler}>Delete Cover</Button>
+          </div>
+        </div>
+        {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
+        <div style={{ marginLeft: '25%', marginTop: '2rem' }}>
+          {currentUser.auth.cv ? (
+            <a
+              download="Your CV"
+              href={`data:application/pdf;base64,${currentUser.auth.cv}`}
+              style={{ marginRight: '6rem' }}
+            >
+              Download CV
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
+          )}
+
+          {currentUser.auth.coverLetter ? (
+            <a
+              download="Cover Letter"
+              href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
+            >
+              Download cover
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
+          )}
+        </div>
 
         {/* my profile */}
         <InformationBox />
