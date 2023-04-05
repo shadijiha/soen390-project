@@ -1,5 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
@@ -22,12 +25,14 @@ const SkillsBox = () => {
   }
 
   const addSkill = () => {
-    let skill: Skill = {}
+    const skill: Skill = {}
     setSkillsList((oldArray) => [...oldArray, skill])
   }
   const isNew = (skill: Skill) => {
     return !skill.title
   }
+
+  const { t } = useTranslation('common')
 
   return (
     <Stack
@@ -55,7 +60,7 @@ const SkillsBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Skills
+        {t('skills')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
@@ -87,5 +92,4 @@ const SkillsBox = () => {
     </Stack>
   )
 }
-
 export default SkillsBox

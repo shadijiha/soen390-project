@@ -1,5 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
@@ -28,7 +31,7 @@ const PersonalProjectsBox = () => {
     )
   }
   const addPersonalProject = () => {
-    let personalProject: PersonalProject = {}
+    const personalProject: PersonalProject = {}
     setPersonalProjectsList((oldArray) => [...(oldArray || []), personalProject])
   }
   const isNew = (personalProject: PersonalProject) => {
@@ -40,6 +43,9 @@ const PersonalProjectsBox = () => {
       personalProject.url
     )
   }
+
+  const { t } = useTranslation('common')
+
   return (
     <Stack
       as="form"
@@ -66,7 +72,7 @@ const PersonalProjectsBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Personal Projects
+        {t('personalProjects')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',
@@ -99,5 +105,4 @@ const PersonalProjectsBox = () => {
     </Stack>
   )
 }
-
 export default PersonalProjectsBox

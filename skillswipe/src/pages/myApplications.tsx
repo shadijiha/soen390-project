@@ -20,6 +20,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
@@ -265,7 +266,7 @@ const MyApplications = () => {
                     alignItems="center"
                     _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                   >
-                    <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                    <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                       <HStack spacing={3}>
                         <img
                           src={`http://www.${application.job.companyName.toLowerCase()}.com/favicon.ico`}
@@ -400,5 +401,11 @@ const MyApplications = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default MyApplications

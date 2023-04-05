@@ -1,4 +1,8 @@
+const { i18n } = require('./next-i18next.config')
+// /** @type {import('./next-i18next.config').i18n} */
+
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: false,
   eslint: {
@@ -10,6 +14,7 @@ const nextConfig = {
   env: {
     BASE_URL: process.env.BASE_URL,
   },
-};
+  i18n,
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

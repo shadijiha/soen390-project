@@ -1,27 +1,24 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
-
-import { Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
-
-import { useRouter } from 'next/router'
-import { useSelector } from 'react-redux'
-import ProfileStyle from '../../styles/profilestyle'
-
 import Awards from '@/components/Profile/Awards'
 import Courses from '@/components/Profile/Courses'
 import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfile'
-import Recommendations from '@/components/Profile/Recommendations'
 import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
-import Education from '../../components/Profile/education'
+import { Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import Languages from '../../components/Profile/Languages'
+import Education from '../../components/Profile/education'
+import ProfileStyle from '../../styles/profilestyle'
 
 const Profile = () => {
+  const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
   const User = useSelector((state) => state as any)
@@ -40,7 +37,7 @@ const Profile = () => {
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
-  
+
   return (
     <>
       <style jsx>{ProfileStyle}</style>
@@ -159,7 +156,7 @@ const Profile = () => {
                       router.push('/profile/editProfile')
                     }}
                   >
-                    Edit
+                    {t('edit')}
                   </button>
                 </div>
               </div>
@@ -257,5 +254,11 @@ const Profile = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Profile

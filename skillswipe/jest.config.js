@@ -20,11 +20,11 @@ const customJestConfig = {
   },
   moduleDirectories: ['node_modules', '<rootDir>/'],
   collectCoverage: true,
-  coverageDirectory: "../coverage",
+  coverageDirectory: '../coverage',
   coverageThreshold: {
     global: {
-      statements: 80
-    }
+      statements: 80,
+    },
   },
   testEnvironment: 'jest-environment-jsdom',
 }

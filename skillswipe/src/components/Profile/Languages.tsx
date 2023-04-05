@@ -1,10 +1,15 @@
 import { Button, Stack } from '@chakra-ui/react'
-import React from 'react'
 
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
 
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 const Languages = ({ languages }: any) => {
+  const { t } = useTranslation('common')
+
   return (
     languages && (
       <div data-testid="languages">
@@ -21,7 +26,10 @@ const Languages = ({ languages }: any) => {
                   textAlign: 'center',
                 }}
               >
-                <text>🌐 Languages</text>
+                <text>
+                  🌐
+                  {t('languages')}
+                </text>
               </h1>
             </div>
             <Stack
@@ -40,6 +48,7 @@ const Languages = ({ languages }: any) => {
               {/* map through the skillsArray and create a button for each */}
               {languages.map((languages: any) => (
                 <Button
+                  key={languages.id}
                   className="skill"
                   style={{
                     backgroundColor: 'transparent',
@@ -61,5 +70,4 @@ const Languages = ({ languages }: any) => {
     )
   )
 }
-
 export default Languages

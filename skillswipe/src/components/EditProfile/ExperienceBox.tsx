@@ -1,5 +1,8 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
@@ -25,7 +28,7 @@ const ExperienceBox = () => {
     )
   }
   const addExperience = () => {
-    let exp: Experience = {}
+    const exp: Experience = {}
     setExperienceList((oldArray) => [...(oldArray || []), exp])
   }
   const isNew = (experience: Experience) => {
@@ -35,7 +38,8 @@ const ExperienceBox = () => {
       experience.end_year &&
       experience.title
     )
-}
+  }
+  const { t } = useTranslation('common')
   return (
     <Stack
       as="form"
@@ -61,7 +65,7 @@ const ExperienceBox = () => {
           fontWeight: 'bold',
         }}
       >
-        Work Experience
+        {t('workExperience')}
         <Button
           style={{
             boxShadow: '0 5px 17px 0px rgba(0, 100, 500, 0.3)',

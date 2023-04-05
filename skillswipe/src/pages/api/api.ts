@@ -47,6 +47,33 @@ export const editPersonalInformation = async (token: any, UpdatedUser: any) => {
     },
   })
 }
+export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
+  return axios.post(`${URL}/user/documents`, UpdatedUser, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+export const deleteUserCv = async (token: any) => {
+  return axios.delete(`${URL}/user/documents`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      cv: true,
+    },
+  })
+}
+export const deleteCover = async (token: any) => {
+  return axios.delete(`${URL}/user/documents`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    data: {
+      coverLetter: true,
+    },
+  })
+}
 export const getUserById = async (token: any, id: any) => {
   return axios.get(`${URL}/user/${id}`, {
     headers: {
@@ -156,6 +183,14 @@ export const editCourses = async (token: any, UpdatedUser: any) => {
 
 export const editLanguages = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}`, UpdatedUser, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export const removeCoverpic = async (token: any) => {
+  return axios.delete(`${URL}/user/coverPic`, {
     headers: {
       authorization: `Bearer ${token}`,
     },

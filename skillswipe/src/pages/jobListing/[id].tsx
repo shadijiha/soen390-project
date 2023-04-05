@@ -1,22 +1,16 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
-
-import React, { useEffect, useState } from 'react'
-
 import JobDescription from '@/components/jobListing/JobDescription'
 import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
-
+import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-
 import { viewJob } from '../api/api'
 
 type JobAttributes = {
@@ -34,6 +28,7 @@ type JobAttributes = {
 }
 
 const jobListing = () => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const [job, setJob] = useState<JobAttributes>({})
   const [jobSkills, setSkills] = useState<Array<string>>([])
@@ -49,13 +44,13 @@ const jobListing = () => {
         })
         .catch((error) => {
           console.error(error)
-          toast.error('Error getting job')
+          toast.error(t('errorJobs'))
         })
     }
   }, [router.query.id])
 
   if (!job) {
-    return <div>Loading...</div>
+    return <div> {t('loading')} </div>
   }
 
   useEffect(() => {
@@ -100,4 +95,11 @@ const jobListing = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
 export default jobListing

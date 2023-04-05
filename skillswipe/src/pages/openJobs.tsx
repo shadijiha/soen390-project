@@ -25,6 +25,8 @@ import {
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
+import { useTranslation, withTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { getOpenJobs, viewJob } from './api/api'
@@ -62,7 +64,7 @@ const findJob = () => {
         setJobListing(response.data)
       } catch (error) {
         console.error(error)
-        toast.error('Error getting jobs')
+        toast.error(t('errorJobs'))
       }
     }
     viewOpenJobs()
@@ -139,6 +141,8 @@ const findJob = () => {
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
 
+  const { t } = useTranslation('common')
+
   return (
     <>
       <Layout>
@@ -157,7 +161,7 @@ const findJob = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                💼 ‎ Open Jobs
+                💼 ‎ {t('openJobs')}
               </chakra.h3>
               <Menu>
                 <MenuButton
@@ -167,14 +171,14 @@ const findJob = () => {
                   padding={'1.5em'}
                   rounded={'full'}
                 >
-                  Filter Jobs
+                  {t('filterJobs')}
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                    Sort by Starting Date
+                    {t('sortStartingDate')}
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
-                    Sort by Highest Salary
+                    {t('sortHighestSalary')}
                   </MenuItem>
 
                   <Checkbox
@@ -193,7 +197,7 @@ const findJob = () => {
                       handleCheckboxChange(e)
                     }}
                   >
-                    View All
+                    {t('viewAll')}
                   </Checkbox>
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
@@ -209,7 +213,7 @@ const findJob = () => {
                         handleCheckboxChange(e)
                       }}
                     >
-                      Full Time
+                      {t('fullTime')}
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[1]}
@@ -224,7 +228,7 @@ const findJob = () => {
                         handleCheckboxChange(e)
                       }}
                     >
-                      Part Time
+                      {t('partTime')}
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[2]}
@@ -239,7 +243,7 @@ const findJob = () => {
                       }}
                       value="contract"
                     >
-                      Contract
+                      {t('contract')}
                     </Checkbox>
                     <Checkbox
                       isChecked={checkedItems[3]}
@@ -254,7 +258,7 @@ const findJob = () => {
                       }}
                       value="other"
                     >
-                      Other
+                      {t('other')}
                     </Checkbox>
                   </Stack>
                 </MenuList>
@@ -281,7 +285,7 @@ const findJob = () => {
                   alignItems="center"
                   _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                 >
-                  <Box gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                     <HStack spacing={3}>
                       <img
                         src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
@@ -340,19 +344,19 @@ const findJob = () => {
                     fontSize={{ base: 'xs', sm: 'sm' }}
                     color={useColorModeValue('gray.600', 'gray.300')}
                   >
-                    {/* By the way, the ‎ is an invisible space character */}
                     <chakra.p>
-                      {/* format the starting date to be only year month and date */}
-                      📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
-                    </chakra.p>
-                    <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
-                    <chakra.p>
-                      🏫 ‎ ‎ Transcript Needed? ‎ ‎
-                      {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                      📅 {t('startingDate')}: {job.startDate.split('T')[0]}
                     </chakra.p>
                     <chakra.p>
-                      💌 ‎ ‎ Cover Letter Needed? ‎ ‎
-                      {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
+                      🤑 {t('salary')}: ${job.salary}/hr
+                    </chakra.p>
+                    <chakra.p>
+                      🏫 {t('transcript')}:{' '}
+                      {job.transcript.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                    <chakra.p>
+                      💌 {t('coverLetter')}:{' '}
+                      {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
                     </chakra.p>
                   </VStack>
                   <Stack
@@ -373,7 +377,7 @@ const findJob = () => {
                         router.push(`/jobListing/${job.id}`)
                       }}
                     >
-                      Apply
+                      {t('apply')}
                     </Button>
                   </Stack>
                 </Grid>
@@ -387,4 +391,10 @@ const findJob = () => {
   )
 }
 
-export default findJob
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
+export default withTranslation('common')(findJob)

@@ -54,6 +54,13 @@ export class JobsController {
     return recruiter.jobs
   }
 
+  // get applications for my job listing
+  @Get('/my/applications')
+  async getApplicationsForMyJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
+    const recruiter: User = (await authedUser.getUser()) as User
+    return await this.jobsService.getApplicationsForMyJobs(recruiter.id)
+  }
+
   // update job post
   @Put(':id')
   async updateJob (@AuthUser() authedUser: BearerPayload, @Body() job: Jobs.UpdateJobRequest, @Param('id') id: string): Promise<void> {

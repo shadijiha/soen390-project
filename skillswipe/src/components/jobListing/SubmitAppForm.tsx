@@ -1,5 +1,5 @@
 import { applyToJob } from '@/pages/api/api'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
 import {
   AspectRatio,
@@ -17,7 +17,11 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+
+import { GetStaticProps } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
+import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 const SubmitAppForm = () => {
@@ -41,7 +45,7 @@ const SubmitAppForm = () => {
       id: 0,
     }
 
-    const missingFields = []
+    const missingFields = [] as string[]
 
     if (!submitApp.name) {
       missingFields.push('name')
@@ -82,6 +86,7 @@ const SubmitAppForm = () => {
     }
   }
 
+  const { t } = useTranslation('common')
   return (
     <>
       <VStack
@@ -114,21 +119,21 @@ const SubmitAppForm = () => {
               paddingBottom: '0.2em',
             }}
           >
-            Submit Application
+            {t('submitApplication')}
           </Text>
           <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
             <FormControl id="name">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>{t('name')}</FormLabel>
               <Input
                 type="text"
-                placeholder="loggedInName"
+                placeholder={t('loggedInName')}
                 rounded="100px"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
             </FormControl>
             <FormControl id="email">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('email')}</FormLabel>
               <Input
                 type="email"
                 placeholder="loggedInEmail@test.com"
@@ -138,7 +143,7 @@ const SubmitAppForm = () => {
               />
             </FormControl>
             <FormControl id="resume">
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>{t('phone')}</FormLabel>
               <Input
                 type="text"
                 rounded="100px"
@@ -254,7 +259,7 @@ const SubmitAppForm = () => {
             shadow={'0px 4px 30px #0000001F'}
             onClick={handleSubmit}
           >
-            Apply
+            {t('submit')}
           </Button>
         </VStack>
       </VStack>

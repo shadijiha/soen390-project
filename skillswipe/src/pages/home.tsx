@@ -29,12 +29,12 @@ import {
   ModalOverlay,
   Text,
   useColorModeValue,
-  VStack,
 } from '@chakra-ui/react'
-import { create } from 'domain'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
-import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
-import { DropzoneOptions, useDropzone } from 'react-dropzone'
+import { Fragment, useEffect, useRef, useState } from 'react'
+
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
@@ -117,7 +117,7 @@ const Home = () => {
     const date = new Date(dateString)
     return new Intl.DateTimeFormat('en-US', options).format(date)
   }
-
+  const { t } = useTranslation('common')
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
   const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
   const [preview, setPreview] = useState<any>(null)
@@ -162,7 +162,6 @@ const Home = () => {
   const onClose = () => setIsOpen(false)
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
-  const toggleTheme = useColorModeValue('🌙', '💡')
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
     {
@@ -239,7 +238,9 @@ const Home = () => {
         >
           <Box marginLeft={'2rem'}>
             <HStack paddingBottom={5}>
-              <Heading marginRight={3}>Welcome, {User.auth.firstName} 🧑🏼‍💻</Heading>
+              <Heading marginRight={3}>
+                {t('welcome')}, {User.auth.firstName} 🧑🏼‍💻
+              </Heading>
               <Button
                 borderRadius="50px"
                 onClick={() => setIsOpen(true)}
@@ -255,7 +256,7 @@ const Home = () => {
                 fontWeight: '500',
               }}
             >
-              🏠 Recent Posts
+              🏠 {t('recent posts')}
             </Heading>
 
             <div
@@ -587,5 +588,11 @@ const Home = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Home
