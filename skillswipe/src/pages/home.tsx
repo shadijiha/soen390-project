@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
@@ -28,6 +31,7 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { create } from 'domain'
 import router from 'next/router'
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { DropzoneOptions, useDropzone } from 'react-dropzone'
@@ -35,7 +39,6 @@ import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
 import { createPosts, deletePost, getOpenJobs, getPosts } from './api/api'
-import { create } from 'domain'
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -205,24 +208,25 @@ const Home = () => {
 
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
-    //if we replace createpost with fd then u can post only image  (no content)
-
     const fd = new FormData()
     fd.append('image', createpost.image, 'post image')
-    fd.append('content' , createpost.content)
+    fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
-    createPosts(token,fd).then((res) => {
+    createPosts(token, fd).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post')
       } else {
         toast.error('Error creating post')
       }
     })
+    setTimeout(() => {
+      window.location.reload()
+    }, 5000)
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
   }
-  
+
   return (
     <>
       <Layout>
@@ -292,7 +296,11 @@ const Home = () => {
                       <Center>
                         {preview ? (
                           <img
-                            style={{borderRadius: '10px', maxHeight: '200px', maxWidth: 'auto' }}
+                            style={{
+                              borderRadius: '10px',
+                              maxHeight: '200px',
+                              maxWidth: 'auto',
+                            }}
                             src={preview}
                           />
                         ) : (
@@ -420,6 +428,9 @@ const Home = () => {
                                     toast.error('Can only delete your post')
                                   }
                                 })
+                                setTimeout(() => {
+                                  window.location.reload()
+                                }, 5000)
                               }}
                               style={{
                                 marginTop: '0.5rem',
@@ -430,21 +441,19 @@ const Home = () => {
                           ) : null}
                         </HStack>
                         {post.image !== null ? (
-                        
                           <HStack>
-                            
                             {' '}
                             <img
                               alt="post pic"
                               width={'80%'}
+                              style={{ maxHeight: '60%' }}
                               src={
                                 post.image
-                                ? `data:image/jpeg;base64,${post.image}`
-                                : post.image
+                                  ? `data:image/jpeg;base64,${post.image}`
+                                  : post.image
                               }
-                              />
+                            />
                           </HStack>
-                             
                         ) : null}
                       </Box>
                     </ListItem>
