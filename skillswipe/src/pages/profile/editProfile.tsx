@@ -356,6 +356,22 @@ const EditProfile = () => {
             <Button onClick={deleteCoverHandler}>Delete Cover</Button>
           </div>
         </div>
+        {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
+        <div style={{ marginLeft: '25%', marginTop: '2rem' }}>
+          <a
+            download="Your CV"
+            href={`data:application/pdf;base64,${currentUser.auth.cv}`}
+            style={{ marginRight: '6rem' }}
+          >
+            Download CV
+          </a>
+          <a
+            download="Cover Letter"
+            href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
+          >
+            Download cover
+          </a>
+        </div>
 
         {/* my profile */}
         <InformationBox />
