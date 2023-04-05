@@ -105,7 +105,9 @@ const EditProfile = () => {
       fd.append('cv', e.target.files[0], e.target.files[0].name)
       uploadUserDocuments(token, fd)
         .then((response) => {
+          window.location.reload();
           setFile({ ...File, cv: response.data })
+          window.location.reload();
           toast('Successfully Updated CV ' + e.target.files[0].name)
         })
         .catch((error) => {
@@ -119,6 +121,7 @@ const EditProfile = () => {
     deleteUserCv(token)
       .then((response) => {
         setFile({ ...File, cv: response.data })
+        window.location.reload();
         toast('Successfully deleted CV')
       })
       .catch((error) => {
@@ -133,6 +136,7 @@ const EditProfile = () => {
       uploadUserDocuments(token, fd)
         .then((response) => {
           setFile({ ...File, coverLetter: response.data })
+          window.location.reload();
           toast('Successfully Updated coverLetter')
         })
         .catch((error) => {
@@ -146,6 +150,7 @@ const EditProfile = () => {
     deleteCover(token)
       .then((response) => {
         setFile({ ...File, coverLetter: response.data })
+        window.location.reload();
         toast('Successfully deleted Cover Letter')
       })
       .catch((error) => {
@@ -358,19 +363,28 @@ const EditProfile = () => {
         </div>
         {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
         <div style={{ marginLeft: '25%', marginTop: '2rem' }}>
-          <a
-            download="Your CV"
-            href={`data:application/pdf;base64,${currentUser.auth.cv}`}
-            style={{ marginRight: '6rem' }}
-          >
-            Download CV
-          </a>
-          <a
-            download="Cover Letter"
-            href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
-          >
-            Download cover
-          </a>
+          {currentUser.auth.cv ? (
+            <a
+              download="Your CV"
+              href={`data:application/pdf;base64,${currentUser.auth.cv}`}
+              style={{ marginRight: '6rem' }}
+            >
+              Download CV
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
+          )}
+
+          {currentUser.auth.coverLetter ? (
+            <a
+              download="Cover Letter"
+              href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
+            >
+              Download cover
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
+          )}
         </div>
 
         {/* my profile */}
