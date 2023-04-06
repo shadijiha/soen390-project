@@ -212,7 +212,7 @@ const postJob = () => {
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
-                      setJobListing({ ...postListing, transcript: Boolean(value) })
+                      setJobListing({ ...postListing, transcript: value === 'true' })
                     }
                   >
                     <HStack spacing="10%">
