@@ -1,3 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -32,7 +36,7 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { getOpenJobs } from './api/api'
+import { deleteJobListing, getOpenJobs } from './api/api'
 
 interface JobAttributes {
   id: number
@@ -47,7 +51,6 @@ interface JobAttributes {
   coverLetter: false | true
   transcript: false | true
 }
-
 const myListings = () => {
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
   const { t } = useTranslation('common')
@@ -56,7 +59,6 @@ const myListings = () => {
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
-
       try {
         // Call API function to get open jobs
 
@@ -122,7 +124,8 @@ const myListings = () => {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
-
+  const userToken =
+    typeof window !== 'undefined' ? localStorage.getItem('jwt') : null
   return (
     <>
       <Layout>
@@ -379,7 +382,8 @@ const myListings = () => {
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
                       onClick={() => {
-                        router.push(`/jobListing/${job.id}`)
+                        // invoke function deleteJobListing from api
+                        deleteJobListing(userToken, job.id)
                       }}
                     >
                       {t('delete')}

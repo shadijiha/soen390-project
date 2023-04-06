@@ -318,3 +318,17 @@ export const withdrawJobApplication = async (token, id) => {
     throw new Error(error.response.data.error)
   }
 }
+export const deleteJobListing = async (token, id) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  try {
+    const response = await axios.delete(`${URL}/jobs/${id}`, config)
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
