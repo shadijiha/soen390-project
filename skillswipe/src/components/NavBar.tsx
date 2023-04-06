@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { BellIcon, ChevronDownIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  BellIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -23,6 +29,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { i18n } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -32,7 +39,6 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { i18n } from 'next-i18next'
 import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
@@ -95,7 +101,7 @@ export default function NavBar(props: any) {
   const languageOptions = [
     { label: 'English', value: 'en' },
     { label: 'Français', value: 'fr' },
-  ];
+  ]
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -197,7 +203,7 @@ export default function NavBar(props: any) {
     if (value === 'option3') {
       router.push('/postJob')
     }
-    if(value === 'option4'){
+    if (value === 'option4') {
       router.push('/myApplications')
     }
   }
@@ -286,8 +292,6 @@ export default function NavBar(props: any) {
               </Button>
             </NextLink>
 
-            
-
             <Menu>
               <MenuButton
                 as={Button}
@@ -362,10 +366,10 @@ export default function NavBar(props: any) {
 
             {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) :(
+            ) : (
               <NotificationCounter Notifications={loading1 + loading2} />
-            ) }
-    
+            )}
+
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton
