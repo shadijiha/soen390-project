@@ -35,8 +35,8 @@ const postJob = () => {
     skills: '',
     startDate: '',
     jobType: '',
-    coverLetter: null,
-    transcript: null,
+    coverLetter: null as null | boolean,
+    transcript: null as null | boolean,
     id: 0,
   })
 
