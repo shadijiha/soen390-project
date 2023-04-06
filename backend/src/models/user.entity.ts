@@ -26,6 +26,7 @@ import { Work } from './work.entity'
 import { Connection } from './connection.entity'
 import { Job } from './job.entity'
 import { Application } from './application.entity'
+import { Post } from './post.entity'
 
 @Entity('users')
 @TableInheritance({ column: { type: 'varchar', name: 'type' } })
@@ -215,4 +216,9 @@ export class User extends BaseEntity {
   })
   @ApiProperty({ type: [Education] })
     applications: Application[]
+
+  // posts
+  @OneToMany(() => Post, (p) => p.user)
+  @ApiProperty({ type: [Post] })
+    posts: Post[]
 }

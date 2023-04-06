@@ -107,15 +107,13 @@ export class ConnectionsService {
    * @returns An array of objects with the following structure:
    */
   public async getAcceptedConnections (userId: number): Promise<any[]> {
-    const connections = await this.connectionRepository
-      .createQueryBuilder('connection')
-      .leftJoinAndSelect('connection.user_1', 'user_1')
-      .leftJoinAndSelect('connection.user_2', 'user_2')
-      .where('user_1.id = :userId', { userId })
-      .where('user_2.id = :userId', { userId })
-      .andWhere('isAccepted = true')
-      .getMany()
-
+    const connections = await this.connectionRepository.find({
+      where: [
+        { user_1: { id: userId } },
+        { user_2: { id: userId } }
+      ],
+      relations: ['user_1', 'user_2']
+    })
     return connections.map((connection) => {
       const user = connection.user_1.id === userId ? connection.user_2 : connection.user_1
       return { user, since: connection.updated_at }
