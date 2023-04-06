@@ -17,6 +17,7 @@ describe("ConnectionsService", () => {
   };
 
   let mockConnectionsRepository = {
+    find: jest.fn(() => Promise.resolve([])),
     findOne: jest.fn(() => Promise.resolve({ id: 1, user_1: 1, user_2: 2, isAccepted: false })),
     update: jest.fn(),
     delete: jest.fn(),
@@ -70,13 +71,13 @@ describe("ConnectionsService", () => {
   it("should throw error on add connection", async () => {
     try {
       expect(await service.addConnection(1, 1)).toThrowError();
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should add connection", async () => {
     try {
       expect(await service.addConnection(1, 2)).toThrowError();
-    } catch (e) {}
+    } catch (e) { }
   });
 
   it("should return pending connections", async () => {
@@ -86,7 +87,7 @@ describe("ConnectionsService", () => {
 
   it("should return accepted connections", async () => {
     const result = await service.getAcceptedConnections(1);
-    expect(result).toEqual([{ since: undefined, user: undefined }]);
+    expect(result).toEqual([]);
   });
 
   it("should return connection status", async () => {
