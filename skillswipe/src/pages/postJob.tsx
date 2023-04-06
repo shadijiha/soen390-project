@@ -35,8 +35,8 @@ const postJob = () => {
     skills: '',
     startDate: '',
     jobType: '',
-    coverLetter: true,
-    transcript: true,
+    coverLetter: null,
+    transcript: null,
     id: 0,
   })
 
@@ -56,8 +56,8 @@ const postJob = () => {
       !postListing.skills ||
       !postListing.startDate ||
       !postListing.jobType ||
-      !postListing.coverLetter ||
-      !postListing.transcript
+      postListing.coverLetter == null ||
+      postListing.transcript == null
     ) {
       toast(t('fillAllFields'))
       return
@@ -197,7 +197,10 @@ const postJob = () => {
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
-                      setJobListing({ ...postListing, transcript: value === 'true' })
+                      setJobListing({
+                        ...postListing,
+                        coverLetter: value === 'true',
+                      })
                     }
                   >
                     <HStack spacing="10%">
@@ -212,7 +215,10 @@ const postJob = () => {
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
-                      setJobListing({ ...postListing, transcript: value === 'true' })
+                      setJobListing({
+                        ...postListing,
+                        transcript: value === 'true' ? true : false,
+                      })
                     }
                   >
                     <HStack spacing="10%">
