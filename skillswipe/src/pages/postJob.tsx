@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react'
 
 import { useTranslation } from 'next-i18next'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -199,7 +198,7 @@ const postJob = () => {
                     onChange={(value) =>
                       setJobListing({
                         ...postListing,
-                        coverLetter: value === 'true',
+                        coverLetter: value === 'true' ? true : false,
                       })
                     }
                   >
