@@ -29,7 +29,7 @@ import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import { getOpenJobs, viewJob } from './api/api'
+import { applyToJob, getOpenJobs } from './api/api'
 
 interface JobAttributes {
   id: number
@@ -46,6 +46,66 @@ interface JobAttributes {
 }
 
 const findJob = () => {
+  const [cvUploaded, setCvUploaded] = useState(false)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [cover, setCover] = useState('')
+
+  const handleSubmit = (event) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+    const jobId = parseInt(router.query.id as string)
+
+    const submitApp = {
+      name: name,
+      email: email,
+      phone: phone,
+      ...(cvUploaded && { cv: cvUploaded }),
+      coverLetter: cover,
+      id: 0,
+    }
+
+    const missingFields = [] as string[]
+
+    if (!submitApp.name) {
+      missingFields.push('name')
+    }
+    if (!submitApp.email) {
+      missingFields.push('email')
+    }
+    if (!submitApp.phone) {
+      missingFields.push('phone')
+    }
+    if (!submitApp.cv) {
+      missingFields.push('cv')
+    }
+    if (!submitApp.coverLetter) {
+      missingFields.push('cover letter')
+    }
+
+    if (missingFields.length > 0) {
+      const message = `Please fill in the following fields: ${missingFields.join(
+        ', '
+      )}`
+      toast.error(message)
+      return
+    } else {
+      applyToJob(token, jobId, submitApp)
+        .then((res) => {
+          if (res.status == 201 || res.status == 200) {
+            toast.success('Successfully applied to job. Good luck!')
+          } else {
+            console.error('Error applying to job!', res.data)
+            toast.error('Error 1 API error occurred. Please try again later.')
+          }
+        })
+        .catch((error) => {
+          console.error('Error applying to job!', error)
+          toast.error('Error 2 occurred. Please try again later.')
+        })
+    }
+  }
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
   const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
 
@@ -375,9 +435,7 @@ const findJob = () => {
                         outline={'solid 1px'}
                         colorScheme="green"
                         outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
-                        }}
+                        onClick={handleSubmit}
                       >
                         Quick Apply
                       </Button>
