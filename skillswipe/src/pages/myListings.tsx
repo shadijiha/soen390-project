@@ -381,12 +381,19 @@ const myListings = () => {
                       rounded="100px"
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                      onClick={() => {
-                        // invoke function deleteJobListing from api
-                        deleteJobListing(userToken, job.id)
+                      onClick={async () => {
+                        const token = localStorage.getItem('jwt')
+                        try {
+                          await deleteJobListing(token, job.id)
+                          setJobListing(jobListing.filter((a) => a.id !== job.id))
+                          toast.success('Job listing deleted successfully!')
+                        } catch (error) {
+                          console.error(error)
+                          toast.error('Error withdrawing application')
+                        }
                       }}
                     >
-                      {t('delete')}
+                      Delete Application
                     </Button>
                   </Stack>
                 </Grid>
