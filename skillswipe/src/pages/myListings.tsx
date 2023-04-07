@@ -1,9 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-<<<<<<< Updated upstream
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-=======
->>>>>>> Stashed changes
 /* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
