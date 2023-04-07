@@ -505,18 +505,21 @@ const Home = () => {
                             {job.companyName}
                           </chakra.h2>
                           {/* quick apply job button */}
-                          <Button
-                            colorScheme="blue"
-                            border={useColorModeValue('gray.200', 'gray.600')}
-                            borderWidth="4px"
-                            size="sm"
-                            borderRadius="50px"
-                            onClick={() => {
-                              router.push(`/jobListing/${job.id}`)
-                            }}
-                          >
-                            Quick Apply
-                          </Button>
+                          {!job.coverLetter && !job.transcript && (
+                            <Button
+                              colorScheme="gray"
+                              // border={useColorModeValue('gray.200', 'gray.600')}
+                              borderWidth="3px"
+                              size="sm"
+                              p={4}
+                              borderRadius="50px"
+                              onClick={() => {
+                                router.push(`/jobListing/${job.id}`)
+                              }}
+                            >
+                              Quick Apply
+                            </Button>
+                          )}
                         </HStack>
 
                         <chakra.h3

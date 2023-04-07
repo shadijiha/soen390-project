@@ -360,16 +360,31 @@ const findJob = () => {
                     </chakra.p>
                   </VStack>
                   <Stack
-                    spacing={2}
-                    direction="row"
-                    fontSize={{ base: 'sm', sm: 'md' }}
+                    spacing={4}
+                    direction={{ base: 'column', md: 'row' }}
+                    fontSize={{ base: 'sm', md: 'md' }}
                     justifySelf="flex-end"
                     alignItems="center"
                   >
+                    {/* quick apply job button */}
+                    {!job.coverLetter && !job.transcript && (
+                      <Button
+                        as={Link}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                        rounded="100px"
+                        outline={'solid 1px'}
+                        colorScheme="green"
+                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                        onClick={() => {
+                          router.push(`/jobListing/${job.id}`)
+                        }}
+                      >
+                        Quick Apply
+                      </Button>
+                    )}
                     <Button
                       as={Link}
                       _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                      p={5}
                       rounded="100px"
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
