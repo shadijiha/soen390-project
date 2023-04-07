@@ -27,6 +27,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import error from 'next/error'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 import { applyToJob, checkLogin, getOpenJobs } from './api/api'
@@ -101,9 +102,7 @@ const findJob = () => {
     }
 
     if (missingFields.length > 0) {
-      const message = `Please fill in the following fields: ${missingFields.join(
-        ', '
-      )}`
+      const message = `Missing fields: ${missingFields.join(', ')}`
       toast.error(message)
       return
     } else {
@@ -113,7 +112,7 @@ const findJob = () => {
             toast.success('Successfully applied to job. Good luck!')
           } else {
             console.error('Error applying to job!', res.data)
-            toast.error('API error occurred. Please try again later.')
+            toast.error(res.data.message) // toast the error message
           }
         })
         .catch((error) => {
