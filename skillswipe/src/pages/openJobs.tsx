@@ -29,7 +29,7 @@ import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import { applyToJob, getOpenJobs } from './api/api'
+import { applyToJob, checkLogin, getOpenJobs } from './api/api'
 
 interface JobAttributes {
   id: number
@@ -45,24 +45,46 @@ interface JobAttributes {
   transcript: false | true
 }
 
-const findJob = () => {
-  const [cvUploaded, setCvUploaded] = useState(false)
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
-  const [cover, setCover] = useState('')
+interface UserAttributes {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  mobileNo: string
+  gender: string
+  profilePic: string | null
+  coverPic: string | null
+  cv: string | null
+  coverLetter: string | null
+  biography: string
+  userStatus: string
+  type: string
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
+}
 
-  const handleSubmit = (event) => {
+const findJob = () => {
+  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  const [userId, setUserId] = useState(0)
+  const [userFirstName, setUserFirstName] = useState('')
+  const [userLastName, setUserLastName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPhone, setUserPhone] = useState('')
+  const [userCv, setUserCv] = useState('')
+  const [userCover, setUserCover] = useState('')
+  const handleSubmit = (event, jobId) => {
     const token = localStorage.getItem('jwt')
     event.preventDefault()
-    const jobId = parseInt(router.query.id as string)
 
     const submitApp = {
-      name: name,
-      email: email,
-      phone: phone,
-      ...(cvUploaded && { cv: cvUploaded }),
-      coverLetter: cover,
+      userId: userId,
+      name: `${userFirstName} ${userLastName}`,
+      email: userEmail,
+      phone: userPhone,
+      ...(userCv && { cv: userCv }),
+      coverLetter: userCover,
       id: 0,
     }
 
@@ -76,12 +98,6 @@ const findJob = () => {
     }
     if (!submitApp.phone) {
       missingFields.push('phone')
-    }
-    if (!submitApp.cv) {
-      missingFields.push('cv')
-    }
-    if (!submitApp.coverLetter) {
-      missingFields.push('cover letter')
     }
 
     if (missingFields.length > 0) {
@@ -97,7 +113,7 @@ const findJob = () => {
             toast.success('Successfully applied to job. Good luck!')
           } else {
             console.error('Error applying to job!', res.data)
-            toast.error('Error 1 API error occurred. Please try again later.')
+            toast.error('API error occurred. Please try again later.')
           }
         })
         .catch((error) => {
@@ -106,10 +122,45 @@ const findJob = () => {
         })
     }
   }
-  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('jwt')
+      // fetch checkLogin API
+      const response = await checkLogin(token)
+      const data: UserAttributes = response.data
+
+      // Access the user attributes
+      const userId = data.id
+      const userFirstName = data.firstName
+      const userLastName = data.lastName
+      const userEmail = data.email
+      const userPhone = data.mobileNo
+      const userCv = data.cv
+      const userCover = data.coverLetter
+
+      // Update state variables with user data
+      setUserId(userId)
+      setUserFirstName(userFirstName)
+      setUserLastName(userLastName)
+      setUserEmail(userEmail)
+      setUserPhone(userPhone)
+      setUserCv('')
+      setUserCover('')
+
+      console.log('User ID:', userId)
+      console.log('User first name:', userFirstName)
+      console.log('User last name:', userLastName)
+      console.log('User email:', userEmail)
+      console.log('User phone:', userPhone)
+      console.log('User CV:', userCv)
+      console.log('User cover letter:', userCover)
+    } catch (error) {
+      console.error('Error fetching user data:', error)
+    }
+  }
 
   useEffect(() => {
+    fetchUserData()
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
@@ -426,20 +477,22 @@ const findJob = () => {
                     justifySelf="flex-end"
                     alignItems="center"
                   >
-                    {/* quick apply job button */}
-                    {!job.coverLetter && !job.transcript && (
-                      <Button
-                        as={Link}
-                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                        rounded="100px"
-                        outline={'solid 1px'}
-                        colorScheme="green"
-                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                        onClick={handleSubmit}
-                      >
-                        Quick Apply
-                      </Button>
-                    )}
+                    <div key={job.id}>
+                      {/* quick apply job button */}
+                      {!job.coverLetter && !job.transcript && (
+                        <Button
+                          as={Link}
+                          _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                          rounded="100px"
+                          outline={'solid 1px'}
+                          colorScheme="green"
+                          outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                          onClick={(event) => handleSubmit(event, job.id)}
+                        >
+                          Quick Apply
+                        </Button>
+                      )}
+                    </div>
                     <Button
                       as={Link}
                       _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
