@@ -331,7 +331,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  📂 ‎ {t('openJobs')}
+                  📂 ‎ {t('myListings')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}

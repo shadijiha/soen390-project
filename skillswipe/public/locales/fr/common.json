@@ -37,8 +37,8 @@
     "noMessages": "Aucun message",
 
     "pendingRequests": "Demandes en attente",
-    "new": "Nouveau",  
-    "notifications": "Notifications", 
+    "new": "Nouveau",
+    "notifications": "Notifications",
     "pleaseAddMeToYourNetwork": "Veuillez m'ajouter à votre réseau",
     "ignore": "Ignorer",
     "accept": "Accepter",
@@ -52,7 +52,7 @@
     "notConnectedStatusMessage": "{{user}} n'est pas connecté(e)",
     "userNotFoundMessage": "Utilisateur non trouvé",
 
-    
+    "myListings": "Mes offres d'emploi",
     "openJobs": "Offres d'emploi ouvertes",
     "filterJobs": "Filtrer les offres d'emploi",
     "sortStartingDate": "Trier par date de début",
@@ -109,14 +109,14 @@
     "edit": "Modifier",
     "updateCoverPicture": "Mettre à jour la photo de couverture",
     "updateProfilePicture": "Mettre à jour la photo de profil",
-    "removeCoverPicture": "Suppression réussie de l'image de couverture", 
+    "removeCoverPicture": "Suppression réussie de l'image de couverture",
     "recentPosts": "Publications récentes",
 
     "fillAllFields": "Veuillez remplir tous les champs",
     "loggedIn": "Connecté",
     "fillCorrectly": "Veuillez remplir correctement les champs",
 
-    "removeConnection":"Retirer la connexion",
+    "removeConnection": "Retirer la connexion",
     "connectionRemoved": "Connexion supprimée",
     "requestAccepted": "Demande acceptée",
     "requestDeclined": "Demande refusée",
@@ -160,7 +160,7 @@
     "name": "Nom",
     "phone": "Téléphone",
     "dropCV": "Déposer votre CV",
-    "orApplyHere" : "Ou postulez ici",
+    "orApplyHere": "Ou postulez ici",
     "coverLetter2": "Lettre de motivation",
     "submit": "Envoyer",
     "skillSwipeTeam": "2023 390 Équipe SkillSwipe. Tous les droits ne sont pas réservés",
@@ -171,37 +171,36 @@
     "SignIn/Logout": "Se connecter / Se déconnecter",
 
     "loggedInName": "Bienvenue {{name}}",
-      "pasteHere": "Coller ici",
+    "pasteHere": "Coller ici",
 
-      "addedSuccessfully": "Ajouté avec succès",
-      "deletedSuccessfully": "Supprimé avec succès",
-      "updatedSuccessfully": "Mis à jour avec succès",
-      "error": "Erreur",
-      "errorAdding": "Erreur lors de l'ajout",
-      "errorDeleting": "Erreur lors de la suppression",
-      "errorUpdating": "Erreur lors de la mise à jour",
-      "update": "Mettre à jour",
-      "add": "Ajouter",
-      "addValidYear": "Veuillez ajouter une année de début et de fin valide",
-      "education": "Éducation",
-      "experience": "Expérience",
-      "title": "Titre",
-      "year": "Année",
-      "description": "Description",
-      "startDate": "Date de début",
-      "endDate": "Date de fin",
-      "issuer": "Émetteur",
-      "courseName": "Nom du cours",
-      "courseNumber": "Numéro du cours",
-      "degree": "Diplôme",
-      "institution": "Institution",
+    "addedSuccessfully": "Ajouté avec succès",
+    "deletedSuccessfully": "Supprimé avec succès",
+    "updatedSuccessfully": "Mis à jour avec succès",
+    "error": "Erreur",
+    "errorAdding": "Erreur lors de l'ajout",
+    "errorDeleting": "Erreur lors de la suppression",
+    "errorUpdating": "Erreur lors de la mise à jour",
+    "update": "Mettre à jour",
+    "add": "Ajouter",
+    "addValidYear": "Veuillez ajouter une année de début et de fin valide",
+    "education": "Éducation",
+    "experience": "Expérience",
+    "title": "Titre",
+    "year": "Année",
+    "description": "Description",
+    "startDate": "Date de début",
+    "endDate": "Date de fin",
+    "issuer": "Émetteur",
+    "courseName": "Nom du cours",
+    "courseNumber": "Numéro du cours",
+    "degree": "Diplôme",
+    "institution": "Institution",
 
-      "beginner": "Débutant",
-      "intermediate": "Intermédiaire",
-      "advanced": "Avancé",
-      "native": "Natif"
-      
-   
- 
-  }
- 
+    "beginner": "Débutant",
+    "intermediate": "Intermédiaire",
+    "advanced": "Avancé",
+    "native": "Natif"
+
+
+
+}
