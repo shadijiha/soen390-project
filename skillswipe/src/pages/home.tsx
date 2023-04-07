@@ -246,7 +246,7 @@ const Home = () => {
                 onClick={() => setIsOpen(true)}
                 data-testid="create-button"
               >
-                Create Post
+                {t('createPost')}
               </Button>
             </HStack>
             <Heading
@@ -475,7 +475,7 @@ const Home = () => {
                     borderWidth: '2px',
                   }}
                 >
-                  <b>Open Jobs for You</b>
+                  <b> {t('openJobsForYou')} </b>
                 </Text>
                 {jobListing.map((job, index) => (
                   <Fragment key={index}>
@@ -515,7 +515,7 @@ const Home = () => {
                               router.push(`/jobListing/${job.id}`)
                             }}
                           >
-                            Quick Apply
+                            {t('quickApply')}
                           </Button>
                         </HStack>
 

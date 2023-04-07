@@ -199,8 +199,16 @@
       "beginner": "Beginner",
       "intermediate": "Intermediate",
       "advanced": "Advanced",
-      "native": "Native"
-   
+      "native": "Native",
+
+      "myApplications": "MY Job Applications",   
+      "openJobsForYou": "Open Jobs For You",
+      "quickApply": "Quick Apply",
+      "createPost": "Create Post",
+      "withdraw": "Withdraw Application",
+      "noApplications":"You have not applied for any jobs yet.",
+      "clickHere": "Click Here",
+      "toApply": "to view all jobs."
 
 
       

@@ -20,12 +20,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getMyApplications, withdrawJobApplication } from './api/api'
 import jobListing from './jobListing/[id]'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 interface Application {
   id: number
   name: string
@@ -51,7 +52,7 @@ interface Application {
 }
 const MyApplications = () => {
   const [token, setToken] = useState<string | null>(null)
-
+  const { t } = useTranslation('common')
   const [applications, setApplications] = useState<Application[]>([])
 
   useEffect(() => {
@@ -116,7 +117,7 @@ const MyApplications = () => {
                   h={10}
                 />
                 <chakra.h3 fontSize="4xl" fontWeight="bold">
-                  My Job Applications
+                  {t('myApplications')}
                 </chakra.h3>
               </Flex>
 
@@ -237,12 +238,12 @@ const MyApplications = () => {
               ></img>
               <chakra.p fontSize="xl">
                 {/* click hyperlink to create application */}
-                You have not applied for any jobs yet.
+                {t('noApplications')}
                 <br />
                 <Link href="/openJobs" color={'blue.100'}>
-                  Click here
+                  {t('clickHere')}
                 </Link>{' '}
-                to view available jobs.
+                {t('toApply')}
               </chakra.p>
             </Box>
           ) : (
@@ -387,7 +388,7 @@ const MyApplications = () => {
                           }
                         }}
                       >
-                        Withdraw Application
+                        {t('withdraw')}
                       </Button>
                     </Stack>
                   </Grid>
