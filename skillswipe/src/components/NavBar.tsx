@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
@@ -249,21 +250,18 @@ export default function NavBar(props: any) {
               {toggleTheme}
             </Button>
           </NextLink>
-
           <Select
-            value={currentLang ?? 'en'}
+            value={currentLang ?? ''}
             onChange={(e) => changeLanguage(e.target.value)}
-            variant="filled"
-            my={5}
-            w="58"
-            py={2}
+            variant="outline"
+            rounded="full"
+            width="auto"
             _hover={{
               cursor: 'pointer',
             }}
-            icon={<Text>🌐</Text>}
           >
-            <option value="en"> {t('english')} </option>
-            <option value="fr"> {t('french')} </option>
+            <option value="en">{t('english')} 🌍</option>
+            <option value="fr">{t('french')} 🌍</option>
           </Select>
 
           <Search />
