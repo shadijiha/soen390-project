@@ -306,16 +306,14 @@ const myListings = () => {
                     >
                       {job.jobTitle}
                     </chakra.h3>
-                    <div
-                      style={{
-                        paddingTop: '0.5em',
-                      }}
-                    ></div>
 
                     <chakra.p
-                      fontWeight="bold"
+                      fontWeight="normal"
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
+                      style={{
+                        paddingTop: '1.0em',
+                      }}
                     >
                       📍 {job.location}
                     </chakra.p>
@@ -323,9 +321,30 @@ const myListings = () => {
                       fontWeight="normal"
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
+                      style={{
+                        paddingTop: '0.5em',
+                      }}
                     >
                       💼 ‎
                       {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
+                    </chakra.p>
+                    <chakra.p
+                      fontWeight="bold"
+                      fontSize="sm"
+                      color={useColorModeValue('gray.600', 'gray.300')}
+                      style={{
+                        paddingTop: '0.5em',
+                      }}
+                    >
+                      ✅ ‎ # of Applications: {}
+                      <button>
+                        <Link
+                          href={`/jobListing/${job.id}`}
+                          color={useColorModeValue('blue.500', 'blue.300')}
+                        >
+                          View All
+                        </Link>
+                      </button>
                     </chakra.p>
                   </Box>
                   <VStack
