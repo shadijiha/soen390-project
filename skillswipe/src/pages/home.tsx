@@ -38,7 +38,14 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
-import { createPosts, deletePost, getOpenJobs, getPosts } from './api/api'
+import {
+  applyToJob,
+  checkLogin,
+  createPosts,
+  deletePost,
+  getOpenJobs,
+  getPosts,
+} from './api/api'
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -51,6 +58,25 @@ interface JobAttributes {
   jobType: ''
   coverLetter: false | true
   transcript: false | true
+}
+
+interface UserAttributes {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  mobileNo: string
+  gender: string
+  profilePic: string | null
+  coverPic: string | null
+  cv: string | null
+  coverLetter: string | null
+  biography: string
+  userStatus: string
+  type: string
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
 }
 
 const Home = () => {
@@ -105,6 +131,97 @@ const Home = () => {
   //     </div>
   //   )
   // }
+  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  const [userId, setUserId] = useState(0)
+  const [userFirstName, setUserFirstName] = useState('')
+  const [userLastName, setUserLastName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPhone, setUserPhone] = useState('')
+  const [userCv, setUserCv] = useState('')
+  const [userCover, setUserCover] = useState('')
+  const handleSubmit = (event, jobId) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+
+    const submitApp = {
+      userId: userId,
+      name: `${userFirstName} ${userLastName}`,
+      email: userEmail,
+      phone: userPhone,
+      ...(userCv && { cv: userCv }),
+      coverLetter: userCover,
+      id: 0,
+    }
+
+    const missingFields = [] as string[]
+
+    if (!submitApp.name) {
+      missingFields.push('name')
+    }
+    if (!submitApp.email) {
+      missingFields.push('email')
+    }
+    if (!submitApp.phone) {
+      missingFields.push('phone')
+    }
+
+    if (missingFields.length > 0) {
+      const message = `Missing fields: ${missingFields.join(', ')}`
+      toast.error(message)
+      return
+    } else {
+      applyToJob(token, jobId, submitApp)
+        .then((res) => {
+          if (res.status == 201 || res.status == 200) {
+            toast.success('Successfully applied to job. Good luck!')
+          } else {
+            console.error('Error applying to job!', res.data)
+            toast.error(res.data.message) // toast the error message
+          }
+        })
+        .catch((error) => {
+          console.error('Error applying to job!', error)
+          toast.error('Error 2 occurred. Please try again later.')
+        })
+    }
+  }
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('jwt')
+      // fetch checkLogin API
+      const response = await checkLogin(token)
+      const data: UserAttributes = response.data
+
+      // Access the user attributes
+      const userId = data.id
+      const userFirstName = data.firstName
+      const userLastName = data.lastName
+      const userEmail = data.email
+      const userPhone = data.mobileNo
+      const userCv = data.cv
+      const userCover = data.coverLetter
+
+      // Update state variables with user data
+      setUserId(userId)
+      setUserFirstName(userFirstName)
+      setUserLastName(userLastName)
+      setUserEmail(userEmail)
+      setUserPhone(userPhone)
+      setUserCv('')
+      setUserCover('')
+
+      console.log('User ID:', userId)
+      console.log('User first name:', userFirstName)
+      console.log('User last name:', userLastName)
+      console.log('User email:', userEmail)
+      console.log('User phone:', userPhone)
+      console.log('User CV:', userCv)
+      console.log('User cover letter:', userCover)
+    } catch (error) {
+      console.error('Error fetching user data:', error)
+    }
+  }
   const formatDate = (dateString) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -118,8 +235,8 @@ const Home = () => {
     return new Intl.DateTimeFormat('en-US', options).format(date)
   }
   const { t } = useTranslation('common')
-  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  // const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  // const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
   const [preview, setPreview] = useState<any>(null)
   const input = useRef<any>(null)
 
@@ -138,6 +255,7 @@ const Home = () => {
   }
 
   useEffect(() => {
+    fetchUserData()
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
@@ -513,9 +631,7 @@ const Home = () => {
                               size="sm"
                               p={4}
                               borderRadius="50px"
-                              onClick={() => {
-                                router.push(`/jobListing/${job.id}`)
-                              }}
+                              onClick={(event) => handleSubmit(event, job.id)}
                             >
                               Quick Apply
                             </Button>
