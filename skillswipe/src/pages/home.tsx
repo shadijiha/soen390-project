@@ -390,8 +390,9 @@ const Home = () => {
           gap={3}
           _hover={{
             boxShadow: '0 0 0 2px #3182ce',
-            maxWidth: '49vh',
+            // maxWidth: '-1',
             borderRadius: '18px',
+            maxWidth: '50%',
           }}
         >
           {children}
@@ -677,11 +678,7 @@ const Home = () => {
                 >
                   {jobListing.map((job, index) => (
                     <Fragment key={index}>
-                      <HoverableGrid
-                        w="100%"
-                        minW={{ base: 'unset', sm: '100vh' }}
-                        // templateColumns={{ base: 'unset' }}
-                      >
+                      <HoverableGrid w="100%" minW={{ base: 'unset', sm: '100vh' }}>
                         <Box>
                           <HStack spacing={3}>
                             <img
