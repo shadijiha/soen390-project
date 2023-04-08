@@ -1,3 +1,14 @@
 .blurred {
     backdrop-filter: blur(10px);
 }
+
+.centeredDialog {
+    backdrop-filter: blur(11px);
+}
+
+.centeredAlertDialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

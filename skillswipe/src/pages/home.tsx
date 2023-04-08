@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -10,15 +11,20 @@ import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
   Avatar,
   Box,
   Button,
   Center,
-  chakra,
   Divider,
   Grid,
-  Heading,
   HStack,
+  Heading,
   Link,
   List,
   ListItem,
@@ -30,13 +36,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
+  chakra,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useRef, useState } from 'react'
-
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
@@ -82,6 +88,33 @@ interface UserAttributes {
 }
 
 const Home = () => {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  const [postToDeleteId, setPostToDeleteId] = useState(null)
+
+  const handleDeleteClick = (postId) => {
+    setPostToDeleteId(postId)
+    setIsConfirmOpen(true)
+  }
+  const handlePostDelete = () => {
+    if (postToDeleteId) {
+      const token = localStorage.getItem('jwt')
+      deletePost(token, postToDeleteId)
+        .then((res) => {
+          if (res.status === 201 || res.status === 200) {
+            toast.success('Successfully deleted post')
+          } else {
+            toast.error('Can only delete your post')
+          }
+        })
+        .catch((error) => {
+          toast.error('Error deleting post')
+        })
+      setTimeout(() => {
+        window.location.reload()
+      }, 5000)
+    }
+    setIsConfirmOpen(false)
+  }
   // const FileDropzone = () => {
   //   const onDrop = useCallback((acceptedFiles) => {
   //     // Handle files here
@@ -346,6 +379,7 @@ const Home = () => {
     setCreatePost({ ...createpost, content: e.target.value })
   }
 
+  const leastDestructiveRef = useRef(null)
   return (
     <>
       <Layout>
@@ -407,12 +441,12 @@ const Home = () => {
                   >
                     Have something on your 🧠?
                   </ModalHeader>
-                  <ModalCloseButton />
+
                   <ModalBody>
                     <Box
                       padding={'5px'}
                       borderRadius={'30px'}
-                      border={'2px dotted black'}
+                      border="1px solid currentColor"
                     >
                       <Center>
                         {preview ? (
@@ -481,6 +515,37 @@ const Home = () => {
                   </ModalFooter>
                 </ModalContent>
               </Modal>
+              <Modal
+                isOpen={isConfirmOpen}
+                onClose={() => setIsConfirmOpen(false)}
+                size="md"
+              >
+                <ModalOverlay className={styles.blurred} />
+                <ModalContent
+                  margin={'auto'}
+                  borderRadius="17px"
+                  padding={'0.3em'}
+                  borderColor={formBorder}
+                  backgroundColor={postBackground}
+                  borderWidth="2px"
+                  display={'flex'}
+                >
+                  <ModalHeader fontSize="lg" fontWeight="bold">
+                    Delete Post
+                  </ModalHeader>
+
+                  <ModalBody>
+                    Are you sure you want to delete this post? This action cannot be
+                    undone.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={() => setIsConfirmOpen(false)}>Cancel</Button>
+                    <Button colorScheme="red" onClick={handlePostDelete} ml={3}>
+                      Delete
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </div>
 
             <HStack spacing={8} align="start">
@@ -534,25 +599,12 @@ const Home = () => {
                         </HStack>
                         <HStack justifyContent={'space-between'}>
                           <Text>{post.content}</Text>
-
                           {User.auth.id === post.user.id ? (
                             <Button
                               colorScheme="red"
                               size="sm"
                               borderRadius="50px"
-                              onClick={() => {
-                                const token = localStorage.getItem('jwt')
-                                deletePost(token, post.id).then((res) => {
-                                  if (res.status == 201 || res.status == 200) {
-                                    toast.success('Sucessfully deleted post')
-                                  } else {
-                                    toast.error('Can only delete your post')
-                                  }
-                                })
-                                setTimeout(() => {
-                                  window.location.reload()
-                                }, 5000)
-                              }}
+                              onClick={() => handleDeleteClick(post.id)}
                               style={{
                                 marginTop: '0.5rem',
                               }}
