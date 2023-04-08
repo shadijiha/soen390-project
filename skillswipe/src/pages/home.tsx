@@ -381,6 +381,24 @@ const Home = () => {
   }
 
   const leastDestructiveRef = useRef(null)
+
+  const HoverableGrid = ({ children, ...props }) => {
+    return (
+      <Box borderRadius="18px" {...props}>
+        <Grid
+          p={{ base: 2, sm: 4 }}
+          gap={3}
+          _hover={{
+            boxShadow: '0 0 0 2px #3182ce',
+            maxWidth: '49vh',
+            borderRadius: '18px',
+          }}
+        >
+          {children}
+        </Grid>
+      </Box>
+    )
+  }
   return (
     <>
       <Layout>
@@ -659,13 +677,10 @@ const Home = () => {
                 >
                   {jobListing.map((job, index) => (
                     <Fragment key={index}>
-                      <Grid
+                      <HoverableGrid
                         w="100%"
                         minW={{ base: 'unset', sm: '100vh' }}
-                        templateColumns={{ base: 'unset' }}
-                        p={{ base: 2, sm: 4 }}
-                        gap={3}
-                        _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+                        // templateColumns={{ base: 'unset' }}
                       >
                         <Box>
                           <HStack spacing={3}>
@@ -756,7 +771,7 @@ const Home = () => {
                             </chakra.p>
                           </Grid>
                         </Box>
-                      </Grid>
+                      </HoverableGrid>
                       {jobListing.length - 1 !== index && <Divider m={0} />}
                     </Fragment>
                   ))}
