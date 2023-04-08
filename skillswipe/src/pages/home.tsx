@@ -539,7 +539,7 @@ const Home = () => {
                             <Button
                               colorScheme="red"
                               size="sm"
-                              borderRadius="50px"
+                              borderRadius="full"
                               onClick={() => {
                                 const token = localStorage.getItem('jwt')
                                 deletePost(token, post.id).then((res) => {
