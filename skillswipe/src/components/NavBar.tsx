@@ -251,7 +251,7 @@ export default function NavBar(props: any) {
             </Button>
           </NextLink>
           <Select
-            value={currentLang ?? ''}
+            value={currentLang ?? 'en'}
             onChange={(e) => changeLanguage(e.target.value)}
             variant="outline"
             rounded="full"
