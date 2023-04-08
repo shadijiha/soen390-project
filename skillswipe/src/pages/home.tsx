@@ -102,6 +102,10 @@ const Home = () => {
         .then((res) => {
           if (res.status === 201 || res.status === 200) {
             toast.success('Successfully deleted post')
+            // add reload method here to ensure reloading happens after successful deletion
+            setTimeout(() => {
+              window.location.reload()
+            }, 0)
           } else {
             toast.error('Can only delete your post')
           }
@@ -109,9 +113,6 @@ const Home = () => {
         .catch((error) => {
           toast.error('Error deleting post')
         })
-      setTimeout(() => {
-        window.location.reload()
-      }, 5000)
     }
     setIsConfirmOpen(false)
   }
@@ -361,7 +362,7 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
     const fd = new FormData()
-    fd.append('image', createpost.image, 'post image')
+    // fd.append('image', createpost.image, 'post image')
     fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
     createPosts(token, fd).then((res) => {
@@ -373,7 +374,7 @@ const Home = () => {
     })
     setTimeout(() => {
       window.location.reload()
-    }, 5000)
+    }, 100)
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
