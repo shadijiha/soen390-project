@@ -19,7 +19,6 @@ const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
 
   return (
     <>
-      key={null}
       {data.map((job) => (
         <>
           <div
