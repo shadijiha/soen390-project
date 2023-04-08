@@ -393,6 +393,7 @@ const Home = () => {
             // maxWidth: '-1',
             borderRadius: '18px',
             maxWidth: '50%',
+            transition: 'all 0.3s ease-in-out',
           }}
         >
           {children}
@@ -424,7 +425,7 @@ const Home = () => {
               </Button>
             </HStack>
             <Heading
-              paddingBottom={0}
+              paddingTop={1}
               style={{
                 fontSize: '1.5rem',
                 fontWeight: '500',
@@ -618,7 +619,9 @@ const Home = () => {
                           </Text>
                         </HStack>
                         <HStack justifyContent={'space-between'}>
-                          <Text>{post.content}</Text>
+                          <Text paddingTop={3} marginLeft={'1'}>
+                            {post.content}
+                          </Text>
                           {User.auth.id === post.user.id ? (
                             <Button
                               colorScheme="red"
@@ -653,6 +656,13 @@ const Home = () => {
                   ))}
                 </List>
               </Box>
+              <Divider
+                orientation="vertical"
+                height="100%"
+                width="1px"
+                color={formBorder}
+                display={{ base: 'none', md: 'block' }}
+              />
               <Box width={'30%'} display={{ base: 'none', md: 'block' }}>
                 <Text
                   style={{
@@ -671,7 +681,7 @@ const Home = () => {
                 </Text>
                 <Box
                   style={{
-                    border: '1px solid',
+                    // border: '1px solid',
                     borderColor: useColorModeValue('#5D616736', '#E2E8F01E'),
                     borderRadius: '18px',
                   }}
