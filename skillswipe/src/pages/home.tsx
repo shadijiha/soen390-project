@@ -362,7 +362,7 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
     const fd = new FormData()
-    // fd.append('image', createpost.image, 'post image')
+    fd.append('image', createpost.image, 'post image')
     fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
     createPosts(token, fd).then((res) => {
