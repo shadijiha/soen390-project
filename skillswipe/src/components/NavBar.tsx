@@ -355,7 +355,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  📈 ‎ My Job Applications
+                  📈 ‎ {t('myApplications')}
                 </MenuItem>
               </MenuList>
             </Menu>
@@ -406,7 +406,7 @@ export default function NavBar(props: any) {
                   transform: 'scale(1.05)',
                 }}
               >
-                Logout
+                {t('logout')}
               </Button>
             </NextLink>
           </Flex>
@@ -493,7 +493,7 @@ export default function NavBar(props: any) {
                   {t('createJobListing')}
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
-                  My Job Applications
+                  {t('myApplications')}
                 </MenuItem>
               </MenuList>
             </Menu>

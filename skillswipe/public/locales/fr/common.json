@@ -199,7 +199,17 @@
       "beginner": "Débutant",
       "intermediate": "Intermédiaire",
       "advanced": "Avancé",
-      "native": "Natif"
+      "native": "Natif",
+
+      "myApplications": "Mes candidatures",
+      "openJobsForYou": "Offres d'emploi pour vous",
+      "quickApply": "Candidature rapide",
+      "createPost": "Créer un post",
+      "withdraw": "Retirer la candidature",
+      "noApplications":"Vous n'avez pas de candidatures",
+      "clickHere": "Cliquez ici",
+      "toApply": "pour postuler"
+
       
    
  

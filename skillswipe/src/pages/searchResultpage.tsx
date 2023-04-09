@@ -1,26 +1,27 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
-import { Box, Flex, Heading, List, Stack } from '@chakra-ui/react'
+import { Box, Flex, Heading, Img, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export default function Search() {
+const Search = () => {
   const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
-  const [searchTerm, setSearchTerm] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
   const [searchResults, setSearchResults] = useState([])
-  const [profile, setProfile] = useState({
+  const profile = {
     image:
       'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
-  })
+  }
 
   const router = useRouter()
 
@@ -69,7 +70,7 @@ export default function Search() {
           <div>
             <List>
               {searchResults.map((user: any) => (
-                <Stack>
+                <Stack key={user.id}>
                   <Box
                     borderWidth="1px"
                     borderColor={formBorder}
@@ -106,7 +107,7 @@ export default function Search() {
                           }}
                         ></div>
 
-                        <img
+                        <Img
                           src={
                             user.profilePic
                               ? `data:image/jpeg;base64,${user.profilePic}`
@@ -129,6 +130,14 @@ export default function Search() {
     </Layout>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
+export default Search
 
 // const handleSearch = async (e:any) => {
 // const token = localStorage.getItem("jwt");

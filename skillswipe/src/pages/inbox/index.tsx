@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Inbox = () => {
   const { t } = useTranslation('common')
@@ -83,4 +84,9 @@ const Inbox = () => {
   )
 }
 
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 export default Inbox

@@ -105,13 +105,13 @@ const postJob = () => {
                   paddingBottom: '0.2em',
                 }}
               >
-                Create Job Listing
+                {t('createJobListing')}
               </Text>
             </VStack>
             <VStack spacing={'2.5em'} w="100%">
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl id="jobTitle">
-                  <FormLabel htmlFor="jobTitle">Position Title</FormLabel>
+                  <FormLabel htmlFor="jobTitle"> {t('positionTitle')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({ ...postListing, jobTitle: event.target.value })
@@ -124,7 +124,7 @@ const postJob = () => {
                   />
                 </FormControl>
                 <FormControl id="companyName">
-                  <FormLabel htmlFor="companyName">Company</FormLabel>
+                  <FormLabel htmlFor="companyName">{t('company')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({
@@ -140,7 +140,7 @@ const postJob = () => {
                   />
                 </FormControl>
                 <FormControl id="location">
-                  <FormLabel htmlFor="location">Location</FormLabel>
+                  <FormLabel htmlFor="location">{t('location')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({ ...postListing, location: event.target.value })
@@ -156,7 +156,7 @@ const postJob = () => {
 
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl paddingRight={{ sm: 0, md: 10 }} id="salary">
-                  <FormLabel htmlFor="salary">Salary (/hr)</FormLabel>
+                  <FormLabel htmlFor="salary">{t('salary')} (/hr)</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({
@@ -173,7 +173,7 @@ const postJob = () => {
                 </FormControl>
                 <FormControl as="fieldset">
                   <FormLabel as="legend" paddingBottom={1.5}>
-                    Job Type
+                    {t('jobType')}
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
@@ -181,10 +181,10 @@ const postJob = () => {
                     }
                   >
                     <HStack spacing="auto">
-                      <Radio value="full-time">Full-time</Radio>
-                      <Radio value="part-time">Part-time</Radio>
-                      <Radio value="contract">Contract</Radio>
-                      <Radio value="other">Other</Radio>
+                      <Radio value="full-time">{t('fullTime')}</Radio>
+                      <Radio value="part-time">{t('partTime')}</Radio>
+                      <Radio value="contract">{t('contract')}</Radio>
+                      <Radio value="other">{t('other')}</Radio>
                     </HStack>
                   </RadioGroup>
                 </FormControl>
@@ -193,7 +193,7 @@ const postJob = () => {
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl as="fieldset">
                   <FormLabel as="legend" paddingBottom={1.5}>
-                    Cover Letter Required?
+                    {t('coverLetter')}
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
@@ -201,14 +201,14 @@ const postJob = () => {
                     }
                   >
                     <HStack spacing="10%">
-                      <Radio value="true">Yes</Radio>
-                      <Radio value="false">No</Radio>
+                      <Radio value="true">{t('yes')}</Radio>
+                      <Radio value="false">{t('no')}</Radio>
                     </HStack>
                   </RadioGroup>
                 </FormControl>
                 <FormControl as="fieldset">
                   <FormLabel as="legend" paddingBottom={1.5}>
-                    Transcript Required?
+                    {t('transcript')}
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
@@ -216,14 +216,14 @@ const postJob = () => {
                     }
                   >
                     <HStack spacing="10%">
-                      <Radio value="true">Yes</Radio>
-                      <Radio value="false">No</Radio>
+                      <Radio value="true">{t('yes')}</Radio>
+                      <Radio value="false">{t('no')}</Radio>
                     </HStack>
                   </RadioGroup>
                 </FormControl>
 
                 <FormControl id="startDate">
-                  <FormLabel htmlFor="startDate">Starting Date</FormLabel>
+                  <FormLabel htmlFor="startDate">{t('startDate')}</FormLabel>
                   <Input
                     type="date"
                     rounded="100px"
@@ -238,7 +238,7 @@ const postJob = () => {
                   />
                 </FormControl>
                 <FormControl id="skills">
-                  <FormLabel htmlFor="skills">Skills Needed</FormLabel>
+                  <FormLabel htmlFor="skills">{t('skillsNeeded')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({ ...postListing, skills: event.target.value })
@@ -258,7 +258,7 @@ const postJob = () => {
                   paddingBottom: '1.5em',
                 }}
               >
-                <FormLabel htmlFor="jobDescription">Job Description</FormLabel>
+                <FormLabel htmlFor="jobDescription">{t('jobDescription')}</FormLabel>
                 <Textarea
                   name="jobDescription"
                   id="jobDescription"
@@ -287,7 +287,7 @@ const postJob = () => {
                 textShadow="0px 0px 20px #00000076"
                 shadow={'0px 4px 30px #0000001F'}
               >
-                Create
+                {t('create')}
               </Button>
             </VStack>
           </Box>
