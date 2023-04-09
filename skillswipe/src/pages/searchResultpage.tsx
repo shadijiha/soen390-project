@@ -8,8 +8,9 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-export default function Search() {
+const Search = () => {
   const { t } = useTranslation('common')
   const formBorder = useColorModeValue('gray.100', 'gray.600')
   const postBackground = useColorModeValue('gray.100', 'gray.700')
@@ -129,6 +130,14 @@ export default function Search() {
     </Layout>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
+
+export default Search
 
 // const handleSearch = async (e:any) => {
 // const token = localStorage.getItem("jwt");
