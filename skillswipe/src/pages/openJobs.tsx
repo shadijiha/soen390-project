@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -13,6 +11,7 @@ import {
   Grid,
   HStack,
   Icon,
+  Img,
   Link,
   Menu,
   MenuButton,
@@ -23,13 +22,12 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import router from 'next/router'
-import React, { Fragment, useEffect, useState } from 'react'
-// Here we have used react-icons package for the icons
+import { Fragment, useEffect, useState } from 'react'
 import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
 import { toast } from 'react-toastify'
-import { getOpenJobs, viewJob } from './api/api'
+import { getOpenJobs } from './api/api'
 
 interface JobAttributes {
   id: number
@@ -45,7 +43,10 @@ interface JobAttributes {
   transcript: false | true
 }
 
-const findJob = () => {
+const FindJob = () => {
+  const bg27 = useColorModeValue('gray.200', 'gray.700')
+  const bg63 = useColorModeValue('gray.600', 'gray.300')
+  const bg46 = useColorModeValue('gray.400', 'gray.600')
   const [jobListing, setJobListing] = useState<JobAttributes[]>([])
   const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
 
@@ -53,12 +54,9 @@ const findJob = () => {
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
-
       try {
         // Call API function to get open jobs
-
         const response = await getOpenJobs(token)
-
         // Update state with fetched data
         setInitalJobListing(response.data)
         setJobListing(response.data)
@@ -130,17 +128,9 @@ const findJob = () => {
 
     setJobListing(filteredJobs)
   }
-
-  const [checkedItems, setCheckedItems] = React.useState([
-    false,
-    false,
-    false,
-    false,
-  ])
-
+  const [checkedItems, setCheckedItems] = useState([false, false, false, false])
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
-
   const { t } = useTranslation('common')
 
   return (
@@ -283,11 +273,11 @@ const findJob = () => {
                   p={{ base: 2, sm: 4 }}
                   gap={3}
                   alignItems="center"
-                  _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+                  _hover={{ bg: bg27 }}
                 >
                   <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                     <HStack spacing={3}>
-                      <img
+                      <Img
                         src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
                         width="20px"
                         height="20px"
@@ -298,7 +288,6 @@ const findJob = () => {
                             'https://img.icons8.com/3d-fluency/512/hard-working.png'
                         }}
                       />
-
                       <chakra.h2 fontWeight="bold" fontSize="lg">
                         {job.companyName}
                       </chakra.h2>
@@ -321,18 +310,10 @@ const findJob = () => {
                       }}
                     ></div>
 
-                    <chakra.p
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
+                    <chakra.p fontWeight="bold" fontSize="sm" color={bg63}>
                       📍 {job.location}
                     </chakra.p>
-                    <chakra.p
-                      fontWeight="normal"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
+                    <chakra.p fontWeight="normal" fontSize="sm" color={bg63}>
                       💼 ‎
                       {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
                     </chakra.p>
@@ -342,7 +323,7 @@ const findJob = () => {
                     alignItems="start"
                     fontWeight="light"
                     fontSize={{ base: 'xs', sm: 'sm' }}
-                    color={useColorModeValue('gray.600', 'gray.300')}
+                    color={bg63}
                   >
                     <chakra.p>
                       📅 {t('startingDate')}: {job.startDate.split('T')[0]}
@@ -368,11 +349,11 @@ const findJob = () => {
                   >
                     <Button
                       as={Link}
-                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                      _hover={{ bg: bg46 }}
                       p={5}
                       rounded="100px"
                       outline={'solid 1px'}
-                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                      outlineColor={bg46}
                       onClick={() => {
                         router.push(`/jobListing/${job.id}`)
                       }}
@@ -397,4 +378,4 @@ export const getStaticProps = async ({ locale }) => ({
   },
 })
 
-export default withTranslation('common')(findJob)
+export default withTranslation('common')(FindJob)
