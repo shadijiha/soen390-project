@@ -38,21 +38,55 @@ import { toast } from 'react-toastify'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { deleteJobListing, getOpenJobs } from './api/api'
 
-interface JobAttributes {
-  id: number
-  jobTitle: ''
-  companyName: ''
-  location: ''
-  jobDescription: ''
-  salary: ''
-  skills: ''
-  startDate: ''
-  jobType: ''
-  coverLetter: false | true
-  transcript: false | true
-}
 const myListings = () => {
-  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  const [jobListing, setJobListing] = useState([
+    {
+      id: 5,
+      jobTitle: 'Software Engineering Intern',
+      companyName: 'Amazon',
+      location: 'Montreal',
+      jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
+      salary: '20',
+      jobType: 'full-time',
+      startDate: '2023-03-23T04:00:00.000Z',
+      coverLetter: true,
+      transcript: true,
+      created_at: '2023-03-16T20:19:34.940Z',
+      updated_at: '2023-03-16T20:19:34.940Z',
+      user: {
+        id: 4,
+        firstName: 'Uzair',
+        lastName: 'Ali',
+        email: 'messi@gmail.com',
+        mobileNo: '',
+        gender: 'MALE',
+        profilePic: '',
+        coverPic: null,
+        cv: '',
+        coverLetter: '',
+        biography: null,
+        userStatus: 'online',
+        type: 'User',
+        created_at: '2023-03-02T22:50:47.902Z',
+        updated_at: '2023-04-05T03:48:54.000Z',
+        deleted_at: null,
+      },
+      skills: [
+        {
+          id: 1,
+          title: 'C++',
+          created_at: '2023-03-02T22:52:53.844Z',
+          updated_at: '2023-03-02T22:52:53.844Z',
+        },
+        {
+          id: 2,
+          title: 'Java',
+          created_at: '2023-03-02T22:53:07.867Z',
+          updated_at: '2023-03-02T22:53:07.867Z',
+        },
+      ],
+    },
+  ])
   const { t } = useTranslation('common')
 
   useEffect(() => {
@@ -267,155 +301,158 @@ const myListings = () => {
           >
             {jobListing.map((job, index) => (
               <Fragment key={index}>
-                <Grid
-                  templateRows={{ base: 'auto auto', md: 'auto' }}
-                  w="100%"
-                  templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
-                  p={{ base: 2, sm: 4 }}
-                  gap={3}
-                  alignItems="center"
-                  _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                >
-                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                    <HStack spacing={3}>
-                      <img
-                        src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                        width="20px"
-                        height="20px"
-                        alt="logo"
-                        onError={(e) => {
-                          // show a default image if the company logo is not found
-                          e.currentTarget.src =
-                            'https://img.icons8.com/3d-fluency/512/hard-working.png'
-                        }}
-                      />
-
-                      <chakra.h2 fontWeight="bold" fontSize="lg">
-                        {job.companyName}
-                      </chakra.h2>
-                    </HStack>
-
-                    <chakra.h3
-                      as={Link}
-                      isExternal
-                      fontWeight="extrabold"
-                      fontSize="2xl"
-                      onClick={() => {
-                        router.push(`/jobListing/${job.id}`)
-                      }}
-                    >
-                      {job.jobTitle}
-                    </chakra.h3>
-
-                    <chakra.p
-                      fontWeight="normal"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                      style={{
-                        paddingTop: '1.0em',
-                      }}
-                    >
-                      📍 {job.location}
-                    </chakra.p>
-                    <chakra.p
-                      fontWeight="normal"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                      style={{
-                        paddingTop: '0.5em',
-                      }}
-                    >
-                      💼 ‎
-                      {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
-                    </chakra.p>
-                    <chakra.p
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                      style={{
-                        paddingTop: '0.5em',
-                      }}
-                    >
-                      ✅ ‎ # of Applications: {}
-                      <button>
-                        <Link
-                          href={`/jobListing/${job.id}`}
-                          color={useColorModeValue('blue.500', 'blue.300')}
-                        >
-                          View All
-                        </Link>
-                      </button>
-                    </chakra.p>
-                  </Box>
-                  <VStack
-                    spacing={{ base: 0, sm: 3 }}
-                    alignItems="start"
-                    fontWeight="light"
-                    fontSize={{ base: 'xs', sm: 'sm' }}
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
-                    {/* By the way, the ‎ is an invisible space character */}
-                    <chakra.p>
-                      {/* format the starting date to be only year month and date */}
-                      📅 ‎ ‎ {t('startingDate')}: {job.startDate.split('T')[0]}
-                    </chakra.p>
-                    <chakra.p>
-                      🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr
-                    </chakra.p>
-                    <chakra.p>
-                      🏫 ‎ ‎ {t('transcript')} ‎ ‎
-                      {job.transcript.toString() == 'true' ? '✅' : '❌'}
-                    </chakra.p>
-                    <chakra.p>
-                      💌 ‎ ‎ {t('coverLetter')} ‎ ‎
-                      {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
-                    </chakra.p>
-                  </VStack>
-                  <Stack
-                    spacing={6}
-                    direction="row"
-                    fontSize={{ base: 'sm', sm: 'md' }}
-                    justifySelf="flex-end"
+                {currentUser.auth.id === job.user.id ? (
+                  <Grid
+                    templateRows={{ base: 'auto auto', md: 'auto' }}
+                    w="100%"
+                    templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
+                    p={{ base: 2, sm: 4 }}
+                    gap={3}
                     alignItems="center"
+                    _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                   >
-                    <Button
-                      as={Link}
-                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                      p={5}
-                      rounded="100px"
-                      colorScheme={'blue'}
-                      outline={'solid 1px'}
-                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                      onClick={() => {
-                        router.push(`/jobListing/${job.id}`)
-                      }}
+                    <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                      <HStack spacing={3}>
+                        <img
+                          src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                          width="20px"
+                          height="20px"
+                          alt="logo"
+                          onError={(e) => {
+                            // show a default image if the company logo is not found
+                            e.currentTarget.src =
+                              'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                          }}
+                        />
+
+                        <chakra.h2 fontWeight="bold" fontSize="lg">
+                          {job.companyName}
+                        </chakra.h2>
+                      </HStack>
+
+                      <chakra.h3
+                        as={Link}
+                        isExternal
+                        fontWeight="extrabold"
+                        fontSize="2xl"
+                        onClick={() => {
+                          router.push(`/jobListing/${job.id}`)
+                        }}
+                      >
+                        {job.jobTitle}
+                      </chakra.h3>
+
+                      <chakra.p
+                        fontWeight="normal"
+                        fontSize="sm"
+                        color={useColorModeValue('gray.600', 'gray.300')}
+                        style={{
+                          paddingTop: '1.0em',
+                        }}
+                      >
+                        📍 {job.location}
+                      </chakra.p>
+                      <chakra.p
+                        fontWeight="normal"
+                        fontSize="sm"
+                        color={useColorModeValue('gray.600', 'gray.300')}
+                        style={{
+                          paddingTop: '0.5em',
+                        }}
+                      >
+                        💼 ‎
+                        {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
+                      </chakra.p>
+                      <chakra.p
+                        fontWeight="bold"
+                        fontSize="sm"
+                        color={useColorModeValue('gray.600', 'gray.300')}
+                        style={{
+                          paddingTop: '0.5em',
+                        }}
+                      >
+                        ✅ ‎ # of Applications: {}
+                        <button>
+                          <Link
+                            href={`/jobListing/${job.id}`}
+                            color={useColorModeValue('blue.500', 'blue.300')}
+                          >
+                            View All
+                          </Link>
+                        </button>
+                      </chakra.p>
+                    </Box>
+                    <VStack
+                      spacing={{ base: 0, sm: 3 }}
+                      alignItems="start"
+                      fontWeight="light"
+                      fontSize={{ base: 'xs', sm: 'sm' }}
+                      color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      {t('editListing')}
-                    </Button>
-                    <Button
-                      as={Link}
-                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                      p={5}
-                      colorScheme="red"
-                      rounded="100px"
-                      outline={'solid 1px'}
-                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                      onClick={async () => {
-                        const token = localStorage.getItem('jwt')
-                        try {
-                          await deleteJobListing(token, job.id)
-                          setJobListing(jobListing.filter((a) => a.id !== job.id))
-                          toast.success('Job listing deleted successfully!')
-                        } catch (error) {
-                          console.error(error)
-                          toast.error('Error withdrawing application')
-                        }
-                      }}
+                      {/* By the way, the ‎ is an invisible space character */}
+                      <chakra.p>
+                        {/* format the starting date to be only year month and date */}
+                        📅 ‎ ‎ {t('startingDate')}: {job.startDate.split('T')[0]}
+                      </chakra.p>
+                      <chakra.p>
+                        🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr
+                      </chakra.p>
+                      <chakra.p>
+                        🏫 ‎ ‎ {t('transcript')} ‎ ‎
+                        {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                      </chakra.p>
+                      <chakra.p>
+                        💌 ‎ ‎ {t('coverLetter')} ‎ ‎
+                        {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
+                      </chakra.p>
+                    </VStack>
+                    <Stack
+                      spacing={6}
+                      direction="row"
+                      fontSize={{ base: 'sm', sm: 'md' }}
+                      justifySelf="flex-end"
+                      alignItems="center"
                     >
-                      Delete Application
-                    </Button>
-                  </Stack>
-                </Grid>
+                      <Button
+                        as={Link}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                        p={5}
+                        rounded="100px"
+                        colorScheme={'blue'}
+                        outline={'solid 1px'}
+                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                        onClick={() => {
+                          router.push(`/jobListing/${job.id}`)
+                        }}
+                      >
+                        {t('editListing')}
+                      </Button>
+                      <Button
+                        as={Link}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                        p={5}
+                        colorScheme="red"
+                        rounded="100px"
+                        outline={'solid 1px'}
+                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                        onClick={async () => {
+                          const token = localStorage.getItem('jwt')
+                          try {
+                            await deleteJobListing(token, job.id)
+                            setJobListing(jobListing.filter((a) => a.id !== job.id))
+                            toast.success('Job listing deleted successfully!')
+                          } catch (error) {
+                            console.error(error)
+                            toast.error('Error withdrawing application')
+                          }
+                        }}
+                      >
+                        Delete Application
+                      </Button>
+                    </Stack>
+                  </Grid>
+                ) : null}
+
                 {jobListing.length - 1 !== index && <Divider m={0} />}
               </Fragment>
             ))}
