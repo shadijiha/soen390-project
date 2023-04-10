@@ -1,7 +1,14 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { BellIcon, ChevronDownIcon, CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  BellIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
   Badge,
@@ -23,6 +30,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { i18n } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -32,7 +40,6 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
-import { i18n } from 'next-i18next'
 import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
@@ -95,7 +102,7 @@ export default function NavBar(props: any) {
   const languageOptions = [
     { label: 'English', value: 'en' },
     { label: 'Français', value: 'fr' },
-  ];
+  ]
 
   const [profile, setProfile] = useState({
     name: 'John Smith',
@@ -197,7 +204,7 @@ export default function NavBar(props: any) {
     if (value === 'option3') {
       router.push('/postJob')
     }
-    if(value === 'option4'){
+    if (value === 'option4') {
       router.push('/myApplications')
     }
   }
@@ -243,21 +250,18 @@ export default function NavBar(props: any) {
               {toggleTheme}
             </Button>
           </NextLink>
-
           <Select
             value={currentLang ?? 'en'}
             onChange={(e) => changeLanguage(e.target.value)}
-            variant="filled"
-            my={5}
-            w="58"
-            py={2}
+            variant="outline"
+            rounded="full"
+            width="auto"
             _hover={{
               cursor: 'pointer',
             }}
-            icon={<Text>🌐</Text>}
           >
-            <option value="en"> {t('english')} </option>
-            <option value="fr"> {t('french')} </option>
+            <option value="en">{t('english')} 🌍</option>
+            <option value="fr">{t('french')} 🌍</option>
           </Select>
 
           <Search />
@@ -285,8 +289,6 @@ export default function NavBar(props: any) {
                 💬 ‎ {t('messages')}
               </Button>
             </NextLink>
-
-            
 
             <Menu>
               <MenuButton
@@ -329,7 +331,7 @@ export default function NavBar(props: any) {
                     transform: 'scale(1.03)',
                   }}
                 >
-                  📂 ‎ {t('openJobs')}
+                  📂 ‎ {t('myListings')}
                 </MenuItem>
                 <MenuItem
                   onClick={() => handleFilter('option3')}
@@ -362,10 +364,10 @@ export default function NavBar(props: any) {
 
             {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
-            ) :(
+            ) : (
               <NotificationCounter Notifications={loading1 + loading2} />
-            ) }
-    
+            )}
+
             <NextLink href="/profile" passHref>
               <Menu isLazy>
                 <MenuButton

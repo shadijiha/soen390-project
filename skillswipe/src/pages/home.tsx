@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/alt-text */
@@ -34,11 +37,17 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useRef, useState } from 'react'
-
 import { useSelector } from 'react-redux'
 import TextareaAutosize from 'react-textarea-autosize'
 import { toast } from 'react-toastify'
-import { createPosts, deletePost, getOpenJobs, getPosts } from './api/api'
+import {
+  applyToJob,
+  checkLogin,
+  createPosts,
+  deletePost,
+  getOpenJobs,
+  getPosts,
+} from './api/api'
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -53,7 +62,54 @@ interface JobAttributes {
   transcript: false | true
 }
 
+interface UserAttributes {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  mobileNo: string
+  gender: string
+  profilePic: string | null
+  coverPic: string | null
+  cv: string | null
+  coverLetter: string | null
+  biography: string
+  userStatus: string
+  type: string
+  created_at: string
+  updated_at: string
+  deleted_at: string | null
+}
+
 const Home = () => {
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+  const [postToDeleteId, setPostToDeleteId] = useState(null)
+
+  const handleDeleteClick = (postId) => {
+    setPostToDeleteId(postId)
+    setIsConfirmOpen(true)
+  }
+  const handlePostDelete = () => {
+    if (postToDeleteId) {
+      const token = localStorage.getItem('jwt')
+      deletePost(token, postToDeleteId)
+        .then((res) => {
+          if (res.status === 201 || res.status === 200) {
+            toast.success('Successfully deleted post')
+            // add reload method here to ensure reloading happens after successful deletion
+            setTimeout(() => {
+              window.location.reload()
+            }, 0)
+          } else {
+            toast.error('Can only delete your post')
+          }
+        })
+        .catch((error) => {
+          toast.error('Error deleting post')
+        })
+    }
+    setIsConfirmOpen(false)
+  }
   // const FileDropzone = () => {
   //   const onDrop = useCallback((acceptedFiles) => {
   //     // Handle files here
@@ -105,6 +161,144 @@ const Home = () => {
   //     </div>
   //   )
   // }
+  const [jobListing, setJobListing] = useState([
+    {
+      id: 5,
+      jobTitle: 'Software Engineering Intern',
+      companyName: 'Amazon',
+      location: 'Montreal',
+      jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
+      salary: '20',
+      jobType: 'full-time',
+      startDate: '2023-03-23T04:00:00.000Z',
+      coverLetter: true,
+      transcript: true,
+      created_at: '2023-03-16T20:19:34.940Z',
+      updated_at: '2023-03-16T20:19:34.940Z',
+      user: {
+        id: 4,
+        firstName: '',
+        lastName: '',
+        email: 'messi@gmail.com',
+        mobileNo: '',
+        gender: 'MALE',
+        profilePic: '',
+        coverPic: null,
+        cv: '',
+        coverLetter: '',
+        biography: null,
+        userStatus: 'online',
+        type: 'User',
+        created_at: '2023-03-02T22:50:47.902Z',
+        updated_at: '2023-04-05T03:48:54.000Z',
+        deleted_at: null,
+      },
+      skills: [
+        {
+          id: 1,
+          title: 'C++',
+          created_at: '2023-03-02T22:52:53.844Z',
+          updated_at: '2023-03-02T22:52:53.844Z',
+        },
+        {
+          id: 2,
+          title: 'Java',
+          created_at: '2023-03-02T22:53:07.867Z',
+          updated_at: '2023-03-02T22:53:07.867Z',
+        },
+      ],
+    },
+  ])
+  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  const [userId, setUserId] = useState(0)
+  const [userFirstName, setUserFirstName] = useState('')
+  const [userLastName, setUserLastName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPhone, setUserPhone] = useState('')
+  const [userCv, setUserCv] = useState('')
+  const [userCover, setUserCover] = useState('')
+  const handleSubmit = (event, jobId) => {
+    const token = localStorage.getItem('jwt')
+    event.preventDefault()
+
+    const submitApp = {
+      userId: userId,
+      name: `${userFirstName} ${userLastName}`,
+      email: userEmail,
+      phone: userPhone,
+      ...(userCv && { cv: userCv }),
+      coverLetter: userCover,
+      id: 0,
+    }
+
+    const missingFields = [] as string[]
+
+    if (!submitApp.name) {
+      missingFields.push('name')
+    }
+    if (!submitApp.email) {
+      missingFields.push('email')
+    }
+    if (!submitApp.phone) {
+      missingFields.push('phone')
+    }
+
+    if (missingFields.length > 0) {
+      const message = `Missing fields: ${missingFields.join(', ')}`
+      toast.error(message)
+      return
+    } else {
+      applyToJob(token, jobId, submitApp)
+        .then((res) => {
+          if (res.status == 201 || res.status == 200) {
+            toast.success('Successfully applied to job. Good luck!')
+          } else {
+            console.error('Error applying to job!', res.data)
+            toast.error(res.data.message) // toast the error message
+          }
+        })
+        .catch((error) => {
+          console.error('Error applying to job!', error)
+          toast.error('Error 2 occurred. Please try again later.')
+        })
+    }
+  }
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('jwt')
+      // fetch checkLogin API
+      const response = await checkLogin(token)
+      const data: UserAttributes = response.data
+
+      // Access the user attributes
+      const userId = data.id
+      const userFirstName = data.firstName
+      const userLastName = data.lastName
+      const userEmail = data.email
+      const userPhone = data.mobileNo
+      const userCv = data.cv
+      const userCover = data.coverLetter
+
+      // Update state variables with user data
+      setUserId(userId)
+      setUserFirstName(userFirstName)
+      setUserLastName(userLastName)
+      setUserEmail(userEmail)
+      setUserPhone(userPhone)
+      setUserCv('')
+      setUserCover('')
+
+      console.log('User ID:', userId)
+      console.log('User first name:', userFirstName)
+      console.log('User last name:', userLastName)
+      console.log('User email:', userEmail)
+      console.log('User phone:', userPhone)
+      console.log('User CV:', userCv)
+      console.log('User cover letter:', userCover)
+    } catch (error) {
+      console.error('Error fetching user data:', error)
+    }
+  }
   const formatDate = (dateString) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -118,12 +312,13 @@ const Home = () => {
     return new Intl.DateTimeFormat('en-US', options).format(date)
   }
   const { t } = useTranslation('common')
-  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
-  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+  // const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  // const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
   const [preview, setPreview] = useState<any>(null)
   const input = useRef<any>(null)
 
   useEffect(() => {
+    fetchUserData()
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
@@ -209,7 +404,7 @@ const Home = () => {
     })
     setTimeout(() => {
       window.location.reload()
-    }, 5000)
+    }, 100)
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
@@ -228,6 +423,27 @@ const Home = () => {
     }
   }
 
+  const leastDestructiveRef = useRef(null)
+
+  const HoverableGrid = ({ children, ...props }) => {
+    return (
+      <Box borderRadius="18px" {...props}>
+        <Grid
+          p={{ base: 2, sm: 4 }}
+          gap={3}
+          _hover={{
+            boxShadow: '0 0 0 2px #3182ce',
+            // maxWidth: '-1',
+            borderRadius: '18px',
+            maxWidth: '50%',
+            transition: 'all 0.3s ease-in-out',
+          }}
+        >
+          {children}
+        </Grid>
+      </Box>
+    )
+  }
   return (
     <>
       <Layout>
@@ -252,7 +468,7 @@ const Home = () => {
               </Button>
             </HStack>
             <Heading
-              paddingBottom={0}
+              paddingTop={1}
               style={{
                 fontSize: '1.5rem',
                 fontWeight: '500',
@@ -289,12 +505,12 @@ const Home = () => {
                   >
                     Have something on your 🧠?
                   </ModalHeader>
-                  <ModalCloseButton />
+
                   <ModalBody>
                     <Box
                       padding={'5px'}
                       borderRadius={'30px'}
-                      border={'2px dotted black'}
+                      border="1px solid currentColor"
                     >
                       <Center>
                         {preview ? (
@@ -363,6 +579,37 @@ const Home = () => {
                   </ModalFooter>
                 </ModalContent>
               </Modal>
+              <Modal
+                isOpen={isConfirmOpen}
+                onClose={() => setIsConfirmOpen(false)}
+                size="md"
+              >
+                <ModalOverlay className={styles.blurred} />
+                <ModalContent
+                  margin={'auto'}
+                  borderRadius="17px"
+                  padding={'0.3em'}
+                  borderColor={formBorder}
+                  backgroundColor={postBackground}
+                  borderWidth="2px"
+                  display={'flex'}
+                >
+                  <ModalHeader fontSize="lg" fontWeight="bold">
+                    Delete Post
+                  </ModalHeader>
+
+                  <ModalBody>
+                    Are you sure you want to delete this post? This action cannot be
+                    undone.
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button onClick={() => setIsConfirmOpen(false)}>Cancel</Button>
+                    <Button colorScheme="red" onClick={handlePostDelete} ml={3}>
+                      Delete
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
             </div>
 
             <HStack spacing={8} align="start">
@@ -415,26 +662,15 @@ const Home = () => {
                           </Text>
                         </HStack>
                         <HStack justifyContent={'space-between'}>
-                          <Text>{post.content}</Text>
-
+                          <Text paddingTop={3} marginLeft={'1'}>
+                            {post.content}
+                          </Text>
                           {User.auth.id === post.user.id ? (
                             <Button
                               colorScheme="red"
                               size="sm"
                               borderRadius="50px"
-                              onClick={() => {
-                                const token = localStorage.getItem('jwt')
-                                deletePost(token, post.id).then((res) => {
-                                  if (res.status == 201 || res.status == 200) {
-                                    toast.success('Sucessfully deleted post')
-                                  } else {
-                                    toast.error('Can only delete your post')
-                                  }
-                                })
-                                setTimeout(() => {
-                                  window.location.reload()
-                                }, 5000)
-                              }}
+                              onClick={() => handleDeleteClick(post.id)}
                               style={{
                                 marginTop: '0.5rem',
                               }}
@@ -463,6 +699,13 @@ const Home = () => {
                   ))}
                 </List>
               </Box>
+              <Divider
+                orientation="vertical"
+                height="100%"
+                width="1px"
+                color={formBorder}
+                display={{ base: 'none', md: 'block' }}
+              />
               <Box width={'30%'} display={{ base: 'none', md: 'block' }}>
                 <Text
                   style={{
@@ -472,115 +715,123 @@ const Home = () => {
                     backgroundColor: useColorModeValue('gray.100', 'gray.700'),
                     padding: '1rem',
                     marginBottom: '1rem',
-                    borderRadius: '50px',
-                    borderColor: useColorModeValue('gray.200', 'gray.600'),
+                    borderRadius: '20px',
+                    borderColor: useColorModeValue('#5D616736', '#E2E8F01E'),
                     borderWidth: '2px',
                   }}
                 >
                   <b> {t('openJobsForYou')} </b>
                 </Text>
-                {jobListing.map((job, index) => (
-                  <Fragment key={index}>
-                    <Grid
-                      w="100%"
-                      minW={{ base: 'unset', sm: '100vh' }}
-                      templateColumns={{ base: 'unset' }}
-                      p={{ base: 2, sm: 4 }}
-                      gap={3}
-                      _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                    >
-                      <Box>
-                        <HStack spacing={3}>
-                          <img
-                            src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                            width="15px"
-                            height="15px"
-                            alt="logo"
-                            onError={(e) => {
-                              // show a default image if the company logo is not found
-                              e.currentTarget.src =
-                                'https://img.icons8.com/3d-fluency/512/hard-working.png'
-                            }}
-                          />
-
-                          <chakra.h2 fontWeight="bold" fontSize="md">
-                            {job.companyName}
-                          </chakra.h2>
-                          {/* quick apply job button */}
-                          <Button
-                            colorScheme="blue"
-                            border={useColorModeValue('gray.200', 'gray.600')}
-                            borderWidth="4px"
-                            size="sm"
-                            borderRadius="50px"
-                            onClick={() => {
-                              router.push(`/jobListing/${job.id}`)
-                            }}
-                          >
-                            {t('quickApply')}
-                          </Button>
-                        </HStack>
-
-                        <chakra.h3
-                          as={Link}
-                          isExternal
-                          fontWeight="extrabold"
-                          fontSize="15px"
-                          onClick={() => {
-                            router.push(`/jobListing/${job.id}`)
-                          }}
+                <Box
+                  style={{
+                    // border: '1px solid',
+                    borderColor: useColorModeValue('#5D616736', '#E2E8F01E'),
+                    borderRadius: '18px',
+                  }}
+                >
+                  {jobListing.map((job, index) => (
+                    <Fragment key={index}>
+                      {User.auth.id !== job.user.id ? (
+                        <HoverableGrid
+                          w="100%"
+                          minW={{ base: 'unset', sm: '100vh' }}
                         >
-                          {job.jobTitle}
-                        </chakra.h3>
+                          <Box>
+                            <HStack spacing={3}>
+                              <img
+                                src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                                width="15px"
+                                height="15px"
+                                alt="logo"
+                                onError={(e) => {
+                                  // show a default image if the company logo is not found
+                                  e.currentTarget.src =
+                                    'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                                }}
+                              />
 
-                        <div
-                          style={{
-                            paddingTop: '0.5em',
-                          }}
-                        ></div>
+                              <chakra.h2 fontWeight="bold" fontSize="md">
+                                {job.companyName}
+                              </chakra.h2>
+                              {/* quick apply job button */}
+                              {!job.coverLetter && !job.transcript && (
+                                <Button
+                                  colorScheme="gray"
+                                  // border={useColorModeValue('gray.200', 'gray.600')}
+                                  borderWidth="3px"
+                                  size="sm"
+                                  p={4}
+                                  borderRadius="50px"
+                                  onClick={(event) => handleSubmit(event, job.id)}
+                                >
+                                  Quick Apply
+                                </Button>
+                              )}
+                            </HStack>
 
-                        <chakra.p
-                          fontWeight="bold"
-                          fontSize="sm"
-                          color={useColorModeValue('gray.600', 'gray.300')}
-                        >
-                          📍 {job.location}
-                        </chakra.p>
-                        <chakra.p
-                          fontWeight="normal"
-                          fontSize="sm"
-                          color={useColorModeValue('gray.600', 'gray.300')}
-                        >
-                          💼 ‎
-                          {job.jobType.charAt(0).toUpperCase() +
-                            job.jobType.slice(1)}
-                        </chakra.p>
-                        <Grid
-                          alignItems="start"
-                          fontWeight="light"
-                          fontSize={{ base: 'xs', sm: 'sm' }}
-                          color={useColorModeValue('gray.600', 'gray.300')}
-                        >
-                          {/* By the way, the ‎ is an invisible space character */}
-                          <chakra.p>
-                            {/* format the starting date to be only year month and date */}
-                            📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
-                          </chakra.p>
-                          <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
-                          <chakra.p>
-                            🏫 ‎ ‎ Transcript Needed? ‎ ‎
-                            {job.transcript.toString() == 'true' ? '✅' : '❌'}
-                          </chakra.p>
-                          <chakra.p>
-                            💌 ‎ ‎ Cover Letter Needed? ‎ ‎
-                            {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
-                          </chakra.p>
-                        </Grid>
-                      </Box>
-                    </Grid>
-                    {jobListing.length - 1 !== index && <Divider m={0} />}
-                  </Fragment>
-                ))}
+                            <chakra.h3
+                              as={Link}
+                              isExternal
+                              fontWeight="extrabold"
+                              fontSize="15px"
+                              onClick={() => {
+                                router.push(`/jobListing/${job.id}`)
+                              }}
+                            >
+                              {job.jobTitle}
+                            </chakra.h3>
+
+                            <div
+                              style={{
+                                paddingTop: '0.5em',
+                              }}
+                            ></div>
+
+                            <chakra.p
+                              fontWeight="bold"
+                              fontSize="sm"
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              📍 {job.location}
+                            </chakra.p>
+                            <chakra.p
+                              fontWeight="normal"
+                              fontSize="sm"
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              💼 ‎
+                              {job.jobType.charAt(0).toUpperCase() +
+                                job.jobType.slice(1)}
+                            </chakra.p>
+                            <Grid
+                              alignItems="start"
+                              fontWeight="light"
+                              fontSize={{ base: 'xs', sm: 'sm' }}
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              {/* By the way, the ‎ is an invisible space character */}
+                              <chakra.p>
+                                {/* format the starting date to be only year month and date */}
+                                📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
+                              </chakra.p>
+                              <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
+                              <chakra.p>
+                                🏫 ‎ ‎ Transcript Needed? ‎ ‎
+                                {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                              </chakra.p>
+                              <chakra.p>
+                                💌 ‎ ‎ Cover Letter Needed? ‎ ‎
+                                {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
+                              </chakra.p>
+                            </Grid>
+                          </Box>
+                        </HoverableGrid>
+                      ) : null}
+
+                      {jobListing.length - 1 !== index && <Divider m={0} />}
+                    </Fragment>
+                  ))}
+                </Box>
               </Box>
             </HStack>
           </Box>

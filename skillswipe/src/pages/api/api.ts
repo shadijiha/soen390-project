@@ -270,7 +270,6 @@ export const getPosts = async (token: any) => {
 }
 
 export const createPosts = async (token: any, postCreate: any) => {
-
   return axios.post(`${URL}/posts`, postCreate, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -322,6 +321,20 @@ export const withdrawJobApplication = async (token, id) => {
 
   try {
     const response = await axios.delete(`${URL}/application/${id}`, config)
+    return response.data
+  } catch (error) {
+    throw new Error(error.response.data.error)
+  }
+}
+export const deleteJobListing = async (token, id) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  try {
+    const response = await axios.delete(`${URL}/jobs/${id}`, config)
     return response.data
   } catch (error) {
     throw new Error(error.response.data.error)

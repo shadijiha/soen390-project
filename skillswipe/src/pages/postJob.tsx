@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/jsx-no-undef */
 import NavBar from '@/components/NavBar'
@@ -19,7 +20,6 @@ import {
 } from '@chakra-ui/react'
 
 import { useTranslation } from 'next-i18next'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
@@ -35,8 +35,8 @@ const postJob = () => {
     skills: '',
     startDate: '',
     jobType: '',
-    coverLetter: true,
-    transcript: true,
+    coverLetter: null as null | boolean,
+    transcript: null as null | boolean,
     id: 0,
   })
 
@@ -56,8 +56,8 @@ const postJob = () => {
       !postListing.skills ||
       !postListing.startDate ||
       !postListing.jobType ||
-      !postListing.coverLetter ||
-      !postListing.transcript
+      postListing.coverLetter == null ||
+      postListing.transcript == null
     ) {
       toast(t('fillAllFields'))
       return
@@ -197,7 +197,10 @@ const postJob = () => {
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
-                      setJobListing({ ...postListing, coverLetter: Boolean(value) })
+                      setJobListing({
+                        ...postListing,
+                        coverLetter: value === 'true' ? true : false,
+                      })
                     }
                   >
                     <HStack spacing="10%">
@@ -212,7 +215,10 @@ const postJob = () => {
                   </FormLabel>
                   <RadioGroup
                     onChange={(value) =>
-                      setJobListing({ ...postListing, transcript: Boolean(value) })
+                      setJobListing({
+                        ...postListing,
+                        transcript: value === 'true' ? true : false,
+                      })
                     }
                   >
                     <HStack spacing="10%">
