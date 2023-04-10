@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import * as Pusher from 'pusher'
+import type * as Pusher from 'pusher'
 import { Message } from '../models/message.entity'
 import { type User } from '../models/user.entity'
 import { Repository } from 'typeorm'
