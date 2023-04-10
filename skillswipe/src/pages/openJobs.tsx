@@ -250,7 +250,7 @@ const findJob = () => {
 
   const filteredJobListing = jobListing.filter(job => checked.includes(job.jobType as string));
 
-  const [checkedItems, setCheckedItems] = React.useState([
+  const [checkedItems, setCheckedItems] = useState([
     false,
     false,
     false,
