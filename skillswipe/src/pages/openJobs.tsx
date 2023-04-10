@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @next/next/no-img-element */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
@@ -22,10 +23,10 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import router from 'next/router'
-import { Fragment, useEffect, useState } from 'react'
 import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import router from 'next/router'
+import { Fragment, useEffect, useState } from 'react'
 import { BsFilter } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -65,55 +66,54 @@ interface UserAttributes {
 }
 
 const findJob = () => {
-  const [jobListing, setJobListing] = useState([
-    {
-      id: 5,
-      jobTitle: 'Software Engineering Intern',
-      companyName: 'Amazon',
-      location: 'Montreal',
-      jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
-      salary: '20',
-      jobType: 'full-time',
-      startDate: '2023-03-23T04:00:00.000Z',
-      coverLetter: true,
-      transcript: true,
-      created_at: '2023-03-16T20:19:34.940Z',
-      updated_at: '2023-03-16T20:19:34.940Z',
-      user: {
-        id: 4,
-        firstName: '',
-        lastName: '',
-        email: 'messi@gmail.com',
-        mobileNo: '',
-        gender: 'MALE',
-        profilePic: '',
-        coverPic: null,
-        cv: '',
-        coverLetter: '',
-        biography: null,
-        userStatus: 'online',
-        type: 'User',
-        created_at: '2023-03-02T22:50:47.902Z',
-        updated_at: '2023-04-05T03:48:54.000Z',
-        deleted_at: null,
-      },
-      skills: [
-        {
-          id: 1,
-          title: 'C++',
-          created_at: '2023-03-02T22:52:53.844Z',
-          updated_at: '2023-03-02T22:52:53.844Z',
-        },
-        {
-          id: 2,
-          title: 'Java',
-          created_at: '2023-03-02T22:53:07.867Z',
-          updated_at: '2023-03-02T22:53:07.867Z',
-        },
-      ],
+  const mockJobData = {
+    id: 5,
+    jobTitle: 'Software Engineering Intern',
+    companyName: 'Amazon',
+    location: 'Montreal',
+    jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
+    salary: '20',
+    jobType: 'full-time',
+    startDate: '2023-03-23T04:00:00.000Z',
+    coverLetter: true,
+    transcript: true,
+    created_at: '2023-03-16T20:19:34.940Z',
+    updated_at: '2023-03-16T20:19:34.940Z',
+    user: {
+      id: 4,
+      firstName: '',
+      lastName: '',
+      email: 'messi@gmail.com',
+      mobileNo: '',
+      gender: 'MALE',
+      profilePic: '',
+      coverPic: null,
+      cv: '',
+      coverLetter: '',
+      biography: null,
+      userStatus: 'online',
+      type: 'User',
+      created_at: '2023-03-02T22:50:47.902Z',
+      updated_at: '2023-04-05T03:48:54.000Z',
+      deleted_at: null,
     },
-  ])
-  const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
+    skills: [
+      {
+        id: 1,
+        title: 'C++',
+        created_at: '2023-03-02T22:52:53.844Z',
+        updated_at: '2023-03-02T22:52:53.844Z',
+      },
+      {
+        id: 2,
+        title: 'Java',
+        created_at: '2023-03-02T22:53:07.867Z',
+        updated_at: '2023-03-02T22:53:07.867Z',
+      },
+    ],
+  }
+  const [jobListing, setJobListing] = useState([mockJobData])
+  const [initialJobListing, setInitalJobListing] = useState([mockJobData])
   const [userId, setUserId] = useState(0)
   const [userFirstName, setUserFirstName] = useState('')
   const [userLastName, setUserLastName] = useState('')
