@@ -15,16 +15,25 @@ export const editProfile = async (editProfile: any) => {
 }
 
 export const changeStatus = async (status: any, token: any) => {
-  return axios.put(
-    `${URL}/user/status`,
-    { userStatus: status },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
+  return fetch(`${URL}/user/status`,{method : "PUT",headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`
+    },body :JSON.stringify({userStatus : status}),keepalive :true
+  })
 }
+
+
+// export const changeStatus = async (status: any, token: any) => {
+//   return axios.put(
+//     `${URL}/user/status`,
+//     { userStatus: status },
+//     {
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     }
+//   )
+// }
 export const getUserStatus = async (id: any, token: any) => {
   return axios.get(`${URL}/user/status/${id}`, {
     headers: {
