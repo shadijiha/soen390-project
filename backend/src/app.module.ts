@@ -9,6 +9,7 @@ import { ProfileModule } from './profile/profile.module'
 import { ChatModule } from './chat/chat.module'
 import { JobsModule } from './jobs/jobs.module'
 import { ApplicationModule } from './application/application.module'
+import { PusherService } from './util/pusher/pusher.service'
 
 @Module({
   imports: [
@@ -32,6 +33,6 @@ import { ApplicationModule } from './application/application.module'
     ApplicationModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, PusherService]
 })
 export class AppModule {}

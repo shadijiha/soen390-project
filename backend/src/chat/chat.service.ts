@@ -7,27 +7,19 @@ import { Repository } from 'typeorm'
 import { ShadoCloudClient } from 'shado-cloud-sdk'
 import { UploadedFileDB } from '../models/file.entity'
 import * as path from 'path'
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class ChatService {
-  private readonly pusher: Pusher
   private readonly cloud: ShadoCloudClient
 
   constructor (
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
     @InjectRepository(UploadedFileDB)
-    private readonly fileRepository: Repository<UploadedFileDB>
+    private readonly fileRepository: Repository<UploadedFileDB>,
+    private readonly pusherService: PusherService
   ) {
-    // TODO: These should be in a .env file
-    this.pusher = new Pusher({
-      appId: process.env.PUSHER_APP_ID ?? 'unset',
-      key: process.env.PUSHER_APP_KEY ?? 'unset',
-      secret: process.env.PUSHER_APP_SECRET ?? 'unset',
-      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset'
-      // encrypted: true
-    })
-
     this.cloud = new ShadoCloudClient(
       process.env.SHADO_CLOUD_EMAIL ?? 'unset',
       process.env.SHADO_CLOUD_PASSWORD ?? 'unset'
@@ -46,7 +38,7 @@ export class ChatService {
     receiver: User,
     message: string
   ): Promise<Pusher.Response> {
-    const res = await this.pusher.trigger(`message-${receiver.id}`, 'message', {
+    const res = await this.pusherService.trigger(`message-${receiver.id}`, 'message', {
       message,
       sender: sender.id
     })
@@ -57,7 +49,7 @@ export class ChatService {
     msg.receiverId = receiver.id
     await this.messageRepository.save(msg)
 
-    await this.pusher.trigger(`user-${receiver.id}`, 'message-notification', {
+    await this.pusherService.trigger(`user-${receiver.id}`, 'message-notification', {
       user: {
         id: sender.id,
         firstName: sender.firstName,
