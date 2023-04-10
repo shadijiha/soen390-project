@@ -24,8 +24,7 @@ export class ChatService {
       appId: process.env.PUSHER_APP_ID ?? 'unset',
       key: process.env.PUSHER_APP_KEY ?? 'unset',
       secret: process.env.PUSHER_APP_SECRET ?? 'unset',
-      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset',
-      useTLS: true
+      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset'
       // encrypted: true
     })
 
