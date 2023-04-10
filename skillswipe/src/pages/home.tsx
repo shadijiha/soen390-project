@@ -123,20 +123,6 @@ const Home = () => {
   const [preview, setPreview] = useState<any>(null)
   const input = useRef<any>(null)
 
-  function handleImageChange(e) {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      console.log(reader)
-      reader.onload = () => {
-        setCreatePost({ ...createpost, image: e.target.files[0] })
-        setPreview(reader.result)
-      }
-
-      reader.readAsDataURL(file)
-    }
-  }
-
   useEffect(() => {
     const viewOpenJobs = async () => {
       // Get token from local storage
@@ -208,7 +194,10 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
     const fd = new FormData()
-    fd.append('image', createpost.image, 'post image')
+    if (createpost.image) {
+      fd.append('image', createpost.image, 'post image')
+    }
+
     fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
     createPosts(token, fd).then((res) => {
@@ -224,6 +213,19 @@ const Home = () => {
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
+  }
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      console.log(reader)
+      reader.onload = () => {
+        setCreatePost({ ...createpost, image: e.target.files[0] })
+        setPreview(reader.result)
+      }
+
+      reader.readAsDataURL(file)
+    }
   }
 
   return (
