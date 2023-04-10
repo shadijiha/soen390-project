@@ -7,7 +7,7 @@ import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 import { Job } from "../models/job.entity";
 import Pusher from "pusher";
-import { PusherService } from "src/util/pusher/pusher.service";
+import { PusherService } from "../util/pusher/pusher.service";
 
 describe("UsersService", () => {
   let service: UsersService;
