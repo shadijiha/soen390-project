@@ -317,20 +317,6 @@ const Home = () => {
   const [preview, setPreview] = useState<any>(null)
   const input = useRef<any>(null)
 
-  function handleImageChange(e) {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      console.log(reader)
-      reader.onload = () => {
-        setCreatePost({ ...createpost, image: e.target.files[0] })
-        setPreview(reader.result)
-      }
-
-      reader.readAsDataURL(file)
-    }
-  }
-
   useEffect(() => {
     fetchUserData()
     const viewOpenJobs = async () => {
@@ -403,7 +389,10 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
     const fd = new FormData()
-    fd.append('image', createpost.image, 'post image')
+    if (createpost.image) {
+      fd.append('image', createpost.image, 'post image')
+    }
+
     fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
     createPosts(token, fd).then((res) => {
@@ -419,6 +408,19 @@ const Home = () => {
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
+  }
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      console.log(reader)
+      reader.onload = () => {
+        setCreatePost({ ...createpost, image: e.target.files[0] })
+        setPreview(reader.result)
+      }
+
+      reader.readAsDataURL(file)
+    }
   }
 
   const leastDestructiveRef = useRef(null)
@@ -462,7 +464,7 @@ const Home = () => {
                 onClick={() => setIsOpen(true)}
                 data-testid="create-button"
               >
-                Create Post
+                {t('createPost')}
               </Button>
             </HStack>
             <Heading
@@ -718,7 +720,7 @@ const Home = () => {
                     borderWidth: '2px',
                   }}
                 >
-                  <b>Open Jobs for You</b>
+                  <b> {t('openJobsForYou')} </b>
                 </Text>
                 <Box
                   style={{

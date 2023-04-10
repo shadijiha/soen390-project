@@ -20,4 +20,4 @@ import { Post } from '../models/post.entity'
   imports: [TypeOrmModule.forFeature([User, Job]), TypeOrmModule.forFeature([Connection, Post])],
   exports: [TypeOrmModule]
 })
-export class UsersModule {}
+export class UsersModule { }

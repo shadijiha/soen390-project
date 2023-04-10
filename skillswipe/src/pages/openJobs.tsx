@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -13,6 +12,7 @@ import {
   Grid,
   HStack,
   Icon,
+  Img,
   Link,
   Menu,
   MenuButton,
@@ -23,8 +23,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import router from 'next/router'
-import React, { Fragment, useEffect, useState } from 'react'
-// Here we have used react-icons package for the icons
+import { Fragment, useEffect, useState } from 'react'
 import { useTranslation, withTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { BsFilter } from 'react-icons/bs'
@@ -211,12 +210,9 @@ const findJob = () => {
     const viewOpenJobs = async () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
-
       try {
         // Call API function to get open jobs
-
         const response = await getOpenJobs(token)
-
         // Update state with fetched data
         setInitalJobListing(response.data)
         setJobListing(response.data)
@@ -288,17 +284,9 @@ const findJob = () => {
 
     setJobListing(filteredJobs)
   }
-
-  const [checkedItems, setCheckedItems] = React.useState([
-    false,
-    false,
-    false,
-    false,
-  ])
-
+  const [checkedItems, setCheckedItems] = useState([false, false, false, false])
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
-
   const { t } = useTranslation('common')
 
   return (

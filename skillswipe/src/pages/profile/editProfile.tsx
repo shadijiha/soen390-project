@@ -25,6 +25,7 @@ import {
   deleteUserCv,
   editPersonalInformation,
   removeCoverpic,
+  removeProfilepic,
   uploadUserDocuments,
 } from '../api/api'
 
@@ -167,13 +168,25 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast(t('removeCoverPicture'))
+        toast(('removeCoverPicture'))
       })
       .catch((error) => {
         toast(error.message)
       })
   }
 
+  const removeUserProfilepic = () => {
+    const token = localStorage.getItem('jwt')
+    removeProfilepic(token)
+      .then((response) => {
+        console.log(response)
+        setPic({ ...Pic, profilePic: response.data.profilePic })
+        toast(('removeProfilePicture'))
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
   const clickCover = () => {
     document.getElementById('file-input-coverPic')?.click()
   }
@@ -288,7 +301,7 @@ const EditProfile = () => {
                   }}
                   // add an onClick handler to delete the profile pic
 
-                  onClick={removeUserCoverpic} // TODO: FIX THIS SHIT -- should be profile picture not cover
+                  onClick={removeUserProfilepic} 
                 />
               </button>
             ) : null}
@@ -316,6 +329,7 @@ const EditProfile = () => {
                 onClick={clickCover}
                 onChange={coverImageHandler}
               />
+
               <label htmlFor="file-input-coverPic">
                 <img
                   src="https://img.icons8.com/material-sharp/512/send-letter.png"
@@ -346,7 +360,29 @@ const EditProfile = () => {
                   boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
+
             </a>
+            {Pic.coverPic ? (
+              <button
+                style={{ position: 'absolute', bottom: '-10px', left: '-10px' }}
+              >
+                <img
+                  src="https://img.icons8.com/material-sharp/512/trash.png"
+                  alt="Delete Icon"
+                  style={{
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
+                    padding: '1px',
+                    margin: '2px',
+                    border: '3px solid black',
+                  }}
+                  // add an onClick handler to delete the profile pic
+                  onClick={removeUserCoverpic}
+                />
+              </button>
+            ) : null}
           </div>
         </Stack>
         <div
@@ -370,27 +406,7 @@ const EditProfile = () => {
               style={{ display: 'none' }}
             />
 
-            {Pic.coverPic ? (
-              <button
-                style={{ position: 'absolute', bottom: '-10px', left: '-5px' }}
-              >
-                <img
-                  src="https://img.icons8.com/material-sharp/512/trash.png"
-                  alt="Delete Icon"
-                  style={{
-                    height: '35px',
-                    width: '35px',
-                    borderRadius: '100%',
-                    backgroundColor: 'white',
-                    padding: '1px',
-                    margin: '2px',
-                    border: '3px solid black',
-                  }}
-                  // add an onClick handler to delete the profile pic
-                  onClick={removeUserCoverpic}
-                />
-              </button>
-            ) : null}
+           
           </div>
           <div
             style={{
