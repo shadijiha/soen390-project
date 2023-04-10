@@ -11,20 +11,15 @@ import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Avatar,
   Box,
   Button,
   Center,
+  chakra,
   Divider,
   Grid,
-  HStack,
   Heading,
+  HStack,
   Link,
   List,
   ListItem,
@@ -36,7 +31,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  chakra,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
