@@ -32,6 +32,18 @@ export class JobsController {
     return await this.jobsService.getAllJobs()
   }
 
+ // get all jobs listings for a recruiter
+ @Get('/my')
+ async getJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
+   const recruiter: User = (await authedUser.getUser(['jobs'])) as User
+
+   if (recruiter == null) {
+     throw new HttpException('Recruiters does not exist', 400)
+   }
+
+   return recruiter.jobs
+ }
+
   // get a job listing by id
   @Get(':id')
   async getJobById (@Param('id') id: string): Promise<Job> {
@@ -42,17 +54,6 @@ export class JobsController {
     }
   }
 
-  // get all jobs listings for a recruiter
-  @Get('/my')
-  async getJobs (@AuthUser() authedUser: BearerPayload): Promise<Job[]> {
-    const recruiter: User = (await authedUser.getUser(['jobs'])) as User
-
-    if (recruiter == null) {
-      throw new HttpException('Recruiters does not exist', 400)
-    }
-
-    return recruiter.jobs
-  }
 
   // get applications for my job listing
   @Get('/my/applications')
