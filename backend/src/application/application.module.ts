@@ -8,10 +8,11 @@ import { UsersService } from '../users/users.service'
 import { ApplicationService } from './application.service'
 import { ApplicationController } from './application.controller'
 import { Application } from '../models/application.entity'
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Module({
   controllers: [ApplicationController],
-  providers: [ApplicationService, UsersService, JobsService],
+  providers: [ApplicationService, PusherService, UsersService, JobsService],
   imports: [TypeOrmModule.forFeature([User, Job, Skill, Application])],
   exports: [TypeOrmModule]
 })

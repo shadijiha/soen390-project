@@ -6,25 +6,19 @@ import { type Users } from './users.types'
 import * as argon2 from 'argon2'
 import { type Auth } from '../auth/auth.types'
 import { Job } from '../models/job.entity'
-import * as Pusher from 'pusher'
+import type * as Pusher from 'pusher'
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class UsersService {
-  private readonly pusher: Pusher
   constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
-    private readonly dataSource: DataSource
+    private readonly dataSource: DataSource,
+    private readonly pusherService: PusherService
   ) {
-    this.pusher = new Pusher({
-      appId: process.env.PUSHER_APP_ID ?? 'unset',
-      key: process.env.PUSHER_APP_KEY ?? 'unset',
-      secret: process.env.PUSHER_APP_SECRET ?? 'unset',
-      cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset'
-      // encrypted: true
-    })
   }
 
   /**
@@ -162,7 +156,7 @@ export class UsersService {
     oldUser.userStatus = status
     await this.usersRepository.update(id, oldUser)
 
-    return await this.pusher.trigger(`userStatus-${id}`, 'statusUpdate', { id, status })
+    return await this.pusherService.trigger(`userStatus-${id}`, 'statusUpdate', { id, status })
   }
 
   /**
