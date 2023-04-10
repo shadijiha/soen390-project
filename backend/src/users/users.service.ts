@@ -23,7 +23,6 @@ export class UsersService {
       key: process.env.PUSHER_APP_KEY ?? 'unset',
       secret: process.env.PUSHER_APP_SECRET ?? 'unset',
       cluster: process.env.PUSHER_APP_CLUSTER ?? 'unset',
-      useTLS: true
       // encrypted: true
     })
   }
