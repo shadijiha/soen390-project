@@ -104,9 +104,16 @@ const Chat = () => {
             toast(t('userNotFound'))
           })
       }
-      setLoad(true)
+      // setLoad(true)
     }
   }, [router.query.id])
+
+
+  useEffect(() => {
+    if(User.auth.id){
+      setLoad(true)
+    }
+  },[User.auth])
   useEffect(() => {
     // Get coversation by ID will doo when apis are fully ready
     // Message is fully function

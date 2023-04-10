@@ -7,6 +7,7 @@ import { UsersService } from "./users.service";
 import { Users } from "./users.types";
 import { Job } from "../models/job.entity";
 import Pusher from "pusher";
+import { PusherService } from "../util/pusher/pusher.service";
 
 describe("UsersService", () => {
   let service: UsersService;
@@ -41,7 +42,7 @@ describe("UsersService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UsersService,
-
+        PusherService,
         {
           provide: getRepositoryToken(User),
           // define a fake repository that returns the fake users

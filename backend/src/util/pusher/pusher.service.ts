@@ -19,4 +19,8 @@ export class PusherService {
       message: data
     })
   }
+
+  async trigger (channel: string, event: string, data: any): Promise<Pusher.Response> {
+    return await this.pusher.trigger(channel, event, data)
+  }
 }

@@ -194,7 +194,7 @@ const myListings = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                My Listings
+                {t('myListings')}
               </chakra.h3>
               <Spacer />
               <Menu>

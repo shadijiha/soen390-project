@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Layout from '@/components/Layout'
 import {
   Button,
@@ -11,9 +10,7 @@ import {
   useColorMode,
   useColorModeValue,
 } from '@chakra-ui/react'
-
 import { useTranslation } from 'next-i18next'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'

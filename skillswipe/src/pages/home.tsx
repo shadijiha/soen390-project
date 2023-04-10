@@ -11,20 +11,15 @@ import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
 import { DeleteIcon } from '@chakra-ui/icons'
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Avatar,
   Box,
   Button,
   Center,
+  chakra,
   Divider,
   Grid,
-  HStack,
   Heading,
+  HStack,
   Link,
   List,
   ListItem,
@@ -36,7 +31,6 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  chakra,
   useColorModeValue,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
@@ -167,7 +161,54 @@ const Home = () => {
   //     </div>
   //   )
   // }
-  const [jobListing, setJobListing] = useState<JobAttributes[]>([])
+  const [jobListing, setJobListing] = useState([
+    {
+      id: 5,
+      jobTitle: 'Software Engineering Intern',
+      companyName: 'Amazon',
+      location: 'Montreal',
+      jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
+      salary: '20',
+      jobType: 'full-time',
+      startDate: '2023-03-23T04:00:00.000Z',
+      coverLetter: true,
+      transcript: true,
+      created_at: '2023-03-16T20:19:34.940Z',
+      updated_at: '2023-03-16T20:19:34.940Z',
+      user: {
+        id: 4,
+        firstName: '',
+        lastName: '',
+        email: 'messi@gmail.com',
+        mobileNo: '',
+        gender: 'MALE',
+        profilePic: '',
+        coverPic: null,
+        cv: '',
+        coverLetter: '',
+        biography: null,
+        userStatus: 'online',
+        type: 'User',
+        created_at: '2023-03-02T22:50:47.902Z',
+        updated_at: '2023-04-05T03:48:54.000Z',
+        deleted_at: null,
+      },
+      skills: [
+        {
+          id: 1,
+          title: 'C++',
+          created_at: '2023-03-02T22:52:53.844Z',
+          updated_at: '2023-03-02T22:52:53.844Z',
+        },
+        {
+          id: 2,
+          title: 'Java',
+          created_at: '2023-03-02T22:53:07.867Z',
+          updated_at: '2023-03-02T22:53:07.867Z',
+        },
+      ],
+    },
+  ])
   const [initialJobListing, setInitalJobListing] = useState<JobAttributes[]>([])
   const [userId, setUserId] = useState(0)
   const [userFirstName, setUserFirstName] = useState('')
@@ -276,20 +317,6 @@ const Home = () => {
   const [preview, setPreview] = useState<any>(null)
   const input = useRef<any>(null)
 
-  function handleImageChange(e) {
-    const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      console.log(reader)
-      reader.onload = () => {
-        setCreatePost({ ...createpost, image: e.target.files[0] })
-        setPreview(reader.result)
-      }
-
-      reader.readAsDataURL(file)
-    }
-  }
-
   useEffect(() => {
     fetchUserData()
     const viewOpenJobs = async () => {
@@ -362,7 +389,10 @@ const Home = () => {
   const [createpost, setCreatePost] = useState({ content: '', image: '' })
   const createPostHandler = () => {
     const fd = new FormData()
-    fd.append('image', createpost.image, 'post image')
+    if (createpost.image) {
+      fd.append('image', createpost.image, 'post image')
+    }
+
     fd.append('content', createpost.content)
     const token = localStorage.getItem('jwt')
     createPosts(token, fd).then((res) => {
@@ -378,6 +408,19 @@ const Home = () => {
   }
   const handlepost = (e) => {
     setCreatePost({ ...createpost, content: e.target.value })
+  }
+  function handleImageChange(e) {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      console.log(reader)
+      reader.onload = () => {
+        setCreatePost({ ...createpost, image: e.target.files[0] })
+        setPreview(reader.result)
+      }
+
+      reader.readAsDataURL(file)
+    }
   }
 
   const leastDestructiveRef = useRef(null)
@@ -421,7 +464,7 @@ const Home = () => {
                 onClick={() => setIsOpen(true)}
                 data-testid="create-button"
               >
-                Create Post
+                {t('createPost')}
               </Button>
             </HStack>
             <Heading
@@ -677,7 +720,7 @@ const Home = () => {
                     borderWidth: '2px',
                   }}
                 >
-                  <b>Open Jobs for You</b>
+                  <b> {t('openJobsForYou')} </b>
                 </Text>
                 <Box
                   style={{
@@ -688,97 +731,103 @@ const Home = () => {
                 >
                   {jobListing.map((job, index) => (
                     <Fragment key={index}>
-                      <HoverableGrid w="100%" minW={{ base: 'unset', sm: '100vh' }}>
-                        <Box>
-                          <HStack spacing={3}>
-                            <img
-                              src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                              width="15px"
-                              height="15px"
-                              alt="logo"
-                              onError={(e) => {
-                                // show a default image if the company logo is not found
-                                e.currentTarget.src =
-                                  'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                      {User.auth.id !== job.user.id ? (
+                        <HoverableGrid
+                          w="100%"
+                          minW={{ base: 'unset', sm: '100vh' }}
+                        >
+                          <Box>
+                            <HStack spacing={3}>
+                              <img
+                                src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                                width="15px"
+                                height="15px"
+                                alt="logo"
+                                onError={(e) => {
+                                  // show a default image if the company logo is not found
+                                  e.currentTarget.src =
+                                    'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                                }}
+                              />
+
+                              <chakra.h2 fontWeight="bold" fontSize="md">
+                                {job.companyName}
+                              </chakra.h2>
+                              {/* quick apply job button */}
+                              {!job.coverLetter && !job.transcript && (
+                                <Button
+                                  colorScheme="gray"
+                                  // border={useColorModeValue('gray.200', 'gray.600')}
+                                  borderWidth="3px"
+                                  size="sm"
+                                  p={4}
+                                  borderRadius="50px"
+                                  onClick={(event) => handleSubmit(event, job.id)}
+                                >
+                                  Quick Apply
+                                </Button>
+                              )}
+                            </HStack>
+
+                            <chakra.h3
+                              as={Link}
+                              isExternal
+                              fontWeight="extrabold"
+                              fontSize="15px"
+                              onClick={() => {
+                                router.push(`/jobListing/${job.id}`)
                               }}
-                            />
+                            >
+                              {job.jobTitle}
+                            </chakra.h3>
 
-                            <chakra.h2 fontWeight="bold" fontSize="md">
-                              {job.companyName}
-                            </chakra.h2>
-                            {/* quick apply job button */}
-                            {!job.coverLetter && !job.transcript && (
-                              <Button
-                                colorScheme="gray"
-                                // border={useColorModeValue('gray.200', 'gray.600')}
-                                borderWidth="3px"
-                                size="sm"
-                                p={4}
-                                borderRadius="50px"
-                                onClick={(event) => handleSubmit(event, job.id)}
-                              >
-                                Quick Apply
-                              </Button>
-                            )}
-                          </HStack>
+                            <div
+                              style={{
+                                paddingTop: '0.5em',
+                              }}
+                            ></div>
 
-                          <chakra.h3
-                            as={Link}
-                            isExternal
-                            fontWeight="extrabold"
-                            fontSize="15px"
-                            onClick={() => {
-                              router.push(`/jobListing/${job.id}`)
-                            }}
-                          >
-                            {job.jobTitle}
-                          </chakra.h3>
-
-                          <div
-                            style={{
-                              paddingTop: '0.5em',
-                            }}
-                          ></div>
-
-                          <chakra.p
-                            fontWeight="bold"
-                            fontSize="sm"
-                            color={useColorModeValue('gray.600', 'gray.300')}
-                          >
-                            📍 {job.location}
-                          </chakra.p>
-                          <chakra.p
-                            fontWeight="normal"
-                            fontSize="sm"
-                            color={useColorModeValue('gray.600', 'gray.300')}
-                          >
-                            💼 ‎
-                            {job.jobType.charAt(0).toUpperCase() +
-                              job.jobType.slice(1)}
-                          </chakra.p>
-                          <Grid
-                            alignItems="start"
-                            fontWeight="light"
-                            fontSize={{ base: 'xs', sm: 'sm' }}
-                            color={useColorModeValue('gray.600', 'gray.300')}
-                          >
-                            {/* By the way, the ‎ is an invisible space character */}
-                            <chakra.p>
-                              {/* format the starting date to be only year month and date */}
-                              📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
+                            <chakra.p
+                              fontWeight="bold"
+                              fontSize="sm"
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              📍 {job.location}
                             </chakra.p>
-                            <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
-                            <chakra.p>
-                              🏫 ‎ ‎ Transcript Needed? ‎ ‎
-                              {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                            <chakra.p
+                              fontWeight="normal"
+                              fontSize="sm"
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              💼 ‎
+                              {job.jobType.charAt(0).toUpperCase() +
+                                job.jobType.slice(1)}
                             </chakra.p>
-                            <chakra.p>
-                              💌 ‎ ‎ Cover Letter Needed? ‎ ‎
-                              {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
-                            </chakra.p>
-                          </Grid>
-                        </Box>
-                      </HoverableGrid>
+                            <Grid
+                              alignItems="start"
+                              fontWeight="light"
+                              fontSize={{ base: 'xs', sm: 'sm' }}
+                              color={useColorModeValue('gray.600', 'gray.300')}
+                            >
+                              {/* By the way, the ‎ is an invisible space character */}
+                              <chakra.p>
+                                {/* format the starting date to be only year month and date */}
+                                📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
+                              </chakra.p>
+                              <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
+                              <chakra.p>
+                                🏫 ‎ ‎ Transcript Needed? ‎ ‎
+                                {job.transcript.toString() == 'true' ? '✅' : '❌'}
+                              </chakra.p>
+                              <chakra.p>
+                                💌 ‎ ‎ Cover Letter Needed? ‎ ‎
+                                {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
+                              </chakra.p>
+                            </Grid>
+                          </Box>
+                        </HoverableGrid>
+                      ) : null}
+
                       {jobListing.length - 1 !== index && <Divider m={0} />}
                     </Fragment>
                   ))}
