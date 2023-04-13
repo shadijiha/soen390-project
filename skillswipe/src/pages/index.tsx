@@ -19,6 +19,8 @@ import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { loginApi } from './api/api'
+import GoogleLoginButton from './googleLogin'
+
 
 const login = () => {
   const { t } = useTranslation('common')
@@ -61,6 +63,17 @@ const login = () => {
     }
   }
 
+  const responseGoogle = (response) => {
+    console.log(response);
+    // Handle the response from Google
+  };
+
+  const onFailure = (error) => {
+    console.log(error);
+    // Handle errors
+  };
+
+
   return (
     <>
       <div data-testid="login-page">
@@ -90,17 +103,14 @@ const login = () => {
                 {t('signIn')}
               </Button>
               {/* Google */}
-              <Button
-                mb={6}
-                w={'full'}
-                variant={'outline'}
-                backgroundColor={googleBackground}
-                leftIcon={<FcGoogle />}
-              >
-                <Center>
-                  <Text>{t('googleSignIn')}</Text>
-                </Center>
-              </Button>
+              <GoogleLoginButton
+                  clientId= "382691840743-ornp7e0bkt11mt1rjjuqgfd7t6i5bnf3.apps.googleusercontent.com"
+                  buttonText={t('googleSignIn')}
+                  onSuccess={responseGoogle}
+                  onFailure={onFailure}
+                  cookiePolicy={'single_host_origin'}
+                />
+              <Text textAlign="center">or</Text>
               <Button colorScheme="green" mb={6}>
                 <Link href="/register">Register</Link>
               </Button>
