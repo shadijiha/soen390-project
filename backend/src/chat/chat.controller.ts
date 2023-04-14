@@ -33,11 +33,14 @@ export class ChatController {
   @Get('allconversations')
   public async allConversations (
     @AuthUser() breaserPayload: BearerPayload
-  ): Promise<User[]> {
-    const result: User[] = []
-    const ids = await this.chatService.allConversations(breaserPayload.id)
-    for (const id of ids) {
-      result.push(await this.userService.findOneByIdNoRelations(id))
+  ): Promise<Array<{ user: User, lastMessage: string }>> {
+    const result: Array<{ user: User, lastMessage: string }> = []
+    const conv = await this.chatService.allConversations(breaserPayload.id)
+    for (const e of conv) {
+      result.push({
+        user: await this.userService.findOneByIdNoRelations(e.userId),
+        lastMessage: e.lastMessage
+      })
     }
     return result
   }
