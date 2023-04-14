@@ -34,7 +34,7 @@
     "inbox": "Inbox",
     "sent": "Sent",
     "message": "Message",
-    "noMessages": "No new message",
+    "noMessages": "No new messages. Start a conversation using the button or search bar above.",
 
     "pendingRequests": "Pending Requests",
     "new": "New",

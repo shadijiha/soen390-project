@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable @next/next/no-html-link-for-pages */
@@ -15,6 +16,7 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Link,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -26,6 +28,7 @@ import {
   Spinner,
   Text,
   VStack,
+  chakra,
   useDisclosure,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
@@ -175,7 +178,16 @@ const Inbox = () => {
             <Heading as="h1" size="lg" mb={4}>
               {t('inbox')}
             </Heading>
-            <Button onClick={onOpen}>{t('newMessage')}</Button>
+            <Button
+              onClick={onOpen}
+              colorScheme="blue"
+              style={{
+                marginLeft: '1em',
+                borderRadius: '100px',
+              }}
+            >
+              {t('newMessage')}
+            </Button>
             <SearchUserModal
               isOpen={isOpen}
               onClose={onClose}
@@ -216,7 +228,32 @@ const Inbox = () => {
               </Flex>
             ))
           ) : (
-            <h1>{t('noMessages')}</h1>
+            <Box
+              textAlign="center"
+              paddingTop={'2em'}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
+            >
+              <img
+                alt={t('noMessages')}
+                src="https://img.icons8.com/3d-fluency/256/speech-bubble-with-dots.png"
+                style={{
+                  height: '90px',
+                  width: '90px',
+                  objectFit: 'cover',
+                  marginBottom: '2em',
+                }}
+              ></img>
+              <chakra.p fontSize="xl">
+                {/* click hyperlink to create application */}
+                {t('noMessages')}
+                <br />
+              </chakra.p>
+            </Box>
           )}
         </Box>
       </Layout>

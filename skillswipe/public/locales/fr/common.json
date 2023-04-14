@@ -34,7 +34,7 @@
     "inbox": "Boîte de réception",
     "sent": "Envoyé",
     "message": "Message",
-    "noMessages": "Aucun message",
+    "noMessages": "Aucun message. Composes une message par la button ci-dessous",
 
     "pendingRequests": "Demandes en attente",
     "new": "Nouveau",
