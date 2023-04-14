@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
 
-const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
+const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus }) => {
   const { t } = useTranslation('common')
   const { colorMode, toggleColorMode } = useColorMode()
   const input = useRef(document.createElement('input'))
@@ -48,6 +48,8 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
   }
   return (
     <>
+    {connectionStatus == 'Connected' ?
+    <>
       <Flex w="100%" mt="5">
         <Input
           borderRadius="10px"
@@ -61,7 +63,7 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
           }}
           value={inputMessage}
           onChange={(e) => setInputMessage(e.target.value)}
-        />
+          />
         <Button borderRadius="10px" ml={'1rem'} onClick={handleClick}>
           <AttachmentIcon />
         </Button>
@@ -74,7 +76,7 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
             handleSendMessage(inputMessage)
           }}
           ml={'1rem'}
-        >
+          >
           Send
         </Button>
       </Flex>
@@ -83,9 +85,13 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
         ref={input}
         type="file"
         style={{ display: 'none' }}
-      />
+        />
+      </>
+      :
+      <h1>You must connect to send a message to the user</h1>
+    }
     </>
-  )
-}
+    )
+  }
 
 export default Footer

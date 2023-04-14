@@ -43,7 +43,7 @@ const Messages = ({ messages, user }) => {
                   color="black"
                   minW="100px"
                   maxW="500px"
-                  my="1"
+                  my="0"
                   p="3"
                   borderRadius={'20px'}
                   flexDirection={'row'}
@@ -73,6 +73,7 @@ const Messages = ({ messages, user }) => {
                     >
                       {`${file.size} KB`}
                     </Text>
+                    
                   </Flex>
                   {file.loaded == false ? <Spinner /> : <></>}
                 </Flex>
@@ -125,7 +126,7 @@ const Messages = ({ messages, user }) => {
                   p="3"
                   borderRadius={'20px'}
                 >
-                  <Box boxSize={'16'}>
+                  <Box boxSize={'16'} mt={"10px"}>
                     <FileIcon color={'black'} extension={file.ext} />
                   </Box>
                   <Flex ml={2} flexDir={'column'}>
@@ -133,7 +134,7 @@ const Messages = ({ messages, user }) => {
                       opacity={0.75}
                       color={'black'}
                       fontSize="lg"
-                      ml={1}
+                      ml={0}
                       mt={4}
                       mr={2}
                     >
@@ -144,10 +145,16 @@ const Messages = ({ messages, user }) => {
                       color={'black'}
                       fontSize="sm"
                       mt={2}
-                      ml={1}
+                      ml={0}
                       mr={2}
                     >
                       {`${file.size} KB`}
+                    </Text>
+                    <Text
+                      style={{ fontSize: '10px', color: 'grey', cursor: 'pointer' }}
+
+                    >
+                      Report
                     </Text>
                   </Flex>
                   {file.loaded == false ? <Spinner /> : <></>}
@@ -176,8 +183,15 @@ const Messages = ({ messages, user }) => {
                   my="1"
                   p="3"
                   borderRadius={'20px'}
+                  flexDir={"column"}
                 >
                   {item.message}
+                <Text
+                      style={{ fontSize: '10px', color: 'grey', cursor: 'pointer' }}
+
+                    >
+                      Report
+                    </Text>
                 </Flex>
               </Flex>
             )

@@ -22,6 +22,8 @@ const Chat = () => {
   const router = useRouter()
   const [messages, setMessages] = useState([{}])
   const [chatUser, setchatUser] = useState({})
+  const [numberOfMessages, setnumberOfMessages] = useState(null)
+  const [connectionStatus,setConnectionStatus] = useState(null);
 
   const [Status, setStatus] = useState('offline')
 
@@ -63,12 +65,20 @@ const Chat = () => {
       })
   }
 
-  const loadMessage = (id: any) => {
+  const loadMessage = (id: any,connected:boolean) => {
     if (localStorage.getItem('jwt')) {
       const token = localStorage.getItem('jwt')
       getConversationById(token, id)
         .then((response) => {
           setMessages(response.data)
+          if(connected == true || (connected == false && response.data.length > 0) ){
+            setMessages(response.data)
+          }
+          else{
+            toast(t('notConnected'))
+            router.push('/home')
+          }
+          setnumberOfMessages(response.data.length)
         })
         .catch((error) => {
           toast(error.message)
@@ -77,14 +87,16 @@ const Chat = () => {
   }
   useEffect(() => {
     if (router.query.id) {
-      loadMessage(router.query.id)
       const token = localStorage.getItem('jwt')
       if (router.query.id == User.auth.id) {
         router.push('/home')
       } else {
         getUserById(token, router.query.id)
           .then((response) => {
+            setchatUser(response.data.user)
+            setConnectionStatus(response.data.connectionStatus)
             if (response.data.connectionStatus == 'Connected') {
+              loadMessage(router.query.id,true);
               getUserStatus(router.query.id, token)
                 .then((reponse) => {
                   console.log(reponse.data)
@@ -95,8 +107,15 @@ const Chat = () => {
                 })
               setchatUser(response.data.user)
             } else {
-              toast(t('notConnected'))
-              router.push('/home')
+              setchatUser(response.data.user)            
+              loadMessage(router.query.id,false)
+              getUserStatus(router.query.id, token)
+                .then((reponse) => {
+                  setStatus(reponse.data)
+                })
+                .catch((error) => {
+                  toast(error.message)
+                })
             }
           })
           .catch((error) => {
@@ -173,6 +192,7 @@ const Chat = () => {
                 handleSendMessage={handleSendMessage}
                 sendMessagefile={sendMessagefile}
                 append={append}
+                connectionStatus ={connectionStatus}
               />
             </Flex>
           </Flex>
