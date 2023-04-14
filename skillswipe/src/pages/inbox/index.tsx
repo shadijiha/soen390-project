@@ -121,10 +121,10 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
           )}
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={onClose}>
+          <Button colorScheme="red" mr={3} onClick={onClose} borderRadius={'100px'}>
             Close
           </Button>
-          <Button colorScheme="blue" onClick={handleSearch}>
+          <Button colorScheme="blue" onClick={handleSearch} borderRadius={'100px'}>
             Search
           </Button>
         </ModalFooter>
