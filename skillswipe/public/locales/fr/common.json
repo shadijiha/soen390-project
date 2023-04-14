@@ -44,7 +44,7 @@
     "accept": "Accepter",
     "noPendingRequests": "Aucune demande en attente",
     "noNotifications": "Aucune notification",
-
+    "searchForUser": "Rechercher un utilisateur",
     "chatPageHeader": "Discuter avec {{user}}",
     "sendMessageButton": "Envoyer",
     "attachFileButton": "Joindre un fichier",

@@ -49,6 +49,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const { t } = useTranslation('common')
 
   const handleSearch = async () => {
     setLoading(true)
@@ -86,7 +87,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
         justifyContent={'space-between'}
         minWidth={'50%'}
       >
-        <ModalHeader>Search for a User</ModalHeader>
+        <ModalHeader>{t('searchForUser')}</ModalHeader>
 
         <ModalBody>
           <InputGroup>
