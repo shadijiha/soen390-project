@@ -82,7 +82,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
         justifyContent={'space-between'}
         minWidth={'50%'}
       >
-        <ModalHeader>Search for a user</ModalHeader>
+        <ModalHeader>Search for a User</ModalHeader>
 
         <ModalBody>
           <InputGroup>
