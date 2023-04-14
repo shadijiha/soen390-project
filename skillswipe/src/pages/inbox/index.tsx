@@ -1,13 +1,106 @@
+/* eslint-disable react/no-children-prop */
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import { Avatar, Box, Flex, Heading, Spacer, Text } from '@chakra-ui/react'
+import styles from '@/styles/modal.module.css'
+
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  HStack,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Spacer,
+  Text,
+  VStack,
+  useDisclosure,
+} from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
+  const [search, setSearch] = useState('')
+  const [users, setUsers] = useState([])
+
+  const handleSearch = () => {
+    // Call your API with the search query and set the users in the state
+  }
+
+  const handleUserSelect = (user) => {
+    newMessage(user)
+    onClose()
+  }
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay
+        className={styles.blurred}
+        style={{
+          display: 'flex',
+          alignContent: 'start',
+          justifyContent: 'start',
+          alignItems: 'start',
+        }}
+      />
+      <ModalContent
+        margin={'auto'}
+        borderRadius="14px"
+        padding={'1em'}
+        borderWidth="2px"
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'space-between'}
+        minWidth={'50%'}
+      >
+        <ModalHeader>Search for a user</ModalHeader>
+
+        <ModalBody>
+          <InputGroup>
+            <InputLeftAddon children="Find User" />
+            <Input
+              type="text"
+              value={search}
+              placeholder="Type a name"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </InputGroup>
+
+          <VStack mt={4} spacing={4}>
+            {users.map((user) => (
+              <Box key={user.id} onClick={() => handleUserSelect(user)}>
+                {user.name}
+              </Box>
+            ))}
+          </VStack>
+        </ModalBody>
+        <ModalFooter>
+          <Button colorScheme="red" mr={3} onClick={onClose}>
+            Close
+          </Button>
+          <Button colorScheme="blue" onClick={handleSearch}>
+            Search
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  )
+}
 
 const Inbox = () => {
   const { t } = useTranslation('common')
@@ -15,6 +108,12 @@ const Inbox = () => {
   const [messages, setMessages] = useState([{}])
   const [loading, setLoading] = useState(true)
   const User = useSelector((state) => state as any)
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const handleNewMessage = (user) => {
+    console.log(user)
+    // Add your logic to use the selected user for creating a new message
+  }
+
   useEffect(() => {
     if (User.auth) {
       const token = localStorage.getItem('jwt')
@@ -37,11 +136,25 @@ const Inbox = () => {
     <>
       <Layout>
         <NavBar></NavBar>
-
         <Box p={50} data-testid="inbox">
-          <Heading as="h1" size="lg" mb={4}>
-            {t('inbox')}
-          </Heading>
+          <HStack
+            style={{
+              display: 'flex',
+              alignContent: 'start',
+              justifyContent: 'start',
+              alignItems: 'start',
+            }}
+          >
+            <Heading as="h1" size="lg" mb={4}>
+              {t('inbox')}
+            </Heading>
+            <Button onClick={onOpen}>{t('newMessage')}</Button>
+            <SearchUserModal
+              isOpen={isOpen}
+              onClose={onClose}
+              newMessage={handleNewMessage}
+            />
+          </HStack>
           {messages.length > 0 ? (
             messages.map((element: any) => (
               <Flex
