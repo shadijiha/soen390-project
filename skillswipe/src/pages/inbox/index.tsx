@@ -68,6 +68,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay
         className={styles.blurred}
+        bgColor="rgba(0, 0, 0, 0.4)"
         style={{
           display: 'flex',
           alignContent: 'start',
