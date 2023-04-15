@@ -9,14 +9,14 @@ import { type Auth } from './auth.types'
 
 @Injectable()
 export class AuthService {
-  constructor (
+  constructor(
     private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
-  ) {}
+  ) { }
 
   // validates user email vs password
-  public async validateUser (email: string, pass: string): Promise<Partial<User> | null> {
+  public async validateUser(email: string, pass: string): Promise<Partial<User> | null> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .select('user.password')
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   // logins user
-  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
+  public async login({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
     let user: User
     try {
@@ -58,5 +58,17 @@ export class AuthService {
     } else {
       throw new UnauthorizedException('Wrong password for ' + email)
     }
+  }
+
+  async googleLogin(userProfile: any) {
+    const payload = {
+      email: userProfile.email,
+      sub: userProfile.sub,
+      name: userProfile.name,
+      picture: userProfile.picture,
+    };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 }
