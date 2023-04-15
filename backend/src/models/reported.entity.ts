@@ -12,6 +12,7 @@ import {
 } from 'typeorm'
 import { Message } from './message.entity'
 import { Post } from './post.entity'
+import { User } from './user.entity'
 
 @Entity('reported')
 export class Reported extends BaseEntity {
@@ -50,4 +51,10 @@ export class Reported extends BaseEntity {
   @JoinColumn()
   @ApiProperty({ type: Post })
     post: Post
+
+  // user who reported
+  @OneToOne(() => User)
+  @JoinColumn()
+  @ApiProperty({ type: User })
+    reporter: User
 }
