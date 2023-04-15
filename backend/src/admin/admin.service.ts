@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Message } from '../models/message.entity'
-import { Post } from '../models/post.entity'
-import { Repository } from 'typeorm'
-import { Reported } from '../models/reported.entity'
-import { type User } from '../models/user.entity'
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Message } from "../models/message.entity";
+import { Post } from "../models/post.entity";
+import { In, Repository } from "typeorm";
+import { Reported } from "../models/reported.entity";
+import { type User } from "../models/user.entity";
 
 @Injectable()
 export class AdminService {
-  constructor (
+  constructor(
     @InjectRepository(Message)
     private readonly messagessRepository: Repository<Message>,
     @InjectRepository(Post)
@@ -17,87 +17,107 @@ export class AdminService {
     private readonly reportedRepository: Repository<Reported>
   ) {}
 
-  async reportPost (postId: string, reporter: User): Promise<void> {
+  async reportPost(postId: string, reporter: User): Promise<void> {
     // check if report exists
-    const reportExists = await this.reportedRepository.findOneBy({ post: { id: parseInt(postId) } })
+    const reportExists = await this.reportedRepository.findOneBy({ post: { id: parseInt(postId) } });
 
     if (reportExists != null) {
-      throw new Error('Post already reported')
+      throw new Error("Post already reported");
     }
 
-    const postReported = await this.postsRepository.findOneBy({ id: parseInt(postId) })
+    const postReported = await this.postsRepository.findOneBy({ id: parseInt(postId) });
 
     if (postReported == null) {
-      throw new Error('Post not found')
+      throw new Error("Post not found");
     }
 
     await this.reportedRepository.save({
-      type: 'post',
-      status: 'unresolved',
+      type: "post",
+      status: "unresolved",
       post: postReported,
-      reporter
-    })
+      reporter,
+    });
   }
 
-  async reportMessage (messageId: string, reporter: User): Promise<void> {
+  async reportMessage(messageId: string, reporter: User): Promise<void> {
     // check if report exists
-    const reportExists = await this.reportedRepository.findOneBy({ message: { id: parseInt(messageId) } })
+    const reportExists = await this.reportedRepository.findOneBy({ message: { id: parseInt(messageId) } });
 
     if (reportExists != null) {
-      throw new Error('Message already reported')
+      throw new Error("Message already reported");
     }
 
-    const messageReported = await this.messagessRepository.findOneBy({ id: parseInt(messageId) })
+    const messageReported = await this.messagessRepository.findOneBy({ id: parseInt(messageId) });
 
     if (messageReported == null) {
-      throw new Error('Message not found')
+      throw new Error("Message not found");
     }
 
     await this.reportedRepository.save({
-      type: 'message',
-      status: 'unresolved',
+      type: "message",
+      status: "unresolved",
       message: messageReported,
-      reporter
-    })
+      reporter,
+    });
   }
 
-  async getReportedPosts (): Promise<Reported[]> {
+  async getReportedPosts(): Promise<Reported[]> {
     return await this.reportedRepository.find({
       where: {
-        type: 'post',
-        status: 'unresolved'
+        type: "post",
+        status: "unresolved",
       },
-      relations: ['post', 'reporter']
-    })
+      relations: ["post", "reporter"],
+    });
   }
 
-  async getReportedMessages (): Promise<Reported[]> {
+  async getResolvedPosts(): Promise<Reported[]> {
     return await this.reportedRepository.find({
       where: {
-        type: 'message',
-        status: 'unresolved'
+        type: "post",
+        status: In(["safe", "warned", "banned;"]),
       },
-      relations: ['message', 'reporter']
-    })
+      relations: ["post", "reporter"],
+    });
   }
 
-  async resolvePost (reportId: string): Promise<void> {
-    const report = await this.reportedRepository.findOneBy({ id: parseInt(reportId) })
+  async getResolvedMessages(): Promise<Reported[]> {
+    return await this.reportedRepository.find({
+      where: {
+        type: "message",
+        status: In(["safe", "warned", "banned;"]),
+      },
+      relations: ["message", "reporter"],
+    });
+  }
+
+  async getReportedMessages(): Promise<Reported[]> {
+    return await this.reportedRepository.find({
+      where: {
+        type: "message",
+        status: "unresolved",
+      },
+      relations: ["message", "reporter"],
+    });
+  }
+
+  async resolvePost(reportId: string): Promise<void> {
+    const report = await this.reportedRepository.findOneBy({ id: parseInt(reportId) });
 
     if (report == null) {
-      throw new Error('Report not found')
+      throw new Error("Report not found");
     }
-    report.status = 'resolved'
-    await this.reportedRepository.save(report)
+    report.status = "resolved";
+    await this.reportedRepository.save(report);
   }
 
-  async resolveMessage (reportId: string): Promise<void> {
-    const reported = await this.reportedRepository.findOneBy({ id: parseInt(reportId) })
+  async resolveMessage(reportId: string): Promise<void> {
+    const reported = await this.reportedRepository.findOneBy({ id: parseInt(reportId) });
 
     if (reported == null) {
-      throw new Error('Report not found')
+      throw new Error("Report not found");
     }
-    reported.status = 'resolved'
-    await this.reportedRepository.save(reported)
+    reported.status = "resolved";
+    await this.reportedRepository.save(reported);
   }
 }
