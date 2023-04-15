@@ -35,7 +35,7 @@ export const ListOfUsers = () => {
             <Tr>
               <Td>
                 {' '}
-                <Flex spacing="4">
+                <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                     <Avatar
                       size="sm"

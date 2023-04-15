@@ -30,12 +30,13 @@ import { FiBell, FiChevronDown, FiHome, FiMenu } from 'react-icons/fi'
 interface LinkItemProps {
   name: string
   icon: IconType
+  url: string
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Users', icon: BsPerson },
-  { name: 'Reported Messages', icon: AiOutlineMessage },
-  { name: 'Reported Posts', icon: BsFillFileEarmarkPostFill },
+  { name: 'Home', icon: FiHome, url: '/admin' },
+  { name: 'Users', icon: BsPerson, url: '/admin/users' },
+  { name: 'Reported Messages', icon: AiOutlineMessage, url: '/admin/messages' },
+  { name: 'Reported Posts', icon: BsFillFileEarmarkPostFill, url: '/admin/posts' },
 ]
 
 export default function SidebarWithHeader({ children }: { children: ReactNode }) {
@@ -90,7 +91,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} url={link.url}>
           {link.name}
         </NavItem>
       ))}
@@ -100,11 +101,16 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 
 interface NavItemProps extends FlexProps {
   icon: IconType
+  url: string
   children: ReactText
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, url, children, ...rest }: NavItemProps) => {
   return (
-    <Link href="#" style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <Link
+      href={url}
+      style={{ textDecoration: 'none' }}
+      _focus={{ boxShadow: 'none' }}
+    >
       <Flex
         align="center"
         p="4"
@@ -180,7 +186,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                 </Box>
               </HStack>
             </MenuButton>
-            <MenuList
+            {/* <MenuList
               bg={useColorModeValue('white', 'gray.900')}
               borderColor={useColorModeValue('gray.200', 'gray.700')}
             >
@@ -189,7 +195,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
-            </MenuList>
+            </MenuList> */}
           </Menu>
         </Flex>
       </HStack>
