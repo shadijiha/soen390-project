@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Message } from "../models/message.entity";
 import { Post } from "../models/post.entity";
-import { In, Repository } from "typeorm";
+import { In, Not, Repository } from "typeorm";
 import { Reported } from "../models/reported.entity";
 import { User } from "../models/user.entity";
 
@@ -85,7 +85,7 @@ export class AdminService {
     return await this.reportedRepository.find({
       where: {
         type: "post",
-        status: In(["safe", "warned", "banned;"]),
+        status: Not("unresolved"),
       },
       relations: ["post", "reporter", "reported"],
     });
@@ -95,7 +95,7 @@ export class AdminService {
     return await this.reportedRepository.find({
       where: {
         type: "message",
-        status: In(["safe", "warned", "banned;"]),
+        status: Not("unresolved"),
       },
       relations: ["message", "reporter"],
     });
