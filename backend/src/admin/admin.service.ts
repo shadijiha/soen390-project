@@ -97,7 +97,7 @@ export class AdminService {
         type: "message",
         status: Not("unresolved"),
       },
-      relations: ["message", "reporter"],
+      relations: ["message", "reporter", "reported"],
     });
   }
 
@@ -107,7 +107,7 @@ export class AdminService {
         type: "message",
         status: "unresolved",
       },
-      relations: ["message", "reporter"],
+      relations: ["message", "reporter", "reported"],
     });
   }
 
