@@ -58,5 +58,10 @@ export class Reported extends BaseEntity {
   @ManyToOne(() => User, (user) => user.reports)
   @ApiProperty({ type: () => User })
   reporter: User;
+
+  // user who was reported
+  @ManyToOne(() => User, (user) => user.gotReported)
+  @ApiProperty({ type: () => User })
+  reported: User;
 }
  

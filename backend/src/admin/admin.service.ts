@@ -27,7 +27,7 @@ export class AdminService {
       throw new Error("Post already reported");
     }
 
-    const postReported = await this.postsRepository.findOneBy({ id: parseInt(postId) });
+    const postReported = await this.postsRepository.findOne({ where: { id: parseInt(postId) }, relations: ["user"] });
 
     if (postReported == null) {
       throw new Error("Post not found");
@@ -38,6 +38,7 @@ export class AdminService {
       status: "unresolved",
       post: postReported,
       reporter: reporter,
+      reported: postReported.user,
     });
   }
 
@@ -55,11 +56,18 @@ export class AdminService {
       throw new Error("Message not found");
     }
 
+    const senderWhoGotReported = await this.usersRepository.findOneBy({ id: messageReported.senderId });
+
+    if (senderWhoGotReported == null) {
+      throw new Error("sender not found");
+    }
+
     await this.reportedRepository.save({
       type: "message",
       status: "unresolved",
       message: messageReported,
       reporter: reporter,
+      reported: senderWhoGotReported,
     });
   }
 
@@ -69,7 +77,7 @@ export class AdminService {
         type: "post",
         status: "unresolved",
       },
-      relations: ["post", "reporter"],
+      relations: ["post", "reporter", "reported"],
     });
   }
 
@@ -79,7 +87,7 @@ export class AdminService {
         type: "post",
         status: In(["safe", "warned", "banned;"]),
       },
-      relations: ["post", "reporter"],
+      relations: ["post", "reporter", "reported"],
     });
   }
 

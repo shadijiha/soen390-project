@@ -146,10 +146,10 @@ export class User extends BaseEntity {
   volunteeringExperience: Volunteering[];
 
   // connections
-  @OneToMany(() => Connection, (connection) => connection.user_1)
+  @OneToMany(() => Connection, (connection) => connection.user_1, { cascade: true, orphanedRowAction: "delete" })
   connection_1: Connection[];
 
-  @OneToMany(() => Connection, (connection) => connection.user_2)
+  @OneToMany(() => Connection, (connection) => connection.user_2, { cascade: true, orphanedRowAction: "delete" })
   connection_2: Connection[];
 
   // skills
@@ -218,13 +218,17 @@ export class User extends BaseEntity {
   applications: Application[];
 
   // posts
-  @OneToMany(() => Post, (p) => p.user, { cascade:  ["soft-remove"], orphanedRowAction: "soft-delete" })
-  @ApiProperty({ type: [Post] })
+  @OneToMany(() => Post, (p) => p.user, { onDelete: "CASCADE", orphanedRowAction: "delete" })
+  @ApiProperty({ type: [Post] }) 
   posts: Post[];
 
   //reports
-  @OneToMany(() => Reported, (r) => r.reporter, { cascade: true, orphanedRowAction: "delete" })
+  @OneToMany(() => Reported, (r) => r.reporter, { onDelete: "CASCADE", orphanedRowAction: "delete" })
   @ApiProperty({ type: [Reported] })
   reports: Reported[];
+
+  @OneToMany(() => Reported, (r) => r.reporter, { onDelete: "CASCADE", orphanedRowAction: "delete" })
+  @ApiProperty({ type: [Reported] })
+  gotReported: Reported[];
 
 }
