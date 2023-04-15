@@ -10,9 +10,10 @@ import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
 
 const Inbox = () => {
+
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [messages, setMessages] = useState([{}])
+  const [messages, setMessages] = useState([{user : ""}]);
   const [loading, setLoading] = useState(true)
   const User = useSelector((state) => state as any)
   useEffect(() => {
@@ -70,7 +71,7 @@ const Inbox = () => {
           <Heading as="h1" size="lg" mb={4}>
             {t('inbox')}
           </Heading>
-          {messages[0].user ? (
+          {messages[0].user != "" ? (
             messages.map((element: any) => (
               <Flex
                 key={element.id}
