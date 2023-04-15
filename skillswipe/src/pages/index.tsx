@@ -21,7 +21,6 @@ import 'react-toastify/dist/ReactToastify.css'
 import { loginApi } from './api/api'
 import GoogleLoginButton from './googleLogin'
 
-
 const login = () => {
   const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
@@ -31,6 +30,7 @@ const login = () => {
   const googleBackground = useColorModeValue('white', 'gray.700')
   const [User, setUser] = useState({ email: '', password: '' })
   const router = useRouter()
+  const currentLang = router.locale // => locale string eg. "en"
   const changeEmail = (event: any) => {
     setUser({
       ...User,
@@ -64,15 +64,14 @@ const login = () => {
   }
 
   const responseGoogle = (response) => {
-    console.log(response);
+    console.log(response)
     // Handle the response from Google
-  };
+  }
 
   const onFailure = (error) => {
-    console.log(error);
+    console.log(error)
     // Handle errors
-  };
-
+  }
 
   return (
     <>
@@ -103,13 +102,7 @@ const login = () => {
                 {t('signIn')}
               </Button>
               {/* Google */}
-              <GoogleLoginButton
-                  clientId= "382691840743-ornp7e0bkt11mt1rjjuqgfd7t6i5bnf3.apps.googleusercontent.com"
-                  buttonText={t('googleSignIn')}
-                  onSuccess={responseGoogle}
-                  onFailure={onFailure}
-                  cookiePolicy={'single_host_origin'}
-                />
+              <GoogleLoginButton lang={currentLang} />
               <Text textAlign="center">or</Text>
               <Button colorScheme="green" mb={6}>
                 <Link href="/register">Register</Link>

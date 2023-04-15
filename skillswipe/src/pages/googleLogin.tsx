@@ -1,51 +1,48 @@
-import React from 'react';
-import GoogleLogin from 'react-google-login';
-import Router from 'next/router';
-import { toast } from 'react-toastify';
+import { GoogleLogin } from '@react-oauth/google'
+import Router from 'next/router'
+import React from 'react'
+import { toast } from 'react-toastify'
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ lang }) => {
   const responseGoogle = (response) => {
-    console.log(response);
+    console.log(response)
     // Handle the response from Google
-    const { tokenId } = response;
-    fetch('http://localhost:3000/api/auth/google',{
+    const { tokenId } = response
+    fetch('http://localhost:8080/auth/google', {
       method: 'POST',
       headers: {
-         'Content-Type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ tokenId }),
-   })
+    })
       .then((res) => res.json())
       .then((data) => {
-         if (data.success){
-            localStorage.setItem('jwt', data.token);
-            Router.push('/home');
-         }else{
-            console.log('google login error');
-         }
+        if (data.success) {
+          localStorage.setItem('jwt', data.token)
+          Router.push('/home')
+        } else {
+          console.log('google login error')
+        }
       })
       .catch((err) => {
-         console.log(err);
-      });
-      
+        console.log(err)
+      })
+  }
 
-  };
-
-  const onFailure = (error) => {
-    console.log(error);
+  const onFailure = () => {
     // Handle errors
-     toast ('Failed to login with Google. Please try again later.');
-  };
+    toast('Failed to login with Google. Please try again later.')
+  }
 
   return (
     <GoogleLogin
-      clientId="382691840743-ornp7e0bkt11mt1rjjuqgfd7t6i5bnf3.apps.googleusercontent.com"
-      buttonText="Login with Google"
+      text="signin_with"
+      locale={lang}
       onSuccess={responseGoogle}
-      onFailure={onFailure}
-      cookiePolicy={'single_host_origin'}
+      onError={onFailure}
+      state_cookie_domain={'single_host_origin'}
     />
-  );
-};
+  )
+}
 
-export default GoogleLoginButton;
+export default GoogleLoginButton
