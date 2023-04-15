@@ -71,7 +71,7 @@ const Inbox = () => {
           <Heading as="h1" size="lg" mb={4}>
             {t('inbox')}
           </Heading>
-          {messages[0].user != "" ? (
+          {messages[0]? (
             messages.map((element: any) => (
               <Flex
                 key={element.id}
