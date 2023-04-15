@@ -9,6 +9,8 @@ import { ProfileModule } from './profile/profile.module'
 import { ChatModule } from './chat/chat.module'
 import { JobsModule } from './jobs/jobs.module'
 import { ApplicationModule } from './application/application.module'
+import { AdminController } from './admin/admin.controller';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -29,9 +31,10 @@ import { ApplicationModule } from './application/application.module'
     ProfileModule,
     ChatModule,
     JobsModule,
-    ApplicationModule
+    ApplicationModule,
+    AdminModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, AdminController],
   providers: [AppService]
 })
 export class AppModule {}
