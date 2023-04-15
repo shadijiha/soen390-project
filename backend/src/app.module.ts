@@ -9,8 +9,8 @@ import { ProfileModule } from './profile/profile.module'
 import { ChatModule } from './chat/chat.module'
 import { JobsModule } from './jobs/jobs.module'
 import { ApplicationModule } from './application/application.module'
-import { AdminController } from './admin/admin.controller';
-import { AdminModule } from './admin/admin.module';
+import { AdminController } from './admin/admin.controller'
+import { AdminModule } from './admin/admin.module'
 
 @Module({
   imports: [
