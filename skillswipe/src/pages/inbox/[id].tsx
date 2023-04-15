@@ -188,6 +188,7 @@ const Chat = () => {
               <br />
               <Messages messages={messages} user={chatUser} />
               <Divider />
+              
               <Footer
                 handleSendMessage={handleSendMessage}
                 sendMessagefile={sendMessagefile}
