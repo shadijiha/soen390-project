@@ -27,6 +27,7 @@ import { Connection } from "./connection.entity";
 import { Job } from "./job.entity";
 import { Application } from "./application.entity";
 import { Post } from "./post.entity";
+import { Reported } from "./reported.entity";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -217,7 +218,13 @@ export class User extends BaseEntity {
   applications: Application[];
 
   // posts
-  @OneToMany(() => Post, (p) => p.user)
+  @OneToMany(() => Post, (p) => p.user, { cascade:  ["soft-remove"], orphanedRowAction: "soft-delete" })
   @ApiProperty({ type: [Post] })
   posts: Post[];
+
+  //reports
+  @OneToMany(() => Reported, (r) => r.reporter, { cascade: true, orphanedRowAction: "delete" })
+  @ApiProperty({ type: [Reported] })
+  reports: Reported[];
+
 }

@@ -4,7 +4,7 @@ import { Message } from "../models/message.entity";
 import { Post } from "../models/post.entity";
 import { In, Repository } from "typeorm";
 import { Reported } from "../models/reported.entity";
-import { type User } from "../models/user.entity";
+import { User } from "../models/user.entity";
 
 @Injectable()
 export class AdminService {
@@ -14,7 +14,9 @@ export class AdminService {
     @InjectRepository(Post)
     private readonly postsRepository: Repository<Post>,
     @InjectRepository(Reported)
-    private readonly reportedRepository: Repository<Reported>
+    private readonly reportedRepository: Repository<Reported>,
+    @InjectRepository(User)
+    private readonly usersRepository: Repository<User>
   ) {}
 
   async reportPost(postId: string, reporter: User): Promise<void> {
@@ -35,7 +37,7 @@ export class AdminService {
       type: "post",
       status: "unresolved",
       post: postReported,
-      reporter,
+      reporter: reporter,
     });
   }
 
@@ -57,7 +59,7 @@ export class AdminService {
       type: "message",
       status: "unresolved",
       message: messageReported,
-      reporter,
+      reporter: reporter,
     });
   }
 
@@ -101,23 +103,122 @@ export class AdminService {
     });
   }
 
-  async resolvePost(reportId: string): Promise<void> {
+  async resolvePostSafe(reportId: string): Promise<void> {
     const report = await this.reportedRepository.findOneBy({ id: parseInt(reportId) });
 
     if (report == null) {
       throw new Error("Report not found");
     }
-    report.status = "resolved";
+    report.status = "safe";
     await this.reportedRepository.save(report);
   }
 
-  async resolveMessage(reportId: string): Promise<void> {
+  async resolveMessageSafe(reportId: string): Promise<void> {
     const reported = await this.reportedRepository.findOneBy({ id: parseInt(reportId) });
 
     if (reported == null) {
       throw new Error("Report not found");
     }
-    reported.status = "resolved";
+    reported.status = "safe";
     await this.reportedRepository.save(reported);
+  }
+
+  async removePost(reportId: string): Promise<void> {
+    const report = await this.reportedRepository.findOne({
+      where: {
+        id: parseInt(reportId),
+      },
+
+      relations: ["post"],
+    });
+
+    if (report == null) {
+      throw new Error("Report not found");
+    }
+    report.status = "warned";
+    await this.reportedRepository.save(report);
+
+    report.post.softRemove();
+
+    //add pusher notification
+  }
+
+  async removeMessage(reportId: string): Promise<void> {
+    const report = await this.reportedRepository.findOne({
+      where: {
+        id: parseInt(reportId),
+      },
+
+      relations: ["message"],
+    });
+
+    if (report == null) {
+      throw new Error("Report not found");
+    }
+    report.status = "warned";
+    await this.reportedRepository.save(report);
+
+    report.message.softRemove();
+
+    //add pusher notification
+  }
+
+  async banUserPost(reportId: string): Promise<void> {
+    const report = await this.reportedRepository.findOne({
+      where: {
+        id: parseInt(reportId),
+      },
+
+      relations: ["post"],
+    });
+
+    if (report == null) {
+      throw new Error("Report not found");
+    }
+
+    report.status = "banned";
+    await this.reportedRepository.save(report);
+
+    const posterToBeBanned = (
+      await this.postsRepository.findOne({
+        where: {
+          id: report.post.id,
+        },
+        relations: ["user"],
+      })
+    )?.user;
+
+    if (posterToBeBanned != null) {
+      posterToBeBanned.type = "banned";
+      posterToBeBanned.softRemove();
+    }
+  }
+
+  async banUserMessage(reportId: string): Promise<void> {
+    const report = await this.reportedRepository.findOne({
+      where: {
+        id: parseInt(reportId),
+      },
+
+      relations: ["message"],
+    });
+
+    if (report == null) {
+      throw new Error("Report not found");
+    }
+
+    report.status = "banned";
+    await this.reportedRepository.save(report);
+
+    const senderToBeBanned = await this.usersRepository.findOne({
+      where: {
+        id: report.message.senderId,
+      },
+    });
+
+    if (senderToBeBanned != null) {
+      senderToBeBanned.type = "banned";
+      senderToBeBanned.softRemove();
+    }
   }
 }

@@ -63,23 +63,68 @@ export class AdminController {
     return await this.adminService.getResolvedMessages();
   }
 
-  @Put("resolve-post/:reportId")
+  @Put("resolve-post/safe/:reportId")
   async resolvePost(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
     const user = (await authedUser.getUser()) as User;
 
     if (user.type !== "admin") {
       throw new Error("Unauthorized, Not an admin");
     }
-    await this.adminService.resolvePost(reportId);
+    await this.adminService.resolvePostSafe(reportId);
   }
 
-  @Put("resolve-message/:reportId")
+  @Put("resolve-message/safe/:reportId")
   async resolveMessage(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
     const user = (await authedUser.getUser()) as User;
 
     if (user.type !== "admin") {
       throw new Error("Unauthorized, Not an admin");
     }
-    await this.adminService.resolveMessage(reportId);
+    await this.adminService.resolveMessageSafe(reportId);
   }
+
+
+
+  @Put("resolve-post/warned/:reportId")
+  async removePost(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
+    const user = (await authedUser.getUser()) as User;
+
+    if (user.type !== "admin") {
+      throw new Error("Unauthorized, Not an admin");
+    }
+    await this.adminService.removePost(reportId);
+  }
+
+  @Put("resolve-message/warned/:reportId")
+  async removeMessage(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
+    const user = (await authedUser.getUser()) as User;
+
+    if (user.type !== "admin") {
+      throw new Error("Unauthorized, Not an admin");
+    }
+    await this.adminService.removeMessage(reportId);
+  }
+
+
+  @Put("resolve-post/Ban/:reportId")
+  async BanPost(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
+    const user = (await authedUser.getUser()) as User;
+
+    if (user.type !== "admin") {
+      throw new Error("Unauthorized, Not an admin");
+    }
+    await this.adminService.banUserPost(reportId);
+  }
+
+  @Put("resolve-message/Ban/:reportId")
+  async BanMessage(@Param("reportId") reportId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
+    const user = (await authedUser.getUser()) as User;
+
+    if (user.type !== "admin") {
+      throw new Error("Unauthorized, Not an admin");
+    }
+    await this.adminService.banUserMessage(reportId);
+  }
+
+
 }
