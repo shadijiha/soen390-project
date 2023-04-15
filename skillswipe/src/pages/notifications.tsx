@@ -1,16 +1,20 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/jsx-no-undef */
 import {
+  Heading,
   Avatar,
   Badge,
   Box,
+  Center,
   Button,
   Flex,
-  Heading,
   HStack,
   Link,
   Spacer,
   Text,
+  useColorModeValue,
+  Stack,
+  Icon,
 } from '@chakra-ui/react'
 
 import type { InferGetStaticPropsType } from 'next'
@@ -24,24 +28,52 @@ import { toast } from 'react-toastify'
 import { getStaticProps } from '.'
 import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
-import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
+import { acceptRequest, getPendingRequest, removeConnection, sendRequest } from './api/api'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { getAllConversation, getConversationById } from './api/chat'
+import { getAllConversation, getConversationById, /*getSuggestedUsers */} from './api/chat'
+import { px } from 'framer-motion'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [pendingConnections, setPendingConnections] = useState([
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
   const [messageNotification, setmessageNotification] = useState([])
+  // const [suggestedUsers, setSuggestedUsers] = useState([])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
+  const buttonColors = useColorModeValue('black', 'white')
 
+  const users = [
+    {
+      name: "John Doe",
+      jobTitle: "Software Developer",
+      company: "Amazon",
+      location: "Toronto, Canada",
+      avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+    },
+    {
+      name: "Jane Smith",
+      jobTitle: "UX Designer",
+      company: "Facebook",
+      location: "Vancouver, Canada",
+      avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+    },
+    {
+      name: "Bob Johnson",
+      jobTitle: "Marketing Manager",
+      company: "Google",
+      location: "Montreal, Canada",
+      avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+    },
+  ];
+  
   useEffect(() => {
     getPendingConnections()
     getMessage()
+    // getSuggestions()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -102,7 +134,21 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       toast.success('Request Accepted')
     }
   }
-
+  const [Status, setStatus] = useState({
+    connected: false,
+    Requested: false,
+    Pending: false,
+  })
+  const Request = () => {
+    const token = localStorage.getItem('jwt')
+    sendRequest(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ ...Status, Requested: true })
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
   const addRequest = () => {
     getPendingConnections()
   }
@@ -150,6 +196,27 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     }
   }
 
+  // const getSuggestions = async () => {
+  //   const token = localStorage.getItem('jwt')
+  //   if (token) {
+  //     try {
+  //       const res = await getSuggestedUsers(token)
+  //       setSuggestedUsers(res.data)
+  //     } catch (error) {
+  //       toast(error.message)
+  //     }
+  //   }
+  // }
+
+  const handleImageError = (self) => {
+    self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png'
+    console.log('Error loading logo image')
+  }
+
+  const handleImageLoad = () => {
+    console.log('Logo image loaded successfully')
+  }
+
   return (
     <>
       <Layout>
@@ -157,11 +224,13 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={pendingConnections.length + messageNotification.length}
           addRequest={addRequest}
         ></NavBar>
-        <Box p={4}>
-          <Heading as="h1" size="lg" mb={4}>
+        <Flex  justifyContent="center">
+      <Box ml="2">
+        <Box p={4} >
+          <Heading as="h1" size="lg" mb={4} >
             {t('pendingRequests')}
           </Heading>
-          <Flex flexDirection={'column-reverse'}>
+          <Flex flexDirection={'column-reverse'} >
             {pendingConnections.length > 0 ? (
               pendingConnections.map((connection: any) => (
                 <Flex
@@ -274,10 +343,135 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           ) : (
             <Text>{t('noNotifications')}</Text>
           )}
+
+          {/* <Heading as="h1" size="lg" mb={4}>
+            {t('suggestions')}
+          </Heading>
+          {suggestedUsers.length > 0 ? (
+            suggestedUsers.map((user: any) => (
+              <Flex
+                key={user.id}
+                borderWidth="1px"
+                borderRadius="lg"
+                p={4}
+                mb={4}
+                display="flex"
+                alignItems="center"
+              >
+                <Link href={`/profile/${user.id}`}>
+                  <Flex>
+                    <Avatar
+                      size="lg"
+                      mr={4}
+                      src={
+                        user.profilePic
+                          ? `data:image/jpeg;base64,${user.profilePic}`
+                          : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                      }
+                    />
+                    <Box>
+                      <Heading as="h2" size="md" mb={2}>
+                        {user.firstName} {user.lastName}
+                      </Heading>
+                      <Text mb={2}>{user.bio}</Text>
+                      <Text fontSize="sm">{user.timestamp}</Text>
+                    </Box>
+                  </Flex>
+                </Link> 
+                </Flex>
+            ))
+          ) : (
+            <Text>{t('noSuggestions')}</Text>
+          )} */}
+
+<Box py="4" >
+  <Heading as="h1" size="lg" mb={8}>
+    People you might know
+  </Heading>
+  <Flex flexWrap="wrap" justifyContent= "around ">
+    {users.map((user) => (
+    <Box
+    maxW={'260px'}
+    w={'full'}
+    bg={useColorModeValue('white', 'gray.900')}
+    boxShadow={'2xl'}
+    rounded={'lg'}
+    p={3}
+    mb={8}
+    mx={6}
+    textAlign={'center'}>
+    <Avatar
+      size={'xl'}
+      src={user.avatar} 
+      mb={4}
+      pos={'relative'}
+
+    />
+    <Heading fontSize={'2xl'} fontFamily={'body'}>
+      {user.name}
+    </Heading>
+    
+    <Text
+      textAlign={'center'}
+      color={useColorModeValue('gray.700', 'gray.400')}
+      px={3}
+    >
+     {user.jobTitle}
+     <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" mt={2}>
+  <Text fontSize="md" fontWeight="medium" mr={2}>
+    Works at
+  </Text>
+  <Text fontSize="md" color={useColorModeValue('gray.700', 'gray.400')} mr={2}>
+    {user.company}
+  </Text>
+  <img
+    src={`https://www.${user.company.toLowerCase()}.com/favicon.ico`}
+    alt={`${user.company} logo`}
+    width={20}
+    height={20}
+    onError={handleImageError}
+    onLoad={handleImageLoad}
+  />
+</Box>
+
+    </Text>
+
+    <Text mt={14}
+      textAlign={'center'}
+      color={useColorModeValue('gray.700', 'gray.400')}
+      px={3}>
+        {user.location}
+    </Text>
+
+    <Stack mt={8} direction={'row'} spacing={4}>
+      <Button
+       flex={1}
+       className="profile-button button"
+       onClick={Request}
+       style={{
+         color: buttonColors,
+         borderColor: buttonColors,
+         borderWidth: '2px',
+         textShadow: '0px 0px 40px #000000CA',
+         fontWeight: 600,
+         marginRight: '1em',
+       }}
+       >
+        Connect 
+      </Button>
+    </Stack>
+   </Box>
+    ))}
+    </Flex>
+  </Box>
+
         </Box>
-      </Layout>
+        </Box>
+      </Flex>
+</Layout>
     </>
   )
+
 }
 
 export const getServerSideProps = async ({ locale }) => ({
