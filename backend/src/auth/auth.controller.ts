@@ -50,10 +50,7 @@ export class AuthController {
 
   @Post('google/redirect')
   // @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect (@Body() tokenDto: TokenDto): Promise<{
-    user: User
-    access_token: string
-  }> {
+  async googleAuthRedirect (@Body() tokenDto: TokenDto): Promise<Auth.LoginResponse> {
     const { token } = tokenDto
     return await this.authService.googleLogin(token)
   }

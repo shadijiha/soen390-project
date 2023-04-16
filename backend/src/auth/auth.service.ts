@@ -5,12 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm'
 import * as argon2 from 'argon2'
 import { Repository } from 'typeorm'
 import { User } from '../models/user.entity'
-import { Auth } from './auth.types'
+import { type Auth } from './auth.types'
+import { UsersService } from '../users/users.service'
 
 @Injectable()
 export class AuthService {
   constructor (
     private readonly jwtService: JwtService,
+    private readonly userService: UsersService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
   ) { }
@@ -60,9 +62,8 @@ export class AuthService {
     }
   }
 
-  async googleLogin (token: any): Promise<{ user: User, access_token: string }> {
+  async googleLogin (token: any): Promise<Auth.LoginResponse> {
     const decodedJwtAccessToken: Auth.GoogleToken = this.jwtService.decode(token) as Auth.GoogleToken
-    console.log(decodedJwtAccessToken)
     const payload = {
       email: decodedJwtAccessToken?.email,
       sub: decodedJwtAccessToken?.sub,
@@ -72,24 +73,32 @@ export class AuthService {
     }
     return await this.usersRepository.findOneByOrFail({ email: payload.email })
       .then((user: User) => {
+        const { password, ...userNoPass } = user
+        const payload = {
+          email: userNoPass.email,
+          id: userNoPass.id
+        }
         return {
-          user,
+          user: userNoPass,
           access_token: this.jwtService.sign(payload)
         }
       })
       .catch(async () => {
-        const authRequest = new Auth.RegisterRequest()
-        authRequest.email = payload.email
-        authRequest.firstName = payload.firstName
-        authRequest.lastName = payload.lastName
-        authRequest.gender = 'male' // temp
-        authRequest.password = 'temp1234qa'
+        const newUser: Auth.RegisterRequest = new User()
+        newUser.email = payload.email
+        newUser.firstName = payload.firstName
+        newUser.lastName = payload.lastName
+        newUser.gender = 'male' // temp
+        newUser.password = await argon2.hash('temp1234qa')
 
         try {
-          const user: User = this.usersRepository.create(authRequest)
-
+          const { password, ...userNoPass } = await this.userService.create(newUser)
+          const payload = {
+            email: userNoPass.email,
+            id: userNoPass.id
+          }
           return {
-            user,
+            user: userNoPass,
             access_token: this.jwtService.sign(payload)
           }
         } catch (error) {
