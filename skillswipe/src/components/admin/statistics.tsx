@@ -18,9 +18,10 @@ interface StatsCardProps {
   stat: string
   icon: ReactNode
   link: string
+  url: string
 }
 function StatsCard(props: StatsCardProps) {
-  const { title, stat, icon, link } = props
+  const { title, stat, icon, link, url } = props
   return (
     <Stat
       px={{ base: 2, md: 4 }}
@@ -48,7 +49,7 @@ function StatsCard(props: StatsCardProps) {
           {icon}
         </Box>
       </Flex>
-      <Link pl="16px" color="blue.400">
+      <Link pl="16px" color="blue.400" href={url}>
         {link}
       </Link>
     </Stat>
@@ -67,18 +68,21 @@ export default function BasicStatistics() {
           stat={'5,000'}
           icon={<BsPerson size={'3em'} />}
           link={'View Users'}
+          url={'/admin/users'}
         />
         <StatsCard
           title={'Reported Messages'}
           stat={'1,000'}
           icon={<AiOutlineMessage size={'3em'} />}
           link={'View Reported Messages'}
+          url={'/admin/messages'}
         />
         <StatsCard
           title={'Reported Posts'}
           stat={'7'}
           icon={<BsFillFileEarmarkPostFill size={'3em'} />}
           link={'View Reported Posts'}
+          url={'/admin/posts'}
         />
       </SimpleGrid>
     </Box>

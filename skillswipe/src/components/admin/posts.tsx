@@ -53,7 +53,7 @@ export const ReportedPosts = () => {
             <Tr>
               <Td>
                 {' '}
-                <Flex spacing="4">
+                <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                     <Avatar
                       size="sm"
@@ -96,7 +96,7 @@ export const ReportedPosts = () => {
             <Tr>
               <Td>
                 {' '}
-                <Flex spacing="4">
+                <Flex>
                   <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                     <Avatar
                       size="sm"
@@ -143,7 +143,7 @@ function MessagesModal() {
               <Heading size="md" mb="2">
                 Report Owner:{' '}
               </Heading>
-              <Flex spacing="4">
+              <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                   <Avatar
                     size="sm"
@@ -161,7 +161,7 @@ function MessagesModal() {
               <Heading size="md" mb="2">
                 Reported User:{' '}
               </Heading>
-              <Flex spacing="4">
+              <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                   <Avatar size="sm" name="Marc Eid" />
                   <Box>

@@ -81,7 +81,8 @@ export class AdminService {
         type: 'post',
         status: 'unresolved'
       },
-      relations: ['post', 'reporter', 'reported']
+      relations: ['post', 'reporter', 'reported'],
+      withDeleted: true
     })
   }
 
@@ -91,7 +92,8 @@ export class AdminService {
         type: 'post',
         status: Not('unresolved')
       },
-      relations: ['post', 'reporter', 'reported']
+      relations: ['post', 'reporter', 'reported'],
+      withDeleted: true
     })
   }
 
@@ -101,7 +103,8 @@ export class AdminService {
         type: 'message',
         status: Not('unresolved')
       },
-      relations: ['message', 'reporter', 'reported']
+      relations: ['message', 'reporter', 'reported'],
+      withDeleted: true
     })
   }
 
@@ -111,7 +114,8 @@ export class AdminService {
         type: 'message',
         status: 'unresolved'
       },
-      relations: ['message', 'reporter', 'reported']
+      relations: ['message', 'reporter', 'reported'],
+      withDeleted: true
     })
   }
 

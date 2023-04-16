@@ -1,25 +1,10 @@
+import { getReportedMessage, getResolvedMessages } from '@/pages/admin/adminApi'
 import {
-  AlertDialog,
-  AlertDialogBody,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogOverlay,
   Avatar,
   Badge,
   Box,
-  Button,
-  Divider,
   Flex,
   Heading,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Table,
   TableContainer,
   Tbody,
@@ -28,10 +13,96 @@ import {
   Th,
   Thead,
   Tr,
-  useDisclosure,
+  useToast,
 } from '@chakra-ui/react'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import ActionsModal from './actionsModal'
+export const formatDate = (dateString) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }
+
+  const date = new Date(dateString)
+  return new Intl.DateTimeFormat('en-US', options).format(date)
+}
 export const ReportedMessages = () => {
+  const toast = useToast()
+  const router = useRouter()
+  const [ReportedMessages, setReportedMessages] = useState<any[]>([])
+  const [ResolvedMessages, setResolvedMessages] = useState<any[]>([])
+
+  // send request to get reportedMessages
+
+  const getColorScheme = (status) => {
+    switch (status) {
+      case 'unresolved':
+        return 'blue'
+      case 'safe':
+        return 'green'
+      case 'banned':
+        return 'red'
+      case 'warned':
+        return 'yellow'
+      default:
+        return 'gray'
+    }
+  }
+  const resolveItem = (id, status) => {
+    const message: any = ReportedMessages.find((message: any) => message.id === id)
+    if (!message) return
+    message.status = status
+    setReportedMessages(ReportedMessages.filter((message: any) => message.id !== id))
+    setResolvedMessages([...(ResolvedMessages as any), message])
+  }
+  useEffect(() => {
+    const token = localStorage.getItem('jwt')
+    if (!token) {
+      toast({
+        position: 'top-right',
+        title: 'Error',
+        description: 'You are not logged in!',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
+      router.push({ pathname: '/login' })
+      return
+    }
+    getReportedMessage(token)
+      .then((res) => {
+        setReportedMessages(res.data)
+      })
+      .catch(() => {
+        toast({
+          position: 'top-right',
+          title: 'Error',
+          description: "Can't get reported messages! Please contact support",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      })
+
+    getResolvedMessages(token)
+      .then((res) => {
+        setResolvedMessages(res.data)
+      })
+      .catch(() => {
+        toast({
+          position: 'top-right',
+          title: 'Error',
+          description: "Can't get resolved messages! Please contact support",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+      })
+  }, [])
   return (
     <div>
       <Heading size="lg" mb="4">
@@ -49,30 +120,39 @@ export const ReportedMessages = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>
-                <Flex spacing="4">
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Avatar
-                      size="sm"
-                      name="Segun Adebayo"
-                      src="https://bit.ly/sage-adebayo"
-                    />
-                    <Box>
-                      <Text size="sm">Segun Adebayo</Text>
-                    </Box>
+            {ReportedMessages.map((message: any) => (
+              <Tr key={message.id}>
+                <Td>
+                  {' '}
+                  <Flex>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Avatar size="sm" src={message.reportedProfilePic} />
+                      <Box>
+                        <Text size="sm">{message.reportedFullName}</Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Td>
-              <Td>helloworld</Td>
-              <Td>24, March 2022</Td>
-              <Td>
-                <Badge colorScheme="yellow">Pending</Badge>
-              </Td>
-              <Td color="blue.200">
-                <MessagesModal />
-              </Td>
-            </Tr>
+                </Td>
+                <Td>
+                  {message.message.message.length > 30
+                    ? message.message.message.substring(0, 30) + '...'
+                    : message.message.message}
+                </Td>
+                <Td>{formatDate(message.created_at)}</Td>
+                <Td>
+                  <Badge colorScheme={getColorScheme(message.status)}>
+                    {message.status}
+                  </Badge>
+                </Td>
+                <Td color="blue.200">
+                  <ActionsModal
+                    message={message}
+                    type="unresolved"
+                    resolveItem={resolveItem}
+                  />
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
@@ -91,166 +171,38 @@ export const ReportedMessages = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>
-                {' '}
-                <Flex spacing="4">
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Avatar
-                      size="sm"
-                      name="Segun Adebayo"
-                      src="https://bit.ly/sage-adebayo"
-                    />
-                    <Box>
-                      <Text size="sm">Segun Adebayo</Text>
-                    </Box>
+            {ResolvedMessages.map((message: any) => (
+              <Tr key={message.id}>
+                <Td>
+                  {' '}
+                  <Flex>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Avatar size="sm" src={message.reportedProfilePic} />
+                      <Box>
+                        <Text size="sm">{message.reportedFullName}</Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Td>
-              <Td>helloworld</Td>
-              <Td>24, March 2022</Td>
-              <Td>
-                <Badge colorScheme="green">Resolved</Badge>
-              </Td>
-              <Td color="blue.200">
-                <MessagesModal />
-              </Td>
-            </Tr>
+                </Td>
+                <Td>
+                  {message.message.message.length > 30
+                    ? message.message.message.substring(0, 30) + '...'
+                    : message.message.message}
+                </Td>
+                <Td>{formatDate(message.created_at)}</Td>
+                <Td>
+                  <Badge colorScheme={getColorScheme(message.status)}>
+                    {message.status}
+                  </Badge>
+                </Td>
+                <Td color="blue.200">
+                  <ActionsModal message={message} type="resolved" />
+                </Td>
+              </Tr>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
     </div>
-  )
-}
-
-function MessagesModal() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  return (
-    <>
-      <Link onClick={onOpen}>View</Link>
-
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            <Heading size="lg">Reported Message</Heading>
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Box mb="2">
-              <Heading size="md" mb="2">
-                Report Owner:{' '}
-              </Heading>
-              <Flex spacing="4">
-                <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                  <Avatar
-                    size="sm"
-                    name="Segun Adebayo"
-                    src="https://bit.ly/sage-adebayo"
-                  />
-                  <Box>
-                    <Text size="sm">Segun Adebayo</Text>
-                  </Box>
-                </Flex>
-              </Flex>
-            </Box>
-            <Divider orientation="horizontal" />
-            <Box mt="2">
-              <Heading size="md" mb="2">
-                Reported User:{' '}
-              </Heading>
-              <Flex spacing="4">
-                <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                  <Avatar size="sm" name="Marc Eid" />
-                  <Box>
-                    <Text size="sm">Marc Eid</Text>
-                  </Box>
-                </Flex>
-              </Flex>
-            </Box>
-            <Box mt="4">
-              <Heading size="md" mb="2">
-                Message:{' '}
-              </Heading>
-              <Text size="sm">
-                Hello World, i am warning you to sukalikafika. Please dont report me
-                to admin, they will ban me if you do so{' '}
-              </Text>
-            </Box>
-            <Box mt="4">
-              <Text size="sm">
-                <Text fontSize="20px" fontWeight="bold" mb="2" display="inline">
-                  Date:{' '}
-                </Text>
-                24, March 2022
-              </Text>
-            </Box>
-            <Box mt="4">
-              <Heading size="md" mb="2">
-                Actions:{' '}
-              </Heading>
-              <Alert
-                title="Send Warning to User"
-                message="Are you sure you want to send a warning to user?"
-                scheme="yellow"
-                action="Send Warning"
-              />
-              <Alert
-                title="Send Warning to User"
-                message="Are you sure you want to ban user?"
-                scheme="red"
-                action="Ban User"
-              />
-              <Alert
-                title="Mark Message as Safe"
-                message="Are you sure you want ot mark this message as safe?"
-                scheme="green"
-                action="Safe"
-              />
-            </Box>
-          </ModalBody>
-          <ModalFooter>
-            <Button variant="ghost" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  )
-}
-
-function Alert(props: any) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const cancelRef = React.useRef()
-  const { title, message, action, scheme } = props
-
-  return (
-    <>
-      <Button colorScheme={scheme} onClick={onOpen} mr={2}>
-        {action}
-      </Button>
-
-      <AlertDialog isOpen={isOpen} leastDestructiveRef={cancelRef} onClose={onClose}>
-        <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader fontSize="lg" fontWeight="bold">
-              {title}
-            </AlertDialogHeader>
-
-            <AlertDialogBody>{message}</AlertDialogBody>
-
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme={scheme} onClick={onClose} ml={3}>
-                {action}
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialogOverlay>
-      </AlertDialog>
-    </>
   )
 }
