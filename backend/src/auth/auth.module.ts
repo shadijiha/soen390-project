@@ -30,6 +30,6 @@ import { GoogleStrategy } from './google.strategy';
     TypeOrmModule.forFeature([User])
   ],
   controllers: [AuthController],
-  providers: [AuthService, GoogleStrategy, UsersService, JwtStrategy, ConnectionsService, PusherService]
+  providers: [AuthService, UsersService, GoogleStrategy, JwtStrategy, ConnectionsService, PusherService]
 })
 export class AuthModule { }

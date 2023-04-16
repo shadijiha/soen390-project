@@ -5,12 +5,14 @@ import { InjectRepository } from '@nestjs/typeorm'
 import * as argon2 from 'argon2'
 import { Repository } from 'typeorm'
 import { User } from '../models/user.entity'
-import { type Auth } from './auth.types'
+import { Auth } from './auth.types'
+import { UsersService } from '../users/users.service'
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
+    private readonly userService: UsersService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
   ) { }
@@ -64,11 +66,30 @@ export class AuthService {
     const payload = {
       email: userProfile.email,
       sub: userProfile.sub,
-      name: userProfile.name,
+      firstName: userProfile.firstName,
+      lastName: userProfile.LastName,
       picture: userProfile.picture,
     };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+    return this.usersRepository.findOneByOrFail({ email: payload.email })
+      .then((user) => {
+        return {
+          user,
+          access_token: this.jwtService.sign(payload),
+        }
+      })
+      .catch(() => {
+        let authRequest = new Auth.RegisterRequest()
+        authRequest.email = payload.email
+        authRequest.firstName = payload.firstName
+        authRequest.lastName = payload.lastName
+        authRequest.gender = 'male' // temp
+        authRequest.password = ''
+        this.userService.create(authRequest).then((userProfile: User) => {
+          return {
+            userProfile,
+            access_token: this.jwtService.sign(payload),
+          }
+        })
+      })
   }
 }
