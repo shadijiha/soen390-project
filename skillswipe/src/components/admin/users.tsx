@@ -3,6 +3,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Flex,
   Heading,
   Link,
@@ -18,12 +19,20 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import Alert from './alert'
 import { formatDate } from './messages'
 
 export const ListOfUsers = () => {
   const toast = useToast()
   const router = useRouter()
   const [users, setUsers] = useState<any[]>([])
+
+  const unbanUser = (id) => {
+    const user: any = users.find((user: any) => user.id === id)
+    if (!user) return
+    user.status = 'active'
+    setUsers(users.filter((user: any) => user.id !== id))
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('jwt')
@@ -96,7 +105,22 @@ export const ListOfUsers = () => {
                 <Td color="blue.200">
                   {user.deleted_at ? (
                     <Text color="blue.200">
-                      <Link>Unban</Link>
+                      <Link>
+                        <Alert
+                          title="Unban User"
+                          message={
+                            'Are you sure you want to send unban ' +
+                            user.firstName +
+                            ' ' +
+                            user.lastName +
+                            '?'
+                          }
+                          scheme="red"
+                          action="Unban User"
+                          id={user.id}
+                          resolveItem={unbanUser}
+                        />
+                      </Link>
                     </Text>
                   ) : (
                     <Text color="blue.200">
