@@ -6,7 +6,7 @@ import { GlobalErrorFilter } from './chat/exception.filter'
 import { ValidationPipe } from '@nestjs/common'
 // import { ValidationPipe } from '@nestjs/common'
 
-async function bootstrap(): Promise<void> {
+async function bootstrap (): Promise<void> {
   const app = await NestFactory.create(AppModule)
   process.env.NODE_ENV !== 'development'
     ? app.enableCors({

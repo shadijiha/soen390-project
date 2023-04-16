@@ -9,14 +9,14 @@ import { Auth } from './auth.types'
 
 @Injectable()
 export class AuthService {
-  constructor(
+  constructor (
     private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
   ) { }
 
   // validates user email vs password
-  public async validateUser(email: string, pass: string): Promise<Partial<User> | null> {
+  public async validateUser (email: string, pass: string): Promise<Partial<User> | null> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .select('user.password')
@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   // logins user
-  public async login({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
+  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
     let user: User
     try {
@@ -60,8 +60,8 @@ export class AuthService {
     }
   }
 
-  async googleLogin(token: any): Promise<void | { user: User, access_token: string }> {
-    const decodedJwtAccessToken: Auth.GoogleToken = this.jwtService.decode(token) as Auth.GoogleToken;
+  async googleLogin (token: any): Promise<{ user: User, access_token: string }> {
+    const decodedJwtAccessToken: Auth.GoogleToken = this.jwtService.decode(token) as Auth.GoogleToken
     console.log(decodedJwtAccessToken)
     const payload = {
       email: decodedJwtAccessToken?.email,
@@ -83,7 +83,7 @@ export class AuthService {
         authRequest.firstName = payload.firstName
         authRequest.lastName = payload.lastName
         authRequest.gender = 'male' // temp
-        authRequest.password = ''
+        authRequest.password = 'temp1234qa'
 
         try {
           const user: User = this.usersRepository.create(authRequest)
