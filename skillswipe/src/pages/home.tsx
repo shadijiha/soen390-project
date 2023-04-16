@@ -262,6 +262,7 @@ const Home = () => {
           toast.error('Error 2 occurred. Please try again later.')
         })
     }
+    setQuickApplyButtonText('Applied')
   }
   const fetchUserData = async () => {
     try {
@@ -338,6 +339,7 @@ const Home = () => {
     }
     viewOpenJobs()
   }, [])
+  const [QuickApplyButtonText, setQuickApplyButtonText] = useState('Quick Apply')
 
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
@@ -764,7 +766,7 @@ const Home = () => {
                                   borderRadius="50px"
                                   onClick={(event) => handleSubmit(event, job.id)}
                                 >
-                                  Quick Apply
+                                  {QuickApplyButtonText}
                                 </Button>
                               )}
                             </HStack>

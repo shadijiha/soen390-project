@@ -167,6 +167,7 @@ const findJob = () => {
           toast.error('Error 2 occurred. Please try again later.')
         })
     }
+    setQuickApplyButtonText('Applied')
   }
   const fetchUserData = async () => {
     try {
@@ -288,6 +289,8 @@ const findJob = () => {
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
   const { t } = useTranslation('common')
+
+  const [QuickApplyButtonText, setQuickApplyButtonText] = useState('Quick Apply')
 
   return (
     <>
@@ -527,7 +530,7 @@ const findJob = () => {
                             outlineColor={useColorModeValue('gray.400', 'gray.600')}
                             onClick={(event) => handleSubmit(event, job.id)}
                           >
-                            Quick Apply
+                            {QuickApplyButtonText}
                           </Button>
                         )}
                       </div>
