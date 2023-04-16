@@ -32,8 +32,8 @@ export const formatDate = (dateString) => {
 }
 export const ReportedMessages = () => {
   const router = useRouter()
-  const [ReportedMessages, setReportedMessages] = useState([])
-  const [ResolvedMessages, setResolvedMessages] = useState([])
+  const [ReportedMessages, setReportedMessages] = useState<any[]>([])
+  const [ResolvedMessages, setResolvedMessages] = useState<any[]>([])
 
   // send request to get reportedMessages
 
@@ -51,7 +51,13 @@ export const ReportedMessages = () => {
         return 'gray'
     }
   }
-
+  const resolveItem = (id, status) => {
+    const message: any = ReportedMessages.find((message: any) => message.id === id)
+    if (!message) return
+    message.status = status
+    setReportedMessages(ReportedMessages.filter((message: any) => message.id !== id))
+    setResolvedMessages([...(ResolvedMessages as any), message])
+  }
   useEffect(() => {
     const token = localStorage.getItem('jwt')
     if (!token) {
@@ -117,7 +123,11 @@ export const ReportedMessages = () => {
                   </Badge>
                 </Td>
                 <Td color="blue.200">
-                  <ActionsModal message={message} type="unresolved" />
+                  <ActionsModal
+                    message={message}
+                    type="unresolved"
+                    resolveItem={resolveItem}
+                  />
                 </Td>
               </Tr>
             ))}

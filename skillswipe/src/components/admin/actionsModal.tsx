@@ -22,7 +22,7 @@ import { formatDate } from './messages'
 
 function ActionsModal(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { message, type } = props
+  const { message, type, resolveItem } = props
   return (
     <>
       <Link onClick={onOpen}>View</Link>
@@ -91,18 +91,27 @@ function ActionsModal(props) {
                   message="Are you sure you want to send a warning to user?"
                   scheme="yellow"
                   action="Send Warning"
+                  id={message.id}
+                  close={onClose}
+                  resolveItem={resolveItem}
                 />
                 <Alert
                   title="Send Warning to User"
                   message="Are you sure you want to ban user?"
                   scheme="red"
                   action="Ban User"
+                  id={message.id}
+                  close={onClose}
+                  resolveItem={resolveItem}
                 />
                 <Alert
                   title="Mark Message as Safe"
                   message="Are you sure you want ot mark this as safe?"
                   scheme="green"
                   action="Safe"
+                  id={message.id}
+                  close={onClose}
+                  resolveItem={resolveItem}
                 />
               </Box>
             )}

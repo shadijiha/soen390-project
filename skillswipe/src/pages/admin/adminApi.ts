@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 const URL = process.env.BASE_URL ?? 'http://localhost:8080'
 
 //messages related api
@@ -10,6 +11,7 @@ export const getReportedMessage = async (token: string) => {
       },
     })
     .catch((err) => {
+      toast.error(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -22,6 +24,7 @@ export const getResolvedMessages = async (token: string) => {
       },
     })
     .catch((err) => {
+      toast.error(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -38,6 +41,7 @@ export const ResolveMessageSafe = async (token: string, id: string) => {
       }
     )
     .catch((err) => {
+      toast.error(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -54,6 +58,7 @@ export const ResolveMessageBan = async (token: string, id: string) => {
       }
     )
     .catch((err) => {
+      toast(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -70,6 +75,7 @@ export const ResolveMessageWarn = async (token: string, id: string) => {
       }
     )
     .catch((err) => {
+      toast(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -82,6 +88,7 @@ export const getReportedPosts = async (token: string) => {
       },
     })
     .catch((err) => {
+      toast.error(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
@@ -94,6 +101,7 @@ export const getResolvedPosts = async (token: string) => {
       },
     })
     .catch((err) => {
+      toast.error(err.response.data.message)
       return { status: 400, data: err.response.data }
     })
 }
