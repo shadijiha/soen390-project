@@ -109,3 +109,52 @@ export const getUsers = async (token: string) => {
       return { status: 400, data: err.response.data }
     })
 }
+
+export const ResolvePostSafe = async (token: string, id: string) => {
+  return axios
+    .put(
+      `${URL}/admin/resolve-post/safe/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
+export const ResolvePostBan = async (token: string, id: string) => {
+  return axios
+    .put(
+      `${URL}/admin/resolve-post/Ban/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
+export const ResolvePostWarn = async (token: string, id: string) => {
+  return axios
+    .put(
+      `${URL}/admin/resolve-post/warned/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
