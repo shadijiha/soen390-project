@@ -26,6 +26,7 @@ type JobAttributes = {
   coverLetter?: boolean
   transcript?: boolean
   skills?: Array<string>
+  externalUrl?: string
 }
 
 const jobListing = () => {
@@ -61,6 +62,13 @@ const jobListing = () => {
   }, [job.skills])
   const [isFormHidden, setFormHidden] = useState(false)
 
+  // make isFormHidden true if the job is external by seeing if externalUrl is not null
+  useEffect(() => {
+    if (job.externalUrl) {
+      setFormHidden(true)
+    }
+  }, [job.externalUrl])
+
   return (
     <>
       <Layout>
@@ -86,12 +94,7 @@ const jobListing = () => {
               </Flex>
               {/* Job Description */}
               <JobDescription jobDescription={job.jobDescription} />
-              <Checkbox
-                defaultChecked={isFormHidden}
-                onChange={(e) => setFormHidden(e.target.checked)}
-              >
-                frontend test: is it external job
-              </Checkbox>{' '}
+
               {/* Submit Application Form */}
               {!isFormHidden && <SubmitAppForm />}
               <div
@@ -116,7 +119,8 @@ const jobListing = () => {
                     // on click go to linkedin url
                     onClick={() => {
                       window.open(
-                        'https://www.linkedin.com/jobs/view/2500000000/',
+                        // open the string externalUrl in a new tab
+                        job.externalUrl,
                         '_blank'
                       )
                     }}

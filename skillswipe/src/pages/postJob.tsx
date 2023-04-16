@@ -39,6 +39,7 @@ const postJob = () => {
     coverLetter: null as null | boolean,
     transcript: null as null | boolean,
     id: 0,
+    externalUrl: '',
   })
 
   const { t } = useTranslation('common')
@@ -58,7 +59,8 @@ const postJob = () => {
       !postListing.startDate ||
       !postListing.jobType ||
       postListing.coverLetter == null ||
-      postListing.transcript == null
+      postListing.transcript == null ||
+      !postListing.externalUrl
     ) {
       toast(t('fillAllFields'))
       return
@@ -119,17 +121,17 @@ const postJob = () => {
 
             <VStack spacing={'2.5em'} w="100%">
               {!isFormHidden && (
-                <FormControl id="externalURL">
-                  <FormLabel htmlFor="externalURL">{t('externalURL')}</FormLabel>
+                <FormControl id="externalUrl">
+                  <FormLabel htmlFor="externalUrl">{t('externalUrl')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
-                        // externalURL: event.target.value,
+                        externalUrl: event.target.value,
                       })
                     }
-                    name="externalURL"
-                    id="externalURL"
+                    name="externalUrl"
+                    id="externalUrl"
                     type="text"
                     placeholder="ex: https://www.google.com/careers/1"
                     rounded="100px"
