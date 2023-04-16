@@ -49,9 +49,9 @@ export class NotificationsService {
     const notification = new Notifications()
     notification.type = type
     notification.text = text
-    // notification.photo = photo == null ? null : photo
-    // notification.link = link ?? null
-    // notification.title = title ?? null
+    notification.photo = photo !== undefined ? photo : null
+    notification.link = link !== undefined ? link : null
+    notification.title = title !== undefined ? title : null
     notification.read = false
     notification.user = user
     await this.notificationsRepository.save(notification)

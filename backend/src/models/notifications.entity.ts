@@ -1,47 +1,47 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { User } from "./user.entity";
+import { ApiProperty } from '@nestjs/swagger'
+import { BaseEntity, Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm'
+import { User } from './user.entity'
 
-@Entity("notifications")
+@Entity('notifications')
 export class Notifications extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
-  id: number;
+    id: number
 
   @Column()
   @ApiProperty()
-  type: string;
+    type: string
 
   @Column()
   @ApiProperty()
-  text: string;
+    text: string
 
-  // @Column({ default: null})
-  // @ApiProperty()
-  // photo: string | null;
+  @Column({ default: null, type: 'varchar' })
+  @ApiProperty()
+    photo: string | null
 
-  // @Column({ default: null})
-  // @ApiProperty()
-  // link: string | null;
+  @Column({ default: null, type: 'varchar' })
+  @ApiProperty()
+    link: string | null
 
-  // @Column({ default: null})
-  // @ApiProperty()
-  // title: string | null;
+  @Column({ default: null, type: 'varchar' })
+  @ApiProperty()
+    title: string | null
 
   @Column()
   @ApiProperty()
-  read: boolean;
+    read: boolean
 
   @CreateDateColumn()
-  created_at: Date;
+    created_at: Date
 
   @UpdateDateColumn()
-  updated_at: Date;
+    updated_at: Date
 
   @DeleteDateColumn()
-  deleted_at: Date;
+    deleted_at: Date
 
-  @ManyToOne(() => User, (u) => u.notifications, { onDelete: "CASCADE" })
+  @ManyToOne(() => User, (u) => u.notifications, { onDelete: 'CASCADE' })
   @ApiProperty({ type: () => User })
-  user: User;
+    user: User
 }
