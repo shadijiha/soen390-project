@@ -6,7 +6,7 @@ import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
-import { Container, Divider, Flex, Stack } from '@chakra-ui/react'
+import { Button, Checkbox, Container, Divider, Flex, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
@@ -59,6 +59,7 @@ const jobListing = () => {
       setSkills(job.skills)
     }
   }, [job.skills])
+  const [isFormHidden, setFormHidden] = useState(false)
 
   return (
     <>
@@ -83,12 +84,47 @@ const jobListing = () => {
 
                 <Divider />
               </Flex>
-
               {/* Job Description */}
               <JobDescription jobDescription={job.jobDescription} />
-
+              <Checkbox
+                defaultChecked={isFormHidden}
+                onChange={(e) => setFormHidden(e.target.checked)}
+              >
+                frontend test: is it external job
+              </Checkbox>{' '}
               {/* Submit Application Form */}
-              <SubmitAppForm />
+              {!isFormHidden && <SubmitAppForm />}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                {isFormHidden && (
+                  <Button
+                    size={'lg'}
+                    bg="green.300"
+                    color="white"
+                    _hover={{
+                      bg: 'green.500',
+                    }}
+                    borderRadius="200px"
+                    w={{ base: '100%', md: '150px' }}
+                    textShadow="0px 0px 20px #00000076"
+                    shadow={'0px 4px 30px #0000001F'}
+                    // on click go to linkedin url
+                    onClick={() => {
+                      window.open(
+                        'https://www.linkedin.com/jobs/view/2500000000/',
+                        '_blank'
+                      )
+                    }}
+                  >
+                    View Job
+                  </Button>
+                )}
+              </div>
             </Stack>
           </Container>
         </div>
