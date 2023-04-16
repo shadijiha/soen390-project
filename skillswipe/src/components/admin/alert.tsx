@@ -19,6 +19,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function Alert(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [isLoading, setIsLoading] = useState(false)
   const cancelRef = React.useRef()
   const { title, message, action, scheme, id, resolveItem } = props
   const onCLoseParent = props.close
@@ -35,15 +36,16 @@ export default function Alert(props: any) {
     }
   }, [])
   const takeAction = () => {
+    setIsLoading(true)
     if (action === 'Ban User') {
       resolveBan()
     } else if (action === 'Send Warning') {
       resolveWarning()
     } else if (action === 'Safe') {
       resolveSafe()
+    } else if (action === 'Unban User') {
+      resolveUnban()
     }
-    onCLoseParent()
-    onClose()
   }
 
   const resolveSafe = () => {
@@ -58,6 +60,9 @@ export default function Alert(props: any) {
           duration: 9000,
           isClosable: true,
         })
+        setIsLoading(false)
+        onCLoseParent()
+        onClose()
       })
       .catch((err) => {
         toast({
@@ -83,6 +88,9 @@ export default function Alert(props: any) {
           duration: 9000,
           isClosable: true,
         })
+        setIsLoading(false)
+        onCLoseParent()
+        onClose()
       })
       .catch((err) => {
         toast({
@@ -108,6 +116,9 @@ export default function Alert(props: any) {
           duration: 9000,
           isClosable: true,
         })
+        setIsLoading(false)
+        onCLoseParent()
+        onClose()
       })
       .catch((err) => {
         toast({
@@ -119,6 +130,11 @@ export default function Alert(props: any) {
           isClosable: true,
         })
       })
+  }
+
+  const resolveUnban = () => {
+    resolveItem(id)
+    setIsLoading(false)
   }
 
   return (
@@ -140,7 +156,12 @@ export default function Alert(props: any) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme={scheme} onClick={takeAction} ml={3}>
+              <Button
+                colorScheme={scheme}
+                onClick={takeAction}
+                ml={3}
+                isLoading={isLoading}
+              >
                 {action}
               </Button>
             </AlertDialogFooter>
