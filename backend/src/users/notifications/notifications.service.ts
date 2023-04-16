@@ -39,7 +39,7 @@ export class NotificationsService {
     await this.notificationsRepository.delete({ id: notificationId })
   }
 
-  async createNotification (userId: number, type: string, text: string, photo: string, link: string, title: string): Promise<void> {
+  async createNotification (userId: number, type: string, text: string, photo?: string, link?: string, title?: string): Promise<Notifications> {
     const user = await this.usersRepository.findOneBy({ id: userId })
 
     if (user == null) {
@@ -49,11 +49,13 @@ export class NotificationsService {
     const notification = new Notifications()
     notification.type = type
     notification.text = text
-    notification.photo = photo
-    notification.link = link
-    notification.title = title
+    notification.photo = photo ?? null
+    notification.link = link ?? null
+    notification.title = title ?? null
     notification.read = false
     notification.user = user
     await this.notificationsRepository.save(notification)
+
+    return notification
   }
 }

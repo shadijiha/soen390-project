@@ -14,13 +14,13 @@ export class Notifications extends BaseEntity {
     text: string
 
   @Column()
-    photo: string
+    photo: string | null
 
   @Column()
-    link: string
+    link: string | null
 
   @Column()
-    title: string
+    title: string | null
 
   @Column()
     read: boolean

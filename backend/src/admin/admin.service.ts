@@ -6,6 +6,7 @@ import { Not, Repository } from 'typeorm'
 import { Reported } from '../models/reported.entity'
 import { User } from '../models/user.entity'
 import { PusherService } from '../util/pusher/pusher.service'
+import { NotificationsService } from '../users/notifications/notifications.service'
 
 @Injectable()
 export class AdminService {
@@ -19,7 +20,8 @@ export class AdminService {
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
 
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
+    private readonly notificationsService: NotificationsService
   ) {}
 
   async reportPost (postId: string, reporter: User): Promise<void> {
@@ -162,7 +164,13 @@ export class AdminService {
     // todo: add pusher notification
     // add notification to db
     // then notification in the pusher data
-    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { message: 'Your post has been removed', post: report.post })
+    const notificationCreated = await this.notificationsService.createNotification(
+      report.reported.id,
+      'post removed',
+      'your post is against our terms and conditions'
+    )
+
+    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { notificationCreated })
   }
 
   async removeMessage (reportId: string): Promise<void> {
