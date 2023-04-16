@@ -152,7 +152,7 @@ export class AdminService {
 
     await report.post.softRemove()
 
-    // add pusher notification
+    // todo: add pusher notification
   }
 
   async removeMessage (reportId: string): Promise<void> {
@@ -172,7 +172,7 @@ export class AdminService {
 
     await report.message.softRemove()
 
-    // add pusher notification
+    // todo: add pusher notification
   }
 
   async banUserPost (reportId: string): Promise<void> {
