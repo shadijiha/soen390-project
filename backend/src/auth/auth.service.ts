@@ -6,13 +6,11 @@ import * as argon2 from 'argon2'
 import { Repository } from 'typeorm'
 import { User } from '../models/user.entity'
 import { Auth } from './auth.types'
-import { UsersService } from '../users/users.service'
 
 @Injectable()
 export class AuthService {
   constructor (
     private readonly jwtService: JwtService,
-    private readonly userService: UsersService,
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>
   ) { }
@@ -84,17 +82,18 @@ export class AuthService {
         authRequest.lastName = payload.lastName
         authRequest.gender = 'male' // temp
         authRequest.password = ''
-        return await this.userService.create(authRequest)
-          .then((userProfile: User) => {
-            return {
-              user: userProfile,
-              access_token: this.jwtService.sign(payload)
-            }
-          })
-          .catch((error) => {
-            console.log('google auth error', error)
-            throw new UnauthorizedException('Authentication error: Google SSO, could not create user')
-          })
+
+        try {
+          const user: User = this.usersRepository.create(authRequest)
+
+          return {
+            user,
+            access_token: this.jwtService.sign(payload)
+          }
+        } catch (error) {
+          console.log('google auth error', error)
+          throw new UnauthorizedException('Authentication error: Google SSO, could not create user')
+        }
       })
   }
 }

@@ -3,6 +3,7 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { AuthService } from "./auth.service";
 import { User } from "../models/user.entity";
 import { JwtService } from "@nestjs/jwt";
+import { GoogleStrategy } from './google.strategy';
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -42,6 +43,7 @@ describe("AuthService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
+        GoogleStrategy,
         JwtService,
         {
           provide: getRepositoryToken(User),
