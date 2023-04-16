@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, checkLogin } from '@/pages/api/api'
-
 import { Box } from '@chakra-ui/react'
 import { Spinner } from '@chakra-ui/spinner'
-import { error } from 'console'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { bindActionCreators } from 'redux'
 import { actionCreator } from '../Redux/index'
@@ -16,15 +13,12 @@ const Layout = ({ children }: any) => {
   const router = useRouter()
   const dispatch = useDispatch()
   const actions = bindActionCreators(actionCreator, dispatch)
-  const user = useSelector((state) => state)
 
   const handleBeforeUnload = () => {
     const token = localStorage.getItem('jwt')
-    changeStatus('offline', token)
-      .then((response) => {})
-      .catch((error) => {
-        toast(error.message)
-      })
+    changeStatus('offline', token).catch((error) => {
+      toast(error.message)
+    })
   }
 
   useEffect(() => {
@@ -36,45 +30,31 @@ const Layout = ({ children }: any) => {
           if (router.asPath == '/register' || router.asPath == '/') {
             actions.setUser(response.data)
             router.push('/home')
-            setTimeout(() => {
-              setLoading(false)
-            }, 100)
+            setTimeout(() => setLoading(false), 100)
 
-            changeStatus('online', token)
-              .then((response) => {})
-              .catch((error) => {
-                toast(error.message)
-              })
+            changeStatus('online', token).catch((error) => {
+              toast(error.message)
+            })
           } else {
             actions.setUser(response.data)
-            setTimeout(() => {
-              setLoading(false)
-            })
+            setTimeout(() => setLoading(false))
 
-            changeStatus('online', token)
-              .then((response) => {})
-              .catch((error) => {
-                toast(error.message)
-              })
+            changeStatus('online', token).catch((error) => {
+              toast(error.message)
+            })
           }
         })
         .catch((error) => {
           router.push('/')
-          setTimeout(() => {
-            setLoading(false)
-          }, 100)
+          setTimeout(() => setLoading(false), 100)
           localStorage.removeItem('jwt')
         })
     } else {
       if (router.asPath != '/register') {
         router.push('/')
-        setTimeout(() => {
-          setLoading(false)
-        }, 100)
+        setTimeout(() => setLoading(false), 100)
       } else {
-        setTimeout(() => {
-          setLoading(false)
-        }, 100)
+        setTimeout(() => setLoading(false), 100)
       }
     }
 
@@ -82,18 +62,18 @@ const Layout = ({ children }: any) => {
       window.removeEventListener('beforeunload', handleBeforeUnload)
     }
   }, [])
+
   return (
-    <>
-      <main>
-        {Loading ? (
-          <Box alignContent={'center'}>
-            <Spinner />
-          </Box>
-        ) : (
-          children
-        )}
-      </main>
-    </>
+    <main>
+      {Loading ? (
+        <Box alignContent={'center'}>
+          <Spinner />
+        </Box>
+      ) : (
+        children
+      )}
+    </main>
   )
 }
+
 export default Layout

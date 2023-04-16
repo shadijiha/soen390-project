@@ -15,11 +15,10 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import GoogleLoginButton from '../components/googleLogin'
 import { loginApi } from './api/api'
-import GoogleLoginButton from './googleLogin'
 
 const login = () => {
   const { t } = useTranslation('common')
@@ -27,7 +26,6 @@ const login = () => {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
   const toggleTheme = useColorModeValue('🌙', '💡')
-  const googleBackground = useColorModeValue('white', 'gray.700')
   const [User, setUser] = useState({ email: '', password: '' })
   const router = useRouter()
   const currentLang = router.locale // => locale string eg. "en"
@@ -63,22 +61,18 @@ const login = () => {
     }
   }
 
-  const responseGoogle = (response) => {
-    console.log(response)
-    // Handle the response from Google
-  }
-
-  const onFailure = (error) => {
-    console.log(error)
-    // Handle errors
-  }
-
   return (
     <>
       <div data-testid="login-page">
         <Layout>
           <Flex height="100vh" alignItems="center" justifyContent="center">
-            <Flex direction="column" background={formBackground} p={12} rounded={25}>
+            <Flex
+              direction="column"
+              background={formBackground}
+              p={12}
+              rounded={25}
+              justifyContent="center"
+            >
               <Heading mb={6}>SkillSwipe 🚀</Heading>
               <Input
                 placeholder="Email"
@@ -101,7 +95,6 @@ const login = () => {
               <Button colorScheme="blue" mb={3} onClick={submitForm}>
                 {t('signIn')}
               </Button>
-              {/* Google */}
               <GoogleLoginButton lang={currentLang} />
               <Text textAlign="center">or</Text>
               <Button colorScheme="green" mb={6}>
@@ -114,6 +107,14 @@ const login = () => {
               >
                 {toggleTheme}
               </Button>
+              <div className="policy-agreement">
+                <Text onClick={() => router.push('/privacy-policy')}>
+                  Read about privacy policy
+                </Text>
+                <Text onClick={() => router.push('/terms-agreement')}>
+                  Read our terms of agreement
+                </Text>
+              </div>
             </Flex>
           </Flex>
         </Layout>

@@ -1,17 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import {
-  BellIcon,
-  ChevronDownIcon,
-  CloseIcon,
-  HamburgerIcon,
-  SearchIcon,
-} from '@chakra-ui/icons'
+import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
-  Badge,
   Box,
   Button,
   Collapse,
@@ -30,7 +21,6 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import { i18n } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
