@@ -5,6 +5,7 @@ import {
   Box,
   Flex,
   Heading,
+  Link,
   Table,
   TableContainer,
   Tbody,
@@ -17,6 +18,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { formatDate } from './messages'
 
 export const ListOfUsers = () => {
   const toast = useToast()
@@ -62,10 +64,10 @@ export const ListOfUsers = () => {
           <Thead>
             <Tr>
               <Th>User</Th>
-              <Th>Message</Th>
-              <Th>Date</Th>
+              <Th>Email</Th>
+              <Th>Since</Th>
               <Th>Status</Th>
-              <Th>Actions</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -75,23 +77,35 @@ export const ListOfUsers = () => {
                   {' '}
                   <Flex>
                     <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                      <Avatar
-                        size="sm"
-                        name="Segun Adebayo"
-                        src="https://bit.ly/sage-adebayo"
-                      />
+                      <Avatar size="sm" src={user.profilePic} />
                       <Box>
-                        <Text size="sm">Segun Adebayo</Text>
+                        <Text size="sm">{user.firstName + ' ' + user.lastName}</Text>
                       </Box>
                     </Flex>
                   </Flex>
                 </Td>
-                <Td>helloworld</Td>
-                <Td>24, March 2022</Td>
+                <Td>{user.email}</Td>
+                <Td>{formatDate(user.created_at)}</Td>
                 <Td>
-                  <Badge colorScheme="yellow">Pending</Badge>
+                  {user.deleted_at ? (
+                    <Badge colorScheme="red">Banned</Badge>
+                  ) : (
+                    <Badge colorScheme="green">Active</Badge>
+                  )}
                 </Td>
-                <Td color="blue.200">tempƒ</Td>
+                <Td color="blue.200">
+                  {user.deleted_at ? (
+                    <Text color="blue.200">
+                      <Link>Unban</Link>
+                    </Text>
+                  ) : (
+                    <Text color="blue.200">
+                      <Link href={'/profile/' + user.id} isExternal>
+                        Visit Profile
+                      </Link>
+                    </Text>
+                  )}
+                </Td>
               </Tr>
             ))}
           </Tbody>
