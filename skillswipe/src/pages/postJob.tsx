@@ -116,26 +116,26 @@ const postJob = () => {
                 {t('hideFormInputs')}
               </Checkbox>{' '}
             </VStack>
-            {!isFormHidden && (
-              <FormControl id="externalURL">
-                <FormLabel htmlFor="externalURL">{t('externalURL')}</FormLabel>
-                <Input
-                  onChange={(event) =>
-                    setJobListing({
-                      ...postListing,
-                      // externalURL: event.target.value,
-                    })
-                  }
-                  name="externalURL"
-                  id="externalURL"
-                  type="text"
-                  placeholder="ex: https://www.google.com/careers/1"
-                  rounded="100px"
-                />
-              </FormControl>
-            )}
 
             <VStack spacing={'2.5em'} w="100%">
+              {!isFormHidden && (
+                <FormControl id="externalURL">
+                  <FormLabel htmlFor="externalURL">{t('externalURL')}</FormLabel>
+                  <Input
+                    onChange={(event) =>
+                      setJobListing({
+                        ...postListing,
+                        // externalURL: event.target.value,
+                      })
+                    }
+                    name="externalURL"
+                    id="externalURL"
+                    type="text"
+                    placeholder="ex: https://www.google.com/careers/1"
+                    rounded="100px"
+                  />
+                </FormControl>
+              )}
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl id="jobTitle">
                   <FormLabel htmlFor="jobTitle"> {t('positionTitle')}</FormLabel>
