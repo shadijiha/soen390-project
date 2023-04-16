@@ -13,10 +13,10 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
 import ActionsModal from './actionsModal'
 export const formatDate = (dateString) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -31,6 +31,7 @@ export const formatDate = (dateString) => {
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
 export const ReportedMessages = () => {
+  const toast = useToast()
   const router = useRouter()
   const [ReportedMessages, setReportedMessages] = useState<any[]>([])
   const [ResolvedMessages, setResolvedMessages] = useState<any[]>([])
@@ -61,7 +62,14 @@ export const ReportedMessages = () => {
   useEffect(() => {
     const token = localStorage.getItem('jwt')
     if (!token) {
-      toast.error('You are not logged in!')
+      toast({
+        position: 'top-right',
+        title: 'Error',
+        description: 'You are not logged in!',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      })
       router.push({ pathname: '/login' })
       return
     }
@@ -70,7 +78,14 @@ export const ReportedMessages = () => {
         setReportedMessages(res.data)
       })
       .catch(() => {
-        toast.error("Can't get reported messages! Please contact support")
+        toast({
+          position: 'top-right',
+          title: 'Error',
+          description: "Can't get reported messages! Please contact support",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
       })
 
     getResolvedMessages(token)
@@ -78,7 +93,14 @@ export const ReportedMessages = () => {
         setResolvedMessages(res.data)
       })
       .catch(() => {
-        toast.error("Can't get resolved messages! Please contact support")
+        toast({
+          position: 'top-right',
+          title: 'Error',
+          description: "Can't get resolved messages! Please contact support",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
       })
   }, [])
   return (
