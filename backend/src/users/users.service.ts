@@ -11,7 +11,7 @@ import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class UsersService {
-  constructor(
+  constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Job)
@@ -26,7 +26,7 @@ export class UsersService {
    * @param {string} email - string
    * @returns The user object
    */
-  public async getByEmail(email: string): Promise<User> {
+  public async getByEmail (email: string): Promise<User> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
@@ -34,7 +34,7 @@ export class UsersService {
    * It returns an array of users.
    * @returns An array of users
    */
-  async findAll(): Promise<User[]> {
+  async findAll (): Promise<User[]> {
     return await this.usersRepository.find()
   }
 
@@ -44,7 +44,7 @@ export class UsersService {
    * @param {string[]} [relations] - [
    * @returns The user object with all the relations.
    */
-  async findOneById(userId: number, relations?: string[]): Promise<User> {
+  async findOneById (userId: number, relations?: string[]): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {
         id: userId
@@ -70,7 +70,7 @@ export class UsersService {
    * @param {number} userId - number - the id of the user you want to find
    * @returns A user object with all the relations.
    */
-  async findOneByIdNoRelations(userId: number): Promise<User> {
+  async findOneByIdNoRelations (userId: number): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {
         id: userId
@@ -84,7 +84,7 @@ export class UsersService {
    * @param {string} email - string
    * @returns The user object
    */
-  async findOneByEmail(email: string): Promise<User | null> {
+  async findOneByEmail (email: string): Promise<User | null> {
     return await this.usersRepository.findOneByOrFail({ email })
   }
 
@@ -93,7 +93,7 @@ export class UsersService {
    * @param body - Auth.RegisterRequest
    * @returns The userNoPass is being returned.
    */
-  public async create(body: Auth.RegisterRequest): Promise<Partial<User>> {
+  public async create (body: Auth.RegisterRequest): Promise<Partial<User>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -112,7 +112,7 @@ export class UsersService {
    * @param files - { profilePic?: Express.Multer.File; coverPic?: Express.Multer.File }
    * @returns The updated user.
    */
-  async update(
+  async update (
     id: number,
     user: Users.UpdateUserRequest,
     files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
@@ -151,7 +151,7 @@ export class UsersService {
    * @param {"online" | "offline"} status - "online" | "offline"
    * @returns The response from the Pusher API.
    */
-  async updateStatus(id: number, status: 'online' | 'offline'): Promise<Pusher.Response> {
+  async updateStatus (id: number, status: 'online' | 'offline'): Promise<Pusher.Response> {
     const oldUser = await this.findOneByIdNoRelations(id)
     oldUser.userStatus = status
     await this.usersRepository.update(id, oldUser)
@@ -165,7 +165,7 @@ export class UsersService {
    * @param {number} id - number - the id of the user
    * @returns The userStatus property of the user object.
    */
-  async getStatus(id: number): Promise<'online' | 'offline'> {
+  async getStatus (id: number): Promise<'online' | 'offline'> {
     const user = await this.findOneByIdNoRelations(id)
     return user.userStatus
   }
@@ -174,7 +174,7 @@ export class UsersService {
    * Find a user by id, then soft remove it.
    * @param {number} id - number - the id of the user to be deleted
    */
-  async removeSoft(id: number): Promise<void> {
+  async removeSoft (id: number): Promise<void> {
     const user = await this.findOneById(id)
     await this.usersRepository.softRemove(user)
   }
@@ -187,7 +187,7 @@ export class UsersService {
    * @param {string} query - string - The search query
    * @returns An object with two properties: users and jobs.
    */
-  public async search(user: User | null, query: string): Promise<Users.SearchResponse> {
+  public async search (user: User | null, query: string): Promise<Users.SearchResponse> {
     return {
       users: await this.usersRepository.find({
         where: [{ firstName: Like(`%${query}%`) }, { lastName: Like(`%${query}%`) }, { email: Like(`%${query}%`) }],
@@ -206,7 +206,7 @@ export class UsersService {
    * @param {User} user - User - the user object that is being updated
    * @param files - { cv?: Express.Multer.File; coverLetter?: Express.Multer.File }
    */
-  async addDocuments(user: User, files: { cv?: Express.Multer.File, coverLetter?: Express.Multer.File }): Promise<void> {
+  async addDocuments (user: User, files: { cv?: Express.Multer.File, coverLetter?: Express.Multer.File }): Promise<void> {
     if (files?.cv != null) {
       const buff = files.cv[0].buffer
       const base64data = buff.toString('base64')
@@ -227,7 +227,7 @@ export class UsersService {
    * @param {User} user - User - this is the user that is currently logged in
    * @param data - Users.DeleteDocumentsRequest
    */
-  async removeDocuments(user: User, data: Users.DeleteDocumentsRequest): Promise<void> {
+  async removeDocuments (user: User, data: Users.DeleteDocumentsRequest): Promise<void> {
     if (data.cv) {
       user.cv = null
     }
@@ -243,7 +243,7 @@ export class UsersService {
    * It finds a user by id, sets the profilePic property to null, and saves the user.
    * @param {number} userId - number - The id of the user whose profile picture you want to remove.
    */
-  async removeProfilePic(userId: number): Promise<void> {
+  async removeProfilePic (userId: number): Promise<void> {
     const user = await this.usersRepository.findOneOrFail({
       where: {
         id: userId
@@ -257,7 +257,7 @@ export class UsersService {
    * It finds a user by id, sets the coverPic property to null, and saves the user.
    * @param {number} userId - number - the id of the user whose cover pic you want to remove
    */
-  async removeCoverPic(userId: number): Promise<void> {
+  async removeCoverPic (userId: number): Promise<void> {
     const user = await this.usersRepository.findOneOrFail({
       where: {
         id: userId

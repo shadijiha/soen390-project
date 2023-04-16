@@ -62,34 +62,39 @@ export class AuthService {
     }
   }
 
-  async googleLogin(userProfile: any) {
+  async googleLogin(userProfile: any): Promise<{ user: User, access_token: string }> {
     const payload = {
       email: userProfile.email,
       sub: userProfile.sub,
       firstName: userProfile.firstName,
       lastName: userProfile.LastName,
-      picture: userProfile.picture,
-    };
+      picture: userProfile.picture
+    }
     return this.usersRepository.findOneByOrFail({ email: payload.email })
-      .then((user) => {
+      .then((user: User) => {
         return {
           user,
-          access_token: this.jwtService.sign(payload),
+          access_token: this.jwtService.sign(payload)
         }
       })
       .catch(() => {
-        let authRequest = new Auth.RegisterRequest()
+        const authRequest = new Auth.RegisterRequest()
         authRequest.email = payload.email
         authRequest.firstName = payload.firstName
         authRequest.lastName = payload.lastName
         authRequest.gender = 'male' // temp
         authRequest.password = ''
-        this.userService.create(authRequest).then((userProfile: User) => {
-          return {
-            userProfile,
-            access_token: this.jwtService.sign(payload),
-          }
-        })
+        return this.userService.create(authRequest)
+          .then((userProfile: User) => {
+            return {
+              user: userProfile,
+              access_token: this.jwtService.sign(payload)
+            }
+          })
+          .catch((error) => {
+            console.log('google auth error', error)
+            throw new UnauthorizedException('Authentication error: Google SSO, could not create user')
+          })
       })
   }
 }
