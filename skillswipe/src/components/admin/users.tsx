@@ -93,7 +93,11 @@ export const ListOfUsers = () => {
                     </Flex>
                   </Flex>
                 </Td>
-                <Td>{user.email}</Td>
+                <Td>
+                  <Link color="blue.200" href={'mailto:' + user.email}>
+                    {user.email}
+                  </Link>
+                </Td>
                 <Td>{formatDate(user.created_at)}</Td>
                 <Td>
                   {user.deleted_at ? (
