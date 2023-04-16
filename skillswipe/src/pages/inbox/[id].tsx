@@ -108,12 +108,11 @@ const Chat = () => {
     }
   }, [router.query.id])
 
-
   useEffect(() => {
-    if(User.auth.id){
+    if (User.auth.id) {
       setLoad(true)
     }
-  },[User.auth])
+  }, [User.auth])
   useEffect(() => {
     // Get coversation by ID will doo when apis are fully ready
     // Message is fully function
