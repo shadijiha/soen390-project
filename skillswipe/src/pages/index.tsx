@@ -95,7 +95,9 @@ const login = () => {
               <Button colorScheme="blue" mb={3} onClick={submitForm}>
                 {t('signIn')}
               </Button>
-              <GoogleLoginButton lang={currentLang} />
+              <Center>
+                <GoogleLoginButton lang={currentLang} />
+              </Center>
               <Text textAlign="center">or</Text>
               <Button colorScheme="green" mb={6}>
                 <Link href="/register">Register</Link>
