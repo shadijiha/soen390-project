@@ -59,8 +59,7 @@ const postJob = () => {
       !postListing.startDate ||
       !postListing.jobType ||
       postListing.coverLetter == null ||
-      postListing.transcript == null ||
-      !postListing.externalUrl
+      postListing.transcript == null
     ) {
       toast(t('fillAllFields'))
       return

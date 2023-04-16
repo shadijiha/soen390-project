@@ -44,6 +44,7 @@ interface JobAttributes {
   jobType: ''
   coverLetter: false | true
   transcript: false | true
+  externalUrl: '' | null
 }
 
 interface UserAttributes {
@@ -68,6 +69,7 @@ interface UserAttributes {
 const findJob = () => {
   const mockJobData = {
     id: 5,
+    externalUrl: null,
     jobTitle: 'Software Engineering Intern',
     companyName: 'Amazon',
     location: 'Montreal',
@@ -215,6 +217,7 @@ const findJob = () => {
         // Call API function to get open jobs
         const response = await getOpenJobs(token)
         // Update state with fetched data
+        console.log(response.data)
         setInitalJobListing(response.data)
         setJobListing(response.data)
       } catch (error) {
