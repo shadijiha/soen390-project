@@ -96,8 +96,8 @@ export class User extends BaseEntity {
   @ApiProperty()
     updated_at: Date
 
-  @DeleteDateColumn()
-    deleted_at: Date
+  @DeleteDateColumn({ nullable: true })
+    deleted_at: Date | null
 
   // SPECIAL GETTERS AND METHODS
   public get fullName (): string {

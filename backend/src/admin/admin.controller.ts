@@ -122,4 +122,15 @@ export class AdminController {
     }
     await this.adminService.banUserMessage(reportId)
   }
+
+  // unban user
+  @Put('unban-user/:userId')
+  async unbanUser (@Param('userId') userId: string, @AuthUser() authedUser: BearerPayload): Promise<void> {
+    const user = (await authedUser.getUser()) as User
+
+    if (user.type !== 'admin') {
+      throw new Error('Unauthorized, Not an admin')
+    }
+    await this.adminService.unbanUser(userId)
+  }
 }

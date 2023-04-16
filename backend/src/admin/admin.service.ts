@@ -237,4 +237,20 @@ export class AdminService {
       await senderToBeBanned.softRemove()
     }
   }
+
+  async unbanUser (userId: string): Promise<void> {
+    const user = await this.usersRepository.findOne({
+      where: {
+        id: parseInt(userId)
+      },
+      withDeleted: true
+    })
+
+    if (user == null) {
+      throw new Error('User not found')
+    }
+
+    user.deleted_at = null
+    await this.usersRepository.save(user)
+  }
 }
