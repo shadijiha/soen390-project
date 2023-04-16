@@ -13,7 +13,7 @@ import { ApiBearerAuth, ApiConsumes, ApiParam, ApiTags } from '@nestjs/swagger'
 import type Pusher from 'pusher'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { type Message } from 'src/models/message.entity'
-import { type User } from 'src/models/user.entity'
+import { User } from 'src/models/user.entity'
 import { UsersService } from 'src/users/users.service'
 import { ApiFile, AuthUser, BearerPayload } from 'src/util/util'
 import { ChatService } from './chat.service'
@@ -37,10 +37,23 @@ export class ChatController {
     const result: Array<{ user: User, lastMessage: string }> = []
     const conv = await this.chatService.allConversations(breaserPayload.id)
     for (const e of conv) {
-      result.push({
-        user: await this.userService.findOneByIdNoRelations(e.userId),
-        lastMessage: e.lastMessage
-      })
+      try {
+        result.push({
+          user: await this.userService.findOneByIdNoRelations(e.userId),
+          lastMessage: e.lastMessage
+        })
+      } catch (err) {
+      // User was banned maybe?
+        const user = new User()
+        user.id = e.userId
+        user.firstName = 'Deleted'
+        user.lastName = 'User'
+
+        result.push({
+          user,
+          lastMessage: e.lastMessage
+        })
+      }
     }
     return result
   }
