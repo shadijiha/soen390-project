@@ -193,7 +193,13 @@ export class AdminService {
     // todo: add pusher notification
     // add notification to db
     // then notification in the pusher data
-    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { message: 'Your message has been removed', textMessage: report.message })
+    const notificationCreated = await this.notificationsService.createNotification(
+      report.reported.id,
+      'message removed',
+      'your message is against our terms and conditions'
+    )
+
+    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { notificationCreated })
   }
 
   async banUserPost (reportId: string): Promise<void> {
