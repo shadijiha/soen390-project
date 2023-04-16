@@ -6,24 +6,36 @@ import { GlobalErrorFilter } from './chat/exception.filter'
 import { ValidationPipe } from '@nestjs/common'
 // import { ValidationPipe } from '@nestjs/common'
 
-async function bootstrap (): Promise<void> {
+async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
   process.env.NODE_ENV !== 'development'
     ? app.enableCors({
       origin: [
         '*.skillswipe.app',
         'https://skillswipe.app',
-        'https://www.skillswipe.app'
+        'https://www.skillswipe.app',
+        'https://accounts.google.com'
       ],
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       preflightContinue: false,
       optionsSuccessStatus: 204
     })
-    : app.enableCors()
+    : app.enableCors({
+      origin: [
+        'localhost',
+        'http://localhost:3000',
+        'http://localhost',
+        'https://accounts.google.com',
+        '*.google.com'
+      ],
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+      preflightContinue: false,
+      optionsSuccessStatus: 204
+    })
   const config = new DocumentBuilder()
     .setTitle(`${process.env.APP_NAME ?? 'skillswipe-dev'} API`)
     .setDescription(
-`The ${process.env.APP_NAME ?? 'skillswipe-dev'} API description`
+      `The ${process.env.APP_NAME ?? 'skillswipe-dev'} API description`
     )
     .setVersion(process.env.APP_VERSION ?? 'dev')
     .addBearerAuth()

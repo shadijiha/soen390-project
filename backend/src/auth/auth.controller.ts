@@ -9,10 +9,14 @@ import { Auth } from './auth.types'
 import { JwtAuthGuard } from './jwt-auth.guard'
 import { AuthGuard } from '@nestjs/passport'
 
+export class TokenDto {
+  token: string;
+}
+
 @Controller('auth')
 @ApiTags('Authentication')
 export class AuthController {
-  constructor (
+  constructor(
     private readonly userService: UsersService,
     private readonly authService: AuthService
   ) { }
@@ -20,7 +24,7 @@ export class AuthController {
   // login endpoint for user
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async login (@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
+  public async login(@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
     // try {
     return await this.authService.login(body)
     // } catch (e) {
@@ -31,7 +35,7 @@ export class AuthController {
   // register and then login endpoint for user
   @Post('register')
   @ApiResponse({ type: Auth.LoginResponse })
-  public async register (@Body() body: Auth.RegisterRequest): Promise<Auth.LoginResponse> {
+  public async register(@Body() body: Auth.RegisterRequest): Promise<Auth.LoginResponse> {
     try {
       // Will fail if email is NOT taken
       await this.userService.findOneByEmail(body.email)
@@ -45,18 +49,14 @@ export class AuthController {
     throw new ConflictException(`Email ${body.email} already taken`)
   }
 
-  // Google strategy
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth (@Req() req): Promise<void> { }
-
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthRedirect (@Req() req): Promise<{
+  @Post('google/redirect')
+  // @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Body() tokenDto: TokenDto): Promise<void | {
     user: User
     access_token: string
   }> {
-    return await this.authService.googleLogin(req.user)
+    const { token } = tokenDto
+    return await this.authService.googleLogin(token)
   }
 
   // get user info endpoint
@@ -64,7 +64,7 @@ export class AuthController {
   @ApiResponse({ type: User })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  public async me (@AuthUser() authedUser: BearerPayload): Promise<User> {
+  public async me(@AuthUser() authedUser: BearerPayload): Promise<User> {
     const user: User = (await authedUser.getUser([
       'educations',
       'workExperiences',

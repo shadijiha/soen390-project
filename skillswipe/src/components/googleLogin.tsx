@@ -2,29 +2,22 @@ import { GoogleLogin } from '@react-oauth/google'
 import Router from 'next/router'
 import React from 'react'
 import { toast } from 'react-toastify'
+import { googleAuth } from '../pages/api/api'
 
 const GoogleLoginButton = ({ lang }) => {
   const responseGoogle = (response) => {
     console.log(response)
     // Handle the response from Google
-    const { tokenId } = response
-    fetch('http://localhost:8080/auth/google', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ tokenId }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          localStorage.setItem('jwt', data.token)
-          Router.push('/home')
-        } else {
-          console.log('google login error')
-        }
+    const { credential } = response
+    googleAuth(credential)
+      .then(async (response) => {
+        console.log(response)
+        let token = response.data.access_token
+        localStorage.setItem('jwt', token)
+        Router.push('/home')
       })
       .catch((err) => {
+        console.log('google login error')
         console.log(err)
       })
   }
@@ -40,7 +33,7 @@ const GoogleLoginButton = ({ lang }) => {
       locale={lang}
       onSuccess={responseGoogle}
       onError={onFailure}
-      state_cookie_domain={'single_host_origin'}
+      // state_cookie_domain={'single_host_origin'}
     />
   )
 }
