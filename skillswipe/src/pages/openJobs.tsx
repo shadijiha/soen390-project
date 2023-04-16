@@ -538,7 +538,7 @@ const findJob = () => {
                           </Button>
                         )}
                     </div>
-                    {currentUser.auth.id !== job.user.id && (
+                    {currentUser.auth.id !== job.user.id ? (
                       <Button
                         as={Link}
                         _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
@@ -550,6 +550,19 @@ const findJob = () => {
                         }}
                       >
                         {t('apply')}
+                      </Button>
+                    ) : (
+                      <Button
+                        as={Link}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                        rounded="100px"
+                        outline={'solid 1px'}
+                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                        onClick={() => {
+                          router.push(`/myListings/`)
+                        }}
+                      >
+                        Edit Listing
                       </Button>
                     )}
                   </Stack>
