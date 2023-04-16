@@ -5,6 +5,7 @@ import { Post } from '../models/post.entity'
 import { Not, Repository } from 'typeorm'
 import { Reported } from '../models/reported.entity'
 import { User } from '../models/user.entity'
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class AdminService {
@@ -16,7 +17,9 @@ export class AdminService {
     @InjectRepository(Reported)
     private readonly reportedRepository: Repository<Reported>,
     @InjectRepository(User)
-    private readonly usersRepository: Repository<User>
+    private readonly usersRepository: Repository<User>,
+
+    private readonly pusherService: PusherService
   ) {}
 
   async reportPost (postId: string, reporter: User): Promise<void> {
@@ -145,7 +148,7 @@ export class AdminService {
         id: parseInt(reportId)
       },
 
-      relations: ['post']
+      relations: ['post', 'reported']
     })
 
     if (report == null) {
@@ -157,6 +160,9 @@ export class AdminService {
     await report.post.softRemove()
 
     // todo: add pusher notification
+    // add notification to db
+    // then notification in the pusher data
+    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { message: 'Your post has been removed', post: report.post })
   }
 
   async removeMessage (reportId: string): Promise<void> {
@@ -165,7 +171,7 @@ export class AdminService {
         id: parseInt(reportId)
       },
 
-      relations: ['message']
+      relations: ['message', 'reported']
     })
 
     if (report == null) {
@@ -177,6 +183,9 @@ export class AdminService {
     await report.message.softRemove()
 
     // todo: add pusher notification
+    // add notification to db
+    // then notification in the pusher data
+    await this.pusherService.trigger(`user-${report.reported.id}`, 'warn', { message: 'Your message has been removed', textMessage: report.message })
   }
 
   async banUserPost (reportId: string): Promise<void> {
@@ -185,7 +194,7 @@ export class AdminService {
         id: parseInt(reportId)
       },
 
-      relations: ['post']
+      relations: ['post', 'reported']
     })
 
     if (report == null) {
@@ -195,14 +204,7 @@ export class AdminService {
     report.status = 'banned'
     await this.reportedRepository.save(report)
 
-    const posterToBeBanned = (
-      await this.postsRepository.findOne({
-        where: {
-          id: report.post.id
-        },
-        relations: ['user']
-      })
-    )?.user
+    const posterToBeBanned = report.reported
 
     if (posterToBeBanned != null) {
       posterToBeBanned.type = 'banned'
@@ -216,7 +218,7 @@ export class AdminService {
         id: parseInt(reportId)
       },
 
-      relations: ['message']
+      relations: ['message', 'reported']
     })
 
     if (report == null) {
@@ -226,11 +228,7 @@ export class AdminService {
     report.status = 'banned'
     await this.reportedRepository.save(report)
 
-    const senderToBeBanned = await this.usersRepository.findOne({
-      where: {
-        id: report.message.senderId
-      }
-    })
+    const senderToBeBanned = report.reported
 
     if (senderToBeBanned != null) {
       senderToBeBanned.type = 'banned'
