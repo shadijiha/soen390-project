@@ -10,7 +10,7 @@ import { UsersService } from '../users/users.service'
 
 @Injectable()
 export class AuthService {
-  constructor(
+  constructor (
     private readonly jwtService: JwtService,
     private readonly userService: UsersService,
     @InjectRepository(User)
@@ -18,7 +18,7 @@ export class AuthService {
   ) { }
 
   // validates user email vs password
-  public async validateUser(email: string, pass: string): Promise<Partial<User> | null> {
+  public async validateUser (email: string, pass: string): Promise<Partial<User> | null> {
     const user = await this.usersRepository
       .createQueryBuilder('user')
       .select('user.password')
@@ -37,7 +37,7 @@ export class AuthService {
   }
 
   // logins user
-  public async login({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
+  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
     // Validate email
     let user: User
     try {
@@ -62,7 +62,7 @@ export class AuthService {
     }
   }
 
-  async googleLogin(userProfile: any): Promise<{ user: User, access_token: string }> {
+  async googleLogin (userProfile: any): Promise<{ user: User, access_token: string }> {
     const payload = {
       email: userProfile.email,
       sub: userProfile.sub,
@@ -70,21 +70,21 @@ export class AuthService {
       lastName: userProfile.LastName,
       picture: userProfile.picture
     }
-    return this.usersRepository.findOneByOrFail({ email: payload.email })
+    return await this.usersRepository.findOneByOrFail({ email: payload.email })
       .then((user: User) => {
         return {
           user,
           access_token: this.jwtService.sign(payload)
         }
       })
-      .catch(() => {
+      .catch(async () => {
         const authRequest = new Auth.RegisterRequest()
         authRequest.email = payload.email
         authRequest.firstName = payload.firstName
         authRequest.lastName = payload.lastName
         authRequest.gender = 'male' // temp
         authRequest.password = ''
-        return this.userService.create(authRequest)
+        return await this.userService.create(authRequest)
           .then((userProfile: User) => {
             return {
               user: userProfile,
