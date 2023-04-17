@@ -64,7 +64,7 @@ const Information = ({ update, handleSubmit }: any) => {
       </Stack>
 
       <FormControl>
-        <FormLabel htmlFor="name">First Name</FormLabel>
+        <FormLabel htmlFor="name">{t('First Name')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -79,7 +79,7 @@ const Information = ({ update, handleSubmit }: any) => {
         />
       </FormControl>
       <FormControl>
-        <FormLabel htmlFor="name">Last Name</FormLabel>
+        <FormLabel htmlFor="name">{t('Last Name')}</FormLabel>
         <Input
           minWidth={'100%'}
           type="text"
@@ -127,7 +127,7 @@ const Information = ({ update, handleSubmit }: any) => {
         />
       </FormControl>
       <FormControl>
-        <FormLabel htmlFor="gender">Sex</FormLabel>
+        <FormLabel htmlFor="gender">{t('Sex')}</FormLabel>
         <Select
           minWidth={'100%'}
           // defaultValue={profile.location}

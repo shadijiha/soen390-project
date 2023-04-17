@@ -208,7 +208,39 @@
       "withdraw": "Withdraw Application",
       "noApplications":"You have not applied for any jobs yet.",
       "clickHere": "Click Here",
-      "toApply": "to view all jobs."
+      "toApply": "to view all jobs.",
+
+      "Have something on your": "Have something on your mind",
+      "Click to upload Picture": "Click to upload Picture",
+      "Post": "Post",
+      "Cancel": "Cancel",
+      "Delete Post": "Delete Post",
+      "Are you sure you want to delete this post? This action cannot be undone.": "Are you sure you want to delete this post? This action cannot be undone.",
+      "Quick Apply": "Quick Apply",
+      "Type anything...": "Type anything...",
+
+      "of Applications": "# of Applications:",
+      "View All": "View All",
+      "Delete Application": "Delete Application",
+
+      "Upload CV": "Upload CV",
+      "Upload Cover": "Upload Cover",
+      "Download CV": "Download CV",
+      "Download cover": "Download cover",
+      "Delete CV": "Delete CV",
+      "Delete Cover": "Delete Cover",
+
+      "First Name": "First Name",
+      "Last Name": "Last Name",
+      "Sex": "Sex",
+      "No CV uploaded": "No CV uploaded",
+      "No Cover uploaded": "No Cover uploaded"
+
+
+
+
+
+
 
 
       

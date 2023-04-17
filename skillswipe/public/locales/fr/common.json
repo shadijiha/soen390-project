@@ -85,7 +85,7 @@
   "alreadyUser": "Déjà un utilisateur ?",
   "confirm password": "Confirmation du mot de passe",
 
-  "myListings": "Mes offres d'emploi",
+
   "filterList": "Filtrer la liste",
   "sortNewest": "Trier par date de création",
   "sortHighestSalary": "Trier par salaire le plus élevé",
@@ -203,5 +203,32 @@
   "withdraw": "Retirer la candidature",
   "noApplications": "Vous n'avez pas de candidatures",
   "clickHere": "Cliquez ici",
-  "toApply": "pour postuler"
+  "toApply": "pour postuler",
+
+  "Have something on your": "Avez-vous quelque chose à dire ?",
+  "Click to upload Picture": "Cliquez pour télécharger une photo",
+  "Post": "Publier",
+  "Cancel": "Annuler",
+  "Delete Post": "Supprimer le post",
+  "Are you sure you want to delete this post? This action cannot be undone.": "Êtes-vous sûr de vouloir supprimer ce post ? Cette action ne peut pas être annulée.",
+  "Quick Apply": "Candidature rapide",
+  "Type anything...": "Tapez quelque chose ...",
+  "of Applications": "de candidatures",
+  "View All": "Voir tout",
+  "Delete Application": "Supprimer la candidature",
+
+  "Upload CV": "Télécharger le CV",
+  "Upload Cover": "Télécharger la lettre de motivation",
+  "Download CV": "Télécharger le CV",
+  "Download cover": "Télécharger la lettre de motivation",
+  "Delete CV": "Supprimer le CV",
+  "Delete Cover": "Supprimer la lettre de motivation",
+  
+  "First Name": "Prénom",
+  "Last Name": "Nom de famille",
+  "Sex": "Sexe",
+  "No CV uploaded": "Aucun CV téléchargé",
+  "No Cover uploaded": "Aucune lettre de motivation téléchargée"
+  
+
 }

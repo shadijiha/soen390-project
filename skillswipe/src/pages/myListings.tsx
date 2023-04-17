@@ -371,13 +371,13 @@ const myListings = () => {
                           paddingTop: '0.5em',
                         }}
                       >
-                        ✅ ‎ # of Applications: {}
+                        ✅ ‎ # {t('of Applications')}: {}
                         <button>
                           <Link
                             href={`/jobListing/${job.id}`}
                             color={useColorModeValue('blue.500', 'blue.300')}
                           >
-                            View All
+                            {t('View All')}
                           </Link>
                         </button>
                       </chakra.p>
@@ -447,7 +447,7 @@ const myListings = () => {
                           }
                         }}
                       >
-                        Delete Application
+                        {t('Delete Application')}
                       </Button>
                     </Stack>
                   </Grid>

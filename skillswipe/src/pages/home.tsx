@@ -503,7 +503,7 @@ const Home = () => {
                       fontWeight: '300',
                     }}
                   >
-                    Have something on your 🧠?
+                    {t('Have something on your')} 🧠?
                   </ModalHeader>
 
                   <ModalBody>
@@ -529,7 +529,7 @@ const Home = () => {
                             }}
                             style={{ cursor: 'pointer' }}
                           >
-                            Click to upload Picture
+                            {t('Click to upload Picture')}
                           </h1>
                         )}
 
@@ -537,7 +537,7 @@ const Home = () => {
                       </Center>
                     </Box>
                     <TextareaAutosize
-                      placeholder={'Type anything...'}
+                      placeholder={t('Type anything...')}
                       onChange={handlepost}
                       id="creat-box"
                       minRows={2}
@@ -571,10 +571,10 @@ const Home = () => {
                       onClick={createPostHandler}
                       borderRadius="50px"
                     >
-                      Post
+                      {t('Post')}
                     </Button>
                     <Button variant="ghost" onClick={onClose}>
-                      Cancel
+                      {t('Cancel')}
                     </Button>
                   </ModalFooter>
                 </ModalContent>
@@ -595,17 +595,16 @@ const Home = () => {
                   display={'flex'}
                 >
                   <ModalHeader fontSize="lg" fontWeight="bold">
-                    Delete Post
+                    {t('Delete Post')}
                   </ModalHeader>
 
                   <ModalBody>
-                    Are you sure you want to delete this post? This action cannot be
-                    undone.
+                    {t('Are you sure you want to delete this post? This action cannot be undone.')}
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={() => setIsConfirmOpen(false)}>Cancel</Button>
+                    <Button onClick={() => setIsConfirmOpen(false)}>{t('Cancel')}</Button>
                     <Button colorScheme="red" onClick={handlePostDelete} ml={3}>
-                      Delete
+                      {t('delete')}
                     </Button>
                   </ModalFooter>
                 </ModalContent>
@@ -764,7 +763,7 @@ const Home = () => {
                                   borderRadius="50px"
                                   onClick={(event) => handleSubmit(event, job.id)}
                                 >
-                                  Quick Apply
+                                  {t('Quick Apply')}
                                 </Button>
                               )}
                             </HStack>
@@ -814,13 +813,13 @@ const Home = () => {
                                 {/* format the starting date to be only year month and date */}
                                 📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
                               </chakra.p>
-                              <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
+                              <chakra.p>🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr</chakra.p>
                               <chakra.p>
-                                🏫 ‎ ‎ Transcript Needed? ‎ ‎
+                                🏫 ‎ ‎ {t('transcript')} ‎ ‎
                                 {job.transcript.toString() == 'true' ? '✅' : '❌'}
                               </chakra.p>
                               <chakra.p>
-                                💌 ‎ ‎ Cover Letter Needed? ‎ ‎
+                                💌 ‎ ‎ {t('coverLetter')} ‎ ‎
                                 {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                               </chakra.p>
                             </Grid>
