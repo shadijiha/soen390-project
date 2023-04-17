@@ -46,7 +46,6 @@ export class PostsService {
     const ids: number[] = connections.map((connection) => connection.user.id)
     ids.push(userInfo.id)
 
-
     const posts = await this.postRepository.find(
       { where: { user: { id: In(ids) } }, order: { created_at: 'DESC' }, relations: ['user'] }
     )
