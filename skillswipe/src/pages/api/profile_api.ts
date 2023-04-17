@@ -298,3 +298,15 @@ export const deleteSkillsRequest = async (token: any, skillId: number) => {
       return { status: 500, data: err }
     })
 }
+
+// get suggested friends
+export const getSuggestedUsers = async (token: any) => {
+  return axios.get(`${URL}/suggestedFriends`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+
+

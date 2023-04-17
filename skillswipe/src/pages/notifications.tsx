@@ -29,9 +29,10 @@ import { getStaticProps } from '.'
 import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
 import { acceptRequest, getPendingRequest, removeConnection, sendRequest } from './api/api'
+import { getSuggestedUsers } from './api/profile_api'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { getAllConversation, getConversationById, /*getSuggestedUsers */} from './api/chat'
+import { getAllConversation, getConversationById} from './api/chat'
 import { px } from 'framer-motion'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -39,41 +40,21 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
   const [messageNotification, setmessageNotification] = useState([])
-  // const [suggestedUsers, setSuggestedUsers] = useState([])
+  const [suggestedFriends, setSuggestedFriends] = useState([
+    { id: '', firstName: '', lastName: '', profilePic: '', company: '', title: '' },
+  ])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
+  const [loading3, setloading3] = useState(0)
   const buttonColors = useColorModeValue('black', 'white')
 
-  const users = [
-    {
-      name: "John Doe",
-      jobTitle: "Software Developer",
-      company: "Amazon",
-      location: "Toronto, Canada",
-      avatar: "https://randomuser.me/api/portraits/men/1.jpg",
-    },
-    {
-      name: "Jane Smith",
-      jobTitle: "UX Designer",
-      company: "Facebook",
-      location: "Vancouver, Canada",
-      avatar: "https://randomuser.me/api/portraits/women/2.jpg",
-    },
-    {
-      name: "Bob Johnson",
-      jobTitle: "Marketing Manager",
-      company: "Google",
-      location: "Montreal, Canada",
-      avatar: "https://randomuser.me/api/portraits/men/3.jpg",
-    },
-  ];
   
   useEffect(() => {
     getPendingConnections()
     getMessage()
-    // getSuggestions()
+    getSuggestedFriends()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -196,17 +177,24 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     }
   }
 
-  // const getSuggestions = async () => {
-  //   const token = localStorage.getItem('jwt')
-  //   if (token) {
-  //     try {
-  //       const res = await getSuggestedUsers(token)
-  //       setSuggestedUsers(res.data)
-  //     } catch (error) {
-  //       toast(error.message)
-  //     }
-  //   }
-  // }
+  const getSuggestedFriends = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getSuggestedUsers(token)
+        .then((res) => {
+          setSuggestedFriends(res.data)
+          setloading3(res.data.length)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
+  const viewUsers = () => {
+    getSuggestedFriends()
+  }
+  
 
   const handleImageError = (self) => {
     self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png'
@@ -221,7 +209,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     <>
       <Layout>
         <NavBar
-          nbNotifications={pendingConnections.length + messageNotification.length}
+          nbNotifications={pendingConnections.length + messageNotification.length + suggestedFriends.length}
           addRequest={addRequest}
         ></NavBar>
         <Flex  justifyContent="center">
@@ -344,53 +332,15 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
             <Text>{t('noNotifications')}</Text>
           )}
 
-          {/* <Heading as="h1" size="lg" mb={4}>
-            {t('suggestions')}
-          </Heading>
-          {suggestedUsers.length > 0 ? (
-            suggestedUsers.map((user: any) => (
-              <Flex
-                key={user.id}
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                mb={4}
-                display="flex"
-                alignItems="center"
-              >
-                <Link href={`/profile/${user.id}`}>
-                  <Flex>
-                    <Avatar
-                      size="lg"
-                      mr={4}
-                      src={
-                        user.profilePic
-                          ? `data:image/jpeg;base64,${user.profilePic}`
-                          : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                      }
-                    />
-                    <Box>
-                      <Heading as="h2" size="md" mb={2}>
-                        {user.firstName} {user.lastName}
-                      </Heading>
-                      <Text mb={2}>{user.bio}</Text>
-                      <Text fontSize="sm">{user.timestamp}</Text>
-                    </Box>
-                  </Flex>
-                </Link> 
-                </Flex>
-            ))
-          ) : (
-            <Text>{t('noSuggestions')}</Text>
-          )} */}
-
 <Box py="4" >
   <Heading as="h1" size="lg" mb={8}>
     People you might know
   </Heading>
   <Flex flexWrap="wrap" justifyContent= "around ">
-    {users.map((user) => (
+    {suggestedFriends.length > 0 ? (
+     suggestedFriends.map((friend: any) => (
     <Box
+    key={friend.id}
     maxW={'260px'}
     w={'full'}
     bg={useColorModeValue('white', 'gray.900')}
@@ -402,13 +352,13 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     textAlign={'center'}>
     <Avatar
       size={'xl'}
-      src={user.avatar} 
+      src={friend.profilePic ? `data:image/jpeg;base64,${friend.profilePic}` : process.env.NEXT_PUBLIC_DEFAULT_PICTURE}
       mb={4}
       pos={'relative'}
 
     />
     <Heading fontSize={'2xl'} fontFamily={'body'}>
-      {user.name}
+      {friend.firstName} {friend.lastName}
     </Heading>
     
     <Text
@@ -416,22 +366,26 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       color={useColorModeValue('gray.700', 'gray.400')}
       px={3}
     >
-     {user.jobTitle}
+      {friend.jobTitle}
+
+
      <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" mt={2}>
   <Text fontSize="md" fontWeight="medium" mr={2}>
     Works at
   </Text>
   <Text fontSize="md" color={useColorModeValue('gray.700', 'gray.400')} mr={2}>
-    {user.company}
+    {friend.company} 
   </Text>
+  {friend.company && (
   <img
-    src={`https://www.${user.company.toLowerCase()}.com/favicon.ico`}
-    alt={`${user.company} logo`}
+    src={`https://www.${friend.company.toLowerCase()}.com/favicon.ico`}
+    alt={`${friend.company} logo`}
     width={20}
     height={20}
     onError={handleImageError}
     onLoad={handleImageLoad}
   />
+)}
 </Box>
 
     </Text>
@@ -440,7 +394,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       textAlign={'center'}
       color={useColorModeValue('gray.700', 'gray.400')}
       px={3}>
-        {user.location}
+        {friend.location}
     </Text>
 
     <Stack mt={8} direction={'row'} spacing={4}>
@@ -461,9 +415,16 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       </Button>
     </Stack>
    </Box>
-    ))}
+    
+      ))
+    ) : (
+      <Text>{t('noSuggestions')}</Text>
+    )}
+
     </Flex>
+       
   </Box>
+
 
         </Box>
         </Box>
