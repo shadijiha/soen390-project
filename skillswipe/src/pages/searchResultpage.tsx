@@ -137,28 +137,3 @@ export const getServerSideProps = async ({ locale }) => ({
 })
 
 export default Search
-
-// const handleSearch = async (e:any) => {
-// const token = localStorage.getItem("jwt");
-
-// search(token, searchQuery)
-//     .then((response) => {
-//         console.log(response.data.users);
-//         if (response.data == null) {
-//             toast("No results found");
-//         }else{
-
-//           const fetch = response.data.users.json();
-//           // using key value pairs
-
-//           response.data.users.map((user:any) => {
-//             setSearchResults({...searchResults, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic});
-//           })
-
-//         }
-//     })
-//     .catch((error) => {
-
-//         console.log(error);
-//     })
-// };

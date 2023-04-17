@@ -15,8 +15,6 @@ const GoogleLoginButton = ({ lang }) => {
     googleAuth(credential)
       .then(async (response) => {
         console.log(response)
-        const token = response.data.access_token
-        localStorage.setItem('jwt', token)
         Router.push('/home')
       })
       .catch((err) => {

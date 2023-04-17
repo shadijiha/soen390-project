@@ -86,7 +86,6 @@ const Register = () => {
         register(User)
           .then((Response) => {
             toast(t('successfullyRegistered'))
-            localStorage.setItem('jwt', Response.data.access_token)
             router.push('/home')
           })
           .catch((error) => {

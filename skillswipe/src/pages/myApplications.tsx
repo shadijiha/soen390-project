@@ -361,7 +361,6 @@ const MyApplications = () => {
                       outline={'solid 1px'}
                       outlineColor={useColorModeValue('gray.400', 'gray.600')}
                       onClick={async () => {
-                        const token = localStorage.getItem('jwt')
                         try {
                           await withdrawJobApplication(application.id)
                           setApplications(

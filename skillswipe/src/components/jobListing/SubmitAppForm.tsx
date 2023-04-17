@@ -32,7 +32,6 @@ const SubmitAppForm = () => {
   const [cover, setCover] = useState('')
 
   const handleSubmit = (event) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     const jobId = parseInt(router.query.id as string)
 
@@ -70,7 +69,7 @@ const SubmitAppForm = () => {
       toast.error(message)
       return
     } else {
-      applyToJob(token, jobId, submitApp)
+      applyToJob(jobId, submitApp)
         .then((res) => {
           if (res.status == 201 || res.status == 200) {
             toast.success('Successfully applied to job. Good luck!')

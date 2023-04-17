@@ -167,7 +167,6 @@ const findJob = () => {
   }
   const fetchUserData = async () => {
     try {
-      const token = localStorage.getItem('jwt')
       // fetch checkLogin API
       const response = await checkLogin()
       const data: UserAttributes = response.data
@@ -205,7 +204,6 @@ const findJob = () => {
   useEffect(() => {
     fetchUserData()
     const viewOpenJobs = async () => {
-      // Get token from local storage
       try {
         // Call API function to get open jobs
         const response = await getOpenJobs()

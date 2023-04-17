@@ -7,7 +7,6 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, Heading, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
@@ -47,7 +46,6 @@ const EditProfile = () => {
   })
 
   const coverImageHandler = (e: any) => {
-    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('coverPic', e.target.files[0], e.target.files[0].name)
@@ -65,7 +63,6 @@ const EditProfile = () => {
 
   const ProfileImageHandler = (e: any) => {
     console.log(e.target)
-    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('profilePic', e.target.files[0], e.target.files[0].name)

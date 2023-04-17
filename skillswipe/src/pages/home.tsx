@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
 import { DeleteIcon } from '@chakra-ui/icons'
@@ -378,7 +377,6 @@ const Home = () => {
     }
 
     fd.append('content', createpost.content)
-    const token = localStorage.getItem('jwt')
     createPosts(fd).then((res) => {
       if (res.status == 201 || res.status == 200) {
         toast.success('Sucessfully created post')

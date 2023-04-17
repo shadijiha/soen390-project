@@ -25,8 +25,6 @@ const InformationBox = () => {
     setUpdateUser(User)
   }
   const handleSubmit = async () => {
-    const token = localStorage.getItem('jwt')
-
     if (
       UpdateUser.firstName ||
       UpdateUser.lastName ||
@@ -38,7 +36,7 @@ const InformationBox = () => {
       if (UpdateUser.email && !emailValidator(UpdateUser.email)) {
         toast(t('invalidEmail'))
       } else {
-        editPersonalInformation(token, UpdateUser)
+        editPersonalInformation(UpdateUser)
           .then((response) => {
             console.log(response)
             toast(t('updateSuccess'))

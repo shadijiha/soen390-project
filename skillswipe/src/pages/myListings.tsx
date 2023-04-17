@@ -148,8 +148,7 @@ const myListings = () => {
       profilePic: currentUser.auth.profilePic,
     })
   }, [currentUser])
-  const userToken =
-    typeof window !== 'undefined' ? localStorage.getItem('jwt') : null
+
   return (
     <ProtectedRoute>
       <NavBar />

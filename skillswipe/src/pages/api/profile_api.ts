@@ -35,10 +35,7 @@ export const addEducationHistoryRequest = async (education: any) => {
   })
 }
 
-export const deleteEducationHistoryRequest = async (
-  token: any,
-  educationId: number
-) => {
+export const deleteEducationHistoryRequest = async (educationId: number) => {
   return req.delete(`/profile/education/${educationId}`).catch((err) => {
     return { status: 500, data: err }
   })
