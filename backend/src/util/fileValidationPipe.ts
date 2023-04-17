@@ -20,7 +20,7 @@ export class ProfileImagesFileValidationPipe implements PipeTransform {
       images.push(coverPic)
     }
 
-    console.log(images)
+   
 
     for (const image of images) {
       if (!image.mimetype.startsWith('image/')) {
@@ -55,7 +55,7 @@ export class ApplicationFileValidationPipe implements PipeTransform {
       pdfs.push(coverLetter)
     }
 
-    console.log(pdfs)
+
 
     for (const pdf of pdfs) {
       if (!pdf.mimetype.endsWith('/pdf')) {

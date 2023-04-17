@@ -54,7 +54,7 @@ describe('NotificationsService', () => {
 
   it('should mark notification as read', async () => {
     const allNotifications = await service.markAsRead(1);
-    expect(allNotifications).toEqual(true);
+    expect(mockNotificationsRepository.update).toHaveBeenCalled();
   });
 
   it('should mark all notifications as read', async () => {
