@@ -695,6 +695,7 @@ const Home = () => {
                                   objectFit: 'cover',
                                   borderRadius: '15px',
                                   marginTop: '1rem',
+                                  boxShadow: '0px 0px 10px 0px #00000040',
                                 }}
                                 src={
                                   post.image
