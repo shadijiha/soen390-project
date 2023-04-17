@@ -10,8 +10,9 @@ import { UsersModule } from '../users/users.module'
 import { UsersService } from '../users/users.service'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
-import { JwtStrategy } from './jwt.strategy'
-import { GoogleStrategy } from './google.strategy'
+import { JwtStrategy } from './strategies/jwt.strategy'
+import { GoogleStrategy } from './strategies/google.strategy'
+import { LocalStrategy } from './strategies/local.strategy'
 
 @Module({
   imports: [
@@ -30,6 +31,6 @@ import { GoogleStrategy } from './google.strategy'
     TypeOrmModule.forFeature([User])
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, GoogleStrategy, JwtStrategy, ConnectionsService, PusherService]
+  providers: [AuthService, UsersService, GoogleStrategy, LocalStrategy, JwtStrategy, ConnectionsService, PusherService]
 })
 export class AuthModule { }

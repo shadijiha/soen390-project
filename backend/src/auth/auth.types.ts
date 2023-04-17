@@ -26,7 +26,7 @@ export namespace Auth {
       user: User | Partial<User> | null
 
     @ApiProperty()
-      access_token: string
+      accessToken: string
   }
 
   export class RegisterRequest extends LoginRequest {

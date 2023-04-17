@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import {
   Button,
   Flex,
@@ -99,97 +98,93 @@ const Register = () => {
     }
   }
   return (
-    <>
-      <Layout>
-        <Flex
-          height="100vh"
-          alignItems="center"
-          justifyContent="center"
-          data-testid="register-page"
+    <Flex
+      height="100vh"
+      alignItems="center"
+      justifyContent="center"
+      data-testid="register-page"
+    >
+      <Flex direction="column" background={formBackground} p={12} rounded={25}>
+        <Heading mb={6}>{t('register')} 🧖🏼</Heading>
+        <Input
+          data-testid="first-name"
+          placeholder="First Name"
+          variant="filled"
+          mb={3}
+          type="text"
+          background={placeholderBackground}
+          onChange={FirstNameChange}
+        />
+
+        <Input
+          data-testid="last-name"
+          placeholder="Last Name"
+          variant="filled"
+          mb={3}
+          type="text"
+          background={placeholderBackground}
+          onChange={LastNameChange}
+        />
+
+        <Input
+          data-testid="email"
+          placeholder={t('email')}
+          variant="filled"
+          mb={3}
+          type="email"
+          background={placeholderBackground}
+          onChange={EmailChange}
+        />
+        <Input
+          data-testid="password"
+          placeholder={t('password')}
+          variant="filled"
+          mb={3}
+          type="password"
+          background={placeholderBackground}
+          onChange={passwordChange}
+        />
+        <Input
+          data-testid="confirm-password"
+          placeholder={t('confirm password')}
+          variant="filled"
+          type="password"
+          background={placeholderBackground}
+          onChange={confirmpassChange}
+        />
+        <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
+          {ConfirmPass !== User.password ? t('password-mismatch') : ''}
+        </Text>
+
+        <Select
+          my={3}
+          onChange={genderChange}
+          placeholder={t('select sex')}
+          mb={6}
+          variant="filled"
+          background={placeholderBackground}
         >
-          <Flex direction="column" background={formBackground} p={12} rounded={25}>
-            <Heading mb={6}>{t('register')} 🧖🏼</Heading>
-            <Input
-              data-testid="first-name"
-              placeholder="First Name"
-              variant="filled"
-              mb={3}
-              type="text"
-              background={placeholderBackground}
-              onChange={FirstNameChange}
-            />
-
-            <Input
-              data-testid="last-name"
-              placeholder="Last Name"
-              variant="filled"
-              mb={3}
-              type="text"
-              background={placeholderBackground}
-              onChange={LastNameChange}
-            />
-
-            <Input
-              data-testid="email"
-              placeholder={t('email')}
-              variant="filled"
-              mb={3}
-              type="email"
-              background={placeholderBackground}
-              onChange={EmailChange}
-            />
-            <Input
-              data-testid="password"
-              placeholder={t('password')}
-              variant="filled"
-              mb={3}
-              type="password"
-              background={placeholderBackground}
-              onChange={passwordChange}
-            />
-            <Input
-              data-testid="confirm-password"
-              placeholder={t('confirm password')}
-              variant="filled"
-              type="password"
-              background={placeholderBackground}
-              onChange={confirmpassChange}
-            />
-            <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
-              {ConfirmPass !== User.password ? t('password-mismatch') : ''}
-            </Text>
-
-            <Select
-              my={3}
-              onChange={genderChange}
-              placeholder={t('select sex')}
-              mb={6}
-              variant="filled"
-              background={placeholderBackground}
-            >
-              <option value="MALE">{t('male')}</option>
-              <option value="FEMALE">{t('female')}</option>
-            </Select>
-            <Button colorScheme="green" mb={4} onClick={submitForm}>
-              {t('register')}
-            </Button>
-            <Button
-              mb={4}
-              onClick={toggleColorMode}
-              _hover={{ bg: 'transparent' }}
-              bg="transparent"
-            >
-              {toggleTheme}
-            </Button>
-            <Button mb={-5}>
-              <Link href="/">
-                <Text fontSize={13}>{t('alreadyUser')}</Text>
-              </Link>
-            </Button>
-          </Flex>
-        </Flex>
-      </Layout>
-    </>
+          <option value="MALE">{t('male')}</option>
+          <option value="FEMALE">{t('female')}</option>
+        </Select>
+        <Button colorScheme="green" mb={4} onClick={submitForm}>
+          {t('register')}
+        </Button>
+        <Button
+          mb={4}
+          onClick={toggleColorMode}
+          _hover={{ bg: 'transparent' }}
+          bg="transparent"
+        >
+          {toggleTheme}
+        </Button>
+        <Button mb={-5}>
+          <Link href="/">
+            <Text fontSize={13}>{t('alreadyUser')}</Text>
+          </Link>
+        </Button>
+      </Flex>
+    </Flex>
   )
 }
 

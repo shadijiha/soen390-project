@@ -1,6 +1,6 @@
 import { PassportStrategy } from '@nestjs/passport'
 import { Injectable } from '@nestjs/common'
-import { User } from '../models/user.entity'
+import { User } from '../../models/user.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { Strategy, type VerifyCallback } from 'passport-google-oauth20'

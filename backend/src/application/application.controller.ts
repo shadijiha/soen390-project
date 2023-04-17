@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common'
 import { FileFieldsInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { type Application } from '../models/application.entity'
 import { type User } from '../models/user.entity'
 import { ApplicationFileValidationPipe } from '../util/fileValidationPipe'
@@ -14,7 +14,7 @@ import { Applications } from './applications.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ApplicationController {
-  constructor (private readonly applicationService: ApplicationService) {}
+  constructor (private readonly applicationService: ApplicationService) { }
 
   // post an application route
   @Post(':id')

@@ -37,9 +37,10 @@ export class AuthService {
   }
 
   // logins user
-  public async login ({ email, password }: Auth.LoginRequest): Promise<{ user: User, access_token: string }> {
+  public async login ({ email, password }: Auth.LoginRequest): Promise<Auth.LoginResponse> {
     // Validate email
     let user: User
+    console.log(email, password)
     try {
       user = await this.usersRepository.findOneByOrFail({ email })
     } catch (e) {
@@ -55,7 +56,7 @@ export class AuthService {
 
       return {
         user,
-        access_token: this.jwtService.sign(payload)
+        accessToken: this.jwtService.sign(payload)
       }
     } else {
       throw new UnauthorizedException('Wrong password for ' + email)
@@ -80,7 +81,7 @@ export class AuthService {
         }
         return {
           user: userNoPass,
-          access_token: this.jwtService.sign(payload)
+          accessToken: this.jwtService.sign(payload)
         }
       })
       .catch(async () => {
@@ -99,7 +100,7 @@ export class AuthService {
           }
           return {
             user: userNoPass,
-            access_token: this.jwtService.sign(payload)
+            accessToken: this.jwtService.sign(payload)
           }
         } catch (error) {
           console.log('google auth error', error)

@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Box, Flex, Heading, Img, List, Stack } from '@chakra-ui/react'
@@ -8,6 +7,7 @@ import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import ProtectedRoute from '../components/ProtectedRoute'
 import { search } from './api/api'
 
 const Search = () => {
@@ -28,8 +28,7 @@ const Search = () => {
   const searchQuery = router.query.q?.valueOf() as string
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt')
-    search(token, searchQuery)
+    search(searchQuery)
       .then((response) => {
         if (!response.data || !response.data.users) {
           toast(t('noResults'))
@@ -55,7 +54,7 @@ const Search = () => {
   // display search results in a card component with profile pic, name,
 
   return (
-    <Layout>
+    <ProtectedRoute>
       <NavBar></NavBar>
       <Heading
         textAlign={'center'}
@@ -127,7 +126,7 @@ const Search = () => {
           </div>
         </Stack>
       </Flex>
-    </Layout>
+    </ProtectedRoute>
   )
 }
 

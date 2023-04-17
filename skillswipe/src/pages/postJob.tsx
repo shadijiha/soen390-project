@@ -23,6 +23,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import ProtectedRoute from '../components/ProtectedRoute'
 import { createJob } from './api/api'
 
 const postJob = () => {
@@ -43,7 +44,6 @@ const postJob = () => {
   const { t } = useTranslation('common')
 
   const addListing = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     console.log(postListing)
 
@@ -66,7 +66,7 @@ const postJob = () => {
       const salary = parseInt(postListing.salary.toString(), 10)
       postListing.salary = salary
 
-      createJob(token, postListing).then((res) => {
+      createJob(postListing).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('createListing '))
         } else {
@@ -77,7 +77,7 @@ const postJob = () => {
   }
 
   return (
-    <>
+    <ProtectedRoute>
       <NavBar />
       <div data-testid="post-job">
         <Container maxW="5xl" paddingBottom={8}>
@@ -299,7 +299,7 @@ const postJob = () => {
           </Box>
         </Container>
       </div>
-    </>
+    </ProtectedRoute>
   )
 }
 
