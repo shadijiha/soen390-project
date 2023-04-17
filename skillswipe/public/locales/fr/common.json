@@ -52,8 +52,8 @@
     "notConnectedStatusMessage": "{{user}} n'est pas connecté(e)",
     "userNotFoundMessage": "Utilisateur non trouvé",
 
-    "myListings": "Mes offres d'emploi",
-    "openJobs": "Offres d'emploi ouvertes",
+    "myListings": "Mes Offres d'Emploi",
+    "openJobs": "Offres d'Emploi Ouvertes",
     "filterJobs": "Filtrer les offres d'emploi",
     "sortStartingDate": "Trier par date de début",
     "viewAll": "Voir tout",
