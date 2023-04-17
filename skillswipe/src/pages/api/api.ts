@@ -17,7 +17,7 @@ export const editProfile = async (editProfile: any) =>
   req.put('/auth/login', editProfile)
 
 export const changeStatus = async (status: any) =>
-  fetch(`${URL}/user/status`, {
+  fetch(`${process.env.BASE_URL}/user/status`, {
     method: 'PUT',
     credentials: 'include',
     headers: {
@@ -122,7 +122,7 @@ export const getMyApplications = async () =>
 
 export const withdrawJobApplication = async (id) =>
   req
-    .delete(`${URL}/application/${id}`)
+    .delete(`/application/${id}`)
     .then((resp) => resp.data)
     .catch((error) => {
       throw new Error(error.response.data.error)
@@ -130,7 +130,7 @@ export const withdrawJobApplication = async (id) =>
 
 export const deleteJobListing = async (id) =>
   req
-    .delete(`${URL}/jobs/${id}`)
+    .delete(`/jobs/${id}`)
     .then((resp) => resp.data)
     .catch((error) => {
       throw new Error(error.response.data.error)
