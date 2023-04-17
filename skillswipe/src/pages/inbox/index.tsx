@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-children-prop */
@@ -114,8 +115,10 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
           ) : (
             <VStack mt={4} spacing={4}>
               {users.map((user) => (
-                <Box key={user.id} onClick={() => handleUserSelect(user)}>
-                  {user.name}
+                <Box
+                // key={user.id} onClick={() => handleUserSelect(user)}
+                >
+                  {/* {user.name} */}
                 </Box>
               ))}
             </VStack>
