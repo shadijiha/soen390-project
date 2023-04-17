@@ -121,7 +121,7 @@ const postJob = () => {
             <VStack spacing={'2.5em'} w="100%">
               {!isFormHidden && (
                 <FormControl id="externalUrl">
-                  <FormLabel htmlFor="externalUrl">{t('externalUrl')}</FormLabel>
+                  <FormLabel htmlFor="externalUrl">{t('externalURL')}</FormLabel>
                   <Input
                     onChange={(event) =>
                       setJobListing({
