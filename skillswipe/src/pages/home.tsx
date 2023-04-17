@@ -343,8 +343,8 @@ const Home = () => {
 
   const [isOpen, setIsOpen] = useState(false)
   const onClose = () => setIsOpen(false)
-  const formBorder = useColorModeValue('gray.100', 'gray.600')
-  const postBackground = useColorModeValue('gray.100', 'gray.700')
+  const formBorder = useColorModeValue('gray.300', 'gray.600')
+  const postBackground = useColorModeValue('gray.100', '#DBE9FF0A ')
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
     {
@@ -435,9 +435,8 @@ const Home = () => {
           gap={3}
           _hover={{
             boxShadow: '0 0 0 2px #3182ce',
-            // maxWidth: '-1',
             borderRadius: '18px',
-            maxWidth: '50%',
+            // maxWidth: '50%',
             transition: 'all 0.3s ease-in-out',
           }}
         >
@@ -614,7 +613,7 @@ const Home = () => {
               </Modal>
             </div>
 
-            <HStack spacing={8} align="start">
+            <HStack spacing={8} align="start" width={'80vw'}>
               <Box width={{ base: '100%', md: '70%' }}>
                 <List>
                   {posts.map((post) => (
@@ -628,7 +627,6 @@ const Home = () => {
                         rounded="20"
                         overflow="hidden"
                         minWidth={'100%'}
-                        // maxW={'700px'}
                       >
                         <HStack
                           spacing={6}
@@ -681,6 +679,7 @@ const Home = () => {
                             </Button>
                           ) : null}
                         </HStack>
+
                         {post.image !== null ? (
                           <HStack>
                             <a
@@ -716,9 +715,9 @@ const Home = () => {
                 height="100%"
                 width="1px"
                 color={formBorder}
-                display={{ base: 'none', md: 'block' }}
+                display={{ base: 'none', md: 'block', sm: 'block' }}
               />
-              <Box width={'30%'} display={{ base: 'none', md: 'block' }}>
+              <Box width={'30%'} display={{ base: 'none', md: 'block', sm: 'none' }}>
                 <Text
                   style={{
                     fontSize: '1.2rem',
@@ -727,27 +726,18 @@ const Home = () => {
                     backgroundColor: useColorModeValue('gray.100', 'gray.700'),
                     padding: '1rem',
                     marginBottom: '1rem',
-                    borderRadius: '20px',
+                    borderRadius: '200px',
                     borderColor: useColorModeValue('#5D616736', '#E2E8F01E'),
                     borderWidth: '2px',
                   }}
                 >
                   <b> {t('openJobsForYou')} </b>
                 </Text>
-                <Box
-                  style={{
-                    // border: '1px solid',
-                    borderColor: useColorModeValue('#5D616736', '#E2E8F01E'),
-                    borderRadius: '18px',
-                  }}
-                >
+                <div min-width={{ base: 'unset', sm: '100vh' }}>
                   {jobListing.map((job, index) => (
                     <Fragment key={index}>
                       {User.auth.id !== job.user.id ? (
-                        <HoverableGrid
-                          w="100%"
-                          minW={{ base: 'unset', sm: '100vh' }}
-                        >
+                        <HoverableGrid>
                           <Box>
                             <HStack spacing={3}>
                               <img
@@ -804,14 +794,14 @@ const Home = () => {
                               fontSize="sm"
                               color={useColorModeValue('gray.600', 'gray.300')}
                             >
-                              📍 {job.location}
+                              📍 ‎ ‎ {job.location}
                             </chakra.p>
                             <chakra.p
                               fontWeight="normal"
                               fontSize="sm"
                               color={useColorModeValue('gray.600', 'gray.300')}
                             >
-                              💼 ‎
+                              💼 ‎ ‎ {t('jobType')}:{' '}
                               {job.jobType.charAt(0).toUpperCase() +
                                 job.jobType.slice(1)}
                             </chakra.p>
@@ -822,17 +812,21 @@ const Home = () => {
                               color={useColorModeValue('gray.600', 'gray.300')}
                             >
                               {/* By the way, the ‎ is an invisible space character */}
+
                               <chakra.p>
                                 {/* format the starting date to be only year month and date */}
-                                📅 ‎ ‎ Starting Date: {job.startDate.split('T')[0]}
+                                📅 ‎ ‎ {t('startDate')}:{' '}
+                                {job.startDate.split('T')[0]}
                               </chakra.p>
-                              <chakra.p>🤑 ‎ ‎ Salary: ${job.salary}/hr</chakra.p>
                               <chakra.p>
-                                🏫 ‎ ‎ Transcript Needed? ‎ ‎
+                                🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr
+                              </chakra.p>
+                              <chakra.p>
+                                🏫 ‎ ‎ {t('transcript')} ‎ ‎
                                 {job.transcript.toString() == 'true' ? '✅' : '❌'}
                               </chakra.p>
                               <chakra.p>
-                                💌 ‎ ‎ Cover Letter Needed? ‎ ‎
+                                💌 ‎ ‎ {t('coverLetter')} ‎ ‎
                                 {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
                               </chakra.p>
                             </Grid>
@@ -843,7 +837,7 @@ const Home = () => {
                       {jobListing.length - 1 !== index && <Divider m={0} />}
                     </Fragment>
                   ))}
-                </Box>
+                </div>
               </Box>
             </HStack>
           </Box>
