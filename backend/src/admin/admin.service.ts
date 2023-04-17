@@ -91,6 +91,17 @@ export class AdminService {
     })
   }
 
+  async getReportedMessages (): Promise<Reported[]> {
+    return await this.reportedRepository.find({
+      where: {
+        type: 'message',
+        status: 'unresolved'
+      },
+      relations: ['message', 'reporter', 'reported'],
+      withDeleted: true
+    })
+  }
+
   async getResolvedPosts (): Promise<Reported[]> {
     return await this.reportedRepository.find({
       where: {
@@ -113,16 +124,7 @@ export class AdminService {
     })
   }
 
-  async getReportedMessages (): Promise<Reported[]> {
-    return await this.reportedRepository.find({
-      where: {
-        type: 'message',
-        status: 'unresolved'
-      },
-      relations: ['message', 'reporter', 'reported'],
-      withDeleted: true
-    })
-  }
+
 
   async resolvePostSafe (reportId: string): Promise<void> {
     const report = await this.reportedRepository.findOneBy({ id: parseInt(reportId) })
@@ -159,7 +161,8 @@ export class AdminService {
     report.status = 'warned'
     await this.reportedRepository.save(report)
 
-    await report.post.softRemove()
+    // await report.post.softRemove()
+    await this.reportedRepository.softRemove(report.post)
 
     // todo: add pusher notification
     // add notification to db
@@ -222,7 +225,8 @@ export class AdminService {
 
     if (posterToBeBanned != null) {
       posterToBeBanned.type = 'banned'
-      await posterToBeBanned.softRemove()
+      // await posterToBeBanned.softRemove()
+      await this.usersRepository.softRemove(posterToBeBanned)
     }
   }
 
@@ -246,7 +250,8 @@ export class AdminService {
 
     if (senderToBeBanned != null) {
       senderToBeBanned.type = 'banned'
-      await senderToBeBanned.softRemove()
+      // await senderToBeBanned.softRemove()
+      await this.usersRepository.softRemove(senderToBeBanned)
     }
   }
 
