@@ -683,17 +683,26 @@ const Home = () => {
                         </HStack>
                         {post.image !== null ? (
                           <HStack>
-                            {' '}
-                            <img
-                              alt="post pic"
-                              width={'80%'}
-                              style={{ maxHeight: '60%' }}
-                              src={
-                                post.image
-                                  ? `data:image/jpeg;base64,${post.image}`
-                                  : post.image
-                              }
-                            />
+                            <a
+                              href={`data:image/jpeg;base64,${post.image}`}
+                              target="_blank"
+                            >
+                              <img
+                                alt="post pic"
+                                style={{
+                                  maxHeight: '180px',
+                                  maxWidth: 'auto',
+                                  objectFit: 'cover',
+                                  borderRadius: '15px',
+                                  marginTop: '1rem',
+                                }}
+                                src={
+                                  post.image
+                                    ? `data:image/jpeg;base64,${post.image}`
+                                    : post.image
+                                }
+                              />
+                            </a>
                           </HStack>
                         ) : null}
                       </Box>
