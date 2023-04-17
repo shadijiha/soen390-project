@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import {
   Button,
   Center,
@@ -14,45 +13,40 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
+import { useContext, useState } from 'react'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import GoogleLoginButton from '../components/googleLogin'
+import AuthContext, { User } from '../contexts/AuthContext'
 import { loginApi } from './api/api'
 
 const login = () => {
+  const { setUser } = useContext(AuthContext)
   const { t } = useTranslation('common')
   const { toggleColorMode } = useColorMode()
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
   const toggleTheme = useColorModeValue('🌙', '💡')
-  const googleBackground = useColorModeValue('white', 'gray.700')
-  const [User, setUser] = useState({ email: '', password: '' })
+  // const [User, setUser] = useState({ email: '', password: '' })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const router = useRouter()
-  const changeEmail = (event: any) => {
-    setUser({
-      ...User,
-      email: event.target.value,
-    })
-  }
-  const changePassword = (event: any) => {
-    setUser({
-      ...User,
-      password: event.target.value,
-    })
-  }
+  const currentLang = router.locale // => locale string eg. "en"
+
   const submitForm = () => {
-    if (!(User.email && User.password)) {
+    if (!(email && password)) {
       toast(t('Please fill all the fields'))
     } else {
-      loginApi(User)
-        .then((Response: any) => {
+      loginApi({ email, password })
+        .then((resp) => {
+          console.log(resp)
+          setUser(resp.data as User)
           toast(t('loggedIn'))
           router.push('/home')
-          localStorage.setItem('jwt', Response.data.access_token)
         })
         .catch((error: any) => {
-          if (error.response.status == 401) {
+          console.log(error)
+          if (error.response.status == 401 || error.response.status == 400) {
             toast(t('fillCorrectly'))
           } else {
             toast(error.message)
@@ -62,60 +56,66 @@ const login = () => {
   }
 
   return (
-    <>
-      <div data-testid="login-page">
-        <Layout>
-          <Flex height="100vh" alignItems="center" justifyContent="center">
-            <Flex direction="column" background={formBackground} p={12} rounded={25}>
-              <Heading mb={6}>SkillSwipe 🚀</Heading>
-              <Input
-                placeholder="Email"
-                onChange={changeEmail}
-                variant="filled"
-                mb={3}
-                type="email"
-                background={placeholderBackground}
-                data-testid="email"
-              />
-              <Input
-                placeholder="*******"
-                onChange={changePassword}
-                variant="filled"
-                mb={6}
-                type="password"
-                background={placeholderBackground}
-                data-testid="password"
-              />
-              <Button colorScheme="blue" mb={3} onClick={submitForm}>
-                {t('signIn')}
-              </Button>
-              {/* Google */}
-              <Button
-                mb={6}
-                w={'full'}
-                variant={'outline'}
-                backgroundColor={googleBackground}
-                leftIcon={<FcGoogle />}
-              >
-                <Center>
-                  <Text>{t('googleSignIn')}</Text>
-                </Center>
-              </Button>
-              <Button colorScheme="green" mb={6}>
-                <Link href="/register">Register</Link>
-              </Button>
-              <Button
-                onClick={toggleColorMode}
-                _hover={{ bg: 'transparent' }}
-                bg="transparent"
-              >
-                {toggleTheme}
-              </Button>
-            </Flex>
-          </Flex>
-        </Layout>
-      </div>
-    </>
+    <div data-testid="login-page">
+      <Flex height="100vh" alignItems="center" justifyContent="center">
+        <Flex
+          direction="column"
+          background={formBackground}
+          p={12}
+          rounded={25}
+          justifyContent="center"
+        >
+          <Heading mb={6}>SkillSwipe 🚀</Heading>
+          <Input
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value)
+            }}
+            variant="filled"
+            mb={3}
+            type="email"
+            background={placeholderBackground}
+            data-testid="email"
+          />
+          <Input
+            placeholder="*******"
+            onChange={(e) => {
+              setPassword(e.target.value)
+            }}
+            variant="filled"
+            mb={6}
+            type="password"
+            background={placeholderBackground}
+            data-testid="password"
+          />
+          <Button colorScheme="blue" mb={3} onClick={submitForm}>
+            {t('signIn')}
+          </Button>
+          <Center>
+            <GoogleLoginButton lang={currentLang} />
+          </Center>
+          <Text textAlign="center">or</Text>
+          <Button colorScheme="green" mb={6}>
+            <Link href="/register">Register</Link>
+          </Button>
+          <Button
+            onClick={toggleColorMode}
+            _hover={{ bg: 'transparent' }}
+            bg="transparent"
+          >
+            {toggleTheme}
+          </Button>
+          <div className="policy-agreement">
+            <Text onClick={() => router.push('/privacy-policy')}>
+              Read about privacy policy
+            </Text>
+            <Text onClick={() => router.push('/terms-agreement')}>
+              Read our terms of agreement
+            </Text>
+          </div>
+        </Flex>
+      </Flex>
+    </div>
   )
 }
 

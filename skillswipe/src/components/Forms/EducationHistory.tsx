@@ -39,7 +39,6 @@ const EducationHistory = (props: any) => {
   }
 
   const addEducation = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !educationHistory.degree ||
@@ -54,7 +53,7 @@ const EducationHistory = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      addEducationHistoryRequest(token, educationHistory).then((res) => {
+      addEducationHistoryRequest(educationHistory).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -65,12 +64,11 @@ const EducationHistory = (props: any) => {
   }
 
   const deleteEducation = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteEducation(props.education.id)
     } else {
-      deleteEducationHistoryRequest(token, educationHistory.id).then((res) => {
+      deleteEducationHistoryRequest(educationHistory.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           console.log('Chilld:' + props.education.id)
@@ -82,7 +80,6 @@ const EducationHistory = (props: any) => {
     }
   }
   const updateEducation = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     // call API to update education history
     if (
@@ -98,7 +95,7 @@ const EducationHistory = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      editEducationHistoryRequest(token, educationHistory).then((res) => {
+      editEducationHistoryRequest(educationHistory).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {

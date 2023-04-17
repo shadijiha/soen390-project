@@ -40,7 +40,6 @@ const PersonalProjects = (props: any) => {
   }
 
   const updatePersonalProjects = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !personalProject.start_year ||
@@ -56,7 +55,7 @@ const PersonalProjects = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      editPersonalProjectsRequest(token, personalProject).then((res) => {
+      editPersonalProjectsRequest(personalProject).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -67,7 +66,6 @@ const PersonalProjects = (props: any) => {
   }
 
   const addPersonalProjects = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !personalProject.start_year ||
@@ -83,7 +81,7 @@ const PersonalProjects = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      addPersonalProjectsRequest(token, personalProject).then((res) => {
+      addPersonalProjectsRequest(personalProject).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -94,12 +92,11 @@ const PersonalProjects = (props: any) => {
   }
 
   const deletePersonalProjects = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteProject(props.personalProject?.id)
     } else {
-      deletePersonalProjectsRequest(token, personalProject?.id).then((res) => {
+      deletePersonalProjectsRequest(personalProject?.id).then((res) => {
         if (res.status === 201 || res.status === 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteProject(props.personalProject.id)

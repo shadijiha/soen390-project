@@ -39,7 +39,6 @@ const Experience = (props: any) => {
   }
 
   const updateWorkExperience = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !experience.start_year ||
@@ -54,7 +53,7 @@ const Experience = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      editWorkEperienceRequest(token, experience).then((res) => {
+      editWorkEperienceRequest(experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -65,7 +64,6 @@ const Experience = (props: any) => {
   }
 
   const addWorkExperience = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !experience.start_year ||
@@ -80,7 +78,7 @@ const Experience = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      addWorkExperienceRequest(token, experience).then((res) => {
+      addWorkExperienceRequest(experience).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -91,12 +89,11 @@ const Experience = (props: any) => {
   }
 
   const deleteWorkExperience = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteExperience(props.experience.id)
     } else {
-      deleteWorkExperienceRequest(token, experience.id).then((res) => {
+      deleteWorkExperienceRequest(experience.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteExperience(props.experience.id)

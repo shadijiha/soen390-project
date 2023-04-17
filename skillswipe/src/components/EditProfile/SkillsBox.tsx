@@ -1,11 +1,10 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
+import AuthContext from '../../contexts/AuthContext'
 import Skills from '../Forms/Skills'
 
 type Skill = {
@@ -15,8 +14,8 @@ type Skill = {
 
 const SkillsBox = () => {
   // Api calls
-  const profile = useSelector((state) => state as any)
-  const [skillsList, setSkillsList] = useState(profile.auth.skills as Skill[])
+  const { user } = useContext(AuthContext)
+  const [skillsList, setSkillsList] = useState(user.skills as Skill[])
   const deleteSkill = (id: number) => {
     console.log('delete skill', id)
     console.log('skillsList', skillsList)

@@ -1,14 +1,14 @@
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Box, Flex, Heading, Img, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import ProtectedRoute from '../components/ProtectedRoute'
 import { search } from './api/api'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Search = () => {
   const { t } = useTranslation('common')
@@ -28,8 +28,7 @@ const Search = () => {
   const searchQuery = router.query.q?.valueOf() as string
 
   useEffect(() => {
-    const token = localStorage.getItem('jwt')
-    search(token, searchQuery)
+    search(searchQuery)
       .then((response) => {
         if (!response.data || !response.data.users) {
           toast(t('noResults'))
@@ -55,7 +54,7 @@ const Search = () => {
   // display search results in a card component with profile pic, name,
 
   return (
-    <Layout>
+    <ProtectedRoute>
       <NavBar></NavBar>
       <Heading
         textAlign={'center'}
@@ -127,7 +126,7 @@ const Search = () => {
           </div>
         </Stack>
       </Flex>
-    </Layout>
+    </ProtectedRoute>
   )
 }
 
@@ -138,28 +137,3 @@ export const getServerSideProps = async ({ locale }) => ({
 })
 
 export default Search
-
-// const handleSearch = async (e:any) => {
-// const token = localStorage.getItem("jwt");
-
-// search(token, searchQuery)
-//     .then((response) => {
-//         console.log(response.data.users);
-//         if (response.data == null) {
-//             toast("No results found");
-//         }else{
-
-//           const fetch = response.data.users.json();
-//           // using key value pairs
-
-//           response.data.users.map((user:any) => {
-//             setSearchResults({...searchResults, firstName: user.firstName, lastName: user.lastName, profilePic: user.profilePic});
-//           })
-
-//         }
-//     })
-//     .catch((error) => {
-
-//         console.log(error);
-//     })
-// };

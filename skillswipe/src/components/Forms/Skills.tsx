@@ -36,13 +36,12 @@ const Skills = (props: any) => {
   }
 
   const updateSkills = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!skill.title) {
       toast(t('fillFields'))
       return
     } else {
-      editSkillsRequest(token, skill).then((res) => {
+      editSkillsRequest(skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -53,13 +52,12 @@ const Skills = (props: any) => {
   }
 
   const addSkill = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!skill.title) {
       toast(t('fillFields'))
       return
     } else {
-      addSkillsRequest(token, skill).then((res) => {
+      addSkillsRequest(skill).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -70,12 +68,11 @@ const Skills = (props: any) => {
   }
 
   const deleteSkill = (event: any) => {
-    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteSkill(props.skill.id)
     } else {
-      deleteSkillsRequest(token, skill.id).then((res) => {
+      deleteSkillsRequest(skill.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteSkill(props.skill.id)

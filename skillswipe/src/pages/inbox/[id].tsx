@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Divider, Flex, Spinner, useColorMode } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
@@ -11,6 +10,7 @@ import { toast } from 'react-toastify'
 import Footer from '../../components/Chat/Footer'
 import Header from '../../components/Chat/Header'
 import Messages from '../../components/Chat/Messages'
+import ProtectedRoute from '../../components/ProtectedRoute'
 import { getUserById, getUserStatus } from '../api/api'
 import { getConversationById, message } from '../api/chat'
 
@@ -30,10 +30,9 @@ const Chat = () => {
       return
     }
     const data = inputMessage
-    const token = localStorage.getItem('jwt')
     setMessages((old) => [...old, { senderId: User.auth.id, message: data }])
 
-    message(token, {
+    message({
       message: data,
       receiverId: router.query.id,
     })
@@ -49,9 +48,7 @@ const Chat = () => {
   }
 
   const sendMessagefile = (file: any) => {
-    const token = localStorage.getItem('jwt')
-
-    message(token, {
+    message({
       message: JSON.stringify(file),
       receiverId: router.query.id,
     })
@@ -64,28 +61,24 @@ const Chat = () => {
   }
 
   const loadMessage = (id: any) => {
-    if (localStorage.getItem('jwt')) {
-      const token = localStorage.getItem('jwt')
-      getConversationById(token, id)
-        .then((response) => {
-          setMessages(response.data)
-        })
-        .catch((error) => {
-          toast(error.message)
-        })
-    }
+    getConversationById(id)
+      .then((response) => {
+        setMessages(response.data)
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
   }
   useEffect(() => {
     if (router.query.id) {
       loadMessage(router.query.id)
-      const token = localStorage.getItem('jwt')
       if (router.query.id == User.auth.id) {
         router.push('/home')
       } else {
-        getUserById(token, router.query.id)
+        getUserById(router.query.id)
           .then((response) => {
             if (response.data.connectionStatus == 'Connected') {
-              getUserStatus(router.query.id, token)
+              getUserStatus(router.query.id)
                 .then((reponse) => {
                   console.log(reponse.data)
                   setStatus(reponse.data)
@@ -108,12 +101,11 @@ const Chat = () => {
     }
   }, [router.query.id])
 
-
   useEffect(() => {
-    if(User.auth.id){
+    if (User.auth.id) {
       setLoad(true)
     }
-  },[User.auth])
+  }, [User.auth])
   useEffect(() => {
     // Get coversation by ID will doo when apis are fully ready
     // Message is fully function
@@ -142,43 +134,41 @@ const Chat = () => {
     }
   }, [Load])
   return (
-    <>
-      <Layout>
-        <NavBar />
-        {Load == false ? (
-          <Spinner />
-        ) : (
-          <Flex mt={0} w="100%" h="100vh" justify="center">
-            <Flex
-              w="65%"
-              h="75%"
-              flexDir="column"
-              style={{
-                backgroundColor:
-                  useColorMode().colorMode === 'light' ? '#FFFFFF9F' : '#FFFFFF1F',
-                borderRadius: '35px',
-                padding: '25px',
-                boxShadow: '0px 0px 10px 0px #0000001f',
-                borderColor:
-                  useColorMode().colorMode === 'light' ? '#CECECEA0' : '#FFFFFF1F',
-                borderWidth: '7px',
-              }}
-            >
-              <Header user={chatUser} status={Status} />
-              <Divider />
-              <br />
-              <Messages messages={messages} user={chatUser} />
-              <Divider />
-              <Footer
-                handleSendMessage={handleSendMessage}
-                sendMessagefile={sendMessagefile}
-                append={append}
-              />
-            </Flex>
+    <ProtectedRoute>
+      <NavBar />
+      {Load == false ? (
+        <Spinner />
+      ) : (
+        <Flex mt={0} w="100%" h="100vh" justify="center">
+          <Flex
+            w="65%"
+            h="75%"
+            flexDir="column"
+            style={{
+              backgroundColor:
+                useColorMode().colorMode === 'light' ? '#FFFFFF9F' : '#FFFFFF1F',
+              borderRadius: '35px',
+              padding: '25px',
+              boxShadow: '0px 0px 10px 0px #0000001f',
+              borderColor:
+                useColorMode().colorMode === 'light' ? '#CECECEA0' : '#FFFFFF1F',
+              borderWidth: '7px',
+            }}
+          >
+            <Header user={chatUser} status={Status} />
+            <Divider />
+            <br />
+            <Messages messages={messages} user={chatUser} />
+            <Divider />
+            <Footer
+              handleSendMessage={handleSendMessage}
+              sendMessagefile={sendMessagefile}
+              append={append}
+            />
           </Flex>
-        )}
-      </Layout>
-    </>
+        </Flex>
+      )}
+    </ProtectedRoute>
   )
 }
 

@@ -1,11 +1,9 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useContext, useState } from 'react'
 import 'react-toastify/dist/ReactToastify.css'
+import AuthContext from '../../contexts/AuthContext'
 import Languages from '../Forms/Languages'
 
 type Language = {
@@ -15,11 +13,8 @@ type Language = {
 }
 
 const LanguagesBox = () => {
-  // Api calls
-  const profile = useSelector((state) => state as any)
-  const [languageList, setLanguageList] = useState(
-    profile.auth.languages as Language[]
-  )
+  const { user } = useContext(AuthContext)
+  const [languageList, setLanguageList] = useState(user.languages as Language[])
   const deleteLanguage = (id: number) => {
     setLanguageList(languageList.filter((language: any) => language.id !== id))
   }
