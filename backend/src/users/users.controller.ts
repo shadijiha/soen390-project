@@ -3,7 +3,7 @@
 import { BadRequestException, Controller, Delete, Get, HttpException, HttpStatus } from '@nestjs/common'
 import { Body, Param, Post, Put, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common/decorators'
 import { ApiBearerAuth, ApiConsumes, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
 import { type User } from '../models/user.entity'
 import { UsersService } from './users.service'
 import { Users } from './users.types'
@@ -18,7 +18,7 @@ import type Pusher from 'pusher'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class UsersController {
-  constructor (private readonly usersService: UsersService, private readonly connectionsService: ConnectionsService) {}
+  constructor (private readonly usersService: UsersService, private readonly connectionsService: ConnectionsService) { }
 
   /* It's a controller that returns all users */
   @Get('users')

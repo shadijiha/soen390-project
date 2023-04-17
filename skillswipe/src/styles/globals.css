@@ -167,3 +167,10 @@ a {
     text-transform: none;
     text-decoration: none;
 }
+
+.policy-agreement {
+    font-size: small;
+    color: var(--dl-color-gray-black);
+    width: 100%;
+    text-align: center;
+}

@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import Awards from '@/components/Profile/Awards'
 import Courses from '@/components/Profile/Courses'
@@ -22,6 +21,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Education from '../../components/Profile/education'
+import ProtectedRoute from '../../components/ProtectedRoute'
 import ProfileStyle from '../../styles/profilestyle'
 import {
   acceptRequest,
@@ -64,8 +64,7 @@ const profile = () => {
   const currentUser = useSelector((state) => state as any)
 
   const Request = () => {
-    const token = localStorage.getItem('jwt')
-    sendRequest(token, router.query.id)
+    sendRequest(router.query.id)
       .then((reponse) => {
         setStatus({ ...Status, Requested: true })
       })
@@ -74,8 +73,7 @@ const profile = () => {
       })
   }
   const Accept = () => {
-    const token = localStorage.getItem('jwt')
-    acceptRequest(token, router.query.id)
+    acceptRequest(router.query.id)
       .then((reponse) => {
         setStatus({ ...Status, connected: true })
       })
@@ -85,7 +83,7 @@ const profile = () => {
   }
   const Reject = () => {
     const token = localStorage.getItem('jwt')
-    removeConnection(token, router.query.id)
+    removeConnection(router.query.id)
       .then((reponse) => {
         setStatus({ connected: false, Requested: false, Pending: false })
         toast.success('Connection has been removed', { type: 'success' })
@@ -102,8 +100,7 @@ const profile = () => {
         console.log('same url')
         router.push('/home')
       } else {
-        const token = localStorage.getItem('jwt')
-        getUserById(token, router.query.id)
+        getUserById(router.query.id)
           .then((response: any) => {
             console.log(response.data)
             setUser(response.data.user)
@@ -112,7 +109,7 @@ const profile = () => {
               console.log('Status')
             } else {
               if (response.data.connectionStatus == 'Pending') {
-                getPendingRequest(token).then((response) => {
+                getPendingRequest().then((response) => {
                   console.log(response)
                   if (response.data.length > 0) {
                     let found = false
@@ -153,150 +150,112 @@ const profile = () => {
   })
 
   return (
-    <>
+    <ProtectedRoute>
       <style jsx>{ProfileStyle}</style>
-      <Layout>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <>
-            <NavBar />
-            <div data-testid="profile-page">
-              <div
-                id="profile"
-                className="profile-container"
-                style={{
-                  marginTop: '-3em',
-                }}
-              >
-                <Head>
-                  <title>SkillSwipe</title>
-                  <meta property="og:title" content="SkillSwipe" />
-                </Head>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <NavBar />
+          <div data-testid="profile-page">
+            <div
+              id="profile"
+              className="profile-container"
+              style={{
+                marginTop: '-3em',
+              }}
+            >
+              <Head>
+                <title>SkillSwipe</title>
+                <meta property="og:title" content="SkillSwipe" />
+              </Head>
 
-                {/* profile picture */}
-                <div className="profile-top-card">
-                  <img
-                    alt="image"
-                    src={
-                      user.profilePic
-                        ? `data:image/jpeg;base64,${user.profilePic}`
+              {/* profile picture */}
+              <div className="profile-top-card">
+                <img
+                  alt="image"
+                  src={
+                    user.profilePic
+                      ? `data:image/jpeg;base64,${user.profilePic}`
+                      : profile.image
+                  }
+                  className="profile-image"
+                  style={{
+                    aspectRatio: '1/1',
+                    objectFit: 'cover',
+                  }}
+                />
+
+                <div
+                  className="profile-container01"
+                  style={{
+                    //make the background image repeat itself
+                    backgroundRepeat: 'repeat',
+                    // make the background image to be 35% opacity
+                    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                    // make the background image to be 50% opacity
+                    backgroundBlendMode: 'multiply',
+                    // make the container take the entire screens width
+
+                    backgroundImage: `url(${
+                      user.coverPic
+                        ? `data:image/jpeg;base64,${user.coverPic}`
                         : profile.image
-                    }
-                    className="profile-image"
+                    })`,
+                  }}
+                >
+                  <h1
+                    className="profile-text01"
                     style={{
-                      aspectRatio: '1/1',
-                      objectFit: 'cover',
-                    }}
-                  />
+                      fontSize: '1.5em',
+                      fontWeight: 700,
+                      textShadow: '0px 0px 30px #00000085',
 
-                  <div
-                    className="profile-container01"
-                    style={{
-                      //make the background image repeat itself
-                      backgroundRepeat: 'repeat',
-                      // make the background image to be 35% opacity
-                      backgroundColor: 'rgba(0, 0, 0, 0.35)',
-                      // make the background image to be 50% opacity
-                      backgroundBlendMode: 'multiply',
-                      // make the container take the entire screens width
-
-                      backgroundImage: `url(${
-                        user.coverPic
-                          ? `data:image/jpeg;base64,${user.coverPic}`
-                          : profile.image
-                      })`,
+                      color: 'white',
                     }}
                   >
-                    <h1
-                      className="profile-text01"
-                      style={{
-                        fontSize: '1.5em',
-                        fontWeight: 700,
-                        textShadow: '0px 0px 30px #00000085',
+                    {user.firstName + ' ' + user.lastName} 👋🏼
+                  </h1>
+                  <span
+                    className="profile-text02"
+                    style={{
+                      fontSize: '1em',
+                      textShadow: '0px 0px 30px #00000085',
 
-                        color: 'white',
-                      }}
-                    >
-                      {user.firstName + ' ' + user.lastName} 👋🏼
-                    </h1>
+                      color: 'white',
+                    }}
+                  >
+                    📨 {user.email}
+                  </span>
+                  <span
+                    className="profile-text03"
+                    style={{
+                      fontSize: '1em',
+                      textShadow: '0px 0px 30px #00000085',
+
+                      color: 'white',
+                    }}
+                  >
+                    <span>📱 {user.mobileNo}</span>
+                    <br></br>
+                    <br></br>
+                  </span>
+                  <div className="profile-container03">
                     <span
-                      className="profile-text02"
+                      className="profile-text06"
                       style={{
-                        fontSize: '1em',
-                        textShadow: '0px 0px 30px #00000085',
-
+                        textShadow: '0px 0px 30px #000000B4',
+                        marginLeft: '0px',
                         color: 'white',
                       }}
                     >
-                      📨 {user.email}
+                      💬 {user.biography}
                     </span>
-                    <span
-                      className="profile-text03"
-                      style={{
-                        fontSize: '1em',
-                        textShadow: '0px 0px 30px #00000085',
+                  </div>
 
-                        color: 'white',
-                      }}
-                    >
-                      <span>📱 {user.mobileNo}</span>
-                      <br></br>
-                      <br></br>
-                    </span>
-                    <div className="profile-container03">
-                      <span
-                        className="profile-text06"
-                        style={{
-                          textShadow: '0px 0px 30px #000000B4',
-                          marginLeft: '0px',
-                          color: 'white',
-                        }}
-                      >
-                        💬 {user.biography}
-                      </span>
-                    </div>
-
-                    <div className="profile-container05">
-                      {Status.connected == true ? (
-                        <>
-                          <button
-                            className="profile-button button"
-                            style={{
-                              color: buttonColors,
-                              borderColor: buttonColors,
-                              borderWidth: '2px',
-                              textShadow: '0px 0px 40px #000000CA',
-                              fontWeight: 600,
-                              marginRight: '1em',
-                            }}
-                            onClick={() => {
-                              router.push(`/inbox/${router.query.id}`)
-                            }}
-                          >
-                            <span>
-                              <span>{t('message')}</span>
-                            </span>
-                          </button>
-                          <button
-                            className="profile-button button"
-                            style={{
-                              color: buttonColors,
-                              borderColor: buttonColors,
-                              borderWidth: '2px',
-                              textShadow: '0px 0px 40px #000000CA',
-                              fontWeight: 600,
-                              marginRight: 'auto',
-                              width: '100%', // added this line to make the button fill the available space
-                            }}
-                            onClick={Reject}
-                          >
-                            <span>
-                              <span>{t('removeConnection')}</span>
-                            </span>
-                          </button>
-                        </>
-                      ) : Status.Requested == true ? (
+                  <div className="profile-container05">
+                    {Status.connected == true ? (
+                      <>
                         <button
                           className="profile-button button"
                           style={{
@@ -307,160 +266,196 @@ const profile = () => {
                             fontWeight: 600,
                             marginRight: '1em',
                           }}
+                          onClick={() => {
+                            router.push(`/inbox/${router.query.id}`)
+                          }}
+                        >
+                          <span>
+                            <span>{t('message')}</span>
+                          </span>
+                        </button>
+                        <button
+                          className="profile-button button"
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: '2px',
+                            textShadow: '0px 0px 40px #000000CA',
+                            fontWeight: 600,
+                            marginRight: 'auto',
+                            width: '100%', // added this line to make the button fill the available space
+                          }}
                           onClick={Reject}
                         >
                           <span>
-                            <span>{t('deleteRequest')}</span>
+                            <span>{t('removeConnection')}</span>
                           </span>
                         </button>
-                      ) : Status.Pending == true ? (
-                        <>
-                          <button
-                            className="profile-button button"
-                            onClick={Accept}
-                            style={{
-                              color: buttonColors,
-                              borderColor: buttonColors,
-                              borderWidth: '2px',
-                              textShadow: '0px 0px 40px #000000CA',
-                              fontWeight: 600,
-                              marginRight: '1em',
-                            }}
-                          >
-                            <span>
-                              <span> {t('accept')}</span>
-                            </span>
-                          </button>
-                          <button
-                            className="profile-button button"
-                            onClick={Reject}
-                            style={{
-                              color: buttonColors,
-                              borderColor: buttonColors,
-                              borderWidth: '2px',
-                              textShadow: '0px 0px 40px #000000CA',
-                              fontWeight: 600,
-                              marginRight: '1em',
-                            }}
-                          >
-                            <span>
-                              <span> {t('decline')}</span>
-                            </span>
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <button
-                            className="profile-button button"
-                            onClick={Request}
-                            style={{
-                              color: buttonColors,
-                              borderColor: buttonColors,
-                              borderWidth: '2px',
-                              textShadow: '0px 0px 40px #000000CA',
-                              fontWeight: 600,
-                              marginRight: '1em',
-                            }}
-                          >
-                            <span>
-                              <span> {t('connect')}</span>
-                            </span>
-                          </button>
-                        </>
-                      )}
+                      </>
+                    ) : Status.Requested == true ? (
+                      <button
+                        className="profile-button button"
+                        style={{
+                          color: buttonColors,
+                          borderColor: buttonColors,
+                          borderWidth: '2px',
+                          textShadow: '0px 0px 40px #000000CA',
+                          fontWeight: 600,
+                          marginRight: '1em',
+                        }}
+                        onClick={Reject}
+                      >
+                        <span>
+                          <span>{t('deleteRequest')}</span>
+                        </span>
+                      </button>
+                    ) : Status.Pending == true ? (
+                      <>
+                        <button
+                          className="profile-button button"
+                          onClick={Accept}
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: '2px',
+                            textShadow: '0px 0px 40px #000000CA',
+                            fontWeight: 600,
+                            marginRight: '1em',
+                          }}
+                        >
+                          <span>
+                            <span> {t('accept')}</span>
+                          </span>
+                        </button>
+                        <button
+                          className="profile-button button"
+                          onClick={Reject}
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: '2px',
+                            textShadow: '0px 0px 40px #000000CA',
+                            fontWeight: 600,
+                            marginRight: '1em',
+                          }}
+                        >
+                          <span>
+                            <span> {t('decline')}</span>
+                          </span>
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <button
+                          className="profile-button button"
+                          onClick={Request}
+                          style={{
+                            color: buttonColors,
+                            borderColor: buttonColors,
+                            borderWidth: '2px',
+                            textShadow: '0px 0px 40px #000000CA',
+                            fontWeight: 600,
+                            marginRight: '1em',
+                          }}
+                        >
+                          <span>
+                            <span> {t('connect')}</span>
+                          </span>
+                        </button>
+                      </>
+                    )}
 
-                      {/* to do: show this edit button only if user logged in == the profile that is shown */}
-                    </div>
+                    {/* to do: show this edit button only if user logged in == the profile that is shown */}
                   </div>
                 </div>
-                <Stack
-                  direction={'row'}
-                  paddingTop="1rem"
-                  style={{
-                    flexWrap: 'wrap',
-                  }}
-                >
-                  {/* SKILLS SECTION */}
-
-                  {user.skills && user.skills.length ? (
-                    <Skills skillsArray={user.skills} />
-                  ) : (
-                    <></>
-                  )}
-
-                  {/* AWARDS SECTION */}
-                  {user.awards && user.awards.length ? (
-                    <Awards awards={user.awards} />
-                  ) : (
-                    <></>
-                  )}
-                </Stack>
-
-                <br></br>
-                <Divider />
-                {/* CAREER JOURNEY WORK EXPERIENCE */}
-                {user.workExperiences && user.workExperiences.length > 0 ? (
-                  <WorkExperience experience={user.workExperiences} />
-                ) : (
-                  <></>
-                )}
-
-                <Divider />
-                {/* EDUCATION SECTION */}
-
-                {user.educations && user.educations.length > 0 ? (
-                  <Education education={user.educations} />
-                ) : (
-                  <></>
-                )}
-                <Divider />
-                {/* VOLUNTEERING SECTION */}
-
-                {user.volunteeringExperience &&
-                user.volunteeringExperience.length > 0 ? (
-                  <Volunteering volunteer={user.volunteeringExperience} />
-                ) : (
-                  <></>
-                )}
-                <Divider />
-                {/* RECOMMENDATIONS SECTION */}
-
-                {user.recommendationsReceived &&
-                user.recommendationsReceived.length > 0 ? (
-                  <Recommendations rocommendations={user.recommendationsReceived} />
-                ) : (
-                  <></>
-                )}
-
-                <Divider />
-                {/* PERSONAL PROJECTS */}
-                {user.projects && user.projects.length > 0 ? (
-                  <PersonalProjectsProfile Project={user.projects} />
-                ) : (
-                  <></>
-                )}
-                <Divider />
-
-                {/* COURSES ACCOMPLISHED */}
-
-                {user.courses && user.courses.length > 0 ? (
-                  <Courses courses={user.courses} />
-                ) : (
-                  <></>
-                )}
-                {/* temporary div below for spacing under page, will need to remove in final sprint */}
-                <div
-                  style={{
-                    display: 'flex',
-                    paddingBottom: '10em',
-                  }}
-                ></div>
               </div>
+              <Stack
+                direction={'row'}
+                paddingTop="1rem"
+                style={{
+                  flexWrap: 'wrap',
+                }}
+              >
+                {/* SKILLS SECTION */}
+
+                {user.skills && user.skills.length ? (
+                  <Skills skillsArray={user.skills} />
+                ) : (
+                  <></>
+                )}
+
+                {/* AWARDS SECTION */}
+                {user.awards && user.awards.length ? (
+                  <Awards awards={user.awards} />
+                ) : (
+                  <></>
+                )}
+              </Stack>
+
+              <br></br>
+              <Divider />
+              {/* CAREER JOURNEY WORK EXPERIENCE */}
+              {user.workExperiences && user.workExperiences.length > 0 ? (
+                <WorkExperience experience={user.workExperiences} />
+              ) : (
+                <></>
+              )}
+
+              <Divider />
+              {/* EDUCATION SECTION */}
+
+              {user.educations && user.educations.length > 0 ? (
+                <Education education={user.educations} />
+              ) : (
+                <></>
+              )}
+              <Divider />
+              {/* VOLUNTEERING SECTION */}
+
+              {user.volunteeringExperience &&
+              user.volunteeringExperience.length > 0 ? (
+                <Volunteering volunteer={user.volunteeringExperience} />
+              ) : (
+                <></>
+              )}
+              <Divider />
+              {/* RECOMMENDATIONS SECTION */}
+
+              {user.recommendationsReceived &&
+              user.recommendationsReceived.length > 0 ? (
+                <Recommendations rocommendations={user.recommendationsReceived} />
+              ) : (
+                <></>
+              )}
+
+              <Divider />
+              {/* PERSONAL PROJECTS */}
+              {user.projects && user.projects.length > 0 ? (
+                <PersonalProjectsProfile Project={user.projects} />
+              ) : (
+                <></>
+              )}
+              <Divider />
+
+              {/* COURSES ACCOMPLISHED */}
+
+              {user.courses && user.courses.length > 0 ? (
+                <Courses courses={user.courses} />
+              ) : (
+                <></>
+              )}
+              {/* temporary div below for spacing under page, will need to remove in final sprint */}
+              <div
+                style={{
+                  display: 'flex',
+                  paddingBottom: '10em',
+                }}
+              ></div>
             </div>
-          </>
-        )}
-      </Layout>
-    </>
+          </div>
+        </>
+      )}
+    </ProtectedRoute>
   )
 }
 

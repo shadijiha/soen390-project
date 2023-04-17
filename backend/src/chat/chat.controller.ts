@@ -11,7 +11,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiConsumes, ApiParam, ApiTags } from '@nestjs/swagger'
 import type Pusher from 'pusher'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard'
 import { type Message } from 'src/models/message.entity'
 import { type User } from 'src/models/user.entity'
 import { UsersService } from 'src/users/users.service'
@@ -27,7 +27,7 @@ export class ChatController {
   constructor (
     private readonly chatService: ChatService,
     private readonly userService: UsersService
-  ) {}
+  ) { }
 
   // get all conversations for a user
   @Get('allconversations')
