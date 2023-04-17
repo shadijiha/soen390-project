@@ -360,7 +360,7 @@ const myListings = () => {
                           paddingTop: '0.5em',
                         }}
                       >
-                        💼 ‎
+                        💼 ‎ {t('jobType')}: {}
                         {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
                       </chakra.p>
                       <chakra.p
@@ -371,7 +371,7 @@ const myListings = () => {
                           paddingTop: '0.5em',
                         }}
                       >
-                        ✅ ‎ # of Applications: {}
+                        ✅ ‎ {t('numberOfApplications')}: {}
                         <button>
                           <Link
                             href={`/jobListing/${job.id}`}
@@ -447,7 +447,7 @@ const myListings = () => {
                           }
                         }}
                       >
-                        Delete Application
+                        {t('delete')}
                       </Button>
                     </Stack>
                   </Grid>

@@ -485,7 +485,7 @@ const findJob = () => {
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      💼 ‎
+                      💼 ‎ {t('jobType')}:{' '}
                       {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
                     </chakra.p>
                   </Box>
@@ -511,12 +511,12 @@ const findJob = () => {
                       {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
                     </chakra.p>
                   </VStack>
-                  <Stack
+                  <VStack
                     spacing={4}
                     direction={{ base: 'column', md: 'row' }}
                     fontSize={{ base: 'sm', md: 'md' }}
                     justifySelf="flex-end"
-                    alignItems="center"
+                    alignItems="end"
                   >
                     <div key={job.id}>
                       {/* quick apply job button */}
@@ -562,10 +562,10 @@ const findJob = () => {
                           router.push(`/myListings/`)
                         }}
                       >
-                        Edit Listing
+                        {t('editListing')}
                       </Button>
                     )}
-                  </Stack>
+                  </VStack>
                 </Grid>
 
                 {jobListing.length - 1 !== index && <Divider m={0} />}

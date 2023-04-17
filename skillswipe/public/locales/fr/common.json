@@ -204,5 +204,6 @@
     "withdraw": "Retirer la candidature",
     "noApplications": "Vous n'avez pas de candidatures",
     "clickHere": "Cliquez ici",
-    "toApply": "pour postuler"
+    "toApply": "pour postuler",
+    "numberOfApplications": "Nombre de candidatures"
 }
