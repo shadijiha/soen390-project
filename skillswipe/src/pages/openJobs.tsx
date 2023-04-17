@@ -121,7 +121,12 @@ const findJob = () => {
   const [userPhone, setUserPhone] = useState('')
   const [userCv, setUserCv] = useState('')
   const [userCover, setUserCover] = useState('')
-  const [checked, setChecked] = useState(['full-time', 'part-time', 'contract', 'other']);
+  const [checked, setChecked] = useState([
+    'full-time',
+    'part-time',
+    'contract',
+    'other',
+  ])
   const currentUser = useSelector((state) => state as any)
 
   const handleSubmit = (event, jobId) => {
@@ -246,17 +251,11 @@ const findJob = () => {
     }
   }
 
- 
+  const filteredJobListing = jobListing.filter((job) =>
+    checked.includes(job.jobType as string)
+  )
 
-  const filteredJobListing = jobListing.filter(job => checked.includes(job.jobType as string));
-
-  const [checkedItems, setCheckedItems] = useState([
-    false,
-    false,
-    false,
-    false,
-  ])
-
+  const [checkedItems, setCheckedItems] = useState([false, false, false, false])
 
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
@@ -266,7 +265,7 @@ const findJob = () => {
     <>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        <Container maxW="5xl" p={{ base: 10, md: 0 }} minH="100vh">
           <Flex justify="left" mb={3}>
             <HStack
               style={{
@@ -308,9 +307,9 @@ const findJob = () => {
                     onChange={(e) => {
                       // Check or uncheck all checkboxes
                       if (e.target.checked) {
-                        setChecked(['full-time', 'part-time', 'contract', 'other']);
+                        setChecked(['full-time', 'part-time', 'contract', 'other'])
                       } else {
-                        setChecked([]);
+                        setChecked([])
                       }
                     }}
                   >
@@ -318,30 +317,34 @@ const findJob = () => {
                   </Checkbox>
                   <Stack pl={7} mt={1} spacing={1}>
                     <Checkbox
-                     isChecked={checked.includes('full-time')}
-                     value="full-time"
-                     onChange={(e) => {
-                       // Add or remove value from checked array
-                       if (e.target.checked) {
-                         setChecked([...checked, e.target.value]);
-                       } else {
-                         setChecked(checked.filter((item) => item !== e.target.value));
-                       }
-                     }}
+                      isChecked={checked.includes('full-time')}
+                      value="full-time"
+                      onChange={(e) => {
+                        // Add or remove value from checked array
+                        if (e.target.checked) {
+                          setChecked([...checked, e.target.value])
+                        } else {
+                          setChecked(
+                            checked.filter((item) => item !== e.target.value)
+                          )
+                        }
+                      }}
                     >
                       {t('fullTime')}
                     </Checkbox>
                     <Checkbox
-                     isChecked={checked.includes('part-time')}
-                     value="part-time"
-                     onChange={(e) => {
-                       // Add or remove value from checked array
-                       if (e.target.checked) {
-                         setChecked([...checked, e.target.value]);
-                       } else {
-                         setChecked(checked.filter((item) => item !== e.target.value));
-                       }
-                     }}
+                      isChecked={checked.includes('part-time')}
+                      value="part-time"
+                      onChange={(e) => {
+                        // Add or remove value from checked array
+                        if (e.target.checked) {
+                          setChecked([...checked, e.target.value])
+                        } else {
+                          setChecked(
+                            checked.filter((item) => item !== e.target.value)
+                          )
+                        }
+                      }}
                     >
                       {t('partTime')}
                     </Checkbox>
@@ -351,25 +354,29 @@ const findJob = () => {
                       onChange={(e) => {
                         // Add or remove value from checked array
                         if (e.target.checked) {
-                          setChecked([...checked, e.target.value]);
+                          setChecked([...checked, e.target.value])
                         } else {
-                          setChecked(checked.filter((item) => item !== e.target.value));
+                          setChecked(
+                            checked.filter((item) => item !== e.target.value)
+                          )
                         }
                       }}
                     >
                       {t('contract')}
                     </Checkbox>
                     <Checkbox
-                       isChecked={checked.includes('other')}
-                       value="other"
-                       onChange={(e) => {
-                         // Add or remove value from checked array
-                         if (e.target.checked) {
-                           setChecked([...checked, e.target.value]);
-                         } else {
-                           setChecked(checked.filter((item) => item !== e.target.value));
-                         }
-                       }}
+                      isChecked={checked.includes('other')}
+                      value="other"
+                      onChange={(e) => {
+                        // Add or remove value from checked array
+                        if (e.target.checked) {
+                          setChecked([...checked, e.target.value])
+                        } else {
+                          setChecked(
+                            checked.filter((item) => item !== e.target.value)
+                          )
+                        }
+                      }}
                     >
                       {t('other')}
                     </Checkbox>
@@ -387,226 +394,263 @@ const findJob = () => {
             spacing={0}
             marginBottom={'5em'}
           >
-            { checked.length > 0 ? (filteredJobListing.map((job, index) => (
-              <Fragment key={index}>
-                <Grid
-                  templateRows={{ base: 'auto auto', md: 'auto' }}
-                  w="100%"
-                  templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
-                  p={{ base: 2, sm: 4 }}
-                  gap={3}
-                  alignItems="center"
-                  _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                >
-                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                    <HStack spacing={3}>
-                      <img
-                        src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                        width="20px"
-                        height="20px"
-                        alt="logo"
-                        onError={(e) => {
-                          // show a default image if the company logo is not found
-                          e.currentTarget.src =
-                            'https://img.icons8.com/3d-fluency/512/hard-working.png'
-                        }}
-                      />
-
-                      <chakra.h2 fontWeight="bold" fontSize="lg">
-                        {job.companyName}
-                      </chakra.h2>
-                    </HStack>
-
-                    <chakra.h3
-                      as={Link}
-                      isExternal
-                      fontWeight="extrabold"
-                      fontSize="2xl"
-                      onClick={() => {
-                        router.push(`/jobListing/${job.id}`)
-                      }}
+            {checked.length > 0
+              ? filteredJobListing.map((job, index) => (
+                  <Fragment key={index}>
+                    <Grid
+                      templateRows={{ base: 'auto auto', md: 'auto' }}
+                      w="100%"
+                      templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
+                      p={{ base: 2, sm: 4 }}
+                      gap={3}
+                      alignItems="center"
+                      _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                     >
-                      {job.jobTitle}
-                    </chakra.h3>
-                    <div
-                      style={{
-                        paddingTop: '0.5em',
-                      }}
-                    ></div>
+                      <Box
+                        key={index}
+                        gridColumnEnd={{ base: 'span 2', md: 'unset' }}
+                      >
+                        <HStack spacing={3}>
+                          <img
+                            src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                            width="20px"
+                            height="20px"
+                            alt="logo"
+                            onError={(e) => {
+                              // show a default image if the company logo is not found
+                              e.currentTarget.src =
+                                'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                            }}
+                          />
 
-                    <chakra.p
-                      fontWeight="bold"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
-                      📍 {job.location}
-                    </chakra.p>
-                    <chakra.p
-                      fontWeight="normal"
-                      fontSize="sm"
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
-                      💼 ‎
-                      {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
-                    </chakra.p>
-                  </Box>
-                  <VStack
-                    spacing={{ base: 0, sm: 3 }}
-                    alignItems="start"
-                    fontWeight="light"
-                    fontSize={{ base: 'xs', sm: 'sm' }}
-                    color={useColorModeValue('gray.600', 'gray.300')}
-                  >
-                    <chakra.p>
-                      📅 {t('startingDate')}: {job.startDate.split('T')[0]}
-                    </chakra.p>
-                    <chakra.p>
-                      🤑 {t('salary')}: ${job.salary}/hr
-                    </chakra.p>
-                    <chakra.p>
-                      🏫 {t('transcript')}:{' '}
-                      {job.transcript.toString() == 'true' ? t('yes') : t('no')}
-                    </chakra.p>
-                    <chakra.p>
-                      💌 {t('coverLetter')}:{' '}
-                      {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
-                    </chakra.p>
-                  </VStack>
-                  <Stack
-                    spacing={4}
-                    direction={{ base: 'column', md: 'row' }}
-                    fontSize={{ base: 'sm', md: 'md' }}
-                    justifySelf="flex-end"
-                    alignItems="center"
-                  >
-                    <div key={job.id}>
-                      {/* quick apply job button */}
-                      {!job.coverLetter && !job.transcript && (
+                          <chakra.h2 fontWeight="bold" fontSize="lg">
+                            {job.companyName}
+                          </chakra.h2>
+                        </HStack>
+
+                        <chakra.h3
+                          as={Link}
+                          isExternal
+                          fontWeight="extrabold"
+                          fontSize="2xl"
+                          onClick={() => {
+                            router.push(`/jobListing/${job.id}`)
+                          }}
+                        >
+                          {job.jobTitle}
+                        </chakra.h3>
+                        <div
+                          style={{
+                            paddingTop: '0.5em',
+                          }}
+                        ></div>
+
+                        <chakra.p
+                          fontWeight="bold"
+                          fontSize="sm"
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          📍 {job.location}
+                        </chakra.p>
+                        <chakra.p
+                          fontWeight="normal"
+                          fontSize="sm"
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          💼 ‎
+                          {job.jobType.charAt(0).toUpperCase() +
+                            job.jobType.slice(1)}
+                        </chakra.p>
+                      </Box>
+                      <VStack
+                        spacing={{ base: 0, sm: 3 }}
+                        alignItems="start"
+                        fontWeight="light"
+                        fontSize={{ base: 'xs', sm: 'sm' }}
+                        color={useColorModeValue('gray.600', 'gray.300')}
+                      >
+                        <chakra.p>
+                          📅 {t('startingDate')}: {job.startDate.split('T')[0]}
+                        </chakra.p>
+                        <chakra.p>
+                          🤑 {t('salary')}: ${job.salary}/hr
+                        </chakra.p>
+                        <chakra.p>
+                          🏫 {t('transcript')}:{' '}
+                          {job.transcript.toString() == 'true' ? t('yes') : t('no')}
+                        </chakra.p>
+                        <chakra.p>
+                          💌 {t('coverLetter')}:{' '}
+                          {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
+                        </chakra.p>
+                      </VStack>
+                      <Stack
+                        spacing={4}
+                        direction={{ base: 'column', md: 'row' }}
+                        fontSize={{ base: 'sm', md: 'md' }}
+                        justifySelf="flex-end"
+                        alignItems="center"
+                      >
+                        <div key={job.id}>
+                          {/* quick apply job button */}
+                          {!job.coverLetter && !job.transcript && (
+                            <Button
+                              as={Link}
+                              _hover={{
+                                bg: useColorModeValue('gray.400', 'gray.600'),
+                              }}
+                              rounded="100px"
+                              outline={'solid 1px'}
+                              colorScheme="green"
+                              outlineColor={useColorModeValue(
+                                'gray.400',
+                                'gray.600'
+                              )}
+                              onClick={(event) => handleSubmit(event, job.id)}
+                            >
+                              Quick Apply
+                            </Button>
+                          )}
+                        </div>
                         <Button
                           as={Link}
                           _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
                           rounded="100px"
                           outline={'solid 1px'}
-                          colorScheme="green"
                           outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                          onClick={(event) => handleSubmit(event, job.id)}
-                        >
-                          Quick Apply
-                        </Button>
-                      )}
-                    </div>
-                    <Button
-                      as={Link}
-                      _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                      rounded="100px"
-                      outline={'solid 1px'}
-                      outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                      onClick={() => {
-                        router.push(`/jobListing/${job.id}`)
-                      }}
-                    >
-                      {t('apply')}
-                    </Button>
-                  </Stack>
-                </Grid>
-                {jobListing.length - 1 !== index && <Divider m={0} />}
-              </Fragment>
-            ))): ((jobListing.map((job, index) => (
-              <Fragment key={index}>
-                {currentUser.auth.id !== job.user.id ? (
-                  <Grid
-                    templateRows={{ base: 'auto auto', md: 'auto' }}
-                    w="100%"
-                    templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
-                    p={{ base: 2, sm: 4 }}
-                    gap={3}
-                    alignItems="center"
-                    _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                  >
-                    <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                      <HStack spacing={3}>
-                        <img
-                          src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                          width="20px"
-                          height="20px"
-                          alt="logo"
-                          onError={(e) => {
-                            // show a default image if the company logo is not found
-                            e.currentTarget.src =
-                              'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                          onClick={() => {
+                            router.push(`/jobListing/${job.id}`)
                           }}
-                        />
-
-                        <chakra.h2 fontWeight="bold" fontSize="lg">
-                          {job.companyName}
-                        </chakra.h2>
-                      </HStack>
-
-                      <chakra.h3
-                        as={Link}
-                        isExternal
-                        fontWeight="extrabold"
-                        fontSize="2xl"
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
-                        }}
+                        >
+                          {t('apply')}
+                        </Button>
+                      </Stack>
+                    </Grid>
+                    {jobListing.length - 1 !== index && <Divider m={0} />}
+                  </Fragment>
+                ))
+              : jobListing.map((job, index) => (
+                  <Fragment key={index}>
+                    {currentUser.auth.id !== job.user.id ? (
+                      <Grid
+                        templateRows={{ base: 'auto auto', md: 'auto' }}
+                        w="100%"
+                        templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
+                        p={{ base: 2, sm: 4 }}
+                        gap={3}
+                        alignItems="center"
+                        _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
                       >
-                        {job.jobTitle}
-                      </chakra.h3>
-                      <div
-                        style={{
-                          paddingTop: '0.5em',
-                        }}
-                      ></div>
+                        <Box
+                          key={index}
+                          gridColumnEnd={{ base: 'span 2', md: 'unset' }}
+                        >
+                          <HStack spacing={3}>
+                            <img
+                              src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                              width="20px"
+                              height="20px"
+                              alt="logo"
+                              onError={(e) => {
+                                // show a default image if the company logo is not found
+                                e.currentTarget.src =
+                                  'https://img.icons8.com/3d-fluency/512/hard-working.png'
+                              }}
+                            />
 
-                      <chakra.p
-                        fontWeight="bold"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                      >
-                        📍 {job.location}
-                      </chakra.p>
-                      <chakra.p
-                        fontWeight="normal"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                      >
-                        💼 ‎
-                        {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
-                      </chakra.p>
-                    </Box>
-                    <VStack
-                      spacing={{ base: 0, sm: 3 }}
-                      alignItems="start"
-                      fontWeight="light"
-                      fontSize={{ base: 'xs', sm: 'sm' }}
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
-                      <chakra.p>
-                        📅 {t('startingDate')}: {job.startDate.split('T')[0]}
-                      </chakra.p>
-                      <chakra.p>
-                        🤑 {t('salary')}: ${job.salary}/hr
-                      </chakra.p>
-                      <chakra.p>
-                        🏫 {t('transcript')}:{' '}
-                        {job.transcript.toString() == 'true' ? t('yes') : t('no')}
-                      </chakra.p>
-                      <chakra.p>
-                        💌 {t('coverLetter')}:{' '}
-                        {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
-                      </chakra.p>
-                    </VStack>
-                    <Stack
-                      spacing={4}
-                      direction={{ base: 'column', md: 'row' }}
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      justifySelf="flex-end"
-                      alignItems="center"
-                    >
-                      <div key={job.id}>
-                        {/* quick apply job button */}
-                        {!job.coverLetter && !job.transcript && (
+                            <chakra.h2 fontWeight="bold" fontSize="lg">
+                              {job.companyName}
+                            </chakra.h2>
+                          </HStack>
+
+                          <chakra.h3
+                            as={Link}
+                            isExternal
+                            fontWeight="extrabold"
+                            fontSize="2xl"
+                            onClick={() => {
+                              router.push(`/jobListing/${job.id}`)
+                            }}
+                          >
+                            {job.jobTitle}
+                          </chakra.h3>
+                          <div
+                            style={{
+                              paddingTop: '0.5em',
+                            }}
+                          ></div>
+
+                          <chakra.p
+                            fontWeight="bold"
+                            fontSize="sm"
+                            color={useColorModeValue('gray.600', 'gray.300')}
+                          >
+                            📍 {job.location}
+                          </chakra.p>
+                          <chakra.p
+                            fontWeight="normal"
+                            fontSize="sm"
+                            color={useColorModeValue('gray.600', 'gray.300')}
+                          >
+                            💼 ‎
+                            {job.jobType.charAt(0).toUpperCase() +
+                              job.jobType.slice(1)}
+                          </chakra.p>
+                        </Box>
+                        <VStack
+                          spacing={{ base: 0, sm: 3 }}
+                          alignItems="start"
+                          fontWeight="light"
+                          fontSize={{ base: 'xs', sm: 'sm' }}
+                          color={useColorModeValue('gray.600', 'gray.300')}
+                        >
+                          <chakra.p>
+                            📅 {t('startingDate')}: {job.startDate.split('T')[0]}
+                          </chakra.p>
+                          <chakra.p>
+                            🤑 {t('salary')}: ${job.salary}/hr
+                          </chakra.p>
+                          <chakra.p>
+                            🏫 {t('transcript')}:{' '}
+                            {job.transcript.toString() == 'true'
+                              ? t('yes')
+                              : t('no')}
+                          </chakra.p>
+                          <chakra.p>
+                            💌 {t('coverLetter')}:{' '}
+                            {job.coverLetter.toString() == 'true'
+                              ? t('yes')
+                              : t('no')}
+                          </chakra.p>
+                        </VStack>
+                        <Stack
+                          spacing={4}
+                          direction={{ base: 'column', md: 'row' }}
+                          fontSize={{ base: 'sm', md: 'md' }}
+                          justifySelf="flex-end"
+                          alignItems="center"
+                        >
+                          <div key={job.id}>
+                            {/* quick apply job button */}
+                            {!job.coverLetter && !job.transcript && (
+                              <Button
+                                as={Link}
+                                _hover={{
+                                  bg: useColorModeValue('gray.400', 'gray.600'),
+                                }}
+                                rounded="100px"
+                                outline={'solid 1px'}
+                                colorScheme="green"
+                                outlineColor={useColorModeValue(
+                                  'gray.400',
+                                  'gray.600'
+                                )}
+                                onClick={(event) => handleSubmit(event, job.id)}
+                              >
+                                Quick Apply
+                              </Button>
+                            )}
+                          </div>
                           <Button
                             as={Link}
                             _hover={{
@@ -614,33 +658,20 @@ const findJob = () => {
                             }}
                             rounded="100px"
                             outline={'solid 1px'}
-                            colorScheme="green"
                             outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                            onClick={(event) => handleSubmit(event, job.id)}
+                            onClick={() => {
+                              router.push(`/jobListing/${job.id}`)
+                            }}
                           >
-                            Quick Apply
+                            {t('apply')}
                           </Button>
-                        )}
-                      </div>
-                      <Button
-                        as={Link}
-                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                        rounded="100px"
-                        outline={'solid 1px'}
-                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
-                        }}
-                      >
-                        {t('apply')}
-                      </Button>
-                    </Stack>
-                  </Grid>
-                ) : null}
+                        </Stack>
+                      </Grid>
+                    ) : null}
 
-                {jobListing.length - 1 !== index && <Divider m={0} />}
-              </Fragment>
-            ) )))}
+                    {jobListing.length - 1 !== index && <Divider m={0} />}
+                  </Fragment>
+                ))}
           </VStack>
         </Container>
       </Layout>
