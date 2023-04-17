@@ -128,6 +128,7 @@ describe("AdminService", () => {
 
   it("should report a post", async () => {
     const user: User = new User();
+    jest.spyOn(mockReportedRepository, "findOneBy").mockReturnValue(null as any);
     const result = await service.reportPost("1", user);
 
     expect(mockReportedRepository.save).toHaveBeenCalled();
@@ -135,6 +136,7 @@ describe("AdminService", () => {
 
   it("should report a message", async () => {
     const user: User = new User();
+    //jest.spyOn(mockReportedRepository, "findOneBy").mockReturnValue(null as any);
     const result = await service.reportMessage("1", user);
 
     expect(mockReportedRepository.save).toHaveBeenCalled();
@@ -165,8 +167,15 @@ describe("AdminService", () => {
   });
 
   it("should resolve a reported post as safe", async () => {
-    const result = await service.resolvePostSafe("1");
 
+    jest.spyOn(mockReportedRepository, "findOneBy").mockReturnValue({
+      id: 1,
+      type: "test",
+      status: "test",
+    } as unknown as Reported);
+    
+    const result = await service.resolvePostSafe("1");
+    
     expect(mockReportedRepository.findOneBy).toHaveBeenCalled();
   });
 
