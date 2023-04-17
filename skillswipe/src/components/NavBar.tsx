@@ -207,7 +207,7 @@ export default function NavBar(props: any) {
             style={{ fontWeight: 'bold', fontSize: 25 }}
             ml={'15px'}
             onClick={() => {
-              router.push('/')
+              router.push('/home')
             }}
           >
             SkillSwipe
