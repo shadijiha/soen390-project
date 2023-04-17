@@ -124,8 +124,6 @@ export class AdminService {
     })
   }
 
-
-
   async resolvePostSafe (reportId: string): Promise<void> {
     const report = await this.reportedRepository.findOneBy({ id: parseInt(reportId) })
 
