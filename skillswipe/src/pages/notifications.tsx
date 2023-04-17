@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-no-undef */
 import {
   Avatar,
   Badge,
@@ -10,18 +12,21 @@ import {
   Spacer,
   Text,
 } from '@chakra-ui/react'
+
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getStaticProps } from '.'
+import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
-import ProtectedRoute from '../components/ProtectedRoute'
 import { acceptRequest, getPendingRequest, removeConnection } from './api/api'
+
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { getAllConversation, getConversationById } from './api/chat'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -53,7 +58,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
   const getPendingConnections = () => {
     if (typeof localStorage !== 'undefined') {
-      getPendingRequest()
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
         .then((res) => {
           setPendingConnections(res.data)
           setloading2(res.data.length)
@@ -66,7 +72,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
   const ignore = (id) => {
     if (typeof localStorage !== 'undefined') {
-      removeConnection(id)
+      const token = localStorage.getItem('jwt')
+      removeConnection(token, id)
         .then((res) => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
@@ -81,7 +88,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
   const accept = (id) => {
     if (typeof localStorage !== 'undefined') {
-      acceptRequest(id)
+      const token = localStorage.getItem('jwt')
+      acceptRequest(token, id)
         .then((res) => {
           setPendingConnections(
             pendingConnections.filter((connection: any) => connection.user.id !== id)
@@ -101,59 +109,128 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const { t } = useTranslation('common')
 
   const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
     const notification: any = []
-    try {
-      const allConvo = await getAllConversation()
-      allConvo.data.map(async (element) => {
-        const convo = await getConversationById(element.id)
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
 
-        await Promise.all(
-          convo.data.map(async (el) => {
-            // console.log(el)
-            const created_at: Date = new Date(el.created_at)
-            const currentDate: Date = new Date()
-            const diffInMs: any = currentDate.getTime() - created_at.getTime()
-            const diffInHrs: number = diffInMs / (1000 * 60 * 60)
-            if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
-              const notif: any = {
-                id: element.id,
-                firstName: element.firstName,
-                lastName: element.lastName,
-                created_at: el.created_at,
-                profilePic: element.profilePic,
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                const notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
               }
-              notification.push(notif)
-            }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
           })
-        )
-        notification.sort((a, b) => {
-          const cr1: any = new Date(a.created_at)
-          const cr2: any = new Date(b.created_at)
-          return cr2.getTime() - cr1.getTime()
+          setloading1(notification.length)
+          setmessageNotification(notification)
         })
-        setloading1(notification.length)
-        setmessageNotification(notification)
-      })
-    } catch (error) {
-      toast(error.message)
+      } catch (error) {
+        toast(error.message)
+      }
     }
   }
 
   return (
-    <ProtectedRoute>
-      <NavBar
-        nbNotifications={pendingConnections.length + messageNotification.length}
-        addRequest={addRequest}
-      ></NavBar>
-      <Box p={4}>
-        <Heading as="h1" size="lg" mb={4}>
-          {t('pendingRequests')}
-        </Heading>
-        <Flex flexDirection={'column-reverse'}>
-          {pendingConnections.length > 0 ? (
-            pendingConnections.map((connection: any) => (
+    <>
+      <Layout>
+        <NavBar
+          nbNotifications={pendingConnections.length + messageNotification.length}
+          addRequest={addRequest}
+        ></NavBar>
+        <Box p={4}>
+          <Heading as="h1" size="lg" mb={4}>
+            {t('pendingRequests')}
+          </Heading>
+          <Flex flexDirection={'column-reverse'}>
+            {pendingConnections.length > 0 ? (
+              pendingConnections.map((connection: any) => (
+                <Flex
+                  key={connection.user.id}
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  p={4}
+                  mb={4}
+                  display="flex"
+                  alignItems="center"
+                >
+                  <Link href={`/profile/${connection.user.id}`}>
+                    <Flex>
+                      <Avatar
+                        size="lg"
+                        mr={4}
+                        src={
+                          connection.user.profilePic
+                            ? `data:image/jpeg;base64,${connection.user.profilePic}`
+                            : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                        }
+                      />
+                      <Box>
+                        <Heading as="h2" size="md" mb={2}>
+                          {connection.user.firstName} {connection.user.lastName}
+                          <Badge ml="1" colorScheme="green">
+                            {t('new')}
+                          </Badge>
+                        </Heading>
+                        <Text mb={2}>Please add me to your network</Text>
+                        <Text fontSize="sm">{connection.user.timestamp}</Text>
+                      </Box>
+                    </Flex>
+                  </Link>
+                  <Spacer />
+                  <Box>
+                    <HStack>
+                      <Button
+                        colorScheme="gray"
+                        onClick={() => ignore(connection.user.id)}
+                      >
+                        {t('ignore')}
+                      </Button>
+                      <Button
+                        colorScheme="twitter"
+                        onClick={() => accept(connection.user.id)}
+                      >
+                        {' '}
+                        <text>{t('accept')}</text>
+                      </Button>
+                    </HStack>
+                  </Box>
+                </Flex>
+              ))
+            ) : (
+              <footer>
+                <Text>{t('noPendingRequests')}</Text>
+              </footer>
+            )}
+          </Flex>
+        </Box>
+        <Box p={4}>
+          <Heading as="h1" size="lg" mb={4}>
+            {t('notifications')}
+          </Heading>
+          {messageNotification.length > 0 ? (
+            messageNotification.map((notification: any, index) => (
               <Flex
-                key={connection.user.id}
+                key={index}
                 borderWidth="1px"
                 borderRadius="lg"
                 p={4}
@@ -161,109 +238,45 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 display="flex"
                 alignItems="center"
               >
-                <Link href={`/profile/${connection.user.id}`}>
-                  <Flex>
-                    <Avatar
-                      size="lg"
-                      mr={4}
-                      src={
-                        connection.user.profilePic
-                          ? `data:image/jpeg;base64,${connection.user.profilePic}`
-                          : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                      }
-                    />
-                    <Box>
-                      <Heading as="h2" size="md" mb={2}>
-                        {connection.user.firstName} {connection.user.lastName}
-                        <Badge ml="1" colorScheme="green">
-                          {t('new')}
-                        </Badge>
-                      </Heading>
-                      <Text mb={2}>Please add me to your network</Text>
-                      <Text fontSize="sm">{connection.user.timestamp}</Text>
-                    </Box>
-                  </Flex>
-                </Link>
-                <Spacer />
-                <Box>
-                  <HStack>
-                    <Button
-                      colorScheme="gray"
-                      onClick={() => ignore(connection.user.id)}
+                <Flex>
+                  <Avatar
+                    size="lg"
+                    mr={4}
+                    src={
+                      notification.profilePic
+                        ? `data:image/jpeg;base64,${notification.profilePic}`
+                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                    }
+                  />
+                  <Box>
+                    <Heading
+                      as="h2"
+                      size="md"
+                      mb={2}
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        router.push(`/inbox/${notification.id}`)
+                      }}
                     >
-                      {t('ignore')}
-                    </Button>
-                    <Button
-                      colorScheme="twitter"
-                      onClick={() => accept(connection.user.id)}
-                    >
-                      {' '}
-                      <text>{t('accept')}</text>
-                    </Button>
-                  </HStack>
-                </Box>
+                      {`${notification.firstName} ${notification.lastName}`}{' '}
+                      <Badge ml="1" colorScheme="green">
+                        {t('new')}
+                      </Badge>
+                    </Heading>
+                    <Text
+                      mb={2}
+                    >{`You have a new message from ${notification.firstName} ${notification.lastName}`}</Text>
+                    <Text fontSize="sm">{notification.created_at}</Text>
+                  </Box>
+                </Flex>
               </Flex>
             ))
           ) : (
-            <footer>
-              <Text>{t('noPendingRequests')}</Text>
-            </footer>
+            <Text>{t('noNotifications')}</Text>
           )}
-        </Flex>
-      </Box>
-      <Box p={4}>
-        <Heading as="h1" size="lg" mb={4}>
-          {t('notifications')}
-        </Heading>
-        {messageNotification.length > 0 ? (
-          messageNotification.map((notification: any, index) => (
-            <Flex
-              key={index}
-              borderWidth="1px"
-              borderRadius="lg"
-              p={4}
-              mb={4}
-              display="flex"
-              alignItems="center"
-            >
-              <Flex>
-                <Avatar
-                  size="lg"
-                  mr={4}
-                  src={
-                    notification.profilePic
-                      ? `data:image/jpeg;base64,${notification.profilePic}`
-                      : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                  }
-                />
-                <Box>
-                  <Heading
-                    as="h2"
-                    size="md"
-                    mb={2}
-                    style={{ cursor: 'pointer' }}
-                    onClick={() => {
-                      router.push(`/inbox/${notification.id}`)
-                    }}
-                  >
-                    {`${notification.firstName} ${notification.lastName}`}{' '}
-                    <Badge ml="1" colorScheme="green">
-                      {t('new')}
-                    </Badge>
-                  </Heading>
-                  <Text
-                    mb={2}
-                  >{`You have a new message from ${notification.firstName} ${notification.lastName}`}</Text>
-                  <Text fontSize="sm">{notification.created_at}</Text>
-                </Box>
-              </Flex>
-            </Flex>
-          ))
-        ) : (
-          <Text>{t('noNotifications')}</Text>
-        )}
-      </Box>
-    </ProtectedRoute>
+        </Box>
+      </Layout>
+    </>
   )
 }
 

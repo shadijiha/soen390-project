@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
+// eslint-disable-next-line prettier/prettier
+import { useTranslation } from 'next-i18next'
+
 import Awards from '../Forms/Awards'
 
 type Awards = {
@@ -15,8 +17,8 @@ type Awards = {
 }
 
 const AwardsBox = () => {
-  const { user } = useContext(AuthContext)
-  const [awardsList, setAwardsList] = useState(user.awards as Awards[])
+  const profile = useSelector((state) => state as any)
+  const [awardsList, setAwardsList] = useState(profile.auth.awards as Awards[])
   const deleteAward = (id: number) => {
     console.log('delete award', id)
     console.log('awardsList', awardsList)

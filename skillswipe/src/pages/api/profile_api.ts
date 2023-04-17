@@ -1,152 +1,300 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import axios from 'axios'
+const URL = process.env.BASE_URL ?? 'http://localhost:8080'
 
-const req = axios.create({
-  withCredentials: true,
-  baseURL: process.env.BASE_URL ?? 'http://localhost:8080',
-})
-
-export const editAwardsRequest = async (award: any) => {
-  return req.put(`/profile/award/${award.id}`, award).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const addAwardsRequest = async (award: any) => {
-  return req.post('/profile/award', award).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const deleteAwardsRequest = async (awardId: number) => {
-  return req.delete(`/profile/award/${awardId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const editEducationHistoryRequest = async (education: any) => {
-  return req.put(`/profile/education/${education.id}`, education).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const addEducationHistoryRequest = async (education: any) => {
-  return req.post('/profile/education', education).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const deleteEducationHistoryRequest = async (educationId: number) => {
-  return req.delete(`/profile/education/${educationId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const editWorkEperienceRequest = async (work: any) => {
-  return req.put(`/profile/work/${work.id}`, work).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const addWorkExperienceRequest = async (work: any) => {
-  return req.post('/profile/work', work).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const deleteWorkExperienceRequest = async (workId: number) => {
-  return req.delete(`/profile/work/${workId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
-}
-
-export const editVolunteeringRequest = async (volunteering: any) => {
-  return req
-    .put(`/Profile/volunteering/${volunteering.id}`, volunteering)
+export const editAwardsRequest = async (token: any, award: any) => {
+  return axios
+    .put(`${URL}/profile/award/${award.id}`, award, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
     .catch((err) => {
       return { status: 500, data: err }
     })
 }
 
-export const addVolunteeringRequest = async (volunteering: any) => {
-  return req.post('/Profile/volunteering', volunteering).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const addAwardsRequest = async (token: any, award: any) => {
+  return axios
+    .post(`${URL}/profile/award`, award, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const deleteVolunteeringRequest = async (VolunteeringId: number) => {
-  return req.delete(`/Profile/volunteering/${VolunteeringId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const deleteAwardsRequest = async (token: any, awardId: number) => {
+  return axios
+    .delete(`${URL}/profile/award/${awardId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const editPersonalProjectsRequest = async (project: any) => {
-  return req.put(`/profile/project/${project.id}`, project).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const editEducationHistoryRequest = async (token: any, education: any) => {
+  return axios
+    .put(`${URL}/profile/education/${education.id}`, education, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const addPersonalProjectsRequest = async (project: any) => {
-  return req.post('/profile/project', project).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const addEducationHistoryRequest = async (token: any, education: any) => {
+  return axios
+    .post(`${URL}/profile/education`, education, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const deletePersonalProjectsRequest = async (projectId: number) => {
-  return req.delete(`/profile/project/${projectId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const deleteEducationHistoryRequest = async (
+  token: any,
+  educationId: number
+) => {
+  return axios
+    .delete(`${URL}/profile/education/${educationId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const editCoursesRequest = async (course: any) => {
-  return req.put(`/profile/course/${course.id}`, course).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const editWorkEperienceRequest = async (token: any, work: any) => {
+  return axios
+    .put(`${URL}/profile/work/${work.id}`, work, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const addCoursesRequest = async (course: any) => {
-  return req.post('/profile/course', course).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const addWorkExperienceRequest = async (token: any, work: any) => {
+  return axios
+    .post(`${URL}/profile/work`, work, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const deleteCoursesRequest = async (courseId: number) => {
-  return req.delete(`/profile/course/${courseId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const deleteWorkExperienceRequest = async (token: any, workId: number) => {
+  return axios
+    .delete(`${URL}/profile/work/${workId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const editLanguagesRequest = async (language: any) => {
-  return req.put(`/profile/language/${language.id}`, language).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const editVolunteeringRequest = async (token: any, volunteering: any) => {
+  return axios
+    .put(`${URL}/Profile/volunteering/${volunteering.id}`, volunteering, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const addLanguagesRequest = async (language: any) => {
-  return req.post('/profile/language', language).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const addVolunteeringRequest = async (token: any, volunteering: any) => {
+  return axios
+    .post(`${URL}/Profile/volunteering`, volunteering, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const deleteLanguagesRequest = async (languageId: number) => {
-  return req.delete(`/profile/language/${languageId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const deleteVolunteeringRequest = async (
+  token: any,
+  VolunteeringId: number
+) => {
+  return axios
+    .delete(`${URL}/Profile/volunteering/${VolunteeringId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const editSkillsRequest = async (skill: any) => {
-  return req.put(`/profile/skill/${skill.id}`, skill).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const editPersonalProjectsRequest = async (token: any, project: any) => {
+  return axios
+    .put(`${URL}/profile/project/${project.id}`, project, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const addSkillsRequest = async (skill: any) => {
-  return req.post('/profile/skill', skill).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const addPersonalProjectsRequest = async (token: any, project: any) => {
+  return axios
+    .post(`${URL}/profile/project`, project, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }
 
-export const deleteSkillsRequest = async (skillId: number) => {
-  return req.delete(`/profile/skill/${skillId}`).catch((err) => {
-    return { status: 500, data: err }
-  })
+export const deletePersonalProjectsRequest = async (
+  token: any,
+  projectId: number
+) => {
+  return axios
+    .delete(`${URL}/profile/project/${projectId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const editCoursesRequest = async (token: any, course: any) => {
+  return axios
+    .put(`${URL}/profile/course/${course.id}`, course, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const addCoursesRequest = async (token: any, course: any) => {
+  return axios
+    .post(`${URL}/profile/course`, course, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteCoursesRequest = async (token: any, courseId: number) => {
+  return axios
+    .delete(`${URL}/profile/course/${courseId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const editLanguagesRequest = async (token: any, language: any) => {
+  return axios
+    .put(`${URL}/profile/language/${language.id}`, language, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const addLanguagesRequest = async (token: any, language: any) => {
+  return axios
+    .post(`${URL}/profile/language`, language, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteLanguagesRequest = async (token: any, languageId: number) => {
+  return axios
+    .delete(`${URL}/profile/language/${languageId}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const editSkillsRequest = async (token: any, skill: any) => {
+  return axios
+    .put(`${URL}/profile/skill/${skill.id}`, skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const addSkillsRequest = async (token: any, skill: any) => {
+  return axios
+    .post(`${URL}/profile/skill`, skill, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
+}
+
+export const deleteSkillsRequest = async (token: any, skillId: number) => {
+  return axios
+    .delete(`${URL}/profile/skill/${skillId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 500, data: err }
+    })
 }

@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import React, { useContext, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
 import EducationHistory from '../Forms/EducationHistory'
 
 type Education = {
@@ -15,8 +17,10 @@ type Education = {
 }
 
 const EducationHistoryBox = () => {
-  const { user } = useContext(AuthContext)
-  const [educationList, setEducationList] = useState(user.educations as Education[])
+  const profile = useSelector((state) => state as any)
+  const [educationList, setEducationList] = useState(
+    profile.auth.educations as Education[]
+  )
   const deleteEducation = (id: number) => {
     console.log('delete education', id)
     console.log('educationList', educationList)

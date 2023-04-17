@@ -93,7 +93,7 @@ export class UsersService {
    * @param body - Auth.RegisterRequest
    * @returns The userNoPass is being returned.
    */
-  public async create (body: Auth.RegisterRequest): Promise<Partial<User>> {
+  public async create (body: Auth.RegisterRequest): Promise<Record<string, any>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -101,7 +101,7 @@ export class UsersService {
     user.lastName = body.lastName
     user.gender = body.gender
 
-    const { password, ...userNoPass }: Partial<User> = await this.usersRepository.save(user)
+    const { password, ...userNoPass }: Record<string, any> = await this.usersRepository.save(user)
     return userNoPass
   }
 

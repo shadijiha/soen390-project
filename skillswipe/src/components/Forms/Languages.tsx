@@ -38,12 +38,13 @@ const Languages = (props: any) => {
   }
 
   const updateLanguages = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!language.languageName || !language.proficiency) {
       toast(t('fillFields'))
       return
     } else {
-      editLanguagesRequest(language).then((res) => {
+      editLanguagesRequest(token, language).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -54,12 +55,13 @@ const Languages = (props: any) => {
   }
 
   const addLanguages = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!language.languageName || !language.proficiency) {
       toast(t('fillFields'))
       return
     } else {
-      addLanguagesRequest(language).then((res) => {
+      addLanguagesRequest(token, language).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -70,11 +72,12 @@ const Languages = (props: any) => {
   }
 
   const deleteLanguages = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteLanguage(props.language.id)
     } else {
-      deleteLanguagesRequest(language.id).then((res) => {
+      deleteLanguagesRequest(token, language.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteLanguage(props.language.id)

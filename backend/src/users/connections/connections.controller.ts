@@ -11,7 +11,7 @@ import {
 import { HttpException } from '@nestjs/common/exceptions/http.exception'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { ConnectionsService } from '../../users/connections/connections.service'
 import { Connections } from '../../users/connections/connections.types'
@@ -21,7 +21,7 @@ import { Connections } from '../../users/connections/connections.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ConnectionsController {
-  constructor (private readonly connectionService: ConnectionsService) { }
+  constructor (private readonly connectionService: ConnectionsService) {}
 
   /* A POST request to the endpoint /connections/add. It is sending a connection request to another user. */
   @Post('add')

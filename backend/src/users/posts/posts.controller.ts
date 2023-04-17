@@ -5,7 +5,7 @@ import { Body, Param, UploadedFiles } from '@nestjs/common/decorators/http/route
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
 import { PusherService } from '../../util/pusher/pusher.service'
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { PostsService } from './posts.service'
 import { PostImageValidationPipe } from '../../util/fileValidationPipe'
@@ -20,7 +20,7 @@ import { FileFieldsInterceptor } from '@nestjs/platform-express'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class PostsController {
-  constructor (private readonly pusherService: PusherService, private readonly postsService: PostsService) { }
+  constructor (private readonly pusherService: PusherService, private readonly postsService: PostsService) {}
 
   @Post()
   @ApiConsumes('multipart/form-data')
