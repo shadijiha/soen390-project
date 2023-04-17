@@ -266,4 +266,52 @@ export class UsersService {
     user.coverPic = null
     await this.usersRepository.save(user)
   }
+
+  // get suggested friends based on university or work
+  public async getSuggestedFriends (id: number): Promise<any []> {
+    const user = await this.usersRepository.findOne(
+      {
+        where: { id },
+        relations: ['educations', 'workExperiences']
+      }
+    )
+    if (user == null) return []
+    const users = await this.usersRepository.find({ relations: ['educations', 'workExperiences'] })
+    const universityFriends: User[] = []
+    const workFriends: User[] = []
+    let suggestedFriends: User[] = []
+
+    // if user has university
+    if (user.educations.length > 0) {
+      const institution = user.educations[0].institution
+      users.map(u => {
+        if (u.educations[0]?.institution.toLowerCase() === institution.toLowerCase()) {
+          const newUser: any = u
+          newUser.suggestedFriendType = 'university'
+          newUser.suggestedFriendInstitution = institution
+          universityFriends.push(u)
+        }
+        return u
+      })
+    }
+    // if user has work experience
+    if (user.workExperiences.length > 0) {
+      const company = user.workExperiences[0].company
+      users.map(u => {
+        if (u.workExperiences[0]?.company.toLowerCase() === company.toLowerCase()) {
+          const newUser: any = u
+          newUser.suggestedFriendType = 'work'
+          newUser.suggestedFriendInstitution = company
+          workFriends.push(u)
+        }
+        return u
+      }
+      )
+    }
+    // remove duplicates
+    suggestedFriends = [...new Set([...universityFriends, ...workFriends])]
+    // remove user
+    suggestedFriends = suggestedFriends.filter(u => u.id !== user.id)
+    return suggestedFriends
+  }
 }
