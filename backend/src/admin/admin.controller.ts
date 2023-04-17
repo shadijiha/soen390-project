@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { AdminService } from './admin.service'
 import { AuthUser, BearerPayload } from '../util/util'
 import { type User } from '../models/user.entity'
