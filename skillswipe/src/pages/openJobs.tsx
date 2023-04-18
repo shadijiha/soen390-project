@@ -277,6 +277,11 @@ const findJob = () => {
             (job) => job.jobType === ('other' as string)
           )
           break
+        case 'jobPostedByMe':
+          filteredJobs = filteredJobs.filter(
+            (job) => job.user.id === currentUser.auth.id
+          )
+          break
 
         default:
           break
@@ -288,7 +293,13 @@ const findJob = () => {
 
     setJobListing(filteredJobs)
   }
-  const [checkedItems, setCheckedItems] = useState([false, false, false, false])
+  const [checkedItems, setCheckedItems] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ])
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
   const { t } = useTranslation('common')
@@ -299,7 +310,7 @@ const findJob = () => {
     <>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        <Container maxW="5xl" p={{ base: 10, md: 0 }} minH={'2xl'}>
           <Flex justify="left" mb={3}>
             <HStack
               style={{
@@ -327,10 +338,10 @@ const findJob = () => {
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                    {t('sortStartingDate')}
+                    📅 {t('sortStartingDate')}
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
-                    {t('sortHighestSalary')}
+                    💸 {t('sortHighestSalary')}
                   </MenuItem>
 
                   <Checkbox
@@ -341,6 +352,7 @@ const findJob = () => {
                     isIndeterminate={isIndeterminate}
                     onChange={(e) => {
                       setCheckedItems([
+                        e.target.checked,
                         e.target.checked,
                         e.target.checked,
                         e.target.checked,
@@ -413,6 +425,24 @@ const findJob = () => {
                       {t('other')}
                     </Checkbox>
                   </Stack>
+                  <Checkbox
+                    paddingTop={1}
+                    pl={3}
+                    paddingBottom={1}
+                    isChecked={checkedItems[4]}
+                    onChange={(e) => {
+                      setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                      handleCheckboxChange(e)
+                    }}
+                    value="jobPostedByMe"
+                  >
+                    My Listings
+                  </Checkbox>
                 </MenuList>
               </Menu>
             </HStack>
