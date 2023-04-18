@@ -15,13 +15,16 @@ export const editProfile = async (editProfile: any) => {
 }
 
 export const changeStatus = async (status: any, token: any) => {
-  return fetch(`${URL}/user/status`,{method : "PUT",headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`
-    },body :JSON.stringify({userStatus : status}),keepalive :true
+  return fetch(`${URL}/user/status`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ userStatus: status }),
+    keepalive: true,
   })
 }
-
 
 // export const changeStatus = async (status: any, token: any) => {
 //   return axios.put(
@@ -294,6 +297,17 @@ export const deletePost = async (token: any, postId: number) => {
     })
     .catch((err) => {
       return { status: 500, data: err }
+    })
+}
+export const reportPost = async (token: any, Id: number, some: any) => {
+  return axios
+    .post(`${URL}/admin/report-post/${Id}`, some, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err }
     })
 }
 
