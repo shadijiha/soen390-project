@@ -1,5 +1,7 @@
+import Layout from '@/components/Layout'
 import {
   Button,
+  Center,
   Flex,
   Heading,
   Input,
@@ -13,6 +15,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
+import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
@@ -86,6 +89,7 @@ const Register = () => {
         register(User)
           .then((Response) => {
             toast(t('successfullyRegistered'))
+            localStorage.setItem('jwt', Response.data.access_token)
             router.push('/home')
           })
           .catch((error) => {
@@ -97,93 +101,110 @@ const Register = () => {
     }
   }
   return (
-    <Flex
-      height="100vh"
-      alignItems="center"
-      justifyContent="center"
-      data-testid="register-page"
-    >
-      <Flex direction="column" background={formBackground} p={12} rounded={25}>
-        <Heading mb={6}>{t('register')} 🧖🏼</Heading>
-        <Input
-          data-testid="first-name"
-          placeholder="First Name"
-          variant="filled"
-          mb={3}
-          type="text"
-          background={placeholderBackground}
-          onChange={FirstNameChange}
-        />
-
-        <Input
-          data-testid="last-name"
-          placeholder="Last Name"
-          variant="filled"
-          mb={3}
-          type="text"
-          background={placeholderBackground}
-          onChange={LastNameChange}
-        />
-
-        <Input
-          data-testid="email"
-          placeholder={t('email')}
-          variant="filled"
-          mb={3}
-          type="email"
-          background={placeholderBackground}
-          onChange={EmailChange}
-        />
-        <Input
-          data-testid="password"
-          placeholder={t('password')}
-          variant="filled"
-          mb={3}
-          type="password"
-          background={placeholderBackground}
-          onChange={passwordChange}
-        />
-        <Input
-          data-testid="confirm-password"
-          placeholder={t('confirm password')}
-          variant="filled"
-          type="password"
-          background={placeholderBackground}
-          onChange={confirmpassChange}
-        />
-        <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
-          {ConfirmPass !== User.password ? t('password-mismatch') : ''}
-        </Text>
-
-        <Select
-          my={3}
-          onChange={genderChange}
-          placeholder={t('select sex')}
-          mb={6}
-          variant="filled"
-          background={placeholderBackground}
+    <>
+      <Layout>
+        <Flex
+          height="100vh"
+          alignItems="center"
+          justifyContent="center"
+          data-testid="register-page"
         >
-          <option value="MALE">{t('male')}</option>
-          <option value="FEMALE">{t('female')}</option>
-        </Select>
-        <Button colorScheme="green" mb={4} onClick={submitForm}>
-          {t('register')}
-        </Button>
-        <Button
-          mb={4}
-          onClick={toggleColorMode}
-          _hover={{ bg: 'transparent' }}
-          bg="transparent"
-        >
-          {toggleTheme}
-        </Button>
-        <Button mb={-5}>
-          <Link href="/">
-            <Text fontSize={13}>{t('alreadyUser')}</Text>
-          </Link>
-        </Button>
-      </Flex>
-    </Flex>
+          <Flex direction="column" background={formBackground} p={12} rounded={25}>
+            <Heading mb={6}>{t('register')} 🧖🏼</Heading>
+            <Input
+              data-testid="first-name"
+              placeholder="First Name"
+              variant="filled"
+              mb={3}
+              type="text"
+              background={placeholderBackground}
+              onChange={FirstNameChange}
+            />
+
+            <Input
+              data-testid="last-name"
+              placeholder="Last Name"
+              variant="filled"
+              mb={3}
+              type="text"
+              background={placeholderBackground}
+              onChange={LastNameChange}
+            />
+
+            <Input
+              data-testid="email"
+              placeholder={t('email')}
+              variant="filled"
+              mb={3}
+              type="email"
+              background={placeholderBackground}
+              onChange={EmailChange}
+            />
+            <Input
+              data-testid="password"
+              placeholder={t('password')}
+              variant="filled"
+              mb={3}
+              type="password"
+              background={placeholderBackground}
+              onChange={passwordChange}
+            />
+            <Input
+              data-testid="confirm-password"
+              placeholder={t('confirm password')}
+              variant="filled"
+              type="password"
+              background={placeholderBackground}
+              onChange={confirmpassChange}
+            />
+            <Text color={'tomato'} fontSize="xs" noOfLines={[1, 2]}>
+              {ConfirmPass !== User.password ? t('password-mismatch') : ''}
+            </Text>
+
+            <Select
+              my={3}
+              onChange={genderChange}
+              placeholder={t('select sex')}
+              mb={6}
+              variant="filled"
+              background={placeholderBackground}
+            >
+              <option value="MALE">{t('male')}</option>
+              <option value="FEMALE">{t('female')}</option>
+            </Select>
+            <Button colorScheme="green" mb={4} onClick={submitForm}>
+              {t('register')}
+            </Button>
+            {/* Google */}
+            <Button
+              mb={4}
+              w={'full'}
+              variant={'outline'}
+              backgroundColor={googleBackground}
+              leftIcon={<FcGoogle />}
+            >
+              <Center>
+                <Text>{t('signupWithGoogle')}</Text>
+              </Center>
+            </Button>
+
+            <Button
+              mb={4}
+              onClick={toggleColorMode}
+              _hover={{ bg: 'transparent' }}
+              bg="transparent"
+            >
+              {toggleTheme}
+            </Button>
+            <Button mb={-5}>
+              <Link href="/">
+                <Text fontSize={13}>{t('alreadyUser')}</Text>
+              </Link>
+            </Button>
+          </Flex>
+        </Flex>
+      </Layout>
+    </>
   )
 }
 

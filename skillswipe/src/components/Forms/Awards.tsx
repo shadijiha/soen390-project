@@ -40,6 +40,7 @@ const Awards = (props: any) => {
   }
 
   const updateAward = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !award.title ||
@@ -51,7 +52,7 @@ const Awards = (props: any) => {
       toast(t('fillFields'))
       return
     } else {
-      editAwardsRequest(award).then((res) => {
+      editAwardsRequest(token, award).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('awardUpdated'))
         } else {
@@ -62,6 +63,7 @@ const Awards = (props: any) => {
   }
 
   const addAward = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !award.title ||
@@ -73,7 +75,7 @@ const Awards = (props: any) => {
       toast(t('fillFields'))
       return
     } else {
-      addAwardsRequest(award).then((res) => {
+      addAwardsRequest(token, award).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -84,11 +86,12 @@ const Awards = (props: any) => {
   }
 
   const deleteAward = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteAward(props.award.id)
     } else {
-      deleteAwardsRequest(award.id).then((res) => {
+      deleteAwardsRequest(token, award.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteAward(props.Award?.id)

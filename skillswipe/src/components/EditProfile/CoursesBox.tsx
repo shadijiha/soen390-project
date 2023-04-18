@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import React, { useContext, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
 import Courses from '../Forms/Courses'
 
 type Course = {
@@ -13,8 +15,9 @@ type Course = {
 }
 
 const CoursesBox = () => {
-  const { user } = useContext(AuthContext)
-  const [coursesList, setCoursesList] = useState(user.courses as Course[])
+  // Api calls
+  const profile = useSelector((state) => state as any)
+  const [coursesList, setCoursesList] = useState(profile.auth.courses as Course[])
   const deleteCourse = (id: number) => {
     setCoursesList(coursesList.filter((course: any) => course.id !== id))
   }

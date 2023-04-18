@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, HttpException, Param, Post, Put, UseGuards } from '@nestjs/common'
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 import { type User } from '../models/user.entity'
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { type Job } from '../models/job.entity'
 import { AuthUser, BearerPayload } from '../util/util'
 import { JobsService } from './jobs.service'
@@ -12,7 +12,7 @@ import { Jobs } from './jobs.types'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class JobsController {
-  constructor (private readonly jobsService: JobsService) { }
+  constructor (private readonly jobsService: JobsService) {}
 
   // create a job post only allowed if user is a recruiter
   @Post()

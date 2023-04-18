@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { useContext, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
 import PersonalProjects from '../Forms/PersonalProjects'
 
 type PersonalProject = {
@@ -17,9 +19,9 @@ type PersonalProject = {
 
 const PersonalProjectsBox = () => {
   // Api calls
-  const { user } = useContext(AuthContext)
+  const profile = useSelector((state) => state as any)
   const [personalProjectsList, setPersonalProjectsList] = useState(
-    user.projects as PersonalProject[]
+    profile.auth.projects as PersonalProject[]
   )
   const deletePersonalProject = (id: number) => {
     setPersonalProjectsList(

@@ -4,7 +4,7 @@ import { Post } from '@nestjs/common/decorators/http/request-mapping.decorator'
 import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
 import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
 import { PusherService } from '../../util/pusher/pusher.service'
-import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard'
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 
 @Controller('notifications')
@@ -12,7 +12,7 @@ import { AuthUser, BearerPayload } from '../../util/util'
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class NotificationsController {
-  constructor (private readonly pusherService: PusherService) { }
+  constructor (private readonly pusherService: PusherService) {}
 
   /**
    * It sends a notification to the client
