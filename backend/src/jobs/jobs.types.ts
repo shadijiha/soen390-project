@@ -32,6 +32,9 @@ export namespace Jobs {
 
     @ApiProperty()
       skills: string
+
+    @ApiProperty()
+      externalUrl: string
   }
 
   export class UpdateJobRequest extends AddJobRequest {}
