@@ -557,6 +557,7 @@ const findJob = () => {
                         _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
                         rounded="100px"
                         outline={'solid 1px'}
+                        colorScheme="blue"
                         outlineColor={useColorModeValue('gray.400', 'gray.600')}
                         onClick={() => {
                           router.push(`/myListings/`)
