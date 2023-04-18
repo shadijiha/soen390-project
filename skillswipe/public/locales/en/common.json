@@ -208,7 +208,11 @@
       "withdraw": "Withdraw Application",
       "noApplications":"You have not applied for any jobs yet.",
       "clickHere": "Click Here",
-      "toApply": "to view all jobs."
+      "toApply": "to view all jobs.",
+      "Please add me to your network": "Please add me to your network",
+      "People you might know": "People you might know",
+      "noSuggestions": "No suggestions found"
+
 
 
       

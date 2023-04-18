@@ -52,7 +52,7 @@
   "notConnectedStatusMessage": "{{user}} n'est pas connecté(e)",
   "userNotFoundMessage": "Utilisateur non trouvé",
 
-  "myListings": "Mes offres d'emploi",
+ 
   "openJobs": "Offres d'emploi ouvertes",
   "filterJobs": "Filtrer les offres d'emploi",
   "sortStartingDate": "Trier par date de début",
@@ -203,5 +203,8 @@
   "withdraw": "Retirer la candidature",
   "noApplications": "Vous n'avez pas de candidatures",
   "clickHere": "Cliquez ici",
-  "toApply": "pour postuler"
+  "toApply": "pour postuler",
+  "Please add me to your network": "Veuillez m'ajouter à votre réseau",
+  "People you might know": "Personnes que vous pourriez connaître",
+  "noSuggestions": "Aucune suggestion"
 }

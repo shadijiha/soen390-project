@@ -28,7 +28,7 @@ import { toast } from 'react-toastify'
 import { getStaticProps } from '.'
 import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
-import { acceptRequest, getPendingRequest, removeConnection, sendRequest } from './api/api'
+import { acceptRequest, getPendingRequest,getUserById, removeConnection, sendRequest } from './api/api'
 import { getSuggestedUsers } from './api/profile_api'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -40,15 +40,34 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     { user: { id: '', firstName: '', lastName: '', profilePic: '', timestamp: '' } },
   ])
   const [messageNotification, setmessageNotification] = useState([])
-  const [suggestedFriends, setSuggestedFriends] = useState([
-    { id: '', firstName: '', lastName: '', profilePic: '', company: '', title: '' },
-  ])
+  const [suggestedFriends, setSuggestedFriends] = useState([])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
+  const [loading, setloading] = useState(true)
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
   const [loading3, setloading3] = useState(0)
   const buttonColors = useColorModeValue('black', 'white')
+  const [user, setUser] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobileNo: '',
+    gender: '',
+    profilePic: '',
+    coverPic: '',
+    biography: '',
+    skills: [],
+    awards: [],
+    workExperiences: [],
+    educations: [],
+    volunteeringExperience: [],
+    recommendationsReceived: [],
+    projects: [],
+    courses: [],
+    Languages: [],
+  })
+
 
   
   useEffect(() => {
@@ -81,6 +100,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           toast.error(err)
         })
     }
+    
   }
 
   const ignore = (id) => {
@@ -133,6 +153,57 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const addRequest = () => {
     getPendingConnections()
   }
+
+  useEffect(() => {
+    if (router.query.id) {
+      console.log(router.query.id)
+      if (router.query.id == currentUser.auth.id) {
+        console.log('same url')
+        router.push('/home')
+      } else {
+        const token = localStorage.getItem('jwt')
+        getUserById(token, router.query.id)
+          .then((response: any) => {
+            console.log(response.data)
+            setUser(response.data.user)
+            if (response.data.connectionStatus == 'NotConnected') {
+              setStatus({ ...Status, connected: false })
+              console.log('Status')
+            } else {
+              if (response.data.connectionStatus == 'Pending') {
+                getPendingRequest(token).then((response) => {
+                  console.log(response)
+                  if (response.data.length > 0) {
+                    let found = false
+                    console.log(response.data)
+                    response.data.map((element: any) => {
+                      if (element.user.id == router.query.id) {
+                        setStatus({ ...Status, Pending: true })
+                        found = true
+                      }
+                    })
+                    if (found == false) {
+                      setStatus({ ...Status, Requested: true })
+                    }
+                  } else {
+                    setStatus({ ...Status, Requested: true })
+                  }
+                })
+              } else {
+                setStatus({ ...Status, connected: true })
+              }
+            }
+            console.log(Status)
+            setloading(false)
+          })
+          .catch((error) => {
+            toast(t('userNotFound'))
+            router.push('/')
+          })
+      }
+    }
+  }, [router.query])
+
   const { t } = useTranslation('common')
 
   const getMessage = async () => {
@@ -248,7 +319,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                             {t('new')}
                           </Badge>
                         </Heading>
-                        <Text mb={2}>Please add me to your network</Text>
+                        <Text mb={2}>{t('Please add me to your network')}</Text>
                         <Text fontSize="sm">{connection.user.timestamp}</Text>
                       </Box>
                     </Flex>
@@ -334,7 +405,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
 <Box py="4" >
   <Heading as="h1" size="lg" mb={8}>
-    People you might know
+    {t('People you might know')}
   </Heading>
   <Flex flexWrap="wrap" justifyContent= "around ">
     {suggestedFriends.length > 0 ? (
@@ -343,7 +414,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     key={friend.id}
     maxW={'260px'}
     w={'full'}
-    bg={useColorModeValue('white', 'gray.900')}
+    bg= {friend.coverPic ? `url(data:image/jpeg;base64,${friend.coverPic})` : 'gray.700'}
     boxShadow={'2xl'}
     rounded={'lg'}
     p={3}
@@ -358,7 +429,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
 
     />
     <Heading fontSize={'2xl'} fontFamily={'body'}>
-      {friend.firstName} {friend.lastName}
+    {friend.firstName} {friend.lastName} 
     </Heading>
     
     <Text
@@ -366,19 +437,18 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       color={useColorModeValue('gray.700', 'gray.400')}
       px={3}
     >
-      {friend.jobTitle}
-
+ 
 
      <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" mt={2}>
   <Text fontSize="md" fontWeight="medium" mr={2}>
-    Works at
+    {friend.suggestedFriendType} at
   </Text>
   <Text fontSize="md" color={useColorModeValue('gray.700', 'gray.400')} mr={2}>
-    {friend.company} 
+    {friend.workExperiences[0]?.company} 
   </Text>
-  {friend.company && (
+  {friend.workExperiences[0]?.company && (
   <img
-    src={`https://www.${friend.company.toLowerCase()}.com/favicon.ico`}
+    src={`https://www.${friend.workExperiences[0]?.company.toLowerCase()}.com/favicon.ico`}
     alt={`${friend.company} logo`}
     width={20}
     height={20}
@@ -394,7 +464,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       textAlign={'center'}
       color={useColorModeValue('gray.700', 'gray.400')}
       px={3}>
-        {friend.location}
+       {friend.educations[0]?.degree}
+      {friend.educations[0]?.institution}
     </Text>
 
     <Stack mt={8} direction={'row'} spacing={4}>
@@ -411,7 +482,9 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
          marginRight: '1em',
        }}
        >
-        Connect 
+       <span>
+          <span> {t('connect')}</span>
+       </span> 
       </Button>
     </Stack>
    </Box>
