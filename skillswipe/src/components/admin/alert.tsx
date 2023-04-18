@@ -20,7 +20,7 @@ import React, { useEffect, useState } from 'react'
 export default function Alert(props: any) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoading, setIsLoading] = useState(false)
-  const cancelRef = React.useRef()
+  const cancelRef: any = React.useRef()
   const { title, message, action, scheme, id, resolveItem } = props
   const onCLoseParent = props.close
   const router = useRouter()
