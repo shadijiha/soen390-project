@@ -140,9 +140,9 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     Requested: false,
     Pending: false,
   })
-  const Request = () => {
+  const Request = (id) => {
     const token = localStorage.getItem('jwt')
-    sendRequest(token, router.query.id)
+    sendRequest(token, id)
       .then((reponse) => {
         setStatus({ ...Status, Requested: true })
       })
@@ -153,19 +153,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const addRequest = () => {
     getPendingConnections()
   }
-  const Accept = () => {
+
+  const Reject = (id) => {
     const token = localStorage.getItem('jwt')
-    acceptRequest(token, router.query.id)
-      .then((reponse) => {
-        setStatus({ ...Status, connected: true })
-      })
-      .catch((error) => {
-        toast(error.message)
-      })
-  }
-  const Reject = () => {
-    const token = localStorage.getItem('jwt')
-    removeConnection(token, router.query.id)
+    removeConnection(token, id)
       .then((reponse) => {
         setStatus({ connected: false, Requested: false, Pending: false })
         toast.success('Connection has been removed', { type: 'success' })
@@ -505,7 +496,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         fontWeight: 600,
         marginRight: '1em',
       }}
-      onClick={Reject}
+      onClick = {() => Reject(friend.id)}
     >
       <span>
         <span>{t('deleteRequest')}</span>
@@ -515,7 +506,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     <Button
       flex={1}
       className="profile-button button"
-      onClick={Request}
+      onClick={() => Request(friend.id)}
       style={{
         color: buttonColors,
         borderColor: buttonColors,
