@@ -21,6 +21,11 @@ export class Job extends BaseEntity {
   @ApiProperty()
     id: number
 
+  // make optional
+  @Column({ nullable: true })
+  @ApiProperty()
+    externalUrl: string
+
   @Column()
   @ApiProperty()
     jobTitle: string

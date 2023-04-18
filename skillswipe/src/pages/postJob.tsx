@@ -5,6 +5,7 @@ import NavBar from '@/components/NavBar'
 import {
   Box,
   Button,
+  Checkbox,
   Container,
   FormControl,
   FormLabel,
@@ -38,6 +39,7 @@ const postJob = () => {
     coverLetter: null as null | boolean,
     transcript: null as null | boolean,
     id: 0,
+    externalUrl: '',
   })
 
   const { t } = useTranslation('common')
@@ -76,6 +78,8 @@ const postJob = () => {
     }
   }
 
+  const [isFormHidden, setFormHidden] = useState(true)
+
   return (
     <>
       <NavBar />
@@ -96,7 +100,6 @@ const postJob = () => {
                 alt="Job Listing Image"
                 width={'80px'}
               ></Image>
-
               <Text
                 style={{
                   fontWeight: 700,
@@ -107,14 +110,42 @@ const postJob = () => {
               >
                 {t('createJobListing')}
               </Text>
+              <Checkbox
+                defaultChecked={!isFormHidden}
+                onChange={(e) => setFormHidden(!e.target.checked)}
+              >
+                {t('hideFormInputs')}
+              </Checkbox>{' '}
             </VStack>
+
             <VStack spacing={'2.5em'} w="100%">
+              {!isFormHidden && (
+                <FormControl id="externalUrl">
+                  <FormLabel htmlFor="externalUrl">{t('externalURL')}</FormLabel>
+                  <Input
+                    onChange={(event) =>
+                      setJobListing({
+                        ...postListing,
+                        externalUrl: event.target.value,
+                      })
+                    }
+                    name="externalUrl"
+                    id="externalUrl"
+                    type="text"
+                    placeholder="ex: https://www.google.com/careers/1"
+                    rounded="100px"
+                  />
+                </FormControl>
+              )}
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
                 <FormControl id="jobTitle">
                   <FormLabel htmlFor="jobTitle"> {t('positionTitle')}</FormLabel>
                   <Input
                     onChange={(event) =>
-                      setJobListing({ ...postListing, jobTitle: event.target.value })
+                      setJobListing({
+                        ...postListing,
+                        jobTitle: event.target.value,
+                      })
                     }
                     name="jobTitle"
                     id="jobTitle"
@@ -123,6 +154,7 @@ const postJob = () => {
                     rounded="100px"
                   />
                 </FormControl>
+
                 <FormControl id="companyName">
                   <FormLabel htmlFor="companyName">{t('company')}</FormLabel>
                   <Input
@@ -139,11 +171,15 @@ const postJob = () => {
                     rounded="100px"
                   />
                 </FormControl>
+
                 <FormControl id="location">
                   <FormLabel htmlFor="location">{t('location')}</FormLabel>
                   <Input
                     onChange={(event) =>
-                      setJobListing({ ...postListing, location: event.target.value })
+                      setJobListing({
+                        ...postListing,
+                        location: event.target.value,
+                      })
                     }
                     name="location"
                     id="location"
@@ -171,6 +207,7 @@ const postJob = () => {
                     rounded="100px"
                   />
                 </FormControl>
+
                 <FormControl as="fieldset">
                   <FormLabel as="legend" paddingBottom={1.5}>
                     {t('jobType')}
@@ -209,6 +246,7 @@ const postJob = () => {
                     </HStack>
                   </RadioGroup>
                 </FormControl>
+
                 <FormControl as="fieldset">
                   <FormLabel as="legend" paddingBottom={1.5}>
                     {t('transcript')}
@@ -243,6 +281,7 @@ const postJob = () => {
                     }
                   />
                 </FormControl>
+
                 <FormControl id="skills">
                   <FormLabel htmlFor="skills">{t('skillsNeeded')}</FormLabel>
                   <Input
