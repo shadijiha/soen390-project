@@ -29,7 +29,7 @@ export class JobsService {
     job.startDate = data.startDate
     job.coverLetter = data.coverLetter
     job.transcript = data.transcript
-
+    job.externalUrl = data.externalUrl
     if (data.skills != null) {
       if (data.skills === '' || data.skills === ' ') {
         job.skills = []
