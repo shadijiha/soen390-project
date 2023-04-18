@@ -20,7 +20,7 @@ import {
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-
+import { default as NextLink } from 'next/link'
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -153,6 +153,27 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const addRequest = () => {
     getPendingConnections()
   }
+  const Accept = () => {
+    const token = localStorage.getItem('jwt')
+    acceptRequest(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ ...Status, connected: true })
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+  const Reject = () => {
+    const token = localStorage.getItem('jwt')
+    removeConnection(token, router.query.id)
+      .then((reponse) => {
+        setStatus({ connected: false, Requested: false, Pending: false })
+        toast.success('Connection has been removed', { type: 'success' })
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
 
   useEffect(() => {
     if (router.query.id) {
@@ -279,6 +300,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   return (
     <>
       <Layout>
+        
         <NavBar
           nbNotifications={pendingConnections.length + messageNotification.length + suggestedFriends.length}
           addRequest={addRequest}
@@ -407,7 +429,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   <Heading as="h1" size="lg" mb={8}>
     {t('People you might know')}
   </Heading>
-  <Flex flexWrap="wrap" justifyContent= "around ">
+<Flex 
+  flexWrap="wrap" justifyContent= "around ">
     {suggestedFriends.length > 0 ? (
      suggestedFriends.map((friend: any) => (
     <Box
@@ -428,9 +451,11 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       pos={'relative'}
 
     />
-    <Heading fontSize={'2xl'} fontFamily={'body'}>
-    {friend.firstName} {friend.lastName} 
-    </Heading>
+    <NextLink href={`profile/${friend.id}`}>
+      <Heading fontSize={'2xl'} fontFamily={'body'}>
+        {friend.firstName} {friend.lastName} 
+      </Heading>
+    </NextLink>
     
     <Text
       textAlign={'center'}
@@ -464,29 +489,48 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       textAlign={'center'}
       color={useColorModeValue('gray.700', 'gray.400')}
       px={3}>
-       {friend.educations[0]?.degree}
-      {friend.educations[0]?.institution}
-    </Text>
+       {friend.educations && friend.educations.length > 0 ? `${friend.educations[0].degree} at ${friend.educations[0].institution}` : "Education not specified"}
+</Text>
 
-    <Stack mt={8} direction={'row'} spacing={4}>
-      <Button
-       flex={1}
-       className="profile-button button"
-       onClick={Request}
-       style={{
-         color: buttonColors,
-         borderColor: buttonColors,
-         borderWidth: '2px',
-         textShadow: '0px 0px 40px #000000CA',
-         fontWeight: 600,
-         marginRight: '1em',
-       }}
-       >
-       <span>
-          <span> {t('connect')}</span>
-       </span> 
-      </Button>
-    </Stack>
+<Stack mt={8} direction={'row'} spacing={4}>
+  {Status.Requested == true ? (
+    <Button
+      flex={1}
+      className="profile-button button"
+      style={{
+        color: buttonColors,
+        borderColor: buttonColors,
+        borderWidth: '2px',
+        textShadow: '0px 0px 40px #000000CA',
+        fontWeight: 600,
+        marginRight: '1em',
+      }}
+      onClick={Reject}
+    >
+      <span>
+        <span>{t('deleteRequest')}</span>
+      </span>
+    </Button>
+  ) : (
+    <Button
+      flex={1}
+      className="profile-button button"
+      onClick={Request}
+      style={{
+        color: buttonColors,
+        borderColor: buttonColors,
+        borderWidth: '2px',
+        textShadow: '0px 0px 40px #000000CA',
+        fontWeight: 600,
+        marginRight: '1em',
+      }}
+    >
+      <span>
+        <span> {t('connect')}</span>
+      </span> 
+    </Button>
+  )}
+</Stack>
    </Box>
     
       ))
