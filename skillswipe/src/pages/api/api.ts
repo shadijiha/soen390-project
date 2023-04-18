@@ -15,44 +15,15 @@ export const editProfile = async (editProfile: any) => {
 }
 
 export const changeStatus = async (status: any, token: any) => {
-<<<<<<< HEAD
-  return fetch(`${URL}/user/status`,{method : "PUT",headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`
-    },body :JSON.stringify({userStatus : status}),keepalive :true
-  })
-}
-
-
-// export const changeStatus = async (status: any, token: any) => {
-//   return axios.put(
-//     `${URL}/user/status`,
-//     { userStatus: status },
-//     {
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     }
-//   )
-// }
-export const getUserStatus = async (id: any, token: any) => {
-  return axios.get(`${URL}/user/status/${id}`, {
-    headers: {
-=======
   return fetch(`${URL}/user/status`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
->>>>>>> origin/master
       Authorization: `Bearer ${token}`,
     },
   })
 }
 
-<<<<<<< HEAD
-export const checkLogin = async (token: any) => {
-  return axios.get(`${URL}/auth/me`, {
-=======
 // export const changeStatus = async (status: any, token: any) => {
 //   return axios.put(
 //     `${URL}/user/status`,
@@ -66,50 +37,26 @@ export const checkLogin = async (token: any) => {
 // }
 export const getUserStatus = async (id: any, token: any) => {
   return axios.get(`${URL}/user/status/${id}`, {
->>>>>>> origin/master
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 }
-<<<<<<< HEAD
-export const editPersonalInformation = async (token: any, UpdatedUser: any) => {
-  return axios.put(`${URL}/user`, UpdatedUser, {
-=======
 
 export const checkLogin = async (token: any) => {
   return axios.get(`${URL}/auth/me`, {
->>>>>>> origin/master
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 }
-<<<<<<< HEAD
-export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
-  return axios.post(`${URL}/user/documents`, UpdatedUser, {
-=======
 export const editPersonalInformation = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}/user`, UpdatedUser, {
->>>>>>> origin/master
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 }
-<<<<<<< HEAD
-export const deleteUserCv = async (token: any) => {
-  return axios.delete(`${URL}/user/documents`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    data: {
-      cv: true,
-    },
-  })
-}
-export const deleteCover = async (token: any) => {
-=======
 export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
   return axios.post(`${URL}/user/documents`, UpdatedUser, {
     headers: {
@@ -118,39 +65,11 @@ export const uploadUserDocuments = async (token: any, UpdatedUser: any) => {
   })
 }
 export const deleteUserCv = async (token: any) => {
->>>>>>> origin/master
   return axios.delete(`${URL}/user/documents`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
     data: {
-<<<<<<< HEAD
-      coverLetter: true,
-    },
-  })
-}
-export const getUserById = async (token: any, id: any) => {
-  return axios.get(`${URL}/user/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-
-export const sendRequest = async (token: any, id: any) => {
-  return axios.post(
-    `${URL}/connections/add`,
-    { toUser: id },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-}
-export const getPendingRequest = async (token: any) => {
-  return axios.get(`${URL}/connections/pending`, {
-=======
       cv: true,
     },
   })
@@ -167,47 +86,11 @@ export const deleteCover = async (token: any) => {
 }
 export const getUserById = async (token: any, id: any) => {
   return axios.get(`${URL}/user/${id}`, {
->>>>>>> origin/master
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
 }
-<<<<<<< HEAD
-export const getAccepted = async (token: any) => {
-  return axios.get(`${URL}/connections/add`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-export const getStatus = async (token: any, id: any) => {
-  return axios.get(`${URL}/connections/status/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-export const acceptRequest = async (token: any, id: any) => {
-  return axios.put(
-    `${URL}/connections/accept`,
-    { id: id },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  )
-}
-export const removeConnection = async (token: any, id: any) => {
-  return axios.delete(`${URL}/connections/delete/${id}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-
-=======
 
 export const sendRequest = async (token: any, id: any) => {
   return axios.post(
@@ -260,7 +143,6 @@ export const removeConnection = async (token: any, id: any) => {
   })
 }
 
->>>>>>> origin/master
 export const editEducationHistory = async (token: any, UpdatedUser: any) => {
   return axios.put(`${URL}/Profile/add/education`, UpdatedUser, {
     headers: {
