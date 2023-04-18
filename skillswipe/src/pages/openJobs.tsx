@@ -478,7 +478,7 @@ const findJob = () => {
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      📍 {job.location}
+                      📍 ‎ {job.location}
                     </chakra.p>
                     <chakra.p
                       fontWeight="normal"
