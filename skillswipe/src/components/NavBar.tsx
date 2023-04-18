@@ -1,8 +1,17 @@
-import { changeStatus, getPendingRequest, logout } from '@/pages/api/api'
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-empty-function */
+import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  BellIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Collapse,
@@ -21,20 +30,19 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { i18n } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { RiArrowDropDownFill } from 'react-icons/ri'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../contexts/AuthContext'
 import Search from './Search/Search'
 import NotificationCounter from './Util/NotificationCounter'
 
 export default function NavBar(props: any) {
-  const { user } = useContext(AuthContext)
-  const { t } = useTranslation('common')
   const { colorMode, toggleColorMode } = useColorMode()
   // const isDark = colorMode === "dark";
   const [display, changeDisplay] = useState('none')
@@ -69,13 +77,23 @@ export default function NavBar(props: any) {
     'rgba(0, 0, 0, 0.25)'
   )
 
-  const handleLogout = () => {
-    changeStatus('offline')
-    logout().catch((error) => {
-      toast(error.message)
-    })
-    toast('Successfully Logged Out')
+  const logout = () => {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      localStorage.removeItem('jwt')
+      changeStatus('offline', token)
+        .then((response) => {})
+        .catch((error) => {
+          toast(error.message)
+        })
+      toast('Successfully Logged Out')
+    }
   }
+
+  const [showDropdown1, setShowDropdown1] = useState(false)
+  const [showDropdown2, setShowDropdown2] = useState(false)
+
+  const { t } = useTranslation('common')
 
   const changeLanguage = (language) => {
     router.push(router.pathname, router.pathname, { locale: language })
@@ -103,67 +121,73 @@ export default function NavBar(props: any) {
     profilePic: '',
     coverPic: '',
   })
-
+  const currentUser = useSelector((state) => state as any)
   useEffect(() => {
     setPic({
-      coverPic: user.coverPic,
-      profilePic: user.profilePic,
+      coverPic: currentUser.auth.coverPic,
+      profilePic: currentUser.auth.profilePic,
     })
-  }, [user])
+  }, [currentUser])
 
   const getPendingConnections = () => {
-    getPendingRequest()
-      .then((res) => {
-        setPendingConnections(res.data)
-        setloading2(res.data.length)
-      })
-      .catch((err) => {
-        toast.error(err)
-      })
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getPendingRequest(token)
+        .then((res) => {
+          setPendingConnections(res.data)
+          setloading2(res.data.length)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
   }
   useEffect(() => {
-    if (user) {
+    if (currentUser.auth) {
       getMessage()
       getPendingConnections()
     }
-  }, [user])
+  }, [currentUser])
 
   const getMessage = async () => {
+    const token = localStorage.getItem('jwt')
     const notification: any = []
-    try {
-      const allConvo = await getAllConversation()
-      allConvo.data.map(async (element) => {
-        const convo = await getConversationById(element.id)
+    if (token) {
+      try {
+        const allConvo = await getAllConversation(token)
+        allConvo.data.map(async (element) => {
+          const convo = await getConversationById(token, element.id)
 
-        await Promise.all(
-          convo.data.map(async (el) => {
-            // console.log(el)
-            const created_at: Date = new Date(el.created_at)
-            const currentDate: Date = new Date()
-            const diffInMs: any = currentDate.getTime() - created_at.getTime()
-            const diffInHrs: number = diffInMs / (1000 * 60 * 60)
-            if (el.receiverId == user.id && diffInHrs < 24) {
-              const notif: any = {
-                id: element.id,
-                firstName: element.firstName,
-                lastName: element.lastName,
-                created_at: el.created_at,
-                profilePic: element.profilePic,
+          await Promise.all(
+            convo.data.map(async (el) => {
+              // console.log(el)
+              const created_at: Date = new Date(el.created_at)
+              const currentDate: Date = new Date()
+              const diffInMs: any = currentDate.getTime() - created_at.getTime()
+              const diffInHrs: number = diffInMs / (1000 * 60 * 60)
+              if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
+                const notif: any = {
+                  id: element.id,
+                  firstName: element.firstName,
+                  lastName: element.lastName,
+                  created_at: el.created_at,
+                  profilePic: element.profilePic,
+                }
+                notification.push(notif)
               }
-              notification.push(notif)
-            }
+            })
+          )
+          notification.sort((a, b) => {
+            const cr1: any = new Date(a.created_at)
+            const cr2: any = new Date(b.created_at)
+            return cr2.getTime() - cr1.getTime()
           })
-        )
-        notification.sort((a, b) => {
-          const cr1: any = new Date(a.created_at)
-          const cr2: any = new Date(b.created_at)
-          return cr2.getTime() - cr1.getTime()
+          setmessageNotification(notification)
+          setloading1(notification.length)
         })
-        setmessageNotification(notification)
-        setloading1(notification.length)
-      })
-    } catch (error) {
-      toast(error.message)
+      } catch (error) {
+        toast(error.message)
+      }
     }
   }
 
@@ -207,7 +231,7 @@ export default function NavBar(props: any) {
             style={{ fontWeight: 'bold', fontSize: 25 }}
             ml={'15px'}
             onClick={() => {
-              router.push('/home')
+              router.push('/')
             }}
           >
             SkillSwipe
@@ -538,7 +562,6 @@ export default function NavBar(props: any) {
                   boxShadow: 'md',
                   transform: 'scale(1.05)',
                 }}
-                onClick={() => handleLogout()}
               >
                 {t('SignIn/Logout')}
               </Button>

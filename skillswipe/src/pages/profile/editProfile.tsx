@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
@@ -7,6 +12,7 @@ import LanguagesBox from '@/components/EditProfile/LanguagesBox'
 import PersonalProjectsBox from '@/components/EditProfile/PersonalProjectsBox'
 import SkillsBox from '@/components/EditProfile/SkillsBox'
 import VolunteeringBox from '@/components/EditProfile/VolunteeringBox'
+import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import { Box, Button, Heading, Stack } from '@chakra-ui/react'
 import { useTranslation, withTranslation } from 'next-i18next'
@@ -14,7 +20,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import ProtectedRoute from '../../components/ProtectedRoute'
 import {
   deleteCover,
   deleteUserCv,
@@ -65,10 +70,11 @@ const EditProfile = () => {
   })
 
   const coverImageHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('coverPic', e.target.files[0], e.target.files[0].name)
-      editPersonalInformation(fd)
+      editPersonalInformation(token, fd)
         .then((response) => {
           console.log(response)
           setPic({ ...Pic, coverPic: response.data.coverPic })
@@ -82,10 +88,11 @@ const EditProfile = () => {
 
   const ProfileImageHandler = (e: any) => {
     console.log(e.target)
+    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('profilePic', e.target.files[0], e.target.files[0].name)
-      editPersonalInformation(fd)
+      editPersonalInformation(token, fd)
         .then((response) => {
           setPic({ ...Pic, profilePic: response.data.profilePic })
           toast(t('updateProfilePicture'))
@@ -97,10 +104,11 @@ const EditProfile = () => {
   }
 
   const uploadCVHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('cv', e.target.files[0], e.target.files[0].name)
-      uploadUserDocuments(fd)
+      uploadUserDocuments(token, fd)
         .then((response) => {
           window.location.reload()
           setFile({ ...File, cv: response.data })
@@ -113,7 +121,9 @@ const EditProfile = () => {
     }
   }
   const deleteCVHandler = (e: any) => {
-    deleteUserCv()
+    const token = localStorage.getItem('jwt')
+
+    deleteUserCv(token)
       .then((response) => {
         setFile({ ...File, cv: response.data })
         window.location.reload()
@@ -124,10 +134,11 @@ const EditProfile = () => {
       })
   }
   const uploadCoverLetterHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       fd.append('coverLetter', e.target.files[0], e.target.files[0].name)
-      uploadUserDocuments(fd)
+      uploadUserDocuments(token, fd)
         .then((response) => {
           setFile({ ...File, coverLetter: response.data })
           window.location.reload()
@@ -139,7 +150,9 @@ const EditProfile = () => {
     }
   }
   const deleteCoverHandler = (e: any) => {
-    deleteCover()
+    const token = localStorage.getItem('jwt')
+
+    deleteCover(token)
       .then((response) => {
         setFile({ ...File, coverLetter: response.data })
         window.location.reload()
@@ -150,11 +163,12 @@ const EditProfile = () => {
       })
   }
   const removeUserCoverpic = () => {
-    removeCoverpic()
+    const token = localStorage.getItem('jwt')
+    removeCoverpic(token)
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast('removeCoverPicture')
+        toast(('removeCoverPicture'))
       })
       .catch((error) => {
         toast(error.message)
@@ -162,11 +176,12 @@ const EditProfile = () => {
   }
 
   const removeUserProfilepic = () => {
-    removeProfilepic()
+    const token = localStorage.getItem('jwt')
+    removeProfilepic(token)
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, profilePic: response.data.profilePic })
-        toast('removeProfilePicture')
+        toast(('removeProfilePicture'))
       })
       .catch((error) => {
         toast(error.message)
@@ -186,285 +201,294 @@ const EditProfile = () => {
   }
 
   return (
-    <ProtectedRoute>
-      <NavBar />
-      <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
-        <Box>
-          <Heading
-            style={{
-              fontSize: '2.5rem',
-              fontWeight: '200',
-            }}
-          >
-            {t('hey')}, {currentUser.auth.firstName}!
-          </Heading>
+    <>
+      <Layout>
+        <NavBar />
+        <Box display="flex" justifyContent="center" alignItems="center" pb={4}>
+          <Box>
+            <Heading
+              style={{
+                fontSize: '2.5rem',
+                fontWeight: '200',
+              }}
+            >
+              {t('hey')}, {currentUser.auth.firstName}!
+            </Heading>
+          </Box>
         </Box>
-      </Box>
 
-      <Stack
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        {/* profile picture */}
-        <div
-          className="profile-picture"
+        <Stack
           style={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '150px',
-            width: '150px',
-            position: 'relative',
-            margin: '2%',
-            marginBottom: '5%',
           }}
         >
-          <button style={{ position: 'absolute', bottom: '0', right: '0' }}>
-            {/* upload new profile pic button */}
+          {/* profile picture */}
+          <div
+            className="profile-picture"
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '150px',
+              width: '150px',
+              position: 'relative',
+              margin: '2%',
+              marginBottom: '5%',
+            }}
+          >
+            <button style={{ position: 'absolute', bottom: '0', right: '0' }}>
+              {/* upload new profile pic button */}
+              <input
+                type="file"
+                id="file-input-profilePic"
+                style={{ display: 'none' }}
+                onClick={clickProfile}
+                onChange={ProfileImageHandler}
+              />
+              <label htmlFor="file-input-profilePic">
+                <img
+                  src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                  alt="Upload Icon"
+                  style={{
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
+                  }}
+                />
+              </label>
+            </button>
+            <a onClick={clickProfile}>
+              <img
+                alt="image"
+                src={
+                  Pic.profilePic
+                    ? `data:image/jpeg;base64,${Pic.profilePic}`
+                    : profile.image
+                }
+                className="profile-image"
+                style={{
+                  aspectRatio: '1/1',
+                  objectFit: 'cover',
+                  borderRadius: '100%',
+                  boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
+                }}
+              />
+            </a>
+
             <input
               type="file"
               id="file-input-profilePic"
               style={{ display: 'none' }}
-              onClick={clickProfile}
               onChange={ProfileImageHandler}
             />
-            <label htmlFor="file-input-profilePic">
-              <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
-                style={{
-                  height: '35px',
-                  width: '35px',
-                  borderRadius: '100%',
-                  backgroundColor: 'white',
-                }}
-              />
-            </label>
-          </button>
-          <a onClick={clickProfile}>
-            <img
-              alt="image"
-              src={
-                Pic.profilePic
-                  ? `data:image/jpeg;base64,${Pic.profilePic}`
-                  : profile.image
-              }
-              className="profile-image"
-              style={{
-                aspectRatio: '1/1',
-                objectFit: 'cover',
-                borderRadius: '100%',
-                boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
-              }}
-            />
-          </a>
+            {Pic.profilePic ? (
+              <button style={{ position: 'absolute', top: '0', right: '0' }}>
+                <img
+                  src="https://img.icons8.com/material-sharp/512/trash.png"
+                  alt="Delete Icon"
+                  style={{
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
+                    padding: '1px',
+                    margin: '2px',
+                    border: '3px solid black',
+                  }}
+                  // add an onClick handler to delete the profile pic
 
-          <input
-            type="file"
-            id="file-input-profilePic"
-            style={{ display: 'none' }}
-            onChange={ProfileImageHandler}
-          />
-          {Pic.profilePic ? (
-            <button style={{ position: 'absolute', top: '0', right: '0' }}>
-              <img
-                src="https://img.icons8.com/material-sharp/512/trash.png"
-                alt="Delete Icon"
-                style={{
-                  height: '35px',
-                  width: '35px',
-                  borderRadius: '100%',
-                  backgroundColor: 'white',
-                  padding: '1px',
-                  margin: '2px',
-                  border: '3px solid black',
-                }}
-                // add an onClick handler to delete the profile pic
+                  onClick={removeUserProfilepic} 
+                />
+              </button>
+            ) : null}
+          </div>
 
-                onClick={removeUserProfilepic}
+          {/* cover photo */}
+
+          <div
+            className="profile-cover"
+            style={{
+              position: 'relative',
+              height: '250px',
+              width: 'max-content',
+              margin: '2%',
+            }}
+          >
+            <button
+              style={{ position: 'absolute', bottom: '-10px', right: '-10px' }}
+            >
+              {/* upload new profile cover button */}
+              <input
+                type="file"
+                id="file-input-coverPic"
+                style={{ display: 'none' }}
+                onClick={clickCover}
+                onChange={coverImageHandler}
               />
+
+              <label htmlFor="file-input-coverPic">
+                <img
+                  src="https://img.icons8.com/material-sharp/512/send-letter.png"
+                  alt="Upload Icon"
+                  style={{
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
+                  }}
+                />
+              </label>
             </button>
-          ) : null}
-        </div>
+            <a onClick={clickCover}>
+              <img
+                alt="image"
+                src={
+                  Pic.coverPic
+                    ? `data:image/jpeg;base64,${Pic.coverPic}`
+                    : profile.cover
+                }
+                className="profile-cover"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '30px',
+                  boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
+                }}
+              />
 
-        {/* cover photo */}
-
+            </a>
+            {Pic.coverPic ? (
+              <button
+                style={{ position: 'absolute', bottom: '-10px', left: '-10px' }}
+              >
+                <img
+                  src="https://img.icons8.com/material-sharp/512/trash.png"
+                  alt="Delete Icon"
+                  style={{
+                    height: '35px',
+                    width: '35px',
+                    borderRadius: '100%',
+                    backgroundColor: 'white',
+                    padding: '1px',
+                    margin: '2px',
+                    border: '3px solid black',
+                  }}
+                  // add an onClick handler to delete the profile pic
+                  onClick={removeUserCoverpic}
+                />
+              </button>
+            ) : null}
+          </div>
+        </Stack>
         <div
-          className="profile-cover"
           style={{
-            position: 'relative',
-            height: '250px',
-            width: 'max-content',
-            margin: '2%',
+            marginLeft: '25%',
           }}
         >
-          <button style={{ position: 'absolute', bottom: '-10px', right: '-10px' }}>
-            {/* upload new profile cover button */}
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCV}>
+              <Button>Upload CV</Button>
+            </a>
             <input
               type="file"
-              id="file-input-coverPic"
+              id="upload-cv"
+              onChange={uploadCVHandler}
               style={{ display: 'none' }}
-              onClick={clickCover}
-              onChange={coverImageHandler}
             />
 
-            <label htmlFor="file-input-coverPic">
-              <img
-                src="https://img.icons8.com/material-sharp/512/send-letter.png"
-                alt="Upload Icon"
-                style={{
-                  height: '35px',
-                  width: '35px',
-                  borderRadius: '100%',
-                  backgroundColor: 'white',
-                }}
-              />
-            </label>
-          </button>
-          <a onClick={clickCover}>
-            <img
-              alt="image"
-              src={
-                Pic.coverPic
-                  ? `data:image/jpeg;base64,${Pic.coverPic}`
-                  : profile.cover
-              }
-              className="profile-cover"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                borderRadius: '30px',
-                boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
-              }}
+           
+          </div>
+          <div
+            style={{
+              display: 'inline',
+              marginRight: '5rem',
+            }}
+          >
+            <a onClick={uploadCover}>
+              <Button>Upload Cover</Button>
+            </a>
+            <input
+              type="file"
+              id="upload-cover"
+              onChange={uploadCoverLetterHandler}
+              style={{ display: 'none' }}
             />
-          </a>
-          {Pic.coverPic ? (
-            <button style={{ position: 'absolute', bottom: '-10px', left: '-10px' }}>
-              <img
-                src="https://img.icons8.com/material-sharp/512/trash.png"
-                alt="Delete Icon"
-                style={{
-                  height: '35px',
-                  width: '35px',
-                  borderRadius: '100%',
-                  backgroundColor: 'white',
-                  padding: '1px',
-                  margin: '2px',
-                  border: '3px solid black',
-                }}
-                // add an onClick handler to delete the profile pic
-                onClick={removeUserCoverpic}
-              />
-            </button>
-          ) : null}
-        </div>
-      </Stack>
-      <div
-        style={{
-          marginLeft: '25%',
-        }}
-      >
-        <div
-          style={{
-            display: 'inline',
-            marginRight: '5rem',
-          }}
-        >
-          <a onClick={uploadCV}>
-            <Button>Upload CV</Button>
-          </a>
-          <input
-            type="file"
-            id="upload-cv"
-            onChange={uploadCVHandler}
-            style={{ display: 'none' }}
-          />
-        </div>
-        <div
-          style={{
-            display: 'inline',
-            marginRight: '5rem',
-          }}
-        >
-          <a onClick={uploadCover}>
-            <Button>Upload Cover</Button>
-          </a>
-          <input
-            type="file"
-            id="upload-cover"
-            onChange={uploadCoverLetterHandler}
-            style={{ display: 'none' }}
-          />
-        </div>
-        <div
-          style={{
-            display: 'inline',
-          }}
-        >
-          <Button onClick={deleteCVHandler} mr={'5rem'}>
-            Delete CV
-          </Button>
-          <Button onClick={deleteCoverHandler}>Delete Cover</Button>
-        </div>
-      </div>
-      {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
-      <div style={{ marginLeft: '25%', marginTop: '2rem' }}>
-        {currentUser.auth.cv ? (
-          <a
-            download="Your CV"
-            href={`data:application/pdf;base64,${currentUser.auth.cv}`}
-            style={{ marginRight: '6rem' }}
+          </div>
+          <div
+            style={{
+              display: 'inline',
+            }}
           >
-            Download CV
-          </a>
-        ) : (
-          <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
-        )}
+            <Button onClick={deleteCVHandler} mr={'5rem'}>
+              Delete CV
+            </Button>
+            <Button onClick={deleteCoverHandler}>Delete Cover</Button>
+          </div>
+        </div>
+        {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
+        <div style={{ marginLeft: '25%', marginTop: '2rem' }}>
+          {currentUser.auth.cv ? (
+            <a
+              download="Your CV"
+              href={`data:application/pdf;base64,${currentUser.auth.cv}`}
+              style={{ marginRight: '6rem' }}
+            >
+              Download CV
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
+          )}
 
-        {currentUser.auth.coverLetter ? (
-          <a
-            download="Cover Letter"
-            href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
-          >
-            Download cover
-          </a>
-        ) : (
-          <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
-        )}
-      </div>
+          {currentUser.auth.coverLetter ? (
+            <a
+              download="Cover Letter"
+              href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
+            >
+              Download cover
+            </a>
+          ) : (
+            <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
+          )}
+        </div>
 
-      {/* my profile */}
-      <InformationBox />
+        {/* my profile */}
+        <InformationBox />
 
-      {/* work experience */}
-      <ExperienceBox />
+        {/* work experience */}
+        <ExperienceBox />
 
-      {/* Education History */}
-      <EducationHistoryBox />
+        {/* Education History */}
+        <EducationHistoryBox />
 
-      {/* awards */}
-      <AwardsBox />
+        {/* awards */}
+        <AwardsBox />
 
-      {/* skills */}
-      <SkillsBox />
+        {/* skills */}
+        <SkillsBox />
 
-      {/* Volunteering */}
-      <VolunteeringBox />
+        {/* Volunteering */}
+        <VolunteeringBox />
 
-      {/* Personal Projects */}
-      <PersonalProjectsBox />
+        {/* Personal Projects */}
+        <PersonalProjectsBox />
 
-      {/* languages */}
-      <LanguagesBox />
+        {/* languages */}
+        <LanguagesBox />
 
-      {/* Certifications */}
-      <CoursesBox />
-    </ProtectedRoute>
+        {/* Certifications */}
+        <CoursesBox />
+      </Layout>
+    </>
   )
 }
 

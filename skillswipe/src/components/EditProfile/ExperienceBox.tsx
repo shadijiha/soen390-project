@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import React, { useContext, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
 import Experience from '../Forms/Experience'
 
 type Experience = {
@@ -15,9 +17,10 @@ type Experience = {
 }
 
 const ExperienceBox = () => {
-  const { user } = useContext(AuthContext)
+  // Api calls
+  const profile = useSelector((state) => state as any)
   const [experienceList, setExperienceList] = useState(
-    user.workExperiences as Experience[]
+    profile.auth.workExperiences as Experience[]
   )
   const deleteExperience = (id: number) => {
     setExperienceList(

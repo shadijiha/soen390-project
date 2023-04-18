@@ -39,6 +39,7 @@ const Volunteering = (props: any) => {
   }
 
   const updateVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !volunteering.company ||
@@ -53,7 +54,7 @@ const Volunteering = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      editVolunteeringRequest(volunteering).then((res) => {
+      editVolunteeringRequest(token, volunteering).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -64,11 +65,12 @@ const Volunteering = (props: any) => {
   }
 
   const deleteVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteVolunteering(props.volunteering.id)
     } else {
-      deleteVolunteeringRequest(volunteering.id).then((res) => {
+      deleteVolunteeringRequest(token, volunteering.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteVolunteering(props.volunteering.id)
@@ -80,6 +82,7 @@ const Volunteering = (props: any) => {
   }
 
   const addVolunteering = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (
       !volunteering.company ||
@@ -94,7 +97,7 @@ const Volunteering = (props: any) => {
       toast(t('addValidYear'))
       return
     } else {
-      addVolunteeringRequest(volunteering).then((res) => {
+      addVolunteeringRequest(token, volunteering).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {

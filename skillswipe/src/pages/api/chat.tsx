@@ -1,20 +1,32 @@
 import axios from 'axios'
+const URL = process.env.BASE_URL ?? 'http://localhost:8080'
 
-const req = axios.create({
-  withCredentials: true,
-  baseURL: process.env.BASE_URL ?? 'http://localhost:8080',
-})
+export const message = async (token: any, MessageRequest: any) => {
+  return axios.post(`${URL}/chat/message`, MessageRequest, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+export const getConversationById = async (token: any, id: any) => {
+  return axios.get(`${URL}/chat/conversation/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
 
-export const message = async (MessageRequest: any) => {
-  return req.post('/chat/message', MessageRequest)
+export const getAllConversation = async (token: any) => {
+  return axios.get(`${URL}/chat/allconversations`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }
-export const getConversationById = async (id: any) => {
-  return req.get(`/chat/conversation/${id}`)
-}
-
-export const getAllConversation = async () => {
-  return req.get('/chat/allconversations')
-}
-export const upload = async (file: any) => {
-  return req.post('/chat/upload', file)
+export const upload = async (token: any, file: any) => {
+  return axios.post(`${URL}/chat/upload`, file, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
 }

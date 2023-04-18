@@ -2,9 +2,10 @@ import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import React, { useContext, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
-import AuthContext from '../../contexts/AuthContext'
 import Volunteering from '../Forms/Volunteering'
 
 type Volunteering = {
@@ -16,9 +17,9 @@ type Volunteering = {
 }
 
 const VolunteeringBox = () => {
-  const { user } = useContext(AuthContext)
+  const profile = useSelector((state) => state as any)
   const [volunteeringList, setVolunteeringList] = useState(
-    user.volunteeringExperience as Volunteering[]
+    profile.auth.volunteeringExperience as Volunteering[]
   )
   const deleteVolunteering = (id: number) => {
     setVolunteeringList(

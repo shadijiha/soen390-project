@@ -37,12 +37,13 @@ const Courses = (props: any) => {
   }
 
   const updateCourses = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
       toast(t('fillFields'))
       return
     } else {
-      editCoursesRequest(course).then((res) => {
+      editCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('updatedSuccessfully'))
         } else {
@@ -53,12 +54,13 @@ const Courses = (props: any) => {
   }
 
   const addCourses = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (!course.courseName || !course.courseNumber) {
       toast(t('fillFields'))
       return
     } else {
-      addCoursesRequest(course).then((res) => {
+      addCoursesRequest(token, course).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('addedSuccessfully'))
         } else {
@@ -69,11 +71,12 @@ const Courses = (props: any) => {
   }
 
   const deleteCourses = (event: any) => {
+    const token = localStorage.getItem('jwt')
     event.preventDefault()
     if (props.isNew) {
       props.deleteCourse(props.course.id)
     } else {
-      deleteCoursesRequest(course.id).then((res) => {
+      deleteCoursesRequest(token, course.id).then((res) => {
         if (res.status == 201 || res.status == 200) {
           toast.success(t('deletedSuccessfully'))
           props.deleteCourse(props.course.id)

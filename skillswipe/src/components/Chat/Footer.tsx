@@ -1,8 +1,11 @@
 import { upload } from '@/pages/api/chat'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
+import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import React, { useRef, useState } from 'react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import React, { useEffect, useRef, useState } from 'react'
+import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
 
 const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
@@ -14,6 +17,7 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
     input.current.click()
   }
   const documentuploadHandler = (e: any) => {
+    const token = localStorage.getItem('jwt')
     const fd = new FormData()
     if (e.target.files[0]) {
       console.log(e.target.files)
@@ -25,7 +29,7 @@ const Footer = ({ handleSendMessage, sendMessagefile, append }) => {
         link: '',
         loaded: false,
       })
-      upload(fd)
+      upload(token, fd)
         .then((response) => {
           console.log(response.data)
           sendMessagefile({
