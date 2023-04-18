@@ -76,7 +76,7 @@ export class JobsService {
         const notificationPromise = this.notificationsService.createNotification(
           user.id,
           'Job Alert',
-          `A new job, ${job.jobTitle}, has been posted that matches your skills: ${matchedSkills.map((s) => s.title).join(', ')}`,
+          `A new job by ${job.companyName}, ${job.jobTitle}, has been posted that matches your skills: ${matchedSkills.map((s) => s.title).join(', ')}`,
           undefined,
           `/jobId/${job.id}`
         )
