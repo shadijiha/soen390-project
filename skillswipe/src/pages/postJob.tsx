@@ -36,8 +36,8 @@ const postJob = () => {
     skills: '',
     startDate: '',
     jobType: '',
-    coverLetter: null as null | boolean,
-    transcript: null as null | boolean,
+    coverLetter: false,
+    transcript: false,
     id: 0,
     externalUrl: '',
   })
@@ -58,8 +58,8 @@ const postJob = () => {
       !postListing.skills ||
       !postListing.startDate ||
       !postListing.jobType ||
-      postListing.coverLetter == null ||
-      postListing.transcript == null
+      (!isFormHidden &&
+        (postListing.coverLetter == null || postListing.transcript == null))
     ) {
       toast(t('fillAllFields'))
       return
@@ -228,43 +228,93 @@ const postJob = () => {
               </Stack>
 
               <Stack w="100%" spacing={3} direction={{ base: 'column', md: 'row' }}>
-                <FormControl as="fieldset">
-                  <FormLabel as="legend" paddingBottom={1.5}>
-                    {t('coverLetter')}
-                  </FormLabel>
-                  <RadioGroup
-                    onChange={(value) =>
-                      setJobListing({
-                        ...postListing,
-                        coverLetter: value === 'true' ? true : false,
-                      })
-                    }
-                  >
-                    <HStack spacing="10%">
-                      <Radio value="true">{t('yes')}</Radio>
-                      <Radio value="false">{t('no')}</Radio>
-                    </HStack>
-                  </RadioGroup>
-                </FormControl>
+                {isFormHidden && (
+                  <FormControl as="fieldset">
+                    <FormLabel as="legend" paddingBottom={1.5}>
+                      {t('coverLetter')}
+                    </FormLabel>
+                    <RadioGroup
+                      onChange={(value) =>
+                        setJobListing({
+                          ...postListing,
+                          coverLetter: value === 'true' ? true : false,
+                        })
+                      }
+                    >
+                      <HStack spacing="10%">
+                        <Radio value="true">{t('yes')}</Radio>
+                        <Radio value="false">{t('no')}</Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
+                )}
+                {isFormHidden && (
+                  <FormControl as="fieldset">
+                    <FormLabel as="legend" paddingBottom={1.5}>
+                      {t('transcript')}
+                    </FormLabel>
+                    <RadioGroup
+                      onChange={(value) =>
+                        setJobListing({
+                          ...postListing,
+                          transcript: value === 'true' ? true : false,
+                        })
+                      }
+                    >
+                      <HStack spacing="10%">
+                        <Radio value="true">{t('yes')}</Radio>
+                        <Radio value="false">{t('no')}</Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
+                )}
 
-                <FormControl as="fieldset">
-                  <FormLabel as="legend" paddingBottom={1.5}>
-                    {t('transcript')}
-                  </FormLabel>
-                  <RadioGroup
-                    onChange={(value) =>
-                      setJobListing({
-                        ...postListing,
-                        transcript: value === 'true' ? true : false,
-                      })
-                    }
-                  >
-                    <HStack spacing="10%">
-                      <Radio value="true">{t('yes')}</Radio>
-                      <Radio value="false">{t('no')}</Radio>
-                    </HStack>
-                  </RadioGroup>
-                </FormControl>
+                {!isFormHidden && (
+                  <FormControl as="fieldset">
+                    <FormLabel as="legend" paddingBottom={1.5}>
+                      {t('coverLetter')}
+                    </FormLabel>
+                    <RadioGroup
+                      value={postListing.coverLetter.toString()}
+                      onChange={(value) =>
+                        setJobListing({
+                          ...postListing,
+                          coverLetter: value === 'true' ? true : false,
+                        })
+                      }
+                    >
+                      <HStack spacing="10%">
+                        <Radio value="true" isDisabled>
+                          {t('yes')}
+                        </Radio>
+                        <Radio value="false">{t('no')}</Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
+                )}
+                {!isFormHidden && (
+                  <FormControl as="fieldset">
+                    <FormLabel as="legend" paddingBottom={1.5}>
+                      {t('transcript')}
+                    </FormLabel>
+                    <RadioGroup
+                      value={postListing.transcript.toString()}
+                      onChange={(value) =>
+                        setJobListing({
+                          ...postListing,
+                          transcript: value === 'true' ? true : false,
+                        })
+                      }
+                    >
+                      <HStack spacing="10%">
+                        <Radio value="true" isDisabled>
+                          {t('yes')}
+                        </Radio>
+                        <Radio value="false">{t('no')}</Radio>
+                      </HStack>
+                    </RadioGroup>
+                  </FormControl>
+                )}
 
                 <FormControl id="startDate">
                   <FormLabel htmlFor="startDate">{t('startDate')}</FormLabel>
