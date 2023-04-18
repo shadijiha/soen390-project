@@ -138,9 +138,10 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
 }
 
 const Inbox = () => {
+
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [messages, setMessages] = useState([{}])
+  const [messages, setMessages] = useState([{user : ""}]);
   const [loading, setLoading] = useState(true)
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -154,8 +155,14 @@ const Inbox = () => {
       const token = localStorage.getItem('jwt')
       getAllConversation(token)
         .then((response) => {
-          let allConvo = response.data
+          console.log(response)
+          let allConvo: any = response.data
           allConvo = allConvo.filter(filterConvo)
+          allConvo.map(element => {
+            if(isMessageData(element)){
+              element.lastMessage  = `${JSON.parse(element.lastMessage).ext} File` 
+            }
+          })
           setMessages(allConvo)
           setLoading(false)
         })
@@ -164,8 +171,30 @@ const Inbox = () => {
         })
     }
   }, [User.auth])
+
+  const isMessageData = (Message) => {
+    var data = false
+
+    var file = { ext: '', link: '', name: '', size: 0, loaded: false }
+
+    try {
+      file = JSON.parse(Message.lastMessage)
+      if (file.ext && file.size) {
+        data = true
+      } else {
+        data = false
+      }
+    } catch (error) {
+      var data = false
+    }
+
+    if (!isNaN(parseFloat(Message.lastMessage)) && isFinite(Message.lastMessage)) {
+      data = false
+    }
+    return data
+  }
   const filterConvo = (element: any) => {
-    return element.id != User.auth.id
+    return element.user.id != User.auth.id
   }
   return (
     <>
@@ -199,7 +228,7 @@ const Inbox = () => {
               newMessage={handleNewMessage}
             />
           </HStack>
-          {messages.length > 0 ? (
+          {messages[0] ? (
             messages.map((element: any) => (
               <Flex
                 key={element.id}
@@ -210,7 +239,7 @@ const Inbox = () => {
                 display="flex"
                 alignItems="center"
                 cursor={'pointer'}
-                onClick={() => router.push(`/inbox/${element.id}`)}
+                onClick={() => router.push(`/inbox/${element.user.id}`)}
               >
                 <Flex>
                   <Avatar
@@ -218,15 +247,15 @@ const Inbox = () => {
                     mr={4}
                     src={
                       element.profilePic
-                        ? `data:image/jpeg;base64,${element.profilePic}`
+                        ? `data:image/jpeg;base64,${element.user.profilePic}`
                         : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
                     }
                   />
                   <Box>
                     <Heading as="h2" size="md" mb={2}>
-                      {`${element.firstName} ${element.lastName}`}
+                      {`${element.user.firstName} ${element.user.lastName}`}
                     </Heading>
-                    <Text mb={2}>{element.text}</Text>
+                    <Text mb={2}>{element.lastMessage}</Text>
                   </Box>
                 </Flex>
                 <Spacer />

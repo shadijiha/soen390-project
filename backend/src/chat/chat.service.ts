@@ -29,7 +29,9 @@ export class ChatService {
       //   "Unable to login to Shado Cloud. Won't be able to upload files. Error: " +
       // 		JSON.stringify(err)
       // )
-      console.log("Unable to login to Shado Cloud. Won't be able to upload files. Error: ")
+      console.log(
+        "Unable to login to Shado Cloud. Won't be able to upload files. Error: "
+      )
     })
   }
 
@@ -38,10 +40,14 @@ export class ChatService {
     receiver: User,
     message: string
   ): Promise<Pusher.Response> {
-    const res = await this.pusherService.trigger(`message-${receiver.id}`, 'message', {
-      message,
-      sender: sender.id
-    })
+    const res = await this.pusherService.trigger(
+      `message-${receiver.id}`,
+      'message',
+      {
+        message,
+        sender: sender.id
+      }
+    )
     // Push to db (we don't need to await --> save time)
     const msg = new Message()
     msg.message = message
@@ -49,32 +55,57 @@ export class ChatService {
     msg.receiverId = receiver.id
     await this.messageRepository.save(msg)
 
-    await this.pusherService.trigger(`user-${receiver.id}`, 'message-notification', {
-      user: {
-        id: sender.id,
-        firstName: sender.firstName,
-        lastName: sender.lastName
-      },
-      message: msg
-    })
+    await this.pusherService.trigger(
+      `user-${receiver.id}`,
+      'message-notification',
+      {
+        user: {
+          id: sender.id,
+          firstName: sender.firstName,
+          lastName: sender.lastName
+        },
+        message: msg
+      }
+    )
 
     return res
   }
 
   // get all conversations for a user
-  public async allConversations (userId: number): Promise<number[]> {
+  public async allConversations (
+    userId: number
+  ): Promise<Array<{ userId: number, lastMessage: string }>> {
     const messages = await this.messageRepository.find({
       where: [{ senderId: userId }, { receiverId: userId }],
-      select: ['senderId', 'receiverId']
+      select: ['id', 'senderId', 'receiverId', 'message', 'created_at'],
+      order: { created_at: 'DESC' } // Order by createdAt in descending order
     })
 
-    const conversations = new Set<number>()
+    const conversationsMap = new Map<number, Message>()
+
     messages.forEach((message) => {
-      conversations.add(message.senderId)
-      conversations.add(message.receiverId)
+      const conversationPartnerId =
+        message.senderId === userId ? message.receiverId : message.senderId
+
+      if (
+        !conversationsMap.has(conversationPartnerId) ||
+        (conversationsMap.get(conversationPartnerId) as Message).created_at <
+          message.created_at
+      ) {
+        conversationsMap.set(conversationPartnerId, message)
+      }
     })
 
-    return Array.from(conversations)
+    const conversations: Array<{ userId: number, lastMessage: string }> = []
+
+    conversationsMap.forEach((message, conversationId) => {
+      conversations.push({
+        userId: conversationId,
+        lastMessage: message.message
+      })
+    })
+
+    return conversations
   }
 
   public async conversation (
@@ -90,10 +121,10 @@ export class ChatService {
   }
 
   /**
-	 * TODO: move this to a separate service
-	 * @param file
-	 * @param userId
-	 */
+   * TODO: move this to a separate service
+   * @param file
+   * @param userId
+   */
   public async upload (
     file: Express.Multer.File,
     userId: number
@@ -137,7 +168,7 @@ export class ChatService {
   private randomAlphaNumeric (length: number): string {
     let result = ''
     const characters =
-			'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     const charactersLength = characters.length
     for (let i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength))
