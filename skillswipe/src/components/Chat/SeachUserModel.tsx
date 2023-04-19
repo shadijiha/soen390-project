@@ -5,6 +5,7 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   CircularProgress,
   Flex,
   Input,
@@ -92,12 +93,22 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
                 placeholder="Type a name"
                 borderRadius={'200px'}
                 onChange={(e) => setSearch(e.target.value)}
+                // enter key pressed to search
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch()
+                  }
+                }}
               />
             </InputGroup>
             <VStack align="start" mt={5} spacing={5}>
               {loading ? (
-                <Flex justifyContent="center">
-                  <CircularProgress />
+                <Flex justifyContent="center" align={'center'} alignItems={'center'}>
+                  <CircularProgress
+                    alignContent={'center'}
+                    alignItems={'center'}
+                    alignSelf={'center'}
+                  />
                 </Flex>
               ) : searched && users.length === 0 ? (
                 <Text>No user found</Text>
