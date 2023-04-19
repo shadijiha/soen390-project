@@ -36,7 +36,12 @@ import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { deleteJobListing, getOpenJobs } from './api/api'
+import { deleteJobListing, getJobApplicants, getOpenJobs } from './api/api'
+
+const handleApplicationsClick = (jobId) => {
+  // Here, you can implement your navigation or any other action needed
+  router.push('/') // Navigates the user to the home page
+}
 
 const myListings = () => {
   const [jobListing, setJobListing] = useState([
@@ -53,6 +58,7 @@ const myListings = () => {
       transcript: true,
       created_at: '2023-03-16T20:19:34.940Z',
       updated_at: '2023-03-16T20:19:34.940Z',
+
       user: {
         id: 4,
         firstName: 'Uzair',
@@ -87,6 +93,35 @@ const myListings = () => {
       ],
     },
   ])
+
+  const [jobApplicant, setJobApplicant] = useState([
+    {
+      id: 25,
+      externalUrl: 'https://www.linkedin.com/in/saleemusama/',
+      jobTitle: 'thirdparty',
+      companyName: 'test',
+      location: 'test',
+      jobDescription: 'hey',
+      salary: '34',
+      jobType: 'part-time',
+      startDate: '2023-04-21T04:00:00.000Z',
+      coverLetter: false,
+      transcript: false,
+      created_at: '2023-04-18T20:50:19.339Z',
+      updated_at: '2023-04-18T20:50:19.339Z',
+      applications: [
+        {
+          id: 35,
+          name: 'Usama2 Saleem',
+          email: 'usama.saleem9@hotmail.com',
+          phone: '5149692059',
+          cv: null,
+          coverLetter: null,
+          created_at: '2023-04-19T22:31:43.747Z',
+        },
+      ],
+    },
+  ])
   const { t } = useTranslation('common')
 
   useEffect(() => {
@@ -95,9 +130,7 @@ const myListings = () => {
       const token = localStorage.getItem('jwt')
       try {
         // Call API function to get open jobs
-
         const response = await getOpenJobs(token)
-
         // Update state with fetched data
         setJobListing(response.data)
       } catch (error) {
@@ -106,6 +139,24 @@ const myListings = () => {
       }
     }
     viewOpenJobs()
+  }, [])
+
+  useEffect(() => {
+    const getApplicants = async () => {
+      console.log('getting applicants')
+      // Get token from local storage
+      const token = localStorage.getItem('jwt')
+      try {
+        // Call API function to get job applicants for this job id
+        const responseApplicants = await getJobApplicants(token)
+        // Update state with fetched data
+        setJobApplicant(responseApplicants.data)
+      } catch (error) {
+        console.error(error)
+        toast.error(t('errorJobs'))
+      }
+    }
+    getApplicants()
   }, [])
 
   const handleFilter = (value) => {
@@ -372,12 +423,14 @@ const myListings = () => {
                         }}
                       >
                         ✅ ‎ {t('numberOfApplications')}: {}
-                        <button>
+                        <button onClick={() => handleApplicationsClick(job.id)}>
                           <Link
                             href={`/jobListing/${job.id}`}
                             color={useColorModeValue('blue.500', 'blue.300')}
                           >
-                            View All
+                            {/* Display the number of applications or 0 if not present */}
+                            {jobApplicant.find((app) => app.id === job.id)
+                              ?.applications?.length || 0}
                           </Link>
                         </button>
                       </chakra.p>

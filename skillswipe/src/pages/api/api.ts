@@ -261,6 +261,18 @@ export const getMyListings = async (token: any) => {
     })
 }
 
+export const getJobApplicants = async (token: any) => {
+  return axios
+    .get(`${URL}/jobs/my/applications`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
+
 export const viewJob = async (token, id) => {
   return axios
     .get(`${URL}/jobs/${id}`, {
