@@ -16,7 +16,7 @@ import { Post } from '../models/post.entity'
 
 @Module({
   controllers: [UsersController, ConnectionsController, NotificationsController, PostsController],
-  providers: [PusherService, UsersService, ConnectionsService, NotificationsService, PostsService, ConnectionsController],
+  providers: [PusherService, UsersService, ConnectionsService, NotificationsService, PostsService],
   imports: [TypeOrmModule.forFeature([User, Job]), TypeOrmModule.forFeature([Connection, Post])],
   exports: [TypeOrmModule]
 })

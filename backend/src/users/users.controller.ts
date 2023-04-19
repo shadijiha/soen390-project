@@ -37,7 +37,6 @@ import {
 } from '../util/fileValidationPipe'
 import { ConnectionsService } from './connections/connections.service'
 import type Pusher from 'pusher'
-import { ConnectionsController } from './connections/connections.controller'
 
 @Controller()
 @ApiTags('Users')
@@ -46,8 +45,7 @@ import { ConnectionsController } from './connections/connections.controller'
 export class UsersController {
   constructor (
     private readonly usersService: UsersService,
-    private readonly connectionsService: ConnectionsService,
-    private readonly connectionController: ConnectionsController
+    private readonly connectionsService: ConnectionsService
   ) { }
 
   /* It's a controller that returns all users */
