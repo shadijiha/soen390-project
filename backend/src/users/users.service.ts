@@ -39,11 +39,31 @@ export class UsersService {
   }
 
   /**
-	 * It finds a user by their id and returns the user with all of their relations.
-	 * @param {number} userId - number - the id of the user we want to find
-	 * @param {string[]} [relations] - [
-	 * @returns The user object with all the relations.
-	 */
+ * Returns an array of users with ther relations
+ * @returns An array of users with all their relations.
+ */
+  async findAllWithRelations (): Promise<User[]> {
+    return await this.usersRepository.find({
+      relations: [
+        'educations',
+        'workExperiences',
+        'volunteeringExperience',
+        'skills',
+        'courses',
+        'projects',
+        'awards',
+        'languages',
+        'recommendationsReceived'
+      ]
+    })
+  }
+
+  /**
+   * It finds a user by their id and returns the user with all of their relations.
+   * @param {number} userId - number - the id of the user we want to find
+   * @param {string[]} [relations] - [
+   * @returns The user object with all the relations.
+   */
   async findOneById (userId: number, relations?: string[]): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {

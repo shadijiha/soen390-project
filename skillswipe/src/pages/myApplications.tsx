@@ -330,17 +330,18 @@ const MyApplications = () => {
                       {/* By the way, the ‎ is an invisible space character */}
                       <chakra.p>
                         {/* format the starting date to be only year month and date */}
-                        📅 ‎ ‎ Starting Date:{' '}
+                        📅 ‎ ‎ {t('startingDate')}:{' '}
                         {application.job.startDate.split('T')[0]}
                       </chakra.p>
                       <chakra.p>
-                        🤑 ‎ ‎ Salary: ${application.job.salary}/hr
+                        🤑 ‎ ‎ {t('salary')}: ${application.job.salary}/hr
                       </chakra.p>
                       <chakra.p>
-                        💼 ‎ ‎ Job Posted: {application.job.created_at.split('T')[0]}
+                        💼 ‎ ‎ {t('jobPosted')}:{' '}
+                        {application.job.created_at.split('T')[0]}
                       </chakra.p>
                       <chakra.p>
-                        ⏳ ‎ ‎ Job Updated:{' '}
+                        ⏳ ‎ ‎ {t('jobUpdated')}:{' '}
                         {application.job.updated_at.split('T')[0]}
                       </chakra.p>
                     </VStack>
