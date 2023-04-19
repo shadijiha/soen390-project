@@ -46,7 +46,7 @@ export class UsersController {
   constructor (
     private readonly usersService: UsersService,
     private readonly connectionsService: ConnectionsService
-  ) {}
+  ) { }
 
   /* It's a controller that returns all users */
   @Get('users')
@@ -100,7 +100,16 @@ export class UsersController {
       @Query('query') query: string
   ): Promise<Users.SearchResponse> {
     if (query.length <= 0) return { users: [], jobs: [] }
-    return await this.usersService.search(await authedUser.getUser(), query)
+
+    const withCon: Users.SearchResponse = new Users.SearchResponse()
+    const withoutCon = await this.usersService.search(await authedUser.getUser(), query)
+    withCon.jobs = withoutCon.jobs
+
+    for (const { user } of withoutCon.users) {
+      const con = await this.connectionsService.getConnectionStatus(authedUser.id, user.id)
+      withCon.users.push({ user, connectionStatus: con })
+    }
+    return withCon
   }
 
   /* It's a controller that updates a user. */

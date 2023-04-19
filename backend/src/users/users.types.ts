@@ -67,12 +67,19 @@ export namespace Users {
       user: User | null
   }
 
+  class SearchUsersElement {
+    @ApiProperty({ type: User })
+      user: User
+
+    @ApiProperty({ enum: ['Connected', 'Pending', 'NotConnected', 'Unknown'] })
+      connectionStatus: 'Connected' | 'Pending' | 'NotConnected' | 'Unknown'
+  }
   export class SearchResponse {
-    @ApiProperty({ type: [User] })
-      users: User[]
+    @ApiProperty({ type: [SearchUsersElement] })
+      users: SearchUsersElement[] = []
 
     @ApiProperty({ type: [Job] })
-      jobs: Job[]
+      jobs: Job[] = []
   }
 
   export class GetUserByIdResponse extends App.WithStatus {

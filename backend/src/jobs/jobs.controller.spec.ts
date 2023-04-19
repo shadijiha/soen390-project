@@ -13,12 +13,12 @@ describe("JobsController", () => {
   let userRepository: Repository<User>;
 
   let mockJobsService = {
-    createJob: jest.fn(() => {}),
-    updateJob: jest.fn(() => {}),
-    deleteJob: jest.fn(() => {}),
-    getJobById: jest.fn(() => {}),
-    getAllJobs: jest.fn(() => {}),
-    getApplicationsForMyJobs: jest.fn(() => {}),
+    createJob: jest.fn(() => { }),
+    updateJob: jest.fn(() => { }),
+    deleteJob: jest.fn(() => { }),
+    getJobById: jest.fn(() => { }),
+    getAllJobs: jest.fn(() => { }),
+    getApplicationsForMyJobs: jest.fn(() => { }),
   };
 
   let mockUsersRepository = {
@@ -64,8 +64,8 @@ describe("JobsController", () => {
       startDate: new Date(),
       coverLetter: true,
       transcript: true,
+      externalUrl: "",
       skills: "test",
-      externalUrl: "test",
       tempFunction: function () {
         throw new Error("Function not implemented.");
       },

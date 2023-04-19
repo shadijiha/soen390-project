@@ -16,11 +16,11 @@ describe("UsersController", () => {
 
   let mockUserService = {
     findAll: jest.fn(() => []),
-    findOne: jest.fn(() => {}),
+    findOne: jest.fn(() => { }),
     update: jest.fn(() => ({ id: 1, firstName: "Test" })),
-    getByEmail: jest.fn(() => {}),
-    updateStatus: jest.fn(() => {}),
-    getStatus: jest.fn(() => {}),
+    getByEmail: jest.fn(() => { }),
+    updateStatus: jest.fn(() => { }),
+    getStatus: jest.fn(() => { }),
 
     removeSoft: jest.fn((id) => {
       if (id == 1) return true;
@@ -32,16 +32,16 @@ describe("UsersController", () => {
       else return null;
     }),
 
-    search: jest.fn(() => ({})),
-    addDocuments: jest.fn(() => {}),
-    removeDocuments: jest.fn(() => {}),
-    removeProfilePic: jest.fn(() => {}),
-    removeCoverPic: jest.fn(() => {}),
+    search: jest.fn(() => ({ users: [], jobs: [] })),
+    addDocuments: jest.fn(() => { }),
+    removeDocuments: jest.fn(() => { }),
+    removeProfilePic: jest.fn(() => { }),
+    removeCoverPic: jest.fn(() => { }),
   };
 
   let mockConnectionService = {
-    getConnectionStatus: jest.fn(() => {}),
-    getAcceptedConnections: jest.fn(() => {}),
+    getConnectionStatus: jest.fn(() => { }),
+    getAcceptedConnections: jest.fn(() => { }),
   };
 
   beforeEach(async () => {
@@ -53,7 +53,7 @@ describe("UsersController", () => {
           provide: getRepositoryToken(User),
           useValue: {
             find: jest.fn(() => []),
-            findOne: jest.fn(() => {}),
+            findOne: jest.fn(() => { }),
           },
         },
         {
@@ -162,7 +162,7 @@ describe("UsersController", () => {
 
     try {
       expect(await controller.remove(bearer)).toThrowError();
-    } catch (e) {}
+    } catch (e) { }
 
     expect(mockUserService.removeSoft).toHaveBeenCalled();
   });
