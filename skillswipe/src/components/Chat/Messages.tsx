@@ -23,6 +23,7 @@ import { useSelector } from 'react-redux'
 import Dialog from '../Dialog'
 import { ReportApi } from '@/pages/api/profile_api'
 import { toast } from 'react-toastify'
+import { ReportMessage } from '@/pages/api/adminApi'
 
 const Messages = ({ messages, user }) => {
   const User = useSelector((state) => state as any)
@@ -41,12 +42,14 @@ const Messages = ({ messages, user }) => {
   }
 
   const Report = () =>{
-    if(localStorage.getItem("jwt") && chatId != -1){
-      ReportApi(localStorage.getItem("jwt"),{"type" : "chat","entity_id" : chatId}).then((response)=> {
+    const token = localStorage.getItem("jwt");
+    if(token && chatId != -1){
+      ReportMessage(token,chatId).then((response)=> {
         toast("Successfully Reported the Message")
         onClose();
       }).catch((err) => {
-        toast(err.message);
+       
+        toast(err.response.data.message);
         onClose();
       })
 
