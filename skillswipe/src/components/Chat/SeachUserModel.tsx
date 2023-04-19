@@ -33,12 +33,14 @@ interface User {
 const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState<User[]>([])
+  const [searched, setSearched] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { t } = useTranslation('common')
 
   const handleSearch = async () => {
     setLoading(true)
+    setSearched(false)
     try {
       const token = localStorage.getItem('jwt')
       const response = await searchUser(token, search)
@@ -49,6 +51,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
       console.error(error)
     }
     setLoading(false)
+    setSearched(true)
   }
 
   const handleUserSelect = (user) => {
@@ -83,11 +86,11 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
 
           <ModalBody>
             <InputGroup>
-              <InputLeftAddon children="Find User" />
               <Input
                 type="text"
                 value={search}
                 placeholder="Type a name"
+                borderRadius={'200px'}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </InputGroup>
@@ -96,6 +99,8 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
                 <Flex justifyContent="center">
                   <CircularProgress />
                 </Flex>
+              ) : searched && users.length === 0 ? (
+                <Text>No user found</Text>
               ) : (
                 users.map((user) => (
                   <Box
