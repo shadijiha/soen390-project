@@ -35,7 +35,7 @@ export class UsersService {
    * @returns An array of users
    */
   async findAll (): Promise<User[]> {
-    return await this.usersRepository.find()
+    return await this.usersRepository.find({ withDeleted: true })
   }
 
   /**

@@ -66,6 +66,7 @@ describe("JobsController", () => {
       transcript: true,
       externalUrl: "",
       skills: "test",
+      externalUrl: "test",
       tempFunction: function () {
         throw new Error("Function not implemented.");
       },
@@ -142,7 +143,7 @@ describe("JobsController", () => {
       coverLetter: true,
       transcript: true,
       skills: "test",
-      externalUrl: "",
+      externalUrl: "test",
       tempFunction: function () {
         throw new Error("Function not implemented.");
       },
