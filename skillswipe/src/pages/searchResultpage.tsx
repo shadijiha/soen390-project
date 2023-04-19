@@ -3,12 +3,12 @@ import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Box, Flex, Heading, Img, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Search = () => {
   const { t } = useTranslation('common')
@@ -25,18 +25,16 @@ const Search = () => {
 
   const router = useRouter()
 
-  
   const searchQuery = router.query.q?.valueOf() as string
-  const searchQuery2 = router.query.c?.valueOf() as boolean;
+  const searchQuery2 = router.query.c?.valueOf() as boolean
 
-  const filterFun = (user) =>{
-    return user.connectionStatus == "Connected"
+  const filterFun = (user) => {
+    return user.connectionStatus == 'Connected'
   }
   useEffect(() => {
-
-    console.log(router.query);
-    if(searchQuery){
-      console.log(searchQuery2);
+    console.log(router.query)
+    if (searchQuery) {
+      console.log(searchQuery2)
       const token = localStorage.getItem('jwt')
       search(token, searchQuery)
         .then((response) => {
@@ -44,15 +42,14 @@ const Search = () => {
             toast(t('noResults'))
           } else {
             if (response.data !== null && response.data.users !== null) {
-              if(searchQuery2){
-                console.log("searchQuery2")
-                var user = response.data.users.filter(filterFun);
+              if (searchQuery2) {
+                console.log('searchQuery2')
+                const user = response.data.users.filter(filterFun)
                 // user.filter((element) => (
                 //   element.connectionStatus == "Connected"
                 // ))
-                setSearchResults(user);
-              }
-              else{
+                setSearchResults(user)
+              } else {
                 setSearchResults(response.data.users)
               }
               console.log(searchResults)
@@ -64,11 +61,8 @@ const Search = () => {
         .catch((error) => {
           console.log(error)
         })
-
     }
-  }, [searchQuery,searchQuery2])
-
-
+  }, [searchQuery, searchQuery2])
 
   // display search results in a card component with profile pic, name,
 
@@ -88,7 +82,6 @@ const Search = () => {
           <div>
             <List>
               {searchResults.map((user: any) => (
-            
                 <Stack key={user.user.id}>
                   <Box
                     borderWidth="1px"
@@ -104,8 +97,13 @@ const Search = () => {
                     key={user.id}
                   >
                     <li key={user.user.id}>
-                      
-                      <NextLink href={`${searchQuery2 ? `inbox/${user.user.id}` : `profile/${user.user.id}`}`}>
+                      <NextLink
+                        href={`${
+                          searchQuery2
+                            ? `inbox/${user.user.id}`
+                            : `profile/${user.user.id}`
+                        }`}
+                      >
                         <Heading
                           fontSize={20}
                           style={{
