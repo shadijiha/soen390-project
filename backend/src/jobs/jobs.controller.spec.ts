@@ -66,7 +66,6 @@ describe("JobsController", () => {
       transcript: true,
       externalUrl: "",
       skills: "test",
-      externalUrl: "test",
       tempFunction: function () {
         throw new Error("Function not implemented.");
       },
