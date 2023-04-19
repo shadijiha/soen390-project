@@ -225,7 +225,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
       try {
         const allConvo = await getAllConversation(token)
         allConvo.data.map(async (element) => {
-          const convo = await getConversationById(token, element.id)
+          const convo = await getConversationById(token, element.user.id)
 
           await Promise.all(
             convo.data.map(async (el) => {
@@ -236,11 +236,11 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               const diffInHrs: number = diffInMs / (1000 * 60 * 60)
               if (el.receiverId == currentUser.auth.id && diffInHrs < 24) {
                 const notif: any = {
-                  id: element.id,
-                  firstName: element.firstName,
-                  lastName: element.lastName,
+                  id: element.user.id,
+                  firstName: element.user.firstName,
+                  lastName: element.user.lastName,
                   created_at: el.created_at,
-                  profilePic: element.profilePic,
+                  profilePic: element.user.profilePic,
                 }
                 notification.push(notif)
               }

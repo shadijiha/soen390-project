@@ -8,7 +8,6 @@
   "password": "Mot de passe",
   "username": "Nom d'utilisateur",
   "googleSignIn": "Se connecter avec Google",
-
   "home": "Accueil",
   "profile": "Profil",
   "settings": "Paramètres",
@@ -24,18 +23,15 @@
   "systemMode": "Mode système",
   "english": "Anglais",
   "french": "Français",
-
   "search": "Rechercher",
   "total results": "Total des résultats",
   "recent posts": "Publications récentes",
   "noResults": "Aucun résultat",
-
   "messages": "Messages",
   "inbox": "Boîte de réception",
   "sent": "Envoyé",
   "message": "Message",
-  "noMessages": "Aucun message",
-
+  "noMessages": "Aucun message. Composes une message par la button ci-dessous",
   "pendingRequests": "Demandes en attente",
   "new": "Nouveau",
   "notifications": "Notifications",
@@ -44,16 +40,15 @@
   "accept": "Accepter",
   "noPendingRequests": "Aucune demande en attente",
   "noNotifications": "Aucune notification",
-
+  "searchForUser": "Rechercher un utilisateur",
   "chatPageHeader": "Discuter avec {{user}}",
   "sendMessageButton": "Envoyer",
   "attachFileButton": "Joindre un fichier",
   "connectedStatusMessage": "{{user}} est connecté(e)",
   "notConnectedStatusMessage": "{{user}} n'est pas connecté(e)",
   "userNotFoundMessage": "Utilisateur non trouvé",
-
- 
-  "openJobs": "Offres d'emploi ouvertes",
+  "myListings": "Mes Offres d'Emploi",
+  "openJobs": "Offres d'Emploi Ouvertes",
   "filterJobs": "Filtrer les offres d'emploi",
   "sortStartingDate": "Trier par date de début",
   "viewAll": "Voir tout",
@@ -69,14 +64,13 @@
   "coverLetter": "Lettre de motivation requise?",
   "yes": "Oui",
   "no": "Non",
-
+  "hideFormInputs": "Postuler chez 3rd party",
   "createJobListing": "Créer une offre d'emploi",
   "jobType": "Type d'emploi",
   "coverLetterRequired": "Lettre de motivation requise ?",
   "transcriptRequired": "Transcription requise ?",
   "skillsNeeded": "Compétences requises",
   "create": "Créer",
-
   "register": "S'inscrire",
   "select sex": "Choisir le sexe",
   "male": "Masculin",
@@ -84,8 +78,7 @@
   "signupWithGoogle": "S'inscrire avec Google",
   "alreadyUser": "Déjà un utilisateur ?",
   "confirm password": "Confirmation du mot de passe",
-
-  "myListings": "Mes offres d'emploi",
+  "externalURL": "URL externe",
   "filterList": "Filtrer la liste",
   "sortNewest": "Trier par date de création",
   "sortHighestSalary": "Trier par salaire le plus élevé",
@@ -96,23 +89,19 @@
   "connect": "Connecter",
   "createListing": "Créer une offre d'emploi",
   "errorCreateListing": "Erreur lors de la création de l'offre d'emploi",
-
   "notConnected": "Non connecté",
   "userNotFound": "Utilisateur non trouvé",
   "loading": "Chargement",
   "deleteRequest": "Supprimer la demande",
-
   "hey": "Salut",
   "edit": "Modifier",
   "updateCoverPicture": "Mettre à jour la photo de couverture",
   "updateProfilePicture": "Mettre à jour la photo de profil",
   "removeCoverPicture": "Suppression réussie de l'image de couverture",
   "recentPosts": "Publications récentes",
-
   "fillAllFields": "Veuillez remplir tous les champs",
   "loggedIn": "Connecté",
   "fillCorrectly": "Veuillez remplir correctement les champs",
-
   "removeConnection": "Retirer la connexion",
   "connectionRemoved": "Connexion supprimée",
   "requestAccepted": "Demande acceptée",
@@ -124,13 +113,11 @@
   "successfullyRegistered": "Inscription réussie",
   "invalidInput": "Entrée invalide",
   "password-mismatch": "Les mots de passe ne correspondent pas",
-
   "newMessage": "Nouveau message",
   "newMessage2": "Vous avez reçu un nouveau message",
   "newRequest": "Nouvelle demande",
   "newRequest2": "Vous avez reçu une nouvelle demande",
   "charInput": "Essayez quelque chose ...",
-
   "awards": "Récompenses",
   "courses": "Cours",
   "accomplishedCourses": "Cours accomplis",
@@ -146,12 +133,10 @@
   "recommendations": "Recommandations",
   "volunteeringHistory": "Historique de bénévolat",
   "careerJourney": "Parcours professionnel",
-
   "fillFields": "Veuillez remplir tous les champs",
   "awardUpdated": "Récompense mise à jour",
   "awardDeleted": "Récompense supprimée",
   "awardError": "Erreur lors de la mise à jour de la récompense",
-
   "submitApplication": "Envoyer la candidature",
   "name": "Nom",
   "phone": "Téléphone",
@@ -165,10 +150,8 @@
   "logout": "Déconnexion",
   "myAccount": "Mon compte",
   "SignIn/Logout": "Se connecter / Se déconnecter",
-
   "loggedInName": "Bienvenue {{name}}",
   "pasteHere": "Coller ici",
-
   "addedSuccessfully": "Ajouté avec succès",
   "deletedSuccessfully": "Supprimé avec succès",
   "updatedSuccessfully": "Mis à jour avec succès",
@@ -191,7 +174,9 @@
   "courseNumber": "Numéro du cours",
   "degree": "Diplôme",
   "institution": "Institution",
-
+  "Please add me to your network": "Veuillez m'ajouter à votre réseau",
+  "People you might know": "Personnes que vous pourriez connaître",
+  "noSuggestions": "Aucune suggestion",
   "beginner": "Débutant",
   "intermediate": "Intermédiaire",
   "advanced": "Avancé",
@@ -204,7 +189,5 @@
   "noApplications": "Vous n'avez pas de candidatures",
   "clickHere": "Cliquez ici",
   "toApply": "pour postuler",
-  "Please add me to your network": "Veuillez m'ajouter à votre réseau",
-  "People you might know": "Personnes que vous pourriez connaître",
-  "noSuggestions": "Aucune suggestion"
+  "numberOfApplications": "Nombre de candidatures"
 }

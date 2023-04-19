@@ -44,6 +44,7 @@ interface JobAttributes {
   jobType: ''
   coverLetter: false | true
   transcript: false | true
+  externalUrl: '' | null
 }
 
 interface UserAttributes {
@@ -68,6 +69,7 @@ interface UserAttributes {
 const findJob = () => {
   const mockJobData = {
     id: 5,
+    externalUrl: 'https://www.linkedin.com/in/saleemusama/' as string,
     jobTitle: 'Software Engineering Intern',
     companyName: 'Amazon',
     location: 'Montreal',
@@ -167,6 +169,7 @@ const findJob = () => {
           toast.error('Error 2 occurred. Please try again later.')
         })
     }
+    setQuickApplyButtonText('Applied')
   }
   const fetchUserData = async () => {
     try {
@@ -214,6 +217,7 @@ const findJob = () => {
         // Call API function to get open jobs
         const response = await getOpenJobs(token)
         // Update state with fetched data
+        console.log(response.data)
         setInitalJobListing(response.data)
         setJobListing(response.data)
       } catch (error) {
@@ -288,6 +292,8 @@ const findJob = () => {
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
   const { t } = useTranslation('common')
+
+  const [QuickApplyButtonText, setQuickApplyButtonText] = useState('Quick Apply')
 
   return (
     <>
@@ -422,100 +428,101 @@ const findJob = () => {
           >
             {jobListing.map((job, index) => (
               <Fragment key={index}>
-                {currentUser.auth.id !== job.user.id ? (
-                  <Grid
-                    templateRows={{ base: 'auto auto', md: 'auto' }}
-                    w="100%"
-                    templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
-                    p={{ base: 2, sm: 4 }}
-                    gap={3}
-                    alignItems="center"
-                    _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                  >
-                    <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                      <HStack spacing={3}>
-                        <img
-                          src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                          width="20px"
-                          height="20px"
-                          alt="logo"
-                          onError={(e) => {
-                            // show a default image if the company logo is not found
-                            e.currentTarget.src =
-                              'https://img.icons8.com/3d-fluency/512/hard-working.png'
-                          }}
-                        />
-
-                        <chakra.h2 fontWeight="bold" fontSize="lg">
-                          {job.companyName}
-                        </chakra.h2>
-                      </HStack>
-
-                      <chakra.h3
-                        as={Link}
-                        isExternal
-                        fontWeight="extrabold"
-                        fontSize="2xl"
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
+                <Grid
+                  templateRows={{ base: 'auto auto', md: 'auto' }}
+                  w="100%"
+                  templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
+                  p={{ base: 2, sm: 4 }}
+                  gap={3}
+                  alignItems="center"
+                  _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
+                >
+                  <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
+                    <HStack spacing={3}>
+                      <img
+                        src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                        width="20px"
+                        height="20px"
+                        alt="logo"
+                        onError={(e) => {
+                          // show a default image if the company logo is not found
+                          e.currentTarget.src =
+                            'https://img.icons8.com/3d-fluency/512/hard-working.png'
                         }}
-                      >
-                        {job.jobTitle}
-                      </chakra.h3>
-                      <div
-                        style={{
-                          paddingTop: '0.5em',
-                        }}
-                      ></div>
+                      />
 
-                      <chakra.p
-                        fontWeight="bold"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                      >
-                        📍 {job.location}
-                      </chakra.p>
-                      <chakra.p
-                        fontWeight="normal"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                      >
-                        💼 ‎
-                        {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
-                      </chakra.p>
-                    </Box>
-                    <VStack
-                      spacing={{ base: 0, sm: 3 }}
-                      alignItems="start"
-                      fontWeight="light"
-                      fontSize={{ base: 'xs', sm: 'sm' }}
+                      <chakra.h2 fontWeight="bold" fontSize="lg">
+                        {job.companyName}
+                      </chakra.h2>
+                    </HStack>
+
+                    <chakra.h3
+                      as={Link}
+                      isExternal
+                      fontWeight="extrabold"
+                      fontSize="2xl"
+                      onClick={() => {
+                        router.push(`/jobListing/${job.id}`)
+                      }}
+                    >
+                      {job.jobTitle}
+                    </chakra.h3>
+                    <div
+                      style={{
+                        paddingTop: '0.5em',
+                      }}
+                    ></div>
+
+                    <chakra.p
+                      fontWeight="bold"
+                      fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      <chakra.p>
-                        📅 {t('startingDate')}: {job.startDate.split('T')[0]}
-                      </chakra.p>
-                      <chakra.p>
-                        🤑 {t('salary')}: ${job.salary}/hr
-                      </chakra.p>
-                      <chakra.p>
-                        🏫 {t('transcript')}:{' '}
-                        {job.transcript.toString() == 'true' ? t('yes') : t('no')}
-                      </chakra.p>
-                      <chakra.p>
-                        💌 {t('coverLetter')}:{' '}
-                        {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
-                      </chakra.p>
-                    </VStack>
-                    <Stack
-                      spacing={4}
-                      direction={{ base: 'column', md: 'row' }}
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      justifySelf="flex-end"
-                      alignItems="center"
+                      📍 {job.location}
+                    </chakra.p>
+                    <chakra.p
+                      fontWeight="normal"
+                      fontSize="sm"
+                      color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      <div key={job.id}>
-                        {/* quick apply job button */}
-                        {!job.coverLetter && !job.transcript && (
+                      💼 ‎ {t('jobType')}:{' '}
+                      {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
+                    </chakra.p>
+                  </Box>
+                  <VStack
+                    spacing={{ base: 0, sm: 3 }}
+                    alignItems="start"
+                    fontWeight="light"
+                    fontSize={{ base: 'xs', sm: 'sm' }}
+                    color={useColorModeValue('gray.600', 'gray.300')}
+                  >
+                    <chakra.p>
+                      📅 {t('startingDate')}: {job.startDate.split('T')[0]}
+                    </chakra.p>
+                    <chakra.p>
+                      🤑 {t('salary')}: ${job.salary}/hr
+                    </chakra.p>
+                    <chakra.p>
+                      🏫 {t('transcript')}:{' '}
+                      {job.transcript.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                    <chakra.p>
+                      💌 {t('coverLetter')}:{' '}
+                      {job.coverLetter.toString() == 'true' ? t('yes') : t('no')}
+                    </chakra.p>
+                  </VStack>
+                  <VStack
+                    spacing={4}
+                    direction={{ base: 'column', md: 'row' }}
+                    fontSize={{ base: 'sm', md: 'md' }}
+                    justifySelf="flex-end"
+                    alignItems="end"
+                  >
+                    <div key={job.id}>
+                      {/* quick apply job button */}
+                      {!job.coverLetter &&
+                        !job.transcript &&
+                        currentUser.auth.id !== job.user.id && (
                           <Button
                             as={Link}
                             _hover={{
@@ -527,10 +534,11 @@ const findJob = () => {
                             outlineColor={useColorModeValue('gray.400', 'gray.600')}
                             onClick={(event) => handleSubmit(event, job.id)}
                           >
-                            Quick Apply
+                            {QuickApplyButtonText}
                           </Button>
                         )}
-                      </div>
+                    </div>
+                    {currentUser.auth.id !== job.user.id ? (
                       <Button
                         as={Link}
                         _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
@@ -543,9 +551,22 @@ const findJob = () => {
                       >
                         {t('apply')}
                       </Button>
-                    </Stack>
-                  </Grid>
-                ) : null}
+                    ) : (
+                      <Button
+                        as={Link}
+                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                        rounded="100px"
+                        outline={'solid 1px'}
+                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                        onClick={() => {
+                          router.push(`/myListings/`)
+                        }}
+                      >
+                        {t('editListing')}
+                      </Button>
+                    )}
+                  </VStack>
+                </Grid>
 
                 {jobListing.length - 1 !== index && <Divider m={0} />}
               </Fragment>

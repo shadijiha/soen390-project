@@ -107,4 +107,11 @@ export namespace Users {
       coverLetter: boolean
   }
 
+  export class ReportRequest {
+    @ApiProperty({ enum: ['post', 'chat'] })
+      type: 'post' | 'chat'
+
+    @ApiProperty()
+      entity_id: number
+  }
 }
