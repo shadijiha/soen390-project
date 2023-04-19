@@ -451,36 +451,18 @@ const findJob = () => {
                         }}
                       />
 
-                  <Checkbox
-                    paddingTop={1}
-                    pl={3}
-                    paddingBottom={1}
-                    isChecked={allChecked}
-                    isIndeterminate={isIndeterminate}
-                    onChange={(e) => {
-                      setCheckedItems([
-                        e.target.checked,
-                        e.target.checked,
-                        e.target.checked,
-                        e.target.checked,
-                      ])
-                      handleCheckboxChange(e)
-                    }}
-                  >
-                    {t('viewAll')}
-                  </Checkbox>
-                  <Stack pl={7} mt={1} spacing={1}>
-                    <Checkbox
-                      isChecked={checkedItems[0]}
-                      value="full-time"
-                      onChange={(e) => {
-                        setCheckedItems([
-                          e.target.checked,
-                          checkedItems[1],
-                          checkedItems[2],
-                          checkedItems[3],
-                        ])
-                        handleCheckboxChange(e)
+                      <chakra.h2 fontWeight="bold" fontSize="lg">
+                        {job.companyName}
+                      </chakra.h2>
+                    </HStack>
+
+                    <chakra.h3
+                      as={Link}
+                      isExternal
+                      fontWeight="extrabold"
+                      fontSize="2xl"
+                      onClick={() => {
+                        router.push(`/jobListing/${job.id}`)
                       }}
                     >
                       {job.jobTitle}

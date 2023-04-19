@@ -21,6 +21,8 @@ export const changeStatus = async (status: any, token: any) => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
+    body: JSON.stringify({ userStatus: status }),
+    keepalive: true,
   })
 }
 

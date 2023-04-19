@@ -33,12 +33,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import { getAllConversation } from '../api/chat'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface User {
   id: number

@@ -20,6 +20,8 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
