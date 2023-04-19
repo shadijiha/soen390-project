@@ -158,3 +158,17 @@ export const ResolvePostWarn = async (token: string, id: string) => {
     })
 }
 
+export const ReportMessage= async (token: string, id: number) => {
+  console.log(id)
+  return axios
+    .post(
+      `${URL}/admin/report-message/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    
+}
