@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Job } from '../models/job.entity'
 import { Skill } from '../models/skill.entity'
@@ -68,12 +68,12 @@ export class JobsService {
     const users = await this.usersRepository.find({ relations: ['skills'] })
 
     // filtering users that have skills that match the job skills
-    const promises = users.map((user) => {
+    const promises = users.map(async (user) => {
       // filtering the skills that match the job skills
       const matchedSkills = user.skills.filter((skill) => job.skills.find((jobSkill) => jobSkill.title === skill.title) != null)
       if (matchedSkills.length > 0) {
         // creating a notification for the user
-        const notificationPromise = this.notificationsService.createNotification(
+        const notificationPromise = await this.notificationsService.createNotification(
           user.id,
           'Job Alert',
           `A new job by ${job.companyName}, ${job.jobTitle}, has been posted that matches your skills: ${matchedSkills.map((s) => s.title).join(', ')}`,
@@ -81,8 +81,9 @@ export class JobsService {
           `/jobId/${job.id}`
         )
         // sending a pusher notification to the user
-        const pusherPromise = this.pusherService.trigger(`user-${user.id}`, 'newJob', { notificationPromise })
-
+        const pusherPromise = await this.pusherService.trigger(`user-${user.id}`, 'newJob', { notificationPromise })
+        console.log(notificationPromise);
+        
         // returning a promise that resolves when both promises have resolved
         return Promise.all([notificationPromise, pusherPromise])
       }
