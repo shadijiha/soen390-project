@@ -21,9 +21,27 @@ describe("PostsService", () => {
     save: jest.fn(() => {
       return { id: 1, content: "test" } as Post;
     }),
+    findOne: jest.fn(() => {
+      return { id: 1, content: "test" } as Post;
+    }),
+    delete: jest.fn(() => {
+      return Promise.resolve({ id: 1, content: "test" } as Post);
+    }),
+    find: jest.fn(),
   };
 
-  let mockConnectionsRepository = {};
+  let mockConnectionsRepository = {
+    find: jest.fn(() => {
+      return [
+        {
+          id: 1,
+          user_1: { id: 1, type: "user", jobs: [] },
+          user_2: { id: 2, type: "user", jobs: [] },
+          isAccepted: true,
+        },
+      ] as unknown as Connection[];
+    }),
+  };
 
   let mockUsersRepository = {
     findOne: jest.fn((x) => {
@@ -79,5 +97,17 @@ describe("PostsService", () => {
 
     const result = await service.createPost(bearer, post, files);
     expect(mockPostsRepository.save).toHaveBeenCalled();
+  });
+
+  it("should delete a post", async () => {
+    const bearer = await createTestBearerPayload("roger@gmail.com", userRepository);
+    const result = await service.deletePost(bearer, 1);
+    expect(mockPostsRepository.delete).toHaveBeenCalled();
+  });
+
+  it("should get a feed", async () => {
+    const bearer = await createTestBearerPayload("roger@gmail.com", userRepository);
+    const result = await service.getFeed(bearer);
+    expect(mockPostsRepository.find).toHaveBeenCalled();
   });
 });
