@@ -205,5 +205,17 @@
     "noApplications": "Vous n'avez pas de candidatures",
     "clickHere": "Cliquez ici",
     "toApply": "pour postuler",
-    "numberOfApplications": "Nombre de candidatures"
+    "numberOfApplications": "Nombre de candidatures",
+
+    "successfullyApplied": "Candidature réussie",
+    "errorApplying": "Erreur lors de la candidature",
+
+    "Applied": "Application envoyée",
+
+    "jobPosted": "Offre d'emploi publiée",
+    "jobUpdated": "Offre d'emploi mise à jour",
+
+    "skillsPlaceholder": "Séparer par une virgule(par exemple, React, NextJS, ChakraUI)",
+
+
 }

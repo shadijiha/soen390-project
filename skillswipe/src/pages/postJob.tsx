@@ -342,7 +342,7 @@ const postJob = () => {
                     id="skills"
                     type="text"
                     rounded="100px"
-                    placeholder="Separate with comma (e.g React, NextJS, ChakraUI)"
+                    placeholder={t('skillsPlaceholder')}
                   />
                 </FormControl>
               </Stack>
@@ -358,7 +358,7 @@ const postJob = () => {
                   name="jobDescription"
                   id="jobDescription"
                   size="lg"
-                  placeholder="Paste here"
+                  placeholder={t('pasteHere')}
                   rounded="15px"
                   onChange={(event) =>
                     setJobListing({

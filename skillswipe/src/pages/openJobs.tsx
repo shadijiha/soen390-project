@@ -158,9 +158,9 @@ const findJob = () => {
       applyToJob(token, jobId, submitApp)
         .then((res) => {
           if (res.status == 201 || res.status == 200) {
-            toast.success('Successfully applied to job. Good luck!')
+            toast.success(t('successfullyApplied'))
           } else {
-            console.error('Error applying to job!', res.data)
+            console.error(t('errorApplying'), res.data)
             toast.error(res.data.message) // toast the error message
           }
         })
@@ -169,7 +169,7 @@ const findJob = () => {
           toast.error('Error 2 occurred. Please try again later.')
         })
     }
-    setQuickApplyButtonText('Applied')
+    setQuickApplyButtonText(t('Applied'))
   }
   const fetchUserData = async () => {
     try {
@@ -304,7 +304,7 @@ const findJob = () => {
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
   const { t } = useTranslation('common')
 
-  const [QuickApplyButtonText, setQuickApplyButtonText] = useState('Quick Apply')
+  const [QuickApplyButtonText, setQuickApplyButtonText] = useState(t('quickApply'))
 
   return (
     <>
@@ -441,7 +441,7 @@ const findJob = () => {
                     }}
                     value="jobPostedByMe"
                   >
-                    My Listings
+                    {t('myListings')}
                   </Checkbox>
                 </MenuList>
               </Menu>

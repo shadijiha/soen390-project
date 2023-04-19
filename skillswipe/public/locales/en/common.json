@@ -209,12 +209,17 @@
     "noApplications": "You have not applied for any jobs yet.",
     "clickHere": "Click Here",
     "toApply": "to view all jobs.",
-    "numberOfApplications": "Number of Applications"
+    "numberOfApplications": "Number of Applications",
 
+    "successfullyApplied": "Successfully applied to job. Good luck!",
+    "errorApplying": "Error applying to job. Please try again later.",
 
+    "Applied": "Applied",
 
+    "jobPosted": "Date Job Posted",
+    "jobUpdated": "Date Job Updated",
 
-
+    "skillsPlaceholder": "Separate with comma(e.g React, NextJS, ChakraUI)"
 
 
 }
