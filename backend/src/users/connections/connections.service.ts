@@ -94,7 +94,7 @@ export class ConnectionsService {
 
     return connections.map((connection) => {
       return { user: connection.user_1, since: connection.updated_at };
-    });
+    }).filter((connection) => connection.user != null);
   }
 
   /**
