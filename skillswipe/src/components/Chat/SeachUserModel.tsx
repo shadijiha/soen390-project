@@ -96,13 +96,13 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
         />
         <ModalContent
           margin={'auto'}
-          borderRadius="14px"
-          padding={'1em'}
+          borderRadius="25px"
+          padding={'0.5em'}
           borderWidth="2px"
           display={'flex'}
           flexDirection={'column'}
           justifyContent={'space-between'}
-          minWidth={'50%'}
+          minWidth={'45%'}
         >
           <ModalHeader>{t('searchForUser')}</ModalHeader>
 
