@@ -25,32 +25,50 @@ const Search = () => {
 
   const router = useRouter()
 
+  
   const searchQuery = router.query.q?.valueOf() as string
+  const searchQuery2 = router.query.c?.valueOf() as boolean;
 
+  const filterFun = (user) =>{
+    return user.connectionStatus == "Connected"
+  }
   useEffect(() => {
-    const token = localStorage.getItem('jwt')
-    search(token, searchQuery)
-      .then((response) => {
-        if (!response.data || !response.data.users) {
-          toast(t('noResults'))
-        } else {
-          if (response.data !== null && response.data.users !== null) {
-            const searchedUsers = response.data.users.filter(
-              (user: any) =>
-                user.firstName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                user.lastName.toLowerCase().includes(searchQuery.toLowerCase())
-            )
-            setSearchResults(searchedUsers)
-            console.log(searchResults)
+
+    console.log(router.query);
+    if(searchQuery){
+      console.log(searchQuery2);
+      const token = localStorage.getItem('jwt')
+      search(token, searchQuery)
+        .then((response) => {
+          if (!response.data || !response.data.users) {
+            toast(t('noResults'))
           } else {
-            setSearchResults([])
+            if (response.data !== null && response.data.users !== null) {
+              if(searchQuery2){
+                console.log("searchQuery2")
+                var user = response.data.users.filter(filterFun);
+                // user.filter((element) => (
+                //   element.connectionStatus == "Connected"
+                // ))
+                setSearchResults(user);
+              }
+              else{
+                setSearchResults(response.data.users)
+              }
+              console.log(searchResults)
+            } else {
+              setSearchResults([])
+            }
           }
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, [searchQuery])
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
+    }
+  }, [searchQuery,searchQuery2])
+
+
 
   // display search results in a card component with profile pic, name,
 
@@ -70,7 +88,8 @@ const Search = () => {
           <div>
             <List>
               {searchResults.map((user: any) => (
-                <Stack key={user.id}>
+            
+                <Stack key={user.user.id}>
                   <Box
                     borderWidth="1px"
                     borderColor={formBorder}
@@ -84,8 +103,9 @@ const Search = () => {
                     minW={300}
                     key={user.id}
                   >
-                    <li key={user.id}>
-                      <NextLink href={`profile/${user.id}`}>
+                    <li key={user.user.id}>
+                      
+                      <NextLink href={`${searchQuery2 ? `inbox/${user.user.id}` : `profile/${user.user.id}`}`}>
                         <Heading
                           fontSize={20}
                           style={{
@@ -93,7 +113,7 @@ const Search = () => {
                             paddingLeft: '5px',
                           }}
                         >
-                          {user.firstName} {user.lastName}
+                          {user.user.firstName} {user.user.lastName}
                         </Heading>
                         <div
                           style={{
@@ -109,14 +129,14 @@ const Search = () => {
 
                         <Img
                           src={
-                            user.profilePic
-                              ? `data:image/jpeg;base64,${user.profilePic}`
+                            user.user.profilePic
+                              ? `data:image/jpeg;base64,${user.user.profilePic}`
                               : profile.image
                           }
                           style={{
                             borderRadius: '15px',
                           }}
-                          alt={`${user.firstName} ${user.lastName}`}
+                          alt={`${user.user.firstName} ${user.user.lastName}`}
                         />
                       </NextLink>
                     </li>
