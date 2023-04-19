@@ -92,11 +92,11 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
 
         <ModalBody>
           <InputGroup>
-            <InputLeftAddon children="Find User" />
+            <InputLeftAddon children={t("Find User")} />
             <Input
               type="text"
               value={search}
-              placeholder="Type a name"
+              placeholder={t("Type a name")}
               onChange={(e) => setSearch(e.target.value)}
             />
           </InputGroup>
@@ -126,10 +126,10 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="red" mr={3} onClick={onClose} borderRadius={'100px'}>
-            Close
+            {t('close')}
           </Button>
           <Button colorScheme="blue" onClick={handleSearch} borderRadius={'100px'}>
-            Search
+            {t('search')}
           </Button>
         </ModalFooter>
       </ModalContent>

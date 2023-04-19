@@ -504,7 +504,7 @@ const Home = () => {
                       fontWeight: '300',
                     }}
                   >
-                    {t('Have something on your')} 🧠?
+                    {t('Have something on your')} 🧠
                   </ModalHeader>
 
                   <ModalBody>

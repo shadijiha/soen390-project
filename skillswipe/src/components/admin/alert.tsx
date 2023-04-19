@@ -16,8 +16,11 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export default function Alert(props: any) {
+  const { t } = useTranslation('common')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [isLoading, setIsLoading] = useState(false)
   const cancelRef: any = React.useRef()
@@ -55,7 +58,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: 'This message has been marked safe',
+          description: (t ('This message has been marked as safe')),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -68,7 +71,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: "An error has occured while marking this message as 'safe'",
+          description: (t('An error has occured while marking this message as safe')),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -83,7 +86,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: 'This user has been warned',
+          description: (t('This user has been warned')),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -96,7 +99,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: 'An error has occured while warning this user',
+          description: (t('An error has occured while warning this user')),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -111,7 +114,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: 'This user has been banned',
+          description: (t('This user has been banned')),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -124,7 +127,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: 'An error has occured wile banning this user',
+          description: (t('An error has occured wile banning this user')),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -154,7 +157,7 @@ export default function Alert(props: any) {
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                Cancel
+                {t('cancel')}
               </Button>
               <Button
                 colorScheme={scheme}
@@ -171,3 +174,9 @@ export default function Alert(props: any) {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})

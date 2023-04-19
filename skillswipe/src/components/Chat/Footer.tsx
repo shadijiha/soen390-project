@@ -88,10 +88,16 @@ const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus })
         />
       </>
       :
-      <h1>You must connect to send a message to the user</h1>
+      <h1>{t('You must connect to send a message to the user')}</h1>
     }
     </>
     )
   }
+
+  export const getServerSideProps = async ({ locale }) => ({
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  })
 
 export default Footer

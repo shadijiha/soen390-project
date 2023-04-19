@@ -235,7 +235,56 @@
       "Last Name": "Last Name",
       "Sex": "Sex",
       "No CV uploaded": "No CV uploaded",
-      "No Cover uploaded": "No Cover uploaded"
+      "No Cover uploaded": "No Cover uploaded",
+
+      "Find Users": "Find Users",
+      "close": "Close",
+      "Type a name": "Type a name",
+      "You must connect to send a message to the user": "You must connect to send a message to the user",
+      
+      "View": "View",
+      "Reported Message": "Reported Message",
+      "Report Owner": "Report Owner",
+      "Reported User": "Reported User",
+      "Message": "Message",
+      "Date": "Date",
+      "Actions": "Actions",
+      "Are you sure you want to send a warning to user?": "Are you sure you want to send a warning to user?",
+      "Are you sure you want to ban user?": "Are you sure you want to ban user?",
+      "Are you sure you want ot mark this as safe?": "Are you sure you want ot mark this as safe?",
+      "This message has been marked as safe": "This message has been marked as safe",
+      "This user has been warned": "This user has been warned",
+      "An error has occured while warning this user": "An error has occured while warning this user",
+      "This user has been banned": "This user has been banned",
+      "An error has occured wile banning this user": "An error has occured wile banning this user",
+      "You are not logged in!": "You are not logged in!",
+      "Can't get reported messages! Please contact support": "Can't get reported messages! Please contact support",
+      "Pending Reported Messages": "Pending Reported Messages",
+      "User": "User",
+      "Status": "Status",
+      "Resolved Reported Messages": "Resolved Reported Messages",
+      "Can't get reported posts! Please contact support.": "Can't get reported posts! Please contact support.",
+      "Pending Reported Posts": "Pending Reported Posts",
+      "Resolved Reported Posts": "Resolved Reported Posts",
+      "Reported Post": "Reported Post",
+      "This post has been marked safe": "This post has been marked safe",
+      "An error has occured while marking this post as safe": "An error has occured while marking this post as safe",
+      "Can't get users! Please contact support.": "Can't get users! Please contact support.",
+      "List of Users": "List of Users",
+      "Banned": "Banned",
+      "Active": "Active",
+      "Are you sure you want to send unban ": "Are you sure you want to send unban ",
+      "Visit Profile": "Visit Profile"
+
+
+
+      
+
+
+
+
+
+
 
 
 
