@@ -17,7 +17,7 @@ export class UsersService {
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     private readonly dataSource: DataSource,
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
   ) {
   }
 
@@ -37,7 +37,26 @@ export class UsersService {
   async findAll (): Promise<User[]> {
     return await this.usersRepository.find()
   }
-
+/**
+ * Returns an array of users with ther relations
+ * @returns An array of users with all their relations.
+ */
+  async findAllWithRelations (): Promise<User[]> {
+    return await this.usersRepository.find({
+      relations: [
+        'educations',
+        'workExperiences',
+        'volunteeringExperience',
+        'skills',
+        'courses',
+        'projects',
+        'awards',
+        'languages',
+        'recommendationsReceived'
+      ]
+    })
+  }
+  
   /**
    * It finds a user by their id and returns the user with all of their relations.
    * @param {number} userId - number - the id of the user we want to find
@@ -265,53 +284,5 @@ export class UsersService {
     })
     user.coverPic = null
     await this.usersRepository.save(user)
-  }
-
-  // get suggested friends based on university or work
-  public async getSuggestedFriends (id: number): Promise<any []> {
-    const user = await this.usersRepository.findOne(
-      {
-        where: { id },
-        relations: ['educations', 'workExperiences']
-      }
-    )
-    if (user == null) return []
-    const users = await this.usersRepository.find({ relations: ['educations', 'workExperiences'] })
-    const universityFriends: User[] = []
-    const workFriends: User[] = []
-    let suggestedFriends: User[] = []
-
-    // if user has university
-    if (user.educations.length > 0) {
-      const institution = user.educations[0].institution
-      users.map(u => {
-        if (u.educations[0]?.institution.toLowerCase() === institution.toLowerCase()) {
-          const newUser: any = u
-          newUser.suggestedFriendType = 'university'
-          newUser.suggestedFriendInstitution = institution
-          universityFriends.push(u)
-        }
-        return u
-      })
-    }
-    // if user has work experience
-    if (user.workExperiences.length > 0) {
-      const company = user.workExperiences[0].company
-      users.map(u => {
-        if (u.workExperiences[0]?.company.toLowerCase() === company.toLowerCase()) {
-          const newUser: any = u
-          newUser.suggestedFriendType = 'work'
-          newUser.suggestedFriendInstitution = company
-          workFriends.push(u)
-        }
-        return u
-      }
-      )
-    }
-    // remove duplicates
-    suggestedFriends = [...new Set([...universityFriends, ...workFriends])]
-    // remove user
-    suggestedFriends = suggestedFriends.filter(u => u.id !== user.id)
-    return suggestedFriends
   }
 }

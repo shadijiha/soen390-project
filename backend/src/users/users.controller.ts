@@ -61,12 +61,6 @@ export class UsersController {
     return await this.usersService.search(await authedUser.getUser(), query)
   }
 
-  /* It's a controller that returns a suggested friends based on work and univesity. */
-  @Get('suggestedFriends')
-  public async suggestedFriends (@AuthUser() authedUser: BearerPayload): Promise<User[]> {
-    return await this.usersService.getSuggestedFriends(authedUser.id)
-  }
-
   /* It's a controller that updates a user. */
   @Put('user')
   @ApiConsumes('multipart/form-data')

@@ -6,103 +6,112 @@ import {
   Param,
   Post,
   Put,
-  UseGuards
-} from '@nestjs/common/decorators'
-import { HttpException } from '@nestjs/common/exceptions/http.exception'
-import { ApiBearerAuth } from '@nestjs/swagger/dist/decorators/api-bearer.decorator'
-import { ApiTags } from '@nestjs/swagger/dist/decorators/api-use-tags.decorator'
-import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
-import { AuthUser, BearerPayload } from '../../util/util'
-import { ConnectionsService } from '../../users/connections/connections.service'
-import { Connections } from '../../users/connections/connections.types'
+  UseGuards,
+} from "@nestjs/common/decorators";
+import { HttpException } from "@nestjs/common/exceptions/http.exception";
+import { ApiBearerAuth } from "@nestjs/swagger/dist/decorators/api-bearer.decorator";
+import { ApiTags } from "@nestjs/swagger/dist/decorators/api-use-tags.decorator";
+import { JwtAuthGuard } from "../../auth/jwt-auth.guard";
+import { AuthUser, BearerPayload } from "../../util/util";
+import { ConnectionsService } from "../../users/connections/connections.service";
+import { Connections } from "../../users/connections/connections.types";
+import { User } from "src/models/user.entity";
 
-@Controller('connections')
-@ApiTags('Connections')
+@Controller("connections")
+@ApiTags("Connections")
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
 export class ConnectionsController {
-  constructor (private readonly connectionService: ConnectionsService) {}
+  constructor(private readonly connectionService: ConnectionsService) {}
 
   /* A POST request to the endpoint /connections/add. It is sending a connection request to another user. */
-  @Post('add')
-  public async sendConnectionRequest (
+  @Post("add")
+  public async sendConnectionRequest(
     @AuthUser() userInfo: BearerPayload,
-      @Body() body: Connections.AddConnectionRequest
+    @Body() body: Connections.AddConnectionRequest
   ): Promise<void> {
     try {
-      await this.connectionService.addConnection(userInfo.id, body.toUser)
+      await this.connectionService.addConnection(userInfo.id, body.toUser);
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
   }
 
   /* Deleting a connection. */
-  @Delete('delete/:id')
-  public async removeConnection (
+  @Delete("delete/:id")
+  public async removeConnection(
     @AuthUser() userInfo: BearerPayload,
-      @Param('id') id: number
+    @Param("id") id: number
   ): Promise<any> {
     try {
-      return await this.connectionService.deleteConnection(userInfo.id, id)
+      return await this.connectionService.deleteConnection(userInfo.id, id);
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
   }
 
   /* A GET request to the endpoint /connections/status/:id. It is used to get the connection status
 between two users. */
-  @Get('status/:id')
-  public async getConnectionStatus (
+  @Get("status/:id")
+  public async getConnectionStatus(
     @AuthUser() userInfo: BearerPayload,
-      @Param('id') user2Id: number
-  ): Promise<'Connected' | 'Pending' | 'NotConnected'> {
+    @Param("id") user2Id: number
+  ): Promise<"Connected" | "Pending" | "NotConnected"> {
     try {
       return await this.connectionService.getConnectionStatus(
         userInfo.id,
         user2Id
-      )
+      );
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
   }
 
   /* Getting the pending connection requests. */
-  @Get('pending')
-  public async getPendingRequest (
+  @Get("pending")
+  public async getPendingRequest(
     @AuthUser() userInfo: BearerPayload
   ): Promise<any> {
     try {
-      return await this.connectionService.getPendingConnections(userInfo.id)
+      return await this.connectionService.getPendingConnections(userInfo.id);
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
   }
 
   /* Getting the accepted connection requests. */
-  @Get('accepted')
-  public async getAcceptedRequests (
+  @Get("accepted")
+  public async getAcceptedRequests(
     @AuthUser() userInfo: BearerPayload
   ): Promise<any> {
     try {
-      return await this.connectionService.getAcceptedConnections(userInfo.id)
+      return await this.connectionService.getAcceptedConnections(userInfo.id);
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
   }
 
   /* Accepting a connection request. */
-  @Put('accept')
-  public async acceptConnectionRequest (
+  @Put("accept")
+  public async acceptConnectionRequest(
     @AuthUser() userInfo: BearerPayload,
-      @Body() body: Connections.AcceptConnectionRequest
+    @Body() body: Connections.AcceptConnectionRequest
   ): Promise<any> {
     try {
       return await this.connectionService.acceptConnection(
         body.id,
         userInfo.id
-      )
+      );
     } catch (e) {
-      throw new HttpException((e as Error).message, 400)
+      throw new HttpException((e as Error).message, 400);
     }
+  }
+
+  /* It's a controller that returns a suggested friends based on work and univesity. */
+  @Get("suggestedFriends")
+  public async suggestedFriends(
+    @AuthUser() authedUser: BearerPayload
+  ): Promise<User[]> {
+    return await this.connectionService.getSuggestedFriends(authedUser.id);
   }
 }
