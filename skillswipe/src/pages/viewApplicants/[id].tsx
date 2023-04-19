@@ -260,7 +260,7 @@ const myApplicants = () => {
         paddingBottom={'0.2em'}
       >
         {' '}
-        Job company name test: +{currentJob ? currentJob.companyName : 'Loading...'}
+        Job company name : {currentJob ? currentJob.companyName : 'Loading...'}
       </chakra.h3>
       <Layout>
         <NavBar />
@@ -274,7 +274,7 @@ const myApplicants = () => {
             >
               {/* a company picture image here */}
               <img
-                src={`https://www.google.com/s2/favicons?domain=${currentJob.companyName?.toLowerCase()}.com&sz=64`}
+                src={`https://www.google.com/s2/favicons?domain=${currentJob?.companyName?.toLowerCase()}.com&sz=64`}
                 alt="Segun Adebayo"
                 style={{
                   width: '60px',
@@ -290,7 +290,7 @@ const myApplicants = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                {currentJob.jobTitle}
+                {currentJob?.jobTitle}
               </chakra.h3>
               <Spacer />
               <Menu>
