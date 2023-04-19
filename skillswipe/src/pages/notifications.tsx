@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   Center,
+  Divider,
   Flex,
   HStack,
   Heading,
@@ -420,7 +421,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               ) : (
                 <Text>{t('noNotifications')}</Text>
               )}
-
+              <br></br>
+              <Divider />
               <Box py="4">
                 <Heading as="h1" size="lg" mb={8}>
                   {t('People you might know')}
