@@ -138,10 +138,9 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
 }
 
 const Inbox = () => {
-
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [messages, setMessages] = useState([{user : ""}]);
+  const [messages, setMessages] = useState([{ user: '' }])
   const [loading, setLoading] = useState(true)
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -158,9 +157,9 @@ const Inbox = () => {
           console.log(response)
           let allConvo: any = response.data
           allConvo = allConvo.filter(filterConvo)
-          allConvo.map(element => {
-            if(isMessageData(element)){
-              element.lastMessage  = `${JSON.parse(element.lastMessage).ext} File` 
+          allConvo.map((element) => {
+            if (isMessageData(element)) {
+              element.lastMessage = `${JSON.parse(element.lastMessage).ext} File`
             }
           })
           setMessages(allConvo)

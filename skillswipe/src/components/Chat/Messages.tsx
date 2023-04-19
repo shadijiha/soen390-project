@@ -1,4 +1,5 @@
 /* eslint-disable no-var */
+import { ReportApi } from '@/pages/api/profile_api'
 import {
   Avatar,
   Box,
@@ -20,45 +21,43 @@ import {
 import React, { useEffect, useRef, useState } from 'react'
 import { FileIcon, defaultStyles } from 'react-file-icon'
 import { useSelector } from 'react-redux'
-import Dialog from '../Dialog'
-import { ReportApi } from '@/pages/api/profile_api'
 import { toast } from 'react-toastify'
+import Dialog from '../Dialog'
 
 const Messages = ({ messages, user }) => {
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [chatId,setChatId] = useState(-1)
+  const [chatId, setChatId] = useState(-1)
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef(document.createElement('div'))
     useEffect(() => elementRef.current.scrollIntoView(), [])
     return <div ref={elementRef} />
   }
 
-
-  const OnClickReport = (id : any) => {
+  const OnClickReport = (id: any) => {
     setChatId(id)
-    onOpen();
+    onOpen()
   }
 
-  const Report = () =>{
-    if(localStorage.getItem("jwt") && chatId != -1){
-      ReportApi(localStorage.getItem("jwt"),{"type" : "chat","entity_id" : chatId}).then((response)=> {
-        toast("Successfully Reported the Message")
-        onClose();
-      }).catch((err) => {
-        toast(err.message);
-        onClose();
-      })
-
-    }
-    else{
-      onClose();
+  const Report = () => {
+    if (localStorage.getItem('jwt') && chatId != -1) {
+      ReportApi(localStorage.getItem('jwt'), { type: 'chat', entity_id: chatId })
+        .then((response) => {
+          toast('Successfully Reported the Message')
+          onClose()
+        })
+        .catch((err) => {
+          toast(err.message)
+          onClose()
+        })
+    } else {
+      onClose()
     }
   }
 
   return (
     <>
-      <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} Report={Report}/>
+      <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} Report={Report} />
       <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
         {messages.map((item, index) => {
           var data = false
@@ -202,7 +201,6 @@ const Messages = ({ messages, user }) => {
                           cursor: 'pointer',
                         }}
                         onClick={() => OnClickReport(item.id)}
-                       
                       >
                         Report
                       </Text>
@@ -238,7 +236,9 @@ const Messages = ({ messages, user }) => {
                     {item.message}
                     <Text
                       style={{ fontSize: '10px', color: 'grey', cursor: 'pointer' }}
-                      onClick={() => {OnClickReport(item.id)}}
+                      onClick={() => {
+                        OnClickReport(item.id)
+                      }}
                     >
                       Report
                     </Text>

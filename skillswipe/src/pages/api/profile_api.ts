@@ -298,10 +298,10 @@ export const deleteSkillsRequest = async (token: any, skillId: number) => {
       return { status: 500, data: err }
     })
 }
-export const ReportApi = async(token:any,Report : any) => {
-  return axios.post(`${URL}/report`,Report,{
-    headers : {
-      Authorization: `Bearer ${token}`
+export const ReportApi = async (token: any, Report: any) => {
+  return axios.post(`${URL}/report`, Report, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
 }

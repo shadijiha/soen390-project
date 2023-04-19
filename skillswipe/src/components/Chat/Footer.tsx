@@ -1,14 +1,16 @@
 import { upload } from '@/pages/api/chat'
 import { AttachmentIcon } from '@chakra-ui/icons'
 import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import React, { useEffect, useRef, useState } from 'react'
-import { IoSendSharp } from 'react-icons/io5'
+import React, { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 
-const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus }) => {
+const Footer = ({
+  handleSendMessage,
+  sendMessagefile,
+  append,
+  connectionStatus,
+}) => {
   const { t } = useTranslation('common')
   const { colorMode, toggleColorMode } = useColorMode()
   const input = useRef(document.createElement('input'))
@@ -48,50 +50,50 @@ const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus })
   }
   return (
     <>
-    {connectionStatus == 'Connected' ?
-    <>
-      <Flex w="100%" mt="5">
-        <Input
-          borderRadius="10px"
-          color={colorMode === 'light' ? 'black' : 'white'}
-          placeholder={t('chatInput')}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              setInputMessage('')
-              handleSendMessage(inputMessage)
-            }
-          }}
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          />
-        <Button borderRadius="10px" ml={'1rem'} onClick={handleClick}>
-          <AttachmentIcon />
-        </Button>
+      {connectionStatus == 'Connected' ? (
+        <>
+          <Flex w="100%" mt="5">
+            <Input
+              borderRadius="10px"
+              color={colorMode === 'light' ? 'black' : 'white'}
+              placeholder={t('chatInput')}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter') {
+                  setInputMessage('')
+                  handleSendMessage(inputMessage)
+                }
+              }}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+            />
+            <Button borderRadius="10px" ml={'1rem'} onClick={handleClick}>
+              <AttachmentIcon />
+            </Button>
 
-        <Button
-          borderRadius="10px"
-          disabled={inputMessage.trim().length <= 0}
-          onClick={() => {
-            setInputMessage('')
-            handleSendMessage(inputMessage)
-          }}
-          ml={'1rem'}
-          >
-          Send
-        </Button>
-      </Flex>
-      <input
-        onChange={documentuploadHandler}
-        ref={input}
-        type="file"
-        style={{ display: 'none' }}
-        />
-      </>
-      :
-      <h1>You must connect to send a message to the user</h1>
-    }
+            <Button
+              borderRadius="10px"
+              disabled={inputMessage.trim().length <= 0}
+              onClick={() => {
+                setInputMessage('')
+                handleSendMessage(inputMessage)
+              }}
+              ml={'1rem'}
+            >
+              Send
+            </Button>
+          </Flex>
+          <input
+            onChange={documentuploadHandler}
+            ref={input}
+            type="file"
+            style={{ display: 'none' }}
+          />
+        </>
+      ) : (
+        <h1>You must connect to send a message to the user</h1>
+      )}
     </>
-    )
-  }
+  )
+}
 
 export default Footer

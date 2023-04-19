@@ -168,7 +168,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast(('removeCoverPicture'))
+        toast('removeCoverPicture')
       })
       .catch((error) => {
         toast(error.message)
@@ -181,7 +181,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, profilePic: response.data.profilePic })
-        toast(('removeProfilePicture'))
+        toast('removeProfilePicture')
       })
       .catch((error) => {
         toast(error.message)
@@ -301,7 +301,7 @@ const EditProfile = () => {
                   }}
                   // add an onClick handler to delete the profile pic
 
-                  onClick={removeUserProfilepic} 
+                  onClick={removeUserProfilepic}
                 />
               </button>
             ) : null}
@@ -360,7 +360,6 @@ const EditProfile = () => {
                   boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
-
             </a>
             {Pic.coverPic ? (
               <button
@@ -405,8 +404,6 @@ const EditProfile = () => {
               onChange={uploadCVHandler}
               style={{ display: 'none' }}
             />
-
-           
           </div>
           <div
             style={{

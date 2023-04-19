@@ -3,12 +3,12 @@ import NavBar from '@/components/NavBar'
 import { useColorModeValue } from '@chakra-ui/color-mode'
 import { Box, Flex, Heading, Img, List, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { search } from './api/api'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Search = () => {
   const { t } = useTranslation('common')
