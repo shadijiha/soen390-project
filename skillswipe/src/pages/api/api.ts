@@ -300,6 +300,18 @@ export const deletePost = async (token: any, postId: number) => {
     })
 }
 
+export const reportPost = async (token: any, Id: number, some: any) => {
+  return axios
+    .post(`${URL}/admin/report-post/${Id}`, some, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err }
+    })
+}
+
 export const applyToJob = async (token, id, jobApply: any) => {
   return axios
     .post(`${URL}/application/${id}`, jobApply, {

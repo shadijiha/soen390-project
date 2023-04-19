@@ -47,6 +47,7 @@ import {
   deletePost,
   getOpenJobs,
   getPosts,
+  reportPost,
 } from './api/api'
 interface JobAttributes {
   id: number
@@ -109,6 +110,17 @@ const Home = () => {
         })
     }
     setIsConfirmOpen(false)
+  }
+
+  const handleReportPost = (post) => {
+    const token = localStorage.getItem('jwt')
+    reportPost(token, post, post).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success('Sucessfully reported post')
+      } else {
+        toast.error('Already Reported')
+      }
+    })
   }
   // const FileDropzone = () => {
   //   const onDrop = useCallback((acceptedFiles) => {
@@ -677,7 +689,19 @@ const Home = () => {
                             >
                               <DeleteIcon />
                             </Button>
-                          ) : null}
+                          ) : (
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              borderRadius="50px"
+                              onClick={() => handleReportPost(post.id)}
+                              style={{
+                                marginTop: '0.5rem',
+                              }}
+                            >
+                              Report
+                            </Button>
+                          )}
                         </HStack>
 
                         {post.image !== null ? (
