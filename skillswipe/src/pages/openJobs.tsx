@@ -158,9 +158,9 @@ const findJob = () => {
       applyToJob(token, jobId, submitApp)
         .then((res) => {
           if (res.status == 201 || res.status == 200) {
-            toast.success('Successfully applied to job. Good luck!')
+            toast.success(t('successfullyApplied'))
           } else {
-            console.error('Error applying to job!', res.data)
+            console.error(t('errorApplying'), res.data)
             toast.error(res.data.message) // toast the error message
           }
         })
@@ -169,7 +169,7 @@ const findJob = () => {
           toast.error('Error 2 occurred. Please try again later.')
         })
     }
-    setQuickApplyButtonText('Applied')
+    setQuickApplyButtonText(t('Applied'))
   }
   const fetchUserData = async () => {
     try {
@@ -277,6 +277,11 @@ const findJob = () => {
             (job) => job.jobType === ('other' as string)
           )
           break
+        case 'jobPostedByMe':
+          filteredJobs = filteredJobs.filter(
+            (job) => job.user.id === currentUser.auth.id
+          )
+          break
 
         default:
           break
@@ -288,18 +293,24 @@ const findJob = () => {
 
     setJobListing(filteredJobs)
   }
-  const [checkedItems, setCheckedItems] = useState([false, false, false, false])
+  const [checkedItems, setCheckedItems] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+  ])
   const allChecked = checkedItems.every(Boolean)
   const isIndeterminate = checkedItems.some(Boolean) && !allChecked
   const { t } = useTranslation('common')
 
-  const [QuickApplyButtonText, setQuickApplyButtonText] = useState('Quick Apply')
+  const [QuickApplyButtonText, setQuickApplyButtonText] = useState(t('quickApply'))
 
   return (
     <>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }}>
+        <Container maxW="5xl" p={{ base: 10, md: 0 }} minH={'2xl'}>
           <Flex justify="left" mb={3}>
             <HStack
               style={{
@@ -327,10 +338,10 @@ const findJob = () => {
                 </MenuButton>
                 <MenuList borderRadius={'20px'} marginTop={1}>
                   <MenuItem onClick={() => handleFilter('option1')}>
-                    {t('sortStartingDate')}
+                    📅 {t('sortStartingDate')}
                   </MenuItem>
                   <MenuItem onClick={() => handleFilter('option2')}>
-                    {t('sortHighestSalary')}
+                    💸 {t('sortHighestSalary')}
                   </MenuItem>
 
                   <Checkbox
@@ -341,6 +352,7 @@ const findJob = () => {
                     isIndeterminate={isIndeterminate}
                     onChange={(e) => {
                       setCheckedItems([
+                        e.target.checked,
                         e.target.checked,
                         e.target.checked,
                         e.target.checked,
@@ -413,6 +425,24 @@ const findJob = () => {
                       {t('other')}
                     </Checkbox>
                   </Stack>
+                  <Checkbox
+                    paddingTop={1}
+                    pl={3}
+                    paddingBottom={1}
+                    isChecked={checkedItems[4]}
+                    onChange={(e) => {
+                      setCheckedItems([
+                        checkedItems[0],
+                        checkedItems[1],
+                        checkedItems[2],
+                        checkedItems[3],
+                      ])
+                      handleCheckboxChange(e)
+                    }}
+                    value="jobPostedByMe"
+                  >
+                    {t('myListings')}
+                  </Checkbox>
                 </MenuList>
               </Menu>
             </HStack>
@@ -478,7 +508,7 @@ const findJob = () => {
                       fontSize="sm"
                       color={useColorModeValue('gray.600', 'gray.300')}
                     >
-                      📍 {job.location}
+                      📍 ‎ {job.location}
                     </chakra.p>
                     <chakra.p
                       fontWeight="normal"
@@ -557,6 +587,7 @@ const findJob = () => {
                         _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
                         rounded="100px"
                         outline={'solid 1px'}
+                        colorScheme="blue"
                         outlineColor={useColorModeValue('gray.400', 'gray.600')}
                         onClick={() => {
                           router.push(`/myListings/`)
