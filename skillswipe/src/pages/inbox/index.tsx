@@ -1,12 +1,13 @@
+/* eslint-disable no-var */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable @next/next/no-html-link-for-pages */
+import SearchUserModal from '@/components/Chat/SeachUserModel'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
-import SearchUserModal from '@/components/Chat/SeachUserModel'
 
 import {
   Avatar,
@@ -33,13 +34,10 @@ interface User {
   name: string
 }
 
-
-
 const Inbox = () => {
-
   const { t } = useTranslation('common')
   const router = useRouter()
-  const [messages, setMessages] = useState([{user : ""}]);
+  const [messages, setMessages] = useState([{ user: '' }])
   const [loading, setLoading] = useState(true)
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -56,9 +54,9 @@ const Inbox = () => {
           console.log(response)
           let allConvo: any = response.data
           allConvo = allConvo.filter(filterConvo)
-          allConvo.map(element => {
-            if(isMessageData(element)){
-              element.lastMessage  = `${JSON.parse(element.lastMessage).ext} File` 
+          allConvo.map((element) => {
+            if (isMessageData(element)) {
+              element.lastMessage = `${JSON.parse(element.lastMessage).ext} File`
             }
           })
           setMessages(allConvo)
@@ -73,7 +71,7 @@ const Inbox = () => {
   const isMessageData = (Message) => {
     var data = false
 
-    var file = { ext: '', link: '', name: '', size: 0, loaded: false }
+    let file = { ext: '', link: '', name: '', size: 0, loaded: false }
 
     try {
       file = JSON.parse(Message.lastMessage)

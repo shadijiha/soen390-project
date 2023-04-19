@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
@@ -45,10 +46,9 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { t } = useTranslation('common')
-  
 
   const handleSearch = async () => {
-    router.push(`/searchResultpage?q=${search}&c=true`)
+    router.push(`/searchResultpage?q=${search}`)
   }
 
   const handleUserSelect = (user) => {
