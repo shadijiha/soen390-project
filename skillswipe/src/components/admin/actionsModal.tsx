@@ -91,7 +91,7 @@ function ActionsModal(props) {
                 </Heading>
                 <Alert
                   title="Send Warning to User"
-                  message={t("Are you sure you want to send a warning to user?")}
+                  message= {t("Are you sure you want to send a warning to user?")}
                   scheme="yellow"
                   action="Send Warning"
                   id={message.id}

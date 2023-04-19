@@ -127,7 +127,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, cv: response.data })
         window.location.reload()
-        toast('Successfully deleted CV')
+        toast(t('Successfully deleted CV'))
       })
       .catch((error) => {
         toast(error.message)
@@ -142,7 +142,7 @@ const EditProfile = () => {
         .then((response) => {
           setFile({ ...File, coverLetter: response.data })
           window.location.reload()
-          toast('Successfully Updated coverLetter')
+          toast(t('Successfully Updated coverLetter'))
         })
         .catch((error) => {
           toast(error.message)
@@ -156,7 +156,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, coverLetter: response.data })
         window.location.reload()
-        toast('Successfully deleted Cover Letter')
+        toast(t('Successfully deleted Cover Letter'))
       })
       .catch((error) => {
         toast(error.message)

@@ -77,7 +77,7 @@ const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus })
           }}
           ml={'1rem'}
           >
-          Send
+          {t('Send')}
         </Button>
       </Flex>
       <input

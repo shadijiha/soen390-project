@@ -189,7 +189,7 @@
     "noApplications": "You have not applied for any jobs yet.",
     "clickHere": "Click Here",
     "toApply": "to view all jobs.",
-    "numberOfApplications": "Number of Applications",
+
 
       "Have something on your": "Have something on your mind",
       "Click to upload Picture": "Click to upload Picture",
@@ -254,23 +254,7 @@
       "Banned": "Banned",
       "Active": "Active",
       "Are you sure you want to send unban ": "Are you sure you want to send unban ",
-      "Visit Profile": "Visit Profile"
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
+      "Visit Profile": "Visit Profile",
 
     "numberOfApplications": "Number of Applications",
 
@@ -282,6 +266,24 @@
     "jobPosted": "Date Job Posted",
     "jobUpdated": "Date Job Updated",
 
-    "skillsPlaceholder": "Separate with comma(e.g React, NextJS, ChakraUI)"
+    "skillsPlaceholder": "Separate with comma(e.g React, NextJS, ChakraUI)",
+
+
+    "Send": "Send",
+    "Report": "Report",
+    "CV Successfully Uploaded": "CV Successfully Uploaded",
+    "Drop CV here": "Drop CV here",
+    "or click to upload": "or click to upload",
+    "CV Uploaded": "CV Uploaded",
+    "Cover Letter (optional)": "Cover Letter (optional)",
+    "Paste here": "Paste here",
+    "Skillswipe has a legal “backdoor” to identify and-or prevent illegal activities, such as harassment.": "Skillswipe has a legal “backdoor” to identify and-or prevent illegal activities, such as harassment.",
+    "To Report the Chat Please press the Report Button": "To Report the Chat Please press the Report Button",
+    "Successfully deleted CV": "Successfully deleted CV",
+    "Successfully Updated coverLetter": "Successfully Updated coverLetter",
+    "Successfully deleted Cover Letter": "Successfully deleted coverLetter"
+
+
+
 
 }

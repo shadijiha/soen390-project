@@ -272,15 +272,32 @@
   "Are you sure you want to send unban ": "Êtes-vous sûr de vouloir envoyer un débannissement ",
   "Visit Profile": "Visiter le profil",
 
-    "successfullyApplied": "Candidature réussie",
-    "errorApplying": "Erreur lors de la candidature",
+  "successfullyApplied": "Candidature réussie",
+  "errorApplying": "Erreur lors de la candidature",
 
-    "Applied": "Application envoyée",
+  "Applied": "Application envoyée",
 
-    "jobPosted": "Offre d'emploi publiée",
-    "jobUpdated": "Offre d'emploi mise à jour",
+  "jobPosted": "Offre d'emploi publiée",
+  "jobUpdated": "Offre d'emploi mise à jour",
 
-    "skillsPlaceholder": "Séparer par une virgule(par exemple, React, NextJS, ChakraUI)"
+  "skillsPlaceholder": "Séparer par une virgule(par exemple, React, NextJS, ChakraUI)",
+
+    "Send": "Envoyer",
+    "Report": "Signaler",
+    "CV Successfully Uploaded": "CV téléchargé avec succès",
+    "Drop CV here": "Déposez le CV ici",
+    "or click to upload": "ou cliquez pour télécharger",
+    "CV Uploaded": "CV téléchargé",
+    "Cover Letter (optional)": "Lettre de motivation (facultatif)",
+    "Paste here": "Collez ici",
+    "Skillswipe has a legal “backdoor” to identify and-or prevent illegal activities, such as harassment.":
+      "Skillswipe a un «porte dérobée» légal pour identifier et / ou empêcher les activités illégales, telles que le harcèlement.",
+    "To Report the Chat Please press the Report Button": "Pour signaler le chat, appuyez sur le bouton Signaler",
+    "Successfully deleted CV": "CV supprimé avec succès",
+    "Successfully Updated coverLetter": "Lettre de motivation mise à jour avec succès",
+    "Successfully deleted Cover Letter": "Lettre de motivation supprimée avec succès"
+
+
 
 
 

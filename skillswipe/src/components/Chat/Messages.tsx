@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 import {
   Avatar,
   Box,
@@ -23,8 +22,12 @@ import { useSelector } from 'react-redux'
 import Dialog from '../Dialog'
 import { ReportApi } from '@/pages/api/profile_api'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 
 const Messages = ({ messages, user }) => {
+  const { t } = useTranslation('common')
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [chatId,setChatId] = useState(-1)
@@ -43,7 +46,7 @@ const Messages = ({ messages, user }) => {
   const Report = () =>{
     if(localStorage.getItem("jwt") && chatId != -1){
       ReportApi(localStorage.getItem("jwt"),{"type" : "chat","entity_id" : chatId}).then((response)=> {
-        toast("Successfully Reported the Message")
+        toast(t("Successfully Reported the Message"))
         onClose();
       }).catch((err) => {
         toast(err.message);
@@ -204,7 +207,7 @@ const Messages = ({ messages, user }) => {
                         onClick={() => OnClickReport(item.id)}
                        
                       >
-                        Report
+                        {t('Report')}
                       </Text>
                     </Flex>
                     {file.loaded == false ? <Spinner /> : <></>}
@@ -240,7 +243,7 @@ const Messages = ({ messages, user }) => {
                       style={{ fontSize: '10px', color: 'grey', cursor: 'pointer' }}
                       onClick={() => {OnClickReport(item.id)}}
                     >
-                      Report
+                      {t('Report')}
                     </Text>
                   </Flex>
                 </Flex>
@@ -253,5 +256,11 @@ const Messages = ({ messages, user }) => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default Messages

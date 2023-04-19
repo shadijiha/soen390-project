@@ -1,9 +1,6 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import {
-  BellIcon,
   ChevronDownIcon,
   CloseIcon,
   HamburgerIcon,

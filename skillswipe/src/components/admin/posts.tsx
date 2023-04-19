@@ -245,7 +245,7 @@ function MessagesModal(props) {
   const { t } = useTranslation()
   return (
     <>
-      <Link onClick={onOpen}>View</Link>
+      <Link onClick={onOpen}>{t('View')}</Link>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

@@ -125,7 +125,7 @@ const jobListing = () => {
                       )
                     }}
                   >
-                    View Job
+                    {t('View Job')}
                   </Button>
                 )}
               </div>

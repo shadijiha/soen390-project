@@ -24,7 +24,9 @@ import router from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
+
 const SubmitAppForm = () => {
+  const { t } = useTranslation('common')
   const [cvUploaded, setCvUploaded] = useState(false)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -73,20 +75,19 @@ const SubmitAppForm = () => {
       applyToJob(token, jobId, submitApp)
         .then((res) => {
           if (res.status == 201 || res.status == 200) {
-            toast.success('Successfully applied to job. Good luck!')
+            toast.success (t('Successfully applied to job. Good luck!'))
           } else {
-            console.error('Error applying to job!', res.data)
-            toast.error('Error 1 API error occurred. Please try again later.')
+            console.error(t('Error applying to job!'), res.data)
+            toast.error(t('Error 1 API error occurred. Please try again later.'))
           }
         })
         .catch((error) => {
-          console.error('Error applying to job!', error)
-          toast.error('Error 2 occurred. Please try again later.')
+          console.error(t('Error applying to job!'), error)
+          toast.error(t('Error 2 occurred. Please try again later.'))
         })
     }
   }
 
-  const { t } = useTranslation('common')
   return (
     <>
       <VStack
@@ -191,7 +192,7 @@ const SubmitAppForm = () => {
                         left="50%"
                         transform="translate(-50%, -50%)"
                       >
-                        <Text>CV Successfully Uploaded</Text>
+                        <Text>{t('CV Successfully Uploaded')}</Text>
                       </Box>
                     </HStack>
                   ) : (
@@ -205,9 +206,9 @@ const SubmitAppForm = () => {
                     >
                       <Stack p="8" textAlign="center" spacing="1">
                         <Heading fontSize="lg" fontWeight="bold">
-                          Drop CV here [.pdf]
+                          {t('Drop CV here')} [.pdf]
                         </Heading>
-                        <Text fontWeight="light">or click to upload</Text>
+                        <Text fontWeight="light">{t('or click to upload')}</Text>
                       </Stack>
                     </Stack>
                   )}
@@ -226,7 +227,7 @@ const SubmitAppForm = () => {
                   onChange={(event) => {
                     if (event.target.files && event.target.files.length > 0) {
                       setCvUploaded(true)
-                      toast.success('CV Uploaded')
+                      toast.success(t('CV Uploaded'))
                     }
                   }}
                 />
@@ -235,10 +236,10 @@ const SubmitAppForm = () => {
           </AspectRatio>
 
           <FormControl id="cover">
-            <FormLabel>Cover Letter (optional)</FormLabel>
+            <FormLabel>{t('Cover Letter (optional)')}</FormLabel>
             <Textarea
               size="lg"
-              placeholder="Paste here"
+              placeholder={t("Paste here")}
               rounded="15px"
               value={cover}
               onChange={(e) => setCover(e.target.value)}
@@ -266,5 +267,11 @@ const SubmitAppForm = () => {
     </>
   )
 }
+
+export const getServerSideProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default SubmitAppForm
