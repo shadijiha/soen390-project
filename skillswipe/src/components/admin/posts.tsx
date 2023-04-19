@@ -1,4 +1,4 @@
-import { ResolvePostBan, ResolvePostSafe, ResolvePostWarn, getReportedPosts, getResolvedPosts } from '@/pages/admin/adminApi'
+import { ResolvePostBan, ResolvePostSafe, ResolvePostWarn, getReportedPosts, getResolvedPosts } from '@/pages/api/adminApi'
 import {
   AlertDialog,
   AlertDialogBody,

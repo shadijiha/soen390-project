@@ -1,4 +1,4 @@
-import { getUsers } from '@/pages/admin/adminApi'
+import { getUsers } from '@/pages/api/adminApi'
 import {
   Avatar,
   Badge,

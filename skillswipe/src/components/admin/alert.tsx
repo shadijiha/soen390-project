@@ -2,7 +2,7 @@ import {
   ResolveMessageBan,
   ResolveMessageSafe,
   ResolveMessageWarn,
-} from '@/pages/admin/adminApi'
+} from '@/pages/api/adminApi'
 import {
   AlertDialog,
   AlertDialogBody,

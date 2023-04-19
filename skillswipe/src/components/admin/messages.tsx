@@ -1,4 +1,4 @@
-import { getReportedMessage, getResolvedMessages } from '@/pages/admin/adminApi'
+import { getReportedMessage, getResolvedMessages } from '@/pages/api/adminApi'
 import {
   Avatar,
   Badge,
