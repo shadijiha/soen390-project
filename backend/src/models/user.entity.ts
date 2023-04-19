@@ -10,7 +10,6 @@ import {
   ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
-  TableInheritance,
   UpdateDateColumn
 } from 'typeorm'
 import { Award } from './award.entity'
@@ -27,9 +26,10 @@ import { Connection } from './connection.entity'
 import { Job } from './job.entity'
 import { Application } from './application.entity'
 import { Post } from './post.entity'
+import { Reported } from './reported.entity'
+import { Notifications } from './notifications.entity'
 
 @Entity('users')
-@TableInheritance({ column: { type: 'varchar', name: 'type' } })
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   @ApiProperty()
@@ -85,9 +85,9 @@ export class User extends BaseEntity {
   @ApiProperty()
     userStatus: 'online' | 'offline'
 
-  @Column({ default: 'jobseeker' })
+  @Column({ default: 'user' })
   @ApiProperty()
-    type: 'jobseeker' | 'recruiter' | 'admin'
+    type: 'user' | 'admin' | 'banned'
 
   @CreateDateColumn()
   @ApiProperty()
@@ -97,8 +97,8 @@ export class User extends BaseEntity {
   @ApiProperty()
     updated_at: Date
 
-  @DeleteDateColumn()
-    deleted_at: Date
+  @DeleteDateColumn({ nullable: true })
+    deleted_at: Date | null
 
   // SPECIAL GETTERS AND METHODS
   public get fullName (): string {
@@ -146,10 +146,10 @@ export class User extends BaseEntity {
     volunteeringExperience: Volunteering[]
 
   // connections
-  @OneToMany(() => Connection, (connection) => connection.user_1)
+  @OneToMany(() => Connection, (connection) => connection.user_1, { cascade: true, orphanedRowAction: 'delete' })
     connection_1: Connection[]
 
-  @OneToMany(() => Connection, (connection) => connection.user_2)
+  @OneToMany(() => Connection, (connection) => connection.user_2, { cascade: true, orphanedRowAction: 'delete' })
     connection_2: Connection[]
 
   // skills
@@ -218,7 +218,20 @@ export class User extends BaseEntity {
     applications: Application[]
 
   // posts
-  @OneToMany(() => Post, (p) => p.user)
+  @OneToMany(() => Post, (p) => p.user, { onDelete: 'CASCADE', orphanedRowAction: 'delete' })
   @ApiProperty({ type: [Post] })
     posts: Post[]
+
+  // reports
+  @OneToMany(() => Reported, (r) => r.reporter, { onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+  @ApiProperty({ type: [Reported] })
+    reports: Reported[]
+
+  @OneToMany(() => Reported, (r) => r.reporter, { onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+  @ApiProperty({ type: [Reported] })
+    gotReported: Reported[]
+
+  @OneToMany(() => Notifications, (n) => n.user, { cascade: true, onDelete: 'CASCADE', orphanedRowAction: 'delete' })
+  @ApiProperty({ type: [Notifications] })
+    notifications: Notifications[]
 }

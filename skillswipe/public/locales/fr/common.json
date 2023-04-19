@@ -1,4 +1,5 @@
 {
+
     "skillSwipe": "🚀 SkillSwipe",
     "welcome": "Bienvenue",
     "signUp": "S'inscrire",
@@ -216,6 +217,7 @@
     "jobUpdated": "Offre d'emploi mise à jour",
 
     "skillsPlaceholder": "Séparer par une virgule(par exemple, React, NextJS, ChakraUI)",
+
 
 
 }

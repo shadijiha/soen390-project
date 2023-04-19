@@ -8,7 +8,6 @@
     "password": "Password",
     "username": "Username",
     "googleSignIn": "Sign In with Google",
-
     "home": "Home",
     "profile": "Profile",
     "settings": "Settings",
@@ -24,7 +23,6 @@
     "systemMode": "System Mode",
     "english": "English",
     "french": "French",
-
     "search": "Search",
     "total results": "Total Results",
     "recent posts": "Recent Posts",
@@ -35,7 +33,6 @@
     "sent": "Sent",
     "message": "Message",
     "noMessages": "No new messages. Start a conversation using the button or search bar above.",
-
     "pendingRequests": "Pending Requests",
     "new": "New",
     "notifications": "Notifications",
@@ -44,15 +41,12 @@
     "accept": "Accept",
     "noPendingRequests": "No pending requests",
     "noNotifications": "No notifications",
-
     "chatPageHeader": "Chat with {{user}}",
     "sendMessageButton": "Send",
     "attachFileButton": "Attach File",
     "connectedStatusMessage": "{{user}} is connected",
     "notConnectedStatusMessage": "{{user}} is not connected",
     "userNotFoundMessage": "User not found",
-
-
     "openJobs": "Open Jobs",
     "filterJobs": "Filter Jobs",
     "sortStartingDate": "Sort by Starting Date",
@@ -69,7 +63,6 @@
     "coverLetter": "Cover Letter Needed?",
     "yes": "Yes",
     "no": "No",
-
     "hideFormInputs": "Post via 3rd party",
     "externalURL": "External URL",
     "createJobListing": "Create Job Listing",
@@ -78,7 +71,6 @@
     "transcriptRequired": "Transcript Required ?",
     "skillsNeeded": "Skills Needed",
     "create": "Create",
-
     "register": "Register",
     "select sex": "Select sex",
     "male": "Male",
@@ -86,8 +78,6 @@
     "signupWithGoogle": "Sign Up with Google",
     "alreadyUser": "Already a user ?",
     "confirm password": "Confirm Password",
-
-
     "myListings": "My Listings",
     "filterList": "Filter List",
     "sortNewest": "Sort by Starting Date",
@@ -99,23 +89,19 @@
     "connect": "Connect",
     "createListing": "Sucessfully created job listing. Happy hiring!",
     "errorCreateListing": "Error creating job listing. Maybe your usertype is not recruiter?",
-
     "notConnected": "Not Connected",
     "userNotFound": "User not found",
     "loading": "Loading...",
     "deleteRequest": "Delete Request",
-
     "hey": "Hey",
     "edit": "Edit",
     "updateCoverPicture": "Successfully Updated Cover Picture",
     "updateProfilePicture": "Successfully Updated Profile Picture",
     "removeCoverPicture": "Successfully Removed Cover Picture",
     "recentPosts": "Recent Posts",
-
     "fillAllFields": "Please fill all fields",
     "loggedIn": "You are Successfully logged in",
     "fillCorrectly": "Please fill the details correctly",
-
     "removeConnection": "Remove Connection",
     "connectionRemoved": "Connection Removed",
     "requestAccepted": "Request Accepted",
@@ -127,13 +113,11 @@
     "successfullyRegistered": "Successfully Registered the Account",
     "invalidInput": "Invalid Inputs",
     "password-mismatch": "Password in both fields should be the same",
-
     "newMessage": "New Message",
     "newMessage2": "You have a new message from John Doe",
     "newRequest": "New Friend Request",
     "newRequest2": "Please add me to your network",
     "charInput": "Type something...",
-
     "awards": "Awards",
     "courses": "Courses",
     "accomplishedCourses": "Accomplished Courses",
@@ -149,13 +133,10 @@
     "recommendations": "Recommendations",
     "volunteeringHistory": "Volunteering History",
     "careerJourney": "Career Journey",
-
-
     "fillFields": "Please fill all fields",
     "awardUpdated": "Award Updated Successfully",
     "awardDeleted": "Award Deleted",
     "awardError": "Error updating award",
-
     "submitApplication": "Submit Application",
     "name": "Name",
     "phone": "Phone",
@@ -169,10 +150,8 @@
     "logout": "Logout",
     "myAccount": "My Account",
     "SignIn/Logout": "Sign In/Logout",
-
     "loggedInName": "Welcome {{name}}",
     "pasteHere": "Paste here",
-
     "addedSuccessfully": "Added Successfully",
     "deletedSuccessfully": "Deleted Successfully",
     "updatedSuccessfully": "Updated Successfully",
@@ -195,12 +174,13 @@
     "courseNumber": "Course Number",
     "degree": "Degree",
     "institution": "Institution",
-
     "beginner": "Beginner",
     "intermediate": "Intermediate",
     "advanced": "Advanced",
     "native": "Native",
-
+    "Please add me to your network": "Please add me to your network",
+    "People you might know": "People you might know",
+    "noSuggestions": "No suggestions found",
     "myApplications": "My Job Applications",
     "openJobsForYou": "Open Jobs For You",
     "quickApply": "Quick Apply",
@@ -209,6 +189,7 @@
     "noApplications": "You have not applied for any jobs yet.",
     "clickHere": "Click Here",
     "toApply": "to view all jobs.",
+
     "numberOfApplications": "Number of Applications",
 
     "successfullyApplied": "Successfully applied to job. Good luck!",
@@ -220,6 +201,5 @@
     "jobUpdated": "Date Job Updated",
 
     "skillsPlaceholder": "Separate with comma(e.g React, NextJS, ChakraUI)"
-
 
 }

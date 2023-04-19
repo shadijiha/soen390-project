@@ -15,6 +15,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { ConnectionsService } from '../../users/connections/connections.service'
 import { Connections } from '../../users/connections/connections.types'
+import { type User } from '../../models/user.entity'
 
 @Controller('connections')
 @ApiTags('Connections')
@@ -104,5 +105,13 @@ between two users. */
     } catch (e) {
       throw new HttpException((e as Error).message, 400)
     }
+  }
+
+  /* It's a controller that returns a suggested friends based on work and univesity. */
+  @Get('suggestedFriends')
+  public async suggestedFriends (
+    @AuthUser() authedUser: BearerPayload
+  ): Promise<User[]> {
+    return await this.connectionService.getSuggestedFriends(authedUser.id)
   }
 }
