@@ -20,13 +20,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getMyApplications, withdrawJobApplication } from './api/api'
 import jobListing from './jobListing/[id]'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 interface Application {
   id: number
   name: string

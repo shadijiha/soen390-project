@@ -20,8 +20,6 @@ export class ProfileImagesFileValidationPipe implements PipeTransform {
       images.push(coverPic)
     }
 
-    console.log(images)
-
     for (const image of images) {
       if (!image.mimetype.startsWith('image/')) {
         throw new BadRequestException(`Invalid file type: ${image.mimetype}`)
@@ -54,8 +52,6 @@ export class ApplicationFileValidationPipe implements PipeTransform {
     if (coverLetter != null) {
       pdfs.push(coverLetter)
     }
-
-    console.log(pdfs)
 
     for (const pdf of pdfs) {
       if (!pdf.mimetype.endsWith('/pdf')) {
