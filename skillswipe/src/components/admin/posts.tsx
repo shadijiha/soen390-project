@@ -36,7 +36,6 @@ import {
 import { useRouter } from 'next/router'
 import React, { useEffect, useState }  from 'react'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 
 export const formatDate = (dateString) => {
@@ -504,9 +503,3 @@ export default function Alert(props: any) {
     </>
   )
 }
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})

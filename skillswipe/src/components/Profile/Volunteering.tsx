@@ -7,7 +7,6 @@ import ProfileStyle from '../../styles/profilestyle'
 
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Volunteering = ({ volunteer }: any) => {
   const { t } = useTranslation('common')

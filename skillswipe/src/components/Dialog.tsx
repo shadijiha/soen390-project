@@ -11,7 +11,6 @@ import React from 'react'
 import { Button } from '@chakra-ui/react'
 import styles from '../styles/modal.module.css'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 const Dialog = ({isOpen,onOpen,onClose,Report}) => {
 //   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,9 +44,5 @@ const Dialog = ({isOpen,onOpen,onClose,Report}) => {
   )
 }
 
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
+
 export default Dialog;

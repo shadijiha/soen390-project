@@ -3,7 +3,6 @@ import { AttachmentIcon } from '@chakra-ui/icons'
 import { Button, Flex, Input, useColorMode } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useEffect, useRef, useState } from 'react'
 import { IoSendSharp } from 'react-icons/io5'
 import { toast } from 'react-toastify'
@@ -93,11 +92,5 @@ const Footer = ({ handleSendMessage, sendMessagefile, append,connectionStatus })
     </>
     )
   }
-
-  export const getServerSideProps = async ({ locale }) => ({
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  })
 
 export default Footer

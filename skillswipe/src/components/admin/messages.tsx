@@ -19,7 +19,6 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import ActionsModal from './actionsModal'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const formatDate = (dateString) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -210,9 +209,3 @@ export const ReportedMessages = () => {
     </div>
   )
 }
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})

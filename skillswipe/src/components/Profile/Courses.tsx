@@ -16,7 +16,6 @@ import {
 } from '@chakra-ui/react'
 import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
 import { FaPencilRuler } from 'react-icons/fa'
 import 'react-toastify/dist/ReactToastify.css'

@@ -23,7 +23,6 @@ import Dialog from '../Dialog'
 import { ReportApi } from '@/pages/api/profile_api'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 
 const Messages = ({ messages, user }) => {
@@ -256,11 +255,5 @@ const Messages = ({ messages, user }) => {
     </>
   )
 }
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default Messages

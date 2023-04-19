@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react'
 
 import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
@@ -268,10 +267,6 @@ const SubmitAppForm = () => {
   )
 }
 
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
+
 
 export default SubmitAppForm

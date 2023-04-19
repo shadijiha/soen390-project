@@ -22,7 +22,6 @@ import React, { useEffect, useState } from 'react'
 import Alert from './alert'
 import { formatDate } from './messages'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 export const ListOfUsers = () => {
   const toast = useToast()
@@ -146,9 +145,4 @@ export const ListOfUsers = () => {
   )
 }
 
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 export default ListOfUsers
