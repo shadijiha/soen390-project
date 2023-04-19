@@ -17,7 +17,7 @@ export class UsersService {
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     private readonly dataSource: DataSource,
-    private readonly pusherService: PusherService,
+    private readonly pusherService: PusherService
   ) {
   }
 
@@ -37,7 +37,8 @@ export class UsersService {
   async findAll (): Promise<User[]> {
     return await this.usersRepository.find()
   }
-/**
+
+  /**
  * Returns an array of users with ther relations
  * @returns An array of users with all their relations.
  */
@@ -56,7 +57,7 @@ export class UsersService {
       ]
     })
   }
-  
+
   /**
    * It finds a user by their id and returns the user with all of their relations.
    * @param {number} userId - number - the id of the user we want to find
