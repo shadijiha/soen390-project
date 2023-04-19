@@ -457,6 +457,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                           }
                           mb={4}
                           pos={'relative'}
+                          boxShadow={'2xl'}
                         />
                         <NextLink href={`profile/${friend.id}`}>
                           <Heading fontSize={'2xl'} fontFamily={'body'}>
@@ -521,7 +522,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                               onClick={() => Reject(friend.id)}
                             >
@@ -541,7 +541,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                             >
                               <span>{t('connect')}</span>
