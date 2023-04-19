@@ -274,7 +274,7 @@ const myApplicants = () => {
             >
               {/* a company picture image here */}
               <img
-                src={`https://www.google.com/s2/favicons?domain=${job.companyName?.toLowerCase()}.com&sz=64`}
+                src={`https://www.google.com/s2/favicons?domain=${currentJob.companyName?.toLowerCase()}.com&sz=64`}
                 alt="Segun Adebayo"
                 style={{
                   width: '60px',
@@ -290,7 +290,7 @@ const myApplicants = () => {
                 textAlign="center"
                 paddingBottom={'0.2em'}
               >
-                Job Title
+                {currentJob.jobTitle}
               </chakra.h3>
               <Spacer />
               <Menu>
