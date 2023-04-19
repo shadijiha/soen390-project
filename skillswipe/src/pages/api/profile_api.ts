@@ -301,7 +301,7 @@ export const deleteSkillsRequest = async (token: any, skillId: number) => {
 
 // get suggested friends
 export const getSuggestedUsers = async (token: any) => {
-  return axios.get(`${URL}/suggestedFriends`, {
+  return axios.get(`${URL}/connections/suggestedFriends`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
