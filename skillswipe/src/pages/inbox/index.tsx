@@ -1,14 +1,6 @@
-/* eslint-disable no-var */
-/* eslint-disable react/jsx-key */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/no-children-prop */
-/* eslint-disable @next/next/no-html-link-for-pages */
 import SearchUserModal from '@/components/Chat/SeachUserModel'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
-import styles from '@/styles/modal.module.css'
-
 import {
   Avatar,
   Box,

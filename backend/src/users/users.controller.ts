@@ -1,5 +1,4 @@
 /* It's a controller that handles all the user related endpoints */
-/* It's a controller that handles all the user related endpoints */
 import {
   BadRequestException,
   Controller,
