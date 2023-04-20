@@ -239,42 +239,48 @@ const myApplicants = () => {
                 </chakra.h2>
                 {job.applications.length > 0 ? (
                   job.applications.map((applicant) => (
-                    <HoverableGrid key={applicant.id}>
-                      <Box
-                        key={applicant.id}
-                        borderWidth={1}
-                        borderRadius="20px"
-                        p={4}
-                        backgroundColor={useColorModeValue('gray.100', 'gray.700')}
-                        marginBottom={'20px'}
+                    <Box
+                      key={applicant.id}
+                      borderWidth={1}
+                      borderRadius="20px"
+                      p={4}
+                      backgroundColor={useColorModeValue('gray.100', 'gray.700')}
+                      marginBottom={'20px'}
+                      alignContent={'start'}
+                      alignItems={'start'}
+                      textAlign={'start'}
+                    >
+                      <chakra.h3
+                        fontWeight="bold"
+                        fontSize="lg"
+                        color={useColorModeValue('gray.700', 'white')}
+                        paddingBottom={'10px'}
+                      >
+                        Applicant name: {applicant.name}
+                        <Spacer />
+                      </chakra.h3>
+                      <VStack
                         alignContent={'start'}
                         alignItems={'start'}
                         textAlign={'start'}
                       >
-                        <chakra.h3
-                          fontWeight="bold"
-                          fontSize="lg"
-                          color={useColorModeValue('gray.700', 'white')}
-                        >
-                          Applicant name: {applicant.name}
+                        <Flex>
+                          <Text>Email: {applicant.email}</Text>
                           <Spacer />
-                        </chakra.h3>
-                        <VStack
-                          alignContent={'start'}
-                          alignItems={'start'}
-                          textAlign={'start'}
-                        >
-                          <Flex>
-                            <Text>Email: {applicant.email}</Text>
-                            <Spacer />
-                          </Flex>
-                          <Flex>
-                            <Text>Phone: {applicant.phone}</Text>
-                            <Spacer />
-                          </Flex>
-                        </VStack>
-                      </Box>
-                    </HoverableGrid>
+                        </Flex>
+                        <Flex>
+                          <Text>Phone: {applicant.phone}</Text>
+                          <Spacer />
+                        </Flex>
+                        <Flex>
+                          <Text>
+                            Applied:{' '}
+                            {new Date(applicant.created_at).toLocaleDateString()}
+                          </Text>
+                          <Spacer />
+                        </Flex>
+                      </VStack>
+                    </Box>
                   ))
                 ) : (
                   <Text>No applicants for this job.</Text>
