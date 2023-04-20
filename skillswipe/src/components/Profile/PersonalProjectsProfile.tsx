@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import {
   Container,
   HStack,
@@ -7,12 +6,9 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import * as React from 'react'
 import { useEffect } from 'react'
-
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface ProjectCardProps {
   id: number

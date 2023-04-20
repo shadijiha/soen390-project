@@ -1,25 +1,15 @@
-/* eslint-disable no-var */
 import { ReportApi } from '@/pages/api/profile_api'
 import {
   Avatar,
   Box,
-  Button,
   Flex,
-  Heading,
   Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Spinner,
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
-import { FileIcon, defaultStyles } from 'react-file-icon'
+import { FileIcon } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import Dialog from '../Dialog'

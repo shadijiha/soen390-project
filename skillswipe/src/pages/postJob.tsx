@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/jsx-no-undef */
 import NavBar from '@/components/NavBar'
 import {
   Box,
@@ -19,7 +16,6 @@ import {
   Textarea,
   VStack,
 } from '@chakra-ui/react'
-
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'

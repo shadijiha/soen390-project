@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable @next/next/no-img-element */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -469,7 +467,7 @@ const findJob = () => {
                 >
                   <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                     <HStack spacing={3}>
-                      <img
+                      <Img
                         src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
                         width="20px"
                         height="20px"

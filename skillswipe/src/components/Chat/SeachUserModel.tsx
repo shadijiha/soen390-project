@@ -1,16 +1,12 @@
-/* eslint-disable react/jsx-no-undef */
-/* eslint-disable react/no-children-prop */
 import styles from '@/styles/modal.module.css'
 import {
   Avatar,
   Box,
   Button,
-  Center,
   CircularProgress,
   Flex,
   Input,
   InputGroup,
-  InputLeftAddon,
   Modal,
   ModalBody,
   ModalContent,
@@ -24,6 +20,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { search as searchUser } from 'src/pages/api/api'
+
 interface User {
   id: number
   firstName: string

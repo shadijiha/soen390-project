@@ -1,7 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -25,17 +21,13 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
-// Here we have used react-icons package for the icons
-
-import { useTranslation } from 'next-i18next'
-
 import { BsFilter } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { deleteJobListing, getOpenJobs } from './api/api'
 
 const myListings = () => {

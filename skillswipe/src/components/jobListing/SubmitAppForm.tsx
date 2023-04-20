@@ -1,6 +1,4 @@
 import { applyToJob } from '@/pages/api/api'
-import { useState } from 'react'
-
 import {
   AspectRatio,
   Box,
@@ -17,13 +15,12 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-
-import { GetStaticProps } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import router from 'next/router'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
+
 const SubmitAppForm = () => {
   const [cvUploaded, setCvUploaded] = useState(false)
   const [name, setName] = useState('')
