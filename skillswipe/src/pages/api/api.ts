@@ -368,3 +368,11 @@ export const deleteJobListing = async (token, id) => {
     throw new Error(error.response.data.error)
   }
 }
+
+export const jobNotificationApi = async (token: any) => {
+  return axios.get(`${URL}/notifications/notifications/all`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
