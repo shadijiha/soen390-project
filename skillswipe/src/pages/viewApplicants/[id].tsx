@@ -5,6 +5,7 @@
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
+  Avatar,
   Box,
   Button,
   Checkbox,
@@ -185,11 +186,39 @@ const myApplicants = () => {
       setRefetch((prevRefetch) => !prevRefetch)
     }
   }, [jobId])
-
+  const HoverableGrid = ({ children, ...props }) => {
+    return (
+      <Grid
+        _hover={{
+          boxShadow: '0 0 0 2px #3182ce',
+          borderRadius: '18px',
+          // maxWidth: '50%',
+          transition: 'all 0.3s ease-in-out',
+        }}
+      >
+        {children}
+      </Grid>
+    )
+  }
   return (
     <>
       <Layout>
         <NavBar />
+
+        {/* logged in user's profile picture */}
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          marginBottom={'20px'}
+        >
+          <Avatar size="2xl" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+          <Text fontSize="xl" fontWeight="bold" marginTop="10px">
+            logged in recruiter name
+          </Text>
+        </Box>
+
         <VStack>
           {jobs.map((job) => (
             <Fragment key={job.id}>
@@ -210,40 +239,42 @@ const myApplicants = () => {
                 </chakra.h2>
                 {job.applications.length > 0 ? (
                   job.applications.map((applicant) => (
-                    <Box
-                      key={applicant.id}
-                      borderWidth={1}
-                      borderRadius="20px"
-                      p={4}
-                      backgroundColor={useColorModeValue('gray.100', 'gray.700')}
-                      marginBottom={'20px'}
-                      alignContent={'start'}
-                      alignItems={'start'}
-                      textAlign={'start'}
-                    >
-                      <chakra.h3
-                        fontWeight="bold"
-                        fontSize="lg"
-                        color={useColorModeValue('gray.700', 'white')}
-                      >
-                        Applicant name: {applicant.name}
-                        <Spacer />
-                      </chakra.h3>
-                      <VStack
+                    <HoverableGrid key={applicant.id}>
+                      <Box
+                        key={applicant.id}
+                        borderWidth={1}
+                        borderRadius="20px"
+                        p={4}
+                        backgroundColor={useColorModeValue('gray.100', 'gray.700')}
+                        marginBottom={'20px'}
                         alignContent={'start'}
                         alignItems={'start'}
                         textAlign={'start'}
                       >
-                        <Flex>
-                          <Text>Email: {applicant.email}</Text>
+                        <chakra.h3
+                          fontWeight="bold"
+                          fontSize="lg"
+                          color={useColorModeValue('gray.700', 'white')}
+                        >
+                          Applicant name: {applicant.name}
                           <Spacer />
-                        </Flex>
-                        <Flex>
-                          <Text>Phone: {applicant.phone}</Text>
-                          <Spacer />
-                        </Flex>
-                      </VStack>
-                    </Box>
+                        </chakra.h3>
+                        <VStack
+                          alignContent={'start'}
+                          alignItems={'start'}
+                          textAlign={'start'}
+                        >
+                          <Flex>
+                            <Text>Email: {applicant.email}</Text>
+                            <Spacer />
+                          </Flex>
+                          <Flex>
+                            <Text>Phone: {applicant.phone}</Text>
+                            <Spacer />
+                          </Flex>
+                        </VStack>
+                      </Box>
+                    </HoverableGrid>
                   ))
                 ) : (
                   <Text>No applicants for this job.</Text>
