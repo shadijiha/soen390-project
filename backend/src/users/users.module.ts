@@ -13,11 +13,12 @@ import { Job } from '../models/job.entity'
 import { PostsController } from './posts/posts.controller'
 import { PostsService } from './posts/posts.service'
 import { Post } from '../models/post.entity'
+import { Notifications } from '../models/notifications.entity'
 
 @Module({
   controllers: [UsersController, ConnectionsController, NotificationsController, PostsController],
   providers: [PusherService, UsersService, ConnectionsService, NotificationsService, PostsService],
-  imports: [TypeOrmModule.forFeature([User, Job]), TypeOrmModule.forFeature([Connection, Post])],
+  imports: [TypeOrmModule.forFeature([User, Job]), TypeOrmModule.forFeature([Connection, Post, Notifications])],
   exports: [TypeOrmModule]
 })
 export class UsersModule { }

@@ -80,7 +80,7 @@ describe("AuthService", () => {
     try {
       expect(await service.login({ email: "@gmail.com", password: "123" })).toThrowError;
     } catch (error) {
-      console.log(error.message);
+   
     }
   });
 });

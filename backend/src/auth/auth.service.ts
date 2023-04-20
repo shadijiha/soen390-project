@@ -46,6 +46,11 @@ export class AuthService {
       throw new UnauthorizedException(`Email ${email} is invalid`)
     }
 
+    // if user is banned throw error
+    if (user.type === 'banned') {
+      throw new UnauthorizedException(`User ${email} is banned`)
+    }
+
     // validate password
     if ((await this.validateUser(email, password)) != null) {
       const payload = {

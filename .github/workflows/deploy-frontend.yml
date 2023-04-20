@@ -8,12 +8,12 @@ on:
   push:
     branches:
       - master
-    paths: "skillswipe/**"
+    paths: 'skillswipe/**'
 
   workflow_dispatch:
     inputs:
       version:
-        description: "Deployment version"
+        description: 'Deployment version'
         required: true
 
 concurrency:
@@ -39,8 +39,8 @@ jobs:
       - name: Use Node.js 19.x
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: Cache NPM dependencies
         uses: actions/cache@v3
@@ -67,8 +67,8 @@ jobs:
       - name: Use Node.js 19.x
         uses: actions/setup-node@v3
         with:
-          node-version-file: ".nvmrc"
-          cache: "npm"
+          node-version-file: '.nvmrc'
+          cache: 'npm'
 
       - name: Cache NPM dependencies
         uses: actions/cache@v3
@@ -85,7 +85,7 @@ jobs:
         with:
           token: ${{ secrets.VERCEL_TOKEN }}
           projectName: skilswipe # project name in Vercel
-          envVariableKeys: BASE_URL,NEXT_PUBLIC_DEFAULT_PICTURE,NEXT_PUBLIC_PUSHER_APP_KEY,NEXT_PUBLIC_PUSHER_APP_CLUSTER
+          envVariableKeys: BASE_URL,NEXT_PUBLIC_DEFAULT_PICTURE,NEXT_PUBLIC_PUSHER_APP_KEY,NEXT_PUBLIC_PUSHER_APP_CLUSTER,NEXT_PUBLIC_GOOGLE_CLIENT_ID
         env:
           BASE_URL: ${{ secrets.BASE_API_URL }}
           TARGET_BASE_URL: preview,development,production # comma delimited, one of [production, preview, development]
@@ -99,6 +99,9 @@ jobs:
           NEXT_PUBLIC_PUSHER_APP_CLUSTER: ${{ secrets.NEXT_PUBLIC_PUSHER_APP_CLUSTER }}
           TARGET_NEXT_PUBLIC_PUSHER_APP_CLUSTER: preview,development,production # comma delimited, one of [production, preview, development]
           TYPE_NEXT_PUBLIC_PUSHER_APP_CLUSTER: plain # one of [plain, encrypted]
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+          TARGET_NEXT_PUBLIC_GOOGLE_CLIENT_ID: preview,development,production # comma delimited, one of [production, preview, development]
+          TYPE_NEXT_PUBLIC_GOOGLE_CLIENT_ID: plain # one of [plain, encrypted]
 
       - name: Deploy to Production
         uses: amondnet/vercel-action@v20
@@ -109,5 +112,5 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: "--prod"
+          vercel-args: '--prod'
           scope: ${{ secrets.VERCEL_ORG_ID }}

@@ -1,12 +1,11 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
 import { Job } from "../models/job.entity";
-import { Recruiter } from "../models/user_types/recruiter.entity";
+import { User } from "../models/user.entity";
 import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
-
 import { Skill } from "../models/skill.entity";
-import { User } from "../models/user.entity";
+
 
 describe("JobsService", () => {
   let service: JobsService;
@@ -68,10 +67,10 @@ describe("JobsService", () => {
       skills: "Java,C++,Python",
     } as unknown as Jobs.AddJobRequest;
 
-    let recruiter: Recruiter = {
+    let recruiter: User = {
       id: 1,
       jobs: [],
-    } as unknown as Recruiter;
+    } as unknown as User;
 
     await service.createJob(data, recruiter);
 
@@ -93,10 +92,10 @@ describe("JobsService", () => {
       skills: "Java,C++,Python",
     } as unknown as Jobs.UpdateJobRequest;
 
-    let recruiter: Recruiter = {
+    let recruiter: User = {
       id: 1,
       jobs: [],
-    } as unknown as Recruiter;
+    } as unknown as User;
 
     try {
       await service.updateJob(jobId, data, recruiter);
@@ -111,7 +110,7 @@ describe("JobsService", () => {
           id: 1,
         },
       ],
-    } as unknown as Recruiter;
+    } as unknown as User;
 
     await service.updateJob(jobId, data, recruiter);
     expect(mockjobsRepository.save).toHaveBeenCalled();
@@ -128,10 +127,10 @@ describe("JobsService", () => {
 
   it("should delete a job", async () => {
     let jobId = 1;
-    let recruiter: Recruiter = {
+    let recruiter: User = {
       id: 1,
       jobs: [],
-    } as unknown as Recruiter;
+    } as unknown as User;
 
     try {
       await service.deleteJob(jobId, recruiter);
@@ -146,7 +145,7 @@ describe("JobsService", () => {
           id: 1,
         },
       ],
-    } as unknown as Recruiter;
+    } as unknown as User;
 
     await service.deleteJob(jobId, recruiter);
     expect(mockjobsRepository.delete).toHaveBeenCalled();

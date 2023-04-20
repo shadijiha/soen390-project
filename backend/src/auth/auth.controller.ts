@@ -26,11 +26,7 @@ export class AuthController {
   @Post('login')
   @ApiResponse({ type: Auth.LoginResponse })
   public async login (@Body() body: Auth.LoginRequest): Promise<Auth.LoginResponse> {
-    // try {
     return await this.authService.login(body)
-    // } catch (e) {
-    // 	return error<Auth.LoginResponse>(e);
-    // }
   }
 
   // register and then login endpoint for user

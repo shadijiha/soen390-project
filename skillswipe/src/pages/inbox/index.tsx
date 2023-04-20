@@ -1,8 +1,10 @@
+/* eslint-disable no-var */
 /* eslint-disable react/jsx-key */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/no-children-prop */
 /* eslint-disable @next/next/no-html-link-for-pages */
+import SearchUserModal from '@/components/Chat/SeachUserModel'
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
@@ -14,21 +16,8 @@ import {
   Flex,
   HStack,
   Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   Spacer,
-  Spinner,
   Text,
-  VStack,
   chakra,
   useDisclosure,
 } from '@chakra-ui/react'
@@ -43,98 +32,6 @@ import { getAllConversation } from '../api/chat'
 interface User {
   id: number
   name: string
-}
-
-const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
-  const [search, setSearch] = useState('')
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(false)
-  const router = useRouter()
-  const { t } = useTranslation('common')
-
-  const handleSearch = async () => {
-    setLoading(true)
-    // Call your API with the search query and set the users in the state
-    const response = await fetch(`/api/search?q=${search}`) // Replace with your API endpoint
-    const data = await response.json()
-    setUsers(data)
-    setLoading(false)
-  }
-
-  const handleUserSelect = (user) => {
-    newMessage(user)
-    onClose()
-  }
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalOverlay
-        className={styles.blurred}
-        bgColor="rgba(0, 0, 0, 0.4)"
-        style={{
-          display: 'flex',
-          alignContent: 'start',
-          justifyContent: 'start',
-          alignItems: 'start',
-        }}
-      />
-      <ModalContent
-        margin={'auto'}
-        borderRadius="14px"
-        padding={'1em'}
-        borderWidth="2px"
-        display={'flex'}
-        flexDirection={'column'}
-        justifyContent={'space-between'}
-        minWidth={'50%'}
-      >
-        <ModalHeader>{t('searchForUser')}</ModalHeader>
-
-        <ModalBody>
-          <InputGroup>
-            <InputLeftAddon children="Find User" />
-            <Input
-              type="text"
-              value={search}
-              placeholder="Type a name"
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </InputGroup>
-
-          {loading ? (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100px',
-              }}
-            >
-              <Spinner />
-            </div>
-          ) : (
-            <VStack mt={4} spacing={4}>
-              {users.map((user) => (
-                <Box
-                // key={user.id} onClick={() => handleUserSelect(user)}
-                >
-                  {/* {user.name} */}
-                </Box>
-              ))}
-            </VStack>
-          )}
-        </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="red" mr={3} onClick={onClose} borderRadius={'100px'}>
-            Close
-          </Button>
-          <Button colorScheme="blue" onClick={handleSearch} borderRadius={'100px'}>
-            Search
-          </Button>
-        </ModalFooter>
-      </ModalContent>
-    </Modal>
-  )
 }
 
 const Inbox = () => {
@@ -174,7 +71,7 @@ const Inbox = () => {
   const isMessageData = (Message) => {
     var data = false
 
-    var file = { ext: '', link: '', name: '', size: 0, loaded: false }
+    let file = { ext: '', link: '', name: '', size: 0, loaded: false }
 
     try {
       file = JSON.parse(Message.lastMessage)
