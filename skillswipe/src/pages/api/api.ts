@@ -370,7 +370,7 @@ export const deleteJobListing = async (token, id) => {
 }
 
 export const jobNotificationApi = async (token: any) => {
-  return axios.get(`${URL}/notifications/notifications/all`, {
+  return axios.get(`${URL}/notifications/notifications/unread`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
