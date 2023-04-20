@@ -190,5 +190,6 @@
     "clickHere": "Cliquez ici",
     "toApply": "pour postuler",
     "numberOfApplications": "Nombre de candidatures",
-    "typeName": "Veuillez entrer nom"
+    "typeName": "Veuillez entrer nom",
+    "viewApplicants": "Voir les candidats"
 }

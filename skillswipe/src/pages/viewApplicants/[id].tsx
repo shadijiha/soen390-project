@@ -7,12 +7,12 @@ import NavBar from '@/components/NavBar'
 import {
   Box,
   Button,
-  chakra,
   Checkbox,
   Container,
   Divider,
   Flex,
   Grid,
+  GridItem,
   HStack,
   Icon,
   Link,
@@ -22,8 +22,10 @@ import {
   MenuList,
   Spacer,
   Stack,
-  useColorModeValue,
+  Text,
   VStack,
+  chakra,
+  useColorModeValue,
 } from '@chakra-ui/react'
 import router, { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
@@ -47,103 +49,114 @@ const handleApplicationsClick = (jobId) => {
   router.push('/') // Navigates the user to the home page
 }
 
+// api result:
+// [
+//   {
+//     "id": 25,
+//     "externalUrl": "https://www.linkedin.com/in/saleemusama/",
+//     "jobTitle": "thirdparty",
+//     "companyName": "test",
+//     "location": "test",
+//     "jobDescription": "hey",
+//     "salary": "34",
+//     "jobType": "part-time",
+//     "startDate": "2023-04-21T04:00:00.000Z",
+//     "coverLetter": false,
+//     "transcript": false,
+//     "created_at": "2023-04-18T20:50:19.339Z",
+//     "updated_at": "2023-04-18T20:50:19.339Z",
+//     "applications": [
+//       {
+//         "id": 35,
+//         "name": "Usama2 Saleem",
+//         "email": "usama.saleem9@hotmail.com",
+//         "phone": "5149692059",
+//         "cv": null,
+//         "coverLetter": null,
+//         "created_at": "2023-04-19T22:31:43.747Z"
+//       },
+//       {
+//         "id": 36,
+//         "name": "Usama2 Saleem",
+//         "email": "usama.saleem9@hotmail.com",
+//         "phone": "5149692059",
+//         "cv": null,
+//         "coverLetter": null,
+//         "created_at": "2023-04-19T22:31:53.137Z"
+//       },
+//       {
+//         "id": 37,
+//         "name": "Usama2 Saleem",
+//         "email": "usama.saleem9@hotmail.com",
+//         "phone": "5149692059",
+//         "cv": null,
+//         "coverLetter": null,
+//         "created_at": "2023-04-19T23:09:39.705Z"
+//       },
+//       {
+//         "id": 38,
+//         "name": "Usama2 Saleem",
+//         "email": "usama.saleem9@hotmail.com",
+//         "phone": "5149692059",
+//         "cv": null,
+//         "coverLetter": null,
+//         "created_at": "2023-04-19T23:09:40.549Z"
+//       }
+//     ]
+//   },
+//   {
+//     "id": 32,
+//     "externalUrl": "https://www.linkedin.com/in/saleemusama/",
+//     "jobTitle": "Twitter Intern",
+//     "companyName": "Twitter",
+//     "location": "Montreal Canada",
+//     "jobDescription": "d",
+//     "salary": "3",
+//     "jobType": "full-time",
+//     "startDate": "2023-04-08T04:00:00.000Z",
+//     "coverLetter": false,
+//     "transcript": false,
+//     "created_at": "2023-04-20T00:05:32.785Z",
+//     "updated_at": "2023-04-20T00:05:32.785Z",
+//     "applications": []
+//   }
+// ]
+
+type JobApplicantType = {
+  id: number
+  externalUrl: string
+  jobTitle: string
+  companyName: string
+  location: string
+  jobDescription: string
+  salary: string
+  jobType: string
+  startDate: string
+  coverLetter: boolean
+  transcript: boolean
+  created_at: string
+  updated_at: string
+  applications: Array<{
+    id: number
+    name: string
+    email: string
+    phone: string
+    cv: string | null
+    coverLetter: string | null
+    created_at: string
+  }>
+}
+
 const myApplicants = () => {
-  const [jobListing, setJobListing] = useState([
-    {
-      id: 5,
-      jobTitle: 'Software Engineering Intern',
-      companyName: 'Amazon',
-      location: 'Montreal',
-      jobDescription: 'bjdwbchjbvdhcvdhjcvbmnd m',
-      salary: '20',
-      jobType: 'full-time',
-      startDate: '2023-03-23T04:00:00.000Z',
-      coverLetter: true,
-      transcript: true,
-      created_at: '2023-03-16T20:19:34.940Z',
-      updated_at: '2023-03-16T20:19:34.940Z',
+  // Get the jobId from the URL using useRouter
+  const router = useRouter()
+  const { jobId } = router.query
 
-      user: {
-        id: 4,
-        firstName: 'Uzair',
-        lastName: 'Ali',
-        email: 'messi@gmail.com',
-        mobileNo: '',
-        gender: 'MALE',
-        profilePic: '',
-        coverPic: null,
-        cv: '',
-        coverLetter: '',
-        biography: null,
-        userStatus: 'online',
-        type: 'User',
-        created_at: '2023-03-02T22:50:47.902Z',
-        updated_at: '2023-04-05T03:48:54.000Z',
-        deleted_at: null,
-      },
-      skills: [
-        {
-          id: 1,
-          title: 'C++',
-          created_at: '2023-03-02T22:52:53.844Z',
-          updated_at: '2023-03-02T22:52:53.844Z',
-        },
-        {
-          id: 2,
-          title: 'Java',
-          created_at: '2023-03-02T22:53:07.867Z',
-          updated_at: '2023-03-02T22:53:07.867Z',
-        },
-      ],
-    },
-  ])
-
-  const [jobApplicant, setJobApplicant] = useState([
-    {
-      id: 25,
-      externalUrl: 'https://www.linkedin.com/in/saleemusama/',
-      jobTitle: 'thirdparty',
-      companyName: 'test',
-      location: 'test',
-      jobDescription: 'hey',
-      salary: '34',
-      jobType: 'part-time',
-      startDate: '2023-04-21T04:00:00.000Z',
-      coverLetter: false,
-      transcript: false,
-      created_at: '2023-04-18T20:50:19.339Z',
-      updated_at: '2023-04-18T20:50:19.339Z',
-      applications: [
-        {
-          id: 35,
-          name: 'Usama2 Saleem',
-          email: 'usama.saleem9@hotmail.com',
-          phone: '5149692059',
-          cv: null,
-          coverLetter: null,
-          created_at: '2023-04-19T22:31:43.747Z',
-        },
-      ],
-    },
-  ])
+  // Initialize empty jobApplicant state of type JobApplicantType | null
+  const [jobApplicant, setJobApplicant] = useState<JobApplicantType | null>(null)
+  const [jobs, setJobs] = useState<Array<JobApplicantType>>([])
+  const [refetch, setRefetch] = useState(false)
   const { t } = useTranslation('common')
-
-  useEffect(() => {
-    const viewOpenJobs = async () => {
-      // Get token from local storage
-      const token = localStorage.getItem('jwt')
-      try {
-        // Call API function to get open jobs
-        const response = await getOpenJobs(token)
-        // Update state with fetched data
-        setJobListing(response.data)
-      } catch (error) {
-        console.error(error)
-        toast.error(t('errorJobs'))
-      }
-    }
-    viewOpenJobs()
-  }, [])
 
   useEffect(() => {
     const getApplicants = async () => {
@@ -151,420 +164,97 @@ const myApplicants = () => {
       // Get token from local storage
       const token = localStorage.getItem('jwt')
       try {
-        // Call API function to get job applicants for this job id
+        // Call API function to get all jobs and applicants
         const responseApplicants = await getJobApplicants(token)
-        // Update state with fetched data
-        setJobApplicant(responseApplicants.data)
+
+        // Set jobs state with the response data
+        setJobs(responseApplicants.data)
+
+        console.log(responseApplicants)
       } catch (error) {
         console.error(error)
         toast.error(t('errorJobs'))
       }
     }
     getApplicants()
-  }, [])
+  }, [refetch])
 
-  const handleFilter = (value) => {
-    // your logic to filter the list goes here
-    console.log(value)
-  }
-  function handleCheckboxChange(event) {
-    const isChecked = event.target.checked
-    // Perform the necessary actions based on the isChecked value
-    if (isChecked) {
-      console.log('Filtering ...')
-      // code to filter jobs
-    } else {
-      console.log('Not filtering.')
-      // code to remove
-    }
-  }
-
-  const [checkedItems, setCheckedItems] = React.useState([
-    false,
-    false,
-    false,
-    false,
-  ])
-
-  const allChecked = checkedItems.every(Boolean)
-  const isIndeterminate = checkedItems.some(Boolean) && !allChecked
-  type JobAttributes = {
-    id?: number
-    jobTitle?: string
-    companyName?: string
-    location?: string
-    jobDescription?: string
-    salary?: string
-    jobType?: string
-    startDate?: string
-    coverLetter?: boolean
-    transcript?: boolean
-    skills?: Array<string>
-    externalUrl?: string
-  }
-  const [profile] = useState({
-    name: 'John Smith',
-    title: 'Software Engineer',
-    location: 'Montreal, QC, CA',
-    school: 'Concordia University',
-    experience: 'Five years of experience in full stack development',
-    experience2: 'Three years of experience in mobile development',
-    experience3: 'Two years of experience in data analysis',
-    image:
-      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
-    cover:
-      'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
-  })
-  const [Pic, setPic] = useState({
-    profilePic: '',
-    coverPic: '',
-  })
-  const currentUser = useSelector((state) => state as any)
+  // When the jobId from the URL changes, this useEffect will run
   useEffect(() => {
-    setPic({
-      coverPic: currentUser.auth.coverPic,
-      profilePic: currentUser.auth.profilePic,
-    })
-  }, [currentUser])
-  const userToken =
-    typeof window !== 'undefined' ? localStorage.getItem('jwt') : null
-
-  // grab job id from url
-  const router = useRouter()
-  const { id } = router.query
-  const [job, setJob] = useState<JobAttributes>({})
-
-  const jobID = id as string
-  const getJob = async () => {
-    try {
-      const response = await getJobApplicants(userToken)
-      setJob(response.data)
-      console.log(response.data)
-    } catch (error) {
-      console.error(error)
-      toast.error(t('errorJobs'))
+    if (jobId) {
+      setRefetch((prevRefetch) => !prevRefetch)
     }
-  }
-  useEffect(() => {
-    getJob()
-  }, [])
-  const currentJob = jobApplicant.find(
-    (applicant) => applicant.id === parseInt(jobID)
-  )
+  }, [jobId])
+
   return (
     <>
-      <chakra.h3
-        fontSize="4xl"
-        fontWeight="bold"
-        textAlign="center"
-        paddingBottom={'0.2em'}
-      >
-        {' '}
-        Job company name : {currentJob ? currentJob.companyName : 'Loading...'}
-      </chakra.h3>
       <Layout>
         <NavBar />
-        <Container maxW="5xl" p={{ base: 10, md: 0 }} data-testid="myListings">
-          <Flex justify="left" mb={3}>
-            <HStack
-              style={{
-                width: '100%',
-                justifyContent: 'space-between',
-              }}
-            >
-              {/* a company picture image here */}
-              <img
-                src={`https://www.google.com/s2/favicons?domain=${currentJob?.companyName?.toLowerCase()}.com&sz=64`}
-                alt="Segun Adebayo"
-                style={{
-                  width: '60px',
-                  height: '60px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  marginRight: '1em',
-                }}
-              />
-              <chakra.h3
-                fontSize="4xl"
-                fontWeight="bold"
-                textAlign="center"
-                paddingBottom={'0.2em'}
+        <VStack>
+          {jobs.map((job) => (
+            <Fragment key={job.id}>
+              <Box
+                borderWidth={1}
+                borderRadius="25px"
+                p={6}
+                minWidth={'70%'}
+                marginBottom={'20px'}
               >
-                {currentJob?.jobTitle}
-              </chakra.h3>
-              <Spacer />
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rightIcon={<Icon as={BsFilter} w={8} h={8} />}
-                  variant="outline"
-                  padding={'1.5em'}
-                  rounded={'full'}
+                <chakra.h2
+                  fontWeight="bold"
+                  fontSize="xl"
+                  color={useColorModeValue('gray.700', 'white')}
+                  marginBottom={'20px'}
                 >
-                  {t('filterList')}
-                </MenuButton>
-                <MenuList borderRadius={'20px'} marginTop={1}>
-                  <MenuItem onClick={() => handleFilter('option1')}>
-                    {t('sortNewest')}
-                  </MenuItem>
-                  <MenuItem onClick={() => handleFilter('option2')}>
-                    {t('sortHighestSalary')}
-                  </MenuItem>
-
-                  <Checkbox
-                    paddingTop={1}
-                    pl={3}
-                    paddingBottom={1}
-                    isChecked={allChecked}
-                    isIndeterminate={isIndeterminate}
-                    onChange={(e) =>
-                      setCheckedItems([
-                        e.target.checked,
-                        e.target.checked,
-                        e.target.checked,
-                        e.target.checked,
-                      ])
-                    }
-                  >
-                    {t('viewAll')}
-                  </Checkbox>
-                  <Stack pl={7} mt={1} spacing={1}>
-                    <Checkbox
-                      isChecked={checkedItems[0]}
-                      onChange={(e) =>
-                        setCheckedItems([
-                          e.target.checked,
-                          checkedItems[1],
-                          checkedItems[2],
-                          checkedItems[3],
-                        ])
-                      }
+                  Job Title: {job.jobTitle}
+                </chakra.h2>
+                {job.applications.length > 0 ? (
+                  job.applications.map((applicant) => (
+                    <Box
+                      key={applicant.id}
+                      borderWidth={1}
+                      borderRadius="20px"
+                      p={4}
+                      backgroundColor={useColorModeValue('gray.100', 'gray.700')}
+                      marginBottom={'20px'}
+                      alignContent={'start'}
+                      alignItems={'start'}
+                      textAlign={'start'}
                     >
-                      {t('fullTime')}
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={checkedItems[1]}
-                      onChange={(e) =>
-                        setCheckedItems([
-                          checkedItems[0],
-                          e.target.checked,
-                          checkedItems[2],
-                          checkedItems[3],
-                        ])
-                      }
-                    >
-                      {t('partTime')}
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={checkedItems[2]}
-                      onChange={(e) =>
-                        setCheckedItems([
-                          checkedItems[0],
-                          checkedItems[1],
-                          e.target.checked,
-                          checkedItems[3],
-                        ])
-                      }
-                    >
-                      {t('internship')}
-                    </Checkbox>
-                    <Checkbox
-                      isChecked={checkedItems[3]}
-                      onChange={(e) =>
-                        setCheckedItems([
-                          checkedItems[0],
-                          checkedItems[1],
-                          checkedItems[2],
-                          e.target.checked,
-                        ])
-                      }
-                    >
-                      {t('other')}
-                    </Checkbox>
-                  </Stack>
-                </MenuList>
-              </Menu>
-            </HStack>
-          </Flex>
-          <VStack
-            shadow={{ base: 'none', md: 'md' }}
-            border="1px solid"
-            borderColor="gray.400"
-            rounded="15px"
-            overflow="hidden"
-            spacing={0}
-            marginBottom={'5em'}
-          >
-            {jobListing.map((job, index) => (
-              <Fragment key={index}>
-                {currentUser.auth.id === job.user.id ? (
-                  <Grid
-                    templateRows={{ base: 'auto auto', md: 'auto' }}
-                    w="100%"
-                    templateColumns={{ base: 'unset', md: '4fr 3fr 2fr' }}
-                    p={{ base: 2, sm: 4 }}
-                    gap={3}
-                    alignItems="center"
-                    _hover={{ bg: useColorModeValue('gray.200', 'gray.700') }}
-                  >
-                    <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
-                      <HStack spacing={3}>
-                        <img
-                          src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
-                          width="20px"
-                          height="20px"
-                          alt="logo"
-                          onError={(e) => {
-                            // show a default image if the company logo is not found
-                            e.currentTarget.src =
-                              'https://img.icons8.com/3d-fluency/512/hard-working.png'
-                          }}
-                        />
-
-                        <chakra.h2 fontWeight="bold" fontSize="lg">
-                          {job.companyName}
-                        </chakra.h2>
-                      </HStack>
-
                       <chakra.h3
-                        as={Link}
-                        isExternal
-                        fontWeight="extrabold"
-                        fontSize="2xl"
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
-                        }}
-                      >
-                        {job.jobTitle}
-                      </chakra.h3>
-
-                      <chakra.p
-                        fontWeight="normal"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                        style={{
-                          paddingTop: '1.0em',
-                        }}
-                      >
-                        📍 {job.location}
-                      </chakra.p>
-                      <chakra.p
-                        fontWeight="normal"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                        style={{
-                          paddingTop: '0.5em',
-                        }}
-                      >
-                        💼 ‎ {t('jobType')}: {}
-                        {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
-                      </chakra.p>
-                      <chakra.p
                         fontWeight="bold"
-                        fontSize="sm"
-                        color={useColorModeValue('gray.600', 'gray.300')}
-                        style={{
-                          paddingTop: '0.5em',
-                        }}
+                        fontSize="lg"
+                        color={useColorModeValue('gray.700', 'white')}
                       >
-                        ✅ ‎ {t('numberOfApplications')}: {}
-                        <button onClick={() => handleApplicationsClick(job.id)}>
-                          <Link
-                            href={`/jobListing/${job.id}`}
-                            color={useColorModeValue('blue.500', 'blue.300')}
-                          >
-                            {/* Display the number of applications or 0 if not present */}
-                            {jobApplicant.find((app) => app.id === job.id)
-                              ?.applications?.length || 0}
-                          </Link>
-                        </button>
-                      </chakra.p>
+                        Applicant name: {applicant.name}
+                        <Spacer />
+                      </chakra.h3>
+                      <VStack
+                        alignContent={'start'}
+                        alignItems={'start'}
+                        textAlign={'start'}
+                      >
+                        <Flex>
+                          <Text>Email: {applicant.email}</Text>
+                          <Spacer />
+                        </Flex>
+                        <Flex>
+                          <Text>Phone: {applicant.phone}</Text>
+                          <Spacer />
+                        </Flex>
+                      </VStack>
                     </Box>
-                    <VStack
-                      spacing={{ base: 0, sm: 3 }}
-                      alignItems="start"
-                      fontWeight="light"
-                      fontSize={{ base: 'xs', sm: 'sm' }}
-                      color={useColorModeValue('gray.600', 'gray.300')}
-                    >
-                      {/* By the way, the ‎ is an invisible space character */}
-                      <chakra.p>
-                        {/* format the starting date to be only year month and date */}
-                        📅 ‎ ‎ {t('startingDate')}: {job.startDate.split('T')[0]}
-                      </chakra.p>
-                      <chakra.p>
-                        🤑 ‎ ‎ {t('salary')}: ${job.salary}/hr
-                      </chakra.p>
-                      <chakra.p>
-                        🏫 ‎ ‎ {t('transcript')} ‎ ‎
-                        {job.transcript.toString() == 'true' ? '✅' : '❌'}
-                      </chakra.p>
-                      <chakra.p>
-                        💌 ‎ ‎ {t('coverLetter')} ‎ ‎
-                        {job.coverLetter.toString() == 'true' ? '✅' : '❌'}
-                      </chakra.p>
-                    </VStack>
-                    <Stack
-                      spacing={6}
-                      direction="row"
-                      fontSize={{ base: 'sm', sm: 'md' }}
-                      justifySelf="flex-end"
-                      alignItems="center"
-                    >
-                      <Button
-                        as={Link}
-                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                        p={5}
-                        rounded="100px"
-                        colorScheme={'blue'}
-                        outline={'solid 1px'}
-                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                        onClick={() => {
-                          router.push(`/jobListing/${job.id}`)
-                        }}
-                      >
-                        {t('editListing')}
-                      </Button>
-                      <Button
-                        as={Link}
-                        _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-                        p={5}
-                        colorScheme="red"
-                        rounded="100px"
-                        outline={'solid 1px'}
-                        outlineColor={useColorModeValue('gray.400', 'gray.600')}
-                        onClick={async () => {
-                          const token = localStorage.getItem('jwt')
-                          try {
-                            await deleteJobListing(token, job.id)
-                            setJobListing(jobListing.filter((a) => a.id !== job.id))
-                            toast.success('Job listing deleted successfully!')
-                          } catch (error) {
-                            console.error(error)
-                            toast.error('Error withdrawing application')
-                          }
-                        }}
-                      >
-                        {t('delete')}
-                      </Button>
-                    </Stack>
-                  </Grid>
-                ) : null}
-
-                {jobListing.length - 1 !== index && <Divider m={0} />}
-              </Fragment>
-            ))}
-          </VStack>
-        </Container>
+                  ))
+                ) : (
+                  <Text>No applicants for this job.</Text>
+                )}
+              </Box>
+            </Fragment>
+          ))}
+        </VStack>
       </Layout>
     </>
   )
 }
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ['common'])),
-  },
-})
 
 export default myApplicants

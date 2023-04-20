@@ -7,6 +7,7 @@ import NavBar from '@/components/NavBar'
 import {
   Box,
   Button,
+  Center,
   chakra,
   Checkbox,
   Container,
@@ -424,14 +425,11 @@ const myListings = () => {
                       >
                         ✅ ‎ {t('numberOfApplications')}: {}
                         <button onClick={() => handleApplicationsClick(job.id)}>
-                          <Link
-                            href={`/jobListing/${job.id}`}
-                            color={useColorModeValue('blue.500', 'blue.300')}
-                          >
+                          <chakra.p>
                             {/* Display the number of applications or 0 if not present */}
                             {jobApplicant.find((app) => app.id === job.id)
                               ?.applications?.length || 0}
-                          </Link>
+                          </chakra.p>
                         </button>
                       </chakra.p>
                     </Box>
@@ -506,11 +504,32 @@ const myListings = () => {
                   </Grid>
                 ) : null}
 
-                {jobListing.length - 1 !== index && <Divider m={0} />}
+                {jobListing.length - 1 !== index && <Divider m={-1} />}
               </Fragment>
             ))}
           </VStack>
         </Container>
+        <Center>
+          <Button
+            alignContent={'center'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            alignSelf={'center'}
+            as={Link}
+            _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+            p={5}
+            colorScheme="orange"
+            rounded="100px"
+            outline={'solid 1px'}
+            outlineColor={useColorModeValue('gray.400', 'gray.600')}
+            // go to url /viewListings
+            onClick={() => {
+              router.push(`/viewApplicants/1`)
+            }}
+          >
+            {t('viewApplicants')}
+          </Button>
+        </Center>
       </Layout>
     </>
   )
