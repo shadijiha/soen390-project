@@ -12,9 +12,11 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FileIcon } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
+import { useTranslation } from 'next-i18next'
 import Dialog from '../Dialog'
 
 const Messages = ({ messages, user }) => {
+  const { t } = useTranslation('common')
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [chatId, setChatId] = useState(-1)
@@ -192,7 +194,7 @@ const Messages = ({ messages, user }) => {
                         }}
                         onClick={() => OnClickReport(item.id)}
                       >
-                        Report
+                        {t('Report')}
                       </Text>
                     </Flex>
                     {file.loaded == false ? <Spinner /> : <></>}
@@ -230,7 +232,7 @@ const Messages = ({ messages, user }) => {
                         OnClickReport(item.id)
                       }}
                     >
-                      Report
+                      {t('Report')}
                     </Text>
                   </Flex>
                 </Flex>

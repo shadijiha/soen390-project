@@ -369,7 +369,7 @@ const myListings = () => {
                             href={`/jobListing/${job.id}`}
                             color={useColorModeValue('blue.500', 'blue.300')}
                           >
-                            View All
+                            {t('View All')}
                           </Link>
                         </button>
                       </chakra.p>
@@ -439,7 +439,7 @@ const myListings = () => {
                           }
                         }}
                       >
-                        {t('delete')}
+                        {t('Delete Application')}
                       </Button>
                     </Stack>
                   </Grid>

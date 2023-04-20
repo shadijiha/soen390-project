@@ -122,7 +122,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, cv: response.data })
         window.location.reload()
-        toast('Successfully deleted CV')
+        toast(t('Successfully deleted CV'))
       })
       .catch((error) => {
         toast(error.message)
@@ -137,7 +137,7 @@ const EditProfile = () => {
         .then((response) => {
           setFile({ ...File, coverLetter: response.data })
           window.location.reload()
-          toast('Successfully Updated coverLetter')
+          toast(t('Successfully Updated coverLetter'))
         })
         .catch((error) => {
           toast(error.message)
@@ -151,7 +151,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, coverLetter: response.data })
         window.location.reload()
-        toast('Successfully deleted Cover Letter')
+        toast(t('Successfully deleted Cover Letter'))
       })
       .catch((error) => {
         toast(error.message)
@@ -391,7 +391,7 @@ const EditProfile = () => {
             }}
           >
             <a onClick={uploadCV}>
-              <Button>Upload CV</Button>
+              <Button>{t('Upload CV')}</Button>
             </a>
             <input
               type="file"
@@ -407,7 +407,7 @@ const EditProfile = () => {
             }}
           >
             <a onClick={uploadCover}>
-              <Button>Upload Cover</Button>
+              <Button>{t('Upload Cover')}</Button>
             </a>
             <input
               type="file"
@@ -422,9 +422,9 @@ const EditProfile = () => {
             }}
           >
             <Button onClick={deleteCVHandler} mr={'5rem'}>
-              Delete CV
+              {t('Delete CV')}
             </Button>
-            <Button onClick={deleteCoverHandler}>Delete Cover</Button>
+            <Button onClick={deleteCoverHandler}>{t('Delete Cover')}</Button>
           </div>
         </div>
         {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
@@ -435,10 +435,10 @@ const EditProfile = () => {
               href={`data:application/pdf;base64,${currentUser.auth.cv}`}
               style={{ marginRight: '6rem' }}
             >
-              Download CV
+              {t('Download CV')}
             </a>
           ) : (
-            <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
+            <a style={{ marginRight: '4.5rem' }}>{t('No CV uploaded')}</a>
           )}
 
           {currentUser.auth.coverLetter ? (
@@ -446,10 +446,10 @@ const EditProfile = () => {
               download="Cover Letter"
               href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
             >
-              Download cover
+              {t('Download cover')}
             </a>
           ) : (
-            <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
+            <a style={{ marginRight: '4.5rem' }}>{t('No Cover uploaded')}</a>
           )}
         </div>
 
