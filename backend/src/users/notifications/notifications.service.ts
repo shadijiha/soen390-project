@@ -18,7 +18,6 @@ export class NotificationsService {
       where: { user: { id: userId } },
       order: { created_at: 'DESC' }
     })
-    
   }
 
   async getUnreadNotifications (userId: number): Promise<Notifications[]> {

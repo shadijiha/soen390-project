@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { NotificationsService } from './notifications.service'
 import { Param } from '@nestjs/common'
-import { Notifications } from 'src/models/notifications.entity'
+import { type Notifications } from 'src/models/notifications.entity'
 
 @Controller('notifications')
 @ApiTags('Notifications')
@@ -31,8 +31,7 @@ export class NotificationsController {
   @Get('/notifications/all')
   async getNotifications (@AuthUser() userInfo: BearerPayload): Promise<Notifications[]> {
     return await this.notificationsService.getAllNotifications(userInfo.id)
-}
-    
+  }
 
   // get unread notifications
   @Get('/notifications/unread')
