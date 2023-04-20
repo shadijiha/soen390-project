@@ -1,4 +1,4 @@
-import { ConsoleLogger, Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Job } from '../models/job.entity'
 import { Skill } from '../models/skill.entity'
@@ -20,7 +20,7 @@ export class JobsService {
     private readonly skillRepository: Repository<Skill>,
     private readonly notificationsService: NotificationsService,
     private readonly pusherService: PusherService
-  ) {}
+  ) { }
 
   // create job and link it with all the skills and the recruiter
   async createJob (data: Jobs.AddJobRequest, recruiter: User): Promise<void> {
@@ -82,10 +82,10 @@ export class JobsService {
         )
         // sending a pusher notification to the user
         const pusherPromise = await this.pusherService.trigger(`user-${user.id}`, 'newJob', { notificationPromise })
-        console.log(notificationPromise);
-        
+        console.log(notificationPromise)
+
         // returning a promise that resolves when both promises have resolved
-        return Promise.all([notificationPromise, pusherPromise])
+        return await Promise.all([notificationPromise, pusherPromise])
       }
       return null
     })

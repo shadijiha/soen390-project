@@ -1,18 +1,18 @@
-import { Injectable } from "@nestjs/common";
-import { User } from "../models/user.entity";
-import { InjectRepository } from "@nestjs/typeorm";
-import { DataSource, Like, Repository } from "typeorm";
-import { type Users } from "./users.types";
-import * as argon2 from "argon2";
-import { type Auth } from "../auth/auth.types";
-import { Job } from "../models/job.entity";
-import type * as Pusher from "pusher";
-import { PusherService } from "../util/pusher/pusher.service";
-import { Report } from "../models/report.entity";
+import { Injectable } from '@nestjs/common'
+import { User } from '../models/user.entity'
+import { InjectRepository } from '@nestjs/typeorm'
+import { DataSource, Like, Repository } from 'typeorm'
+import { type Users } from './users.types'
+import * as argon2 from 'argon2'
+import { type Auth } from '../auth/auth.types'
+import { Job } from '../models/job.entity'
+import type * as Pusher from 'pusher'
+import { PusherService } from '../util/pusher/pusher.service'
+import { Report } from '../models/report.entity'
 
 @Injectable()
 export class UsersService {
-  constructor(
+  constructor (
     @InjectRepository(User)
     private readonly usersRepository: Repository<User>,
     @InjectRepository(Job)
@@ -67,22 +67,22 @@ export class UsersService {
   async findOneById (userId: number, relations?: string[]): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {
-        id: userId,
+        id: userId
       },
       relations: [
-        "educations",
-        "workExperiences",
-        "volunteeringExperience",
-        "skills",
-        "courses",
-        "projects",
-        "awards",
-        "languages",
-        "recommendationsReceived",
-      ],
-    });
+        'educations',
+        'workExperiences',
+        'volunteeringExperience',
+        'skills',
+        'courses',
+        'projects',
+        'awards',
+        'languages',
+        'recommendationsReceived'
+      ]
+    })
 
-    return user;
+    return user
   }
 
   /**
@@ -93,10 +93,10 @@ export class UsersService {
   async findOneByIdNoRelations (userId: number): Promise<User> {
     const user: User = await this.usersRepository.findOneOrFail({
       where: {
-        id: userId,
-      },
-    });
-    return user;
+        id: userId
+      }
+    })
+    return user
   }
 
   /**
@@ -137,9 +137,9 @@ export class UsersService {
   async update (
     id: number,
     user: Users.UpdateUserRequest,
-    files: { profilePic?: Express.Multer.File; coverPic?: Express.Multer.File }
+    files: { profilePic?: Express.Multer.File, coverPic?: Express.Multer.File }
   ): Promise<User> {
-    const oldUser = await this.findOneByIdNoRelations(id);
+    const oldUser = await this.findOneByIdNoRelations(id)
 
     oldUser.firstName =
       user.firstName !== '' ? user.firstName : oldUser.firstName
@@ -152,20 +152,20 @@ export class UsersService {
 
     // convert image to base64
     if (files?.profilePic != null) {
-      const buff = files.profilePic[0].buffer;
-      const base64data = buff.toString("base64");
-      oldUser.profilePic = base64data;
+      const buff = files.profilePic[0].buffer
+      const base64data = buff.toString('base64')
+      oldUser.profilePic = base64data
     }
 
     // convert image to base64
     if (files?.coverPic != null) {
-      const buff = files.coverPic[0].buffer;
-      const base64data = buff.toString("base64");
-      oldUser.coverPic = base64data;
+      const buff = files.coverPic[0].buffer
+      const base64data = buff.toString('base64')
+      oldUser.coverPic = base64data
     }
 
-    await this.usersRepository.update(id, oldUser);
-    return await this.findOneById(id);
+    await this.usersRepository.update(id, oldUser)
+    return await this.findOneById(id)
   }
 
   /**
@@ -235,9 +235,9 @@ export class UsersService {
       }),
       jobs: await this.jobsRepository.find({
         where: [{ jobTitle: Like(`%${query}%`) }, { companyName: Like(`%${query}%`) }, { location: Like(`%${query}%`) }],
-        take: 10,
-      }),
-    };
+        take: 10
+      })
+    }
   }
 
   /**
@@ -251,18 +251,18 @@ export class UsersService {
     files: { cv?: Express.Multer.File, coverLetter?: Express.Multer.File }
   ): Promise<void> {
     if (files?.cv != null) {
-      const buff = files.cv[0].buffer;
-      const base64data = buff.toString("base64");
-      user.cv = base64data;
+      const buff = files.cv[0].buffer
+      const base64data = buff.toString('base64')
+      user.cv = base64data
     }
 
     if (files?.coverLetter != null) {
-      const buff = files.coverLetter[0].buffer;
-      const base64data = buff.toString("base64");
-      user.coverLetter = base64data;
+      const buff = files.coverLetter[0].buffer
+      const base64data = buff.toString('base64')
+      user.coverLetter = base64data
     }
 
-    await this.usersRepository.save(user);
+    await this.usersRepository.save(user)
   }
 
   /**
@@ -275,14 +275,14 @@ export class UsersService {
     data: Users.DeleteDocumentsRequest
   ): Promise<void> {
     if (data.cv) {
-      user.cv = null;
+      user.cv = null
     }
 
     if (data.coverLetter) {
-      user.coverLetter = null;
+      user.coverLetter = null
     }
 
-    await this.usersRepository.save(user);
+    await this.usersRepository.save(user)
   }
 
   /**
@@ -292,11 +292,11 @@ export class UsersService {
   async removeProfilePic (userId: number): Promise<void> {
     const user = await this.usersRepository.findOneOrFail({
       where: {
-        id: userId,
-      },
-    });
-    user.profilePic = null;
-    await this.usersRepository.save(user);
+        id: userId
+      }
+    })
+    user.profilePic = null
+    await this.usersRepository.save(user)
   }
 
   /**
@@ -306,18 +306,18 @@ export class UsersService {
   async removeCoverPic (userId: number): Promise<void> {
     const user = await this.usersRepository.findOneOrFail({
       where: {
-        id: userId,
-      },
-    });
-    user.coverPic = null;
-    await this.usersRepository.save(user);
+        id: userId
+      }
+    })
+    user.coverPic = null
+    await this.usersRepository.save(user)
   }
 
-  public async report(user: User, data: Users.ReportRequest): Promise<void> {
-    const report = new Report();
-    report.reported_by_id = user.id;
-    report.entity_id = data.entity_id;
-    report.type = data.type;
-    await report.save();
+  public async report (user: User, data: Users.ReportRequest): Promise<void> {
+    const report = new Report()
+    report.reported_by_id = user.id
+    report.entity_id = data.entity_id
+    report.type = data.type
+    await report.save()
   }
 }
