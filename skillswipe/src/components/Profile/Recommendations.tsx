@@ -1,11 +1,7 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/jsx-key */
 import { useColorModeValue } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import React from 'react'
 import ProfileStyle from '../../styles/profilestyle'
-
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
 
 const Recommendations = ({ rocommendations }: any) => {
   const { t } = useTranslation('common')

@@ -157,4 +157,3 @@ export const ResolvePostWarn = async (token: string, id: string) => {
       return { status: 400, data: err.response.data }
     })
 }
-

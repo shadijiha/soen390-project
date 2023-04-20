@@ -1,17 +1,5 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import {
-  border,
-  Box,
-  Flex,
-  List,
-  ListIcon,
-  ListItem,
-  Select,
-  Stack,
-  useColorModeValue,
-  useDisclosure,
-} from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
+import { Box, Flex, Stack, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { SetStateAction, useState } from 'react'

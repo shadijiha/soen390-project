@@ -1,6 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'

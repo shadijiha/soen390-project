@@ -1,7 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import {
@@ -27,6 +23,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import { getMyApplications, withdrawJobApplication } from './api/api'
 import jobListing from './jobListing/[id]'
+
 interface Application {
   id: number
   name: string
@@ -50,6 +47,7 @@ interface Application {
   cv: null
   coverLetter: null
 }
+
 const MyApplications = () => {
   const [token, setToken] = useState<string | null>(null)
   const { t } = useTranslation('common')

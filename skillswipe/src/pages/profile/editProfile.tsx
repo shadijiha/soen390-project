@@ -1,8 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/img-redundant-alt */
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
@@ -168,7 +163,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast(('removeCoverPicture'))
+        toast('removeCoverPicture')
       })
       .catch((error) => {
         toast(error.message)
@@ -181,7 +176,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, profilePic: response.data.profilePic })
-        toast(('removeProfilePicture'))
+        toast('removeProfilePicture')
       })
       .catch((error) => {
         toast(error.message)
@@ -301,7 +296,7 @@ const EditProfile = () => {
                   }}
                   // add an onClick handler to delete the profile pic
 
-                  onClick={removeUserProfilepic} 
+                  onClick={removeUserProfilepic}
                 />
               </button>
             ) : null}
@@ -360,7 +355,6 @@ const EditProfile = () => {
                   boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
-
             </a>
             {Pic.coverPic ? (
               <button
@@ -405,8 +399,6 @@ const EditProfile = () => {
               onChange={uploadCVHandler}
               style={{ display: 'none' }}
             />
-
-           
           </div>
           <div
             style={{

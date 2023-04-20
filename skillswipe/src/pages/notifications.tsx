@@ -1,26 +1,22 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable react/jsx-no-undef */
 import {
-  Heading,
   Avatar,
   Badge,
   Box,
-  Center,
   Button,
   Flex,
   HStack,
+  Heading,
   Link,
   Spacer,
+  Stack,
   Text,
   useColorModeValue,
-  Stack,
-  Icon,
 } from '@chakra-ui/react'
-
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
+import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -28,12 +24,15 @@ import { toast } from 'react-toastify'
 import { getStaticProps } from '.'
 import Layout from '../components/Layout'
 import NavBar from '../components/NavBar'
-import { acceptRequest, getPendingRequest,getUserById, removeConnection, sendRequest } from './api/api'
+import {
+  acceptRequest,
+  getPendingRequest,
+  getUserById,
+  removeConnection,
+  sendRequest,
+} from './api/api'
+import { getAllConversation, getConversationById } from './api/chat'
 import { getSuggestedUsers } from './api/profile_api'
-
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { getAllConversation, getConversationById} from './api/chat'
-import { px } from 'framer-motion'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [pendingConnections, setPendingConnections] = useState([
@@ -68,8 +67,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     Languages: [],
   })
 
-
-  
   useEffect(() => {
     getPendingConnections()
     getMessage()
@@ -100,7 +97,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           toast.error(err)
         })
     }
-    
   }
 
   const ignore = (id) => {
@@ -277,7 +273,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const viewUsers = () => {
     getSuggestedFriends()
   }
-  
 
   const handleImageError = (self) => {
     self.target.src = 'https://img.icons8.com/emoji/512/carp-streamer.png'
@@ -291,256 +286,271 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   return (
     <>
       <Layout>
-        
         <NavBar
-          nbNotifications={pendingConnections.length + messageNotification.length + suggestedFriends.length}
+          nbNotifications={
+            pendingConnections.length +
+            messageNotification.length +
+            suggestedFriends.length
+          }
           addRequest={addRequest}
         ></NavBar>
-        <Flex  justifyContent="center">
-      <Box ml="2">
-        <Box p={4} >
-          <Heading as="h1" size="lg" mb={4} >
-            {t('pendingRequests')}
-          </Heading>
-          <Flex flexDirection={'column-reverse'} >
-            {pendingConnections.length > 0 ? (
-              pendingConnections.map((connection: any) => (
-                <Flex
-                  key={connection.user.id}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  p={4}
-                  mb={4}
-                  display="flex"
-                  alignItems="center"
-                >
-                  <Link href={`/profile/${connection.user.id}`}>
+        <Flex justifyContent="center">
+          <Box ml="2">
+            <Box p={4}>
+              <Heading as="h1" size="lg" mb={4}>
+                {t('pendingRequests')}
+              </Heading>
+              <Flex flexDirection={'column-reverse'}>
+                {pendingConnections.length > 0 ? (
+                  pendingConnections.map((connection: any) => (
+                    <Flex
+                      key={connection.user.id}
+                      borderWidth="1px"
+                      borderRadius="lg"
+                      p={4}
+                      mb={4}
+                      display="flex"
+                      alignItems="center"
+                    >
+                      <Link href={`/profile/${connection.user.id}`}>
+                        <Flex>
+                          <Avatar
+                            size="lg"
+                            mr={4}
+                            src={
+                              connection.user.profilePic
+                                ? `data:image/jpeg;base64,${connection.user.profilePic}`
+                                : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                            }
+                          />
+                          <Box>
+                            <Heading as="h2" size="md" mb={2}>
+                              {connection.user.firstName} {connection.user.lastName}
+                              <Badge ml="1" colorScheme="green">
+                                {t('new')}
+                              </Badge>
+                            </Heading>
+                            <Text mb={2}>{t('Please add me to your network')}</Text>
+                            <Text fontSize="sm">{connection.user.timestamp}</Text>
+                          </Box>
+                        </Flex>
+                      </Link>
+                      <Spacer />
+                      <Box>
+                        <HStack>
+                          <Button
+                            colorScheme="gray"
+                            onClick={() => ignore(connection.user.id)}
+                          >
+                            {t('ignore')}
+                          </Button>
+                          <Button
+                            colorScheme="twitter"
+                            onClick={() => accept(connection.user.id)}
+                          >
+                            {' '}
+                            <text>{t('accept')}</text>
+                          </Button>
+                        </HStack>
+                      </Box>
+                    </Flex>
+                  ))
+                ) : (
+                  <footer>
+                    <Text>{t('noPendingRequests')}</Text>
+                  </footer>
+                )}
+              </Flex>
+            </Box>
+            <Box p={4}>
+              <Heading as="h1" size="lg" mb={4}>
+                {t('notifications')}
+              </Heading>
+              {messageNotification.length > 0 ? (
+                messageNotification.map((notification: any, index) => (
+                  <Flex
+                    key={index}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={4}
+                    mb={4}
+                    display="flex"
+                    alignItems="center"
+                  >
                     <Flex>
                       <Avatar
                         size="lg"
                         mr={4}
                         src={
-                          connection.user.profilePic
-                            ? `data:image/jpeg;base64,${connection.user.profilePic}`
+                          notification.profilePic
+                            ? `data:image/jpeg;base64,${notification.profilePic}`
                             : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
                         }
                       />
                       <Box>
-                        <Heading as="h2" size="md" mb={2}>
-                          {connection.user.firstName} {connection.user.lastName}
+                        <Heading
+                          as="h2"
+                          size="md"
+                          mb={2}
+                          style={{ cursor: 'pointer' }}
+                          onClick={() => {
+                            router.push(`/inbox/${notification.id}`)
+                          }}
+                        >
+                          {`${notification.firstName} ${notification.lastName}`}{' '}
                           <Badge ml="1" colorScheme="green">
                             {t('new')}
                           </Badge>
                         </Heading>
-                        <Text mb={2}>{t('Please add me to your network')}</Text>
-                        <Text fontSize="sm">{connection.user.timestamp}</Text>
+                        <Text
+                          mb={2}
+                        >{`You have a new message from ${notification.firstName} ${notification.lastName}`}</Text>
+                        <Text fontSize="sm">{notification.created_at}</Text>
                       </Box>
                     </Flex>
-                  </Link>
-                  <Spacer />
-                  <Box>
-                    <HStack>
-                      <Button
-                        colorScheme="gray"
-                        onClick={() => ignore(connection.user.id)}
+                  </Flex>
+                ))
+              ) : (
+                <Text>{t('noNotifications')}</Text>
+              )}
+
+              <Box py="4">
+                <Heading as="h1" size="lg" mb={8}>
+                  {t('People you might know')}
+                </Heading>
+                <Flex flexWrap="wrap" justifyContent="around ">
+                  {suggestedFriends.length > 0 ? (
+                    suggestedFriends.map((friend: any) => (
+                      <Box
+                        key={friend.id}
+                        maxW={'260px'}
+                        w={'full'}
+                        bg={
+                          friend.coverPic
+                            ? `url(data:image/jpeg;base64,${friend.coverPic})`
+                            : 'gray.700'
+                        }
+                        boxShadow={'2xl'}
+                        rounded={'lg'}
+                        p={3}
+                        mb={8}
+                        mx={6}
+                        textAlign={'center'}
                       >
-                        {t('ignore')}
-                      </Button>
-                      <Button
-                        colorScheme="twitter"
-                        onClick={() => accept(connection.user.id)}
-                      >
-                        {' '}
-                        <text>{t('accept')}</text>
-                      </Button>
-                    </HStack>
-                  </Box>
+                        <Avatar
+                          size={'xl'}
+                          src={
+                            friend.profilePic
+                              ? `data:image/jpeg;base64,${friend.profilePic}`
+                              : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                          }
+                          mb={4}
+                          pos={'relative'}
+                        />
+                        <NextLink href={`profile/${friend.id}`}>
+                          <Heading fontSize={'2xl'} fontFamily={'body'}>
+                            {friend.firstName} {friend.lastName}
+                          </Heading>
+                        </NextLink>
+
+                        <Text
+                          textAlign={'center'}
+                          color={useColorModeValue('gray.700', 'gray.400')}
+                          px={3}
+                        >
+                          <Box
+                            display="flex"
+                            flexDirection="row"
+                            justifyContent="center"
+                            alignItems="center"
+                            mt={2}
+                          >
+                            <Text fontSize="md" fontWeight="medium" mr={2}>
+                              {friend.suggestedFriendType} at
+                            </Text>
+                            <Text
+                              fontSize="md"
+                              color={useColorModeValue('gray.700', 'gray.400')}
+                              mr={2}
+                            >
+                              {friend.workExperiences[0]?.company}
+                            </Text>
+                            {friend.workExperiences[0]?.company && (
+                              <img
+                                src={`https://www.${friend.workExperiences[0]?.company.toLowerCase()}.com/favicon.ico`}
+                                alt={`${friend.company} logo`}
+                                width={20}
+                                height={20}
+                                onError={handleImageError}
+                                onLoad={handleImageLoad}
+                              />
+                            )}
+                          </Box>
+                        </Text>
+
+                        <Text
+                          mt={14}
+                          textAlign={'center'}
+                          color={useColorModeValue('gray.700', 'gray.400')}
+                          px={3}
+                        >
+                          {friend.educations && friend.educations.length > 0
+                            ? `${friend.educations[0].degree} at ${friend.educations[0].institution}`
+                            : 'Education not specified'}
+                        </Text>
+
+                        <Stack mt={8} direction={'row'} spacing={4}>
+                          {Status.Requested == true ? (
+                            <Button
+                              flex={1}
+                              className="profile-button button"
+                              style={{
+                                color: buttonColors,
+                                borderColor: buttonColors,
+                                borderWidth: '2px',
+                                textShadow: '0px 0px 40px #000000CA',
+                                fontWeight: 600,
+                                marginRight: '1em',
+                              }}
+                              onClick={() => Reject(friend.id)}
+                            >
+                              <span>
+                                <span>{t('deleteRequest')}</span>
+                              </span>
+                            </Button>
+                          ) : (
+                            <Button
+                              flex={1}
+                              className="profile-button button"
+                              onClick={() => Request(friend.id)}
+                              style={{
+                                color: buttonColors,
+                                borderColor: buttonColors,
+                                borderWidth: '2px',
+                                textShadow: '0px 0px 40px #000000CA',
+                                fontWeight: 600,
+                                marginRight: '1em',
+                              }}
+                            >
+                              <span>
+                                <span> {t('connect')}</span>
+                              </span>
+                            </Button>
+                          )}
+                        </Stack>
+                      </Box>
+                    ))
+                  ) : (
+                    <Text>{t('noSuggestions')}</Text>
+                  )}
                 </Flex>
-              ))
-            ) : (
-              <footer>
-                <Text>{t('noPendingRequests')}</Text>
-              </footer>
-            )}
-          </Flex>
-        </Box>
-        <Box p={4}>
-          <Heading as="h1" size="lg" mb={4}>
-            {t('notifications')}
-          </Heading>
-          {messageNotification.length > 0 ? (
-            messageNotification.map((notification: any, index) => (
-              <Flex
-                key={index}
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                mb={4}
-                display="flex"
-                alignItems="center"
-              >
-                <Flex>
-                  <Avatar
-                    size="lg"
-                    mr={4}
-                    src={
-                      notification.profilePic
-                        ? `data:image/jpeg;base64,${notification.profilePic}`
-                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                    }
-                  />
-                  <Box>
-                    <Heading
-                      as="h2"
-                      size="md"
-                      mb={2}
-                      style={{ cursor: 'pointer' }}
-                      onClick={() => {
-                        router.push(`/inbox/${notification.id}`)
-                      }}
-                    >
-                      {`${notification.firstName} ${notification.lastName}`}{' '}
-                      <Badge ml="1" colorScheme="green">
-                        {t('new')}
-                      </Badge>
-                    </Heading>
-                    <Text
-                      mb={2}
-                    >{`You have a new message from ${notification.firstName} ${notification.lastName}`}</Text>
-                    <Text fontSize="sm">{notification.created_at}</Text>
-                  </Box>
-                </Flex>
-              </Flex>
-            ))
-          ) : (
-            <Text>{t('noNotifications')}</Text>
-          )}
-
-<Box py="4" >
-  <Heading as="h1" size="lg" mb={8}>
-    {t('People you might know')}
-  </Heading>
-<Flex 
-  flexWrap="wrap" justifyContent= "around ">
-    {suggestedFriends.length > 0 ? (
-     suggestedFriends.map((friend: any) => (
-    <Box
-    key={friend.id}
-    maxW={'260px'}
-    w={'full'}
-    bg= {friend.coverPic ? `url(data:image/jpeg;base64,${friend.coverPic})` : 'gray.700'}
-    boxShadow={'2xl'}
-    rounded={'lg'}
-    p={3}
-    mb={8}
-    mx={6}
-    textAlign={'center'}>
-    <Avatar
-      size={'xl'}
-      src={friend.profilePic ? `data:image/jpeg;base64,${friend.profilePic}` : process.env.NEXT_PUBLIC_DEFAULT_PICTURE}
-      mb={4}
-      pos={'relative'}
-
-    />
-    <NextLink href={`profile/${friend.id}`}>
-      <Heading fontSize={'2xl'} fontFamily={'body'}>
-        {friend.firstName} {friend.lastName} 
-      </Heading>
-    </NextLink>
-    
-    <Text
-      textAlign={'center'}
-      color={useColorModeValue('gray.700', 'gray.400')}
-      px={3}
-    >
- 
-
-     <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center" mt={2}>
-  <Text fontSize="md" fontWeight="medium" mr={2}>
-    {friend.suggestedFriendType} at
-  </Text>
-  <Text fontSize="md" color={useColorModeValue('gray.700', 'gray.400')} mr={2}>
-    {friend.workExperiences[0]?.company} 
-  </Text>
-  {friend.workExperiences[0]?.company && (
-  <img
-    src={`https://www.${friend.workExperiences[0]?.company.toLowerCase()}.com/favicon.ico`}
-    alt={`${friend.company} logo`}
-    width={20}
-    height={20}
-    onError={handleImageError}
-    onLoad={handleImageLoad}
-  />
-)}
-</Box>
-
-    </Text>
-
-    <Text mt={14}
-      textAlign={'center'}
-      color={useColorModeValue('gray.700', 'gray.400')}
-      px={3}>
-       {friend.educations && friend.educations.length > 0 ? `${friend.educations[0].degree} at ${friend.educations[0].institution}` : "Education not specified"}
-</Text>
-
-<Stack mt={8} direction={'row'} spacing={4}>
-  {Status.Requested == true ? (
-    <Button
-      flex={1}
-      className="profile-button button"
-      style={{
-        color: buttonColors,
-        borderColor: buttonColors,
-        borderWidth: '2px',
-        textShadow: '0px 0px 40px #000000CA',
-        fontWeight: 600,
-        marginRight: '1em',
-      }}
-      onClick = {() => Reject(friend.id)}
-    >
-      <span>
-        <span>{t('deleteRequest')}</span>
-      </span>
-    </Button>
-  ) : (
-    <Button
-      flex={1}
-      className="profile-button button"
-      onClick={() => Request(friend.id)}
-      style={{
-        color: buttonColors,
-        borderColor: buttonColors,
-        borderWidth: '2px',
-        textShadow: '0px 0px 40px #000000CA',
-        fontWeight: 600,
-        marginRight: '1em',
-      }}
-    >
-      <span>
-        <span> {t('connect')}</span>
-      </span> 
-    </Button>
-  )}
-</Stack>
-   </Box>
-    
-      ))
-    ) : (
-      <Text>{t('noSuggestions')}</Text>
-    )}
-
-    </Flex>
-       
-  </Box>
-
-
-        </Box>
-        </Box>
-      </Flex>
-</Layout>
+              </Box>
+            </Box>
+          </Box>
+        </Flex>
+      </Layout>
     </>
   )
-
 }
 
 export const getServerSideProps = async ({ locale }) => ({

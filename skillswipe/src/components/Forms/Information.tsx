@@ -9,7 +9,6 @@ import {
   Stack,
   Textarea,
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
 import React from 'react'
 import { useSelector } from 'react-redux'

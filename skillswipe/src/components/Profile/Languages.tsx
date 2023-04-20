@@ -1,10 +1,7 @@
 import { Button, Stack } from '@chakra-ui/react'
-
+import { useTranslation } from 'next-i18next'
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
 
 const Languages = ({ languages }: any) => {
   const { t } = useTranslation('common')

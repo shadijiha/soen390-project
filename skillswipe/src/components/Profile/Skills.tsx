@@ -1,14 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/jsx-key */
 import { Button, Stack } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import React from 'react'
-
 import 'react-toastify/dist/ReactToastify.css'
 import ProfileStyle from '../../styles/profilestyle'
-
-import { GetStaticProps } from 'next'
-import { useTranslation } from 'next-i18next'
-
 
 const Skills = ({ skillsArray }: any) => {
   // call API to get education history
