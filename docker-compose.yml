@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: next.dockerfile
+    user: ${UID}:${GID}
     links:
       - backend
     volumes:
@@ -46,6 +47,7 @@ services:
       dockerfile: nest.dockerfile
       target: "development"
     restart: on-failure
+    user: ${UID}:${GID}
     links:
       - mariadb
     depends_on:

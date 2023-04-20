@@ -1,26 +1,17 @@
-/* eslint-disable react/jsx-key */
 import {
-  Avatar,
   Box,
   chakra,
   Container,
   Flex,
-  Grid,
   HStack,
-  Icon,
-  Stack,
   Text,
   useBreakpointValue,
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React, { useState } from 'react'
-import { FaPencilRuler } from 'react-icons/fa'
 import 'react-toastify/dist/ReactToastify.css'
-import ProfileStyle from '../../styles/profilestyle'
 
 // const courseTitles = ['Shopify Course', 'React Course', 'Node Course']
 // const courseDescriptions = [

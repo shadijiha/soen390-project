@@ -23,7 +23,7 @@ async function bootstrap (): Promise<void> {
   const config = new DocumentBuilder()
     .setTitle(`${process.env.APP_NAME ?? 'skillswipe-dev'} API`)
     .setDescription(
-`The ${process.env.APP_NAME ?? 'skillswipe-dev'} API description`
+      `The ${process.env.APP_NAME ?? 'skillswipe-dev'} API description`
     )
     .setVersion(process.env.APP_VERSION ?? 'dev')
     .addBearerAuth()

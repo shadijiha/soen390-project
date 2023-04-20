@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout'
 import {
   Button,
-  Center,
   Flex,
   Heading,
   Input,
@@ -15,7 +14,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { emailValidator } from '../Util/Validator'
@@ -24,7 +22,6 @@ import { register } from './api/api'
 const Register = () => {
   const { toggleColorMode } = useColorMode()
   const formBackground = useColorModeValue('gray.100', 'gray.700')
-  const googleBackground = useColorModeValue('white', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
   const toggleTheme = useColorModeValue('🌙', '💡')
   const [User, setUser] = useState({
@@ -174,18 +171,6 @@ const Register = () => {
             </Select>
             <Button colorScheme="green" mb={4} onClick={submitForm}>
               {t('register')}
-            </Button>
-            {/* Google */}
-            <Button
-              mb={4}
-              w={'full'}
-              variant={'outline'}
-              backgroundColor={googleBackground}
-              leftIcon={<FcGoogle />}
-            >
-              <Center>
-                <Text>{t('signupWithGoogle')}</Text>
-              </Center>
             </Button>
 
             <Button

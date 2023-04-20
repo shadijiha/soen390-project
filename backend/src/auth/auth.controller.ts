@@ -9,6 +9,10 @@ import { AuthService } from './auth.service'
 import { Auth } from './auth.types'
 import { JwtAuthGuard } from './jwt-auth.guard'
 
+export class TokenDto {
+  token: string
+}
+
 @Controller('auth')
 @ApiTags('Authentication')
 export class AuthController {
@@ -16,7 +20,7 @@ export class AuthController {
     private readonly userService: UsersService,
     private readonly authService: AuthService,
     private readonly connectionsService: ConnectionsService
-  ) {}
+  ) { }
 
   // login endpoint for user
   @Post('login')
@@ -40,6 +44,13 @@ export class AuthController {
 
     // If we are here this means that email is taken since we did not return from the try block
     throw new ConflictException(`Email ${body.email} already taken`)
+  }
+
+  @Post('google/redirect')
+  // @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect (@Body() tokenDto: TokenDto): Promise<Auth.LoginResponse> {
+    const { token } = tokenDto
+    return await this.authService.googleLogin(token)
   }
 
   // get user info endpoint

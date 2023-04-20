@@ -1,4 +1,10 @@
-import { ResolvePostBan, ResolvePostSafe, ResolvePostWarn, getReportedPosts, getResolvedPosts } from '@/pages/api/adminApi'
+import {
+  ResolvePostBan,
+  ResolvePostSafe,
+  ResolvePostWarn,
+  getReportedPosts,
+  getResolvedPosts,
+} from '@/pages/api/adminApi'
 import {
   AlertDialog,
   AlertDialogBody,
@@ -13,7 +19,6 @@ import {
   Divider,
   Flex,
   Heading,
-  Image,
   Link,
   Modal,
   ModalBody,
@@ -34,21 +39,20 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState }  from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const formatDate = (dateString) => {
-const options: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-  hour: '2-digit',
-  minute: '2-digit',
-}
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  }
 
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
-
 
 export const ReportedPosts = () => {
   const toast = useToast()
@@ -84,7 +88,7 @@ export const ReportedPosts = () => {
     const token = localStorage.getItem('jwt')
     if (!token) {
       toast({
-        position : 'top-right',
+        position: 'top-right',
         title: 'Error',
         description: 'You are not logged in!',
         status: 'error',
@@ -100,7 +104,7 @@ export const ReportedPosts = () => {
       })
       .catch(() => {
         toast({
-          position : 'top-right',
+          position: 'top-right',
           title: 'Error',
           description: "Can't get reported posts! Please contact support.",
           status: 'error',
@@ -115,7 +119,7 @@ export const ReportedPosts = () => {
       })
       .catch(() => {
         toast({
-          position : 'top-right',
+          position: 'top-right',
           title: 'Error',
           description: "Can't get resolved posts! Please contact support.",
           status: 'error',
@@ -143,40 +147,37 @@ export const ReportedPosts = () => {
           </Thead>
           <Tbody>
             {ReportedPosts.map((post: any) => (
-            <Tr key={post._id}>
-              <Td>
-                {' '}
-                <Flex>
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Avatar
-                      size="sm"
-                      src={post.reportedProfilePic}
-                    />
-                    <Box>
-                      <Text size="sm">{post.reportedFullName} </Text>
-                    </Box>
+              <Tr key={post._id}>
+                <Td>
+                  {' '}
+                  <Flex>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Avatar size="sm" src={post.reportedProfilePic} />
+                      <Box>
+                        <Text size="sm">{post.reportedFullName} </Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Td>
-              <Td>
-                {post.post.post.length > 50
-                  ? post.post.post.substring(0, 50) + '...'
-                  : post.post.post}
-              </Td>
-              <Td>{formatDate(post.created_at)}</Td>
-              <Td>
-                <Badge colorScheme = {getColorScheme(post.status)}>
-                  {post.status}
-                </Badge>
-              </Td>
-              <Td color="blue.200">
-                <MessagesModal 
-                  post={post}
-                  type = "unresolved"
-                  resolveItem={resolveItem}
-                />
-              </Td>
-            </Tr>
+                </Td>
+                <Td>
+                  {post.post.post.length > 50
+                    ? post.post.post.substring(0, 50) + '...'
+                    : post.post.post}
+                </Td>
+                <Td>{formatDate(post.created_at)}</Td>
+                <Td>
+                  <Badge colorScheme={getColorScheme(post.status)}>
+                    {post.status}
+                  </Badge>
+                </Td>
+                <Td color="blue.200">
+                  <MessagesModal
+                    post={post}
+                    type="unresolved"
+                    resolveItem={resolveItem}
+                  />
+                </Td>
+              </Tr>
             ))}
           </Tbody>
         </Table>
@@ -197,36 +198,33 @@ export const ReportedPosts = () => {
           </Thead>
           <Tbody>
             {ResolvedPosts.map((post: any) => (
-            <Tr key={post._id}>
-              <Td>
-                {' '}
-                <Flex>
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Avatar
-                      size="sm"
-                      src={post.reportedProfilePic}
-                    />
-                    <Box>
-                      <Text size="sm">{post.reportedFullName} </Text>
-                    </Box>
+              <Tr key={post._id}>
+                <Td>
+                  {' '}
+                  <Flex>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Avatar size="sm" src={post.reportedProfilePic} />
+                      <Box>
+                        <Text size="sm">{post.reportedFullName} </Text>
+                      </Box>
+                    </Flex>
                   </Flex>
-                </Flex>
-              </Td>
-              <Td> 
-                {post.post.post.length > 50
-                  ? post.post.post.substring(0, 50) + '...'
-                  : post.post.post}
-              </Td>
-              <Td> {formatDate(post.created_at)}</Td>
-              <Td>
-                <Badge colorScheme = {getColorScheme(post.status)}>
-                  {post.status}
-                </Badge>
-              </Td>
-              <Td color="blue.200">
-                <MessagesModal post = {post} type = "resolved"/>
-              </Td>
-            </Tr>
+                </Td>
+                <Td>
+                  {post.post.post.length > 50
+                    ? post.post.post.substring(0, 50) + '...'
+                    : post.post.post}
+                </Td>
+                <Td> {formatDate(post.created_at)}</Td>
+                <Td>
+                  <Badge colorScheme={getColorScheme(post.status)}>
+                    {post.status}
+                  </Badge>
+                </Td>
+                <Td color="blue.200">
+                  <MessagesModal post={post} type="resolved" />
+                </Td>
+              </Tr>
             ))}
           </Tbody>
         </Table>
@@ -256,16 +254,11 @@ function MessagesModal(props) {
               </Heading>
               <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                  <Avatar
-                    size="sm"
-                    src= {post.reporter?.profilePic}
-                  />
+                  <Avatar size="sm" src={post.reporter?.profilePic} />
                   <Box>
                     <Text size="sm">
                       {' '}
-                      {post.reporter?.firstName + 
-                      ' ' + 
-                      post.reporter?.lastName}
+                      {post.reporter?.firstName + ' ' + post.reporter?.lastName}
                     </Text>
                   </Box>
                 </Flex>
@@ -289,9 +282,7 @@ function MessagesModal(props) {
               <Heading size="md" mb="2">
                 Post:{' '}
               </Heading>
-              <Text size="sm">
-                {post.post.post}  
-              </Text>
+              <Text size="sm">{post.post.post}</Text>
             </Box>
             <Box mt="4">
               <Text size="sm">
@@ -302,11 +293,11 @@ function MessagesModal(props) {
               </Text>
             </Box>
             {type === 'unresolved' && (
-            <Box mt="4">
-              <Heading size="md" mb="2">
-                Actions:{' '}
-              </Heading>
-              <Alert
+              <Box mt="4">
+                <Heading size="md" mb="2">
+                  Actions:{' '}
+                </Heading>
+                <Alert
                   title="Send Warning to User"
                   message="Are you sure you want to send a warning to user?"
                   scheme="yellow"
@@ -333,7 +324,7 @@ function MessagesModal(props) {
                   close={onClose}
                   resolveItem={resolveItem}
                 />
-            </Box>
+              </Box>
             )}
           </ModalBody>
           <ModalFooter>
@@ -379,7 +370,7 @@ export default function Alert(props: any) {
   }
 
   const resolveSafe = () => {
-    ResolvePostSafe (token, id)
+    ResolvePostSafe(token, id)
       .then((res) => {
         resolveItem(id, 'safe')
         toast({
@@ -467,8 +458,6 @@ export default function Alert(props: any) {
     setIsLoading(false)
   }
 
-
-
   return (
     <>
       <Button colorScheme={scheme} onClick={onOpen} mr={2}>
@@ -488,7 +477,12 @@ export default function Alert(props: any) {
               <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button colorScheme={scheme} onClick={takeAction} ml={3} isLoading={isLoading}>
+              <Button
+                colorScheme={scheme}
+                onClick={takeAction}
+                ml={3}
+                isLoading={isLoading}
+              >
                 {action}
               </Button>
             </AlertDialogFooter>
