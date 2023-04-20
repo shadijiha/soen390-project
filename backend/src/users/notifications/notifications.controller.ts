@@ -8,6 +8,7 @@ import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 import { AuthUser, BearerPayload } from '../../util/util'
 import { NotificationsService } from './notifications.service'
 import { Param } from '@nestjs/common'
+import { Notifications } from 'src/models/notifications.entity'
 
 @Controller('notifications')
 @ApiTags('Notifications')
@@ -28,19 +29,21 @@ export class NotificationsController {
 
   // get all notifications
   @Get('/notifications/all')
-  async getNotifications (@AuthUser() userInfo: BearerPayload): Promise<void> {
-    await this.notificationsService.getAllNotifications(userInfo.id)
-  }
+  async getNotifications (@AuthUser() userInfo: BearerPayload): Promise<Notifications[]> {
+    return await this.notificationsService.getAllNotifications(userInfo.id)
+}
+    
 
   // get unread notifications
   @Get('/notifications/unread')
-  async getUnreadNotifications (@AuthUser() userInfo: BearerPayload): Promise<void> {
-    await this.notificationsService.getUnreadNotifications(userInfo.id)
+  async getUnreadNotifications (@AuthUser() userInfo: BearerPayload): Promise<Notifications[]> {
+    return await this.notificationsService.getUnreadNotifications(userInfo.id)
   }
 
   // mark notification as read
-  @Post('/notifications/read/ :notificationId')
+  @Post('/notifications/read/:notificationId')
   async markAsRead (@AuthUser() userInfo: BearerPayload, @Param('notificationId') notificationId: number): Promise<void> {
+    console.log(notificationId)
     await this.notificationsService.markAsRead(userInfo.id, notificationId)
   }
 
@@ -51,7 +54,7 @@ export class NotificationsController {
   }
 
   // delete notification
-  @Post('/notifications/delete/ :notificationId')
+  @Post('/notifications/delete/:notificationId')
   async deleteNotification (@AuthUser() userInfo: BearerPayload, @Param('notificationId') notificationId: number): Promise<void> {
     await this.notificationsService.deleteNotification(userInfo.id, notificationId)
   }
