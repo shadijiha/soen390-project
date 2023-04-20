@@ -245,9 +245,29 @@ const myListings = () => {
                 fontWeight="bold"
                 textAlign="center"
                 paddingBottom={'0.2em'}
+                paddingRight={'0.5em'}
               >
                 {t('myListings')}
               </chakra.h3>
+              <Button
+                alignContent={'center'}
+                justifyContent={'center'}
+                alignItems={'center'}
+                alignSelf={'center'}
+                as={Link}
+                _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
+                p={5}
+                colorScheme="orange"
+                rounded="100px"
+                outline={'solid 1px'}
+                outlineColor={useColorModeValue('gray.400', 'gray.600')}
+                // go to url /viewListings
+                onClick={() => {
+                  router.push(`/myApplicants`)
+                }}
+              >
+                {t('viewApplicants')}
+              </Button>
               <Spacer />
               <Menu>
                 <MenuButton
@@ -509,27 +529,6 @@ const myListings = () => {
             ))}
           </VStack>
         </Container>
-        <Center>
-          <Button
-            alignContent={'center'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            alignSelf={'center'}
-            as={Link}
-            _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
-            p={5}
-            colorScheme="orange"
-            rounded="100px"
-            outline={'solid 1px'}
-            outlineColor={useColorModeValue('gray.400', 'gray.600')}
-            // go to url /viewListings
-            onClick={() => {
-              router.push(`/viewApplicants/1`)
-            }}
-          >
-            {t('viewApplicants')}
-          </Button>
-        </Center>
       </Layout>
     </>
   )

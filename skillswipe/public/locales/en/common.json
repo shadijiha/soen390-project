@@ -191,6 +191,7 @@
     "toApply": "to view all jobs.",
     "numberOfApplications": "Number of Applications",
     "typeName": "Type a Name",
-    "viewApplicants": "View Applicants"
+    "viewApplicants": "View Applicants",
+    "recruiterPanel": "Recruiter Panel"
 
 }
