@@ -376,3 +376,11 @@ export const jobNotificationApi = async (token: any) => {
     },
   })
 }
+
+export const readJobNotifications = async (token: any, id: any) => {
+  return axios.post(`${URL}/notifications/notifications/read/${id}`, id, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}

@@ -29,6 +29,7 @@ import {
   getPendingRequest,
   getUserById,
   jobNotificationApi,
+  readJobNotifications,
   removeConnection,
   sendRequest,
 } from './api/api'
@@ -108,7 +109,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     const token = localStorage.getItem('jwt')
     jobNotificationApi(token)
       .then((res) => {
-        console.log(res)
+        // console.log(res)
         setJobNotification(res.data)
       })
       .catch((err) => {
@@ -299,6 +300,17 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         })
     }
   }
+  const readNotification = (id) => {
+    const token = localStorage.getItem('jwt')
+    getSuggestedUsers(token)
+    readJobNotifications(token, id)
+      .then((res: any) => {
+        toast(res)
+      })
+      .catch((err) => {
+        toast.error(err)
+      })
+  }
 
   const viewUsers = () => {
     getSuggestedFriends()
@@ -312,6 +324,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const handleImageLoad = () => {
     console.log('Logo image loaded successfully')
   }
+  const handleJobNotification = (job) => {
+    readNotification(job)
+    router.push(`/jobListing/${job}`)
+  }
 
   return (
     <>
@@ -320,7 +336,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length
+            suggestedFriends.length +
+            jobNotification.length
           }
           addRequest={addRequest}
         ></NavBar>
@@ -589,7 +606,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                     display="flex"
                     alignItems="center"
                   >
-                    <Link href={`/jobListing/${job.id}`}>
+                    <Link onClick={() => handleJobNotification(job.id)}>
                       <Flex>
                         <Box>
                           <Heading as="h2" size="md" mb={2}>
@@ -607,9 +624,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                       <HStack>
                         <Button
                           colorScheme="twitter"
-                          onClick={() => {
-                            router.push(`/jobListing/${job.id}`)
-                          }}
+                          onClick={() => handleJobNotification(job.id)}
                         >
                           {t('Apply')}
                         </Button>
