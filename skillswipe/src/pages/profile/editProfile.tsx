@@ -64,7 +64,7 @@ const EditProfile = () => {
     experience2: 'Three years of experience in mobile development',
     experience3: 'Two years of experience in data analysis',
     image:
-      'https://marketplace.canva.com/EAFKZzWYqqE/1/0/1600w/canva-purple-navy-neon-gradient-modern-minimalist-man-tiktok-profile-picture-kqzwo_88iLY.jpg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
