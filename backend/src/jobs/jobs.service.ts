@@ -50,10 +50,13 @@ export class JobsService {
 
         const existingSkills = await this.skillRepository.find({
           where: skills.map((s) => ({ title: s.title }))
+          
         })
 
-        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
-
+        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title.toLowerCase() === s.title.toLowerCase()) == null)
+  
+        
+        
         job.skills = [...existingSkills, ...newSkills]
       }
     }
@@ -120,7 +123,7 @@ export class JobsService {
           where: skills.map((s) => ({ title: s.title }))
         })
 
-        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
+        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title.toLowerCase() === s.title.toLowerCase()) == null)
 
         job.skills = [...existingSkills, ...newSkills]
       }
