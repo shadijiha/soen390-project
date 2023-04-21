@@ -192,5 +192,6 @@
     "numberOfApplications": "Nombre de candidatures",
     "typeName": "Veuillez entrer nom",
     "viewApplicants": "Voir les candidats",
-    "recruiterPanel": "Panneau de recruteur"
+    "recruiterPanel": "Panneau de recruteur",
+    "view": "Voir"
 }

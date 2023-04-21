@@ -24,6 +24,8 @@ import router, { useRouter } from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
 
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { useTranslation } from 'next-i18next'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
@@ -62,6 +64,7 @@ type JobApplicantType = {
 }
 
 const myApplicants = () => {
+  const { t } = useTranslation('common')
   const [isMobile] = useMediaQuery('(max-width: 766px)')
   // Get the jobId from the URL using useRouter
   const router = useRouter()
@@ -71,7 +74,6 @@ const myApplicants = () => {
   const [jobApplicant, setJobApplicant] = useState<JobApplicantType | null>(null)
   const [jobs, setJobs] = useState<Array<JobApplicantType>>([])
   const [refetch, setRefetch] = useState(false)
-  const { t } = useTranslation('common')
 
   useEffect(() => {
     const getApplicants = async () => {
@@ -237,7 +239,7 @@ const myApplicants = () => {
                 : profile.image
             }
           />
-          <Text fontSize="xl" fontWeight="bold" marginTop="10px">
+          <Text fontSize="3xl" fontWeight="bold" marginTop="10px">
             {User.auth.firstName} {User.auth.lastName}
           </Text>
           <Text fontSize="md" fontWeight="normal" marginTop="10px">
@@ -245,20 +247,20 @@ const myApplicants = () => {
           </Text>
         </Box>
 
-        <VStack>
+        <VStack spacing={8} marginBottom={'50px'}>
           {jobs.map((job) => (
             <Fragment key={job.id}>
               <Box
-                borderWidth={'3px'}
-                borderRadius="30px"
-                p={6}
+                // border width 3 only on the corners
+                borderWidth="3px 0px 3px 0px"
+                borderRadius="35px"
+                p={8}
                 minWidth={'70%'}
-                marginBottom={'20px'}
                 flex={1}
               >
                 <HStack>
                   <img
-                    src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                    src={`https://logo.clearbit.com/${job.companyName}.com`}
                     width="30px"
                     height="30px"
                     alt="logo"
@@ -604,5 +606,11 @@ const myApplicants = () => {
     </>
   )
 }
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ['common'])),
+  },
+})
 
 export default myApplicants

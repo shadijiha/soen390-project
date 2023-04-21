@@ -41,7 +41,7 @@ import { deleteJobListing, getJobApplicants, getOpenJobs } from './api/api'
 
 const handleApplicationsClick = (jobId) => {
   // Here, you can implement your navigation or any other action needed
-  router.push('/') // Navigates the user to the home page
+  router.push('/myApplicants') // Navigates the user to the home page
 }
 
 const myListings = () => {
@@ -257,9 +257,9 @@ const myListings = () => {
                 as={Link}
                 _hover={{ bg: useColorModeValue('gray.400', 'gray.600') }}
                 p={5}
-                colorScheme="orange"
+                colorScheme="whatsapp"
                 rounded="100px"
-                outline={'solid 1px'}
+                border={'solid 1px'}
                 outlineColor={useColorModeValue('gray.400', 'gray.600')}
                 // go to url /viewListings
                 onClick={() => {
@@ -386,7 +386,7 @@ const myListings = () => {
                     <Box key={index} gridColumnEnd={{ base: 'span 2', md: 'unset' }}>
                       <HStack spacing={3}>
                         <img
-                          src={`http://www.${job.companyName.toLowerCase()}.com/favicon.ico`}
+                          src={`https://logo.clearbit.com/${job.companyName.toLowerCase()}.com`}
                           width="20px"
                           height="20px"
                           alt="logo"
@@ -445,10 +445,13 @@ const myListings = () => {
                       >
                         ✅ ‎ {t('numberOfApplications')}: {}
                         <button onClick={() => handleApplicationsClick(job.id)}>
-                          <chakra.p>
+                          <chakra.p
+                            color={useColorModeValue('blue.600', 'blue.300')}
+                          >
                             {/* Display the number of applications or 0 if not present */}
                             {jobApplicant.find((app) => app.id === job.id)
-                              ?.applications?.length || 0}
+                              ?.applications?.length || 0}{' '}
+                            ({t('view')})
                           </chakra.p>
                         </button>
                       </chakra.p>
