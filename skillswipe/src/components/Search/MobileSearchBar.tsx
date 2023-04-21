@@ -2,15 +2,12 @@ import { SearchIcon } from '@chakra-ui/icons'
 import {
   Button,
   Collapse,
-  IconButton,
   InputGroup,
   InputRightElement,
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
-import { GetStaticProps } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
 import React, { SetStateAction, useState } from 'react'
 

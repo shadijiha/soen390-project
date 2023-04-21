@@ -308,12 +308,10 @@ export const getSuggestedUsers = async (token: any) => {
   })
 }
 
-
-
-export const ReportApi = async(token:any,Report : any) => {
-  return axios.post(`${URL}/report`,Report,{
-    headers : {
-      Authorization: `Bearer ${token}`
+export const ReportApi = async (token: any, Report: any) => {
+  return axios.post(`${URL}/report`, Report, {
+    headers: {
+      Authorization: `Bearer ${token}`,
     },
   })
 }
