@@ -594,7 +594,9 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               </Box>
             </Box>
 
-            <Heading marginBottom={'2rem'}>Jobs for you</Heading>
+            <Heading as="h1" size="lg" mb={8}>
+              {t('Jobs for you')}
+            </Heading>
             {jobNotification.length > 0
               ? jobNotification.map((job: any) => (
                   <Flex
@@ -614,8 +616,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                               {t('new')}
                             </Badge>
                           </Heading>
-                          <Text mb={2}>Job Name</Text>
-                          <Text fontSize="sm">{job.text}</Text>
+                          <Text mb={2}>{job.text}</Text>
                         </Box>
                       </Flex>
                     </Link>

@@ -108,9 +108,9 @@ const Home = () => {
     const token = localStorage.getItem('jwt')
     reportPost(token, post, post).then((res) => {
       if (res.status == 201 || res.status == 200) {
-        toast.success('Sucessfully reported post')
+        toast.success(`${t('Sucessfully reported post')}`)
       } else {
-        toast.error('Already Reported')
+        toast.error(`${t('Already Reported')}`)
       }
     })
   }
@@ -691,7 +691,7 @@ const Home = () => {
                                 marginTop: '0.5rem',
                               }}
                             >
-                              Report
+                              {t('Report')}
                             </Button>
                           )}
                         </HStack>
