@@ -34,7 +34,7 @@ const Profile = () => {
     experience2: 'Three years of experience in mobile development',
     experience3: 'Two years of experience in data analysis',
     image:
-    'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
+      'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
@@ -68,17 +68,15 @@ const Profile = () => {
                   // make the background image to be 35% opacity
                   backgroundColor: 'rgba(0, 0, 0, 0.35)',
                   // make the background image to be 50% opacity
-                  
+                  backgroundImage: `url(${User.auth.coverPic
+                    ? `data:image/jpeg;base64,${User.auth.coverPic}`
+                    : profile.cover
+                    })`,
 
-                  backgroundImage: `url(${
-                    User.auth.coverPic
-                      ? `data:image/jpeg;base64,${User.auth.coverPic}`
-                      : profile.cover
-                  })`,
                 }}
               >
                 <div className="profile-container02">
-            <div className='profile-image03'>
+                  <div className='profile-image03'>
                     <Avatar
                       src={
                         User.auth.profilePic
@@ -96,8 +94,7 @@ const Profile = () => {
                       }}
                     />
                   </div>
-
-                <div className="profile-container03"
+                  <div className="profile-container03"
                   style={{
                     position: "relative",
                     
@@ -153,121 +150,120 @@ const Profile = () => {
                     )}
                   </div>
 
+                
 
-                <div className="profile-container05">
-                  {/* to do: show this edit button only if user logged in == the profile that is shown */}
-                  <button
-                    className="profile-button1 button"
-                    style={{
-                      color: 'white',
+                  <div className="profile-container05">
+                    {/* to do: show this edit button only if user logged in == the profile that is shown */}
+                    <button
+                      className="profile-button1 button"
+                      style={{
+                        color: 'white',
                         borderColor: 'white',
                         width: "100%",
                         borderWidth: '2px',
                         textShadow: '0px 0px 40px #000000CA',
                         fontWeight: 600,
-                        
-                        margin: "auto",
-
-                    }}
-                    onClick={() => {
-                      router.push('/profile/editProfile')
-                    }}
-                  >
-                    {t('edit')}
-                  </button>
-                </div>
+                        fontSize: '1.2em',
+                      }}
+                      onClick={() => {
+                        router.push('/profile/editProfile')
+                      }}
+                    >
+                      {t('edit')}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <Stack
-              direction={'row'}
-              paddingTop="1rem"
-              style={{
-                flexWrap: 'wrap',
-              }}
-            >
-              {/* SKILLS SECTION */}
+              <Stack
+                direction={'row'}
+                paddingTop="1rem"
+                style={{
+                  flexWrap: 'wrap',
+                }}
+              >
+                {/* SKILLS SECTION */}
 
-              {User.auth.skills && User.auth.skills.length > 0 ? (
-                <Skills skillsArray={User.auth.skills} />
+                {User.auth.skills && User.auth.skills.length > 0 ? (
+                  <Skills skillsArray={User.auth.skills} />
+                ) : (
+                  <></>
+                )}
+
+                {/* AWARDS SECTION */}
+                {User.auth.awards && User.auth.awards.length > 0 ? (
+                  <Awards awards={User.auth.awards} />
+                ) : (
+                  <></>
+                )}
+              </Stack>
+
+              <br></br>
+              <Divider />
+
+              <br></br>
+              <Divider />
+
+              {/* CAREER JOURNEY WORK EXPERIENCE */}
+              {User.auth.workExperiences && User.auth.workExperiences.length > 0 ? (
+                <WorkExperience experience={User.auth.workExperiences} />
               ) : (
                 <></>
               )}
 
-              {/* AWARDS SECTION */}
-              {User.auth.awards && User.auth.awards.length > 0 ? (
-                <Awards awards={User.auth.awards} />
+              <Divider />
+              {/* EDUCATION SECTION */}
+
+              {User.auth.educations && User.auth.educations.length > 0 ? (
+                <Education education={User.auth.educations} />
               ) : (
                 <></>
               )}
-            </Stack>
+              <Divider />
+              {/* VOLUNTEERING SECTION */}
 
-            <br></br>
-            <Divider />
+              {User.auth.volunteeringExperience &&
+                User.auth.volunteeringExperience.length > 0 ? (
+                <Volunteering volunteer={User.auth.volunteeringExperience} />
+              ) : (
+                <></>
+              )}
+              <Divider />
+              {/* LANGUAGES SECTION */}
 
-            <br></br>
-            <Divider />
+              {User.auth.languages && User.auth.languages.length > 0 ? (
+                <Languages languages={User.auth.languages} />
+              ) : (
+                <></>
+              )}
 
-            {/* CAREER JOURNEY WORK EXPERIENCE */}
-            {User.auth.workExperiences && User.auth.workExperiences.length > 0 ? (
-              <WorkExperience experience={User.auth.workExperiences} />
-            ) : (
-              <></>
-            )}
+              <Divider />
+              {/* PERSONAL PROJECTS */}
+              {User.auth.projects && User.auth.projects.length > 0 ? (
+                <PersonalProjectsProfile Project={User.auth.projects} />
+              ) : (
+                <></>
+              )}
+              <Divider />
 
-            <Divider />
-            {/* EDUCATION SECTION */}
+              {/* COURSES ACCOMPLISHED */}
 
-            {User.auth.educations && User.auth.educations.length > 0 ? (
-              <Education education={User.auth.educations} />
-            ) : (
-              <></>
-            )}
-            <Divider />
-            {/* VOLUNTEERING SECTION */}
+              {User.auth.courses && User.auth.courses.length > 0 ? (
+                <Courses courses={User.auth.courses} />
+              ) : (
+                <></>
+              )}
 
-            {User.auth.volunteeringExperience &&
-            User.auth.volunteeringExperience.length > 0 ? (
-              <Volunteering volunteer={User.auth.volunteeringExperience} />
-            ) : (
-              <></>
-            )}
-            <Divider />
-            {/* LANGUAGES SECTION */}
-
-            {User.auth.languages && User.auth.languages.length > 0 ? (
-              <Languages languages={User.auth.languages} />
-            ) : (
-              <></>
-            )}
-
-            <Divider />
-            {/* PERSONAL PROJECTS */}
-            {User.auth.projects && User.auth.projects.length > 0 ? (
-              <PersonalProjectsProfile Project={User.auth.projects} />
-            ) : (
-              <></>
-            )}
-            <Divider />
-
-            {/* COURSES ACCOMPLISHED */}
-
-            {User.auth.courses && User.auth.courses.length > 0 ? (
-              <Courses courses={User.auth.courses} />
-            ) : (
-              <></>
-            )}
-
-            {/* temporary div below for spacing under page, will need to remove in final sprint */}
-            <div
-              style={{
-                display: 'flex',
-                paddingBottom: '10em',
-              }}
-            ></div>
+              {/* temporary div below for spacing under page, will need to remove in final sprint */}
+              <div
+                style={{
+                  display: 'flex',
+                  paddingBottom: '10em',
+                }}
+              ></div>
+            </div>
           </div>
-        </div>
       </Layout>
     </>
   )

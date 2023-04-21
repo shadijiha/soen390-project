@@ -203,6 +203,8 @@ const ProfileStyle = css`
             }
           }
           @media (max-width: 767px) {
+            
+
             .home-container1 {
               padding-left: var(--dl-space-space-twounits);
               padding-right: var(--dl-space-space-twounits);
@@ -219,8 +221,17 @@ const ProfileStyle = css`
               padding-left: var(--dl-space-space-twounits);
               padding-right: var(--dl-space-space-twounits);
             }
+
+            
           }
+
+
+         
+
+
           @media (max-width: 479px) {
+
+           
             .home-container1 {
               padding-top: var(--dl-space-space-twounits);
               padding-left: var(--dl-space-space-unit);
@@ -696,6 +707,20 @@ const ProfileStyle = css`
       grid-template-columns: 1fr;
     }
   }
+  @media screen and (max-width: 768px) {
+    .profile-container02 {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: 1em; /* add padding to create space between elements */
+      box-sizing: border-box; /* to include padding in the width calculation */
+    }
+
+  
+  
+  
+  }
+
 
   .profile-container {
     width: 100%;
@@ -704,16 +729,25 @@ const ProfileStyle = css`
     min-height: 100vh;
     align-items: center;
     flex-direction: column;
+    /* added the following properties to make it below the navbar and have some space between them */
+    margin-top: var(--dl-space-space-twounits); /* adjust this value as per your preference */
+    position: relative; /* to make it respect the navbar's position */
+    
   }
   .profile-top-card {
     width: 100%;
     display: flex;
-    max-width: 100%;
-    box-shadow: 4px 4px 10px 0px rgba(18, 18, 18, 0.1);
+    padding: var(--dl-space-space-twounits);
     align-items: stretch;
     flex-direction: row;
     justify-content: space-between;
+    /* added the following property to make it responsive */
+    flex-wrap: wrap; /* to allow the flex items to wrap if they don't fit in one line */
+    
+    margin-left: var(--dl-space-space-twounits: 20px); /* adjust the value as per your preference */
+    margin-right: var(--dl-space-space-twounits: 20px);
   }
+
   .profile-image {
     width: auto;
     height: 20em;
@@ -721,35 +755,48 @@ const ProfileStyle = css`
     object-fit: cover;
     flex-shrink: 0;
     border-radius: 0px;
+    
   }
   .profile-container01 {
+    box-shadow: 4px 4px 10px 0px rgba(18, 18, 18, 0.3);
     flex: 1;
     width: auto;
+    height: 50vh;
     display: flex;
     align-items: flex-start;
-    padding-top: var(--dl-space-space-twounits);
-    padding-left: var(--dl-space-space-twounits);
-    padding-right: var(--dl-space-space-twounits);
     flex-direction: column;
-    padding-bottom: var(--dl-space-space-twounits);
     background-size: cover;
-    justify-content: space-between;
-
+    /* added the following properties to make it have an outline and a curved border */
+    outline: 2px solid white; /* adjust the color and width as per your preference */
+    border-radius: 20px; /* adjust the value as per your preference */
   }
   .profile-container02 {
-    width: 100%;
+    width: 100%; 
     display: flex;
-    align-items: flex-start;
-    margin-bottom: var(--dl-space-space-halfunit);
-    flex-direction: row;
+    flex-direction: row; 
+    align-items: center;
     justify-content: space-between;
-  }
+    position: relative; 
+    top: 50%;
+    height: 50%;
+    background-color: rgba(0,0,0,0.5); /* to make it semi-transparent with black color */
+    box-sizing:border-box; /* to include padding in the width calculation */
+    padding-left: var(–dl-space-space-twounits); 
+    padding-right: var(–dl-space-space-twounits);
+    border-bottom-left-radius: 20px; /* adjust the value as per your preference */
+    border-bottom-right-radius: 20px; /* adjust the value as per your preference */
+    overflow
+
+}
   .profile-text {
     font-weight: 600;
     text-transform: uppercase;
+   
   }
   .profile-text01 {
-    margin-bottom: var(--dl-space-space-twounits);
+    font-size: 1.25rem;
+    
+
   }
   .profile-text02 {
     font-size: 1.25rem;
@@ -757,39 +804,54 @@ const ProfileStyle = css`
   }
   .profile-text03 {
     font-size: 1.25rem;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
   .profile-container03 {
-    flex: 0 0 auto;
     width: auto;
-    height: 92px;
     display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
   }
   .profile-container04 {
     display: flex;
     align-self: stretch;
-    align-items: center;
-    flex-direction: row;
+    align-items: flex-start;
+    flex-direction: column;
+    
+   
+  }
+
+  .profile-container24 {
+    display: flex;
+    align-self: stretch;
+    align-items: flex-start;
+    flex-direction: column;
     justify-content: space-between;
   }
-  .profile-text06 {
+  .profile-text06 
+  {
     font-style: normal;
-    font-weight: 600;
-    margin-left: var(--dl-space-space-halfunit);
+    font-weight: 300;
+    font-size: 0.5 rem;
+    white-space: nowrap;
+    
   }
   .profile-container05 {
-    width: 300px;
+    width: auto;
     display: flex;
     align-self: stretch;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+    
   }
   .profile-button {
     border-radius: 60px;
     background-color: transparent;
+    margin: 0 5px;
   }
   .profile-button1 {
     border-radius: 60px;
@@ -1208,11 +1270,15 @@ const ProfileStyle = css`
     .profile-top-card {
       height: 331px;
     }
-    .profile-image {
+    .profile-image03 {
       width: auto;
-      height: inherit;
+      padding-left: var(--dl-space-space-twounits);
+      
     }
+
+    
     .profile-text02 {
+      fontSize: '1.5em'
       margin-bottom: var(--dl-space-space-halfunit);
     }
     .profile-container04 {
@@ -1220,15 +1286,19 @@ const ProfileStyle = css`
       height: 60px;
       margin-right: 0px;
     }
+
+   
     .profile-container05 {
-      width: 300px;
+      width: 400px;
       height: 60px;
       margin-right: 90px;
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
+      
     }
+    .profile-text03 {}
     .profile-button1 {
       border-radius: 60px;
       background-color: transparent;
@@ -1303,6 +1373,8 @@ const ProfileStyle = css`
       height: 300px;
       flex-direction: row;
       justify-content: space-between;
+      align-self: stretch;
+      align-items: center;
     }
     .profile-image {
       width: 299px;
@@ -1322,9 +1394,12 @@ const ProfileStyle = css`
     }
     .profile-text02 {
 
+      font-size: medium;
+
     }
     .profile-text03 {
-
+      font-size: 0.5rem;
+      
     }
     .profile-container04 {
       width: 191px;
@@ -1333,17 +1408,33 @@ const ProfileStyle = css`
     }
     .profile-text06 {
       font-style: normal;
-      font-weight: 600;
-      margin-right: var(--dl-space-space-fourunits);
+      font-weight: 300;
+      margin-right: var(--dl-space-space-oneunits);
+      font-size: 0.8rem;
+      white-space: nowrap;
     }
+    
     .profile-container05 {
       width: 50%;
       margin-right: 0px;
       justify-content: space-between;
+      align-self:stretch;
+      padding: 0 10px;
+    }
+
+    .profile-container03 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      align-items: center;
+     
+
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
+      
     }
     .profile-button1 {
       border-radius: 60px;
@@ -1369,13 +1460,28 @@ const ProfileStyle = css`
     }
   }
   @media (max-width: 767px) {
+
     .profile-top-card {
       flex-direction: column;
       margin-bottom: 28em;
     }
-    .profile-image {
+   
+    .profile-container01 {
       width: 100%;
-      height: 429px;
+      height: 40vh;
+    }
+    .profile-container02 {
+      width: 100%;
+      
+    }
+
+    .profile-container03 {
+      width: 100%;
+      margin-right: 0px;
+      justify-content: space-between;
+      align-items: center;
+      margin-left: var(--dl-space-space-oneunits);
+
     }
     .profile-container04 {
       padding-right: 0px;
@@ -1383,6 +1489,8 @@ const ProfileStyle = css`
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
+    
+
     }
     .profile-button1 {
       border-radius: 60px;
@@ -1615,22 +1723,39 @@ const ProfileStyle = css`
       height: 700px;
       position: relative;
     }
-    .profile-image {
-      flex: 1;
-      width: auto;
-      height: 400px;
-      align-self: stretch;
-      border-radius: 0px;
+    
+    .profile-image03 {
+      top:-%;
+      left: -20px;
+      position:relative;
+    }
+
+    .profile-image03 .avatar {
+     
     }
     .profile-container01 {
       width: 100%;
     }
     .profile-text02 {
       margin-bottom: var(--dl-space-space-halfunit);
+      font-size: x-large;
     }
     .profile-container03 {
-      width: 422px;
+      width: auto;
+      height: auto;
+      margin-bottom: var(--dl-space-space-twounits);
+      
     }
+
+    .profile-container02 {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 50%;
+      padding-top: var(--dl-space-space-fourunits);
+      box-sizing: border-box; /* to include padding in the width calculation */
+    }
+  
     .profile-container04 {
       width: 200px;
       height: 92px;
@@ -1639,15 +1764,18 @@ const ProfileStyle = css`
       padding-right: 0px;
     }
     .profile-container05 {
-      width: 50%;
-      height: 92px;
-      margin-right: 0px;
-      padding-left: 0px;
-      padding-right: 0px;
+      width: auto;
+      height: 100%;
+      
+      padding-left: var(--dl-space-space-twounits);
+      padding-bottom: var(--dl-space-space-threeunits);
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
+      fontWeight: 600;
+      width: "100%";
+     font-size: 0.2em";
     }
     .profile-button1 {
       border-radius: 60px;
