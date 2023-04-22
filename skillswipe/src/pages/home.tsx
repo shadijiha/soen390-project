@@ -295,6 +295,7 @@ const Home = () => {
   const onClose = () => setIsOpen(false)
   const formBorder = useColorModeValue('gray.300', 'gray.600')
   const postBackground = useColorModeValue('gray.100', '#DBE9FF0A ')
+  const postBackground2 = useColorModeValue('gray.100', '#21262EE2 ')
   const User = useSelector((state) => state as any)
   const [posts, setPosts] = useState([
     {
@@ -442,7 +443,7 @@ const Home = () => {
                   borderRadius="30px"
                   padding={'1em'}
                   borderColor={formBorder}
-                  backgroundColor={postBackground}
+                  backgroundColor={postBackground2}
                   borderWidth="2px"
                   display={'flex'}
                   flexDirection={'column'}

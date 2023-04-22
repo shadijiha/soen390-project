@@ -255,7 +255,7 @@ const myApplicants = () => {
                 borderWidth="3px 0px 3px 0px"
                 borderRadius="35px"
                 p={8}
-                minWidth={'70%'}
+                minWidth={'50%'}
                 flex={1}
               >
                 <HStack>
