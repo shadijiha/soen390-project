@@ -16,9 +16,9 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import GoogleLogin from '../components/GoogleLogin'
 import { loginApi } from './api/api'
 
 const login = () => {
@@ -27,9 +27,10 @@ const login = () => {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
   const toggleTheme = useColorModeValue('🌙', '💡')
-  const googleBackground = useColorModeValue('white', 'gray.700')
-  const [User, setUser] = useState({ email: '', password: '' })
   const router = useRouter()
+  const currentLang = router.locale // => locale string eg. "en"
+  const [User, setUser] = useState({ email: '', password: '' })
+
   const changeEmail = (event: any) => {
     setUser({
       ...User,
@@ -90,18 +91,12 @@ const login = () => {
               <Button colorScheme="blue" mb={3} onClick={submitForm}>
                 {t('signIn')}
               </Button>
-              {/* Google */}
-              <Button
-                mb={6}
-                w={'full'}
-                variant={'outline'}
-                backgroundColor={googleBackground}
-                leftIcon={<FcGoogle />}
-              >
-                <Center>
-                  <Text>{t('googleSignIn')}</Text>
-                </Center>
-              </Button>
+              <Center>
+                <GoogleLogin lang={currentLang}></GoogleLogin>
+              </Center>
+
+              <Text textAlign="center">or</Text>
+
               <Button colorScheme="green" mb={6}>
                 <Link href="/register">Register</Link>
               </Button>

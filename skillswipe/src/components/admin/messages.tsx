@@ -18,6 +18,8 @@ import {
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import ActionsModal from './actionsModal'
+import { useTranslation } from 'next-i18next'
+
 export const formatDate = (dateString) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
@@ -35,6 +37,7 @@ export const ReportedMessages = () => {
   const router = useRouter()
   const [ReportedMessages, setReportedMessages] = useState<any[]>([])
   const [ResolvedMessages, setResolvedMessages] = useState<any[]>([])
+  const { t } = useTranslation('common')
 
   // send request to get reportedMessages
 
@@ -65,7 +68,7 @@ export const ReportedMessages = () => {
       toast({
         position: 'top-right',
         title: 'Error',
-        description: 'You are not logged in!',
+        description: (t('You are not logged in!')),
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -81,7 +84,7 @@ export const ReportedMessages = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: "Can't get reported messages! Please contact support",
+          description: (t("Can't get reported messages! Please contact support")),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -96,7 +99,7 @@ export const ReportedMessages = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: "Can't get resolved messages! Please contact support",
+          description: (t("Can't get resolved messages! Please contact support")),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -106,17 +109,17 @@ export const ReportedMessages = () => {
   return (
     <div>
       <Heading size="lg" mb="4">
-        Pending Reported Messages
+        {t('Pending Reported Messages')}
       </Heading>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>User</Th>
-              <Th>Message</Th>
-              <Th>Date</Th>
-              <Th>Status</Th>
-              <Th>Actions</Th>
+              <Th>{t('User')}</Th>
+              <Th>{t('Message')}</Th>
+              <Th>{t('Date')}</Th>
+              <Th>{t('Status')}</Th>
+              <Th>{t('Actions')}</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -157,17 +160,17 @@ export const ReportedMessages = () => {
         </Table>
       </TableContainer>
       <Heading size="lg" mb="4" mt={8}>
-        Resolved Reported Messages
+        {t('Resolved Reported Messages')}
       </Heading>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>User</Th>
-              <Th>Message</Th>
-              <Th>Date</Th>
-              <Th>Status</Th>
-              <Th>Actions</Th>
+              <Th>{t('User')}</Th>
+              <Th>{t('Message')}</Th>
+              <Th>{t('Date')}</Th>
+              <Th>{t('Status')}</Th>
+              <Th>{t('Actions')}</Th>
             </Tr>
           </Thead>
           <Tbody>

@@ -1,6 +1,6 @@
 import { AdminHome } from '@/components/admin/home'
 import SidebarWithHeader from '@/components/admin/sidebar'
-import React, { useState } from 'react'
+import React from 'react'
 
 const Admin = () => {
   return (
