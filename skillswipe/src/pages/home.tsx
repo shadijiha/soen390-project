@@ -38,6 +38,7 @@ import {
   deletePost,
   getOpenJobs,
   getPosts,
+  reportPost,
 } from './api/api'
 
 interface JobAttributes {
@@ -101,6 +102,17 @@ const Home = () => {
         })
     }
     setIsConfirmOpen(false)
+  }
+
+  const handleReportPost = (post) => {
+    const token = localStorage.getItem('jwt')
+    reportPost(token, post, post).then((res) => {
+      if (res.status == 201 || res.status == 200) {
+        toast.success(`${t('Sucessfully reported post')}`)
+      } else {
+        toast.error(`${t('Already Reported')}`)
+      }
+    })
   }
   // const FileDropzone = () => {
   //   const onDrop = useCallback((acceptedFiles) => {
@@ -773,7 +785,40 @@ const Home = () => {
                             style={{
                               paddingTop: '0.5em',
                             }}
-                          ></div>
+                          >
+                            {formatDate(post.created_at)}
+                          </Text>
+                        </HStack>
+                        <HStack justifyContent={'space-between'}>
+                          <Text paddingTop={3} marginLeft={'1'}>
+                            {post.content}
+                          </Text>
+                          {User.auth.id === post.user.id ? (
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              borderRadius="50px"
+                              onClick={() => handleDeleteClick(post.id)}
+                              style={{
+                                marginTop: '0.5rem',
+                              }}
+                            >
+                              <DeleteIcon />
+                            </Button>
+                          ) : (
+                            <Button
+                              colorScheme="red"
+                              size="sm"
+                              borderRadius="50px"
+                              onClick={() => handleReportPost(post.id)}
+                              style={{
+                                marginTop: '0.5rem',
+                              }}
+                            >
+                              {t('Report')}
+                            </Button>
+                          )}
+                        </HStack>
 
                           <chakra.p
                             fontWeight="bold"

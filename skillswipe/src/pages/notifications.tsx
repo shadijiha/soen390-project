@@ -4,8 +4,8 @@ import {
   Box,
   Button,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Link,
   Spacer,
   Stack,
@@ -28,6 +28,8 @@ import {
   acceptRequest,
   getPendingRequest,
   getUserById,
+  jobNotificationApi,
+  readJobNotifications,
   removeConnection,
   sendRequest,
 } from './api/api'
@@ -40,6 +42,20 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   ])
   const [messageNotification, setmessageNotification] = useState([])
   const [suggestedFriends, setSuggestedFriends] = useState([])
+  const [jobNotification, setJobNotification] = useState([
+    {
+      id: 64,
+      type: '',
+      text: 'A new job by hdwgjhxgdw, Job noti test, has been posted that matches your skills: Java',
+      photo: null,
+      link: '/jobId/66',
+      title: null,
+      read: false,
+      created_at: '2023-04-20T04:26:54.724Z',
+      updated_at: '2023-04-20T04:26:54.724Z',
+      deleted_at: null,
+    },
+  ])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading, setloading] = useState(true)
@@ -71,6 +87,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     getPendingConnections()
     getMessage()
     getSuggestedFriends()
+    getJobNotifications()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -83,8 +100,22 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     channel.bind('message-notification', function (data) {
       getMessage()
     })
+    channel.bind('newJob', function (data) {
+      getJobNotifications()
+    })
   }, [currentUser])
 
+  const getJobNotifications = () => {
+    const token = localStorage.getItem('jwt')
+    jobNotificationApi(token)
+      .then((res) => {
+        // console.log(res)
+        setJobNotification(res.data)
+      })
+      .catch((err) => {
+        toast.error(err)
+      })
+  }
   const getPendingConnections = () => {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('jwt')
@@ -269,6 +300,17 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         })
     }
   }
+  const readNotification = (id) => {
+    const token = localStorage.getItem('jwt')
+    getSuggestedUsers(token)
+    readJobNotifications(token, id)
+      .then((res: any) => {
+        toast(res)
+      })
+      .catch((err) => {
+        toast.error(err)
+      })
+  }
 
   const viewUsers = () => {
     getSuggestedFriends()
@@ -282,6 +324,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const handleImageLoad = () => {
     console.log('Logo image loaded successfully')
   }
+  const handleJobNotification = (job) => {
+    readNotification(job)
+    router.push(`/jobListing/${job}`)
+  }
 
   return (
     <>
@@ -290,7 +336,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length
+            suggestedFriends.length +
+            jobNotification.length
           }
           addRequest={addRequest}
         ></NavBar>
@@ -546,6 +593,47 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 </Flex>
               </Box>
             </Box>
+
+            <Heading as="h1" size="lg" mb={8}>
+              {t('Jobs for you')}
+            </Heading>
+            {jobNotification.length > 0
+              ? jobNotification.map((job: any) => (
+                  <Flex
+                    key={job.id}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={4}
+                    mb={4}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Link onClick={() => handleJobNotification(job.id)}>
+                      <Flex>
+                        <Box>
+                          <Heading as="h2" size="md" mb={2}>
+                            <Badge ml="1" colorScheme="green">
+                              {t('new')}
+                            </Badge>
+                          </Heading>
+                          <Text mb={2}>{job.text}</Text>
+                        </Box>
+                      </Flex>
+                    </Link>
+                    <Spacer />
+                    <Box>
+                      <HStack>
+                        <Button
+                          colorScheme="twitter"
+                          onClick={() => handleJobNotification(job.id)}
+                        >
+                          {t('Apply')}
+                        </Button>
+                      </HStack>
+                    </Box>
+                  </Flex>
+                ))
+              : null}
           </Box>
         </Flex>
       </Layout>
