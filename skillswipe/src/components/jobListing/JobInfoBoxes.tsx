@@ -26,20 +26,18 @@ const JobInfoBoxes = ({
   ]
 
   return (
-    <>
-      <Container maxW="5xl" paddingBottom={8}>
-        <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={5} mt={5} mb={2}>
-          {data.map((job) => (
-            <Box key={job.id} p={5} boxShadow="md" rounded="36px" borderWidth={2}>
-              <Text fontWeight="bold" fontSize="x-large" textAlign={'center'}>
-                {job.text}
-              </Text>
-              <Text textAlign={'center'}>{job.title}</Text>
-            </Box>
-          ))}
-        </SimpleGrid>
-      </Container>
-    </>
+    <Container maxW="5xl" paddingBottom={8}>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 4 }} spacing={5} mt={5} mb={2}>
+        {data.map((job) => (
+          <Box key={job.id} p={5} boxShadow="md" rounded="36px" borderWidth={2}>
+            <Text fontWeight="bold" fontSize="x-large" textAlign={'center'}>
+              {job.text}
+            </Text>
+            <Text textAlign={'center'}>{job.title}</Text>
+          </Box>
+        ))}
+      </SimpleGrid>
+    </Container>
   )
 }
 

@@ -280,14 +280,6 @@ const Home = () => {
       setUserPhone(userPhone)
       setUserCv('')
       setUserCover('')
-
-      console.log('User ID:', userId)
-      console.log('User first name:', userFirstName)
-      console.log('User last name:', userLastName)
-      console.log('User email:', userEmail)
-      console.log('User phone:', userPhone)
-      console.log('User CV:', userCv)
-      console.log('User cover letter:', userCover)
     } catch (error) {
       console.error('Error fetching user data:', error)
     }

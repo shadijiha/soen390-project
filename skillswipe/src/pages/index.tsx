@@ -63,54 +63,52 @@ const login = () => {
   }
 
   return (
-    <>
-      <div data-testid="login-page">
-        <Layout>
-          <Flex height="100vh" alignItems="center" justifyContent="center">
-            <Flex direction="column" background={formBackground} p={12} rounded={25}>
-              <Heading mb={6}>SkillSwipe 🚀</Heading>
-              <Input
-                placeholder="Email"
-                onChange={changeEmail}
-                variant="filled"
-                mb={3}
-                type="email"
-                background={placeholderBackground}
-                data-testid="email"
-              />
-              <Input
-                placeholder="*******"
-                onChange={changePassword}
-                variant="filled"
-                mb={6}
-                type="password"
-                background={placeholderBackground}
-                data-testid="password"
-              />
-              <Button colorScheme="blue" mb={3} onClick={submitForm}>
-                {t('signIn')}
-              </Button>
-              <Center>
-                <GoogleLogin lang={currentLang}></GoogleLogin>
-              </Center>
+    <div data-testid="login-page">
+      <Layout>
+        <Flex height="100vh" alignItems="center" justifyContent="center">
+          <Flex direction="column" background={formBackground} p={12} rounded={25}>
+            <Heading mb={6}>SkillSwipe 🚀</Heading>
+            <Input
+              placeholder="Email"
+              onChange={changeEmail}
+              variant="filled"
+              mb={3}
+              type="email"
+              background={placeholderBackground}
+              data-testid="email"
+            />
+            <Input
+              placeholder="*******"
+              onChange={changePassword}
+              variant="filled"
+              mb={6}
+              type="password"
+              background={placeholderBackground}
+              data-testid="password"
+            />
+            <Button colorScheme="blue" mb={3} onClick={submitForm}>
+              {t('signIn')}
+            </Button>
+            <Center>
+              <GoogleLogin lang={currentLang}></GoogleLogin>
+            </Center>
 
-              <Text textAlign="center">or</Text>
+            <Text textAlign="center">or</Text>
 
-              <Button colorScheme="green" mb={6}>
-                <Link href="/register">Register</Link>
-              </Button>
-              <Button
-                onClick={toggleColorMode}
-                _hover={{ bg: 'transparent' }}
-                bg="transparent"
-              >
-                {toggleTheme}
-              </Button>
-            </Flex>
+            <Button colorScheme="green" mb={6}>
+              <Link href="/register">Register</Link>
+            </Button>
+            <Button
+              onClick={toggleColorMode}
+              _hover={{ bg: 'transparent' }}
+              bg="transparent"
+            >
+              {toggleTheme}
+            </Button>
           </Flex>
-        </Layout>
-      </div>
-    </>
+        </Flex>
+      </Layout>
+    </div>
   )
 }
 

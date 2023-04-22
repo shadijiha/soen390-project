@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-import { viewJob } from '@/pages/api/api'
 import { Heading } from '@chakra-ui/react'
 
 interface TopHeaderProps {
@@ -20,9 +18,8 @@ const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
   return (
     <>
       {data.map((job) => (
-        <>
+        <div key={job.id}>
           <div
-            key={job.id}
             style={{
               marginBottom: '10px',
             }}
@@ -40,7 +37,7 @@ const TopHeader = ({ companyName, jobTitle }: TopHeaderProps) => {
           <Heading fontSize="4xl" mb={10} fontWeight={700}>
             {job.jobTitle}
           </Heading>
-        </>
+        </div>
       ))}
     </>
   )

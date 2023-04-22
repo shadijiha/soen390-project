@@ -116,9 +116,9 @@ const Inbox = () => {
           />
         </HStack>
         {messages[0] ? (
-          messages.map((element: any) => (
+          messages.map((element: any, index: number) => (
             <Flex
-              key={element.id}
+              key={index}
               borderWidth="1px"
               borderRadius="lg"
               p={4}
