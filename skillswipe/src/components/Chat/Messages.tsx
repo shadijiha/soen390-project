@@ -1,4 +1,5 @@
-import { ReportApi } from '@/pages/api/profile_api'
+/* eslint-disable no-var */
+import { ReportMessage } from '@/pages/api/adminApi'
 import {
   Avatar,
   Box,
@@ -12,11 +13,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { FileIcon } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
 import Dialog from '../Dialog'
 
 const Messages = ({ messages, user }) => {
-  const { t } = useTranslation('common')
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [chatId, setChatId] = useState(-1)
@@ -32,14 +31,15 @@ const Messages = ({ messages, user }) => {
   }
 
   const Report = () => {
-    if (localStorage.getItem('jwt') && chatId != -1) {
-      ReportApi(localStorage.getItem('jwt'), { type: 'chat', entity_id: chatId })
+    const token = localStorage.getItem('jwt')
+    if (token && chatId != -1) {
+      ReportMessage(token, chatId)
         .then((response) => {
           toast('Successfully Reported the Message')
           onClose()
         })
         .catch((err) => {
-          toast(err.message)
+          toast(err.response.data.message)
           onClose()
         })
     } else {
@@ -194,7 +194,7 @@ const Messages = ({ messages, user }) => {
                         }}
                         onClick={() => OnClickReport(item.id)}
                       >
-                        {t('Report')}
+                        Report
                       </Text>
                     </Flex>
                     {file.loaded == false ? <Spinner /> : <></>}
@@ -232,7 +232,7 @@ const Messages = ({ messages, user }) => {
                         OnClickReport(item.id)
                       }}
                     >
-                      {t('Report')}
+                      Report
                     </Text>
                   </Flex>
                 </Flex>
