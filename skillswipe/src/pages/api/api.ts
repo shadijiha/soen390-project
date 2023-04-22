@@ -26,10 +26,6 @@ export const changeStatus = async (status: any, token: any) => {
   })
 }
 
-export const googleAuth = async (authtoken: string) => {
-  return axios.post(`${URL}/auth/google/redirect`, { token: authtoken })
-}
-
 // export const changeStatus = async (status: any, token: any) => {
 //   return axios.put(
 //     `${URL}/user/status`,

@@ -1,35 +1,44 @@
-import { ReportApi } from '@/pages/api/profile_api'
+/* eslint-disable no-var */
 import {
   Avatar,
   Box,
+  Button,
   Flex,
+  Heading,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Spinner,
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
-import { FileIcon } from 'react-file-icon'
+import { FileIcon, defaultStyles } from 'react-file-icon'
 import { useSelector } from 'react-redux'
+import Dialog from '../Dialog'
+import { ReportApi } from '@/pages/api/profile_api'
 import { toast } from 'react-toastify'
 import { ReportMessage } from '@/pages/api/adminApi'
-import { useTranslation } from 'next-i18next'
-import Dialog from '../Dialog'
 
 const Messages = ({ messages, user }) => {
-  const { t } = useTranslation('common')
   const User = useSelector((state) => state as any)
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const [chatId, setChatId] = useState(-1)
+  const [chatId,setChatId] = useState(-1)
   const AlwaysScrollToBottom = () => {
     const elementRef = useRef(document.createElement('div'))
     useEffect(() => elementRef.current.scrollIntoView(), [])
     return <div ref={elementRef} />
   }
 
-  const OnClickReport = (id: any) => {
+
+  const OnClickReport = (id : any) => {
     setChatId(id)
-    onOpen()
+    onOpen();
   }
 
   const Report = () =>{
@@ -52,7 +61,7 @@ const Messages = ({ messages, user }) => {
 
   return (
     <>
-      <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} Report={Report} />
+      <Dialog isOpen={isOpen} onOpen={onOpen} onClose={onClose} Report={Report}/>
       <Flex w="100%" h="80%" overflowY="scroll" flexDirection="column" p="3">
         {messages.map((item, index) => {
           var data = false
@@ -196,8 +205,9 @@ const Messages = ({ messages, user }) => {
                           cursor: 'pointer',
                         }}
                         onClick={() => OnClickReport(item.id)}
+                       
                       >
-                        {t('Report')}
+                        Report
                       </Text>
                     </Flex>
                     {file.loaded == false ? <Spinner /> : <></>}
@@ -231,11 +241,9 @@ const Messages = ({ messages, user }) => {
                     {item.message}
                     <Text
                       style={{ fontSize: '10px', color: 'grey', cursor: 'pointer' }}
-                      onClick={() => {
-                        OnClickReport(item.id)
-                      }}
+                      onClick={() => {OnClickReport(item.id)}}
                     >
-                      {t('Report')}
+                      Report
                     </Text>
                   </Flex>
                 </Flex>

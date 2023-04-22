@@ -1,11 +1,13 @@
-import { emailValidator } from '@/Util/Validator'
 import { editPersonalInformation } from '@/pages/api/api'
+import { emailValidator } from '@/Util/Validator'
 import { Stack, Text } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+// eslint-disable-next-line prettier/prettier
+
+import { useTranslation } from 'next-i18next'
 import Information from '../Forms/Information'
 
 const InformationBox = () => {

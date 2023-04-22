@@ -1,3 +1,8 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/img-redundant-alt */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import AwardsBox from '@/components/EditProfile/AwardsBox'
 import CoursesBox from '@/components/EditProfile/CoursesBox'
 import EducationHistoryBox from '@/components/EditProfile/EductationHistoryBox'
@@ -122,7 +127,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, cv: response.data })
         window.location.reload()
-        toast(t('Successfully deleted CV'))
+        toast('Successfully deleted CV')
       })
       .catch((error) => {
         toast(error.message)
@@ -137,7 +142,7 @@ const EditProfile = () => {
         .then((response) => {
           setFile({ ...File, coverLetter: response.data })
           window.location.reload()
-          toast(t('Successfully Updated coverLetter'))
+          toast('Successfully Updated coverLetter')
         })
         .catch((error) => {
           toast(error.message)
@@ -151,7 +156,7 @@ const EditProfile = () => {
       .then((response) => {
         setFile({ ...File, coverLetter: response.data })
         window.location.reload()
-        toast(t('Successfully deleted Cover Letter'))
+        toast('Successfully deleted Cover Letter')
       })
       .catch((error) => {
         toast(error.message)
@@ -163,7 +168,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, coverPic: response.data.coverPic })
-        toast('removeCoverPicture')
+        toast(('removeCoverPicture'))
       })
       .catch((error) => {
         toast(error.message)
@@ -176,7 +181,7 @@ const EditProfile = () => {
       .then((response) => {
         console.log(response)
         setPic({ ...Pic, profilePic: response.data.profilePic })
-        toast('removeProfilePicture')
+        toast(('removeProfilePicture'))
       })
       .catch((error) => {
         toast(error.message)
@@ -296,7 +301,7 @@ const EditProfile = () => {
                   }}
                   // add an onClick handler to delete the profile pic
 
-                  onClick={removeUserProfilepic}
+                  onClick={removeUserProfilepic} 
                 />
               </button>
             ) : null}
@@ -355,6 +360,7 @@ const EditProfile = () => {
                   boxShadow: '0 5px 17px 0px rgba(0, 0, 0, 0.6)',
                 }}
               />
+
             </a>
             {Pic.coverPic ? (
               <button
@@ -391,7 +397,7 @@ const EditProfile = () => {
             }}
           >
             <a onClick={uploadCV}>
-              <Button>{t('Upload CV')}</Button>
+              <Button>Upload CV</Button>
             </a>
             <input
               type="file"
@@ -399,6 +405,8 @@ const EditProfile = () => {
               onChange={uploadCVHandler}
               style={{ display: 'none' }}
             />
+
+           
           </div>
           <div
             style={{
@@ -407,7 +415,7 @@ const EditProfile = () => {
             }}
           >
             <a onClick={uploadCover}>
-              <Button>{t('Upload Cover')}</Button>
+              <Button>Upload Cover</Button>
             </a>
             <input
               type="file"
@@ -422,9 +430,9 @@ const EditProfile = () => {
             }}
           >
             <Button onClick={deleteCVHandler} mr={'5rem'}>
-              {t('Delete CV')}
+              Delete CV
             </Button>
-            <Button onClick={deleteCoverHandler}>{t('Delete Cover')}</Button>
+            <Button onClick={deleteCoverHandler}>Delete Cover</Button>
           </div>
         </div>
         {/* <embed src={`data:application/pdf;base64,${currentUser.auth.coverLetter}`} /> */}
@@ -435,10 +443,10 @@ const EditProfile = () => {
               href={`data:application/pdf;base64,${currentUser.auth.cv}`}
               style={{ marginRight: '6rem' }}
             >
-              {t('Download CV')}
+              Download CV
             </a>
           ) : (
-            <a style={{ marginRight: '4.5rem' }}>{t('No CV uploaded')}</a>
+            <a style={{ marginRight: '4.5rem' }}>No CV uploaded</a>
           )}
 
           {currentUser.auth.coverLetter ? (
@@ -446,10 +454,10 @@ const EditProfile = () => {
               download="Cover Letter"
               href={`data:application/pdf;base64,${currentUser.auth.coverLetter}`}
             >
-              {t('Download cover')}
+              Download cover
             </a>
           ) : (
-            <a style={{ marginRight: '4.5rem' }}>{t('No Cover uploaded')}</a>
+            <a style={{ marginRight: '4.5rem' }}>No Cover uploaded</a>
           )}
         </div>
 

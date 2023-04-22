@@ -23,7 +23,7 @@ const Chat = () => {
   const [messages, setMessages] = useState([{}])
   const [chatUser, setchatUser] = useState({})
   const [numberOfMessages, setnumberOfMessages] = useState(null)
-  const [connectionStatus, setConnectionStatus] = useState(null)
+  const [connectionStatus,setConnectionStatus] = useState(null);
 
   const [Status, setStatus] = useState('offline')
 
@@ -65,18 +65,16 @@ const Chat = () => {
       })
   }
 
-  const loadMessage = (id: any, connected: boolean) => {
+  const loadMessage = (id: any,connected:boolean) => {
     if (localStorage.getItem('jwt')) {
       const token = localStorage.getItem('jwt')
       getConversationById(token, id)
         .then((response) => {
           setMessages(response.data)
-          if (
-            connected == true ||
-            (connected == false && response.data.length > 0)
-          ) {
+          if(connected == true || (connected == false && response.data.length > 0) ){
             setMessages(response.data)
-          } else {
+          }
+          else{
             toast(t('notConnected'))
             router.push('/home')
           }
@@ -98,7 +96,7 @@ const Chat = () => {
             setchatUser(response.data.user)
             setConnectionStatus(response.data.connectionStatus)
             if (response.data.connectionStatus == 'Connected') {
-              loadMessage(router.query.id, true)
+              loadMessage(router.query.id,true);
               getUserStatus(router.query.id, token)
                 .then((reponse) => {
                   console.log(reponse.data)
@@ -109,8 +107,8 @@ const Chat = () => {
                 })
               setchatUser(response.data.user)
             } else {
-              setchatUser(response.data.user)
-              loadMessage(router.query.id, false)
+              setchatUser(response.data.user)            
+              loadMessage(router.query.id,false)
               getUserStatus(router.query.id, token)
                 .then((reponse) => {
                   setStatus(reponse.data)
@@ -189,12 +187,12 @@ const Chat = () => {
               <br />
               <Messages messages={messages} user={chatUser} />
               <Divider />
-
+              
               <Footer
                 handleSendMessage={handleSendMessage}
                 sendMessagefile={sendMessagefile}
                 append={append}
-                connectionStatus={connectionStatus}
+                connectionStatus ={connectionStatus}
               />
             </Flex>
           </Flex>

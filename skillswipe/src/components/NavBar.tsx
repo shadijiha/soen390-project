@@ -1,8 +1,17 @@
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { changeStatus, getPendingRequest } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
-import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
+import {
+  BellIcon,
+  ChevronDownIcon,
+  CloseIcon,
+  HamburgerIcon,
+  SearchIcon,
+} from '@chakra-ui/icons'
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Collapse,
@@ -21,6 +30,7 @@ import {
   useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react'
+import { i18n } from 'next-i18next'
 import NextLink from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -48,6 +58,8 @@ export default function NavBar(props: any) {
   const [messageNotification, setmessageNotification]: any[] = useState([])
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
+  // const [load1,setload1] = useState(true);
+  // const [load2,setload2] = useState(true);
 
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
@@ -69,9 +81,11 @@ export default function NavBar(props: any) {
     const token = localStorage.getItem('jwt')
     if (token) {
       localStorage.removeItem('jwt')
-      changeStatus('offline', token).catch((error) => {
-        toast(error.message)
-      })
+      changeStatus('offline', token)
+        .then((response) => {})
+        .catch((error) => {
+          toast(error.message)
+        })
       toast('Successfully Logged Out')
     }
   }
@@ -548,7 +562,6 @@ export default function NavBar(props: any) {
                   boxShadow: 'md',
                   transform: 'scale(1.05)',
                 }}
-                onClick={logout}
               >
                 {t('SignIn/Logout')}
               </Button>
