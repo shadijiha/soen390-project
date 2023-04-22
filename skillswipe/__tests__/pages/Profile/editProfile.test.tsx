@@ -1,5 +1,5 @@
 import Register from '@/pages/register'
-import { fireEvent, render, screen, waitFor } from '../test-utils'
+import { fireEvent, render, screen, waitFor } from '../../test-utils'
 
 jest.mock('next/router', () => require('next-router-mock'))
 

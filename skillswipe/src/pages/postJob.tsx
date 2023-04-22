@@ -107,6 +107,7 @@ const postJob = () => {
                 {t('createJobListing')}
               </Text>
               <Checkbox
+                data-testid="showForm"
                 defaultChecked={!isFormHidden}
                 onChange={(e) => setFormHidden(!e.target.checked)}
               >
@@ -119,6 +120,7 @@ const postJob = () => {
                 <FormControl id="externalUrl">
                   <FormLabel htmlFor="externalUrl">{t('externalURL')}</FormLabel>
                   <Input
+                    data-testid="externalUrltest"
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
@@ -137,6 +139,7 @@ const postJob = () => {
                 <FormControl id="jobTitle">
                   <FormLabel htmlFor="jobTitle"> {t('positionTitle')}</FormLabel>
                   <Input
+                    data-testid="jobTitle"
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
@@ -154,6 +157,7 @@ const postJob = () => {
                 <FormControl id="companyName">
                   <FormLabel htmlFor="companyName">{t('company')}</FormLabel>
                   <Input
+                    data-testid="companyName"
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
@@ -171,6 +175,7 @@ const postJob = () => {
                 <FormControl id="location">
                   <FormLabel htmlFor="location">{t('location')}</FormLabel>
                   <Input
+                    data-testid="location"
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
@@ -190,6 +195,7 @@ const postJob = () => {
                 <FormControl paddingRight={{ sm: 0, md: 10 }} id="salary">
                   <FormLabel htmlFor="salary">{t('salary')} (/hr)</FormLabel>
                   <Input
+                    data-testid="salary"
                     onChange={(event) =>
                       setJobListing({
                         ...postListing,
@@ -214,7 +220,9 @@ const postJob = () => {
                     }
                   >
                     <HStack spacing="auto">
-                      <Radio value="full-time">{t('fullTime')}</Radio>
+                      <Radio checked value="full-time">
+                        {t('fullTime')}
+                      </Radio>
                       <Radio value="part-time">{t('partTime')}</Radio>
                       <Radio value="contract">{t('contract')}</Radio>
                       <Radio value="other">{t('other')}</Radio>
@@ -239,7 +247,9 @@ const postJob = () => {
                     >
                       <HStack spacing="10%">
                         <Radio value="true">{t('yes')}</Radio>
-                        <Radio value="false">{t('no')}</Radio>
+                        <Radio checked value="false">
+                          {t('no')}
+                        </Radio>
                       </HStack>
                     </RadioGroup>
                   </FormControl>
@@ -259,7 +269,9 @@ const postJob = () => {
                     >
                       <HStack spacing="10%">
                         <Radio value="true">{t('yes')}</Radio>
-                        <Radio value="false">{t('no')}</Radio>
+                        <Radio checked value="false">
+                          {t('no')}
+                        </Radio>
                       </HStack>
                     </RadioGroup>
                   </FormControl>
@@ -283,7 +295,9 @@ const postJob = () => {
                         <Radio value="true" isDisabled>
                           {t('yes')}
                         </Radio>
-                        <Radio value="false">{t('no')}</Radio>
+                        <Radio checked value="false">
+                          {t('no')}
+                        </Radio>
                       </HStack>
                     </RadioGroup>
                   </FormControl>
@@ -306,7 +320,9 @@ const postJob = () => {
                         <Radio value="true" isDisabled>
                           {t('yes')}
                         </Radio>
-                        <Radio value="false">{t('no')}</Radio>
+                        <Radio checked value="false">
+                          {t('no')}
+                        </Radio>
                       </HStack>
                     </RadioGroup>
                   </FormControl>
@@ -315,6 +331,7 @@ const postJob = () => {
                 <FormControl id="startDate">
                   <FormLabel htmlFor="startDate">{t('startDate')}</FormLabel>
                   <Input
+                    data-testid="date"
                     type="date"
                     rounded="100px"
                     id="startDate"
@@ -331,6 +348,7 @@ const postJob = () => {
                 <FormControl id="skills">
                   <FormLabel htmlFor="skills">{t('skillsNeeded')}</FormLabel>
                   <Input
+                    data-testid="skills"
                     onChange={(event) =>
                       setJobListing({ ...postListing, skills: event.target.value })
                     }
@@ -351,6 +369,7 @@ const postJob = () => {
               >
                 <FormLabel htmlFor="jobDescription">{t('jobDescription')}</FormLabel>
                 <Textarea
+                  data-testid="jobDescription"
                   name="jobDescription"
                   id="jobDescription"
                   size="lg"
@@ -366,6 +385,7 @@ const postJob = () => {
               </FormControl>
 
               <Button
+                data-testid="submit"
                 onClick={addListing}
                 size={'lg'}
                 bg="green.300"

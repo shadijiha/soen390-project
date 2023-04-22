@@ -1,5 +1,5 @@
 import Education from '@/components/Profile/education'
-import { render, screen } from '../test-utils'
+import { render, screen } from '../../test-utils'
 
 jest.mock('next/router', () => require('next-router-mock'))
 

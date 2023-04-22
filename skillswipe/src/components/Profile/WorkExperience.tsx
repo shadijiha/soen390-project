@@ -18,7 +18,7 @@ const WorkExperience = ({ experience }: any) => {
   const { t } = useTranslation('common')
 
   return (
-    <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
+    <Container data-testid="workExperience" maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         {t('careerJourney')} 👨🏼‍💻
         <br></br>
