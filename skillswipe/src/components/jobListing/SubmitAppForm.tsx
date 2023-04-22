@@ -15,9 +15,9 @@ import {
   useColorModeValue,
   VStack,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import router from 'next/router'
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { AiOutlineFilePdf } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 
@@ -71,7 +71,7 @@ const SubmitAppForm = () => {
       applyToJob(token, jobId, submitApp)
         .then((res) => {
           if (res.status == 201 || res.status == 200) {
-            toast.success (t('Successfully applied to job. Good luck!'))
+            toast.success(t('Successfully applied to job. Good luck!'))
           } else {
             console.error(t('Error applying to job!'), res.data)
             toast.error(t('Error 1 API error occurred. Please try again later.'))
@@ -235,7 +235,7 @@ const SubmitAppForm = () => {
             <FormLabel>{t('Cover Letter (optional)')}</FormLabel>
             <Textarea
               size="lg"
-              placeholder={t("Paste here")}
+              placeholder={t('Paste here')}
               rounded="15px"
               value={cover}
               onChange={(e) => setCover(e.target.value)}
@@ -263,7 +263,5 @@ const SubmitAppForm = () => {
     </>
   )
 }
-
-
 
 export default SubmitAppForm

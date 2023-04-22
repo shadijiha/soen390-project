@@ -1,26 +1,13 @@
-import Layout from '@/components/Layout'
 import Login from '@/pages/index'
 import '@testing-library/jest-dom'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import React from 'react'
-import { Provider } from 'react-redux'
-import store from '../src/Redux/store'
+import { fireEvent, render, screen, waitFor } from './test-utils'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 describe('Login', () => {
-  const renderLogin = () =>
-    render(
-      <Provider store={store}>
-        {' '}
-        <Layout>
-          <Login />
-        </Layout>
-      </Provider>
-    )
-  // beforeAll(()=>{
-  //     <Layout></Layout>
-  // })
+  const renderLogin = () => render(<Login />)
+
   it('should render login page without crashing', async () => {
     renderLogin()
     await waitFor(() => {
