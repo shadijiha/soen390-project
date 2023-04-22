@@ -15,10 +15,10 @@ import {
   Tr,
   useToast,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import ActionsModal from './actionsModal'
-import { useTranslation } from 'next-i18next'
 
 export const formatDate = (dateString) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -68,7 +68,7 @@ export const ReportedMessages = () => {
       toast({
         position: 'top-right',
         title: 'Error',
-        description: (t('You are not logged in!')),
+        description: t('You are not logged in!'),
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -84,7 +84,7 @@ export const ReportedMessages = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get reported messages! Please contact support")),
+          description: t("Can't get reported messages! Please contact support"),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -99,7 +99,7 @@ export const ReportedMessages = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get resolved messages! Please contact support")),
+          description: t("Can't get resolved messages! Please contact support"),
           status: 'error',
           duration: 9000,
           isClosable: true,

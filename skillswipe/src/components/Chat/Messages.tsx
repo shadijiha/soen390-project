@@ -8,11 +8,11 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import React, { useEffect, useRef, useState } from 'react'
 import { FileIcon } from 'react-file-icon'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-import { useTranslation } from 'next-i18next'
 import Dialog from '../Dialog'
 
 const Messages = ({ messages, user }) => {

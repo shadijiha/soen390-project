@@ -38,9 +38,9 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
-import { useRouter } from 'next/router'
-import React, { useEffect, useState }  from 'react'
 import { useTranslation } from 'next-i18next'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 
 export const formatDate = (dateString) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -92,7 +92,7 @@ export const ReportedPosts = () => {
       toast({
         position: 'top-right',
         title: 'Error',
-        description: (t('You are not logged in!')),
+        description: t('You are not logged in!'),
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -108,7 +108,7 @@ export const ReportedPosts = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get reported posts! Please contact support.")),
+          description: t("Can't get reported posts! Please contact support."),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -123,7 +123,7 @@ export const ReportedPosts = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get resolved posts! Please contact support.")),
+          description: t("Can't get resolved posts! Please contact support."),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -296,14 +296,13 @@ function MessagesModal(props) {
               </Text>
             </Box>
             {type === 'unresolved' && (
-
-            <Box mt="4">
-              <Heading size="md" mb="2">
-                {t('Actions')}:{' '}
-              </Heading>
-              <Alert
+              <Box mt="4">
+                <Heading size="md" mb="2">
+                  {t('Actions')}:{' '}
+                </Heading>
+                <Alert
                   title="Send Warning to User"
-                  message={t("Are you sure you want to send a warning to user?")}
+                  message={t('Are you sure you want to send a warning to user?')}
                   scheme="yellow"
                   action="Send Warning"
                   id={post.id}
@@ -312,7 +311,7 @@ function MessagesModal(props) {
                 />
                 <Alert
                   title="Send Warning to User"
-                  message={t("Are you sure you want to ban user?")}
+                  message={t('Are you sure you want to ban user?')}
                   scheme="red"
                   action="Ban User"
                   id={post.id}
@@ -321,7 +320,7 @@ function MessagesModal(props) {
                 />
                 <Alert
                   title="Mark Post as Safe"
-                  message={t("Are you sure you want ot mark this as safe?")}
+                  message={t('Are you sure you want ot mark this as safe?')}
                   scheme="green"
                   action="Safe"
                   id={post.id}
@@ -381,7 +380,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This post has been marked safe')),
+          description: t('This post has been marked safe'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -394,7 +393,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("An error has occured while marking this post as safe")),
+          description: t('An error has occured while marking this post as safe'),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -409,7 +408,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been warned')),
+          description: t('This user has been warned'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -422,7 +421,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured while warning this user')),
+          description: t('An error has occured while warning this user'),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -437,7 +436,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been banned')),
+          description: t('This user has been banned'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -450,7 +449,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured wile banning this user')),
+          description: t('An error has occured wile banning this user'),
           status: 'success',
           duration: 9000,
           isClosable: true,
