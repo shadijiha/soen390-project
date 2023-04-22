@@ -9,7 +9,6 @@ const NotificationCounter = (props: any) => {
   const [counter, setCounter] = useState(0)
   const currentUser = useSelector((state) => state as any)
   useEffect(() => {
-    console.log(props.Notifications)
     if (props.Notifications) {
       setCounter(props.Notifications)
     }
