@@ -235,11 +235,7 @@ export class UsersService {
         return { user, connectionStatus: 'Unknown' }
       }),
       jobs: await this.jobsRepository.find({
-        where: [
-          { jobTitle: Like(`%${query}%`) },
-          { companyName: Like(`%${query}%`) },
-          { location: Like(`%${query}%`) }
-        ],
+        where: [{ jobTitle: Like(`%${query}%`) }, { companyName: Like(`%${query}%`) }, { location: Like(`%${query}%`) }],
         take: 10
       })
     }
