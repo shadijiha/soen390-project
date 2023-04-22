@@ -1,10 +1,4 @@
-import {
-  ResolvePostBan,
-  ResolvePostSafe,
-  ResolvePostWarn,
-  getReportedPosts,
-  getResolvedPosts,
-} from '@/pages/api/adminApi'
+import { ResolvePostBan, ResolvePostSafe, ResolvePostWarn, getReportedPosts, getResolvedPosts } from '@/pages/api/adminApi'
 import {
   AlertDialog,
   AlertDialogBody,
@@ -19,6 +13,7 @@ import {
   Divider,
   Flex,
   Heading,
+  Image,
   Link,
   Modal,
   ModalBody,
@@ -40,27 +35,26 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState }  from 'react'
-import { useTranslation } from 'next-i18next'
 
 export const formatDate = (dateString) => {
-  const options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  }
+const options: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+}
 
   const date = new Date(dateString)
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
+
 
 export const ReportedPosts = () => {
   const toast = useToast()
   const router = useRouter()
   const [ReportedPosts, setReportedPosts] = useState<any[]>([])
   const [ResolvedPosts, setResolvedPosts] = useState<any[]>([])
-  const { t } = useTranslation('common')
 
   // send request to get reportedPosts
   const getColorScheme = (status) => {
@@ -90,9 +84,9 @@ export const ReportedPosts = () => {
     const token = localStorage.getItem('jwt')
     if (!token) {
       toast({
-        position: 'top-right',
+        position : 'top-right',
         title: 'Error',
-        description: (t('You are not logged in!')),
+        description: 'You are not logged in!',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -106,9 +100,9 @@ export const ReportedPosts = () => {
       })
       .catch(() => {
         toast({
-          position: 'top-right',
+          position : 'top-right',
           title: 'Error',
-          description: (t("Can't get reported posts! Please contact support.")),
+          description: "Can't get reported posts! Please contact support.",
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -121,9 +115,9 @@ export const ReportedPosts = () => {
       })
       .catch(() => {
         toast({
-          position: 'top-right',
+          position : 'top-right',
           title: 'Error',
-          description: (t("Can't get resolved posts! Please contact support.")),
+          description: "Can't get resolved posts! Please contact support.",
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -134,99 +128,105 @@ export const ReportedPosts = () => {
   return (
     <div>
       <Heading size="lg" mb="4">
-        {t('Pending Reported Posts')}
+        Pending Reported Posts
       </Heading>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>{t('User')}</Th>
-              <Th>{t('Post')}</Th>
-              <Th>{t('Date')}</Th>
-              <Th>{t('Status')}</Th>
-              <Th>{t('Actions')}</Th>
+              <Th>User</Th>
+              <Th>Post</Th>
+              <Th>Date</Th>
+              <Th>Status</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
             {ReportedPosts.map((post: any) => (
-              <Tr key={post._id}>
-                <Td>
-                  {' '}
-                  <Flex>
-                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                      <Avatar size="sm" src={post.reportedProfilePic} />
-                      <Box>
-                        <Text size="sm">{post.reportedFullName} </Text>
-                      </Box>
-                    </Flex>
+            <Tr key={post._id}>
+              <Td>
+                {' '}
+                <Flex>
+                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                    <Avatar
+                      size="sm"
+                      src={post.reportedProfilePic}
+                    />
+                    <Box>
+                      <Text size="sm">{post.reportedFullName} </Text>
+                    </Box>
                   </Flex>
-                </Td>
-                <Td>
-                  {post.post.post.length > 50
-                    ? post.post.post.substring(0, 50) + '...'
-                    : post.post.post}
-                </Td>
-                <Td>{formatDate(post.created_at)}</Td>
-                <Td>
-                  <Badge colorScheme={getColorScheme(post.status)}>
-                    {post.status}
-                  </Badge>
-                </Td>
-                <Td color="blue.200">
-                  <MessagesModal
-                    post={post}
-                    type="unresolved"
-                    resolveItem={resolveItem}
-                  />
-                </Td>
-              </Tr>
+                </Flex>
+              </Td>
+              <Td>
+                {post.post.post.length > 50
+                  ? post.post.post.substring(0, 50) + '...'
+                  : post.post.post}
+              </Td>
+              <Td>{formatDate(post.created_at)}</Td>
+              <Td>
+                <Badge colorScheme = {getColorScheme(post.status)}>
+                  {post.status}
+                </Badge>
+              </Td>
+              <Td color="blue.200">
+                <MessagesModal 
+                  post={post}
+                  type = "unresolved"
+                  resolveItem={resolveItem}
+                />
+              </Td>
+            </Tr>
             ))}
           </Tbody>
         </Table>
       </TableContainer>
       <Heading size="lg" mb="4" mt={8}>
-        {t('Resolved Reported Posts')}
+        Resolved Reported Posts
       </Heading>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>{t('User')}</Th>
-              <Th>{t('Post')}</Th>
-              <Th>{t('Date')}</Th>
-              <Th>{t('Status')}</Th>
-              <Th>{t('Actions')}</Th>
+              <Th>User</Th>
+              <Th>Post</Th>
+              <Th>Date</Th>
+              <Th>Status</Th>
+              <Th>Actions</Th>
             </Tr>
           </Thead>
           <Tbody>
             {ResolvedPosts.map((post: any) => (
-              <Tr key={post._id}>
-                <Td>
-                  {' '}
-                  <Flex>
-                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                      <Avatar size="sm" src={post.reportedProfilePic} />
-                      <Box>
-                        <Text size="sm">{post.reportedFullName} </Text>
-                      </Box>
-                    </Flex>
+            <Tr key={post._id}>
+              <Td>
+                {' '}
+                <Flex>
+                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                    <Avatar
+                      size="sm"
+                      src={post.reportedProfilePic}
+                    />
+                    <Box>
+                      <Text size="sm">{post.reportedFullName} </Text>
+                    </Box>
                   </Flex>
-                </Td>
-                <Td>
-                  {post.post.post.length > 50
-                    ? post.post.post.substring(0, 50) + '...'
-                    : post.post.post}
-                </Td>
-                <Td> {formatDate(post.created_at)}</Td>
-                <Td>
-                  <Badge colorScheme={getColorScheme(post.status)}>
-                    {post.status}
-                  </Badge>
-                </Td>
-                <Td color="blue.200">
-                  <MessagesModal post={post} type="resolved" />
-                </Td>
-              </Tr>
+                </Flex>
+              </Td>
+              <Td> 
+                {post.post.post.length > 50
+                  ? post.post.post.substring(0, 50) + '...'
+                  : post.post.post}
+              </Td>
+              <Td> {formatDate(post.created_at)}</Td>
+              <Td>
+                <Badge colorScheme = {getColorScheme(post.status)}>
+                  {post.status}
+                </Badge>
+              </Td>
+              <Td color="blue.200">
+                <MessagesModal post = {post} type = "resolved"/>
+              </Td>
+            </Tr>
             ))}
           </Tbody>
         </Table>
@@ -238,30 +238,34 @@ export const ReportedPosts = () => {
 function MessagesModal(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { post, type, resolveItem } = props
-  const { t } = useTranslation()
   return (
     <>
-      <Link onClick={onOpen}>{t('View')}</Link>
+      <Link onClick={onOpen}>View</Link>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Heading size="lg">{t('Reported Post')}</Heading>
+            <Heading size="lg">Reported Post</Heading>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box mb="2">
               <Heading size="md" mb="2">
-                {t('Report Owner')}:{' '}
+                Report Owner:{' '}
               </Heading>
               <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                  <Avatar size="sm" src={post.reporter?.profilePic} />
+                  <Avatar
+                    size="sm"
+                    src= {post.reporter?.profilePic}
+                  />
                   <Box>
                     <Text size="sm">
                       {' '}
-                      {post.reporter?.firstName + ' ' + post.reporter?.lastName}
+                      {post.reporter?.firstName + 
+                      ' ' + 
+                      post.reporter?.lastName}
                     </Text>
                   </Box>
                 </Flex>
@@ -270,7 +274,7 @@ function MessagesModal(props) {
             <Divider orientation="horizontal" />
             <Box mt="2">
               <Heading size="md" mb="2">
-                {t('Reported User')}:{' '}
+                Reported User:{' '}
               </Heading>
               <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -283,27 +287,28 @@ function MessagesModal(props) {
             </Box>
             <Box mt="4">
               <Heading size="md" mb="2">
-                {t('Post')}:{' '}
+                Post:{' '}
               </Heading>
-              <Text size="sm">{post.post.post}</Text>
+              <Text size="sm">
+                {post.post.post}  
+              </Text>
             </Box>
             <Box mt="4">
               <Text size="sm">
                 <Text fontSize="20px" fontWeight="bold" mb="2" display="inline">
-                  {t('Date')}:{' '}
+                  Date:{' '}
                 </Text>
                 {formatDate(post.created_at)}
               </Text>
             </Box>
             {type === 'unresolved' && (
-
             <Box mt="4">
               <Heading size="md" mb="2">
-                {t('Actions')}:{' '}
+                Actions:{' '}
               </Heading>
               <Alert
                   title="Send Warning to User"
-                  message={t("Are you sure you want to send a warning to user?")}
+                  message="Are you sure you want to send a warning to user?"
                   scheme="yellow"
                   action="Send Warning"
                   id={post.id}
@@ -312,7 +317,7 @@ function MessagesModal(props) {
                 />
                 <Alert
                   title="Send Warning to User"
-                  message={t("Are you sure you want to ban user?")}
+                  message="Are you sure you want to ban user?"
                   scheme="red"
                   action="Ban User"
                   id={post.id}
@@ -321,19 +326,19 @@ function MessagesModal(props) {
                 />
                 <Alert
                   title="Mark Post as Safe"
-                  message={t("Are you sure you want ot mark this as safe?")}
+                  message="Are you sure you want ot mark this as safe?"
                   scheme="green"
                   action="Safe"
                   id={post.id}
                   close={onClose}
                   resolveItem={resolveItem}
                 />
-              </Box>
+            </Box>
             )}
           </ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onClose}>
-              {t('close')}
+              Close
             </Button>
           </ModalFooter>
         </ModalContent>
@@ -351,7 +356,6 @@ export default function Alert(props: any) {
   const router = useRouter()
   const [token, setToken] = useState('')
   const toast = useToast()
-  const { t } = useTranslation()
 
   useEffect(() => {
     const token = localStorage.getItem('jwt')
@@ -375,13 +379,13 @@ export default function Alert(props: any) {
   }
 
   const resolveSafe = () => {
-    ResolvePostSafe(token, id)
+    ResolvePostSafe (token, id)
       .then((res) => {
         resolveItem(id, 'safe')
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This post has been marked safe')),
+          description: 'This post has been marked safe',
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -394,7 +398,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("An error has occured while marking this post as safe")),
+          description: "An error has occured while marking this message as 'safe'",
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -409,7 +413,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been warned')),
+          description: 'This user has been warned',
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -422,7 +426,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured while warning this user')),
+          description: 'An error has occured while warning this user',
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -437,7 +441,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been banned')),
+          description: 'This user has been banned',
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -450,7 +454,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured wile banning this user')),
+          description: 'An error has occured wile banning this user',
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -462,6 +466,8 @@ export default function Alert(props: any) {
     resolveItem(id)
     setIsLoading(false)
   }
+
+
 
   return (
     <>
@@ -480,14 +486,9 @@ export default function Alert(props: any) {
 
             <AlertDialogFooter>
               <Button ref={cancelRef} onClick={onClose}>
-                {t('cancel')}
+                Cancel
               </Button>
-              <Button
-                colorScheme={scheme}
-                onClick={takeAction}
-                ml={3}
-                isLoading={isLoading}
-              >
+              <Button colorScheme={scheme} onClick={takeAction} ml={3} isLoading={isLoading}>
                 {action}
               </Button>
             </AlertDialogFooter>

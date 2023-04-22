@@ -3,8 +3,6 @@ import { getRepositoryToken } from "@nestjs/typeorm";
 import { AuthService } from "./auth.service";
 import { User } from "../models/user.entity";
 import { JwtService } from "@nestjs/jwt";
-import { GoogleStrategy } from './google.strategy';
-import { UsersService } from '../users/users.service';
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -34,9 +32,7 @@ describe("AuthService", () => {
         };
       else throw new Error();
     }),
-  }
-
-
+  };
 
   let mockJwtService = {
     sign: jest.fn(() => "ssdsds"),
@@ -47,8 +43,6 @@ describe("AuthService", () => {
       providers: [
         AuthService,
         JwtService,
-        UsersService,
-        GoogleStrategy,
         {
           provide: getRepositoryToken(User),
           useValue: mockUsersRepository,
@@ -57,8 +51,6 @@ describe("AuthService", () => {
     })
       .overrideProvider(JwtService)
       .useValue(mockJwtService)
-      .overrideProvider(UsersService)
-      .useValue({})
       .compile();
 
     service = module.get<AuthService>(AuthService);

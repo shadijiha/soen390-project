@@ -38,10 +38,10 @@ export class UsersService {
     return await this.usersRepository.find({ withDeleted: true })
   }
 
-  /**
-  * Returns an array of users with ther relations
-  * @returns An array of users with all their relations.
-  */
+ /**
+ * Returns an array of users with ther relations
+ * @returns An array of users with all their relations.
+ */
   async findAllWithRelations (): Promise<User[]> {
     return await this.usersRepository.find({
       relations: [
@@ -115,7 +115,7 @@ export class UsersService {
    */
   public async create (
     body: Auth.RegisterRequest
-  ): Promise<Partial<User>> {
+  ): Promise<Record<string, any>> {
     const user = new User()
     user.email = body.email
     user.password = await argon2.hash(body.password)
@@ -123,7 +123,8 @@ export class UsersService {
     user.lastName = body.lastName
     user.gender = body.gender
 
-    const { password, ...userNoPass }: Partial<User> = await this.usersRepository.save(user)
+    const { password, ...userNoPass }: Record<string, any> =
+      await this.usersRepository.save(user)
     return userNoPass
   }
 

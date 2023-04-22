@@ -4,7 +4,6 @@ import NextLink from 'next/link'
 import Pusher from 'pusher-js'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-
 const NotificationCounter = (props: any) => {
   const [counter, setCounter] = useState(0)
   const currentUser = useSelector((state) => state as any)

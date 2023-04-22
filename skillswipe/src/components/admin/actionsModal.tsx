@@ -16,7 +16,6 @@ import {
   Text,
   useDisclosure,
 } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
 import React from 'react'
 import Alert from './alert'
 import { formatDate } from './messages'
@@ -24,22 +23,21 @@ import { formatDate } from './messages'
 function ActionsModal(props) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { message, type, resolveItem } = props
-  const { t } = useTranslation('common')
   return (
     <>
-      <Link onClick={onOpen}>{t('View')}</Link>
+      <Link onClick={onOpen}>View</Link>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
-            <Heading size="lg">{t('Reported Message')}</Heading>
+            <Heading size="lg">Reported Message</Heading>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Box mb="2">
               <Heading size="md" mb="2">
-                {t('Report Owner')}:{' '}
+                Report Owner:{' '}
               </Heading>
               <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -58,7 +56,7 @@ function ActionsModal(props) {
             <Divider orientation="horizontal" />
             <Box mt="2">
               <Heading size="md" mb="2">
-                {t('Reported User')}:{' '}
+                Reported User:{' '}
               </Heading>
               <Flex>
                 <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -71,14 +69,14 @@ function ActionsModal(props) {
             </Box>
             <Box mt="4">
               <Heading size="md" mb="2">
-                {t('Message')}:{' '}
+                Message:{' '}
               </Heading>
               <Text size="sm">{message.message.message}</Text>
             </Box>
             <Box mt="4">
               <Text size="sm">
                 <Text fontSize="20px" fontWeight="bold" mb="2" display="inline">
-                  {t('Date')}:{' '}
+                  Date:{' '}
                 </Text>
                 {formatDate(message.created_at)}
               </Text>
@@ -86,11 +84,11 @@ function ActionsModal(props) {
             {type === 'unresolved' && (
               <Box mt="4">
                 <Heading size="md" mb="2">
-                  {t('Actions')}:{' '}
+                  Actions:{' '}
                 </Heading>
                 <Alert
                   title="Send Warning to User"
-                  message={t('Are you sure you want to send a warning to user?')}
+                  message="Are you sure you want to send a warning to user?"
                   scheme="yellow"
                   action="Send Warning"
                   id={message.id}
@@ -99,7 +97,7 @@ function ActionsModal(props) {
                 />
                 <Alert
                   title="Send Warning to User"
-                  message={t('Are you sure you want to ban user?')}
+                  message="Are you sure you want to ban user?"
                   scheme="red"
                   action="Ban User"
                   id={message.id}
@@ -108,7 +106,7 @@ function ActionsModal(props) {
                 />
                 <Alert
                   title="Mark Message as Safe"
-                  message={t('Are you sure you want ot mark this as safe?')}
+                  message="Are you sure you want ot mark this as safe?"
                   scheme="green"
                   action="Safe"
                   id={message.id}
@@ -120,7 +118,7 @@ function ActionsModal(props) {
           </ModalBody>
           <ModalFooter>
             <Button variant="ghost" mr={3} onClick={onClose}>
-              {t('close')}
+              Close
             </Button>
           </ModalFooter>
         </ModalContent>

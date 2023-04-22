@@ -3,6 +3,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Flex,
   Heading,
   Link,
@@ -20,13 +21,11 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Alert from './alert'
 import { formatDate } from './messages'
-import { useTranslation } from 'next-i18next'
 
 export const ListOfUsers = () => {
   const toast = useToast()
   const router = useRouter()
   const [users, setUsers] = useState<any[]>([])
-  const { t } = useTranslation('common')
 
   const unbanUser = (id) => {
     const user: any = users.find((user: any) => user.id === id)
@@ -41,7 +40,7 @@ export const ListOfUsers = () => {
       toast({
         position: 'top-right',
         title: 'Error',
-        description: (t('You are not logged in!')),
+        description: 'You are not logged in!',
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -57,7 +56,7 @@ export const ListOfUsers = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get users! Please contact support")),
+          description: "Can't get users! Please contact support",
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -67,17 +66,17 @@ export const ListOfUsers = () => {
   return (
     <div>
       <Heading size="lg" mb="4">
-        {t('List of Users')}
+        List of Users
       </Heading>
       <TableContainer>
         <Table variant="simple">
           <Thead>
             <Tr>
-              <Th>{t('User')}</Th>
-              <Th>{t('Email')}</Th>
-              <Th>{t('Since')}</Th>
-              <Th>{t('Status')}</Th>
-              <Th>{t('Action')}</Th>
+              <Th>User</Th>
+              <Th>Email</Th>
+              <Th>Since</Th>
+              <Th>Status</Th>
+              <Th>Action</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -102,9 +101,9 @@ export const ListOfUsers = () => {
                 <Td>{formatDate(user.created_at)}</Td>
                 <Td>
                   {user.deleted_at ? (
-                    <Badge colorScheme="red">{t('Banned')}</Badge>
+                    <Badge colorScheme="red">Banned</Badge>
                   ) : (
-                    <Badge colorScheme="green">{t('Active')}</Badge>
+                    <Badge colorScheme="green">Active</Badge>
                   )}
                 </Td>
                 <Td color="blue.200">
@@ -114,7 +113,7 @@ export const ListOfUsers = () => {
                         <Alert
                           title="Unban User"
                           message={
-                            (t('Are you sure you want to send unban ')) +
+                            'Are you sure you want to send unban ' +
                             user.firstName +
                             ' ' +
                             user.lastName +
@@ -130,7 +129,7 @@ export const ListOfUsers = () => {
                   ) : (
                     <Text color="blue.200">
                       <Link href={'/profile/' + user.id} isExternal>
-                        {t('Visit Profile')}
+                        Visit Profile
                       </Link>
                     </Text>
                   )}

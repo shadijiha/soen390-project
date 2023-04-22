@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import JobDescription from '@/components/jobListing/JobDescription'
@@ -5,7 +6,7 @@ import JobInfoBoxes from '@/components/jobListing/JobInfoBoxes'
 import SkillsListing from '@/components/jobListing/SkillsListing'
 import SubmitAppForm from '@/components/jobListing/SubmitAppForm'
 import TopHeader from '@/components/jobListing/TopHeader'
-import { Button, Container, Divider, Flex, Stack } from '@chakra-ui/react'
+import { Button, Checkbox, Container, Divider, Flex, Stack } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
@@ -124,7 +125,7 @@ const jobListing = () => {
                       )
                     }}
                   >
-                    {t('View Job')}
+                    View Job
                   </Button>
                 )}
               </div>

@@ -1,3 +1,11 @@
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
@@ -17,6 +25,7 @@ import {
   ListItem,
   Modal,
   ModalBody,
+  ModalCloseButton,
   ModalContent,
   ModalFooter,
   ModalHeader,
@@ -39,7 +48,6 @@ import {
   getOpenJobs,
   getPosts,
 } from './api/api'
-
 interface JobAttributes {
   id: number
   jobTitle: ''
@@ -446,7 +454,7 @@ const Home = () => {
                       fontWeight: '300',
                     }}
                   >
-                    {t('Have something on your')} 🧠
+                    Have something on your 🧠?
                   </ModalHeader>
 
                   <ModalBody>
@@ -472,7 +480,7 @@ const Home = () => {
                             }}
                             style={{ cursor: 'pointer' }}
                           >
-                            {t('Click to upload Picture')}
+                            Click to upload Picture
                           </h1>
                         )}
 
@@ -480,7 +488,7 @@ const Home = () => {
                       </Center>
                     </Box>
                     <TextareaAutosize
-                      placeholder={t('Type anything...')}
+                      placeholder={'Type anything...'}
                       onChange={handlepost}
                       id="creat-box"
                       minRows={2}
@@ -514,10 +522,10 @@ const Home = () => {
                       onClick={createPostHandler}
                       borderRadius="50px"
                     >
-                      {t('Post')}
+                      Post
                     </Button>
                     <Button variant="ghost" onClick={onClose}>
-                      {t('Cancel')}
+                      Cancel
                     </Button>
                   </ModalFooter>
                 </ModalContent>
@@ -538,16 +546,17 @@ const Home = () => {
                   display={'flex'}
                 >
                   <ModalHeader fontSize="lg" fontWeight="bold">
-                    {t('Delete Post')}
+                    Delete Post
                   </ModalHeader>
 
                   <ModalBody>
-                    {t('Are you sure you want to delete this post? This action cannot be undone.')}
+                    Are you sure you want to delete this post? This action cannot be
+                    undone.
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={() => setIsConfirmOpen(false)}>{t('Cancel')}</Button>
+                    <Button onClick={() => setIsConfirmOpen(false)}>Cancel</Button>
                     <Button colorScheme="red" onClick={handlePostDelete} ml={3}>
-                      {t('delete')}
+                      Delete
                     </Button>
                   </ModalFooter>
                 </ModalContent>

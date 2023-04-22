@@ -11,7 +11,6 @@ import { UsersService } from '../users/users.service'
 import { AuthController } from './auth.controller'
 import { AuthService } from './auth.service'
 import { JwtStrategy } from './jwt.strategy'
-import { GoogleStrategy } from './google.strategy'
 
 @Module({
   imports: [
@@ -30,6 +29,6 @@ import { GoogleStrategy } from './google.strategy'
     TypeOrmModule.forFeature([User])
   ],
   controllers: [AuthController],
-  providers: [AuthService, UsersService, GoogleStrategy, JwtStrategy, ConnectionsService, PusherService]
+  providers: [AuthService, UsersService, JwtStrategy, ConnectionsService, PusherService]
 })
-export class AuthModule { }
+export class AuthModule {}

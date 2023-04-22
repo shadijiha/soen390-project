@@ -1,9 +1,11 @@
 import { AddIcon } from '@chakra-ui/icons'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.css'
+// eslint-disable-next-line prettier/prettier
+import { useTranslation } from 'next-i18next'
+
 import Awards from '../Forms/Awards'
 
 type Awards = {
