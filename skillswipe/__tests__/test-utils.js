@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout'
+import { ChakraProvider } from '@chakra-ui/react'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import { render } from '@testing-library/react'
 import { Provider } from 'react-redux'
@@ -9,8 +10,9 @@ const Providers = ({ children }) => {
   return (
     <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? ''}>
       <Provider store={store}>
-        {' '}
-        <Layout>{children}</Layout>
+        <ChakraProvider>
+          <Layout>{children}</Layout>
+        </ChakraProvider>
       </Provider>
     </GoogleOAuthProvider>
   )
