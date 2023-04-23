@@ -90,18 +90,13 @@ const login = () => {
               <Button colorScheme="blue" mb={3} onClick={submitForm}>
                 {t('signIn')}
               </Button>
-              {/* Google */}
-              <Button
-                mb={6}
-                w={'full'}
-                variant={'outline'}
-                backgroundColor={googleBackground}
-                leftIcon={<FcGoogle />}
-              >
-                <Center>
-                  <Text>{t('googleSignIn')}</Text>
-                </Center>
-              </Button>
+              {/* Google Login*/}
+              <Center>
+                <GoogleLogin lang={currentLang}></GoogleLogin>
+              </Center>
+
+              <Text textAlign="center">or</Text>
+
               <Button colorScheme="green" mb={6}>
                 <Link href="/register">Register</Link>
               </Button>

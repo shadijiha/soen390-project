@@ -29,13 +29,10 @@ import {
 import router from 'next/router'
 import React, { Fragment, useEffect, useState } from 'react'
 // Here we have used react-icons package for the icons
-
 import { useTranslation } from 'next-i18next'
-
 import { BsFilter } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { deleteJobListing, getJobApplicants, getOpenJobs } from './api/api'
 
@@ -432,7 +429,7 @@ const myListings = () => {
                           paddingTop: '0.5em',
                         }}
                       >
-                        💼 ‎ {t('jobType')}: {}
+                        💼 ‎ {t('jobType')}: { }
                         {job.jobType.charAt(0).toUpperCase() + job.jobType.slice(1)}
                       </chakra.p>
                       <chakra.p
@@ -443,7 +440,7 @@ const myListings = () => {
                           paddingTop: '0.5em',
                         }}
                       >
-                        ✅ ‎ {t('numberOfApplications')}: {}
+                        ✅ ‎ {t('numberOfApplications')}: { }
                         <button onClick={() => handleApplicationsClick(job.id)}>
                           <chakra.p
                             color={useColorModeValue('blue.600', 'blue.300')}
