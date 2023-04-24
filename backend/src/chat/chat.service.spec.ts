@@ -9,18 +9,17 @@ import { Readable } from "typeorm/platform/PlatformTools";
 import { User } from "../models/user.entity";
 import { ShadoCloudClient } from "shado-cloud-sdk";
 
+
 describe("ChatService", () => {
   let service: ChatService;
   let messageRepository: Repository<Message>;
   let pusherService: PusherService;
   let fileRepository: Repository<UploadedFileDB>;
 
-//   jest.mock("./shado-cloud-sdk");
-  const cloud = new ShadoCloudClient("email", "password");
-  const mockLogin = jest.fn().mockReturnValue(() => {
-    return;
-  }); // create a mock implementation that always resolves
-  cloud.auth.login = mockLogin;
+  const mockCloud = {
+    auth: { login: jest.fn() },
+    upload: jest.fn(),
+  } as unknown as ShadoCloudClient;
 
   const mockMessageRepository = {
     find: jest.fn(() => []),
@@ -48,6 +47,7 @@ describe("ChatService", () => {
           useValue: mockFileRepository,
         },
         { provide: PusherService, useValue: mockPusherService },
+        { provide: ShadoCloudClient, useValue: mockCloud },
       ],
     }).compile();
 

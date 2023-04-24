@@ -11,14 +11,15 @@ import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class ChatService {
-  private readonly cloud: ShadoCloudClient
+
 
   constructor (
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
     @InjectRepository(UploadedFileDB)
     private readonly fileRepository: Repository<UploadedFileDB>,
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
+    private readonly cloud: ShadoCloudClient
   ) {
     this.cloud = new ShadoCloudClient(
       process.env.SHADO_CLOUD_EMAIL ?? 'unset',
