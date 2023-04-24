@@ -1,3 +1,8 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import styles from '@/styles/modal.module.css'
@@ -604,10 +609,14 @@ const Home = () => {
                   </ModalHeader>
 
                   <ModalBody>
-                    {t('Are you sure you want to delete this post? This action cannot be undone.')}
+                    {t(
+                      'Are you sure you want to delete this post? This action cannot be undone.'
+                    )}
                   </ModalBody>
                   <ModalFooter>
-                    <Button onClick={() => setIsConfirmOpen(false)}>{t('Cancel')}</Button>
+                    <Button onClick={() => setIsConfirmOpen(false)}>
+                      {t('Cancel')}
+                    </Button>
                     <Button colorScheme="red" onClick={handlePostDelete} ml={3}>
                       {t('delete')}
                     </Button>

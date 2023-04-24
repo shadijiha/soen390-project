@@ -1,20 +1,25 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-no-undef */
 import {
   Avatar,
   Badge,
   Box,
   Button,
+  Center,
+  Divider,
   Flex,
-  Heading,
   HStack,
+  Heading,
+  Icon,
   Link,
   Spacer,
   Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
@@ -28,13 +33,14 @@ import {
   acceptRequest,
   getPendingRequest,
   getUserById,
-  jobNotificationApi,
-  readJobNotifications,
   removeConnection,
   sendRequest,
 } from './api/api'
-import { getAllConversation, getConversationById } from './api/chat'
 import { getSuggestedUsers } from './api/profile_api'
+
+import { px } from 'framer-motion'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getAllConversation, getConversationById } from './api/chat'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [pendingConnections, setPendingConnections] = useState([
@@ -42,20 +48,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   ])
   const [messageNotification, setmessageNotification] = useState([])
   const [suggestedFriends, setSuggestedFriends] = useState([])
-  const [jobNotification, setJobNotification] = useState([
-    {
-      id: 64,
-      type: '',
-      text: 'A new job by hdwgjhxgdw, Job noti test, has been posted that matches your skills: Java',
-      photo: null,
-      link: '/jobId/66',
-      title: null,
-      read: false,
-      created_at: '2023-04-20T04:26:54.724Z',
-      updated_at: '2023-04-20T04:26:54.724Z',
-      deleted_at: null,
-    },
-  ])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading, setloading] = useState(true)
@@ -87,7 +79,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     getPendingConnections()
     getMessage()
     getSuggestedFriends()
-    getJobNotifications()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -100,22 +91,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     channel.bind('message-notification', function (data) {
       getMessage()
     })
-    channel.bind('newJob', function (data) {
-      getJobNotifications()
-    })
   }, [currentUser])
 
-  const getJobNotifications = () => {
-    const token = localStorage.getItem('jwt')
-    jobNotificationApi(token)
-      .then((res) => {
-        // console.log(res)
-        setJobNotification(res.data)
-      })
-      .catch((err) => {
-        toast.error(err)
-      })
-  }
   const getPendingConnections = () => {
     if (typeof localStorage !== 'undefined') {
       const token = localStorage.getItem('jwt')
@@ -300,17 +277,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         })
     }
   }
-  const readNotification = (id) => {
-    const token = localStorage.getItem('jwt')
-    getSuggestedUsers(token)
-    readJobNotifications(token, id)
-      .then((res: any) => {
-        toast(res)
-      })
-      .catch((err) => {
-        toast.error(err)
-      })
-  }
 
   const viewUsers = () => {
     getSuggestedFriends()
@@ -324,10 +290,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const handleImageLoad = () => {
     console.log('Logo image loaded successfully')
   }
-  const handleJobNotification = (job) => {
-    readNotification(job)
-    router.push(`/jobListing/${job}`)
-  }
 
   return (
     <>
@@ -336,8 +298,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length +
-            jobNotification.length
+            suggestedFriends.length
           }
           addRequest={addRequest}
         ></NavBar>
@@ -460,7 +421,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               ) : (
                 <Text>{t('noNotifications')}</Text>
               )}
-
+              <br></br>
+              <Divider />
               <Box py="4">
                 <Heading as="h1" size="lg" mb={8}>
                   {t('People you might know')}
@@ -478,8 +440,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                             : 'gray.700'
                         }
                         boxShadow={'2xl'}
-                        rounded={'lg'}
-                        p={3}
+                        borderRadius={'20px'}
+                        borderWidth={'3px'}
+                        borderColor={'white.900'}
+                        p={10}
                         mb={8}
                         mx={6}
                         textAlign={'center'}
@@ -493,6 +457,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                           }
                           mb={4}
                           pos={'relative'}
+                          boxShadow={'2xl'}
                         />
                         <NextLink href={`profile/${friend.id}`}>
                           <Heading fontSize={'2xl'} fontFamily={'body'}>
@@ -546,7 +511,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                             : 'Education not specified'}
                         </Text>
 
-                        <Stack mt={8} direction={'row'} spacing={4}>
+                        <Stack mt={8} direction={'row'} align={'center'}>
                           {Status.Requested == true ? (
                             <Button
                               flex={1}
@@ -557,7 +522,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                               onClick={() => Reject(friend.id)}
                             >
@@ -573,15 +537,13 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                               style={{
                                 color: buttonColors,
                                 borderColor: buttonColors,
+                                borderRadius: '100em',
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                             >
-                              <span>
-                                <span> {t('connect')}</span>
-                              </span>
+                              <span>{t('connect')}</span>
                             </Button>
                           )}
                         </Stack>
@@ -593,47 +555,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 </Flex>
               </Box>
             </Box>
-
-            <Heading as="h1" size="lg" mb={8}>
-              {t('Jobs for you')}
-            </Heading>
-            {jobNotification.length > 0
-              ? jobNotification.map((job: any) => (
-                  <Flex
-                    key={job.id}
-                    borderWidth="1px"
-                    borderRadius="lg"
-                    p={4}
-                    mb={4}
-                    display="flex"
-                    alignItems="center"
-                  >
-                    <Link onClick={() => handleJobNotification(job.id)}>
-                      <Flex>
-                        <Box>
-                          <Heading as="h2" size="md" mb={2}>
-                            <Badge ml="1" colorScheme="green">
-                              {t('new')}
-                            </Badge>
-                          </Heading>
-                          <Text mb={2}>{job.text}</Text>
-                        </Box>
-                      </Flex>
-                    </Link>
-                    <Spacer />
-                    <Box>
-                      <HStack>
-                        <Button
-                          colorScheme="twitter"
-                          onClick={() => handleJobNotification(job.id)}
-                        >
-                          {t('Apply')}
-                        </Button>
-                      </HStack>
-                    </Box>
-                  </Flex>
-                ))
-              : null}
           </Box>
         </Flex>
       </Layout>

@@ -384,3 +384,15 @@ export const readJobNotifications = async (token: any, id: any) => {
     },
   })
 }
+
+export const getJobApplicants = async (token: any) => {
+  return axios
+    .get(`${URL}/jobs/my/applications`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .catch((err) => {
+      return { status: 400, data: err.response.data }
+    })
+}
