@@ -11,11 +11,11 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiBearerAuth, ApiConsumes, ApiParam, ApiTags } from '@nestjs/swagger'
 import type Pusher from 'pusher'
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
-import { type Message } from 'src/models/message.entity'
-import { User } from 'src/models/user.entity'
-import { UsersService } from 'src/users/users.service'
-import { ApiFile, AuthUser, BearerPayload } from 'src/util/util'
+import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { type Message } from '../models/message.entity'
+import { User } from '../models/user.entity'
+import { UsersService } from '../users/users.service'
+import { ApiFile, AuthUser, BearerPayload } from '../util/util'
 import { ChatService } from './chat.service'
 import { Chat } from './chat.types'
 
@@ -27,7 +27,7 @@ export class ChatController {
   constructor (
     private readonly chatService: ChatService,
     private readonly userService: UsersService
-  ) {}
+  ) { }
 
   // get all conversations for a user
   @Get('allconversations')
@@ -43,7 +43,7 @@ export class ChatController {
           lastMessage: e.lastMessage
         })
       } catch (err) {
-      // User was banned maybe?
+        // User was banned maybe?
         const user = new User()
         user.id = e.userId
         user.firstName = 'Deleted'
