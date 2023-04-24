@@ -19,6 +19,7 @@ import { useState } from 'react'
 import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import GoogleLogin from '../components/GoogleLogin'
 import { loginApi } from './api/api'
 
 const login = () => {
