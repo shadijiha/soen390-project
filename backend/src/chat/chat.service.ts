@@ -11,8 +11,6 @@ import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class ChatService {
-
-
   constructor (
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
