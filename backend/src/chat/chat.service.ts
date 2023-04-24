@@ -11,27 +11,27 @@ import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class ChatService {
+  private readonly cloud: ShadoCloudClient
+
   constructor (
     @InjectRepository(Message)
     private readonly messageRepository: Repository<Message>,
     @InjectRepository(UploadedFileDB)
     private readonly fileRepository: Repository<UploadedFileDB>,
-    private readonly pusherService: PusherService,
-    private readonly cloud: ShadoCloudClient
+    private readonly pusherService: PusherService
   ) {
     this.cloud = new ShadoCloudClient(
       process.env.SHADO_CLOUD_EMAIL ?? 'unset',
       process.env.SHADO_CLOUD_PASSWORD ?? 'unset'
-    );
-    (async () => {
-      try {
-        await this.cloud.auth.login()
-      } catch (err) {
-        console.log(
-          "Unable to login to Shado Cloud. Won't be able to upload files. Error: ",
-          err
-        )
-      }
+    )
+    this.cloud.auth.login().catch(() => {
+      // throw new Error(
+      //   "Unable to login to Shado Cloud. Won't be able to upload files. Error: " +
+      // 		JSON.stringify(err)
+      // )
+      console.log(
+        "Unable to login to Shado Cloud. Won't be able to upload files. Error: "
+      )
     })
   }
 
