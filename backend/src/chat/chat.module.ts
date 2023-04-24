@@ -8,10 +8,11 @@ import { ChatController } from './chat.controller'
 import { ChatService } from './chat.service'
 import { UploadedFileDB } from '../models/file.entity'
 import { PusherService } from 'src/util/pusher/pusher.service'
+import { ShadoCloudClient } from 'shado-cloud-sdk'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Message, User, Job, UploadedFileDB])],
   controllers: [ChatController],
-  providers: [ChatService, UsersService, PusherService]
+  providers: [ChatService, UsersService, PusherService, ShadoCloudClient]
 })
 export class ChatModule {}

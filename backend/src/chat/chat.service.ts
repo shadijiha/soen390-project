@@ -22,15 +22,16 @@ export class ChatService {
     this.cloud = new ShadoCloudClient(
       process.env.SHADO_CLOUD_EMAIL ?? 'unset',
       process.env.SHADO_CLOUD_PASSWORD ?? 'unset'
-    )
-    this.cloud.auth.login().catch(() => {
-      // throw new Error(
-      //   "Unable to login to Shado Cloud. Won't be able to upload files. Error: " +
-      // 		JSON.stringify(err)
-      // )
-      console.log(
-        "Unable to login to Shado Cloud. Won't be able to upload files. Error: "
-      )
+    );
+    (async () => {
+      try {
+        await this.cloud.auth.login()
+      } catch (err) {
+        console.log(
+          "Unable to login to Shado Cloud. Won't be able to upload files. Error: ",
+          err
+        )
+      }
     })
   }
 
