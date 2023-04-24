@@ -31,6 +31,7 @@ const login = () => {
   const googleBackground = useColorModeValue('white', 'gray.700')
   const [User, setUser] = useState({ email: '', password: '' })
   const router = useRouter()
+  const currentLang = router.locale // => locale string eg. "en"
   const changeEmail = (event: any) => {
     setUser({
       ...User,
