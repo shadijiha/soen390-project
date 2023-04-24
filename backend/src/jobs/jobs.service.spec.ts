@@ -9,7 +9,6 @@ import { NotificationsService } from "../users/notifications/notifications.servi
 import { PusherService } from "../util/pusher/pusher.service";
 import { Notifications } from "../models/notifications.entity";
 
-
 describe("JobsService", () => {
   let service: JobsService;
   let mockUserRepository = {
@@ -44,7 +43,9 @@ describe("JobsService", () => {
     save: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
-    find: jest.fn(() => ["Java", "C++", "Python"]),
+    find: jest.fn(() => {
+      return [{ title: "Java" }, { title: "C++" }, { title: "Python" }] as Skill[];
+    }),
   };
 
   let mockNotificationsRepository = {};
