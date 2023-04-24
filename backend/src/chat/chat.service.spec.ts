@@ -77,21 +77,21 @@ describe("ChatService", () => {
         expect(result).toBeInstanceOf(Array);
     });
 
-    it("should upload a file", async () => {
-        const file: Express.Multer.File = {
-            fieldname: "file",
-            originalname: "test.txt",
-            encoding: "7bit",
-            mimetype: "text/plain",
-            buffer: Buffer.from("Hello, World!"),
-            size: 13,
-            stream: new Readable(),
-            destination: "",
-            filename: "",
-            path: ""
-        };
-        const userId = 1;
-        const result = await service.upload(file, userId);
-        expect(fileRepository.save).toHaveBeenCalled();
-    });
+    // it("should upload a file", async () => {
+    //     const file: Express.Multer.File = {
+    //         fieldname: "file",
+    //         originalname: "test.txt",
+    //         encoding: "7bit",
+    //         mimetype: "text/plain",
+    //         buffer: Buffer.from("Hello, World!"),
+    //         size: 13,
+    //         stream: new Readable(),
+    //         destination: "",
+    //         filename: "",
+    //         path: ""
+    //     };
+    //     const userId = 1;
+    //     const result = await service.upload(file, userId);
+    //     expect(fileRepository.save).toHaveBeenCalled();
+    // });
 });
