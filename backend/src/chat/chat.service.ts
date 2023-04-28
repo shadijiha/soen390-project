@@ -150,14 +150,16 @@ export class ChatService {
 
     // Create a temporary url
     const date = new Date()
-    const url = (
+    const res = (
       await this.cloud.tempUrls.generate({
         filepath: nameExt,
         expires_at: new Date(date.setMonth(date.getMonth() + 1)), // Now + 1 month
         is_readonly: true,
         max_requests: 1000
       })
-    ).url
+    )
+    console.log(res)
+    const url = res.url
     dbFileData.url = url
 
     await this.fileRepository.save(dbFileData)

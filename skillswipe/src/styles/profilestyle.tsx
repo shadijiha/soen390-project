@@ -203,8 +203,6 @@ const ProfileStyle = css`
             }
           }
           @media (max-width: 767px) {
-            
-
             .home-container1 {
               padding-left: var(--dl-space-space-twounits);
               padding-right: var(--dl-space-space-twounits);
@@ -221,17 +219,8 @@ const ProfileStyle = css`
               padding-left: var(--dl-space-space-twounits);
               padding-right: var(--dl-space-space-twounits);
             }
-
-            
           }
-
-
-         
-
-
           @media (max-width: 479px) {
-
-           
             .home-container1 {
               padding-top: var(--dl-space-space-twounits);
               padding-left: var(--dl-space-space-unit);
@@ -707,21 +696,6 @@ const ProfileStyle = css`
       grid-template-columns: 1fr;
     }
   }
-  @media screen and (max-width: 768px) {
-    .profile-container02 {
-      flex-direction: column;
-      align-items: center;
-      height: auto;
-      padding: 1em; /* add padding to create space between elements */
-      box-sizing: border-box; /* to include padding in the width calculation */
-    }
-
-  
-  
-  
-  }
-
-  
 
   .profile-container {
     width: 100%;
@@ -730,25 +704,16 @@ const ProfileStyle = css`
     min-height: 100vh;
     align-items: center;
     flex-direction: column;
-    /* added the following properties to make it below the navbar and have some space between them */
-    margin-top: var(--dl-space-space-twounits); /* adjust this value as per your preference */
-    position: relative; /* to make it respect the navbar's position */
-    
   }
   .profile-top-card {
     width: 100%;
     display: flex;
-    padding: var(--dl-space-space-twounits);
+    max-width: 100%;
+    box-shadow: 4px 4px 10px 0px rgba(18, 18, 18, 0.1);
     align-items: stretch;
     flex-direction: row;
     justify-content: space-between;
-    /* added the following property to make it responsive */
-    flex-wrap: wrap; /* to allow the flex items to wrap if they don't fit in one line */
-    
-    margin-left: var(--dl-space-space-twounits: 20px); /* adjust the value as per your preference */
-    margin-right: var(--dl-space-space-twounits: 20px);
   }
-
   .profile-image {
     width: auto;
     height: 20em;
@@ -756,48 +721,35 @@ const ProfileStyle = css`
     object-fit: cover;
     flex-shrink: 0;
     border-radius: 0px;
-    
   }
   .profile-container01 {
-    box-shadow: 4px 4px 10px 0px rgba(18, 18, 18, 0.3);
     flex: 1;
     width: auto;
-    height: 50vh;
     display: flex;
     align-items: flex-start;
+    padding-top: var(--dl-space-space-twounits);
+    padding-left: var(--dl-space-space-twounits);
+    padding-right: var(--dl-space-space-twounits);
     flex-direction: column;
+    padding-bottom: var(--dl-space-space-twounits);
     background-size: cover;
-    /* added the following properties to make it have an outline and a curved border */
-    outline: 2px solid white; /* adjust the color and width as per your preference */
-    border-radius: 20px; /* adjust the value as per your preference */
+    justify-content: space-between;
+
   }
   .profile-container02 {
-    width: 100%; 
+    width: 100%;
     display: flex;
-    flex-direction: row; 
-    align-items: center;
+    align-items: flex-start;
+    margin-bottom: var(--dl-space-space-halfunit);
+    flex-direction: row;
     justify-content: space-between;
-    position: relative; 
-    top: 50%;
-    height: 50%;
-    background-color: rgba(0,0,0,0.5); /* to make it semi-transparent with black color */
-    box-sizing:border-box; /* to include padding in the width calculation */
-    padding-left: var(–dl-space-space-twounits); 
-    padding-right: var(–dl-space-space-twounits);
-    border-bottom-left-radius: 20px; /* adjust the value as per your preference */
-    border-bottom-right-radius: 20px; /* adjust the value as per your preference */
-    overflow
-
-}
+  }
   .profile-text {
     font-weight: 600;
     text-transform: uppercase;
-   
   }
   .profile-text01 {
-    font-size: 1.25rem;
-    
-
+    margin-bottom: var(--dl-space-space-twounits);
   }
   .profile-text02 {
     font-size: 1.25rem;
@@ -805,56 +757,39 @@ const ProfileStyle = css`
   }
   .profile-text03 {
     font-size: 1.25rem;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
   }
   .profile-container03 {
+    flex: 0 0 auto;
     width: auto;
+    height: 92px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-
+    align-items: flex-start;
+    justify-content: flex-start;
   }
   .profile-container04 {
     display: flex;
     align-self: stretch;
-    align-items: flex-start;
-    flex-direction: column;
-    
-   
-  }
-
-  .profile-container24 {
-    display: flex;
-    align-self: stretch;
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    flex-direction: row;
     justify-content: space-between;
   }
-  .profile-text06 
-  {
+  .profile-text06 {
     font-style: normal;
-    font-weight: 300;
-    font-size: 0.5 rem;
-    white-space: nowrap;
-    
+    font-weight: 600;
+    margin-left: var(--dl-space-space-halfunit);
   }
   .profile-container05 {
-    width: auto;
+    width: 300px;
     display: flex;
     align-self: stretch;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between; 
-    padding-right: var(--dl-space-space-twounits)
-    
-    
+    justify-content: space-between;
   }
   .profile-button {
     border-radius: 60px;
     background-color: transparent;
-    margin: 0 5px;
   }
   .profile-button1 {
     border-radius: 60px;
@@ -1269,52 +1204,15 @@ const ProfileStyle = css`
     border-radius: var(--dl-radius-radius-round);
     object-position: left;
   }
-
-  @media (max-width: 2560px) {
-    .profile-image03 {
-      padding-left: var(--dl-space-space-twounits);
-      padding-bottom: var(--dl-space-space-sixunits);
-    }
-     
-    .profile-button {
-      font-size: xx-large;
-    }
-
-    .profile-text02 {
-      font-size: 2.5em;
-    }
-
-    .profile-text04 {
-      font-size: 2em;
-    }
-
-
-    .profile-text03 {
-      font-size: 2em;
-    }
-
-    .profile-text06 {
-      font-size: 2em;
-    }
-     
-    
-  }
-
-
-
   @media (max-width: 1600px) {
     .profile-top-card {
-      
+      height: 331px;
     }
-    .profile-image03 {
+    .profile-image {
       width: auto;
-      padding-left: var(--dl-space-space-twounits);
-      padding-bottom: var(--dl-space-space-oneunits);
+      height: inherit;
     }
-    
-  
     .profile-text02 {
-      font-size: 1em;
       margin-bottom: var(--dl-space-space-halfunit);
     }
     .profile-container04 {
@@ -1322,34 +1220,15 @@ const ProfileStyle = css`
       height: 60px;
       margin-right: 0px;
     }
-
-    .profile-text02{
-      font-size: 1.2em;                
-    }
-
-    .profile-text03 {
-      font-size: 1em;
-    }
-
-    .profile-text06 {
-      font-size: 1em;
-    }
-   
     .profile-container05 {
-      width: 400px;
+      width: 300px;
       height: 60px;
-      margin-right: 220px;
+      margin-right: 90px;
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
-      font-size: large;
-      
     }
-    .profile-text04 {
-      font-size: 1em;
-    }
-   
     .profile-button1 {
       border-radius: 60px;
       background-color: transparent;
@@ -1419,38 +1298,15 @@ const ProfileStyle = css`
       font-size: 3rem;
     }
   }
-
-  
-
   @media (max-width: 991px) {
     .profile-top-card {
       height: 300px;
       flex-direction: row;
       justify-content: space-between;
-      align-self: stretch;
-      align-items: center;
     }
     .profile-image {
       width: 299px;
       height: inherit;
-    }
-    .profile-image03 {
-      padding-bottom: var(--dl-space-space-oneunits);
-    }
-
-    .profile-text03 {
-      font-size: 1em;
-    }
-
-    .profile-text06 {
-      font-size: 1em;
-
-    }
-    .profile-text04{
-      font-size: 1em;
-    }
-    .profile-text02 {
-      font-size: 1.5em;
     }
     .profile-container01 {
       flex: 1;
@@ -1466,10 +1322,10 @@ const ProfileStyle = css`
     }
     .profile-text02 {
 
-      font-size: medium;
+    }
+    .profile-text03 {
 
     }
-    
     .profile-container04 {
       width: 191px;
       margin-right: var(--dl-space-space-halfunit);
@@ -1477,32 +1333,17 @@ const ProfileStyle = css`
     }
     .profile-text06 {
       font-style: normal;
-      font-weight: 300;
-      margin-right: var(--dl-space-space-oneunits);
-      font-size: 0.8rem;
-      white-space: nowrap;
+      font-weight: 600;
+      margin-right: var(--dl-space-space-fourunits);
     }
-    
     .profile-container05 {
-      width: auto;
+      width: 50%;
       margin-right: 0px;
       justify-content: space-between;
-      align-self:stretch;
-    }
-
-    .profile-container03 {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      align-items: center;
-     
-
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
-      
     }
     .profile-button1 {
       border-radius: 60px;
@@ -1528,33 +1369,13 @@ const ProfileStyle = css`
     }
   }
   @media (max-width: 767px) {
-
     .profile-top-card {
       flex-direction: column;
-      height: 100%;
+      margin-bottom: 28em;
     }
-   
-    .profile-container01 {
+    .profile-image {
       width: 100%;
-      height: 40vh;
-    }
-    .profile-container02 {
-      width: 100%;
-      
-    }
-
-    .profile-container05 {
-      width: 40%;
-      
-    }
-
-    .profile-container03 {
-      width: 100%;
-      margin-right: 0px;
-      justify-content: space-between;
-      align-items: center;
-      
-
+      height: 429px;
     }
     .profile-container04 {
       padding-right: 0px;
@@ -1562,8 +1383,6 @@ const ProfileStyle = css`
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
-      font-size: 0.8em;
-
     }
     .profile-button1 {
       border-radius: 60px;
@@ -1790,216 +1609,28 @@ const ProfileStyle = css`
       flex-direction: column;
     }
   }
-  @media (max-width: 697px) {
-    .profile-top-card {
-      width: 100%;
-      height: 700px;
-      position: relative;
-    }
-
-
-    
-    .profile-image03 {
-      top: 30px;
-      left: -20px;
-      position:relative;
-    }
-
-    .profile-text04 {
-      font-size: 0.8em;
-    }
-   
-
-
-    .profile-container01 { 
-      width: 100%;
-    }
-    .profile-text02 {
-      margin-bottom: var(--dl-space-space-halfunit);
-      font-size: 1.2em;
-    }
-    .profile-container03 {
-      width: auto;
-      height: auto;
-      margin-bottom: var(--dl-space-space-twounits);
-      
-    }
-    .profile-text06 {
-      font-size: 0.8em;
-    }
-
-    .profile-text03 {
-      font-size: 0.8em;
-    }
-    .profile-container02 {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 50%;
-      padding: var(--dl-space-space-fourunits);
-      box-sizing: border-box; /* to include padding in the width calculation */
-    }
-  
-    .profile-container04 {
-      width: 200px;
-      height: 92px;
-      margin-right: 0px;
-      padding-left: 0px;
-      padding-right: 0px;
-    }
-    .profile-container05 {
-      width: 100%;
-      height: 100%;
-      padding-bottom: var(--dl-space-space-threeunits);
-    }
-    .profile-button {
-      border-radius: 60px;
-      background-color: transparent;
-      fontWeight: 600;
-      width: 100%;
-     font-size: 1em;
-    }
-    .profile-button1 {
-      border-radius: 60px;
-      background-color: transparent;
-    }
-    .profile-steps {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: var(--dl-space-space-unit);
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-container06 {
-      padding-left: 0px;
-    }
-    .profile-container09 {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: 0px;
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-text14 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-heading {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-container12 {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: 0px;
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-text20 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-heading1 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-text23 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-container15 {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: 0px;
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-text27 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-heading2 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-container18 {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: 0px;
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-text33 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-heading3 {
-      margin-left: 0px;
-      margin-right: var(--dl-space-space-twounits);
-    }
-    .profile-personal-projects {
-      padding-top: var(--dl-space-space-twounits);
-      padding-left: var(--dl-space-space-unit);
-      padding-right: var(--dl-space-space-unit);
-      padding-bottom: var(--dl-space-space-twounits);
-    }
-    .profile-container20 {
-      grid-template-columns: 1fr;
-    }
-    .profile-image1 {
-      width: 250px;
-      height: 250px;
-    }
-    
-  
-  }
-  
   @media (max-width: 479px) {
     .profile-top-card {
       width: 100%;
       height: 700px;
       position: relative;
     }
-    
-    .profile-image03 {
-      top:-%;
-      left: -20px;
-      position:relative;
+    .profile-image {
+      flex: 1;
+      width: auto;
+      height: 400px;
+      align-self: stretch;
+      border-radius: 0px;
     }
-
-    
     .profile-container01 {
       width: 100%;
     }
     .profile-text02 {
       margin-bottom: var(--dl-space-space-halfunit);
-      font-size: medium;
     }
     .profile-container03 {
-      width: auto;
-      height: auto;
-      margin-bottom: var(--dl-space-space-twounits);
-      
+      width: 422px;
     }
-
-    .profile-text04 {
-      font-size: 0.6em;
-    }
-    .profile-text02 {
-      font-size: 0.8em;
-    }
-    .profile-text06 {
-      font-size: 0.6em;
-    }
-
-    .profile-text03 {
-      font-size: 0.6em;
-    }
-    .profile-container02 {
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 50%;
-      
-      box-sizing: border-box; 
-      padding: var(--dl-space-space-twounits);
-    }
-  
     .profile-container04 {
       width: 200px;
       height: 92px;
@@ -2008,17 +1639,15 @@ const ProfileStyle = css`
       padding-right: 0px;
     }
     .profile-container05 {
-      width: 100%;
-      height: 100%;
-      padding-bottom: var(--dl-space-space-threeunits);
-      
+      width: 50%;
+      height: 92px;
+      margin-right: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
-      fontWeight: 600;
-      width: "100%";
-     font-size: 0.6em;
     }
     .profile-button1 {
       border-radius: 60px;
@@ -2106,7 +1735,6 @@ const ProfileStyle = css`
       width: 250px;
       height: 250px;
     }
-    
   
 `
 

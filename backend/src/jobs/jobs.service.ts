@@ -5,6 +5,9 @@ import { Skill } from '../models/skill.entity'
 import { Repository } from 'typeorm'
 import { type Jobs } from './jobs.types'
 import { User } from '../models/user.entity'
+import { NotificationsService } from '../users/notifications/notifications.service'
+
+import { PusherService } from '../util/pusher/pusher.service'
 
 @Injectable()
 export class JobsService {
@@ -14,8 +17,10 @@ export class JobsService {
     @InjectRepository(Job)
     private readonly jobsRepository: Repository<Job>,
     @InjectRepository(Skill)
-    private readonly skillRepository: Repository<Skill>
-  ) {}
+    private readonly skillRepository: Repository<Skill>,
+    private readonly notificationsService: NotificationsService,
+    private readonly pusherService: PusherService
+  ) { }
 
   // create job and link it with all the skills and the recruiter
   async createJob (data: Jobs.AddJobRequest, recruiter: User): Promise<void> {
@@ -45,9 +50,10 @@ export class JobsService {
 
         const existingSkills = await this.skillRepository.find({
           where: skills.map((s) => ({ title: s.title }))
+
         })
 
-        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
+        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title.toLowerCase() === s.title.toLowerCase()) == null)
 
         job.skills = [...existingSkills, ...newSkills]
       }
@@ -56,6 +62,36 @@ export class JobsService {
     recruiter.jobs = [...recruiter.jobs, job]
 
     await this.usersRepository.save(recruiter)
+
+    // notify all users that a new job has been posted, when their skills match the job skills
+
+    // getting all users with their skills
+    const users = await this.usersRepository.find({ relations: ['skills'] })
+
+    // filtering users that have skills that match the job skills
+    const promises = users.map(async (user) => {
+      // filtering the skills that match the job skills
+      const matchedSkills = user.skills.filter((skill) => job.skills.find((jobSkill) => jobSkill.title === skill.title) != null)
+      if (matchedSkills.length > 0) {
+        // creating a notification for the user
+        const notificationPromise = await this.notificationsService.createNotification(
+          user.id,
+          'Job Alert',
+          `A new job by ${job.companyName}, ${job.jobTitle}, has been posted that matches your skills: ${matchedSkills.map((s) => s.title).join(', ')}`,
+          undefined,
+          `/jobId/${job.id}`
+        )
+        // sending a pusher notification to the user
+        const pusherPromise = await this.pusherService.trigger(`user-${user.id}`, 'newJob', { notificationPromise })
+        console.log(notificationPromise)
+
+        // returning a promise that resolves when both promises have resolved
+        return await Promise.all([notificationPromise, pusherPromise])
+      }
+      return null
+    })
+
+    await Promise.all(promises)
   }
 
   // update job post
@@ -85,7 +121,7 @@ export class JobsService {
           where: skills.map((s) => ({ title: s.title }))
         })
 
-        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
+        const newSkills = skills.filter((s) => existingSkills.find((es) => es.title.toLowerCase() === s.title.toLowerCase()) == null)
 
         job.skills = [...existingSkills, ...newSkills]
       }

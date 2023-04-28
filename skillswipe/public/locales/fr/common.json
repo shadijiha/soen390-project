@@ -263,9 +263,11 @@
     "CV Uploaded": "CV téléchargé",
     "Cover Letter (optional)": "Lettre de motivation (facultatif)",
     "Paste here": "Collez ici",
-    "Skillswipe has a legal “backdoor” to identify and-or prevent illegal activities, such as harassment.":"Skillswipe a un «porte dérobée» légal pour identifier et / ou empêcher les activités illégales, telles que le harcèlement.",
+    "Skillswipe has a legal “backdoor” to identify and-or prevent illegal activities, such as harassment.": "Skillswipe a un «porte dérobée» légal pour identifier et / ou empêcher les activités illégales, telles que le harcèlement.",
     "To Report the Chat Please press the Report Button": "Pour signaler le chat, appuyez sur le bouton Signaler",
     "Successfully deleted CV": "CV supprimé avec succès",
     "Successfully Updated coverLetter": "Lettre de motivation mise à jour avec succès",
-    "Successfully deleted Cover Letter": "Lettre de motivation supprimée avec succès"
+    "Successfully deleted Cover Letter": "Lettre de motivation supprimée avec succès",
+    "recruiterPanel": "Panneau de recruteur",
+    "view": "Voir"
 }
