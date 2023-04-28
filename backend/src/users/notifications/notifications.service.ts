@@ -27,16 +27,16 @@ export class NotificationsService {
     })
   }
 
-  async markAsRead (userId: number, notificationId: number): Promise<void> {
-    await this.notificationsRepository.update({ id: notificationId, user: { id: userId } }, { read: true })
+  async markAsRead (notificationId: number): Promise<void> {
+    await this.notificationsRepository.update({ id: notificationId }, { read: true })
   }
 
   async markAllAsRead (userId: number): Promise<void> {
     await this.notificationsRepository.update({ user: { id: userId }, read: false }, { read: true })
   }
 
-  async deleteNotification (userId: number, notificationId: number): Promise<void> {
-    await this.notificationsRepository.delete({ id: notificationId, user: { id: userId } })
+  async deleteNotification (notificationId: number): Promise<void> {
+    await this.notificationsRepository.delete({ id: notificationId })
   }
 
   async createNotification (userId: number, type: string, text: string, photo?: string, link?: string, title?: string): Promise<Notifications> {

@@ -314,18 +314,6 @@ export const deletePost = async (token: any, postId: number) => {
     })
 }
 
-export const reportPost = async (token: any, Id: number, some: any) => {
-  return axios
-    .post(`${URL}/admin/report-post/${Id}`, some, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((err) => {
-      return { status: 400, data: err }
-    })
-}
-
 export const applyToJob = async (token, id, jobApply: any) => {
   return axios
     .post(`${URL}/application/${id}`, jobApply, {
@@ -377,32 +365,4 @@ export const deleteJobListing = async (token, id) => {
   } catch (error) {
     throw new Error(error.response.data.error)
   }
-}
-
-export const jobNotificationApi = async (token: any) => {
-  return axios.get(`${URL}/notifications/notifications/unread`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-
-export const readJobNotifications = async (token: any, id: any) => {
-  return axios.post(`${URL}/notifications/notifications/read/${id}`, id, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-}
-
-export const getJobApplicants = async (token: any) => {
-  return axios
-    .get(`${URL}/jobs/my/applications`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-    .catch((err) => {
-      return { status: 400, data: err.response.data }
-    })
 }

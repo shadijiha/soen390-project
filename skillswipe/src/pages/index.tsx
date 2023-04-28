@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import {
   Button,
@@ -16,7 +15,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { FcGoogle } from 'react-icons/fc'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import GoogleLogin from '../components/GoogleLogin'
@@ -28,10 +26,10 @@ const login = () => {
   const formBackground = useColorModeValue('gray.100', 'gray.700')
   const placeholderBackground = useColorModeValue('gray.200', 'gray.600')
   const toggleTheme = useColorModeValue('🌙', '💡')
-  const googleBackground = useColorModeValue('white', 'gray.700')
-  const [User, setUser] = useState({ email: '', password: '' })
   const router = useRouter()
   const currentLang = router.locale // => locale string eg. "en"
+  const [User, setUser] = useState({ email: '', password: '' })
+
   const changeEmail = (event: any) => {
     setUser({
       ...User,
@@ -92,7 +90,6 @@ const login = () => {
               <Button colorScheme="blue" mb={3} onClick={submitForm}>
                 {t('signIn')}
               </Button>
-              {/* Google Login*/}
               <Center>
                 <GoogleLogin lang={currentLang}></GoogleLogin>
               </Center>

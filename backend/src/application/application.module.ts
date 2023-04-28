@@ -9,13 +9,11 @@ import { ApplicationService } from './application.service'
 import { ApplicationController } from './application.controller'
 import { Application } from '../models/application.entity'
 import { PusherService } from '../util/pusher/pusher.service'
-import { NotificationsService } from '../users/notifications/notifications.service'
-import { Notifications } from '../models/notifications.entity'
 
 @Module({
   controllers: [ApplicationController],
-  providers: [ApplicationService, PusherService, UsersService, JobsService, NotificationsService],
-  imports: [TypeOrmModule.forFeature([User, Job, Skill, Application, Notifications])],
+  providers: [ApplicationService, PusherService, UsersService, JobsService],
+  imports: [TypeOrmModule.forFeature([User, Job, Skill, Application])],
   exports: [TypeOrmModule]
 })
 export class ApplicationModule {}

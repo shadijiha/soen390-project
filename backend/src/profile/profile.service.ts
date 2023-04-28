@@ -246,7 +246,7 @@ export class ProfileService {
       where: skills.map((s) => ({ title: s.title }))
     })
 
-    const newSkills = skills.filter((s) => existingSkills.find((es) => es.title.toLowerCase() === s.title.toLowerCase()) == null)
+    const newSkills = skills.filter((s) => existingSkills.find((es) => es.title === s.title) == null)
 
     user.skills = [...user.skills, ...existingSkills, ...newSkills]
     await user.save()

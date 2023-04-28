@@ -53,7 +53,7 @@ describe('NotificationsService', () => {
 
 
   it('should mark notification as read', async () => {
-    const allNotifications = await service.markAsRead(2,1);
+    const allNotifications = await service.markAsRead(1);
     expect(mockNotificationsRepository.update).toHaveBeenCalled();
   });
 
@@ -63,7 +63,7 @@ describe('NotificationsService', () => {
   });
 
   it('should delete notification', async () => {
-    const allNotifications = await service.deleteNotification(2, 1);
+    const allNotifications = await service.deleteNotification(1);
     expect(mockNotificationsRepository.delete).toHaveBeenCalled();
   });
 

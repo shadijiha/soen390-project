@@ -5,9 +5,6 @@ import { User } from "../models/user.entity";
 import { JobsService } from "./jobs.service";
 import { Jobs } from "./jobs.types";
 import { Skill } from "../models/skill.entity";
-import { NotificationsService } from "../users/notifications/notifications.service";
-import { PusherService } from "../util/pusher/pusher.service";
-import { Notifications } from "../models/notifications.entity";
 
 
 describe("JobsService", () => {
@@ -15,15 +12,6 @@ describe("JobsService", () => {
   let mockUserRepository = {
     save: jest.fn(),
     update: jest.fn(),
-    find: jest.fn(() => {
-      return [
-        {
-          id: 1,
-          jobs: [],
-          skills: [],
-        },
-      ] as unknown as User[];
-    }),
   };
 
   let mockjobsRepository = {
@@ -47,14 +35,10 @@ describe("JobsService", () => {
     find: jest.fn(() => ["Java", "C++", "Python"]),
   };
 
-  let mockNotificationsRepository = {};
-
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         JobsService,
-        NotificationsService,
-        PusherService,
         {
           provide: getRepositoryToken(User),
           useValue: mockUserRepository,
@@ -66,10 +50,6 @@ describe("JobsService", () => {
         {
           provide: getRepositoryToken(Skill),
           useValue: mockSkillRepository,
-        },
-        {
-          provide: getRepositoryToken(Notifications),
-          useValue: mockNotificationsRepository,
         },
       ],
     }).compile();
