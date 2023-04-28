@@ -56,7 +56,7 @@ export class Reported extends BaseEntity {
     message: Message
 
   // posts
-  @OneToOne(() => Post)
+  @OneToOne(() => Post, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   @ApiProperty({ type: Post })
     post: Post
