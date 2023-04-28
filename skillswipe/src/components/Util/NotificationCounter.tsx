@@ -28,6 +28,12 @@ const NotificationCounter = (props: any) => {
       channel.bind('message-notification', function (data) {
         setCounter((prevCount) => prevCount + 1)
       })
+      channel.bind('newJob', function (data) {
+        setCounter((prevCount) => prevCount + 1)
+      })
+      channel.bind('warn', function (data) {
+        setCounter((prevCount) => prevCount + 1)
+      })
     }
   }, [currentUser])
   return (

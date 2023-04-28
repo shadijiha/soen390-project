@@ -168,8 +168,9 @@ const Chat = () => {
         {Load == false ? (
           <Spinner />
         ) : (
-          <Flex mt={0} w="100%" h="100vh" justify="center">
+          <Flex mt={0}  w="100%" h="100vh" justify="center">
             <Flex
+            
               w="65%"
               h="75%"
               flexDir="column"
@@ -182,6 +183,7 @@ const Chat = () => {
                 borderColor:
                   useColorMode().colorMode === 'light' ? '#CECECEA0' : '#FFFFFF1F',
                 borderWidth: '7px',
+                minWidth : "400px"
               }}
             >
               <Header user={chatUser} status={Status} />

@@ -1,4 +1,4 @@
-import { changeStatus, getPendingRequest } from '@/pages/api/api'
+import { changeStatus, getPendingRequest, jobNotificationApi } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
 import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
@@ -31,6 +31,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import NotificationCounter from './Util/NotificationCounter'
+import { getSuggestedUsers } from '@/pages/api/profile_api'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -48,7 +49,8 @@ export default function NavBar(props: any) {
   const [messageNotification, setmessageNotification]: any[] = useState([])
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
-
+  const [loading3,setloading3] = useState(0);
+  const [loading4,setloading4] = useState(0);
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -75,6 +77,7 @@ export default function NavBar(props: any) {
       toast('Successfully Logged Out')
     }
   }
+  useEffect(() =>{console.log(display)},[display])
 
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
@@ -132,8 +135,37 @@ export default function NavBar(props: any) {
     if (currentUser.auth) {
       getMessage()
       getPendingConnections()
+      getNotification();
     }
   }, [currentUser])
+
+
+  const getNotification = () => {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      jobNotificationApi(token)
+        .then((response) => {
+          setloading3(response.data.length)
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const getSuggestedFriends = () => {
+    if (typeof localStorage !== 'undefined') {
+      const token = localStorage.getItem('jwt')
+      getSuggestedUsers(token)
+        .then((res) => {
+ 
+          setloading4(res.data.length)
+        })
+        .catch((err) => {
+          toast.error(err)
+        })
+    }
+  }
+
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
@@ -351,7 +383,7 @@ export default function NavBar(props: any) {
             {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
             ) : (
-              <NotificationCounter Notifications={loading1 + loading2} />
+              <NotificationCounter Notifications={loading1 + loading2 + loading3 + loading4} />
             )}
 
             <NextLink href="/profile" passHref>
@@ -405,7 +437,7 @@ export default function NavBar(props: any) {
             size="lg"
             mr={2}
             icon={<HamburgerIcon />}
-            onClick={() => changeDisplay('flex')}
+            onClick={() =>  display == 'none'?  changeDisplay('flex') : changeDisplay('none')}
             display={['flex', 'flex', 'none', 'none']}
             ml={'auto'}
             variant={'ghost'}
@@ -432,12 +464,17 @@ export default function NavBar(props: any) {
               aria-label="Open Menu"
               size="xl"
               icon={<CloseIcon />}
-              onClick={() => changeDisplay('none')}
+              onClick={() => display == 'none'?  changeDisplay('flex') : changeDisplay('none')}
               backgroundColor="transparent"
             />
+
+            
+
           </Flex>
 
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
+
+
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 {t('home')}

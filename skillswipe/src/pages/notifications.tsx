@@ -33,6 +33,7 @@ import {
   acceptRequest,
   getPendingRequest,
   getUserById,
+  jobNotificationApi,
   removeConnection,
   sendRequest,
 } from './api/api'
@@ -48,6 +49,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   ])
   const [messageNotification, setmessageNotification] = useState([])
   const [suggestedFriends, setSuggestedFriends] = useState([])
+  const [notification, setNotification] = useState([])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading, setloading] = useState(true)
@@ -79,6 +81,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     getPendingConnections()
     getMessage()
     getSuggestedFriends()
+    getNotification()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -90,6 +93,13 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     })
     channel.bind('message-notification', function (data) {
       getMessage()
+    })
+    channel.bind('newJob',function(data) {
+      
+      getNotification();
+    })
+    channel.bind('warn',function(data){
+      getNotification()
     })
   }, [currentUser])
 
@@ -278,6 +288,20 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     }
   }
 
+  const getNotification = () => {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      jobNotificationApi(token)
+        .then((response) => {
+          setNotification(response.data)
+          console.log(response.data)
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+
   const viewUsers = () => {
     getSuggestedFriends()
   }
@@ -298,7 +322,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length
+            suggestedFriends.length + 
+            notification.length
           }
           addRequest={addRequest}
         ></NavBar>
@@ -370,6 +395,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 )}
               </Flex>
             </Box>
+
             <Box p={4}>
               <Heading as="h1" size="lg" mb={4}>
                 {t('notifications')}
@@ -422,7 +448,86 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 <Text>{t('noNotifications')}</Text>
               )}
               <br></br>
+              <Heading as="h1" size="lg" mb={4}>
+                Alert
+              </Heading>
+              {notification.length > 0 ? (
+                notification.map((notification: any, index) => (
+                  <Flex
+                    key={index}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={4}
+                    mb={4}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Flex>
+                      {/* <Avatar
+                        size="lg"
+                        mr={4}
+                        src={
+                          notification.profilePic
+                            ? `data:image/jpeg;base64,${notification.profilePic}`
+                            : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                        }
+                      /> */}
+                      <Box>
+
+                        {
+
+                          notification.link ? 
+
+
+                        <Heading
+                          as="h2"
+                          size="md"
+                          mb={2}
+                          style={{ cursor: 'pointer' }}
+                      
+                          onClick={() => {
+
+                            router.push(`/jobListing/${notification.link.split("/")[2]}`)
+                          }}
+                        
+                        >
+                          {notification.type}
+                          <Badge ml="1" colorScheme="green">
+                            {t('new')}
+                          </Badge>
+                        </Heading>
+                        :
+                        <Heading
+                        as="h2"
+                        size="md"
+                        mb={2}
+                        style={{ cursor: 'pointer' }}>
+                          {notification.type}
+                          <Badge ml="1" colorScheme="green">
+                            {t('new')}
+                          </Badge>
+
+
+
+                        </Heading>
+
+
+
+                        }
+                        <Text
+                          mb={2}
+                        >{notification.text}</Text>
+                        <Text fontSize="sm">{notification.created_at}</Text>
+                      </Box>
+                    </Flex>
+                  </Flex>
+                ))
+              ) : (
+                <Text>No Job alerts</Text>
+              )}
+
               <Divider />
+
               <Box py="4">
                 <Heading as="h1" size="lg" mb={8}>
                   {t('People you might know')}
