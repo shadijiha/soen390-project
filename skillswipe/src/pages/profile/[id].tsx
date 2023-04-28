@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import Layout from '@/components/Layout'
 import NavBar from '@/components/NavBar'
 import Awards from '@/components/Profile/Awards'
@@ -38,7 +39,7 @@ const profile = () => {
   const { toggleColorMode } = useColorMode()
   const buttonColors = useColorModeValue('black', 'white')
   const [loading, setLoading] = useState(true)
-  const [connection, setConnection] = useState(0);
+  const [connection, setConnection] = useState(0)
   const [LatestWorkExperience, setLatestWorkExprience] = useState([])
   const [user, setUser] = useState({
     firstName: '',
@@ -51,12 +52,12 @@ const profile = () => {
     biography: '',
     skills: [],
     awards: [],
-    workExperiences: [{
-
-      title: '',
-      company: '',
-
-  }],
+    workExperiences: [
+      {
+        title: '',
+        company: '',
+      },
+    ],
     educations: [],
     volunteeringExperience: [],
     recommendationsReceived: [],
@@ -154,8 +155,7 @@ const profile = () => {
   }, [router.query])
 
   const [profile, setProfile] = useState({
-    image:
-      'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
@@ -192,16 +192,16 @@ const profile = () => {
                       // make the background image to be 35% opacity
                       backgroundColor: 'rgba(0, 0, 0, 0.35)',
                       // make the background image to be 50% opacity
-                      
 
-                      backgroundImage: `url(${user.coverPic
+                      backgroundImage: `url(${
+                        user.coverPic
                           ? `data:image/jpeg;base64,${user.coverPic}`
                           : profile.cover
-                        })`,
+                      })`,
                     }}
                   >
                     <div className="profile-container02">
-                      <div className='profile-image03'>
+                      <div className="profile-image03">
                         <Avatar
                           src={
                             user.profilePic
@@ -209,13 +209,12 @@ const profile = () => {
                               : profile.image
                           }
                           size="xl"
-                          style=
-                          {{
-                            borderRadius: "60%",
+                          style={{
+                            borderRadius: '60%',
                             border: '0.1em solid white',
-                            position: "relative",
-                            top: "-2em",
-                            left: "2%",
+                            position: 'relative',
+                            top: '-2em',
+                            left: '2%',
                           }}
                         />
                       </div>
@@ -223,7 +222,6 @@ const profile = () => {
                         <h1
                           className="profile-text02"
                           style={{
-
                             fontWeight: 700,
                             textShadow: '0px 0px 30px #00000085',
                             color: 'white',
@@ -234,10 +232,8 @@ const profile = () => {
                         <span
                           className="profile-text04"
                           style={{
-                            
                             textShadow: '0px 0px 30px #00000085',
                             color: 'white',
-
                           }}
                         >
                           📧 {user.email}
@@ -246,7 +242,6 @@ const profile = () => {
                           <span
                             className="profile-text03"
                             style={{
-                              
                               textShadow: '0px 0px 30px #00000085',
                               margin: '0.2em', // added margin to span
                               color: 'white',
@@ -255,20 +250,25 @@ const profile = () => {
                             {`${connection} Connections`}
                           </span>
                         )}
-                        {user.biography && user.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
-                          <span
-                            className="profile-text06"
-                            style={{
-                              textShadow: '0px 0px 30px #000000B4',
-                              color: 'white',
-                            }}
-                          >
-                            💬{' '}
-                            {`${user.biography} \u25CF  ${user.workExperiences[user.workExperiences.length - 1].title
-                              } at ${user.workExperiences[user.workExperiences.length - 1].company
+                        {user.biography &&
+                          user.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
+                            <span
+                              className="profile-text06"
+                              style={{
+                                textShadow: '0px 0px 30px #000000B4',
+                                color: 'white',
+                              }}
+                            >
+                              💬{' '}
+                              {`${user.biography} \u25CF  ${
+                                user.workExperiences[user.workExperiences.length - 1]
+                                  .title
+                              } at ${
+                                user.workExperiences[user.workExperiences.length - 1]
+                                  .company
                               } `}
-                          </span>
-                        )}
+                            </span>
+                          )}
                       </div>
 
                       <div className="profile-container05">
@@ -283,7 +283,7 @@ const profile = () => {
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
                                 marginRight: '1em',
-                                width: '100%'
+                                width: '100%',
                               }}
                               onClick={() => {
                                 router.push(`/inbox/${router.query.id}`)
@@ -321,8 +321,8 @@ const profile = () => {
                               textShadow: '0px 0px 40px #000000CA',
                               fontWeight: 600,
                               marginRight: '1em',
-                              width: "60%",
-                              margin: "auto"
+                              width: '60%',
+                              margin: 'auto',
                             }}
                             onClick={Reject}
                           >
@@ -376,12 +376,8 @@ const profile = () => {
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                
-                               
-                                margin: "auto"
 
-
-                                
+                                margin: 'auto',
                               }}
                             >
                               <span>
@@ -440,7 +436,7 @@ const profile = () => {
                 {/* VOLUNTEERING SECTION */}
 
                 {user.volunteeringExperience &&
-                  user.volunteeringExperience.length > 0 ? (
+                user.volunteeringExperience.length > 0 ? (
                   <Volunteering volunteer={user.volunteeringExperience} />
                 ) : (
                   <></>
@@ -449,7 +445,7 @@ const profile = () => {
                 {/* RECOMMENDATIONS SECTION */}
 
                 {user.recommendationsReceived &&
-                  user.recommendationsReceived.length > 0 ? (
+                user.recommendationsReceived.length > 0 ? (
                   <Recommendations rocommendations={user.recommendationsReceived} />
                 ) : (
                   <></>
