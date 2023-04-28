@@ -28,19 +28,15 @@ export class ConnectionsService {
     await connection
       .save()
       .then(async (): Promise<any> => {
-        await this.pusherService.triggerNotification(
-          `user-${user2Id}`,
-          'friend-request',
-          {
-            user: {
-              id: user1Id,
-              firstName: user1.firstName,
-              lastName: user1.lastName,
-              profilePic: user1.profilePic,
-              timestamp: 'Just now'
-            }
+        await this.pusherService.triggerNotification(`user-${user2Id}`, 'friend-request', {
+          user: {
+            id: user1Id,
+            firstName: user1.firstName,
+            lastName: user1.lastName,
+            profilePic: user1.profilePic,
+            timestamp: 'Just now'
           }
-        )
+        })
       })
       .catch((err: any) => {
         return err
@@ -53,10 +49,7 @@ export class ConnectionsService {
    * @param {number} user2Id - number - The id of the user you want to delete the connection with
    * @returns The return type is a Promise of an object with two properties: success and message.
    */
-  public async deleteConnection (
-    user1Id: number,
-    user2Id: number
-  ): Promise<{ success: boolean, message: string }> {
+  public async deleteConnection (user1Id: number, user2Id: number): Promise<{ success: boolean, message: string }> {
     if (user1Id === user2Id) throw new Error('No connection found!')
     const connection = await this.connectionRepository.findOne({
       where: [
@@ -81,9 +74,7 @@ export class ConnectionsService {
    * @param {number} userId - number - The user id of the user who is logged in
    * @returns An array of objects with the following structure:
    */
-  public async getPendingConnections (
-    userId: number
-  ): Promise<Array<{ user: User, since: Date }>> {
+  public async getPendingConnections (userId: number): Promise<Array<{ user: User, since: Date }>> {
     const connections = await this.connectionRepository
       .createQueryBuilder('connection')
       .leftJoinAndSelect('connection.user_1', 'user_1')
@@ -92,9 +83,11 @@ export class ConnectionsService {
       .andWhere('isAccepted=false')
       .getMany()
 
-    return connections.map((connection) => {
-      return { user: connection.user_1, since: connection.updated_at }
-    }).filter((connection) => connection.user != null)
+    return connections
+      .map((connection) => {
+        return { user: connection.user_1, since: connection.updated_at }
+      })
+      .filter((connection) => connection.user != null)
   }
 
   /**
@@ -104,10 +97,7 @@ export class ConnectionsService {
    * @param {number} user2Id - number - The id of the user you want to check the connection status with
    * @returns The connection status between two users.
    */
-  public async getConnectionStatus (
-    user1Id: number,
-    user2Id: number
-  ): Promise<'Connected' | 'Pending' | 'NotConnected'> {
+  public async getConnectionStatus (user1Id: number, user2Id: number): Promise<'Connected' | 'Pending' | 'NotConnected'> {
     const connection = await this.connectionRepository.findOne({
       where: [
         { user_1: { id: user1Id }, user_2: { id: user2Id } },
@@ -126,14 +116,18 @@ export class ConnectionsService {
    */
   public async getAcceptedConnections (userId: number): Promise<any[]> {
     const connections = await this.connectionRepository.find({
-      where: [{ user_1: { id: userId } }, { user_2: { id: userId } }],
+      where: [
+        { user_1: { id: userId }, isAccepted: true },
+        { user_2: { id: userId }, isAccepted: true }
+      ],
       relations: ['user_1', 'user_2']
     })
-    return connections.map((connection) => {
-      const user =
-        connection.user_1.id === userId ? connection.user_2 : connection.user_1
-      return { user, since: connection.updated_at }
-    }).filter((connection) => connection.user != null)
+    return connections
+      .map((connection) => {
+        const user = connection.user_1.id === userId ? connection.user_2 : connection.user_1
+        return { user, since: connection.updated_at }
+      })
+      .filter((connection) => connection.user != null)
   }
 
   /**
@@ -143,10 +137,7 @@ export class ConnectionsService {
    * @param user2Id - the user who is accepting the connection
    * @returns An array of objects with user and since properties.
    */
-  public async acceptConnection (
-    user1Id,
-    user2Id
-  ): Promise<Array<{ user: User, since: Date }>> {
+  public async acceptConnection (user1Id, user2Id): Promise<Array<{ user: User, since: Date }>> {
     await this.connectionRepository.update(
       {
         user_1: user1Id,
@@ -173,10 +164,7 @@ export class ConnectionsService {
     if (user.educations.length > 0) {
       const institution = user.educations[0].institution
       users.map((u) => {
-        if (
-          u.educations[0]?.institution.toLowerCase() ===
-          institution.toLowerCase()
-        ) {
+        if (u.educations[0]?.institution.toLowerCase() === institution.toLowerCase()) {
           const newUser: any = u
           newUser.suggestedFriendType = 'university'
           newUser.suggestedFriendInstitution = institution
@@ -189,9 +177,7 @@ export class ConnectionsService {
     if (user.workExperiences.length > 0) {
       const company = user.workExperiences[0].company
       users.map((u) => {
-        if (
-          u.workExperiences[0]?.company.toLowerCase() === company.toLowerCase()
-        ) {
+        if (u.workExperiences[0]?.company.toLowerCase() === company.toLowerCase()) {
           const newUser: any = u
           newUser.suggestedFriendType = 'work'
           newUser.suggestedFriendInstitution = company
@@ -202,16 +188,7 @@ export class ConnectionsService {
     }
 
     // remove duplicates
-    suggestedFriends = [
-      ...new Set(
-        [...universityFriends, ...workFriends].filter(
-          (u) =>
-            !connections.some(
-              (c) => c.user.id === u.id
-            )
-        )
-      )
-    ]
+    suggestedFriends = [...new Set([...universityFriends, ...workFriends].filter((u) => !connections.some((c) => c.user.id === u.id)))]
     // remove user
     suggestedFriends = suggestedFriends.filter((u) => u.id !== user.id)
     return suggestedFriends

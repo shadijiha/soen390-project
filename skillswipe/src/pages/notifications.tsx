@@ -1,20 +1,25 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react/jsx-no-undef */
 import {
   Avatar,
   Badge,
   Box,
   Button,
+  Center,
+  Divider,
   Flex,
   HStack,
   Heading,
+  Icon,
   Link,
   Spacer,
   Stack,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react'
+
 import type { InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { default as NextLink } from 'next/link'
 import { useRouter } from 'next/router'
 import Pusher from 'pusher-js'
@@ -31,8 +36,11 @@ import {
   removeConnection,
   sendRequest,
 } from './api/api'
-import { getAllConversation, getConversationById } from './api/chat'
 import { getSuggestedUsers } from './api/profile_api'
+
+import { px } from 'framer-motion'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { getAllConversation, getConversationById } from './api/chat'
 
 const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [pendingConnections, setPendingConnections] = useState([
@@ -413,7 +421,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
               ) : (
                 <Text>{t('noNotifications')}</Text>
               )}
-
+              <br></br>
+              <Divider />
               <Box py="4">
                 <Heading as="h1" size="lg" mb={8}>
                   {t('People you might know')}
@@ -431,8 +440,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                             : 'gray.700'
                         }
                         boxShadow={'2xl'}
-                        rounded={'lg'}
-                        p={3}
+                        borderRadius={'20px'}
+                        borderWidth={'3px'}
+                        borderColor={'white.900'}
+                        p={10}
                         mb={8}
                         mx={6}
                         textAlign={'center'}
@@ -446,6 +457,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                           }
                           mb={4}
                           pos={'relative'}
+                          boxShadow={'2xl'}
                         />
                         <NextLink href={`profile/${friend.id}`}>
                           <Heading fontSize={'2xl'} fontFamily={'body'}>
@@ -499,7 +511,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                             : 'Education not specified'}
                         </Text>
 
-                        <Stack mt={8} direction={'row'} spacing={4}>
+                        <Stack mt={8} direction={'row'} align={'center'}>
                           {Status.Requested == true ? (
                             <Button
                               flex={1}
@@ -510,7 +522,6 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                               onClick={() => Reject(friend.id)}
                             >
@@ -526,15 +537,13 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                               style={{
                                 color: buttonColors,
                                 borderColor: buttonColors,
+                                borderRadius: '100em',
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
                               }}
                             >
-                              <span>
-                                <span> {t('connect')}</span>
-                              </span>
+                              <span>{t('connect')}</span>
                             </Button>
                           )}
                         </Stack>

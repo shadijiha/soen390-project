@@ -1,12 +1,16 @@
+/* eslint-disable react/jsx-no-undef */
+/* eslint-disable react/no-children-prop */
 import styles from '@/styles/modal.module.css'
 import {
   Avatar,
   Box,
   Button,
+  Center,
   CircularProgress,
   Flex,
   Input,
   InputGroup,
+  InputLeftAddon,
   Modal,
   ModalBody,
   ModalContent,
@@ -20,12 +24,12 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { search as searchUser } from 'src/pages/api/api'
-
 interface User {
   id: number
   firstName: string
   lastName: string
   profilePic: string | null
+  connectionStatus: string
 }
 
 const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
@@ -44,7 +48,22 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
       const response = await searchUser(token, search)
       console.log(response.data)
       console.log('response data:', response.data.users) // Log the response data
-      setUsers(response.data.users.map((el) => el.user))
+
+      // Sort users based on connectionStatus
+      const sortedUsers = response.data.users.sort((a, b) => {
+        if (a.connectionStatus === b.connectionStatus) {
+          return 0
+        }
+        return a.connectionStatus === 'Connected' ? -1 : 1
+      })
+
+      // Set the state with the sorted users array
+      setUsers(
+        sortedUsers.map((el) => ({
+          ...el.user,
+          connectionStatus: el.connectionStatus,
+        }))
+      )
     } catch (error) {
       console.error(error)
     }
@@ -54,6 +73,11 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
 
   const handleUserSelect = (user) => {
     router.push(`/inbox/${user.id}`)
+    onClose()
+  }
+
+  const handleUserSelectConnect = (user) => {
+    router.push(`/profile/${user.id}`)
     onClose()
   }
 
@@ -72,13 +96,13 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
         />
         <ModalContent
           margin={'auto'}
-          borderRadius="14px"
-          padding={'1em'}
+          borderRadius="25px"
+          padding={'0.5em'}
           borderWidth="2px"
           display={'flex'}
           flexDirection={'column'}
           justifyContent={'space-between'}
-          minWidth={'50%'}
+          minWidth={'45%'}
         >
           <ModalHeader>{t('searchForUser')}</ModalHeader>
 
@@ -87,7 +111,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
               <Input
                 type="text"
                 value={search}
-                placeholder="Type a name"
+                placeholder={t('typeName')}
                 borderRadius={'200px'}
                 onChange={(e) => setSearch(e.target.value)}
                 // enter key pressed to search
@@ -111,12 +135,7 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
                 <Text>No user found</Text>
               ) : (
                 users.map((user) => (
-                  <Box
-                    key={user.id}
-                    fontSize="lg"
-                    onClick={() => handleUserSelect(user)}
-                    cursor={'pointer'}
-                  >
+                  <Box key={user.id} fontSize="lg" cursor={'pointer'}>
                     <Flex align="center">
                       <Avatar
                         size="md"
@@ -129,6 +148,37 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
                         mr={3}
                       />
                       <Text>{`${user.firstName} ${user.lastName}`}</Text>
+                      {user.connectionStatus === 'NotConnected' && (
+                        <Button
+                          ml={3}
+                          colorScheme="transparent"
+                          fontSize="sm"
+                          size={'sm'}
+                          textColor={'blue.100'}
+                          borderWidth={'2px'}
+                          borderColor={'blue.100'}
+                          padding={' 1em'}
+                          borderRadius={'100px'}
+                          onClick={() => handleUserSelectConnect(user)}
+                        >
+                          {t('connect')}
+                        </Button>
+                      )}
+                      {user.connectionStatus === 'Connected' && (
+                        <Button
+                          ml={3}
+                          colorScheme="green"
+                          fontSize="sm"
+                          size={'sm'}
+                          borderWidth={'2px'}
+                          borderColor={'blue.100'}
+                          padding={' 1em'}
+                          borderRadius={'100px'}
+                          onClick={() => handleUserSelect(user)}
+                        >
+                          {t('message')}
+                        </Button>
+                      )}
                     </Flex>
                   </Box>
                 ))
@@ -142,10 +192,10 @@ const SearchUserModal = ({ isOpen, onClose, newMessage }) => {
               onClick={onClose}
               borderRadius={'100px'}
             >
-              Close
+              {t('Cancel')}
             </Button>
             <Button colorScheme="blue" onClick={handleSearch} borderRadius={'100px'}>
-              Search
+              {t('search')}
             </Button>
           </ModalFooter>
         </ModalContent>
