@@ -85,101 +85,99 @@ const Inbox = () => {
     return element.user.id != User.auth.id
   }
   return (
-    <>
-      <Layout>
-        <NavBar></NavBar>
-        <Box p={50} data-testid="inbox">
-          <HStack
+    <Layout>
+      <NavBar></NavBar>
+      <Box p={50} data-testid="inbox">
+        <HStack
+          style={{
+            display: 'flex',
+            alignContent: 'start',
+            justifyContent: 'start',
+            alignItems: 'start',
+          }}
+        >
+          <Heading as="h1" size="lg" mb={4}>
+            {t('inbox')}
+          </Heading>
+          <Button
+            onClick={onOpen}
+            colorScheme="blue"
             style={{
-              display: 'flex',
-              alignContent: 'start',
-              justifyContent: 'start',
-              alignItems: 'start',
+              marginLeft: '1em',
+              borderRadius: '100px',
             }}
           >
-            <Heading as="h1" size="lg" mb={4}>
-              {t('inbox')}
-            </Heading>
-            <Button
-              onClick={onOpen}
-              colorScheme="blue"
-              style={{
-                marginLeft: '1em',
-                borderRadius: '100px',
-              }}
+            {t('newMessage')}
+          </Button>
+          <SearchUserModal
+            isOpen={isOpen}
+            onClose={onClose}
+            newMessage={handleNewMessage}
+          />
+        </HStack>
+        {messages[0] ? (
+          messages.map((element: any, index: number) => (
+            <Flex
+              key={index}
+              borderWidth="1px"
+              borderRadius="lg"
+              p={4}
+              mb={4}
+              display="flex"
+              alignItems="center"
+              cursor={'pointer'}
+              onClick={() => router.push(`/inbox/${element.user.id}`)}
             >
-              {t('newMessage')}
-            </Button>
-            <SearchUserModal
-              isOpen={isOpen}
-              onClose={onClose}
-              newMessage={handleNewMessage}
-            />
-          </HStack>
-          {messages[0] ? (
-            messages.map((element: any) => (
-              <Flex
-                key={element.id}
-                borderWidth="1px"
-                borderRadius="lg"
-                p={4}
-                mb={4}
-                display="flex"
-                alignItems="center"
-                cursor={'pointer'}
-                onClick={() => router.push(`/inbox/${element.user.id}`)}
-              >
-                <Flex>
-                  <Avatar
-                    size="lg"
-                    mr={4}
-                    src={
-                      element.profilePic
-                        ? `data:image/jpeg;base64,${element.user.profilePic}`
-                        : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                    }
-                  />
-                  <Box>
-                    <Heading as="h2" size="md" mb={2}>
-                      {`${element.user.firstName} ${element.user.lastName}`}
-                    </Heading>
-                    <Text mb={2}>{element.lastMessage}</Text>
-                  </Box>
-                </Flex>
-                <Spacer />
+              <Flex>
+                <Avatar
+                  size="lg"
+                  mr={4}
+                  src={
+                    element.profilePic
+                      ? `data:image/jpeg;base64,${element.user.profilePic}`
+                      : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
+                  }
+                />
+                <Box>
+                  <Heading as="h2" size="md" mb={2}>
+                    {`${element.user.firstName} ${element.user.lastName}`}
+                  </Heading>
+                  <Text mb={2}>{element.lastMessage}</Text>
+                </Box>
               </Flex>
-            ))
-          ) : (
-            <Box
-              textAlign="center"
-              paddingTop={'2em'}
+              <Spacer />
+            </Flex>
+          ))
+        ) : (
+          <Box
+            textAlign="center"
+            paddingTop={'2em'}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <img
+              alt={t('noMessages')}
+              src="https://img.icons8.com/3d-fluency/256/speech-bubble-with-dots.png"
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                flexDirection: 'column',
-                alignItems: 'center',
+                height: '90px',
+                width: '90px',
+                objectFit: 'cover',
+                marginBottom: '2em',
               }}
-            >
-              <img
-                alt={t('noMessages')}
-                src="https://img.icons8.com/3d-fluency/256/speech-bubble-with-dots.png"
-                style={{
-                  height: '90px',
-                  width: '90px',
-                  objectFit: 'cover',
-                  marginBottom: '2em',
-                }}
-              ></img>
-              <chakra.p fontSize="xl">
-                {/* click hyperlink to create application */}
-                {t('noMessages')}
-                <br />
-              </chakra.p>
-            </Box>
-          )}
-        </Box>
-      </Layout>
-    </>
+            ></img>
+            <chakra.p fontSize="xl">
+              {/* click hyperlink to create application */}
+              {t('noMessages')}
+              <br />
+            </chakra.p>
+          </Box>
+        )}
+      </Box>
+    </Layout>
   )
 }
 

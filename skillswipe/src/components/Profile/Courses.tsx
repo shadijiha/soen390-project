@@ -27,7 +27,7 @@ const Courses = ({ courses }: any) => {
 
   const { t } = useTranslation('common')
   return (
-    <Container maxWidth="7xl" p={{ base: 2, sm: 10 }}>
+    <Container data-testid="courses" maxWidth="7xl" p={{ base: 2, sm: 10 }}>
       <chakra.h3 fontSize="4xl" fontWeight="bold" mb={18} textAlign="center">
         {t('accomplishedCourses')} 📚
         <br></br>

@@ -1,53 +1,11 @@
-// import Layout from '@/components/Layout'
-// import EditProfile from '@/pages/editProfile'
-// import '@testing-library/jest-dom'
-// import { render, screen, waitFor } from '@testing-library/react'
-// import React from 'react'
-// import { Provider } from 'react-redux'
-// import store from '../src/Redux/store'
-
-// jest.mock('next/router', () => require('next-router-mock'))
-// describe('edit-profile', () => {
-//   const renderEditProfile = () =>
-//     render(
-//       <Provider store={store}>
-//         {' '}
-//         <Layout>
-//           <EditProfile />
-//         </Layout>
-//       </Provider>
-//     )
-//   it('should render courses page without crashing', async () => {
-//     renderEditProfile()
-//     await waitFor(() => {
-//       expect(screen.getByTestId('edit-profile')).toBeInTheDocument()
-//     })
-//   })
-// })
-import Layout from '@/components/Layout'
 import Register from '@/pages/register'
-import '@testing-library/jest-dom'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-
-import React from 'react'
-import { Provider } from 'react-redux'
-import store from '../src/Redux/store'
+import { fireEvent, render, screen, waitFor } from '../test-utils'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 describe('Register', () => {
-  const renderSignup = () =>
-    render(
-      <Provider store={store}>
-        {' '}
-        <Layout>
-          <Register />
-        </Layout>
-      </Provider>
-    )
-  // beforeAll(()=>{
-  //     <Layout></Layout>
-  // })
+  const renderSignup = () => render(<Register />)
+
   it('should render register page without crashing', async () => {
     renderSignup()
     await waitFor(() => {

@@ -1,26 +1,26 @@
-import Layout from '@/components/Layout'
+import { loginApi } from '@/pages/api/api'
 import Login from '@/pages/index'
-import '@testing-library/jest-dom'
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
-import React from 'react'
-import { Provider } from 'react-redux'
-import store from '../src/Redux/store'
+import { AxiosResponse } from 'axios'
+import { fireEvent, render, screen, waitFor } from '../test-utils'
 
 jest.mock('next/router', () => require('next-router-mock'))
+jest.mock('@/pages/api/api', () => {
+  const original = jest.requireActual('@/pages/api/api')
+  return {
+    ...original,
+    loginApi: jest.fn(),
+  }
+})
 
 describe('Login', () => {
-  const renderLogin = () =>
-    render(
-      <Provider store={store}>
-        {' '}
-        <Layout>
-          <Login />
-        </Layout>
-      </Provider>
-    )
-  // beforeAll(()=>{
-  //     <Layout></Layout>
-  // })
+  loginApi.mockImplementation(
+    (): Promise<AxiosResponse<any, any>> =>
+      Promise.resolve({ data: { access_token: 'test' } }) as Promise<
+        AxiosResponse<any, any>
+      >
+  )
+  const renderLogin = () => render(<Login />)
+
   it('should render login page without crashing', async () => {
     renderLogin()
     await waitFor(() => {

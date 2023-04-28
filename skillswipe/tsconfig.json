@@ -43,6 +43,7 @@
     "src/components/EditProfile",
     "src/components/Profile",
     "src/components/*",
+    "__tests__/test-utils.js",
   ],
   "exclude": [
     "node_modules"

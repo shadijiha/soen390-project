@@ -31,19 +31,12 @@ const GoogleLoginButton = ({ lang }) => {
   }
 
   return (
-    <Button
-      as={GoogleLogin}
-      colorScheme="blue"
-      background={buttonBackground}
+    <GoogleLogin
       text="signin_with"
       locale={lang}
       onSuccess={responseGoogle}
       onError={onFailure}
-      // state_cookie_domain={'single_host_origin'}
-      style={{ display: 'flex', justifyContent: 'center' }}
-    >
-      Sign in with Google
-    </Button>
+    />
   )
 }
 

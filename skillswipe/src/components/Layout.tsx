@@ -60,17 +60,15 @@ const Layout = ({ children }: any) => {
     }
   }, [])
   return (
-    <>
-      <main>
-        {Loading ? (
-          <Box alignContent={'center'}>
-            <Spinner />
-          </Box>
-        ) : (
-          children
-        )}
-      </main>
-    </>
+    <main>
+      {Loading ? (
+        <Box alignContent={'center'}>
+          <Spinner />
+        </Box>
+      ) : (
+        children
+      )}
+    </main>
   )
 }
 export default Layout

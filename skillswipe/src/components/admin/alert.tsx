@@ -14,9 +14,9 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useTranslation } from 'next-i18next'
 
 export default function Alert(props: any) {
   const { t } = useTranslation('common')
@@ -57,7 +57,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t ('This message has been marked as safe')),
+          description: t('This message has been marked as safe'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -70,7 +70,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured while marking this message as safe')),
+          description: t('An error has occured while marking this message as safe'),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -85,7 +85,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been warned')),
+          description: t('This user has been warned'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -98,7 +98,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured while warning this user')),
+          description: t('An error has occured while warning this user'),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -113,7 +113,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Success',
-          description: (t('This user has been banned')),
+          description: t('This user has been banned'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -126,7 +126,7 @@ export default function Alert(props: any) {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t('An error has occured wile banning this user')),
+          description: t('An error has occured wile banning this user'),
           status: 'success',
           duration: 9000,
           isClosable: true,
@@ -173,5 +173,3 @@ export default function Alert(props: any) {
     </>
   )
 }
-
-

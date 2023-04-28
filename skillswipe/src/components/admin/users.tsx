@@ -16,11 +16,11 @@ import {
   Tr,
   useToast,
 } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Alert from './alert'
 import { formatDate } from './messages'
-import { useTranslation } from 'next-i18next'
 
 export const ListOfUsers = () => {
   const toast = useToast()
@@ -41,7 +41,7 @@ export const ListOfUsers = () => {
       toast({
         position: 'top-right',
         title: 'Error',
-        description: (t('You are not logged in!')),
+        description: t('You are not logged in!'),
         status: 'error',
         duration: 9000,
         isClosable: true,
@@ -57,7 +57,7 @@ export const ListOfUsers = () => {
         toast({
           position: 'top-right',
           title: 'Error',
-          description: (t("Can't get users! Please contact support")),
+          description: t("Can't get users! Please contact support"),
           status: 'error',
           duration: 9000,
           isClosable: true,
@@ -114,7 +114,7 @@ export const ListOfUsers = () => {
                         <Alert
                           title="Unban User"
                           message={
-                            (t('Are you sure you want to send unban ')) +
+                            t('Are you sure you want to send unban ') +
                             user.firstName +
                             ' ' +
                             user.lastName +
