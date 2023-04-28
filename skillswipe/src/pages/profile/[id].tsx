@@ -234,7 +234,7 @@ const profile = () => {
                         <span
                           className="profile-text04"
                           style={{
-                            fontSize: '1em',
+                            
                             textShadow: '0px 0px 30px #00000085',
                             color: 'white',
 
@@ -246,13 +246,13 @@ const profile = () => {
                           <span
                             className="profile-text03"
                             style={{
-                              fontSize: '1em',
+                              
                               textShadow: '0px 0px 30px #00000085',
                               margin: '0.2em', // added margin to span
                               color: 'white',
                             }}
                           >
-                            <span>{`${connection} Connections`}</span>
+                            {`${connection} Connections`}
                           </span>
                         )}
                         {user.biography && user.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
@@ -377,7 +377,7 @@ const profile = () => {
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
                                 
-                                width: "60%",
+                               
                                 margin: "auto"
 
 

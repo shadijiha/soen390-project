@@ -721,6 +721,7 @@ const ProfileStyle = css`
   
   }
 
+  
 
   .profile-container {
     width: 100%;
@@ -845,7 +846,9 @@ const ProfileStyle = css`
     align-self: stretch;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between; 
+    padding-right: var(--dl-space-space-twounits)
+    
     
   }
   .profile-button {
@@ -1266,19 +1269,52 @@ const ProfileStyle = css`
     border-radius: var(--dl-radius-radius-round);
     object-position: left;
   }
+
+  @media (max-width: 2560px) {
+    .profile-image03 {
+      padding-left: var(--dl-space-space-twounits);
+      padding-bottom: var(--dl-space-space-sixunits);
+    }
+     
+    .profile-button {
+      font-size: xx-large;
+    }
+
+    .profile-text02 {
+      font-size: 2.5em;
+    }
+
+    .profile-text04 {
+      font-size: 2em;
+    }
+
+
+    .profile-text03 {
+      font-size: 2em;
+    }
+
+    .profile-text06 {
+      font-size: 2em;
+    }
+     
+    
+  }
+
+
+
   @media (max-width: 1600px) {
     .profile-top-card {
-      height: 331px;
+      
     }
     .profile-image03 {
       width: auto;
       padding-left: var(--dl-space-space-twounits);
-      
+      padding-bottom: var(--dl-space-space-oneunits);
     }
-
     
+  
     .profile-text02 {
-      fontSize: '1.5em'
+      font-size: 1em;
       margin-bottom: var(--dl-space-space-halfunit);
     }
     .profile-container04 {
@@ -1287,18 +1323,33 @@ const ProfileStyle = css`
       margin-right: 0px;
     }
 
+    .profile-text02{
+      font-size: 1.2em;                
+    }
+
+    .profile-text03 {
+      font-size: 1em;
+    }
+
+    .profile-text06 {
+      font-size: 1em;
+    }
    
     .profile-container05 {
       width: 400px;
       height: 60px;
-      margin-right: 90px;
+      margin-right: 220px;
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
+      font-size: large;
       
     }
-    .profile-text03 {}
+    .profile-text04 {
+      font-size: 1em;
+    }
+   
     .profile-button1 {
       border-radius: 60px;
       background-color: transparent;
@@ -1368,6 +1419,9 @@ const ProfileStyle = css`
       font-size: 3rem;
     }
   }
+
+  
+
   @media (max-width: 991px) {
     .profile-top-card {
       height: 300px;
@@ -1379,6 +1433,24 @@ const ProfileStyle = css`
     .profile-image {
       width: 299px;
       height: inherit;
+    }
+    .profile-image03 {
+      padding-bottom: var(--dl-space-space-oneunits);
+    }
+
+    .profile-text03 {
+      font-size: 1em;
+    }
+
+    .profile-text06 {
+      font-size: 1em;
+
+    }
+    .profile-text04{
+      font-size: 1em;
+    }
+    .profile-text02 {
+      font-size: 1.5em;
     }
     .profile-container01 {
       flex: 1;
@@ -1397,10 +1469,7 @@ const ProfileStyle = css`
       font-size: medium;
 
     }
-    .profile-text03 {
-      font-size: 0.5rem;
-      
-    }
+    
     .profile-container04 {
       width: 191px;
       margin-right: var(--dl-space-space-halfunit);
@@ -1415,11 +1484,11 @@ const ProfileStyle = css`
     }
     
     .profile-container05 {
-      width: 50%;
+      width: auto;
       margin-right: 0px;
       justify-content: space-between;
       align-self:stretch;
-      padding: 0 10px;
+      padding-right: var(--dl-space-space-threeunits);
     }
 
     .profile-container03 {
@@ -1475,12 +1544,17 @@ const ProfileStyle = css`
       
     }
 
+    .profile-container05 {
+      width: 40%;
+      
+    }
+
     .profile-container03 {
       width: 100%;
       margin-right: 0px;
       justify-content: space-between;
       align-items: center;
-      margin-left: var(--dl-space-space-oneunits);
+      
 
     }
     .profile-container04 {
@@ -1489,7 +1563,7 @@ const ProfileStyle = css`
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
-    
+      font-size: 0.8em;
 
     }
     .profile-button1 {
@@ -1717,28 +1791,33 @@ const ProfileStyle = css`
       flex-direction: column;
     }
   }
-  @media (max-width: 479px) {
+  @media (max-width: 697px) {
     .profile-top-card {
       width: 100%;
       height: 700px;
       position: relative;
     }
+
+
     
     .profile-image03 {
-      top:-%;
+      top: 30px;
       left: -20px;
       position:relative;
     }
 
-    .profile-image03 .avatar {
-     
+    .profile-text04 {
+      font-size: 0.8em;
     }
-    .profile-container01 {
+   
+
+
+    .profile-container01 { 
       width: 100%;
     }
     .profile-text02 {
       margin-bottom: var(--dl-space-space-halfunit);
-      font-size: x-large;
+      font-size: 1.2em;
     }
     .profile-container03 {
       width: auto;
@@ -1746,13 +1825,19 @@ const ProfileStyle = css`
       margin-bottom: var(--dl-space-space-twounits);
       
     }
+    .profile-text06 {
+      font-size: 0.8em;
+    }
 
+    .profile-text03 {
+      font-size: 0.8em;
+    }
     .profile-container02 {
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 50%;
-      padding-top: var(--dl-space-space-fourunits);
+      padding: var(--dl-space-space-fourunits);
       box-sizing: border-box; /* to include padding in the width calculation */
     }
   
@@ -1766,16 +1851,15 @@ const ProfileStyle = css`
     .profile-container05 {
       width: auto;
       height: 100%;
-      
-      padding-left: var(--dl-space-space-twounits);
       padding-bottom: var(--dl-space-space-threeunits);
+      align-
     }
     .profile-button {
       border-radius: 60px;
       background-color: transparent;
       fontWeight: 600;
-      width: "100%";
-     font-size: 0.2em";
+      width: 100%;
+     font-size: 1em;
     }
     .profile-button1 {
       border-radius: 60px;
@@ -1863,6 +1947,167 @@ const ProfileStyle = css`
       width: 250px;
       height: 250px;
     }
+    
+  
+  }
+  
+  @media (max-width: 479px) {
+    .profile-top-card {
+      width: 100%;
+      height: 700px;
+      position: relative;
+    }
+    
+    .profile-image03 {
+      top:-%;
+      left: -20px;
+      position:relative;
+    }
+
+    
+    .profile-container01 {
+      width: 100%;
+    }
+    .profile-text02 {
+      margin-bottom: var(--dl-space-space-halfunit);
+      font-size: medium;
+    }
+    .profile-container03 {
+      width: auto;
+      height: auto;
+      margin-bottom: var(--dl-space-space-twounits);
+      
+    }
+
+    .profile-text04 {
+      font-size: 0.6em;
+    }
+    .profile-text02 {
+      font-size: 0.8em;
+    }
+    .profile-text06 {
+      font-size: 0.6em;
+    }
+
+    .profile-text03 {
+      font-size: 0.6em;
+    }
+    .profile-container02 {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 50%;
+      
+      box-sizing: border-box; 
+      padding: var(--dl-space-space-twounits);
+    }
+  
+    .profile-container04 {
+      width: 200px;
+      height: 92px;
+      margin-right: 0px;
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .profile-container05 {
+      width: auto;
+      height: 100%;
+      padding-bottom: var(--dl-space-space-threeunits);
+    }
+    .profile-button {
+      border-radius: 60px;
+      background-color: transparent;
+      fontWeight: 600;
+      width: "100%";
+     font-size: 0.6em;
+    }
+    .profile-button1 {
+      border-radius: 60px;
+      background-color: transparent;
+    }
+    .profile-steps {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: var(--dl-space-space-unit);
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-container06 {
+      padding-left: 0px;
+    }
+    .profile-container09 {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: 0px;
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-text14 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-heading {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-container12 {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: 0px;
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-text20 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-heading1 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-text23 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-container15 {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: 0px;
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-text27 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-heading2 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-container18 {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: 0px;
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-text33 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-heading3 {
+      margin-left: 0px;
+      margin-right: var(--dl-space-space-twounits);
+    }
+    .profile-personal-projects {
+      padding-top: var(--dl-space-space-twounits);
+      padding-left: var(--dl-space-space-unit);
+      padding-right: var(--dl-space-space-unit);
+      padding-bottom: var(--dl-space-space-twounits);
+    }
+    .profile-container20 {
+      grid-template-columns: 1fr;
+    }
+    .profile-image1 {
+      width: 250px;
+      height: 250px;
+    }
+    
   
 `
 
