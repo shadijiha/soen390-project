@@ -120,7 +120,7 @@ const profile = () => {
   useEffect(() => {
     if (router.query.id) {
       console.log(router.query.id)
-      if (router.query.id == currentUser.auth.id) {
+      if (router.query.id == currentUser.id) {
         console.log('same url')
         router.push('/home')
       } else {
@@ -403,6 +403,129 @@ const profile = () => {
 
                         {/* to do: show this edit button only if user logged in == the profile that is shown */}
                       </div>
+                    </div>
+                  </div>
+                </div>
+                {/* profile picture */}
+                <div className="profile-top-card">
+                  <div
+                    className="profile-container01"
+                    style={{
+                      //make the background image repeat itself
+                      backgroundRepeat: 'repeat',
+                      // make the background image to be 35% opacity
+                      backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                      // make the background image to be 50% opacity
+
+                      backgroundImage: `url(${
+                        user.coverPic
+                          ? `data:image/jpeg;base64,${user.coverPic}`
+                          : profile.cover
+                      })`,
+                    }}
+                  >
+                    <div className="profile-container02">
+                      <div className="profile-image03">
+                        <Avatar
+                          src={
+                            user.profilePic
+                              ? `data:image/jpeg;base64,${user.profilePic}`
+                              : profile.image
+                          }
+                          size="xl"
+                          style={{
+                            borderRadius: '60%',
+                            border: '0.1em solid white',
+                            position: 'relative',
+                            top: '-2em',
+                            left: '2%',
+                          }}
+                        />
+                      </div>
+
+                      <div
+                        className="profile-container03"
+                        style={{
+                          position: 'relative',
+                        }}
+                      >
+                        <h1
+                          className="profile-text02"
+                          style={{
+                            fontSize: '1.5em',
+                            fontWeight: 700,
+                            textShadow: '0px 0px 30px #00000085',
+                            color: 'white',
+                          }}
+                        >
+                          {user.firstName + ' ' + user.lastName} 👋🏼
+                        </h1>
+                        <span
+                          className="profile-text04"
+                          style={{
+                            fontSize: '1.2em',
+                            textShadow: '0px 0px 30px #00000085',
+                            color: 'white',
+                          }}
+                        >
+                          📧 {user.email}
+                        </span>
+                        {connection >= 0 && ( // only render this span if connections is positive
+                          <span
+                            className="profile-text03"
+                            style={{
+                              fontSize: '1em',
+                              textShadow: '0px 0px 30px #00000085',
+                              margin: '0.2em', // added margin to span
+                              color: 'white',
+                            }}
+                          >
+                            <span>{`${connection} Connections`}</span>
+                          </span>
+                        )}
+                        {user.biography &&
+                          user.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
+                            <span
+                              className="profile-text06"
+                              style={{
+                                textShadow: '0px 0px 30px #000000B4',
+                                color: 'white',
+                              }}
+                            >
+                              💬{' '}
+                              {`${user.biography} |  ${
+                                user.workExperiences[user.workExperiences.length - 1]
+                                  .title
+                              } at ${
+                                user.workExperiences[user.workExperiences.length - 1]
+                                  .company
+                              } `}
+                            </span>
+                          )}
+                      </div>
+
+                      <>
+                        <div className="profile-container05">
+                          {/* to do: show this edit button only if user logged in == the profile that is shown */}
+                          <button
+                            className="profile-button1 button"
+                            style={{
+                              color: 'white',
+                              borderColor: 'white',
+                              width: '100%',
+                              borderWidth: '2px',
+                              textShadow: '0px 0px 40px #000000CA',
+                              fontWeight: 600,
+                              marginLeft: '1.5em',
+                            }}
+                            onClick={() => {
+                              router.push('/profile/editProfile')
+                            }}
+                          >
+                            {t('edit')}
+                          </button>
+                        </div>
+                      </>
                     </div>
                   </div>
                 </div>
