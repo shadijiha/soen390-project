@@ -31,8 +31,6 @@ import {
   getUserById,
   removeConnection,
   sendRequest,
-  
- 
 } from '../api/api'
 
 const profile = () => {
@@ -110,15 +108,14 @@ const profile = () => {
   const getAcceptedConnections = () => {
     const token = localStorage.getItem('jwt')
     getUserById(token, router.query.id)
-    .then((response: any) => {
-      console.log(response.data)
-      setConnection(response.data.connections.length)
+      .then((response: any) => {
+        console.log(response.data)
+        setConnection(response.data.connections.length)
       })
       .catch((error) => {
         toast(error.message)
       })
   }
-  
 
   useEffect(() => {
     if (router.query.id) {
