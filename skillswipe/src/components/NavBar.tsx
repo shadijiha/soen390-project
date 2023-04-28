@@ -1,5 +1,6 @@
 import { changeStatus, getPendingRequest, jobNotificationApi } from '@/pages/api/api'
 import { getAllConversation, getConversationById } from '@/pages/api/chat'
+import { getSuggestedUsers } from '@/pages/api/profile_api'
 import { CloseIcon, HamburgerIcon, SearchIcon } from '@chakra-ui/icons'
 import {
   Avatar,
@@ -31,7 +32,6 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Search from './Search/Search'
 import NotificationCounter from './Util/NotificationCounter'
-import { getSuggestedUsers } from '@/pages/api/profile_api'
 
 export default function NavBar(props: any) {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -49,8 +49,8 @@ export default function NavBar(props: any) {
   const [messageNotification, setmessageNotification]: any[] = useState([])
   const [loading1, setloading1] = useState(0)
   const [loading2, setloading2] = useState(0)
-  const [loading3,setloading3] = useState(0);
-  const [loading4,setloading4] = useState(0);
+  const [loading3, setloading3] = useState(0)
+  const [loading4, setloading4] = useState(0)
   const MobilehandleChange = (e: {
     target: { value: React.SetStateAction<string> }
   }) => {
@@ -77,7 +77,9 @@ export default function NavBar(props: any) {
       toast('Successfully Logged Out')
     }
   }
-  useEffect(() =>{console.log(display)},[display])
+  useEffect(() => {
+    console.log(display)
+  }, [display])
 
   const [showDropdown1, setShowDropdown1] = useState(false)
   const [showDropdown2, setShowDropdown2] = useState(false)
@@ -135,10 +137,9 @@ export default function NavBar(props: any) {
     if (currentUser.auth) {
       getMessage()
       getPendingConnections()
-      getNotification();
+      getNotification()
     }
   }, [currentUser])
-
 
   const getNotification = () => {
     const token = localStorage.getItem('jwt')
@@ -157,7 +158,6 @@ export default function NavBar(props: any) {
       const token = localStorage.getItem('jwt')
       getSuggestedUsers(token)
         .then((res) => {
- 
           setloading4(res.data.length)
         })
         .catch((err) => {
@@ -165,7 +165,6 @@ export default function NavBar(props: any) {
         })
     }
   }
-
 
   const getMessage = async () => {
     const token = localStorage.getItem('jwt')
@@ -224,6 +223,9 @@ export default function NavBar(props: any) {
     }
     if (value === 'option4') {
       router.push('/myApplications')
+    }
+    if (value === 'option5') {
+      router.push('/notifications')
     }
   }
 
@@ -383,7 +385,9 @@ export default function NavBar(props: any) {
             {props.nbNotifications != null ? (
               <NotificationCounter nbNotifications={props.nbNotifications} />
             ) : (
-              <NotificationCounter Notifications={loading1 + loading2 + loading3 + loading4} />
+              <NotificationCounter
+                Notifications={loading1 + loading2 + loading3 + loading4}
+              />
             )}
 
             <NextLink href="/profile" passHref>
@@ -437,7 +441,9 @@ export default function NavBar(props: any) {
             size="lg"
             mr={2}
             icon={<HamburgerIcon />}
-            onClick={() =>  display == 'none'?  changeDisplay('flex') : changeDisplay('none')}
+            onClick={() =>
+              display == 'none' ? changeDisplay('flex') : changeDisplay('none')
+            }
             display={['flex', 'flex', 'none', 'none']}
             ml={'auto'}
             variant={'ghost'}
@@ -464,17 +470,14 @@ export default function NavBar(props: any) {
               aria-label="Open Menu"
               size="xl"
               icon={<CloseIcon />}
-              onClick={() => display == 'none'?  changeDisplay('flex') : changeDisplay('none')}
+              onClick={() =>
+                display == 'none' ? changeDisplay('flex') : changeDisplay('none')
+              }
               backgroundColor="transparent"
             />
-
-            
-
           </Flex>
 
           <Flex flexDir="column" align="center" paddingTop={'5em'}>
-
-
             <NextLink href="/home" passHref>
               <Button variant="ghost" aria-label="Home" my={5} w="100%">
                 {t('home')}
@@ -490,6 +493,12 @@ export default function NavBar(props: any) {
             <NextLink href="/profile" passHref>
               <Button variant="ghost" aria-label="My Account" my={5} w="100%">
                 {t('myAccount')}
+              </Button>
+            </NextLink>
+
+            <NextLink href="/notifications" passHref>
+              <Button variant="ghost" aria-label="notifications" my={5} w="100%">
+                {t('notifications')}
               </Button>
             </NextLink>
 
@@ -519,6 +528,9 @@ export default function NavBar(props: any) {
                 </MenuItem>
                 <MenuItem onClick={() => handleFilter('option4')}>
                   {t('myApplications')}
+                </MenuItem>
+                <MenuItem onClick={() => handleFilter('option5')}>
+                  {t('notifications')}
                 </MenuItem>
               </MenuList>
             </Menu>

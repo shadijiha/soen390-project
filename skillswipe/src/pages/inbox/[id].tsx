@@ -183,7 +183,7 @@ const Chat = () => {
                 borderColor:
                   useColorMode().colorMode === 'light' ? '#CECECEA0' : '#FFFFFF1F',
                 borderWidth: '7px',
-                minWidth : "400px"
+                minWidth : "340px"
               }}
             >
               <Header user={chatUser} status={Status} />
