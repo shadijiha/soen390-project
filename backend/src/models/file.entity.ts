@@ -16,7 +16,7 @@ export class UploadedFileDB {
   @Column()
     storedName: string
 
-  @Column({nullable: true})
+  @Column({ nullable: true })
     url: string
 
   @Column()

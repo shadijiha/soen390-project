@@ -157,9 +157,9 @@ export class ChatService {
         is_readonly: true,
         max_requests: 1000
       })
-    );
-    console.log(res);
-    const url = res.url;
+    )
+    console.log(res)
+    const url = res.url
     dbFileData.url = url
 
     await this.fileRepository.save(dbFileData)
