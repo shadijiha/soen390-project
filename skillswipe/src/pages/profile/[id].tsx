@@ -280,6 +280,10 @@ const profile = () => {
                               style={{
                                 textShadow: '0px 0px 30px #000000B4',
                                 color: 'white',
+                                // text wrap for the span
+                                whiteSpace: 'pre-wrap',
+                                fontSize: '1em',
+                                textAlign: 'justify',
                               }}
                             >
                               💬{' '}
@@ -344,9 +348,6 @@ const profile = () => {
                                 borderWidth: '2px',
                                 textShadow: '0px 0px 40px #000000CA',
                                 fontWeight: 600,
-                                marginRight: '1em',
-                                width: '60%',
-                                margin: 'auto',
                               }}
                               onClick={Reject}
                             >

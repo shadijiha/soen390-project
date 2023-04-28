@@ -148,6 +148,7 @@ const Profile = () => {
                           style={{
                             textShadow: '0px 0px 30px #000000B4',
                             color: 'white',
+                            fontSize: '1em',
                           }}
                         >
                           💬{' '}
