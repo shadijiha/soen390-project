@@ -2010,7 +2010,7 @@ const ProfileStyle = css`
       padding-right: 0px;
     }
     .profile-container05 {
-      width: auto;
+      width: 100%;
       height: 100%;
       padding-bottom: var(--dl-space-space-threeunits);
     }
