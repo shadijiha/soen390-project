@@ -8,8 +8,8 @@ import {
   Center,
   Divider,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Icon,
   Link,
   Spacer,
@@ -34,6 +34,7 @@ import {
   getPendingRequest,
   getUserById,
   jobNotificationApi,
+  readJobNotifications,
   removeConnection,
   sendRequest,
 } from './api/api'
@@ -94,11 +95,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     channel.bind('message-notification', function (data) {
       getMessage()
     })
-    channel.bind('newJob',function(data) {
-      
-      getNotification();
+    channel.bind('newJob', function (data) {
+      getNotification()
     })
-    channel.bind('warn',function(data){
+    channel.bind('warn', function (data) {
       getNotification()
     })
   }, [currentUser])
@@ -301,6 +301,17 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
         })
     }
   }
+  const readNotification = (id) => {
+    const token = localStorage.getItem('jwt')
+    getSuggestedUsers(token)
+    readJobNotifications(token, id)
+      .then((res: any) => {
+        toast(res)
+      })
+      .catch((err) => {
+        toast.error(err)
+      })
+  }
 
   const viewUsers = () => {
     getSuggestedFriends()
@@ -314,6 +325,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const handleImageLoad = () => {
     console.log('Logo image loaded successfully')
   }
+  const handleJobNotification = (job) => {
+    readNotification(job)
+    router.push(`/jobListing/${job}`)
+  }
 
   return (
     <>
@@ -322,7 +337,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length + 
+            suggestedFriends.length +
             notification.length
           }
           addRequest={addRequest}
@@ -452,9 +467,9 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 Alert
               </Heading>
               {notification.length > 0 ? (
-                notification.map((notification: any, index) => (
+                notification.map((job: any) => (
                   <Flex
-                    key={index}
+                    key={job.id}
                     borderWidth="1px"
                     borderRadius="lg"
                     p={4}
@@ -462,64 +477,30 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                     display="flex"
                     alignItems="center"
                   >
-                    <Flex>
-                      {/* <Avatar
-                        size="lg"
-                        mr={4}
-                        src={
-                          notification.profilePic
-                            ? `data:image/jpeg;base64,${notification.profilePic}`
-                            : process.env.NEXT_PUBLIC_DEFAULT_PICTURE
-                        }
-                      /> */}
-                      <Box>
-
-                        {
-
-                          notification.link ? 
-
-
-                        <Heading
-                          as="h2"
-                          size="md"
-                          mb={2}
-                          style={{ cursor: 'pointer' }}
-                      
-                          onClick={() => {
-
-                            router.push(`/jobListing/${notification.link.split("/")[2]}`)
-                          }}
-                        
+                    <Link onClick={() => handleJobNotification(job.id)}>
+                      <Flex>
+                        <Box>
+                          <Heading as="h2" size="md" mb={2}>
+                            <span>Job Alert</span>
+                            <Badge ml="1.5" colorScheme="green">
+                              {t('new')}
+                            </Badge>
+                          </Heading>
+                          <Text mb={2}>{job.text}</Text>
+                        </Box>
+                      </Flex>
+                    </Link>
+                    <Spacer />
+                    <Box>
+                      <HStack>
+                        <Button
+                          colorScheme="twitter"
+                          onClick={() => handleJobNotification(job.id)}
                         >
-                          {notification.type}
-                          <Badge ml="1" colorScheme="green">
-                            {t('new')}
-                          </Badge>
-                        </Heading>
-                        :
-                        <Heading
-                        as="h2"
-                        size="md"
-                        mb={2}
-                        style={{ cursor: 'pointer' }}>
-                          {notification.type}
-                          <Badge ml="1" colorScheme="green">
-                            {t('new')}
-                          </Badge>
-
-
-
-                        </Heading>
-
-
-
-                        }
-                        <Text
-                          mb={2}
-                        >{notification.text}</Text>
-                        <Text fontSize="sm">{notification.created_at}</Text>
-                      </Box>
-                    </Flex>
+                          {t('Apply')}
+                        </Button>
+                      </HStack>
+                    </Box>
                   </Flex>
                 ))
               ) : (
