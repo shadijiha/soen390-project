@@ -1488,7 +1488,6 @@ const ProfileStyle = css`
       margin-right: 0px;
       justify-content: space-between;
       align-self:stretch;
-      padding-right: var(--dl-space-space-threeunits);
     }
 
     .profile-container03 {
@@ -1532,7 +1531,7 @@ const ProfileStyle = css`
 
     .profile-top-card {
       flex-direction: column;
-      margin-bottom: 28em;
+      height: 100%;
     }
    
     .profile-container01 {
@@ -1849,10 +1848,9 @@ const ProfileStyle = css`
       padding-right: 0px;
     }
     .profile-container05 {
-      width: auto;
+      width: 100%;
       height: 100%;
       padding-bottom: var(--dl-space-space-threeunits);
-      align-
     }
     .profile-button {
       border-radius: 60px;

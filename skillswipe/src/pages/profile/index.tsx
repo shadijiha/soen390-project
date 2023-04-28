@@ -6,7 +6,14 @@ import PersonalProjectsProfile from '@/components/Profile/PersonalProjectsProfil
 import Skills from '@/components/Profile/Skills'
 import Volunteering from '@/components/Profile/Volunteering'
 import WorkExperience from '@/components/Profile/WorkExperience'
-import { Avatar, Divider, Stack, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import {
+  Avatar,
+  Center,
+  Divider,
+  Stack,
+  useColorMode,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Head from 'next/head'
@@ -33,8 +40,7 @@ const Profile = () => {
     experience: 'Five years of experience in full stack development',
     experience2: 'Three years of experience in mobile development',
     experience3: 'Two years of experience in data analysis',
-    image:
-    'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
+    image: 'https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg',
     cover:
       'https://img.rawpixel.com/private/static/images/website/2022-05/v904-nunny-016_2.jpg?w=800&dpr=1&fit=default&crop=default&q=65&vib=3&con=3&usm=15&bg=F4F4F3&ixlib=js-2.2.1&s=d04dc64ebef3b6c3ad40a5687bbe31dc',
   })
@@ -68,7 +74,6 @@ const Profile = () => {
                   // make the background image to be 35% opacity
                   backgroundColor: 'rgba(0, 0, 0, 0.35)',
                   // make the background image to be 50% opacity
-                  
 
                   backgroundImage: `url(${
                     User.auth.coverPic
@@ -78,7 +83,7 @@ const Profile = () => {
                 }}
               >
                 <div className="profile-container02">
-            <div className='profile-image03'>
+                  <div className="profile-image03">
                     <Avatar
                       src={
                         User.auth.profilePic
@@ -86,22 +91,22 @@ const Profile = () => {
                           : profile.image
                       }
                       size="xl"
-                      style=
-                      {{
-                        borderRadius: "60%",
+                      style={{
+                        borderRadius: '60%',
                         border: '0.1em solid white',
-                        position: "relative",
-                        top: "-2em",
-                        left: "2%",
+                        position: 'relative',
+                        top: '-2em',
+                        left: '2%',
                       }}
                     />
                   </div>
 
-                <div className="profile-container03"
-                  style={{
-                    position: "relative",
-                    
-                  }}>
+                  <div
+                    className="profile-container03"
+                    style={{
+                      position: 'relative',
+                    }}
+                  >
                     <h1
                       className="profile-text02"
                       style={{
@@ -119,7 +124,6 @@ const Profile = () => {
                         fontSize: '1.2em',
                         textShadow: '0px 0px 30px #00000085',
                         color: 'white',
-
                       }}
                     >
                       📧 {User.auth.email}
@@ -137,45 +141,51 @@ const Profile = () => {
                         <span>{`${connections} Connections`}</span>
                       </span>
                     )}
-                    {User.auth.biography && User.auth.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
-                      <span
-                        className="profile-text06"
-                        style={{
-                          textShadow: '0px 0px 30px #000000B4',
-                          color: 'white',
-                        }}
-                      >
-                        💬{' '}
-                        {`${User.auth.biography} \u25CF  ${User.auth.workExperiences[User.auth.workExperiences.length - 1].title
-                          } at ${User.auth.workExperiences[User.auth.workExperiences.length - 1].company
+                    {User.auth.biography &&
+                      User.auth.workExperiences.length > 0 && ( // only render this span if biography and workExperiences are not empty
+                        <span
+                          className="profile-text06"
+                          style={{
+                            textShadow: '0px 0px 30px #000000B4',
+                            color: 'white',
+                          }}
+                        >
+                          💬{' '}
+                          {`${User.auth.biography} |  ${
+                            User.auth.workExperiences[
+                              User.auth.workExperiences.length - 1
+                            ].title
+                          } at ${
+                            User.auth.workExperiences[
+                              User.auth.workExperiences.length - 1
+                            ].company
                           } `}
-                      </span>
-                    )}
+                        </span>
+                      )}
                   </div>
 
-
-                <div className="profile-container05">
-                  {/* to do: show this edit button only if user logged in == the profile that is shown */}
-                  <button
-                    className="profile-button1 button"
-                    style={{
-                      color: 'white',
-                        borderColor: 'white',
-                        width: "100%",
-                        borderWidth: '2px',
-                        textShadow: '0px 0px 40px #000000CA',
-                        fontWeight: 600,
-                        
-                        margin: "auto",
-
-                    }}
-                    onClick={() => {
-                      router.push('/profile/editProfile')
-                    }}
-                  >
-                    {t('edit')}
-                  </button>
-                </div>
+                  <>
+                    <div className="profile-container05">
+                      {/* to do: show this edit button only if user logged in == the profile that is shown */}
+                      <button
+                        className="profile-button1 button"
+                        style={{
+                          color: 'white',
+                          borderColor: 'white',
+                          width: '100%',
+                          borderWidth: '2px',
+                          textShadow: '0px 0px 40px #000000CA',
+                          fontWeight: 600,
+                          marginLeft: '1.5em',
+                        }}
+                        onClick={() => {
+                          router.push('/profile/editProfile')
+                        }}
+                      >
+                        {t('edit')}
+                      </button>
+                    </div>
+                  </>
                 </div>
               </div>
             </div>
@@ -202,9 +212,6 @@ const Profile = () => {
                 <></>
               )}
             </Stack>
-
-            <br></br>
-            <Divider />
 
             <br></br>
             <Divider />
@@ -259,7 +266,7 @@ const Profile = () => {
               <></>
             )}
 
-            {/* temporary div below for spacing under page, will need to remove in final sprint */}
+            {/* temporary div below for spacing under page */}
             <div
               style={{
                 display: 'flex',
