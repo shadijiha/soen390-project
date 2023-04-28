@@ -31,6 +31,8 @@ import {
   getUserById,
   removeConnection,
   sendRequest,
+  
+ 
 } from '../api/api'
 
 const profile = () => {
@@ -104,6 +106,20 @@ const profile = () => {
       })
   }
 
+  // get number of connections accepted by id
+  const getAcceptedConnections = () => {
+    const token = localStorage.getItem('jwt')
+    getUserById(token, router.query.id)
+    .then((response: any) => {
+      console.log(response.data)
+      setConnection(response.data.connections.length)
+      })
+      .catch((error) => {
+        toast(error.message)
+      })
+  }
+  
+
   useEffect(() => {
     if (router.query.id) {
       console.log(router.query.id)
@@ -116,6 +132,7 @@ const profile = () => {
           .then((response: any) => {
             console.log(response.data)
             setUser(response.data.user)
+            getAcceptedConnections()
             if (response.data.connectionStatus == 'NotConnected') {
               setStatus({ ...Status, connected: false })
               console.log('Status')

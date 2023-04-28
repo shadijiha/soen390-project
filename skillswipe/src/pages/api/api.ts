@@ -116,6 +116,16 @@ export const getPendingRequest = async (token: any) => {
     },
   })
 }
+
+
+export const getAcceptedConnection = async (token: any) => {
+  return axios.get(`${URL}/connections/accepted`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
 export const getAccepted = async (token: any) => {
   return axios.get(`${URL}/connections/add`, {
     headers: {
