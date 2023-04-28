@@ -8,8 +8,8 @@ import {
   Center,
   Divider,
   Flex,
-  HStack,
   Heading,
+  HStack,
   Icon,
   Link,
   Spacer,
@@ -33,6 +33,8 @@ import {
   acceptRequest,
   getPendingRequest,
   getUserById,
+  jobNotificationApi,
+  readJobNotifications,
   removeConnection,
   sendRequest,
 } from './api/api'
@@ -48,6 +50,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   ])
   const [messageNotification, setmessageNotification] = useState([])
   const [suggestedFriends, setSuggestedFriends] = useState([])
+  const [notification, setNotification] = useState([])
   const currentUser = useSelector((state) => state as any)
   const router = useRouter()
   const [loading, setloading] = useState(true)
@@ -79,6 +82,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     getPendingConnections()
     getMessage()
     getSuggestedFriends()
+    getNotification()
     const PUSHER_APP_KEY = process.env.NEXT_PUBLIC_PUSHER_APP_KEY ?? 'null'
     const PUSHER_APP_CLUSTER = process.env.NEXT_PUBLIC_PUSHER_APP_CLUSTER ?? 'us2'
     const pusher = new Pusher(PUSHER_APP_KEY, {
@@ -90,6 +94,12 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     })
     channel.bind('message-notification', function (data) {
       getMessage()
+    })
+    channel.bind('newJob', function (data) {
+      getNotification()
+    })
+    channel.bind('warn', function (data) {
+      getNotification()
     })
   }, [currentUser])
 
@@ -278,6 +288,31 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
     }
   }
 
+  const getNotification = () => {
+    const token = localStorage.getItem('jwt')
+    if (token) {
+      jobNotificationApi(token)
+        .then((response) => {
+          setNotification(response.data)
+          console.log(response.data)
+        })
+        .catch((error) => {
+          toast(error.message)
+        })
+    }
+  }
+  const readNotification = (id) => {
+    const token = localStorage.getItem('jwt')
+    getSuggestedUsers(token)
+    readJobNotifications(token, id)
+      .then((res: any) => {
+        toast(res)
+      })
+      .catch((err) => {
+        toast.error(err)
+      })
+  }
+
   const viewUsers = () => {
     getSuggestedFriends()
   }
@@ -290,6 +325,10 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
   const handleImageLoad = () => {
     console.log('Logo image loaded successfully')
   }
+  const handleJobNotification = (job) => {
+    readNotification(job)
+    router.push(`/jobListing/${job}`)
+  }
 
   return (
     <>
@@ -298,7 +337,8 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
           nbNotifications={
             pendingConnections.length +
             messageNotification.length +
-            suggestedFriends.length
+            suggestedFriends.length +
+            notification.length
           }
           addRequest={addRequest}
         ></NavBar>
@@ -370,6 +410,7 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 )}
               </Flex>
             </Box>
+
             <Box p={4}>
               <Heading as="h1" size="lg" mb={4}>
                 {t('notifications')}
@@ -422,7 +463,52 @@ const Notifications = (_props: InferGetStaticPropsType<typeof getStaticProps>) =
                 <Text>{t('noNotifications')}</Text>
               )}
               <br></br>
+              <Heading as="h1" size="lg" mb={4}>
+                Alert
+              </Heading>
+              {notification.length > 0 ? (
+                notification.map((job: any) => (
+                  <Flex
+                    key={job.id}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    p={4}
+                    mb={4}
+                    display="flex"
+                    alignItems="center"
+                  >
+                    <Link onClick={() => handleJobNotification(job.id)}>
+                      <Flex>
+                        <Box>
+                          <Heading as="h2" size="md" mb={2}>
+                            <span>Job Alert</span>
+                            <Badge ml="1.5" colorScheme="green">
+                              {t('new')}
+                            </Badge>
+                          </Heading>
+                          <Text mb={2}>{job.text}</Text>
+                        </Box>
+                      </Flex>
+                    </Link>
+                    <Spacer />
+                    <Box>
+                      <HStack>
+                        <Button
+                          colorScheme="twitter"
+                          onClick={() => handleJobNotification(job.id)}
+                        >
+                          {t('Apply')}
+                        </Button>
+                      </HStack>
+                    </Box>
+                  </Flex>
+                ))
+              ) : (
+                <Text>No Job alerts</Text>
+              )}
+
               <Divider />
+
               <Box py="4">
                 <Heading as="h1" size="lg" mb={8}>
                   {t('People you might know')}
