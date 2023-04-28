@@ -38,7 +38,7 @@ export class Job extends BaseEntity {
   @ApiProperty()
     location: string
 
-  @Column()
+  @Column({ type: 'text' })
   @ApiProperty()
     jobDescription: string
 

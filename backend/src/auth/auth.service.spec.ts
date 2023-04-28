@@ -48,7 +48,7 @@ describe("AuthService", () => {
         AuthService,
         JwtService,
         UsersService,
-        GoogleStrategy,
+        
         {
           provide: getRepositoryToken(User),
           useValue: mockUsersRepository,
